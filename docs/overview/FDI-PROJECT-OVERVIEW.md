@@ -1504,7 +1504,7 @@ Next Feature starts smarter
 
 目前的 standalone runtime implementation 使用 **Java 17**、**Spring Boot 3.4.1** 與 Maven。
 
-repository 內已有 executable application、Framework runtime contracts、Graphify provider adapter、snapshot binding、bounded traversal、maintenance、feature discovery、DEV-204 preparation，以及相應的 deterministic tests。這些實作提供本地 contract 與 integration seam 驗證，但不等同於 live Graphify integration、real Product binding 或 empirical validation 已完成。
+repository 內已有 executable application、Framework runtime contracts、Grafel-named provider integration classes、snapshot binding、bounded traversal、maintenance、feature discovery、DEV-204 preparation，以及相應的 deterministic tests。Graphify rename/migration is planned and separate；目前的 Grafel-named classes 不代表 live Graphify provider integration 已完成。這些實作提供本地 contract 與 integration seam 驗證，但不等同於 live Graphify integration、real Product binding 或 empirical validation 已完成。
 
 ---
 

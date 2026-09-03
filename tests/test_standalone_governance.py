@@ -1,4 +1,5 @@
 import fnmatch, json, hashlib, re, subprocess
+import pytest
 from functools import lru_cache
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -202,12 +203,11 @@ def test_markdown_inventory_is_exact():
     assert inv==actual
 
 
-def test_framework_spec_numbered_sections_are_consistent():
-    path=ROOT/"docs/specifications/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md"
+def assert_numbered_sections_are_consistent(text):
     current_section=None
     top_level=[]
     subsections={}
-    for line in path.read_text().splitlines():
+    for line in text.splitlines():
         top_match=re.match(r"^# (\d+)\. ", line)
         if top_match:
             current_section=int(top_match.group(1))
@@ -219,9 +219,27 @@ def test_framework_spec_numbered_sections_are_consistent():
             assert current_section is not None
             assert section==current_section, f"{line!r} is under section {current_section}"
             subsections.setdefault(section, []).append(subsection)
-    assert top_level==list(range(1, 45))
+    assert top_level, "no numbered top-level sections"
+    assert top_level==list(range(top_level[0], max(top_level) + 1)), f"top-level sections: {top_level}"
     for section, numbers in subsections.items():
-        assert numbers==sorted(set(numbers)), f"section {section} subsections: {numbers}"
+        assert numbers==list(range(1, max(numbers) + 1)), f"section {section} subsections: {numbers}"
+
+
+def test_framework_spec_numbered_sections_are_consistent():
+    path=ROOT/"docs/specifications/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md"
+    assert_numbered_sections_are_consistent(path.read_text())
+
+
+def test_numbered_section_check_rejects_a_missing_subsection():
+    markdown="\n".join(f"# {number}. Section" for number in range(1, 45))
+    markdown += "\n## 44.1 First\n## 44.2 Second\n## 44.4 Fourth\n"
+    with pytest.raises(AssertionError):
+        assert_numbered_sections_are_consistent(markdown)
+
+
+def test_numbered_section_check_accepts_a_future_contiguous_top_level_section():
+    markdown="\n".join(f"# {number}. Section" for number in range(1, 46))
+    assert_numbered_sections_are_consistent(markdown)
 
 
 def test_overview_documents_runtime_implementation_and_evidence_readiness():
@@ -229,6 +247,8 @@ def test_overview_documents_runtime_implementation_and_evidence_readiness():
     assert "# 34. Runtime Implementation" in overview
     assert "Java 17" in overview
     assert "Spring Boot 3.4.1" in overview
+    assert "Grafel-named provider integration" in overview
+    assert "Graphify rename/migration is planned and separate" in overview
     assert "# 35. Readiness and Evidence Status" in overview
 
 
