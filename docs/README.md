@@ -16,15 +16,15 @@ Every entry is labelled by authority. This index is navigational and does not su
 
 ## Orientation and current state
 
-- [Project overview](../PROJECT-OVERVIEW.md) — orientation only; not governing authority.
-- [Status](../STATUS.json) — current declared readiness and non-claims.
-- [Development backlog](../DEVELOPMENT-BACKLOG.md) — planning record, not governing authority.
+- [Project overview](overview/FDI-PROJECT-OVERVIEW.md) — orientation only; not governing authority.
+- [Status](planning/STATUS.json) — current declared readiness and non-claims.
+- [Development backlog](planning/DEVELOPMENT-BACKLOG.md) — planning record, not governing authority.
 - [Verification summary](../VERIFICATION-SUMMARY.json) — recorded verification scope and evidence claims.
 
 ## Candidate specifications and implementation guidance
 
-- [Product Intelligence](../specs/product-intelligence/), [Product Knowledge](../specs/product-knowledge/), [source integration](../specs/source-integration/), and [Structural Intelligence](../specs/structural-intelligence/) — non-governing specifications unless separately listed in the governing-source lock.
-- [Architecture decisions](../governance/decisions/) — implementation decisions; they do not override approved semantics.
+- [Product Intelligence](specifications/framework/product-intelligence/), [Product Knowledge](specifications/framework/product-knowledge/), [source integration](specifications/framework/source-integration/), and [Structural Intelligence](specifications/framework/structural-intelligence/) — non-governing specifications unless separately listed in the governing-source lock.
+- [Architecture decisions](architecture/decisions/) — implementation decisions; they do not override approved semantics.
 - [Configuration guidance](../config/) — runtime examples and Multica mapping instructions.
 - [Graphify provider migration design](superpowers/specs/2026-09-03-graphify-provider-migration-design.md) — provider-boundary implementation design, not FDI semantic authority.
 - [Project-folder reorganization design](superpowers/specs/2026-09-04-project-folder-reorganization-design.md) and [implementation plan](superpowers/plans/2026-09-04-project-folder-reorganization.md) — repository-layout guidance, not FDI semantic authority.

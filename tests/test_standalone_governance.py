@@ -1,4 +1,4 @@
-import json, hashlib, re
+import fnmatch, json, hashlib, re, subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -38,8 +38,8 @@ def test_all_markdown_basename_is_in_project_tree():
     for p in ROOT.rglob('*.md'): assert p.name in tree
 def test_overview_and_handoff_exist():
     assert (ROOT/'PROJECT-OVERVIEW.md').exists()
-    assert (ROOT/'MULTICA-HANDOFF.md').exists()
-    assert (ROOT/'MULTICA-PROJECT-PROMPT.txt').exists()
+    assert (ROOT/'agent/handoff/MULTICA-HANDOFF.md').exists()
+    assert (ROOT/'agent/handoff/MULTICA-PROJECT-PROMPT.txt').exists()
 def test_no_governing_placeholder_readmes():
     assert not (ROOT/'contracts/layer1/README.md').exists()
     assert not (ROOT/'contracts/ft-t2/README.md').exists()
@@ -52,8 +52,88 @@ def test_repository_navigation_entry_points_exist():
 
 def test_readme_links_to_current_authoritative_entry_points():
     readme=(ROOT/'README.md').read_text()
-    for target in ("PROJECT-OVERVIEW.md", "governance/CURRENT", "STATUS.json"):
+    for target in ("docs/overview/FDI-PROJECT-OVERVIEW.md", "governance/CURRENT", "docs/planning/STATUS.json"):
         assert f"]({target})" in readme
+
+
+def test_reorganized_document_targets_exist_and_old_paths_are_absent():
+    targets=(
+        "docs/overview/FDI-PROJECT-OVERVIEW.md",
+        "docs/specifications/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md",
+        "docs/specifications/framework/FRAMEWORK-CAPABILITY-FEATURE-CATALOG-v0.1-rc4.md",
+        "docs/specifications/framework/SKILL-OWNERSHIP-MAP-v0.1-rc4.md",
+        "docs/specifications/providers/graphify/GRAPHIFY-PROVIDER-PROFILE-v0.1-lean-rc4.md",
+        "docs/reviews/RC4-REVIEW-FIX-NOTE.md",
+        "docs/reviews/SPEC-VERIFICATION.json",
+        "docs/specifications/framework/product-intelligence/PRODUCT-INTELLIGENCE-STORE.md",
+        "docs/specifications/framework/product-knowledge/PRODUCT-KNOWLEDGE-MAINTENANCE-PATH-v0.1.md",
+        "docs/specifications/framework/source-integration/AZURE-REPOS-EXACT-SOURCE-BINDING.md",
+        "docs/specifications/framework/structural-intelligence/FEATURE-DISCOVERY-INTEGRATION-v0.2.md",
+        "docs/specifications/proposals/PA-01/PA-01-MINIMAL-PRODUCT-SEMANTICS-PROFILE-v0.1-approval-candidate.md",
+        "docs/planning/DEVELOPMENT-BACKLOG.md",
+        "docs/planning/STATUS.json",
+        "docs/architecture/decisions/ADR-001-code-intelligence-provider.md",
+        "agent/handoff/MULTICA-HANDOFF.md",
+    )
+    old_paths=(
+        "docs/FDI-PROJECT-OVERVIEW-FRAMEWORK-CENTERED.md",
+        "specs/product-intelligence", "specs/product-knowledge", "specs/source-integration",
+        "specs/structural-intelligence", "specs/proposals", "DEVELOPMENT-BACKLOG.md",
+        "STATUS.json", "governance/decisions", "MULTICA-HANDOFF.md", "MULTICA-PROJECT-PROMPT.txt",
+    )
+    for path in targets:
+        assert (ROOT/path).is_file(), path
+    for path in old_paths:
+        assert not (ROOT/path).exists(), path
+
+
+def test_project_overview_is_a_resolving_compatibility_pointer():
+    overview=(ROOT/'PROJECT-OVERVIEW.md').read_text()
+    target="docs/overview/FDI-PROJECT-OVERVIEW.md"
+    assert f"]({target})" in overview
+    assert (ROOT/target).is_file()
+
+
+def test_active_non_governing_text_has_no_stale_moved_paths():
+    stale_patterns=(
+        r"docs/FDI-PROJECT-OVERVIEW-FRAMEWORK-CENTERED\.md", r"specs/product-intelligence/",
+        r"specs/product-knowledge/", r"specs/source-integration/", r"specs/structural-intelligence/",
+        r"specs/proposals/", r"governance/decisions/", r"(?<!/)STATUS\.json",
+        r"(?<!/)DEVELOPMENT-BACKLOG\.md", r"(?<!/)MULTICA-HANDOFF\.md",
+        r"(?<!/)MULTICA-PROJECT-PROMPT\.txt",
+    )
+    excluded_prefixes=("specs/approved/", "governance/approved/", "docs/superpowers/")
+    candidates=subprocess.run(
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
+        cwd=ROOT, check=True, text=True, capture_output=True,
+    ).stdout.splitlines()
+    for relative in candidates:
+        if relative.startswith(excluded_prefixes) or relative in {"MANIFEST.json", "MARKDOWN-INVENTORY.txt", "PROJECT-TREE.txt", "tests/test_standalone_governance.py"}:
+            continue
+        path=ROOT/relative
+        try:
+            text=path.read_text()
+        except (UnicodeDecodeError, IsADirectoryError):
+            continue
+        for old in stale_patterns:
+            assert not re.search(old, text), f"stale path pattern {old!r} in {relative}"
+
+
+def test_every_tracked_or_pending_path_has_exactly_one_documented_classification():
+    classification=(ROOT/'docs/FILE-CLASSIFICATION.md').read_text()
+    match=re.search(r"```classification-rules\n(.*?)\n```", classification, re.DOTALL)
+    assert match, "missing machine-readable classification-rules block"
+    rules=[]
+    for line in match.group(1).splitlines():
+        pattern, category=line.split("\t", 1)
+        rules.append((pattern, category))
+    paths=subprocess.run(
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
+        cwd=ROOT, check=True, text=True, capture_output=True,
+    ).stdout.splitlines()
+    for path in paths:
+        matches=[category for pattern, category in rules if fnmatch.fnmatchcase(path, pattern)]
+        assert len(matches)==1, f"{path}: expected exactly one classification, got {matches}"
 
 
 def test_repository_navigation_local_links_resolve_and_dated_links_are_centralized():

@@ -1,39 +1,56 @@
 # Repository File Classification
 
-## Rule and precedence
+Every tracked or pending repository path must match exactly one rule in the machine-readable block below. Each line contains a shell-style path pattern, one tab, and its classification. Rules intentionally do not overlap; adding a file requires either an existing unique match or a new non-overlapping rule.
 
-Classify each tracked path by the first matching row below, from top to bottom. A more specific path therefore takes precedence over a broader family. This first-match rule makes nested families such as generated validation fixtures and approved specifications exactly-one classifications during migration. Current and target paths are both listed so the rules remain usable through the staged reorganization.
+```classification-rules
+.gitignore	Root repository metadata
+AGENTS.md	Root repository navigation
+README.md	Root repository navigation
+pom.xml	Build definition
+mvnw	Build entry point
+.mvn/*	Maven wrapper runtime support
+config/*	Runtime or example configuration
+governance/CURRENT	Governance baseline pointer
+governance/GOVERNING-SOURCES.md	Governance provenance index
+governance/approved-source-lock.json	Governance source lock
+governance/GOVERNING-CONTENT-MATERIALIZATION-REPORT.md	Governance materialization report
+governance/baselines/*	Governance baseline
+specs/approved/*	Digest-locked governing authority
+contracts/*	Stable public contract surface
+skills/*	Agent Skill procedure
+workflows/*	Agent workflow procedure
+agent/handoff/*	Agent handoff material
+validation/skill-behavior/prepared-*/*	Generated validation fixture
+validation/skill-behavior/SCENARIOS-*.json	DEV-204 validation scenario
+validation/skill-behavior/VALIDATION-PLAN-*.json	DEV-204 validation plan
+validation/skill-behavior/execution-record-*.schema.json	Validation evidence schema
+validation/skill-behavior/EXECUTION-GUIDE-*.md	Validation execution protocol
+validation/grafel-binding-evidence-*.schema.json	Validation evidence schema
+validation/FDI-*.md	Deterministic or empirical validation protocol
+validation/OPTION-*.md	Deterministic or empirical validation protocol
+validation/REALIZATION-*.md	Deterministic or empirical validation protocol
+scripts/build_*.py	Packaging utility source
+scripts/verify_*.py	Verification utility source
+scripts/evaluate_*.py	Evaluation utility source
+scripts/generate_*.py	Generation utility source
+scripts/prepare_*.py	Migration utility source
+templates/*	Product-instance template
+MANIFEST.json	Generated release metadata
+MARKDOWN-INVENTORY.txt	Generated release metadata
+PROJECT-TREE.txt	Generated release metadata
+VERIFICATION-SUMMARY.json	Generated release metadata
+PROJECT-OVERVIEW.md	Compatibility overview pointer
+docs/overview/*	Conceptual overview
+docs/planning/*	Planning or status record
+docs/specifications/*	Non-governing specification or proposal
+docs/reviews/*	Review evidence
+docs/architecture/*	Implementation architecture decision
+docs/superpowers/*	Historical implementation design or plan
+docs/README.md	Documentation navigation
+docs/FILE-CLASSIFICATION.md	Repository classification rules
+src/main/*	Java application source
+src/test/*	Java test source
+tests/*	Python repository test source
+```
 
-| Priority | Current or target path family | Classification |
-| ---: | --- | --- |
-| 1 | `.gitignore`, `AGENTS.md`, `README.md`, `pom.xml`, `mvnw` | Retained root repository/build entry point |
-| 2 | `.mvn/**` | Maven wrapper runtime support |
-| 3 | `config/**` | Runtime or example configuration |
-| 4 | `governance/CURRENT`, `governance/GOVERNING-SOURCES.md`, `governance/baselines/**`, `governance/locks/**`, `governance/approved-source-lock.json`, `governance/GOVERNING-CONTENT-MATERIALIZATION-REPORT.md` | Governance pointer, provenance, lock, baseline, or report |
-| 5 | `specs/approved/**`, `governance/approved/**` | Digest-locked governing authority |
-| 6 | `governance/decisions/**`, `docs/architecture/decisions/**` | Implementation architecture decision |
-| 7 | `contracts/ft-t2/**`, `contracts/layer1/**`, `contracts/layer2/**`, `contracts/source-integration/**`, `contracts/structural-intelligence/**`, `contracts/public/**` | Stable public contract surface |
-| 8 | `contracts/providers/**` | Provider-local contract surface |
-| 9 | `skills/**`, `workflows/**`, `agent/skills/**`, `agent/workflows/**` | Agent Skill or workflow procedure |
-| 10 | `MULTICA-HANDOFF.md`, `MULTICA-PROJECT-PROMPT.txt`, `agent/handoff/**` | Agent handoff material |
-| 11 | `validation/**/prepared-*/**`, `validation/dev204/fixtures/**` | Generated validation fixture |
-| 12 | `validation/reports/**` | Generated validation or verification report |
-| 13 | `validation/grafel-binding-evidence-v0.1.schema.json`, `validation/dev204/schemas/**` | Validation evidence schema |
-| 14 | `validation/skill-behavior/SCENARIOS-*.json`, `validation/skill-behavior/VALIDATION-PLAN-*.json`, `validation/dev204/scenarios/**` | DEV-204 validation definition |
-| 15 | `validation/FDI-*.md`, `validation/OPTION-*.md`, `validation/REALIZATION-*.md`, `validation/deterministic/**`, `validation/f001/**`, `validation/skill-behavior/EXECUTION-GUIDE-*.md` | Deterministic or empirical validation protocol |
-| 16 | `scripts/build_*.py`, `tooling/packaging/**` | Packaging utility source |
-| 17 | `scripts/verify_*.py`, `scripts/evaluate_*.py`, `tooling/verification/**` | Verification or evaluation utility source |
-| 18 | `scripts/generate_*.py`, `scripts/prepare_*.py`, `tooling/migration/**` | Generation or migration utility source |
-| 19 | `templates/product-intelligence/**`, `templates/product-instance/**` | Product-instance template |
-| 20 | `MANIFEST.json`, `MARKDOWN-INVENTORY.txt`, `PROJECT-TREE.txt`, `VERIFICATION-SUMMARY.json`, `release/**` | Generated release or root metadata |
-| 21 | `PROJECT-OVERVIEW.md`, `docs/overview/**` | Conceptual overview or compatibility pointer |
-| 22 | `DEVELOPMENT-BACKLOG.md`, `STATUS.json`, `docs/planning/**` | Planning or status record |
-| 23 | `specs/product-intelligence/**`, `specs/product-knowledge/**`, `specs/source-integration/**`, `specs/structural-intelligence/**`, `specs/proposals/**`, `docs/specifications/**` | Non-governing specification or proposal |
-| 24 | `docs/reviews/**` | Review evidence |
-| 25 | `docs/design/**`, `docs/superpowers/**` | Implementation design or plan |
-| 26 | `docs/README.md`, `docs/FILE-CLASSIFICATION.md` | Documentation navigation or repository classification |
-| 27 | `src/main/java/**` | Java application source |
-| 28 | `src/test/java/**` | Java test source |
-| 29 | `tests/**` | Python repository/governance test source |
-
-Build output (`target/**`), Python caches, editor state, credentials, and other ignored or untracked runtime residue are not tracked path families and must not be promoted into a classification merely because they exist locally.
+The `config/` family is retained as runtime/example configuration. Build output (`target/**`), Python caches, editor state, credentials, and other ignored runtime residue are not repository file classifications and must not be promoted merely because they exist locally.
