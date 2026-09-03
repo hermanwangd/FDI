@@ -1,4 +1,4 @@
-package com.featuredeliveryintelligence.fdi.runtime;
+package com.featuredeliveryintelligence.fdi.structural.graphify;import com.featuredeliveryintelligence.fdi.structural.api.CodeIntelligenceProvider;import com.featuredeliveryintelligence.fdi.structural.api.SnapshotBindingAttestor;import com.featuredeliveryintelligence.fdi.structural.api.StructuralIntelligence;import com.featuredeliveryintelligence.fdi.structural.api.StructuralMaintenance;import com.featuredeliveryintelligence.fdi.shared.RuntimeMaps;import com.featuredeliveryintelligence.fdi.shared.RuntimeContractException;
 import java.time.Instant;import java.util.*;import java.util.function.Function;
 public final class GrafelBindingAttestor implements SnapshotBindingAttestor{
  private final Function<Map<String,Object>,Map<String,Object>>probe;private final String adapterVersion;

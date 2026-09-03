@@ -1,4 +1,4 @@
-package com.featuredeliveryintelligence.fdi.runtime;
+package com.featuredeliveryintelligence.fdi.shared;
 
 import java.util.*;
 

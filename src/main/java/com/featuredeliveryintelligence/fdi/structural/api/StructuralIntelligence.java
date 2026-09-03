@@ -1,4 +1,4 @@
-package com.featuredeliveryintelligence.fdi.runtime;
+package com.featuredeliveryintelligence.fdi.structural.api;import com.featuredeliveryintelligence.fdi.shared.RuntimeMaps;import com.featuredeliveryintelligence.fdi.shared.RuntimeContractException;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

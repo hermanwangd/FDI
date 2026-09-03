@@ -1,4 +1,4 @@
-package com.featuredeliveryintelligence.fdi.runtime;
+package com.featuredeliveryintelligence.fdi.shared;
 
 public class RuntimeContractException extends IllegalArgumentException {
     public RuntimeContractException(String message) { super(message); }

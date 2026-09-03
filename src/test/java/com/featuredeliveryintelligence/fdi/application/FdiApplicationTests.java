@@ -1,4 +1,4 @@
-package com.featuredeliveryintelligence.fdi;
+package com.featuredeliveryintelligence.fdi.application;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
