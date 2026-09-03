@@ -6,8 +6,31 @@ def ok(name, cond, detail=''):
     checks.append((name,cond,detail));
     if not cond: errors.append(f'{name}: {detail}')
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+def resolve_approved_lock_path(project_root):
+    current=project_root/'governance/CURRENT'
+    if not current.is_file():
+        raise ValueError('missing governance/CURRENT')
+    values=[]
+    for line in current.read_text().splitlines():
+        if line.startswith('APPROVED_SOURCE_LOCK='):
+            values.append(line.split('=',1)[1])
+    if not values:
+        raise ValueError('missing APPROVED_SOURCE_LOCK in governance/CURRENT')
+    if len(values)>1:
+        raise ValueError('duplicate APPROVED_SOURCE_LOCK in governance/CURRENT')
+    relative=Path(values[0])
+    if not values[0] or relative.is_absolute() or '..' in relative.parts:
+        raise ValueError('unsafe APPROVED_SOURCE_LOCK in governance/CURRENT')
+    return project_root/relative
 # 1. authority lock
-lock_path=root/'governance/locks/approved-source-lock.json'
+try:
+    lock_path=resolve_approved_lock_path(root)
+except ValueError as exc:
+    ok('approved-source-lock pointer',False,str(exc))
+    for n,c,d in checks: print(('PASS' if c else 'FAIL'),n,(f'— {d}' if d and not c else ''))
+    print('RESULT: 0 PASS / 1 FAIL')
+    sys.exit(1)
+ok('approved-source-lock pointer',True,lock_path.relative_to(root).as_posix())
 ok('approved-source-lock exists',lock_path.exists(),str(lock_path))
 lock=json.loads(lock_path.read_text()) if lock_path.exists() else {'modules':[]}
 ids={m.get('id') for m in lock.get('modules',[])}

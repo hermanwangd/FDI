@@ -12,7 +12,7 @@ MOVED_OLD_PATHS=(
     "governance/approved-source-lock.json",
 )
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
-APPROVED_DIGESTS={
+APPROVED_FILE_DIGESTS={
     'governance/approved/layer1/fdi-layer1-markdown-io-profile-v0.1-approved.md': '6c98deeb883f6b468a14f87647e9df25fcfffb5814e66aeddb3dcfc5b3b0bb8c',
     'governance/approved/layer1/fdi-layer1-specification-v0.2-approved.md': '18fd5dac4196d01216454ec713d93fc5dd1f752f5db35a467d5fad0b16035928',
     'governance/approved/layer2/fdi-layer2-product-intelligence-framework-v0.1-approved.md': 'fe1ab08cb3ef288dc5bb1bf8fd72546f00948c0889dcb046e3c00bf5e012e112',
@@ -20,7 +20,18 @@ APPROVED_DIGESTS={
     'governance/approved/layer2/fdi-product-asset-profile-specification-v0.1-approved.md': '6d87b6d9396fe3556f543fd44f3ffd4b3f6d94aa51147190c45948c75aed03dc',
     'governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md': 'e54c4cf7ac5b35985a27b17c0ce85ef64f01698a04556ee50948de2f45861561',
 }
-def lock(): return json.loads((ROOT/'governance/locks/approved-source-lock.json').read_text())
+def lock(): return json.loads(current_lock_path().read_text())
+def current_values(root=ROOT):
+    values={}
+    for line in (root/'governance/CURRENT').read_text().splitlines():
+        if '=' in line:
+            key, value=line.split('=', 1)
+            values.setdefault(key, []).append(value)
+    return values
+def current_lock_path(root=ROOT):
+    values=current_values(root)['APPROVED_SOURCE_LOCK']
+    assert len(values)==1
+    return root/values[0]
 def path_pattern_matches(path, pattern):
     path_parts=path.split('/')
     pattern_parts=pattern.split('/')
@@ -62,9 +73,47 @@ def test_five_single_source_hashes_match():
     for m in lock()['modules']:
         if 'sha256' in m: assert sha(ROOT/m['local_path'])==m['sha256']
 def test_approved_sources_are_relocated_byte_identically():
-    assert {m['local_path'] for m in lock()['modules']} == set(APPROVED_DIGESTS)
-    for path, digest in APPROVED_DIGESTS.items():
+    assert {m['local_path'] for m in lock()['modules']} == set(APPROVED_FILE_DIGESTS)
+    for path, digest in APPROVED_FILE_DIGESTS.items():
         assert sha(ROOT/path) == digest
+def test_current_pointer_resolves_lock_and_ft_t2_tree_digest_matches_baseline():
+    lock_path=current_lock_path()
+    assert lock_path == ROOT/'governance/locks/approved-source-lock.json'
+    data=json.loads(lock_path.read_text())
+    ft=next(m for m in data['modules'] if m['id']=='FT-T2')
+    digest=hashlib.sha256()
+    for relative in ft['tree_paths']:
+        path=ROOT/relative
+        digest.update(relative.encode())
+        digest.update(b'\0')
+        digest.update(bytes.fromhex(sha(path)))
+    actual=digest.hexdigest()
+    assert actual == ft['tree_sha256']
+    baseline=(ROOT/'governance/baselines/GB-0001.yaml').read_text()
+    baseline_digest=re.search(r'^\s*tree_sha256:\s*([0-9a-f]{64})\s*$', baseline, re.MULTILINE)
+    assert baseline_digest
+    assert actual == baseline_digest.group(1)
+
+
+@pytest.mark.parametrize(
+    ('current_text', 'message'),
+    (
+        ('GOVERNING_BASELINE=GB-0001\n', 'missing APPROVED_SOURCE_LOCK'),
+        ('APPROVED_SOURCE_LOCK=governance/locks/a.json\nAPPROVED_SOURCE_LOCK=governance/locks/b.json\n', 'duplicate APPROVED_SOURCE_LOCK'),
+        ('APPROVED_SOURCE_LOCK=/tmp/outside.json\n', 'unsafe APPROVED_SOURCE_LOCK'),
+        ('APPROVED_SOURCE_LOCK=../outside.json\n', 'unsafe APPROVED_SOURCE_LOCK'),
+    ),
+)
+def test_verifier_rejects_invalid_current_lock_pointer(tmp_path, current_text, message):
+    governance=tmp_path/'governance'
+    governance.mkdir()
+    (governance/'CURRENT').write_text(current_text)
+    result=subprocess.run(
+        ['python3', str(ROOT/'scripts/verify_standalone_bundle.py'), str(tmp_path)],
+        text=True, capture_output=True,
+    )
+    assert result.returncode != 0
+    assert message in result.stdout
 def test_ft_t2_surface_counts():
     assert len(list((ROOT/'contracts/ft-t2').glob('*.md')))==6
     assert len(list((ROOT/'contracts/ft-t2').glob('*.schema.json')))==6
