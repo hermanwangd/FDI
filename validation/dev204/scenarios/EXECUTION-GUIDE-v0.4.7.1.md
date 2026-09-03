@@ -7,8 +7,8 @@
 ```text
 VALIDATION-PLAN-v0.4.7.1.json
 SCENARIOS-v0.4.7.1.json
-execution-record-v0.2.schema.json
-prepared-v0.4.7.1/
+../schemas/execution-record-v0.2.schema.json
+../fixtures/
 ```
 
 The older prepared packet directories are archived under `archive/superseded/skill-behavior/` and MUST NOT be dispatched for v0.4.7.1.
@@ -28,7 +28,7 @@ The Agent context MUST NOT include the reviewer rubric or GroundTruth. Reviewer 
 
 ## Evidence record
 
-Each execution record MUST conform to `execution-record-v0.2.schema.json` and runtime validation in `Dev204Validation.java`.
+Each execution record MUST conform to `../schemas/execution-record-v0.2.schema.json` and runtime validation in `Dev204Validation.java`.
 
 Required evidence includes:
 

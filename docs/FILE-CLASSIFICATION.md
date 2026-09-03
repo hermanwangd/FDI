@@ -21,20 +21,22 @@ contracts/providers/**	Provider-specific contract surface
 agent/skills/**	Agent Skill procedure
 agent/workflows/**	Agent workflow procedure
 agent/handoff/**	Agent handoff material
-validation/skill-behavior/prepared-*/*	Generated validation fixture
-validation/skill-behavior/SCENARIOS-*.json	DEV-204 validation scenario
-validation/skill-behavior/VALIDATION-PLAN-*.json	DEV-204 validation plan
-validation/skill-behavior/execution-record-*.schema.json	Validation evidence schema
-validation/skill-behavior/EXECUTION-GUIDE-*.md	Validation execution protocol
-validation/grafel-binding-evidence-*.schema.json	Validation evidence schema
-validation/FDI-*.md	Deterministic or empirical validation protocol
-validation/OPTION-*.md	Deterministic or empirical validation protocol
-validation/REALIZATION-*.md	Deterministic or empirical validation protocol
-scripts/build_*.py	Packaging utility source
-scripts/verify_*.py	Verification utility source
-scripts/evaluate_*.py	Evaluation utility source
-scripts/generate_*.py	Generation utility source
-scripts/prepare_*.py	Migration utility source
+validation/dev204/fixtures/**	Generated DEV-204 validation fixture
+validation/dev204/scenarios/SCENARIOS-*.json	DEV-204 validation scenario
+validation/dev204/scenarios/VALIDATION-PLAN-*.json	DEV-204 validation plan
+validation/dev204/scenarios/EXECUTION-GUIDE-*.md	DEV-204 validation execution protocol
+validation/dev204/schemas/**	DEV-204 validation evidence schema
+validation/f001/**	F001 validation protocol
+validation/deterministic/**	Deterministic validation protocol or guard specification
+validation/reports/**	Generated validation report location
+tooling/packaging/build_handoff_bundle.py	Packaging utility source
+tooling/packaging/build_manifest.py	Release-manifest generation utility source
+tooling/packaging/build_overlay_package.py	Packaging utility source
+tooling/packaging/build_package.py	Packaging utility source
+tooling/packaging/generate_project_tree.py	Release-tree generation utility source
+tooling/verification/evaluate_dev204_pair.py	DEV-204 evaluation utility source
+tooling/verification/verify_standalone_bundle.py	Standalone verification utility source
+tooling/migration/prepare_dev204_execution.py	DEV-204 preparation utility source
 templates/**	Product-instance template
 MANIFEST.json	Generated release metadata
 MARKDOWN-INVENTORY.txt	Generated release metadata

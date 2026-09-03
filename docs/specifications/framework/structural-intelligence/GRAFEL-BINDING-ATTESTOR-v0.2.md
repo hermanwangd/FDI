@@ -106,7 +106,7 @@ A tampered `VERIFIED` label is therefore insufficient.
 A successful live execution MUST persist the full `SnapshotBindingAttestation` inside a `GrafelBindingEvidenceRecord` conforming to:
 
 ```text
-06-validation/grafel-binding-evidence-v0.1.schema.json
+contracts/providers/graphify/grafel-binding-evidence-v0.1.schema.json
 ```
 
 The schema requires exact snapshot identity, provider route, non-empty repository bindings, full Git revisions, runtime/wire/adapter compatibility evidence, and `result = EXACTLY_BOUND`.

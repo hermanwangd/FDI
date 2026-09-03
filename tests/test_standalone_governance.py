@@ -13,6 +13,11 @@ MOVED_OLD_PATHS=(
     "contracts/layer1", "contracts/layer2", "contracts/ft-t2",
     "contracts/source-integration", "contracts/structural-intelligence",
     "skills", "workflows",
+    "validation/skill-behavior", "validation/grafel-binding-evidence-v0.1.schema.json",
+    "validation/FDI-v0.4.7.1-ABLATION-PROTOCOL.md",
+    "validation/OPTION-B-PAIRED-REPLAY-PROTOCOL-v0.1.md",
+    "validation/REALIZATION-TRAVERSAL-GUARD-SPEC-v0.1.md",
+    "scripts", "templates/product-intelligence",
 )
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 APPROVED_FILE_DIGESTS={
@@ -115,7 +120,7 @@ def test_verifier_rejects_invalid_current_lock_pointer(tmp_path, current_text, m
     governance.mkdir()
     (governance/'CURRENT').write_text(current_text)
     result=subprocess.run(
-        ['python3', str(ROOT/'scripts/verify_standalone_bundle.py'), str(tmp_path)],
+        ['python3', str(ROOT/'tooling/verification/verify_standalone_bundle.py'), str(tmp_path)],
         text=True, capture_output=True,
     )
     assert result.returncode != 0
@@ -332,3 +337,48 @@ def test_overview_preserves_not_executed_validation_states():
     )
     for row in expected_rows:
         assert row in readiness
+
+
+def test_validation_tooling_and_template_targets_exist_and_old_paths_are_absent():
+    targets=(
+        "validation/dev204/scenarios/SCENARIOS-v0.4.7.1.json",
+        "validation/dev204/scenarios/VALIDATION-PLAN-v0.4.7.1.json",
+        "validation/dev204/scenarios/EXECUTION-GUIDE-v0.4.7.1.md",
+        "validation/dev204/schemas/execution-record-v0.2.schema.json",
+        "validation/dev204/fixtures",
+        "validation/f001/FDI-v0.4.7.1-ABLATION-PROTOCOL.md",
+        "validation/deterministic/OPTION-B-PAIRED-REPLAY-PROTOCOL-v0.1.md",
+        "validation/deterministic/REALIZATION-TRAVERSAL-GUARD-SPEC-v0.1.md",
+        "validation/reports",
+        "contracts/providers/graphify/grafel-binding-evidence-v0.1.schema.json",
+        "tooling/packaging",
+        "tooling/verification",
+        "tooling/migration",
+        "templates/product-instance/README.md",
+    )
+    for path in targets:
+        assert (ROOT/path).exists(), path
+    for path in ("validation/skill-behavior", "validation/grafel-binding-evidence-v0.1.schema.json", "scripts", "templates/product-intelligence"):
+        assert not (ROOT/path).exists(), path
+
+
+def test_dev204_cli_prepares_frozen_corpus_without_execution_claim(tmp_path):
+    jar=ROOT/'target/fdi-0.4.8.3.jar'
+    assert jar.is_file(), "package the application before running the CLI test"
+    result=subprocess.run(
+        [
+            'java', '-jar', str(jar), 'dev204-prepare',
+            '--scenario-pack', str(ROOT/'validation/dev204/scenarios/SCENARIOS-v0.4.7.1.json'),
+            '--output-dir', str(tmp_path),
+        ],
+        text=True, capture_output=True,
+    )
+    assert result.returncode == 0, result.stderr
+    summary=json.loads(result.stdout)
+    assert summary['scenario_count'] == 12
+    assert summary['packet_count'] == 24
+    assert summary['claim_boundary'] == 'PACKETS_PREPARED_NOT_EXECUTED'
+    outputs=list(tmp_path.glob('*.json'))
+    assert len(outputs) == 36
+    assert len(list(tmp_path.glob('*-packet.json'))) == 24
+    assert len(list(tmp_path.glob('*-reviewer-rubric.json'))) == 12

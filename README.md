@@ -7,3 +7,5 @@
 - [Current readiness status](docs/planning/STATUS.json)
 - [Agent instructions](AGENTS.md)
 - [File classification](docs/FILE-CLASSIFICATION.md)
+- [Validation assets](validation/)
+- [Repository tooling](tooling/)

@@ -32,6 +32,6 @@ Every entry is labelled by authority. This index is navigational and does not su
 ## Validation, tooling, and delivery material
 
 - [Validation](../validation/) — protocols, schemas, fixtures, and evidence records; each artifact's own status controls its claim scope.
-- [Scripts](../scripts/) — packaging, verification, and migration utilities.
+- [Tooling](../tooling/) — packaging, verification, and migration utilities.
 - [Templates](../templates/) — reusable instance scaffolding, not authority by existence.
 - [File classification](FILE-CLASSIFICATION.md) — current-to-target repository path classification and precedence.
