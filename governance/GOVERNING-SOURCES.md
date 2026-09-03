@@ -9,7 +9,7 @@ This standalone project does **not** treat opaque IDs as sufficient authority. E
 | L2-FWK | `governance/approved/layer2/fdi-layer2-product-intelligence-framework-v0.1-approved.md` | APPROVED semantics materialized |
 | L2-PROFILE | `governance/approved/layer2/fdi-product-asset-profile-specification-v0.1-approved.md` | APPROVED PA-03/PA-05 profile semantics materialized |
 | L2-MAINT | `governance/approved/layer2/fdi-product-asset-maintenance-skill-contracts-v0.1-approved.md` | APPROVED maintenance semantics materialized |
-| FT-T2 | `governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md` + `contracts/ft-t2/` + `skills/ft-t2/` + `workflows/ft-t2/FEATURE-CLOSURE.md` | HERM-211 locked semantics, standalone normalized physical representation |
+| FT-T2 | `governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md` + `contracts/public/ft-t2/` + `agent/skills/ft-t2/` + `agent/workflows/ft-t2/FEATURE-CLOSURE.md` | HERM-211 locked semantics, standalone normalized physical representation |
 
 ## Provenance discipline
 

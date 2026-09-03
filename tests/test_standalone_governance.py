@@ -10,6 +10,9 @@ MOVED_OLD_PATHS=(
     "STATUS.json", "governance/decisions", "MULTICA-HANDOFF.md", "MULTICA-PROJECT-PROMPT.txt",
     "specs/approved/layer1", "specs/approved/layer2", "specs/approved/ft-t2",
     "governance/approved-source-lock.json",
+    "contracts/layer1", "contracts/layer2", "contracts/ft-t2",
+    "contracts/source-integration", "contracts/structural-intelligence",
+    "skills", "workflows",
 )
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 APPROVED_FILE_DIGESTS={
@@ -51,6 +54,9 @@ def path_pattern_matches(path, pattern):
     return matches(0, 0)
 def stale_path_patterns():
     for old_path in MOVED_OLD_PATHS:
+        if old_path in {"skills", "workflows"}:
+            yield r'(?<![A-Za-z0-9_./-])' + re.escape(old_path) + r'/'
+            continue
         prefix = r'(?<!/)' if '/' not in old_path else ''
         yield prefix + re.escape(old_path) + r'(?![A-Za-z0-9_.-])'
 def local_markdown_links(path):
@@ -115,12 +121,12 @@ def test_verifier_rejects_invalid_current_lock_pointer(tmp_path, current_text, m
     assert result.returncode != 0
     assert message in result.stdout
 def test_ft_t2_surface_counts():
-    assert len(list((ROOT/'contracts/ft-t2').glob('*.md')))==6
-    assert len(list((ROOT/'contracts/ft-t2').glob('*.schema.json')))==6
-    assert len(list((ROOT/'skills/ft-t2').glob('*/SKILL.md')))==5
-    assert (ROOT/'workflows/ft-t2/FEATURE-CLOSURE.md').exists()
+    assert len(list((ROOT/'contracts/public/ft-t2').glob('*.md')))==6
+    assert len(list((ROOT/'contracts/public/ft-t2').glob('*.schema.json')))==6
+    assert len(list((ROOT/'agent/skills/ft-t2').glob('*/SKILL.md')))==5
+    assert (ROOT/'agent/workflows/ft-t2/FEATURE-CLOSURE.md').exists()
 def test_ft_t2_modern_vocabulary():
-    paths=list((ROOT/'contracts/ft-t2').glob('*.md'))+list((ROOT/'skills/ft-t2').glob('*/SKILL.md'))+[ROOT/'workflows/ft-t2/FEATURE-CLOSURE.md',ROOT/'governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md']
+    paths=list((ROOT/'contracts/public/ft-t2').glob('*.md'))+list((ROOT/'agent/skills/ft-t2').glob('*/SKILL.md'))+[ROOT/'agent/workflows/ft-t2/FEATURE-CLOSURE.md',ROOT/'governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md']
     text='\n'.join(p.read_text() for p in paths)
     assert 'CLOSED_WITHIN_DECLARED_SCOPE' in text
     assert 'ACCEPT_CLOSED_WITHIN_DECLARED_SCOPE' in text
@@ -133,8 +139,8 @@ def test_overview_and_handoff_exist():
     assert (ROOT/'agent/handoff/MULTICA-HANDOFF.md').exists()
     assert (ROOT/'agent/handoff/MULTICA-PROJECT-PROMPT.txt').exists()
 def test_no_governing_placeholder_readmes():
-    assert not (ROOT/'contracts/layer1/README.md').exists()
-    assert not (ROOT/'contracts/ft-t2/README.md').exists()
+    assert not (ROOT/'contracts/public/layer1/README.md').exists()
+    assert not (ROOT/'contracts/public/ft-t2/README.md').exists()
 
 
 def test_repository_navigation_entry_points_exist():

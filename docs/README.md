@@ -12,7 +12,7 @@ Every entry is labelled by authority. This index is navigational and does not su
 ## Stable contract surfaces
 
 - [Contracts](../contracts/) — public and provider-facing schemas and contract Markdown.
-- [Agent Skills](../skills/) and [workflows](../workflows/) — governed execution procedures; consult their governing source before use.
+- [Agent Skills](../agent/skills/) and [workflows](../agent/workflows/) — governed execution procedures; consult their governing source before use.
 
 ## Orientation and current state
 

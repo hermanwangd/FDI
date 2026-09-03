@@ -16,9 +16,10 @@ governance/locks/approved-source-lock.json	Governance source lock
 governance/GOVERNING-CONTENT-MATERIALIZATION-REPORT.md	Governance materialization report
 governance/baselines/**	Governance baseline
 governance/approved/**	Digest-locked governing authority
-contracts/**	Stable public contract surface
-skills/**	Agent Skill procedure
-workflows/**	Agent workflow procedure
+contracts/public/**	Provider-neutral public contract surface
+contracts/providers/**	Provider-specific contract surface
+agent/skills/**	Agent Skill procedure
+agent/workflows/**	Agent workflow procedure
 agent/handoff/**	Agent handoff material
 validation/skill-behavior/prepared-*/*	Generated validation fixture
 validation/skill-behavior/SCENARIOS-*.json	DEV-204 validation scenario

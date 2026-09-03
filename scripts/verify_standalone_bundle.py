@@ -49,14 +49,14 @@ for m in lock.get('modules',[]):
             if p.exists(): h.update(rel.encode()); h.update(b'\0'); h.update(bytes.fromhex(sha(p)))
         ok('FT-T2 tree digest',h.hexdigest()==m.get('tree_sha256'),h.hexdigest())
 # 2. exact FT-T2 physical surface
-ft_contract_md=list((root/'contracts/ft-t2').glob('*.md'))
-ft_schemas=list((root/'contracts/ft-t2').glob('*.schema.json'))
-ft_skills=list((root/'skills/ft-t2').glob('*/SKILL.md'))
+ft_contract_md=list((root/'contracts/public/ft-t2').glob('*.md'))
+ft_schemas=list((root/'contracts/public/ft-t2').glob('*.schema.json'))
+ft_skills=list((root/'agent/skills/ft-t2').glob('*/SKILL.md'))
 ok('FT-T2 six contract md',len(ft_contract_md)==6,str([p.name for p in ft_contract_md]))
 ok('FT-T2 six schemas',len(ft_schemas)==6,str([p.name for p in ft_schemas]))
 ok('FT-T2 five skills',len(ft_skills)==5,str([p.parent.name for p in ft_skills]))
-ok('FT-T2 workflow exists',(root/'workflows/ft-t2/FEATURE-CLOSURE.md').exists())
-active_ft='\n'.join(p.read_text(errors='replace') for p in ft_contract_md+ft_skills+[root/'workflows/ft-t2/FEATURE-CLOSURE.md',root/'governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md'])
+ok('FT-T2 workflow exists',(root/'agent/workflows/ft-t2/FEATURE-CLOSURE.md').exists())
+active_ft='\n'.join(p.read_text(errors='replace') for p in ft_contract_md+ft_skills+[root/'agent/workflows/ft-t2/FEATURE-CLOSURE.md',root/'governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md'])
 for banned in ['PROVISIONALLY_COMPLETE','ACCEPT_PROVISIONALLY_COMPLETE','closure_status: OPEN|PARTIAL|CLOSED\n']:
     ok('FT-T2 bans '+banned,banned not in active_ft,banned)
 for required_token in ['CLOSED_WITHIN_DECLARED_SCOPE','SPEC_READY | BLOCKED','ACCEPT_CLOSED_WITHIN_DECLARED_SCOPE']:
