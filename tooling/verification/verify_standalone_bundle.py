@@ -1,7 +1,5 @@
 from pathlib import Path
-import hashlib,json,re,sys,subprocess
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'packaging'))
-from release_metadata import included_files
+import hashlib,json,os,re,sys,subprocess
 root=Path(sys.argv[1] if len(sys.argv)>1 else '.').resolve()
 release=root/'release'
 errors=[]; checks=[]
@@ -9,6 +7,38 @@ def ok(name, cond, detail=''):
     checks.append((name,cond,detail));
     if not cond: errors.append(f'{name}: {detail}')
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+# This deliberately duplicates the small packaging policy. Verification must not
+# reuse the generator selector, or the same selection bug could bless its output.
+VERIFY_EXCLUDED_DIRS={
+    '.git','.worktrees','target','__pycache__','.pytest_cache',
+    '.fdi-work','dist','build','.idea',
+}
+VERIFY_EXCLUDED_FILES={'.env','.DS_Store','credentials.json'}
+VERIFY_EXCLUDED_SUFFIXES=('.pyc','.pyo','.log','.iml')
+def verification_file_is_excluded(relative):
+    parts=relative.parts
+    if any(part in VERIFY_EXCLUDED_DIRS for part in parts): return True
+    if len(parts)>=2 and parts[0]=='.mvn' and parts[1].startswith('apache-maven-'): return True
+    name=relative.name
+    return (name in VERIFY_EXCLUDED_FILES or name.startswith('.env.')
+            or name.endswith(VERIFY_EXCLUDED_SUFFIXES)
+            or name.startswith('MANIFEST.json.'))
+def independently_included_files(project_root):
+    resolved_root=project_root.resolve()
+    for directory,dirnames,filenames in os.walk(resolved_root,followlinks=False):
+        current=Path(directory)
+        dirnames[:]=[
+            name for name in sorted(dirnames)
+            if not (current/name).is_symlink()
+            and not verification_file_is_excluded((current/name).relative_to(resolved_root))
+        ]
+        for name in sorted(filenames):
+            path=current/name; relative=path.relative_to(resolved_root)
+            if relative==Path('release/MANIFEST.json') or path.is_symlink() or verification_file_is_excluded(relative):
+                continue
+            try: path.resolve(strict=True).relative_to(resolved_root)
+            except (FileNotFoundError,ValueError): continue
+            if path.is_file(): yield path
 def parse_project_tree_paths(text):
     lines=text.splitlines()
     if not lines or not lines[0].endswith('/'):
@@ -88,7 +118,7 @@ for required_token in ['CLOSED_WITHIN_DECLARED_SCOPE','SPEC_READY | BLOCKED','AC
 # 3. all markdowns listed in project tree
 pt=release/'PROJECT-TREE.txt'; ok('PROJECT-TREE exists',pt.exists())
 tree=pt.read_text() if pt.exists() else ''
-md=sorted(p.relative_to(root).as_posix() for p in included_files(root) if p.suffix.lower()=='.md')
+md=sorted(p.relative_to(root).as_posix() for p in independently_included_files(root) if p.suffix.lower()=='.md')
 try:
     tree_paths=parse_project_tree_paths(tree)
 except ValueError as exc:
@@ -100,7 +130,7 @@ release_outputs={
     'release/MANIFEST.json', 'release/MARKDOWN-INVENTORY.txt',
     'release/PROJECT-TREE.txt', 'release/VERIFICATION-SUMMARY.json',
 }
-expected_tree_paths={p.relative_to(root).as_posix() for p in included_files(root)} | release_outputs
+expected_tree_paths={p.relative_to(root).as_posix() for p in independently_included_files(root)} | release_outputs
 for relative in tuple(expected_tree_paths):
     parts=relative.split('/')
     expected_tree_paths.update('/'.join(parts[:index]) for index in range(1,len(parts)))
@@ -128,7 +158,7 @@ if summary_path.exists():
        str(execution))
 # Stronger count marker: every markdown basename line count can collide, so verifier also writes exact inventory elsewhere through manifest.
 # 4. JSON/schema parse
-for p in included_files(root):
+for p in independently_included_files(root):
     if p.suffix.lower()!='.json': continue
     try: json.loads(p.read_text())
     except Exception as e: errors.append(f'JSON parse {p.relative_to(root)}: {e}')
@@ -145,7 +175,7 @@ ok('Python packaging tools compile',r.returncode==0,r.stderr[-1000:])
 man=release/'MANIFEST.json'; ok('MANIFEST exists',man.exists())
 if man.exists():
     m=json.loads(man.read_text()); listed={e['path']:e for e in m['files']}
-    actual=[p.relative_to(root).as_posix() for p in included_files(root)]
+    actual=[p.relative_to(root).as_posix() for p in independently_included_files(root)]
     ok('manifest path set exact',set(listed)==set(actual),f'missing={set(actual)-set(listed)}, extra={set(listed)-set(actual)}')
     bad=[]
     for rel,e in listed.items():

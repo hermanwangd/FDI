@@ -202,6 +202,32 @@ def test_verifier_rejects_extra_stale_directory_in_project_tree(tmp_path):
     assert "extra=['specs']" in result.stdout
 
 
+def test_project_tree_exact_verification_does_not_reuse_generator_file_selector():
+    source=(ROOT/'tooling/verification/verify_standalone_bundle.py').read_text()
+    assert 'from release_metadata import included_files' not in source
+
+
+def test_verifier_rejects_missing_non_markdown_file_in_project_tree(tmp_path):
+    copy=tmp_path/'repo'
+    shutil.copytree(ROOT, copy, ignore=shutil.ignore_patterns('.git','.worktrees','target','__pycache__','.pytest_cache','apache-maven-*'))
+    tree_path=copy/'release/PROJECT-TREE.txt'
+    lines=tree_path.read_text().splitlines()
+    lines.remove('├── pom.xml')
+    tree_path.write_text('\n'.join(lines)+'\n')
+    manifest_result=subprocess.run(
+        ['python3', str(copy/'tooling/packaging/build_manifest.py'), str(copy)],
+        text=True, capture_output=True,
+    )
+    assert manifest_result.returncode == 0, manifest_result.stderr
+    result=subprocess.run(
+        ['python3', str(copy/'tooling/verification/verify_standalone_bundle.py'), str(copy)],
+        text=True, capture_output=True,
+    )
+    assert result.returncode != 0
+    assert 'PROJECT-TREE exact path set' in result.stdout
+    assert "missing=['pom.xml']" in result.stdout
+
+
 def test_verifier_detects_one_missing_duplicate_named_markdown_path(tmp_path):
     copy=tmp_path/'repo'
     shutil.copytree(ROOT, copy, ignore=shutil.ignore_patterns('.git','.worktrees','target','__pycache__','.pytest_cache','apache-maven-*'))
