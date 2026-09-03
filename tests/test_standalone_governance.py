@@ -1,8 +1,15 @@
-import json, hashlib
+import json, hashlib, re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 def lock(): return json.loads((ROOT/'governance/approved-source-lock.json').read_text())
+def local_markdown_links(path):
+    text=path.read_text()
+    for raw_target in re.findall(r'(?<!!)\[[^]]+\]\(([^)]+)\)', text):
+        target=raw_target.strip().strip('<>')
+        if target.startswith(('#', 'http://', 'https://', 'mailto:')):
+            continue
+        yield target.split('#', 1)[0].split('?', 1)[0]
 def test_six_governing_modules_are_local():
     mods={m['id']:m for m in lock()['modules']}
     assert set(mods)=={'L1-SEM','L1-IO','L2-FWK','L2-PROFILE','L2-MAINT','FT-T2'}
@@ -47,6 +54,19 @@ def test_readme_links_to_current_authoritative_entry_points():
     readme=(ROOT/'README.md').read_text()
     for target in ("PROJECT-OVERVIEW.md", "governance/CURRENT", "STATUS.json"):
         assert f"]({target})" in readme
+
+
+def test_repository_navigation_local_links_resolve_and_dated_links_are_centralized():
+    navigation_paths=(ROOT/'README.md', ROOT/'AGENTS.md', ROOT/'docs/README.md')
+    for source in navigation_paths:
+        for target in local_markdown_links(source):
+            assert (source.parent/target).resolve().exists(), f"broken link in {source}: {target}"
+    agents=(ROOT/'AGENTS.md').read_text()
+    docs=(ROOT/'docs/README.md').read_text()
+    assert 'docs/superpowers/specs/2026-' not in agents
+    assert '(superpowers/specs/2026-09-03-graphify-provider-migration-design.md)' in docs
+    assert '(superpowers/specs/2026-09-04-project-folder-reorganization-design.md)' in docs
+    assert '(superpowers/plans/2026-09-04-project-folder-reorganization.md)' in docs
 
 
 def test_markdown_inventory_is_exact():

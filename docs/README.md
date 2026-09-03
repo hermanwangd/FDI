@@ -26,7 +26,8 @@ Every entry is labelled by authority. This index is navigational and does not su
 - [Product Intelligence](../specs/product-intelligence/), [Product Knowledge](../specs/product-knowledge/), [source integration](../specs/source-integration/), and [Structural Intelligence](../specs/structural-intelligence/) — non-governing specifications unless separately listed in the governing-source lock.
 - [Architecture decisions](../governance/decisions/) — implementation decisions; they do not override approved semantics.
 - [Configuration guidance](../config/) — runtime examples and Multica mapping instructions.
-- [Reorganization and migration designs](superpowers/) — approved implementation designs, not FDI semantic authority.
+- [Graphify provider migration design](superpowers/specs/2026-09-03-graphify-provider-migration-design.md) — provider-boundary implementation design, not FDI semantic authority.
+- [Project-folder reorganization design](superpowers/specs/2026-09-04-project-folder-reorganization-design.md) and [implementation plan](superpowers/plans/2026-09-04-project-folder-reorganization.md) — repository-layout guidance, not FDI semantic authority.
 
 ## Validation, tooling, and delivery material
 

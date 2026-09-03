@@ -20,7 +20,7 @@ These instructions apply to the entire repository. They provide navigation and e
 
 ## Authority and safety boundaries
 
-- Graphify is an implementation behind the provider-neutral `CodeIntelligenceProvider` and `SnapshotBindingAttestor` boundaries. It is rebuildable Structural Intelligence, not authority for Product truth, current Feature truth, Change Surface inclusion, or `SPEC_READY`. See the [Graphify migration design](docs/superpowers/specs/2026-09-03-graphify-provider-migration-design.md) and [project overview](PROJECT-OVERVIEW.md).
+- Graphify is an implementation behind the provider-neutral `CodeIntelligenceProvider` and `SnapshotBindingAttestor` boundaries. It is rebuildable Structural Intelligence, not authority for Product truth, current Feature truth, Change Surface inclusion, or `SPEC_READY`. Use the [documentation index](docs/README.md) to locate the current provider design and the [project overview](PROJECT-OVERVIEW.md) for the broader authority model.
 - Do not edit, reformat, or regenerate governing content unless the task explicitly authorizes a governance change. Preserve governing bytes and verify their locked digests through [the approved-source lock](governance/approved-source-lock.json) and [materialization report](governance/GOVERNING-CONTENT-MATERIALIZATION-REPORT.md).
 - Bind source-dependent conclusions to exact immutable revisions. A branch, mutable `HEAD`, remote URL, or provider index label is insufficient where an exact revision is required; follow the [exact-source binding specification](specs/source-integration/AZURE-REPOS-EXACT-SOURCE-BINDING.md).
 - Fail closed on missing, ambiguous, stale, mismatched, oversized, or unverifiable required inputs. Do not infer success, authority, or closure from partial evidence. Follow the applicable contracts and the [structural integration specification](specs/structural-intelligence/FEATURE-DISCOVERY-INTEGRATION-v0.2.md).
@@ -28,13 +28,18 @@ These instructions apply to the entire repository. They provide navigation and e
 
 ## Completion verification
 
-Run the checks applicable to the changed surface, including at minimum:
+Always run the repository-level checks applicable to the changed surface:
 
 ```sh
 python3 -m pytest tests/test_standalone_governance.py -q
+git diff --check
+```
+
+When changes touch `src/`, `pom.xml`, `mvnw`, `.mvn/`, or runtime configuration under `config/`, also run:
+
+```sh
 MAVEN_OPTS='-Xmx2g' ./mvnw test
 MAVEN_OPTS='-Xmx2g' ./mvnw package
-git diff --check
 ```
 
 Also run the relevant validation or packaging verifier when those surfaces change. Report observed results and pre-existing exceptions explicitly; never convert an unexecuted check into a passing claim.
