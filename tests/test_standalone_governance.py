@@ -66,17 +66,25 @@ def test_reorganized_document_targets_exist_and_old_paths_are_absent():
         "docs/reviews/RC4-REVIEW-FIX-NOTE.md",
         "docs/reviews/SPEC-VERIFICATION.json",
         "docs/specifications/framework/product-intelligence/PRODUCT-INTELLIGENCE-STORE.md",
+        "docs/specifications/framework/product-knowledge/PA-01-MINIMAL-PRODUCT-SEMANTICS-PROFILE-v0.1-approval-candidate.md",
         "docs/specifications/framework/product-knowledge/PRODUCT-KNOWLEDGE-MAINTENANCE-PATH-v0.1.md",
         "docs/specifications/framework/source-integration/AZURE-REPOS-EXACT-SOURCE-BINDING.md",
         "docs/specifications/framework/structural-intelligence/FEATURE-DISCOVERY-INTEGRATION-v0.2.md",
+        "docs/specifications/framework/structural-intelligence/GRAFEL-ADAPTER-CONTRACT-v0.2.md",
+        "docs/specifications/framework/structural-intelligence/GRAFEL-BINDING-ATTESTOR-v0.2.md",
+        "docs/specifications/framework/structural-intelligence/MAINTAIN-PRODUCT-INTEGRATION-v0.1.md",
         "docs/specifications/proposals/PA-01/PA-01-MINIMAL-PRODUCT-SEMANTICS-PROFILE-v0.1-approval-candidate.md",
         "docs/planning/DEVELOPMENT-BACKLOG.md",
         "docs/planning/STATUS.json",
         "docs/architecture/decisions/ADR-001-code-intelligence-provider.md",
+        "docs/architecture/decisions/ADR-002-product-intelligence-store.md",
+        "docs/architecture/decisions/ADR-003-azure-repos-acquisition.md",
+        "docs/architecture/decisions/ADR-004-standalone-governing-content.md",
         "agent/handoff/MULTICA-HANDOFF.md",
+        "agent/handoff/MULTICA-PROJECT-PROMPT.txt",
     )
     old_paths=(
-        "docs/FDI-PROJECT-OVERVIEW-FRAMEWORK-CENTERED.md",
+        "docs/" + "FDI-PROJECT-OVERVIEW-FRAMEWORK-CENTERED.md",
         "specs/product-intelligence", "specs/product-knowledge", "specs/source-integration",
         "specs/structural-intelligence", "specs/proposals", "DEVELOPMENT-BACKLOG.md",
         "STATUS.json", "governance/decisions", "MULTICA-HANDOFF.md", "MULTICA-PROJECT-PROMPT.txt",
@@ -96,7 +104,7 @@ def test_project_overview_is_a_resolving_compatibility_pointer():
 
 def test_active_non_governing_text_has_no_stale_moved_paths():
     stale_patterns=(
-        r"docs/FDI-PROJECT-OVERVIEW-FRAMEWORK-CENTERED\.md", r"specs/product-intelligence/",
+        re.escape("/".join(("docs", "FDI-PROJECT-OVERVIEW-FRAMEWORK-CENTERED.md"))), r"specs/product-intelligence/",
         r"specs/product-knowledge/", r"specs/source-integration/", r"specs/structural-intelligence/",
         r"specs/proposals/", r"governance/decisions/", r"(?<!/)STATUS\.json",
         r"(?<!/)DEVELOPMENT-BACKLOG\.md", r"(?<!/)MULTICA-HANDOFF\.md",
