@@ -272,6 +272,22 @@ def test_readme_links_to_current_authoritative_entry_points():
         assert f"]({target})" in readme
 
 
+def test_active_handoff_commands_use_python3_for_standalone_verifier():
+    instruction_paths=(
+        ROOT/'agent/handoff/MULTICA-HANDOFF.md',
+        ROOT/'agent/handoff/MULTICA-PROJECT-PROMPT.txt',
+    )
+    bare=re.compile(r'(?<![A-Za-z0-9_])python\s+tooling/verification/verify_standalone_bundle\.py\s+\.')
+    for path in instruction_paths:
+        assert not bare.search(path.read_text()), path
+
+
+def test_framework_spec_declares_canonical_project_location():
+    spec=ROOT/'docs/specifications/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md'
+    expected='**Intended project location:** `docs/specifications/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md`'
+    assert expected in spec.read_text()
+
+
 def test_reorganized_document_targets_exist_and_old_paths_are_absent():
     targets=(
         "docs/overview/FDI-PROJECT-OVERVIEW.md",

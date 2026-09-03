@@ -1,8 +1,10 @@
 # Graphify Provider Profile for FDI — Lean Core
 
-**Document ID:** FDI-GRAPHIFY-PROVIDER-PROFILE  
-**Profile Version:** 0.1-lean-rc4  
-**Status:** REFERENCE_PROVIDER_PROFILE  
+**Document ID:** FDI-GRAPHIFY-PROVIDER-PROFILE
+
+**Profile Version:** 0.1-lean-rc4
+
+**Status:** REFERENCE_PROVIDER_PROFILE
 **Framework Contract:** `FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md`
 
 ---

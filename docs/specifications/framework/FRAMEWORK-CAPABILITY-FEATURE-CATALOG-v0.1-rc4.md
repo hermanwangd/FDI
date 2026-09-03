@@ -1,6 +1,6 @@
 # FDI Framework Capability & Feature Catalog — v0.1-rc4
 
-**Parent Specification:** `FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md`  
+**Parent Specification:** `FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md`
 **Status:** CONTRACT_CANDIDATE companion
 
 

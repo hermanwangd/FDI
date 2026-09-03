@@ -1,9 +1,12 @@
 # Feature Delivery Intelligence (FDI) — Project Overview
 
-**Document role:** Project-level orientation / master overview  
-**Current direction:** Framework-centered  
-**Development baseline:** v0.4.8.3 standalone baseline  
-**Structural Intelligence provider for current implementation:** Graphify  
+**Document role:** Project-level orientation / master overview
+
+**Current direction:** Framework-centered
+
+**Development baseline:** v0.4.8.3 standalone baseline
+
+**Structural Intelligence provider for current implementation:** Graphify
 **Important:** This overview explains the current project model and direction. Governing Layer 1 / Layer 2 / FT-T2 contracts remain authoritative where applicable.
 
 ---
@@ -170,8 +173,9 @@ Feature Run 是一次 bounded change，不是 durable Product Knowledge。
 
 這三個概念是 FDI 最重要的基本模型。
 
-> **Capability = 產品本來會做什麼**  
-> **Component = 這個能力是怎麼被系統做出來的**  
+> **Capability = 產品本來會做什麼**
+>
+> **Component = 這個能力是怎麼被系統做出來的**
 > **Feature = 這一次我們想改什麼**
 
 ---

@@ -1,12 +1,18 @@
 # Feature Delivery Intelligence (FDI) Framework Specification — Lean Core
 
-**Document ID:** FDI-FWK-SPEC  
-**Specification Version:** 0.1-rc4  
-**Profile:** LEAN_CORE  
-**Status:** CONTRACT_CANDIDATE  
-**Development Baseline:** v0.4.8.3 standalone baseline  
-**Companion Provider Profile:** `GRAPHIFY-PROVIDER-PROFILE-v0.1-lean-rc4.md`  
-**Intended project location:** `specs/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md`
+**Document ID:** FDI-FWK-SPEC
+
+**Specification Version:** 0.1-rc4
+
+**Profile:** LEAN_CORE
+
+**Status:** CONTRACT_CANDIDATE
+
+**Development Baseline:** v0.4.8.3 standalone baseline
+
+**Companion Provider Profile:** `GRAPHIFY-PROVIDER-PROFILE-v0.1-lean-rc4.md`
+
+**Intended project location:** `docs/specifications/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md`
 
 ---
 
