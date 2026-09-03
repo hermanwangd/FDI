@@ -12,10 +12,10 @@ mvnw	Build entry point
 config/**	Runtime or example configuration
 governance/CURRENT	Governance baseline pointer
 governance/GOVERNING-SOURCES.md	Governance provenance index
-governance/approved-source-lock.json	Governance source lock
+governance/locks/approved-source-lock.json	Governance source lock
 governance/GOVERNING-CONTENT-MATERIALIZATION-REPORT.md	Governance materialization report
 governance/baselines/**	Governance baseline
-specs/approved/**	Digest-locked governing authority
+governance/approved/**	Digest-locked governing authority
 contracts/**	Stable public contract surface
 skills/**	Agent Skill procedure
 workflows/**	Agent workflow procedure

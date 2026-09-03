@@ -1,6 +1,6 @@
 # Layer 2 Contract Index
 
-Governing Layer 2 documents are physically present under `specs/approved/layer2/`:
+Governing Layer 2 documents are physically present under `governance/approved/layer2/`:
 
 - `fdi-layer2-product-intelligence-framework-v0.1-approved.md`
 - `fdi-product-asset-profile-specification-v0.1-approved.md`

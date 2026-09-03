@@ -8,9 +8,19 @@ MOVED_OLD_PATHS=(
     "specs/product-intelligence", "specs/product-knowledge", "specs/source-integration",
     "specs/structural-intelligence", "specs/proposals", "DEVELOPMENT-BACKLOG.md",
     "STATUS.json", "governance/decisions", "MULTICA-HANDOFF.md", "MULTICA-PROJECT-PROMPT.txt",
+    "specs/approved/layer1", "specs/approved/layer2", "specs/approved/ft-t2",
+    "governance/approved-source-lock.json",
 )
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
-def lock(): return json.loads((ROOT/'governance/approved-source-lock.json').read_text())
+APPROVED_DIGESTS={
+    'governance/approved/layer1/fdi-layer1-markdown-io-profile-v0.1-approved.md': '6c98deeb883f6b468a14f87647e9df25fcfffb5814e66aeddb3dcfc5b3b0bb8c',
+    'governance/approved/layer1/fdi-layer1-specification-v0.2-approved.md': '18fd5dac4196d01216454ec713d93fc5dd1f752f5db35a467d5fad0b16035928',
+    'governance/approved/layer2/fdi-layer2-product-intelligence-framework-v0.1-approved.md': 'fe1ab08cb3ef288dc5bb1bf8fd72546f00948c0889dcb046e3c00bf5e012e112',
+    'governance/approved/layer2/fdi-product-asset-maintenance-skill-contracts-v0.1-approved.md': 'c862a086eacba23ff7828743f78b7fc42c1eeda5d6a8a4e0ec06e08dbf910813',
+    'governance/approved/layer2/fdi-product-asset-profile-specification-v0.1-approved.md': '6d87b6d9396fe3556f543fd44f3ffd4b3f6d94aa51147190c45948c75aed03dc',
+    'governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md': 'e54c4cf7ac5b35985a27b17c0ce85ef64f01698a04556ee50948de2f45861561',
+}
+def lock(): return json.loads((ROOT/'governance/locks/approved-source-lock.json').read_text())
 def path_pattern_matches(path, pattern):
     path_parts=path.split('/')
     pattern_parts=pattern.split('/')
@@ -51,13 +61,17 @@ def test_governing_docs_have_real_content():
 def test_five_single_source_hashes_match():
     for m in lock()['modules']:
         if 'sha256' in m: assert sha(ROOT/m['local_path'])==m['sha256']
+def test_approved_sources_are_relocated_byte_identically():
+    assert {m['local_path'] for m in lock()['modules']} == set(APPROVED_DIGESTS)
+    for path, digest in APPROVED_DIGESTS.items():
+        assert sha(ROOT/path) == digest
 def test_ft_t2_surface_counts():
     assert len(list((ROOT/'contracts/ft-t2').glob('*.md')))==6
     assert len(list((ROOT/'contracts/ft-t2').glob('*.schema.json')))==6
     assert len(list((ROOT/'skills/ft-t2').glob('*/SKILL.md')))==5
     assert (ROOT/'workflows/ft-t2/FEATURE-CLOSURE.md').exists()
 def test_ft_t2_modern_vocabulary():
-    paths=list((ROOT/'contracts/ft-t2').glob('*.md'))+list((ROOT/'skills/ft-t2').glob('*/SKILL.md'))+[ROOT/'workflows/ft-t2/FEATURE-CLOSURE.md',ROOT/'specs/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md']
+    paths=list((ROOT/'contracts/ft-t2').glob('*.md'))+list((ROOT/'skills/ft-t2').glob('*/SKILL.md'))+[ROOT/'workflows/ft-t2/FEATURE-CLOSURE.md',ROOT/'governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md']
     text='\n'.join(p.read_text() for p in paths)
     assert 'CLOSED_WITHIN_DECLARED_SCOPE' in text
     assert 'ACCEPT_CLOSED_WITHIN_DECLARED_SCOPE' in text

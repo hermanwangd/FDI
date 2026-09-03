@@ -7,7 +7,7 @@ def ok(name, cond, detail=''):
     if not cond: errors.append(f'{name}: {detail}')
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 # 1. authority lock
-lock_path=root/'governance/approved-source-lock.json'
+lock_path=root/'governance/locks/approved-source-lock.json'
 ok('approved-source-lock exists',lock_path.exists(),str(lock_path))
 lock=json.loads(lock_path.read_text()) if lock_path.exists() else {'modules':[]}
 ids={m.get('id') for m in lock.get('modules',[])}
@@ -33,7 +33,7 @@ ok('FT-T2 six contract md',len(ft_contract_md)==6,str([p.name for p in ft_contra
 ok('FT-T2 six schemas',len(ft_schemas)==6,str([p.name for p in ft_schemas]))
 ok('FT-T2 five skills',len(ft_skills)==5,str([p.parent.name for p in ft_skills]))
 ok('FT-T2 workflow exists',(root/'workflows/ft-t2/FEATURE-CLOSURE.md').exists())
-active_ft='\n'.join(p.read_text(errors='replace') for p in ft_contract_md+ft_skills+[root/'workflows/ft-t2/FEATURE-CLOSURE.md',root/'specs/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md'])
+active_ft='\n'.join(p.read_text(errors='replace') for p in ft_contract_md+ft_skills+[root/'workflows/ft-t2/FEATURE-CLOSURE.md',root/'governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md'])
 for banned in ['PROVISIONALLY_COMPLETE','ACCEPT_PROVISIONALLY_COMPLETE','closure_status: OPEN|PARTIAL|CLOSED\n']:
     ok('FT-T2 bans '+banned,banned not in active_ft,banned)
 for required_token in ['CLOSED_WITHIN_DECLARED_SCOPE','SPEC_READY | BLOCKED','ACCEPT_CLOSED_WITHIN_DECLARED_SCOPE']:

@@ -6,8 +6,8 @@ Every entry is labelled by authority. This index is navigational and does not su
 
 - [Active baseline identifiers](../governance/CURRENT) — governing baseline pointer.
 - [Governing sources](../governance/GOVERNING-SOURCES.md) — authoritative source index and provenance boundary.
-- [Approved-source lock](../governance/approved-source-lock.json) — machine-readable local paths and digests.
-- [Approved Layer 1, Layer 2, and FT-T2 sources](../specs/approved/) — digest-locked governing content.
+- [Approved-source lock](../governance/locks/approved-source-lock.json) — machine-readable local paths and digests.
+- [Approved Layer 1, Layer 2, and FT-T2 sources](../governance/approved/) — digest-locked governing content.
 
 ## Stable contract surfaces
 

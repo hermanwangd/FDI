@@ -9,4 +9,4 @@
 | Codebase Investigator | PA-03 + Structural Intelligence runtime |
 | Delivery History Analyst | PA-05 + `PA-Historical-Delivery` Skill |
 
-Multica must resolve authority through `governance/approved-source-lock.json`; semantic search result ranking never overrides governing-source precedence.
+Multica must resolve authority through `governance/locks/approved-source-lock.json`; semantic search result ranking never overrides governing-source precedence.
