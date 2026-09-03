@@ -160,6 +160,48 @@ def test_all_markdown_relative_paths_are_in_project_tree():
             assert relative in tree_paths
 
 
+def test_project_tree_generator_excludes_untracked_empty_legacy_directories(tmp_path):
+    kept=tmp_path/'docs/kept.md'
+    kept.parent.mkdir(parents=True)
+    kept.write_text('kept\n')
+    (tmp_path/'specs/approved').mkdir(parents=True)
+    result=subprocess.run(
+        ['python3', str(ROOT/'tooling/packaging/generate_project_tree.py'), str(tmp_path)],
+        text=True, capture_output=True,
+    )
+    assert result.returncode == 0, result.stderr
+    tree_paths=independently_parse_project_tree((tmp_path/'release/PROJECT-TREE.txt').read_text())
+    assert 'docs/kept.md' in tree_paths
+    assert 'specs' not in tree_paths
+    assert 'specs/approved' not in tree_paths
+
+
+def test_verifier_rejects_extra_stale_directory_in_project_tree(tmp_path):
+    copy=tmp_path/'repo'
+    shutil.copytree(ROOT, copy, ignore=shutil.ignore_patterns('.git','.worktrees','target','__pycache__','.pytest_cache','apache-maven-*'))
+    tree_result=subprocess.run(
+        ['python3', str(copy/'tooling/packaging/generate_project_tree.py'), str(copy)],
+        text=True, capture_output=True,
+    )
+    assert tree_result.returncode == 0, tree_result.stderr
+    tree_path=copy/'release/PROJECT-TREE.txt'
+    lines=tree_path.read_text().splitlines()
+    lines.insert(1, '├── specs/')
+    tree_path.write_text('\n'.join(lines)+'\n')
+    manifest_result=subprocess.run(
+        ['python3', str(copy/'tooling/packaging/build_manifest.py'), str(copy)],
+        text=True, capture_output=True,
+    )
+    assert manifest_result.returncode == 0, manifest_result.stderr
+    result=subprocess.run(
+        ['python3', str(copy/'tooling/verification/verify_standalone_bundle.py'), str(copy)],
+        text=True, capture_output=True,
+    )
+    assert result.returncode != 0
+    assert 'PROJECT-TREE exact path set' in result.stdout
+    assert "extra=['specs']" in result.stdout
+
+
 def test_verifier_detects_one_missing_duplicate_named_markdown_path(tmp_path):
     copy=tmp_path/'repo'
     shutil.copytree(ROOT, copy, ignore=shutil.ignore_patterns('.git','.worktrees','target','__pycache__','.pytest_cache','apache-maven-*'))

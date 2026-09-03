@@ -96,6 +96,18 @@ except ValueError as exc:
     ok('PROJECT-TREE parses',False,str(exc))
 else:
     ok('PROJECT-TREE parses',True)
+release_outputs={
+    'release/MANIFEST.json', 'release/MARKDOWN-INVENTORY.txt',
+    'release/PROJECT-TREE.txt', 'release/VERIFICATION-SUMMARY.json',
+}
+expected_tree_paths={p.relative_to(root).as_posix() for p in included_files(root)} | release_outputs
+for relative in tuple(expected_tree_paths):
+    parts=relative.split('/')
+    expected_tree_paths.update('/'.join(parts[:index]) for index in range(1,len(parts)))
+missing_tree=sorted(expected_tree_paths-tree_paths)
+extra_tree=sorted(tree_paths-expected_tree_paths)
+ok('PROJECT-TREE exact path set',not missing_tree and not extra_tree,
+   f'missing={missing_tree[:20]}, extra={extra_tree[:20]}')
 missing=[rel for rel in md if rel not in tree_paths]
 ok('all Markdown files appear in PROJECT-TREE',not missing,f'missing={missing[:20]}')
 mdi=release/'MARKDOWN-INVENTORY.txt'
