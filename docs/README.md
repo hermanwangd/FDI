@@ -19,7 +19,7 @@ Every entry is labelled by authority. This index is navigational and does not su
 - [Project overview](overview/FDI-PROJECT-OVERVIEW.md) — orientation only; not governing authority.
 - [Status](planning/STATUS.json) — current declared readiness and non-claims.
 - [Development backlog](planning/DEVELOPMENT-BACKLOG.md) — planning record, not governing authority.
-- [Verification summary](../release/VERIFICATION-SUMMARY.json) — recorded verification scope and evidence claims.
+- [Verification summary](../release/VERIFICATION-SUMMARY.json) — generated claim boundaries; execution remains `NOT_RUN` unless separately evidenced.
 
 ## Candidate specifications and implementation guidance
 

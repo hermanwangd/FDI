@@ -1,5 +1,6 @@
 """Shared deterministic file-selection policy for release metadata."""
 from __future__ import annotations
+import os
 from pathlib import Path
 
 EXCLUDED_DIR_NAMES = {
@@ -32,9 +33,24 @@ def is_excluded(relative: Path) -> bool:
 
 
 def included_files(root: Path):
-    for path in sorted(root.rglob("*"), key=lambda candidate: candidate.as_posix()):
-        relative = path.relative_to(root)
-        if relative == Path("release/MANIFEST.json"):
-            continue
-        if path.is_file() and not is_excluded(relative):
-            yield path
+    resolved_root = root.resolve()
+    for directory, dirnames, filenames in os.walk(resolved_root, followlinks=False):
+        current = Path(directory)
+        retained_dirs = []
+        for name in sorted(dirnames):
+            candidate = current/name
+            relative = candidate.relative_to(resolved_root)
+            if not candidate.is_symlink() and not is_excluded(relative):
+                retained_dirs.append(name)
+        dirnames[:] = retained_dirs
+        for name in sorted(filenames):
+            path = current/name
+            relative = path.relative_to(resolved_root)
+            if relative == Path("release/MANIFEST.json") or path.is_symlink() or is_excluded(relative):
+                continue
+            try:
+                path.resolve(strict=True).relative_to(resolved_root)
+            except (FileNotFoundError, ValueError):
+                continue
+            if path.is_file():
+                yield path

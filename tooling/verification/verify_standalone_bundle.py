@@ -75,6 +75,17 @@ ok('MARKDOWN-INVENTORY exists',mdi.exists())
 if mdi.exists():
     inv=[x.strip() for x in mdi.read_text().splitlines() if x.strip()]
     ok('MARKDOWN-INVENTORY exact path set',inv==md,f'actual={len(md)} inventory={len(inv)}')
+summary_path=release/'VERIFICATION-SUMMARY.json'
+ok('VERIFICATION-SUMMARY exists',summary_path.exists())
+if summary_path.exists():
+    summary=json.loads(summary_path.read_text())
+    execution=summary.get('verification_execution',{})
+    required_execution={'manifest_integrity','python_compile','standalone_verifier','unit_tests'}
+    ok('VERIFICATION-SUMMARY records no unevidenced PASS',
+       set(execution)==required_execution
+       and set(execution.values()) <= {'NOT_RUN','NOT_RECORDED'}
+       and 'PASS' not in json.dumps(summary),
+       str(execution))
 # Stronger count marker: every markdown basename line count can collide, so verifier also writes exact inventory elsewhere through manifest.
 # 4. JSON/schema parse
 for p in included_files(root):

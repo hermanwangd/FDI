@@ -8,18 +8,16 @@ out.parent.mkdir(parents=True, exist_ok=True)
 markdown_count=sum(path.suffix.lower()=='.md' for path in included_files(root))
 summary={
   "package": "fdi-standalone-project-baseline-v0.4.8.3",
-  "verification_scope": "standalone governing-content materialization and package integrity",
-  "governing_modules": 6,
-  "governing_module_local_resolution": "6/6 PASS",
-  "governing_l1_l2_markdown_files": 5,
-  "ft_t2": {"contract_markdown": 6, "contract_schemas": 6, "skills": 5, "workflow": 1, "modern_vocabulary_guard": "PASS"},
+  "verification_scope": "release metadata claim boundaries; execution evidence is not recorded by this generator",
   "markdown_inventory_files": markdown_count,
-  "standalone_verifier": "62 PASS / 0 FAIL",
-  "unit_tests": "40 PASS / 0 FAIL",
-  "python_compile": "PASS",
-  "manifest_integrity": "PASS",
+  "verification_execution": {
+    "manifest_integrity": "NOT_RUN",
+    "python_compile": "NOT_RUN",
+    "standalone_verifier": "NOT_RUN",
+    "unit_tests": "NOT_RUN"
+  },
   "claims": {
-    "standalone_governing_content_available": True,
+    "standalone_governing_content_available": "NOT_RECORDED",
     "upstream_byte_identity": "NOT_CLAIMED",
     "real_product_binding": "NOT_EXECUTED",
     "live_grafel": "NOT_EXECUTED",

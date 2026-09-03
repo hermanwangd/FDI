@@ -334,6 +334,70 @@ def test_manifest_and_tree_exclude_transient_and_sensitive_paths(tmp_path):
     assert "release/MANIFEST.json" not in manifest_paths
 
 
+def test_release_metadata_excludes_file_and_directory_symlinks(tmp_path):
+    outside=tmp_path.parent/(tmp_path.name + "-outside-secret")
+    outside.write_text("OUTSIDE_SECRET_BYTES\n")
+    internal=tmp_path/"docs/internal.txt"
+    internal.parent.mkdir()
+    internal.write_text("internal\n")
+    (tmp_path/"internal-link.txt").symlink_to(internal)
+    (tmp_path/"outside-link.txt").symlink_to(outside)
+    outside_dir=tmp_path.parent/(tmp_path.name + "-outside-dir")
+    outside_dir.mkdir()
+    (outside_dir/"secret.txt").write_text("OUTSIDE_DIRECTORY_SECRET\n")
+    (tmp_path/"linked-dir").symlink_to(outside_dir, target_is_directory=True)
+    for script in ("generate_project_tree.py", "generate_markdown_inventory.py", "build_manifest.py"):
+        result=subprocess.run(["python3", str(ROOT/"tooling/packaging"/script), str(tmp_path)], text=True, capture_output=True)
+        assert result.returncode == 0, result.stderr
+    manifest_text=(tmp_path/"release/MANIFEST.json").read_text()
+    manifest=json.loads(manifest_text)
+    paths={entry["path"] for entry in manifest["files"]}
+    assert "docs/internal.txt" in paths
+    assert not {"internal-link.txt", "outside-link.txt", "linked-dir/secret.txt"} & paths
+    assert "OUTSIDE_SECRET_BYTES" not in manifest_text
+    assert hashlib.sha256(outside.read_bytes()).hexdigest() not in manifest_text
+    tree=(tmp_path/"release/PROJECT-TREE.txt").read_text()
+    assert "internal-link.txt" not in tree
+    assert "outside-link.txt" not in tree
+    assert "linked-dir" not in tree
+
+
+def test_verification_summary_never_claims_pass_without_execution_evidence(tmp_path):
+    result=subprocess.run(
+        ["python3", str(ROOT/"tooling/packaging/generate_verification_summary.py"), str(tmp_path)],
+        text=True, capture_output=True,
+    )
+    assert result.returncode == 0, result.stderr
+    summary=json.loads((tmp_path/"release/VERIFICATION-SUMMARY.json").read_text())
+    assert summary["verification_execution"] == {
+        "manifest_integrity": "NOT_RUN",
+        "python_compile": "NOT_RUN",
+        "standalone_verifier": "NOT_RUN",
+        "unit_tests": "NOT_RUN",
+    }
+    assert "PASS" not in json.dumps(summary)
+    for key in ("real_product_binding", "live_grafel", "DEV204", "F001"):
+        assert summary["claims"][key] == "NOT_EXECUTED"
+
+
+def test_project_tree_models_all_release_outputs_with_structural_prefixes(tmp_path):
+    (tmp_path/"z-last.txt").write_text("last\n")
+    result=subprocess.run(
+        ["python3", str(ROOT/"tooling/packaging/generate_project_tree.py"), str(tmp_path)],
+        cwd=tmp_path.parent, text=True, capture_output=True,
+    )
+    assert result.returncode == 0, result.stderr
+    lines=(tmp_path/"release/PROJECT-TREE.txt").read_text().splitlines()
+    release_index=lines.index("├── release/")
+    assert lines[release_index + 1:release_index + 5] == [
+        "│   ├── MANIFEST.json",
+        "│   ├── MARKDOWN-INVENTORY.txt",
+        "│   ├── PROJECT-TREE.txt",
+        "│   └── VERIFICATION-SUMMARY.json",
+    ]
+    assert lines[release_index + 5] == "└── z-last.txt"
+
+
 def assert_numbered_sections_are_consistent(text):
     current_section=None
     top_level=[]
