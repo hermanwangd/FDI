@@ -1,4 +1,4 @@
-import fnmatch, importlib.util, json, hashlib, re, subprocess
+import fnmatch, importlib.util, json, hashlib, re, shutil, subprocess
 import pytest
 from functools import lru_cache
 from pathlib import Path
@@ -136,9 +136,54 @@ def test_ft_t2_modern_vocabulary():
     assert 'CLOSED_WITHIN_DECLARED_SCOPE' in text
     assert 'ACCEPT_CLOSED_WITHIN_DECLARED_SCOPE' in text
     assert 'PROVISIONALLY_COMPLETE' not in text
-def test_all_markdown_basename_is_in_project_tree():
-    tree=(ROOT/'release/PROJECT-TREE.txt').read_text()
-    for p in ROOT.rglob('*.md'): assert p.name in tree
+def independently_parse_project_tree(text):
+    paths=set()
+    directories=[]
+    for line in text.splitlines()[1:]:
+        match=re.fullmatch(r'((?:│   |    )*)(?:├── |└── )(.+)', line)
+        assert match, line
+        depth=len(match.group(1))//4
+        name=match.group(2)
+        directories=directories[:depth]
+        relative='/'.join([*directories, name.rstrip('/')])
+        paths.add(relative)
+        if name.endswith('/'):
+            directories.append(name[:-1])
+    return paths
+
+
+def test_all_markdown_relative_paths_are_in_project_tree():
+    tree_paths=independently_parse_project_tree((ROOT/'release/PROJECT-TREE.txt').read_text())
+    for p in ROOT.rglob('*.md'):
+        relative=p.relative_to(ROOT).as_posix()
+        if not any(part in {'.git','.worktrees','.pytest_cache','__pycache__','target'} for part in p.relative_to(ROOT).parts):
+            assert relative in tree_paths
+
+
+def test_verifier_detects_one_missing_duplicate_named_markdown_path(tmp_path):
+    copy=tmp_path/'repo'
+    shutil.copytree(ROOT, copy, ignore=shutil.ignore_patterns('.git','.worktrees','target','__pycache__','.pytest_cache','apache-maven-*'))
+    tree_path=copy/'release/PROJECT-TREE.txt'
+    lines=tree_path.read_text().splitlines()
+    parsed=independently_parse_project_tree('\n'.join(lines)+'\n')
+    assert 'docs/README.md' in parsed
+    assert sum(path.endswith('/README.md') or path == 'README.md' for path in parsed)>1
+    for index in range(1,len(lines)):
+        if not lines[index].endswith('README.md'):
+            continue
+        candidate=lines[:index]+lines[index+1:]
+        if 'docs/README.md' not in independently_parse_project_tree('\n'.join(candidate)+'\n'):
+            del lines[index]
+            break
+    else:
+        pytest.fail('docs/README.md tree entry not found')
+    tree_path.write_text('\n'.join(lines)+'\n')
+    result=subprocess.run(
+        ['python3', str(copy/'tooling/verification/verify_standalone_bundle.py'), str(copy)],
+        text=True, capture_output=True,
+    )
+    assert result.returncode != 0
+    assert 'missing=[\'docs/README.md\']' in result.stdout
 def test_overview_and_handoff_exist():
     assert (ROOT/'PROJECT-OVERVIEW.md').exists()
     assert (ROOT/'agent/handoff/MULTICA-HANDOFF.md').exists()

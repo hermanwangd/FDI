@@ -1,5 +1,5 @@
 from pathlib import Path
-import hashlib,json,sys,subprocess
+import hashlib,json,re,sys,subprocess
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'packaging'))
 from release_metadata import included_files
 root=Path(sys.argv[1] if len(sys.argv)>1 else '.').resolve()
@@ -9,6 +9,27 @@ def ok(name, cond, detail=''):
     checks.append((name,cond,detail));
     if not cond: errors.append(f'{name}: {detail}')
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+def parse_project_tree_paths(text):
+    lines=text.splitlines()
+    if not lines or not lines[0].endswith('/'):
+        raise ValueError('missing project-tree root')
+    paths=set(); directories=[]
+    for line in lines[1:]:
+        match=re.fullmatch(r'((?:│   |    )*)(?:├── |└── )(.+)',line)
+        if not match:
+            raise ValueError(f'invalid project-tree line: {line!r}')
+        depth=len(match.group(1))//4
+        if depth>len(directories):
+            raise ValueError(f'invalid project-tree depth: {line!r}')
+        directories=directories[:depth]
+        name=match.group(2)
+        relative='/'.join([*directories,name.rstrip('/')])
+        if relative in paths:
+            raise ValueError(f'duplicate project-tree path: {relative}')
+        paths.add(relative)
+        if name.endswith('/'):
+            directories.append(name[:-1])
+    return paths
 def resolve_approved_lock_path(project_root):
     current=project_root/'governance/CURRENT'
     if not current.is_file():
@@ -68,7 +89,14 @@ for required_token in ['CLOSED_WITHIN_DECLARED_SCOPE','SPEC_READY | BLOCKED','AC
 pt=release/'PROJECT-TREE.txt'; ok('PROJECT-TREE exists',pt.exists())
 tree=pt.read_text() if pt.exists() else ''
 md=sorted(p.relative_to(root).as_posix() for p in included_files(root) if p.suffix.lower()=='.md')
-missing=[rel for rel in md if Path(rel).name not in tree]
+try:
+    tree_paths=parse_project_tree_paths(tree)
+except ValueError as exc:
+    tree_paths=set()
+    ok('PROJECT-TREE parses',False,str(exc))
+else:
+    ok('PROJECT-TREE parses',True)
+missing=[rel for rel in md if rel not in tree_paths]
 ok('all Markdown files appear in PROJECT-TREE',not missing,f'missing={missing[:20]}')
 mdi=release/'MARKDOWN-INVENTORY.txt'
 ok('MARKDOWN-INVENTORY exists',mdi.exists())
