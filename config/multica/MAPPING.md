@@ -2,7 +2,7 @@
 
 | Runtime role | Primary local content |
 | --- | --- |
-| Workflow Lead | `PROJECT-OVERVIEW.md`, Layer 1 approved specs, root Layer 1 Skills |
+| Workflow Lead | `PROJECT-OVERVIEW.md`, Layer 1 approved specs, `agent/skills/layer1/` Skills |
 | Feature Investigator | `agent/skills/ft-t2/*`, `contracts/public/ft-t2/*`, `agent/workflows/ft-t2/FEATURE-CLOSURE.md` |
 | Closure Reviewer | `agent/skills/ft-t2/closure-review/SKILL.md`, `ClosureReview` contract |
 | Product Intelligence Lead | Layer 2 approved specs + PA Skills |
