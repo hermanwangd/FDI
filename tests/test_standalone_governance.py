@@ -38,6 +38,17 @@ def test_no_governing_placeholder_readmes():
     assert not (ROOT/'contracts/ft-t2/README.md').exists()
 
 
+def test_repository_navigation_entry_points_exist():
+    for path in ("AGENTS.md", "docs/README.md", "docs/FILE-CLASSIFICATION.md"):
+        assert (ROOT/path).is_file()
+
+
+def test_readme_links_to_current_authoritative_entry_points():
+    readme=(ROOT/'README.md').read_text()
+    for target in ("PROJECT-OVERVIEW.md", "governance/CURRENT", "STATUS.json"):
+        assert f"]({target})" in readme
+
+
 def test_markdown_inventory_is_exact():
     actual=sorted(p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*.md") if not any(x in {".pytest_cache","__pycache__",".git"} for x in p.relative_to(ROOT).parts))
     inv=[x.strip() for x in (ROOT/"MARKDOWN-INVENTORY.txt").read_text().splitlines() if x.strip()]
