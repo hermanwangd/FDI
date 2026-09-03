@@ -1,8 +1,36 @@
 import fnmatch, json, hashlib, re, subprocess
+from functools import lru_cache
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
+MOVED_OLD_PATHS=(
+    "/".join(("docs", "FDI-PROJECT-OVERVIEW-FRAMEWORK-CENTERED.md")),
+    "specs/product-intelligence", "specs/product-knowledge", "specs/source-integration",
+    "specs/structural-intelligence", "specs/proposals", "DEVELOPMENT-BACKLOG.md",
+    "STATUS.json", "governance/decisions", "MULTICA-HANDOFF.md", "MULTICA-PROJECT-PROMPT.txt",
+)
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 def lock(): return json.loads((ROOT/'governance/approved-source-lock.json').read_text())
+def path_pattern_matches(path, pattern):
+    path_parts=path.split('/')
+    pattern_parts=pattern.split('/')
+    @lru_cache(maxsize=None)
+    def matches(pattern_index, path_index):
+        if pattern_index == len(pattern_parts):
+            return path_index == len(path_parts)
+        if pattern_parts[pattern_index] == '**':
+            return matches(pattern_index + 1, path_index) or (
+                path_index < len(path_parts) and matches(pattern_index, path_index + 1)
+            )
+        return (
+            path_index < len(path_parts)
+            and fnmatch.fnmatchcase(path_parts[path_index], pattern_parts[pattern_index])
+            and matches(pattern_index + 1, path_index + 1)
+        )
+    return matches(0, 0)
+def stale_path_patterns():
+    for old_path in MOVED_OLD_PATHS:
+        prefix = r'(?<!/)' if '/' not in old_path else ''
+        yield prefix + re.escape(old_path) + r'/?'
 def local_markdown_links(path):
     text=path.read_text()
     for raw_target in re.findall(r'(?<!!)\[[^]]+\]\(([^)]+)\)', text):
@@ -83,15 +111,9 @@ def test_reorganized_document_targets_exist_and_old_paths_are_absent():
         "agent/handoff/MULTICA-HANDOFF.md",
         "agent/handoff/MULTICA-PROJECT-PROMPT.txt",
     )
-    old_paths=(
-        "docs/" + "FDI-PROJECT-OVERVIEW-FRAMEWORK-CENTERED.md",
-        "specs/product-intelligence", "specs/product-knowledge", "specs/source-integration",
-        "specs/structural-intelligence", "specs/proposals", "DEVELOPMENT-BACKLOG.md",
-        "STATUS.json", "governance/decisions", "MULTICA-HANDOFF.md", "MULTICA-PROJECT-PROMPT.txt",
-    )
     for path in targets:
         assert (ROOT/path).is_file(), path
-    for path in old_paths:
+    for path in MOVED_OLD_PATHS:
         assert not (ROOT/path).exists(), path
 
 
@@ -103,13 +125,6 @@ def test_project_overview_is_a_resolving_compatibility_pointer():
 
 
 def test_active_non_governing_text_has_no_stale_moved_paths():
-    stale_patterns=(
-        re.escape("/".join(("docs", "FDI-PROJECT-OVERVIEW-FRAMEWORK-CENTERED.md"))), r"specs/product-intelligence/",
-        r"specs/product-knowledge/", r"specs/source-integration/", r"specs/structural-intelligence/",
-        r"specs/proposals/", r"governance/decisions/", r"(?<!/)STATUS\.json",
-        r"(?<!/)DEVELOPMENT-BACKLOG\.md", r"(?<!/)MULTICA-HANDOFF\.md",
-        r"(?<!/)MULTICA-PROJECT-PROMPT\.txt",
-    )
     excluded_prefixes=("specs/approved/", "governance/approved/", "docs/superpowers/")
     candidates=subprocess.run(
         ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
@@ -123,8 +138,20 @@ def test_active_non_governing_text_has_no_stale_moved_paths():
             text=path.read_text()
         except (UnicodeDecodeError, IsADirectoryError):
             continue
-        for old in stale_patterns:
+        for old in stale_path_patterns():
             assert not re.search(old, text), f"stale path pattern {old!r} in {relative}"
+
+
+def test_stale_path_patterns_reject_bare_and_slash_suffixed_directory_references():
+    patterns=tuple(stale_path_patterns())
+    assert any(re.search(pattern, "See governance/decisions for details") for pattern in patterns)
+    assert any(re.search(pattern, "See governance/decisions/ADR-001.md") for pattern in patterns)
+
+
+def test_classification_globs_are_segment_aware_and_double_star_is_recursive():
+    source="src/main/java/com/example/App.java"
+    assert not path_pattern_matches(source, "src/main/*")
+    assert path_pattern_matches(source, "src/main/**")
 
 
 def test_every_tracked_or_pending_path_has_exactly_one_documented_classification():
@@ -140,7 +167,7 @@ def test_every_tracked_or_pending_path_has_exactly_one_documented_classification
         cwd=ROOT, check=True, text=True, capture_output=True,
     ).stdout.splitlines()
     for path in paths:
-        matches=[category for pattern, category in rules if fnmatch.fnmatchcase(path, pattern)]
+        matches=[category for pattern, category in rules if path_pattern_matches(path, pattern)]
         assert len(matches)==1, f"{path}: expected exactly one classification, got {matches}"
 
 
