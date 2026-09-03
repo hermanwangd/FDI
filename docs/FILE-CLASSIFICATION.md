@@ -31,17 +31,17 @@ validation/deterministic/**	Deterministic validation protocol or guard specifica
 validation/reports/**	Generated validation report location
 tooling/packaging/build_handoff_bundle.py	Packaging utility source
 tooling/packaging/build_manifest.py	Release-manifest generation utility source
+tooling/packaging/generate_markdown_inventory.py	Release-inventory generation utility source
 tooling/packaging/build_overlay_package.py	Packaging utility source
 tooling/packaging/build_package.py	Packaging utility source
 tooling/packaging/generate_project_tree.py	Release-tree generation utility source
+tooling/packaging/generate_verification_summary.py	Release-summary generation utility source
+tooling/packaging/release_metadata.py	Release-metadata selection policy source
 tooling/verification/evaluate_dev204_pair.py	DEV-204 evaluation utility source
 tooling/verification/verify_standalone_bundle.py	Standalone verification utility source
 tooling/migration/prepare_dev204_execution.py	DEV-204 preparation utility source
 templates/**	Product-instance template
-MANIFEST.json	Generated release metadata
-MARKDOWN-INVENTORY.txt	Generated release metadata
-PROJECT-TREE.txt	Generated release metadata
-VERIFICATION-SUMMARY.json	Generated release metadata
+release/**	Generated release metadata
 PROJECT-OVERVIEW.md	Compatibility overview pointer
 docs/overview/**	Conceptual overview
 docs/planning/**	Planning or status record

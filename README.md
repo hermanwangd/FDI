@@ -9,3 +9,4 @@
 - [File classification](docs/FILE-CLASSIFICATION.md)
 - [Validation assets](validation/)
 - [Repository tooling](tooling/)
+- [Release metadata](release/)

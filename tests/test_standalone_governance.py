@@ -137,7 +137,7 @@ def test_ft_t2_modern_vocabulary():
     assert 'ACCEPT_CLOSED_WITHIN_DECLARED_SCOPE' in text
     assert 'PROVISIONALLY_COMPLETE' not in text
 def test_all_markdown_basename_is_in_project_tree():
-    tree=(ROOT/'PROJECT-TREE.txt').read_text()
+    tree=(ROOT/'release/PROJECT-TREE.txt').read_text()
     for p in ROOT.rglob('*.md'): assert p.name in tree
 def test_overview_and_handoff_exist():
     assert (ROOT/'PROJECT-OVERVIEW.md').exists()
@@ -206,9 +206,11 @@ def test_active_non_governing_text_has_no_stale_moved_paths():
         cwd=ROOT, check=True, text=True, capture_output=True,
     ).stdout.splitlines()
     for relative in candidates:
-        if relative.startswith(excluded_prefixes) or relative in {"MANIFEST.json", "MARKDOWN-INVENTORY.txt", "PROJECT-TREE.txt", "tests/test_standalone_governance.py"}:
+        if relative.startswith(excluded_prefixes) or relative in {"release/MANIFEST.json", "release/MARKDOWN-INVENTORY.txt", "release/PROJECT-TREE.txt", "release/VERIFICATION-SUMMARY.json", "tests/test_standalone_governance.py"}:
             continue
         path=ROOT/relative
+        if not path.exists():
+            continue
         try:
             text=path.read_text()
         except (UnicodeDecodeError, IsADirectoryError):
@@ -254,6 +256,8 @@ def test_every_tracked_or_pending_path_has_exactly_one_documented_classification
         cwd=ROOT, check=True, text=True, capture_output=True,
     ).stdout.splitlines()
     for path in paths:
+        if not (ROOT/path).exists():
+            continue
         matches=[category for pattern, category in rules if path_pattern_matches(path, pattern)]
         assert len(matches)==1, f"{path}: expected exactly one classification, got {matches}"
 
@@ -273,8 +277,61 @@ def test_repository_navigation_local_links_resolve_and_dated_links_are_centraliz
 
 def test_markdown_inventory_is_exact():
     actual=sorted(p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*.md") if not any(x in {".pytest_cache","__pycache__",".git"} for x in p.relative_to(ROOT).parts))
-    inv=[x.strip() for x in (ROOT/"MARKDOWN-INVENTORY.txt").read_text().splitlines() if x.strip()]
+    inv=[x.strip() for x in (ROOT/"release/MARKDOWN-INVENTORY.txt").read_text().splitlines() if x.strip()]
     assert inv==actual
+
+
+RELEASE_METADATA=("MANIFEST.json", "MARKDOWN-INVENTORY.txt", "PROJECT-TREE.txt", "VERIFICATION-SUMMARY.json")
+
+
+def test_release_metadata_exists_only_under_release():
+    for name in RELEASE_METADATA:
+        assert (ROOT/"release"/name).is_file(), name
+        assert not (ROOT/name).exists(), name
+
+
+@pytest.mark.parametrize("script", (
+    "tooling/packaging/generate_project_tree.py",
+    "tooling/packaging/generate_markdown_inventory.py",
+    "tooling/packaging/generate_verification_summary.py",
+    "tooling/packaging/build_manifest.py",
+))
+def test_release_generators_default_to_repository_root_from_another_cwd(tmp_path, script):
+    result=subprocess.run(["python3", str(ROOT/script)], cwd=tmp_path, text=True, capture_output=True)
+    assert result.returncode == 0, result.stderr
+    assert str(ROOT/"release") in result.stdout
+
+
+def test_manifest_and_tree_exclude_transient_and_sensitive_paths(tmp_path):
+    included=tmp_path/"docs/kept.md"
+    included.parent.mkdir()
+    included.write_text("kept\n")
+    excluded=(
+        ".git/config", ".worktrees/w/file", ".mvn/apache-maven-3.9.9/README.txt",
+        "target/app.jar", "__pycache__/x.pyc", ".pytest_cache/state", ".fdi-work/report.json",
+        "dist/app.js", "build/output", ".env", "credentials.json", "release/MANIFEST.json.tmp",
+    )
+    for relative in excluded:
+        path=tmp_path/relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("excluded\n")
+    for script in ("generate_project_tree.py", "generate_markdown_inventory.py", "build_manifest.py"):
+        result=subprocess.run(
+            ["python3", str(ROOT/"tooling/packaging"/script), str(tmp_path)],
+            text=True, capture_output=True,
+        )
+        assert result.returncode == 0, result.stderr
+    manifest=json.loads((tmp_path/"release/MANIFEST.json").read_text())
+    manifest_paths={entry["path"] for entry in manifest["files"]}
+    tree=(tmp_path/"release/PROJECT-TREE.txt").read_text()
+    inventory=(tmp_path/"release/MARKDOWN-INVENTORY.txt").read_text().splitlines()
+    assert "docs/kept.md" in manifest_paths
+    assert "docs/kept.md" in inventory
+    for relative in excluded:
+        assert relative not in manifest_paths
+        assert relative not in tree
+        assert relative not in inventory
+    assert "release/MANIFEST.json" not in manifest_paths
 
 
 def assert_numbered_sections_are_consistent(text):

@@ -1,6 +1,9 @@
 from pathlib import Path
 import hashlib,json,sys,subprocess
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'packaging'))
+from release_metadata import included_files
 root=Path(sys.argv[1] if len(sys.argv)>1 else '.').resolve()
+release=root/'release'
 errors=[]; checks=[]
 def ok(name, cond, detail=''):
     checks.append((name,cond,detail));
@@ -62,20 +65,20 @@ for banned in ['PROVISIONALLY_COMPLETE','ACCEPT_PROVISIONALLY_COMPLETE','closure
 for required_token in ['CLOSED_WITHIN_DECLARED_SCOPE','SPEC_READY | BLOCKED','ACCEPT_CLOSED_WITHIN_DECLARED_SCOPE']:
     ok('FT-T2 contains '+required_token,required_token in active_ft,required_token)
 # 3. all markdowns listed in project tree
-pt=root/'PROJECT-TREE.txt'; ok('PROJECT-TREE exists',pt.exists())
+pt=release/'PROJECT-TREE.txt'; ok('PROJECT-TREE exists',pt.exists())
 tree=pt.read_text() if pt.exists() else ''
-md=sorted(p.relative_to(root).as_posix() for p in root.rglob('*.md') if not any(x in {'.git','.pytest_cache','__pycache__'} for x in p.relative_to(root).parts))
+md=sorted(p.relative_to(root).as_posix() for p in included_files(root) if p.suffix.lower()=='.md')
 missing=[rel for rel in md if Path(rel).name not in tree]
 ok('all Markdown files appear in PROJECT-TREE',not missing,f'missing={missing[:20]}')
-mdi=root/'MARKDOWN-INVENTORY.txt'
+mdi=release/'MARKDOWN-INVENTORY.txt'
 ok('MARKDOWN-INVENTORY exists',mdi.exists())
 if mdi.exists():
     inv=[x.strip() for x in mdi.read_text().splitlines() if x.strip()]
     ok('MARKDOWN-INVENTORY exact path set',inv==md,f'actual={len(md)} inventory={len(inv)}')
 # Stronger count marker: every markdown basename line count can collide, so verifier also writes exact inventory elsewhere through manifest.
 # 4. JSON/schema parse
-for p in root.rglob('*.json'):
-    if p.name=='MANIFEST.json': continue
+for p in included_files(root):
+    if p.suffix.lower()!='.json': continue
     try: json.loads(p.read_text())
     except Exception as e: errors.append(f'JSON parse {p.relative_to(root)}: {e}')
 ok('all JSON parse',not any(e.startswith('JSON parse') for e in errors))
@@ -88,12 +91,10 @@ py=[str(p) for p in root.rglob('*.py') if '__pycache__' not in p.parts]
 r=subprocess.run([sys.executable,'-m','py_compile',*py],capture_output=True,text=True)
 ok('Python packaging tools compile',r.returncode==0,r.stderr[-1000:])
 # 6. manifest integrity
-man=root/'MANIFEST.json'; ok('MANIFEST exists',man.exists())
+man=release/'MANIFEST.json'; ok('MANIFEST exists',man.exists())
 if man.exists():
     m=json.loads(man.read_text()); listed={e['path']:e for e in m['files']}
-    actual=[]
-    for p in root.rglob('*'):
-        if p.is_file() and p.name!='MANIFEST.json' and not any(x in {'.git','__pycache__','.pytest_cache'} for x in p.relative_to(root).parts): actual.append(p.relative_to(root).as_posix())
+    actual=[p.relative_to(root).as_posix() for p in included_files(root)]
     ok('manifest path set exact',set(listed)==set(actual),f'missing={set(actual)-set(listed)}, extra={set(listed)-set(actual)}')
     bad=[]
     for rel,e in listed.items():
