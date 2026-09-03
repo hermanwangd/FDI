@@ -30,7 +30,7 @@ def path_pattern_matches(path, pattern):
 def stale_path_patterns():
     for old_path in MOVED_OLD_PATHS:
         prefix = r'(?<!/)' if '/' not in old_path else ''
-        yield prefix + re.escape(old_path) + r'/?'
+        yield prefix + re.escape(old_path) + r'(?![A-Za-z0-9_.-])'
 def local_markdown_links(path):
     text=path.read_text()
     for raw_target in re.findall(r'(?<!!)\[[^]]+\]\(([^)]+)\)', text):
@@ -146,6 +146,18 @@ def test_stale_path_patterns_reject_bare_and_slash_suffixed_directory_references
     patterns=tuple(stale_path_patterns())
     assert any(re.search(pattern, "See governance/decisions for details") for pattern in patterns)
     assert any(re.search(pattern, "See governance/decisions/ADR-001.md") for pattern in patterns)
+
+
+def test_stale_path_patterns_do_not_match_sibling_or_filename_suffixes():
+    patterns=tuple(stale_path_patterns())
+    lookalikes=(
+        "specs/proposals-archive",
+        "specs/proposals_archive",
+        "STATUS.json.bak",
+        "MULTICA-PROJECT-PROMPT.txt.old",
+    )
+    for lookalike in lookalikes:
+        assert not any(re.search(pattern, lookalike) for pattern in patterns), lookalike
 
 
 def test_classification_globs_are_segment_aware_and_double_star_is_recursive():
