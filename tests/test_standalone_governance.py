@@ -1,4 +1,4 @@
-import fnmatch, json, hashlib, re, subprocess
+import fnmatch, importlib.util, json, hashlib, re, subprocess
 import pytest
 from functools import lru_cache
 from pathlib import Path
@@ -382,3 +382,41 @@ def test_dev204_cli_prepares_frozen_corpus_without_execution_claim(tmp_path):
     assert len(outputs) == 36
     assert len(list(tmp_path.glob('*-packet.json'))) == 24
     assert len(list(tmp_path.glob('*-reviewer-rubric.json'))) == 12
+
+
+@pytest.mark.parametrize(
+    ('relative_script', 'argv', 'java_command'),
+    (
+        (
+            'tooling/migration/prepare_dev204_execution.py',
+            ['--scenario-pack', 'scenario.json', '--output-dir', 'prepared'],
+            ['dev204-prepare', '--scenario-pack', 'scenario.json', '--output-dir', 'prepared'],
+        ),
+        (
+            'tooling/verification/evaluate_dev204_pair.py',
+            ['--red', 'red.json', '--green', 'green.json'],
+            ['dev204-evaluate', '--red', 'red.json', '--green', 'green.json'],
+        ),
+    ),
+)
+def test_maven_wrappers_force_bounded_heap_and_preserve_cli_paths(monkeypatch, relative_script, argv, java_command):
+    path=ROOT/relative_script
+    spec=importlib.util.spec_from_file_location('wrapper_under_test', path)
+    module=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    calls=[]
+    monkeypatch.setenv('MAVEN_OPTS', '-Xmx12g')
+    monkeypatch.setattr(module.subprocess, 'run', lambda args, **kwargs: calls.append((args, kwargs)))
+
+    module.main(argv)
+
+    assert len(calls) == 2
+    maven_args, maven_kwargs=calls[0]
+    assert maven_args == [str(ROOT/'mvnw'), '-q', '-DskipTests', 'package']
+    assert maven_kwargs['cwd'] == ROOT
+    assert maven_kwargs['check'] is True
+    assert maven_kwargs['env']['MAVEN_OPTS'] == '-Xmx2g'
+    assert maven_kwargs['env'] is not __import__('os').environ
+    java_args, java_kwargs=calls[1]
+    assert java_args == ['java', '-jar', str(ROOT/'target/fdi-0.4.8.3.jar'), *java_command]
+    assert java_kwargs == {'check': True}
