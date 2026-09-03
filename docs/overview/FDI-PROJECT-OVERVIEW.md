@@ -1497,3 +1497,27 @@ Next Feature starts smarter
 最終目標：
 
 > **把散落在人、文件、code、歷史 Feature、incident 和 runtime 裡的 Product Knowledge，逐步轉成組織可以持續重複使用的能力。**
+
+---
+
+# 34. Runtime Implementation
+
+目前的 standalone runtime implementation 使用 **Java 17**、**Spring Boot 3.4.1** 與 Maven。
+
+repository 內已有 executable application、Framework runtime contracts、Graphify provider adapter、snapshot binding、bounded traversal、maintenance、feature discovery、DEV-204 preparation，以及相應的 deterministic tests。這些實作提供本地 contract 與 integration seam 驗證，但不等同於 live Graphify integration、real Product binding 或 empirical validation 已完成。
+
+---
+
+# 35. Readiness and Evidence Status
+
+目前證據狀態必須保守解讀：local build/test evidence 只能支持已實作 surface 的 deterministic readiness，不能提升未執行的 live 或 validation claims。
+
+| Evidence lane | Status |
+|---|---|
+| Runtime contract and deterministic local tests | Implemented; verify from the current repository and test reports |
+| Live Graphify integration | `NOT_EXECUTED` |
+| Real Product binding | `NOT_EXECUTED` |
+| DEV-204 | `NOT_EXECUTED` |
+| F001 | `NOT_EXECUTED` |
+
+因此，本專案目前不主張 live provider readiness、real-product readiness、fresh-context behavioral proof、F001 uplift，或 `FDI_VALUE_PROVEN`。上述狀態只有在對應的可追溯 evidence 產生後才能更新。

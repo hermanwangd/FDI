@@ -200,3 +200,46 @@ def test_markdown_inventory_is_exact():
     actual=sorted(p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*.md") if not any(x in {".pytest_cache","__pycache__",".git"} for x in p.relative_to(ROOT).parts))
     inv=[x.strip() for x in (ROOT/"MARKDOWN-INVENTORY.txt").read_text().splitlines() if x.strip()]
     assert inv==actual
+
+
+def test_framework_spec_numbered_sections_are_consistent():
+    path=ROOT/"docs/specifications/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md"
+    current_section=None
+    top_level=[]
+    subsections={}
+    for line in path.read_text().splitlines():
+        top_match=re.match(r"^# (\d+)\. ", line)
+        if top_match:
+            current_section=int(top_match.group(1))
+            top_level.append(current_section)
+            continue
+        sub_match=re.match(r"^## (\d+)\.(\d+) ", line)
+        if sub_match:
+            section, subsection=map(int, sub_match.groups())
+            assert current_section is not None
+            assert section==current_section, f"{line!r} is under section {current_section}"
+            subsections.setdefault(section, []).append(subsection)
+    assert top_level==list(range(1, 45))
+    for section, numbers in subsections.items():
+        assert numbers==sorted(set(numbers)), f"section {section} subsections: {numbers}"
+
+
+def test_overview_documents_runtime_implementation_and_evidence_readiness():
+    overview=(ROOT/"docs/overview/FDI-PROJECT-OVERVIEW.md").read_text()
+    assert "# 34. Runtime Implementation" in overview
+    assert "Java 17" in overview
+    assert "Spring Boot 3.4.1" in overview
+    assert "# 35. Readiness and Evidence Status" in overview
+
+
+def test_overview_preserves_not_executed_validation_states():
+    overview=(ROOT/"docs/overview/FDI-PROJECT-OVERVIEW.md").read_text()
+    readiness=overview.split("# 35. Readiness and Evidence Status", 1)[1]
+    expected_rows=(
+        "| Live Graphify integration | `NOT_EXECUTED` |",
+        "| Real Product binding | `NOT_EXECUTED` |",
+        "| DEV-204 | `NOT_EXECUTED` |",
+        "| F001 | `NOT_EXECUTED` |",
+    )
+    for row in expected_rows:
+        assert row in readiness

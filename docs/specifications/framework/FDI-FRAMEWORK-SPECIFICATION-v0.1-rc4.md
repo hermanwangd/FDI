@@ -750,7 +750,7 @@ Cross-capability rules:
 
 # 8. Three Knowledge Roles
 
-## 7.1 SEMANTICS
+## 8.1 SEMANTICS
 
 Answers:
 
@@ -774,7 +774,7 @@ FDI MAY extract, normalize, suggest, compare, and surface conflicts.
 
 FDI MUST NOT silently elevate inferred semantics into published authority.
 
-## 7.2 REALIZATION
+## 8.2 REALIZATION
 
 Answers:
 
@@ -794,7 +794,7 @@ Realization MAY be derived from deterministic and structural evidence.
 
 It SHOULD preserve source provenance, scope, completeness, and limitations.
 
-## 7.3 DELIVERY_PRIOR
+## 8.3 DELIVERY_PRIOR
 
 Answers:
 
@@ -818,7 +818,7 @@ Delivery Prior is historical guidance only.
 
 The Framework MUST represent at least five source domains through one common `SourceRef`.
 
-## 8.1 Product Sources
+## 9.1 Product Sources
 
 Examples:
 
@@ -831,7 +831,7 @@ SOP
 SME / Product Owner input
 ```
 
-## 8.2 Implementation Sources
+## 9.2 Implementation Sources
 
 Examples:
 
@@ -844,7 +844,7 @@ database / event contract
 structural provider observations
 ```
 
-## 8.3 Delivery Sources
+## 9.3 Delivery Sources
 
 Examples:
 
@@ -857,7 +857,7 @@ change request
 release note
 ```
 
-## 8.4 Operational Sources
+## 9.4 Operational Sources
 
 Examples:
 
@@ -872,7 +872,7 @@ runbook
 workaround
 ```
 
-## 8.5 Organizational Sources
+## 9.5 Organizational Sources
 
 Examples:
 
@@ -999,7 +999,7 @@ Implementations MAY persist internal records if useful.
 
 They MUST NOT require other Framework consumers to depend on those internal record shapes.
 
-## 11.1 Entity Resolution
+## 12.1 Entity Resolution
 
 FDI SHOULD use:
 
@@ -1015,7 +1015,7 @@ human confirmation
 
 If identity ambiguity can affect an authoritative claim, FDI MUST fail closed or request resolution.
 
-## 11.2 Relation Resolution
+## 12.2 Relation Resolution
 
 FDI SHOULD distinguish:
 
@@ -1027,7 +1027,7 @@ SEMANTIC
 
 Important semantic relations require applicable governance before publication.
 
-## 11.3 Evidence Fusion
+## 12.3 Evidence Fusion
 
 FDI MAY combine multiple Observations to prepare a stronger ProductAssetProposal.
 
@@ -1061,7 +1061,7 @@ FDI uses three logical data areas.
 
 They do **not** imply three databases.
 
-## 13.1 Product Intelligence
+## 14.1 Product Intelligence
 
 Small, durable, governed:
 
@@ -1072,7 +1072,7 @@ Product
 → Realization
 ```
 
-## 13.2 Structural Intelligence
+## 14.2 Structural Intelligence
 
 Large, rebuildable, provider-managed:
 
@@ -1085,7 +1085,7 @@ Repository
 
 Current reference provider: Graphify.
 
-## 13.3 Evidence / Delivery Records
+## 14.3 Evidence / Delivery Records
 
 Potentially large, historical:
 
