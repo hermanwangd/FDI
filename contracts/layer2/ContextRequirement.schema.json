@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "purpose",
+    "authority_dimension",
+    "mode",
+    "selector",
+    "applicability",
+    "freshness_requirement",
+    "trust_requirement",
+    "claims"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "authority_dimension": {
+      "type": "string"
+    },
+    "mode": {
+      "enum": [
+        "REQUIRED",
+        "CONDITIONAL",
+        "ON_DEMAND"
+      ]
+    },
+    "selector": {},
+    "applicability": {},
+    "freshness_requirement": {},
+    "trust_requirement": {},
+    "claims": {
+      "type": "array"
+    }
+  }
+}

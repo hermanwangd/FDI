@@ -1,0 +1,567 @@
+{
+  "$defs": {
+    "SnapshotBindingAttestation": {
+      "additionalProperties": false,
+      "properties": {
+        "attestation_id": {
+          "pattern": "^sba:",
+          "type": "string"
+        },
+        "binding_state": {
+          "const": "VERIFIED"
+        },
+        "freshness": {
+          "enum": [
+            "LIVE_CURRENT",
+            "FROZEN_INDEXED"
+          ]
+        },
+        "provider_route": {
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "scope_id": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "scope_id",
+            "ref"
+          ],
+          "type": "object"
+        },
+        "provider_runtime": {
+          "additionalProperties": false,
+          "properties": {
+            "adapter_version": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "compatibility": {
+              "const": "VERIFIED"
+            },
+            "runtime_version": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "wire_version": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "runtime_version",
+            "wire_version",
+            "adapter_version",
+            "compatibility"
+          ],
+          "type": "object"
+        },
+        "repositories": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "head_revision": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "indexed_revision": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "queryable": {
+                "const": true
+              },
+              "repository": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "repository",
+              "indexed_revision",
+              "queryable",
+              "head_revision"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "snapshot_id": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "snapshot_id",
+        "binding_state",
+        "provider_route",
+        "freshness",
+        "repositories",
+        "attestation_id"
+      ],
+      "type": "object"
+    },
+    "StructuralDelta": {
+      "additionalProperties": false,
+      "properties": {
+        "added": {
+          "items": {
+            "$ref": "#/$defs/StructuralObservation"
+          },
+          "type": "array"
+        },
+        "after_binding_attestation_id": {
+          "pattern": "^sba:",
+          "type": "string"
+        },
+        "after_snapshot_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "before_binding_attestation_id": {
+          "pattern": "^sba:",
+          "type": "string"
+        },
+        "before_snapshot_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "non_authoritative": {
+          "const": true
+        },
+        "query_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "removed": {
+          "items": {
+            "$ref": "#/$defs/StructuralObservation"
+          },
+          "type": "array"
+        },
+        "repository": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "unchanged": {
+          "items": {
+            "$ref": "#/$defs/StructuralObservation"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "before_snapshot_id",
+        "after_snapshot_id",
+        "before_binding_attestation_id",
+        "after_binding_attestation_id",
+        "added",
+        "removed",
+        "unchanged",
+        "non_authoritative"
+      ],
+      "type": "object"
+    },
+    "StructuralDiffQuery": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_relation_types": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "max_edges": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "max_result_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "query_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "repository": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "query_id",
+        "repository",
+        "allowed_relation_types",
+        "max_edges",
+        "max_result_bytes"
+      ],
+      "type": "object"
+    },
+    "StructuralDiscoveryHint": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "non_authoritative": {
+          "const": true
+        },
+        "observation_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "relation_types": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "repository_id": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository_id",
+        "observation_ids",
+        "relation_types",
+        "evidence_refs",
+        "non_authoritative"
+      ],
+      "type": "object"
+    },
+    "StructuralDiscoveryHintSet": {
+      "additionalProperties": false,
+      "properties": {
+        "binding_attestation_id": {
+          "pattern": "^sba:",
+          "type": "string"
+        },
+        "hints": {
+          "items": {
+            "$ref": "#/$defs/StructuralDiscoveryHint"
+          },
+          "type": "array"
+        },
+        "non_authoritative": {
+          "const": true
+        },
+        "structural_snapshot_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "truncated": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "structural_snapshot_id",
+        "binding_attestation_id",
+        "hints",
+        "truncated",
+        "non_authoritative"
+      ],
+      "type": "object"
+    },
+    "StructuralNode": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "repository_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "id",
+        "repository_id"
+      ],
+      "type": "object"
+    },
+    "StructuralObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "from": {
+          "$ref": "#/$defs/StructuralNode"
+        },
+        "non_authoritative": {
+          "const": true
+        },
+        "observation_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "observed_at": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "path_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "provider": {
+          "type": "object"
+        },
+        "relation_type": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "structural_snapshot_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "to": {
+          "$ref": "#/$defs/StructuralNode"
+        }
+      },
+      "required": [
+        "observation_id",
+        "structural_snapshot_id",
+        "from",
+        "relation_type",
+        "to",
+        "evidence_refs",
+        "path_ids",
+        "provider",
+        "observed_at",
+        "non_authoritative"
+      ],
+      "type": "object"
+    },
+    "StructuralObservationSet": {
+      "additionalProperties": false,
+      "properties": {
+        "binding_attestation_id": {
+          "pattern": "^sba:",
+          "type": "string"
+        },
+        "non_authoritative": {
+          "const": true
+        },
+        "observations": {
+          "items": {
+            "$ref": "#/$defs/StructuralObservation"
+          },
+          "type": "array"
+        },
+        "query_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "structural_snapshot_id": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "query_id",
+        "structural_snapshot_id",
+        "binding_attestation_id",
+        "observations",
+        "non_authoritative"
+      ],
+      "type": "object"
+    },
+    "StructuralQuery": {
+      "additionalProperties": true,
+      "properties": {
+        "allowed_relation_types": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "max_depth": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "max_edges": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "max_nodes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "max_paths": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "max_result_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "query_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "scope": {
+          "properties": {
+            "products": {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "minItems": 1,
+              "type": "array"
+            },
+            "repositories": {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "products",
+            "repositories"
+          ],
+          "type": "object"
+        },
+        "seed": {
+          "properties": {
+            "id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "type": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "id"
+          ],
+          "type": "object"
+        },
+        "snapshot_id": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "query_id",
+        "snapshot_id",
+        "scope",
+        "seed",
+        "allowed_relation_types",
+        "max_depth",
+        "max_nodes",
+        "max_edges",
+        "max_paths",
+        "max_result_bytes"
+      ],
+      "type": "object"
+    },
+    "StructuralSnapshotRef": {
+      "additionalProperties": false,
+      "properties": {
+        "adapter_version": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "created_at": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "provider": {
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "version": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "version"
+          ],
+          "type": "object"
+        },
+        "snapshot_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "source_snapshots": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "repository": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "revision": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "repository",
+              "revision"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "snapshot_id",
+        "provider",
+        "adapter_version",
+        "source_snapshots",
+        "created_at"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "title": "FDI Structural Intelligence Runtime Support Contracts v0.4.7.3",
+  "type": "object"
+}

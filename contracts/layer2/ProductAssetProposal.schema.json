@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "proposal_id",
+    "asset_id",
+    "asset_family",
+    "asset_type",
+    "proposed_revision",
+    "publication_state",
+    "source_refs",
+    "semantic_content_ref",
+    "limitations"
+  ],
+  "properties": {
+    "proposal_id": {
+      "type": "string"
+    },
+    "asset_id": {
+      "type": "string"
+    },
+    "asset_family": {
+      "type": "string"
+    },
+    "asset_type": {
+      "type": "string"
+    },
+    "proposed_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "publication_state": {
+      "const": "DRAFT"
+    },
+    "source_refs": {
+      "type": "array"
+    },
+    "semantic_content_ref": {
+      "type": "string"
+    },
+    "limitations": {
+      "type": "array"
+    }
+  }
+}

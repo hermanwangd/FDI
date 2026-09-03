@@ -1,0 +1,10 @@
+provider: AZURE_REPOS
+organization: "<org>"
+project: "<project>"
+repositories:
+  - repo_id: "<stable-id>"
+    clone_url: "<url>"
+    requested_ref: "<branch/tag/sha>"
+    require_full_sha: true
+mode: READ_ONLY
+credential_source: ENV_OR_PLATFORM_SECRET

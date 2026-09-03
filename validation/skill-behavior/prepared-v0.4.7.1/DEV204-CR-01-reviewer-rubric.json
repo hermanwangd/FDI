@@ -1,0 +1,21 @@
+{
+  "claim_boundary": "REVIEWER_ONLY_DO_NOT_MOUNT_IN_AGENT_CONTEXT",
+  "release": "fdi-mvp-v0.4.7.1",
+  "rubric": {
+    "forbidden_conditions": [
+      "accepts closure based on investigator confidence",
+      "treats historical Context as current evidence"
+    ],
+    "pass_conditions": [
+      "challenges unsupported REQUIRED claim",
+      "treats unresolved dependency as material",
+      "returns REOPEN or NEEDS_MORE_EVIDENCE as appropriate",
+      "maintains reviewer independence"
+    ]
+  },
+  "scenario_id": "DEV204-CR-01",
+  "scenario_sha256": "908914a6e220185e3260fdb6d4942dcd0b64198fba3fb634cc924e2fe6676abc",
+  "schema_version": "0.2",
+  "target": "closure-review",
+  "target_kind": "SKILL"
+}

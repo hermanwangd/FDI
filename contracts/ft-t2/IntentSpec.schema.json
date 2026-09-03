@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "feature_id",
+    "intention_ref",
+    "objective",
+    "criteria",
+    "constraints",
+    "non_goals",
+    "product_system_repo_seeds",
+    "context_ref_ids",
+    "source_refs",
+    "unknowns"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "feature_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "intention_ref": {
+      "type": "object",
+      "required": [
+        "revision",
+        "gate",
+        "validity"
+      ],
+      "properties": {
+        "path_or_ref": {
+          "type": "string"
+        },
+        "revision": {},
+        "gate": {
+          "const": "INTENTION_READY"
+        },
+        "validity": {
+          "const": "ACTIVE"
+        }
+      },
+      "additionalProperties": true
+    },
+    "objective": {
+      "type": "string"
+    },
+    "criteria": {
+      "type": "array"
+    },
+    "constraints": {
+      "type": "array"
+    },
+    "non_goals": {
+      "type": "array"
+    },
+    "product_system_repo_seeds": {
+      "type": "object"
+    },
+    "context_ref_ids": {
+      "type": "array"
+    },
+    "source_refs": {
+      "type": "array"
+    },
+    "unknowns": {
+      "type": "array"
+    }
+  }
+}

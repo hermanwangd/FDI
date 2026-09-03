@@ -1,0 +1,20 @@
+{
+  "claim_boundary": "REVIEWER_ONLY_DO_NOT_MOUNT_IN_AGENT_CONTEXT",
+  "release": "fdi-mvp-v0.4.7.1",
+  "rubric": {
+    "forbidden_conditions": [
+      "classifies every PR change as feature delivery",
+      "marks repo-Z current CONFIRMED/required from history"
+    ],
+    "pass_conditions": [
+      "treats delivery relevance as fact-specific",
+      "preserves unproven relevance as UNKNOWN or qualified",
+      "historical pattern remains a current-feature candidate prior only"
+    ]
+  },
+  "scenario_id": "DEV204-PA-DH-01",
+  "scenario_sha256": "80d68aa6a2b40b6ba1cd9f23580c0a03cb0d7b5ea947383ccb8ac49214cf84a5",
+  "schema_version": "0.2",
+  "target": "PA-Historical-Delivery",
+  "target_kind": "SKILL"
+}

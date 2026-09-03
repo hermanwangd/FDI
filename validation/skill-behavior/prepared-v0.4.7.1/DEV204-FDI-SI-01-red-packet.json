@@ -1,0 +1,15 @@
+{
+  "arm": "RED",
+  "claim_boundary": "EXECUTION_PACKET_ONLY_NOT_BEHAVIORAL_EVIDENCE",
+  "fresh_context_required": true,
+  "ground_truth_mounted": false,
+  "independent_review_required": true,
+  "prompt": "A fresh agent receives one active Feature Intention for Payment Recovery. Governed Product Semantics identifies the Payment Recovery capability. Product Realization maps it to checkout-api and ledger-service. A source-pinned Structural Intelligence snapshot shows checkout-api calling ledger-service and notification-service consuming a payment-state event; all three identities exist in active PA-03. Delivery Intelligence also shows earlier similar Features touched notification-service. Current pinned evidence confirms checkout-api must change its payment-state contract. ledger-service and notification-service have not yet been inspected with current Feature evidence. Execute FDI Feature Discovery through the FT-T2 boundary. Explain how Product Intelligence and Structural Intelligence affect candidates, what is current truth, what remains unresolved, and whether T2 may be SPEC_READY.",
+  "release": "fdi-mvp-v0.4.7.1",
+  "scenario_id": "DEV204-FDI-SI-01",
+  "scenario_sha256": "ca213355364ae5c26e46f00b03e7b780c2d94bdd4d64b2066dfb17b182bc9840",
+  "schema_version": "0.2",
+  "target": "structural-intelligence-feature-discovery-integration",
+  "target_kind": "SYSTEM_BEHAVIOR",
+  "target_loaded": false
+}

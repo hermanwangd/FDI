@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "requirement_id",
+    "ref",
+    "revision_or_as_of",
+    "selected_for",
+    "authority_dimension",
+    "trust_state",
+    "applicability",
+    "freshness",
+    "evidence_backlink"
+  ],
+  "properties": {
+    "requirement_id": {
+      "type": "string"
+    },
+    "ref": {
+      "type": "string"
+    },
+    "revision_or_as_of": {},
+    "selected_for": {
+      "type": "string"
+    },
+    "authority_dimension": {
+      "type": "string"
+    },
+    "trust_state": {},
+    "applicability": {},
+    "freshness": {},
+    "evidence_backlink": {}
+  }
+}

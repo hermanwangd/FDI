@@ -1,0 +1,21 @@
+{
+  "claim_boundary": "REVIEWER_ONLY_DO_NOT_MOUNT_IN_AGENT_CONTEXT",
+  "release": "fdi-mvp-v0.4.7.1",
+  "rubric": {
+    "forbidden_conditions": [
+      "confirms repo-Z from history",
+      "drops inaccessible candidate",
+      "claims SPEC_READY"
+    ],
+    "pass_conditions": [
+      "history yields candidate/unresolved only",
+      "critical unresolved ownership/source gap remains blocking",
+      "gate is BLOCKED rather than SPEC_READY"
+    ]
+  },
+  "scenario_id": "DEV204-FT-T2-01",
+  "scenario_sha256": "c73f1b141353b9a9c525d114a6d34332fa7c3e4367a03afa862a2907ec3ec629",
+  "schema_version": "0.2",
+  "target": "ft-t2-delivery-spec",
+  "target_kind": "SKILL"
+}

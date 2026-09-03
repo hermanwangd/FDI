@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "provider",
+    "repositories",
+    "mode"
+  ],
+  "properties": {
+    "provider": {
+      "type": "string"
+    },
+    "repositories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "repo_id",
+          "clone_url",
+          "requested_ref",
+          "require_full_sha"
+        ],
+        "properties": {
+          "repo_id": {
+            "type": "string"
+          },
+          "clone_url": {
+            "type": "string"
+          },
+          "requested_ref": {
+            "type": "string"
+          },
+          "require_full_sha": {
+            "const": true
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "mode": {
+      "const": "READ_ONLY"
+    }
+  },
+  "additionalProperties": true
+}

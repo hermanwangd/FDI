@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "feature_id",
+    "intention_ref",
+    "evidence_boundary",
+    "candidate_repo_set_ref",
+    "change_surface_set_ref",
+    "evidence_record_refs",
+    "repositories",
+    "dependency_edges",
+    "interfaces",
+    "validation_surfaces",
+    "coverage_ledger",
+    "unknowns",
+    "coverage_gaps",
+    "assumptions",
+    "source_versions",
+    "context_ref_ids",
+    "closure_status",
+    "supersedes"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "feature_id": {
+      "type": "string"
+    },
+    "intention_ref": {
+      "type": "object"
+    },
+    "evidence_boundary": {
+      "type": "object"
+    },
+    "candidate_repo_set_ref": {
+      "type": "string"
+    },
+    "change_surface_set_ref": {
+      "type": "string"
+    },
+    "evidence_record_refs": {
+      "type": "array"
+    },
+    "repositories": {
+      "type": "array"
+    },
+    "dependency_edges": {
+      "type": "array"
+    },
+    "interfaces": {
+      "type": "array"
+    },
+    "validation_surfaces": {
+      "type": "array"
+    },
+    "coverage_ledger": {
+      "type": "array"
+    },
+    "unknowns": {
+      "type": "array"
+    },
+    "coverage_gaps": {
+      "type": "array"
+    },
+    "assumptions": {
+      "type": "array"
+    },
+    "source_versions": {
+      "type": "object"
+    },
+    "context_ref_ids": {
+      "type": "array"
+    },
+    "closure_status": {
+      "enum": [
+        "OPEN",
+        "PARTIAL",
+        "CLOSED_WITHIN_DECLARED_SCOPE"
+      ]
+    },
+    "supersedes": {}
+  }
+}

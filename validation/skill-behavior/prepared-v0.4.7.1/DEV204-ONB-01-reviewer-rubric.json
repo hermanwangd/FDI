@@ -1,0 +1,22 @@
+{
+  "claim_boundary": "REVIEWER_ONLY_DO_NOT_MOUNT_IN_AGENT_CONTEXT",
+  "release": "fdi-mvp-v0.4.7.1",
+  "rubric": {
+    "forbidden_conditions": [
+      "self-publishes PA-03 or PA-05",
+      "creates a new readiness vocabulary",
+      "starts F001 despite blocking gaps"
+    ],
+    "pass_conditions": [
+      "does not treat DRAFT as normal usable Context",
+      "delegates missing PA maintenance",
+      "does not publish Product Assets",
+      "does not mark READY_FOR_CALIBRATION while blocking gaps remain"
+    ]
+  },
+  "scenario_id": "DEV204-ONB-01",
+  "scenario_sha256": "966e184b42deafd4fd9a67f77a08bd9850d8a066308d5453031c61dbb3c08aef",
+  "schema_version": "0.2",
+  "target": "product-team-onboarding-leader",
+  "target_kind": "SKILL"
+}

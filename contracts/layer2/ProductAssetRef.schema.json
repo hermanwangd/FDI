@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "asset_id",
+    "asset_revision",
+    "descriptor_ref",
+    "content_ref",
+    "publication_state",
+    "validity_state",
+    "as_of",
+    "authority_dimensions",
+    "trust_profile",
+    "scope_match"
+  ],
+  "properties": {
+    "asset_id": {
+      "type": "string"
+    },
+    "asset_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "descriptor_ref": {
+      "type": "string"
+    },
+    "content_ref": {
+      "type": "string"
+    },
+    "publication_state": {
+      "const": "PUBLISHED"
+    },
+    "validity_state": {
+      "const": "ACTIVE"
+    },
+    "as_of": {},
+    "authority_dimensions": {
+      "type": "array"
+    },
+    "trust_profile": {
+      "type": "object"
+    },
+    "scope_match": {}
+  }
+}

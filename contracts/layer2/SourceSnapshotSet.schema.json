@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "snapshot_set_id",
+    "sources"
+  ],
+  "properties": {
+    "snapshot_set_id": {
+      "type": "string"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source_ref",
+          "source_type",
+          "revision_or_as_of"
+        ],
+        "properties": {
+          "source_ref": {
+            "type": "string"
+          },
+          "source_type": {
+            "type": "string"
+          },
+          "revision_or_as_of": {}
+        },
+        "additionalProperties": true
+      }
+    }
+  }
+}

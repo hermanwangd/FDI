@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "feature_id",
+    "intention_ref",
+    "findings",
+    "unknowns"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "feature_id": {
+      "type": "string"
+    },
+    "intention_ref": {
+      "type": "object"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "finding_id",
+          "repo_id",
+          "status",
+          "required_action",
+          "relevance",
+          "surfaces",
+          "context_ref_ids",
+          "evidence_refs",
+          "blocking"
+        ],
+        "properties": {
+          "finding_id": {
+            "type": "string"
+          },
+          "repo_id": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "CANDIDATE",
+              "CONFIRMED",
+              "EXCLUDED",
+              "UNRESOLVED"
+            ]
+          },
+          "required_action": {
+            "enum": [
+              "CHANGE",
+              "VERIFY_ONLY",
+              "NO_CHANGE",
+              "NOT_APPLICABLE",
+              "UNDECIDED"
+            ]
+          },
+          "relevance": {
+            "type": "string"
+          },
+          "surfaces": {
+            "type": "array"
+          },
+          "relation_types": {
+            "type": "array"
+          },
+          "criterion_ids": {
+            "type": "array"
+          },
+          "requirement_ids": {
+            "type": "array"
+          },
+          "context_ref_ids": {
+            "type": "array"
+          },
+          "evidence_refs": {
+            "type": "array"
+          },
+          "owner": {},
+          "planned_change": {
+            "type": "string"
+          },
+          "blocking": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "unknowns": {
+      "type": "array"
+    }
+  }
+}

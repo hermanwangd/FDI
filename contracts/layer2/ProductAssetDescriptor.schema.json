@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "asset_id",
+    "asset_family",
+    "asset_type",
+    "asset_revision",
+    "content_ref",
+    "publication_state",
+    "validity_state",
+    "owner",
+    "maintenance_mode",
+    "publication_policy",
+    "scope",
+    "authority_dimensions",
+    "trust_profile",
+    "as_of",
+    "source_refs",
+    "dependency_refs",
+    "freshness_policy",
+    "invalidation_triggers",
+    "selection_metadata"
+  ],
+  "properties": {
+    "asset_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "asset_family": {
+      "enum": [
+        "PRODUCT",
+        "ARCHITECTURE",
+        "CODEBASE",
+        "DOMAIN",
+        "DELIVERY_HISTORY",
+        "OPERATIONS",
+        "KNOWLEDGE",
+        "REFERENCE"
+      ]
+    },
+    "asset_type": {
+      "type": "string"
+    },
+    "asset_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "content_ref": {
+      "type": "string"
+    },
+    "publication_state": {
+      "enum": [
+        "DRAFT",
+        "PUBLISHED",
+        "RETIRED"
+      ]
+    },
+    "validity_state": {
+      "enum": [
+        "NOT_APPLICABLE",
+        "ACTIVE",
+        "STALE",
+        "SUPERSEDED"
+      ]
+    },
+    "owner": {
+      "type": "string"
+    },
+    "maintenance_mode": {
+      "enum": [
+        "CURATED",
+        "DERIVED",
+        "REFERENCED"
+      ]
+    },
+    "publication_policy": {
+      "enum": [
+        "HUMAN_APPROVAL",
+        "RULE_BASED_AUTO",
+        "SOURCE_REFERENCE"
+      ]
+    },
+    "scope": {
+      "type": "object"
+    },
+    "authority_dimensions": {
+      "type": "array"
+    },
+    "trust_profile": {
+      "type": "object"
+    },
+    "as_of": {},
+    "source_refs": {
+      "type": "array"
+    },
+    "dependency_refs": {
+      "type": "array"
+    },
+    "freshness_policy": {
+      "type": "object"
+    },
+    "supersedes": {},
+    "invalidation_triggers": {
+      "type": "array"
+    },
+    "selection_metadata": {
+      "type": "object"
+    }
+  }
+}

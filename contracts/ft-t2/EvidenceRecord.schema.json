@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evidence_id",
+    "feature_id",
+    "source_type",
+    "source_ref",
+    "revision_or_as_of",
+    "location",
+    "method",
+    "environment",
+    "integrity",
+    "finding",
+    "supports",
+    "contradicts",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "evidence_id": {
+      "type": "string"
+    },
+    "feature_id": {
+      "type": "string"
+    },
+    "source_type": {
+      "enum": [
+        "CODE",
+        "CONTRACT",
+        "SCHEMA",
+        "CONFIG",
+        "TEST",
+        "RUNTIME",
+        "OWNERSHIP",
+        "ARCHITECTURE_SOURCE",
+        "OTHER"
+      ]
+    },
+    "source_ref": {
+      "type": "string"
+    },
+    "revision_or_as_of": {},
+    "location": {
+      "type": "string"
+    },
+    "method": {
+      "type": "string"
+    },
+    "environment": {
+      "type": "string"
+    },
+    "integrity": {},
+    "finding": {
+      "type": "string"
+    },
+    "supports": {
+      "type": "array"
+    },
+    "contradicts": {
+      "type": "array"
+    },
+    "limitations": {
+      "type": "array"
+    }
+  }
+}

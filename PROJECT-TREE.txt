@@ -1,0 +1,200 @@
+fdi-standalone-project-baseline-v0.4.8.3/
+├── PROJECT-TREE.txt
+├── archive/
+│   └── superseded/
+├── config/
+│   ├── multica/
+│   │   ├── MAPPING.md
+│   │   └── PROJECT-INSTRUCTIONS.md
+│   ├── azure-repos.example.yaml
+│   ├── grafel.example.yaml
+│   └── product-intelligence.example.yaml
+├── contracts/
+│   ├── ft-t2/
+│   │   ├── CandidateRepoSet.md
+│   │   ├── CandidateRepoSet.schema.json
+│   │   ├── ChangeSurfaceSet.md
+│   │   ├── ChangeSurfaceSet.schema.json
+│   │   ├── ClosurePackage.md
+│   │   ├── ClosurePackage.schema.json
+│   │   ├── ClosureReview.md
+│   │   ├── ClosureReview.schema.json
+│   │   ├── EvidenceRecord.md
+│   │   ├── EvidenceRecord.schema.json
+│   │   ├── IntentSpec.md
+│   │   └── IntentSpec.schema.json
+│   ├── layer1/
+│   │   └── CANONICAL-CONTRACT-INDEX.md
+│   ├── layer2/
+│   │   ├── ContextRequirement.schema.json
+│   │   ├── LAYER2-CONTRACT-INDEX.md
+│   │   ├── ProductAssetDescriptor.schema.json
+│   │   ├── ProductAssetProposal.schema.json
+│   │   ├── ProductAssetRef.schema.json
+│   │   ├── ResolvedContextRef.schema.json
+│   │   └── SourceSnapshotSet.schema.json
+│   ├── source-integration/
+│   │   └── RepositorySourceConfig.schema.json
+│   └── structural-intelligence/
+│       └── structural-runtime-contracts.schema.json
+├── governance/
+│   ├── baselines/
+│   │   └── GB-0001.yaml
+│   ├── decisions/
+│   │   ├── ADR-001-code-intelligence-provider.md
+│   │   ├── ADR-002-product-intelligence-store.md
+│   │   ├── ADR-003-azure-repos-acquisition.md
+│   │   └── ADR-004-standalone-governing-content.md
+│   ├── approved-source-lock.json
+│   ├── CURRENT
+│   ├── GOVERNING-CONTENT-MATERIALIZATION-REPORT.md
+│   └── GOVERNING-SOURCES.md
+├── scripts/
+│   ├── build_handoff_bundle.py
+│   ├── build_manifest.py
+│   ├── build_overlay_package.py
+│   ├── build_package.py
+│   ├── evaluate_dev204_pair.py
+│   ├── generate_project_tree.py
+│   ├── prepare_dev204_execution.py
+│   └── verify_standalone_bundle.py
+├── skills/
+│   ├── ft-t2/
+│   │   ├── changesurface-investigation/
+│   │   │   └── SKILL.md
+│   │   ├── closure-review/
+│   │   │   └── SKILL.md
+│   │   ├── dependency-closure/
+│   │   │   └── SKILL.md
+│   │   ├── feature-intent-analysis/
+│   │   │   └── SKILL.md
+│   │   └── repo-discovery/
+│   │       └── SKILL.md
+│   ├── layer1/
+│   │   ├── ft-t1-intention/
+│   │   │   └── SKILL.md
+│   │   ├── ft-t2-delivery-spec/
+│   │   │   └── SKILL.md
+│   │   ├── ft-t3-implementation/
+│   │   │   └── SKILL.md
+│   │   └── ft-t4-correctness/
+│   │       └── SKILL.md
+│   └── layer2/
+│       ├── PA-Codebase-Inventory/
+│       │   └── SKILL.md
+│       └── PA-Historical-Delivery/
+│           └── SKILL.md
+├── specs/
+│   ├── approved/
+│   │   ├── ft-t2/
+│   │   │   └── FT-T2-GOVERNING-SURFACE.md
+│   │   ├── layer1/
+│   │   │   ├── fdi-layer1-markdown-io-profile-v0.1-approved.md
+│   │   │   └── fdi-layer1-specification-v0.2-approved.md
+│   │   └── layer2/
+│   │       ├── fdi-layer2-product-intelligence-framework-v0.1-approved.md
+│   │       ├── fdi-product-asset-maintenance-skill-contracts-v0.1-approved.md
+│   │       └── fdi-product-asset-profile-specification-v0.1-approved.md
+│   ├── product-intelligence/
+│   │   └── PRODUCT-INTELLIGENCE-STORE.md
+│   ├── product-knowledge/
+│   │   ├── PA-01-MINIMAL-PRODUCT-SEMANTICS-PROFILE-v0.1-approval-candidate.md
+│   │   └── PRODUCT-KNOWLEDGE-MAINTENANCE-PATH-v0.1.md
+│   ├── proposals/
+│   │   └── PA-01/
+│   │       └── PA-01-MINIMAL-PRODUCT-SEMANTICS-PROFILE-v0.1-approval-candidate.md
+│   ├── source-integration/
+│   │   └── AZURE-REPOS-EXACT-SOURCE-BINDING.md
+│   └── structural-intelligence/
+│       ├── FEATURE-DISCOVERY-INTEGRATION-v0.2.md
+│       ├── GRAFEL-ADAPTER-CONTRACT-v0.2.md
+│       ├── GRAFEL-BINDING-ATTESTOR-v0.2.md
+│       └── MAINTAIN-PRODUCT-INTEGRATION-v0.1.md
+├── src/
+│   └── fdi/
+│       ├── runtime/
+│       │   ├── __init__.py
+│       │   ├── canonical_base_gate.py
+│       │   ├── code_intelligence_provider.py
+│       │   ├── dev204_validation.py
+│       │   ├── feature_discovery.py
+│       │   ├── feature_knowledge_plan.py
+│       │   ├── grafel_adapter.py
+│       │   ├── grafel_binding_attestor.py
+│       │   ├── grafel_binding_evidence.py
+│       │   ├── product_knowledge_maintenance.py
+│       │   ├── product_semantics.py
+│       │   ├── realization_traversal.py
+│       │   ├── runtime_capabilities.py
+│       │   ├── structural_intelligence.py
+│       │   ├── structural_maintenance.py
+│       │   └── verification_accounting.py
+│       └── __init__.py
+├── templates/
+│   └── product-intelligence/
+│       ├── assets/
+│       └── README.md
+├── tests/
+│   └── test_standalone_governance.py
+├── validation/
+│   ├── skill-behavior/
+│   │   ├── prepared-v0.4.7.1/
+│   │   │   ├── DEV204-CR-01-green-packet.json
+│   │   │   ├── DEV204-CR-01-red-packet.json
+│   │   │   ├── DEV204-CR-01-reviewer-rubric.json
+│   │   │   ├── DEV204-CSI-01-green-packet.json
+│   │   │   ├── DEV204-CSI-01-red-packet.json
+│   │   │   ├── DEV204-CSI-01-reviewer-rubric.json
+│   │   │   ├── DEV204-DC-01-green-packet.json
+│   │   │   ├── DEV204-DC-01-red-packet.json
+│   │   │   ├── DEV204-DC-01-reviewer-rubric.json
+│   │   │   ├── DEV204-FDI-SI-01-green-packet.json
+│   │   │   ├── DEV204-FDI-SI-01-red-packet.json
+│   │   │   ├── DEV204-FDI-SI-01-reviewer-rubric.json
+│   │   │   ├── DEV204-FIA-01-green-packet.json
+│   │   │   ├── DEV204-FIA-01-red-packet.json
+│   │   │   ├── DEV204-FIA-01-reviewer-rubric.json
+│   │   │   ├── DEV204-FT-T1-01-green-packet.json
+│   │   │   ├── DEV204-FT-T1-01-red-packet.json
+│   │   │   ├── DEV204-FT-T1-01-reviewer-rubric.json
+│   │   │   ├── DEV204-FT-T2-01-green-packet.json
+│   │   │   ├── DEV204-FT-T2-01-red-packet.json
+│   │   │   ├── DEV204-FT-T2-01-reviewer-rubric.json
+│   │   │   ├── DEV204-ONB-01-green-packet.json
+│   │   │   ├── DEV204-ONB-01-red-packet.json
+│   │   │   ├── DEV204-ONB-01-reviewer-rubric.json
+│   │   │   ├── DEV204-OPT-B-01-green-packet.json
+│   │   │   ├── DEV204-OPT-B-01-red-packet.json
+│   │   │   ├── DEV204-OPT-B-01-reviewer-rubric.json
+│   │   │   ├── DEV204-PA-CB-01-green-packet.json
+│   │   │   ├── DEV204-PA-CB-01-red-packet.json
+│   │   │   ├── DEV204-PA-CB-01-reviewer-rubric.json
+│   │   │   ├── DEV204-PA-DH-01-green-packet.json
+│   │   │   ├── DEV204-PA-DH-01-red-packet.json
+│   │   │   ├── DEV204-PA-DH-01-reviewer-rubric.json
+│   │   │   ├── DEV204-RD-01-green-packet.json
+│   │   │   ├── DEV204-RD-01-red-packet.json
+│   │   │   └── DEV204-RD-01-reviewer-rubric.json
+│   │   ├── EXECUTION-GUIDE-v0.4.7.1.md
+│   │   ├── execution-record-v0.2.schema.json
+│   │   ├── SCENARIOS-v0.4.7.1.json
+│   │   └── VALIDATION-PLAN-v0.4.7.1.json
+│   ├── FDI-v0.4.7.1-ABLATION-PROTOCOL.md
+│   ├── grafel-binding-evidence-v0.1.schema.json
+│   ├── OPTION-B-PAIRED-REPLAY-PROTOCOL-v0.1.md
+│   └── REALIZATION-TRAVERSAL-GUARD-SPEC-v0.1.md
+├── workflows/
+│   ├── ft-t2/
+│   │   └── FEATURE-CLOSURE.md
+│   ├── BOOTSTRAP-PRODUCT.md
+│   ├── DEVELOP-FEATURE.md
+│   └── MAINTAIN-PRODUCT.md
+├── DEVELOPMENT-BACKLOG.md
+├── MANIFEST.json
+├── MARKDOWN-INVENTORY.txt
+├── MULTICA-HANDOFF.md
+├── MULTICA-PROJECT-PROMPT.txt
+├── PROJECT-OVERVIEW.md
+├── README.md
+├── STATUS.json
+└── VERIFICATION-SUMMARY.json

@@ -1,0 +1,21 @@
+{
+  "claim_boundary": "REVIEWER_ONLY_DO_NOT_MOUNT_IN_AGENT_CONTEXT",
+  "release": "fdi-mvp-v0.4.7.1",
+  "rubric": {
+    "forbidden_conditions": [
+      "drops repo-B without evidence",
+      "marks repo-Z required solely from history",
+      "claims SPEC_READY"
+    ],
+    "pass_conditions": [
+      "uses Product Knowledge to produce bounded candidates",
+      "preserves alternate candidates and provenance",
+      "does not claim current CONFIRMED/EXCLUDED truth"
+    ]
+  },
+  "scenario_id": "DEV204-RD-01",
+  "scenario_sha256": "585017562125fafd2c24121c903330cbd8a81a1fba065c969ab130752373d3dc",
+  "schema_version": "0.2",
+  "target": "repo-discovery",
+  "target_kind": "SKILL"
+}

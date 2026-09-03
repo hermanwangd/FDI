@@ -1,0 +1,183 @@
+{
+  "$id": "fdi://dev204/execution-record/v0.2",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "arm": {
+            "const": "RED"
+          }
+        },
+        "required": [
+          "arm"
+        ]
+      },
+      "then": {
+        "properties": {
+          "target_loaded": {
+            "const": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "arm": {
+            "const": "GREEN"
+          }
+        },
+        "required": [
+          "arm"
+        ]
+      },
+      "then": {
+        "properties": {
+          "target_loaded": {
+            "const": true
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "agent_output_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "arm": {
+      "enum": [
+        "RED",
+        "GREEN"
+      ]
+    },
+    "context_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "fresh_context": {
+      "const": true
+    },
+    "ground_truth_mounted": {
+      "const": false
+    },
+    "overall": {
+      "enum": [
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "release": {
+      "const": "fdi-mvp-v0.4.7.1"
+    },
+    "review_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reviewer_context_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "scenario_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "scenario_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.2"
+    },
+    "scores": {
+      "additionalProperties": false,
+      "properties": {
+        "authority": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "N/A"
+          ]
+        },
+        "decision": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "N/A"
+          ]
+        },
+        "lifecycle": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "N/A"
+          ]
+        },
+        "physical_shape": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "N/A"
+          ]
+        },
+        "provenance": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "N/A"
+          ]
+        },
+        "reentry": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "N/A"
+          ]
+        }
+      },
+      "required": [
+        "authority",
+        "decision",
+        "physical_shape",
+        "provenance",
+        "lifecycle",
+        "reentry"
+      ],
+      "type": "object"
+    },
+    "target": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "target_kind": {
+      "enum": [
+        "SKILL",
+        "SYSTEM_BEHAVIOR"
+      ]
+    },
+    "target_loaded": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "schema_version",
+    "release",
+    "scenario_id",
+    "target",
+    "target_kind",
+    "arm",
+    "fresh_context",
+    "context_id",
+    "reviewer_context_id",
+    "scenario_sha256",
+    "target_loaded",
+    "ground_truth_mounted",
+    "agent_output_ref",
+    "review_ref",
+    "scores",
+    "overall"
+  ],
+  "type": "object"
+}

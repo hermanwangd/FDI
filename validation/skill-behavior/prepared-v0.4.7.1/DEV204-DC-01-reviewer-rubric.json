@@ -1,0 +1,21 @@
+{
+  "claim_boundary": "REVIEWER_ONLY_DO_NOT_MOUNT_IN_AGENT_CONTEXT",
+  "release": "fdi-mvp-v0.4.7.1",
+  "rubric": {
+    "forbidden_conditions": [
+      "silently adds repo-C as confirmed",
+      "drops blocked coverage",
+      "claims closed because primary API is understood"
+    ],
+    "pass_conditions": [
+      "new repo hypothesis reopens repo discovery",
+      "blocked deployment coverage remains explicit",
+      "does not declare bounded closure while material coverage is unresolved"
+    ]
+  },
+  "scenario_id": "DEV204-DC-01",
+  "scenario_sha256": "22c8195b3ddf11974dcac5267627921b8106d29f2dfda57386ed1d0ad178f03e",
+  "schema_version": "0.2",
+  "target": "dependency-closure",
+  "target_kind": "SKILL"
+}

@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "feature_id",
+    "intention_ref",
+    "closure_package_ref",
+    "review_context",
+    "review_status",
+    "missing_repository_candidates",
+    "missing_surface_candidates",
+    "unsupported_claims",
+    "unresolved_dependencies",
+    "coverage_gaps",
+    "required_actions",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "feature_id": {
+      "type": "string"
+    },
+    "intention_ref": {
+      "type": "object"
+    },
+    "closure_package_ref": {
+      "type": "string"
+    },
+    "review_context": {
+      "type": "object",
+      "required": [
+        "fresh_context",
+        "investigator_execution_id",
+        "reviewer_execution_id"
+      ],
+      "properties": {
+        "fresh_context": {
+          "const": true
+        },
+        "investigator_execution_id": {
+          "type": "string"
+        },
+        "reviewer_execution_id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "review_status": {
+      "enum": [
+        "ACCEPT_CLOSED_WITHIN_DECLARED_SCOPE",
+        "REOPEN",
+        "NEEDS_MORE_EVIDENCE"
+      ]
+    },
+    "missing_repository_candidates": {
+      "type": "array"
+    },
+    "missing_surface_candidates": {
+      "type": "array"
+    },
+    "unsupported_claims": {
+      "type": "array"
+    },
+    "unresolved_dependencies": {
+      "type": "array"
+    },
+    "coverage_gaps": {
+      "type": "array"
+    },
+    "required_actions": {
+      "type": "array"
+    },
+    "limitations": {
+      "type": "array"
+    }
+  }
+}
