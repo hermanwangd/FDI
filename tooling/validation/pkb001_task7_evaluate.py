@@ -477,7 +477,7 @@ def _validate_bound_inputs(root: Path, pre: dict[str, Any]) -> dict[str, Any]:
     return {"task6_manifest": task6_manifest, "key": key, "seal": seal}
 
 
-def evaluate_repository(root: Path) -> dict[str, Any]:
+def _evaluate_repository(root: Path) -> dict[str, Any]:
     root = root.resolve()
     try:
         pre = validate_pre_unblinding(root)
@@ -638,6 +638,14 @@ def evaluate_repository(root: Path) -> dict[str, Any]:
             "Non-human evaluator judgments do not establish Product meaning or permit semantic publication.",
         ],
     }
+
+
+def evaluate_repository(root: Path) -> dict[str, Any]:
+    """Evaluate fail-closed, persisting a STOP-shaped result for every validation error."""
+    try:
+        return _evaluate_repository(root)
+    except EvaluationError as error:
+        return stop_report("POST_BINDING_INTEGRITY_VALIDATION", error)
 
 
 def build_third_review_packet(report: dict[str, Any]) -> dict[str, Any]:

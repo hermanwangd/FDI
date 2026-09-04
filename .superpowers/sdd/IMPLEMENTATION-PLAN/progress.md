@@ -40,3 +40,6 @@ Task 6: complete (commits 7c8ae63..13c09cf, review clean)
 Task 7: Ruling: numeric acceptance thresholds were not frozen before generation/judgment, so observed metrics cannot support GO; evidence-valid execution may conclude only REVISE pending a pre-registered rerun and human Product Team review — cost if wrong: a possibly acceptable prototype is conservatively denied GO.
 Task 7: reporting minor resolved — Markdown includes unsupported-claim fractions and explicit decimal rates matching JSON.
 Task 7: complete (commits 13c09cf..0aab95b, review clean; reporting minor closed in final fix wave)
+Final review: fix wave commit 642b2ff; scoped re-review closed 4/5 original Important findings.
+Final review: resolved — sealed-key accounting/binding failures after the initial validation boundary now persist a `POST_BINDING_INTEGRITY_VALIDATION` STOP report and exit 2; digest-consistent `items:[]` is covered by regression test.
+Final review: resolved — final-fix-report now lists the active Petclinic Product Semantics SHA from `skills/pkb001/REGISTRY.json`; historical baseline bytes remain unchanged.

@@ -1,4 +1,5 @@
 import importlib.util
+import hashlib
 import json
 import shutil
 import subprocess
@@ -221,6 +222,41 @@ def test_task7_cli_persists_stop_and_returns_documented_nonzero_exit(tmp_path):
     assert json.loads(completed.stdout) == persisted
 
 
+def test_task7_cli_persists_stop_for_digest_consistent_invalid_key_accounting(tmp_path):
+    root = copied_evaluation_root(tmp_path / "invalid-key-root")
+    key_path = root / TASK6 / "sealed-blind-key.json"
+    key = json.loads(key_path.read_text())
+    key["items"] = []
+    key_path.write_text(json.dumps(key, indent=2) + "\n")
+    manifest_path = root / TASK6 / "manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    manifest["sealed_key_sha256"] = hashlib.sha256(key_path.read_bytes()).hexdigest()
+    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
+    report_path = tmp_path / "invalid-key-stop-report.json"
+    pending_path = tmp_path / "must-not-exist-key.json"
+
+    completed = subprocess.run(
+        [
+            sys.executable, str(MODULE_PATH), "--root", str(root),
+            "--report", str(report_path), "--pending", str(pending_path),
+        ],
+        check=False,
+        text=True,
+        capture_output=True,
+    )
+
+    assert completed.returncode == 2
+    assert completed.stderr == ""
+    persisted = json.loads(report_path.read_text())
+    assert persisted["decision"] == "STOP"
+    assert persisted["failure_stage"] == "POST_BINDING_INTEGRITY_VALIDATION"
+    assert persisted["unblinding_performed"] is False
+    assert persisted["metrics_computed"] is False
+    assert persisted["semantic_publication_allowed"] is False
+    assert not pending_path.exists()
+    assert json.loads(completed.stdout) == persisted
+
+
 def test_task7_decision_boundary_never_backfits_observed_metrics():
     evaluator = load_evaluator()
     assert evaluator.bounded_decision(
@@ -282,3 +318,13 @@ def test_task7_markdown_reports_unsupported_claim_decimal_rates():
     assert "19/20 (0.9500)" in report
     assert "10/10 (1.0000)" in report
     assert "29/30 (0.9667)" in report
+
+
+def test_final_fix_report_names_active_product_semantics_digest():
+    registry = json.loads((ROOT / "skills/pkb001/REGISTRY.json").read_text())
+    report = (
+        ROOT / ".superpowers/sdd/IMPLEMENTATION-PLAN/final-fix-report.md"
+    ).read_text()
+
+    assert registry["product_semantics_sha256"] in report
+    assert "Active Petclinic Product Semantics" in report

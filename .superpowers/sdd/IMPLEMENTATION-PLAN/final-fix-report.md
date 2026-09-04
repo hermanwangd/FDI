@@ -77,7 +77,7 @@ The report and validator explicitly state that path overlap is not exact graph-n
 
 Before and after this wave, the protected SHA-256 values are:
 
-- Product Semantics: `21cb8c2ad4cd78cba009f205dcba9dc359a0bd933ae494846539c0119bf9b1f4`
+- Active Petclinic Product Semantics: `72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea`
 - Evaluator gold: `4d22799e4d7597e0bbc302c9db3cd0510f70cc946cb5de5909ded9c4b1b112d1`
 - Ground-truth seal: `7290fd4aec80cbdd5cea52b30f9da5323e455843948746fc53208eecf6e2a55a`
 - Forward artifact/manifest/witness: `bfb2d72045a350e3684464ad1bae7cbdd8c06111882e1e9f02276211b81a0992`, `271e859f1f24ace30354b7a7f3315f0db2366d067ff6d30666bc57894ae53994`, `36fb66c248d698ca2e29744bf35b8f3cadaaa5cbcd7b4ca40a97597e1be050a5`
@@ -94,3 +94,7 @@ Before and after this wave, the protected SHA-256 values are:
 - Human Product Team review and any later semantic publication remain separate pending actions.
 
 The commit SHA is reported in the final handoff rather than embedded here, avoiding a self-referential report commit.
+
+## Follow-up review correction
+
+A subsequent scoped review found that sealed-key accounting failures after the initial bound-input checks could still escape as a traceback. The evaluator now wraps the entire evaluation boundary: any later `EvaluationError` becomes a persisted `POST_BINDING_INTEGRITY_VALIDATION` STOP report with exit `2`, `unblinding_performed:false`, and `metrics_computed:false`. A digest-consistent `items:[]` sealed-key mutation is the regression case. This section also corrects the protected Product Semantics digest above; the previously listed `21cb...` digest belongs to the historical FDI baseline, not the active Petclinic semantics.

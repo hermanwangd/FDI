@@ -29,7 +29,7 @@ Apply deterministic label/order blinding while keeping ground truth isolated fro
 ## 7. GO / REVISE / STOP decision
 
 - **GO:** exact snapshot binding and evidence validity pass, forward mappings are useful, reverse proposals meet the frozen acceptance thresholds, and completed Product Team human review approves the experiment decision. A `GO` decision does not itself publish semantics; semantic publication remains a separate explicit Product Team action.
-- **REVISE:** execution remains safe and evidence-valid but quality thresholds are missed.
+- **REVISE:** execution remains safe and evidence-valid, but quality thresholds are missed or were not pre-registered in time to support `GO`.
 - **STOP:** snapshot identity, isolation, evidence integrity, or Product-truth boundaries are violated.
 
 No R1/R2/R3/F1 experiment run begins until all six Phase 0 readiness flags pass: Product Semantics frozen, live Graphify interface verified, PK-S1 ready, PK-S2 ready with cutoff-bounded Delivery History, calibration dataset frozen, and evaluator ground truth sealed and isolated.
