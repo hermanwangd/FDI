@@ -1,0 +1,66 @@
+{
+  "schema_version": "pkb001.pk-s2.provenance-witness.v1",
+  "experiment_id": "PKB-001",
+  "run_id": "pkb001-reverse-task5-root-pkb001-reverse-run-20260904T170320Z",
+  "recorded_at": "2026-09-04T17:08:54Z",
+  "attestation_class": "ATTESTATION_NOT_CRYPTOGRAPHIC_PROOF",
+  "attestation_limit": "This committed witness records orchestration identity, declared isolation, ordering, and byte digests. It is review evidence and not cryptographic proof of model context or non-access.",
+  "orchestration": {
+    "identity": "/root/pkb001_reverse_run",
+    "fork_turns": "none",
+    "fresh_context": true,
+    "task": "Execute isolated PK-S2 reverse experiment",
+    "subagents_or_reviewers_used": false
+  },
+  "pre_generation_phase0": {
+    "path": "validation/pkb001/reports/phase0-readiness.json",
+    "fields_observed": {
+      "status": "READY",
+      "readiness_state": "READY"
+    },
+    "status": "READY",
+    "confirmed_at": "2026-09-04T17:03:20Z",
+    "artifact_generated_at": "2026-09-04T17:05:25Z",
+    "ordering": "PHASE0_READY_CONFIRMED_BEFORE_HYPOTHESIS_GENERATION"
+  },
+  "allowed_input_digests": {
+    ".superpowers/sdd/IMPLEMENTATION-PLAN/task-5-brief.md": "068d0d6f52d13b9b544ee993dcc6630bf758ba08b1a5c130854c73366c551d06",
+    "skills/pkb001/pk-s2-capability-hypothesis/SKILL.md": "5e5afa756e0341d284e48e7e0cb9694fbd7c1c333404248ab0f5cb200beba6c2",
+    "validation/pkb001/artifacts/petclinic-graph-818c413.json": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+    "validation/pkb001/runtime/graphify-petclinic-live-evidence.json": "fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8",
+    "validation/pkb001/datasets/petclinic-delivery-history.json": "87b70439f69bb82cee0139b65108ecce6044aff1a4d1b5ce6324933acbeab2d1",
+    "validation/pkb001/reports/phase0-readiness.json": "a6bb4627120558940639d5d8c56b2626644e486dd634e8b6073500c9f4b2c50c"
+  },
+  "primary_output_digests": {
+    "validation/pkb001/reverse-task5-pkb001_reverse_run/capability-hypotheses.json": "8037b14aae0ff1f9adbce30409ea29ba13d4d024f07dcaa3835eddcaba7cb450",
+    "validation/pkb001/reverse-task5-pkb001_reverse_run/public_validate.py": "4ea40966a9ee6aaf7cadd282b6e401620347ecadef4988e6fdf8b4dab9d6be3f"
+  },
+  "manifest_sha256": "f749bd9e02530f0d41c6af796d31f144ed424bda7263dce9bb3efb33e733e950",
+  "digest_topology": {
+    "manifest_binds": [
+      "all allowed inputs",
+      "capability-hypotheses.json",
+      "public_validate.py"
+    ],
+    "witness_binds": [
+      "all allowed inputs",
+      "capability-hypotheses.json",
+      "public_validate.py",
+      "manifest.json"
+    ],
+    "excluded_recursive_digests": [
+      "provenance-witness.json self digest",
+      "post-attestation public-validation-report.json"
+    ]
+  },
+  "source_binding": {
+    "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+    "delivery_history_sha256": "87b70439f69bb82cee0139b65108ecce6044aff1a4d1b5ce6324933acbeab2d1",
+    "history_cutoff": "2026-08-26T10:57:54Z"
+  },
+  "forbidden_inputs_accessed": false,
+  "product_semantics_visible": false,
+  "post_cutoff_knowledge_used": false,
+  "authority": "PROPOSAL_ONLY"
+}
