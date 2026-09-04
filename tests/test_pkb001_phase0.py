@@ -185,6 +185,58 @@ def test_repository_phase0_remains_blocked_without_external_evidence():
     assert 'P0-01' in result.stdout and 'P0-04' in result.stdout
 
 
+def test_live_graphify_verifier_records_exact_mcp_proof_and_keeps_phase0_not_ready(tmp_path):
+    evidence_path = tmp_path/'graphify-live-evidence.json'
+    result = subprocess.run(
+        ['python3', str(ROOT/'tooling/validation/graphify_live_verifier.py'),
+         '--root', str(ROOT), '--output', str(evidence_path)],
+        text=True, capture_output=True,
+    )
+    assert result.returncode == 0, result.stderr
+    evidence = json.loads(evidence_path.read_text())
+    assert evidence['result'] == 'EXACTLY_BOUND'
+    assert evidence['queryable'] is True
+    assert evidence['runtime_identity'] == 'graphifyy'
+    assert evidence['runtime_version'] == '0.1.14'
+    assert evidence['transport'] == 'MCP stdio'
+    assert evidence['mcp_version'] == '1.29.1'
+    assert evidence['source_provenance'] == {
+        'source_archive_sha256': '8d806aa861e0ffa2136eda227d79d290dfdb89bf0c63fd00a4e2b4ea59d445',
+        'zip_revision_comment': '91f4d120b630ee35c79bf3c75ccd186870a808f9',
+        'installed_direct_url': (ROOT/'.fdi-work/graphify-source/graphify-main').resolve().as_uri(),
+    }
+    assert evidence['supported_operations'] == [
+        'query_graph', 'get_node', 'get_neighbors', 'get_community', 'god_nodes',
+        'graph_stats', 'shortest_path',
+    ]
+    assert evidence['snapshot_binding'] == {
+        'requested_revision': '818c4136ea971c21674525f9053de0d9c7ad8cfe',
+        'indexed_revision': '818c4136ea971c21674525f9053de0d9c7ad8cfe',
+        'input_git_tree_oid': 'f92df0b05c91c7d29d81e70cf86f8678b0545bd2',
+        'graph_sha256': 'e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e',
+    }
+    assert evidence['queries']['node_query']['arguments'] == {
+        'label': 'PetClinicApplication.java'}
+    assert evidence['queries']['node_query']['is_error'] is False
+    assert 'Node: PetClinicApplication.java' in evidence['queries']['node_query']['result']['content'][0]['text']
+    assert evidence['queries']['shortest_path']['arguments']['max_hops'] == 1
+    assert evidence['queries']['shortest_path']['observed_hops'] == 1
+    assert evidence['queries']['shortest_path']['is_error'] is False
+    assert 'PetClinicApplication.java --contains [EXTRACTED]--> PetClinicApplication' in (
+        evidence['queries']['shortest_path']['result']['content'][0]['text'])
+    phase0 = json.loads((ROOT/'validation/pkb001/datasets/phase0-evidence.json').read_text())
+    live_path = ROOT/phase0['graphify']['live_evidence_path']
+    assert hashlib.sha256(live_path.read_bytes()).hexdigest() == phase0['graphify']['live_evidence_sha256']
+    assert phase0['graphify']['result'] == evidence['result']
+    assert phase0['graphify']['supported_operations'] == evidence['supported_operations']
+    assert phase0['graphify']['snapshot_binding'] == evidence['snapshot_binding']
+    readiness = evaluate_readiness(ROOT, phase0)
+    assert readiness['readiness_state'] == 'NOT_READY'
+    assert readiness['readiness_flags']['LIVE_GRAPHIFY_INTERFACE_VERIFIED'] is True
+    assert readiness['readiness_flags']['CALIBRATION_DATASET_FROZEN'] is False
+    assert readiness['readiness_flags']['GROUND_TRUTH_SEALED'] is False
+
+
 def test_gate_rejects_output_outside_repository(tmp_path):
     root = tmp_path/'repo'
     root.mkdir()

@@ -6,22 +6,35 @@
     "sha256": "72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea"
   },
   "graphify": {
-    "result": "STRUCTURAL_ARTIFACT_FROZEN",
-    "queryable": false,
+    "result": "EXACTLY_BOUND",
+    "queryable": true,
     "runtime_identity": "graphifyy",
     "runtime_version": "0.1.14",
-    "transport": "local artifact",
-    "wire_version": "graphify graph JSON",
-    "supported_operations": [],
+    "transport": "MCP stdio",
+    "wire_version": "MCP 2025-11-25",
+    "mcp_version": "1.29.1",
+    "supported_operations": [
+      "query_graph",
+      "get_node",
+      "get_neighbors",
+      "get_community",
+      "god_nodes",
+      "graph_stats",
+      "shortest_path"
+    ],
     "exact_revision_opened": true,
     "source_location_provenance": "git tree f92df0b05c91c7d29d81e70cf86f8678b0545bd2 at immutable commit 818c4136ea971c21674525f9053de0d9c7ad8cfe",
-    "structural_proof": {"node_query": false, "path_query": false},
+    "structural_proof": {"node_query": true, "path_query": true},
     "snapshot_binding": {
       "requested_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
-      "indexed_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe"
+      "indexed_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "input_git_tree_oid": "f92df0b05c91c7d29d81e70cf86f8678b0545bd2",
+      "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e"
     },
     "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
-    "input_policy_sha256": "3c0f7224ba4b75e04a0c3c69914b45ec52275932cc1c82a9772c8c876ca5dc6d"
+    "input_policy_sha256": "3c0f7224ba4b75e04a0c3c69914b45ec52275932cc1c82a9772c8c876ca5dc6d",
+    "live_evidence_path": "validation/pkb001/runtime/graphify-petclinic-live-evidence.json",
+    "live_evidence_sha256": "8d83592f0e0a0a13ed1163d52b0fad6be979fd5497c50bed5c75fc6d9d2af5f0"
   },
   "calibration": {
     "status": "AWAITING_PRODUCT_TEAM_APPROVAL",

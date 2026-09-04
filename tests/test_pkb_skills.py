@@ -92,6 +92,12 @@ def test_petclinic_structural_candidate_is_exactly_bound():
     assert candidate['graphify']['binding_status'] == 'EXACTLY_BOUND'
     assert candidate['graphify']['mode'] == 'AST_ONLY_NO_LLM'
     assert hashlib.sha256(graph_path.read_bytes()).hexdigest() == candidate['graphify']['artifact_sha256']
+    live_evidence_path = ROOT/candidate['graphify']['live_mcp_evidence_path']
+    live_evidence = json.loads(live_evidence_path.read_text())
+    assert candidate['graphify']['live_mcp_verification_status'] == 'EXACTLY_BOUND'
+    assert hashlib.sha256(live_evidence_path.read_bytes()).hexdigest() == candidate['graphify']['live_mcp_evidence_sha256']
+    assert live_evidence['result'] == candidate['graphify']['live_mcp_verification_status']
+    assert live_evidence['snapshot_binding']['requested_revision'] == candidate['source_commit_sha']
     assert len(graph['nodes']) == candidate['graphify']['node_count']
     assert len(graph['links']) == candidate['graphify']['edge_count']
     assert all(not item.get('source_file', '').startswith('/') for item in graph['nodes'])
