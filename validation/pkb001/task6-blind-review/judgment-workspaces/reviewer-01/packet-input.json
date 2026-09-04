@@ -1,0 +1,907 @@
+{
+  "allowed_outcomes": [
+    "SUPPORTED",
+    "PARTIALLY_SUPPORTED",
+    "UNSUPPORTED",
+    "DUPLICATE"
+  ],
+  "allowed_review_actions": [
+    "ACCEPT",
+    "RENAME",
+    "MERGE",
+    "SPLIT",
+    "REJECT",
+    "ADD_MISSING"
+  ],
+  "empty_judgment": {
+    "active_review_seconds": null,
+    "evidence_validity": null,
+    "limitations": null,
+    "outcome": null,
+    "precision": null,
+    "review_action": null,
+    "reviewer_notes": null,
+    "suggested_name": null,
+    "unsupported_claims": null,
+    "usefulness": null
+  },
+  "items": [
+    {
+      "blind_id": "BR-001",
+      "candidate_basis": "Bound create and update handlers call duplicate-name and update paths, while owner association and validator nodes are present; four linked delivery episodes exercise duplicate-name behavior, persisted association, name validation, and update regression coverage.",
+      "candidate_capability": "Companion record identity and update safeguards",
+      "complete_realization_proposed": true,
+      "component_refs": [],
+      "confidence_score": 0.93,
+      "evidence_refs": {
+        "delivery": {
+          "changed_path_refs": [
+            {
+              "commit_sha": "e0db9b184e028d41bcb626f3cbf03a942f67e104",
+              "path": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java"
+            },
+            {
+              "commit_sha": "676db04515ee5f289641cea6cb379dc02b40f67f",
+              "path": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java"
+            },
+            {
+              "commit_sha": "676db04515ee5f289641cea6cb379dc02b40f67f",
+              "path": "src/main/java/org/springframework/samples/petclinic/owner/PetValidator.java"
+            },
+            {
+              "commit_sha": "b11afec3af05e8ff5156566aa014f2036b276647",
+              "path": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java"
+            },
+            {
+              "commit_sha": "b3ee2c53e76e9267f03551a7cd36b0983c859c56",
+              "path": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java"
+            }
+          ],
+          "commit_shas": [
+            "b11afec3af05e8ff5156566aa014f2036b276647",
+            "b3ee2c53e76e9267f03551a7cd36b0983c859c56",
+            "e0db9b184e028d41bcb626f3cbf03a942f67e104",
+            "676db04515ee5f289641cea6cb379dc02b40f67f"
+          ],
+          "pull_request_numbers": [
+            2536,
+            2537,
+            2573,
+            2611
+          ]
+        },
+        "structural": {
+          "graph_edges": [
+            {
+              "relation": "calls",
+              "source": "petcontroller_petcontroller_processcreationform",
+              "target": "petcontroller_petcontroller_isduplicatepetnameviolation"
+            },
+            {
+              "relation": "calls",
+              "source": "petcontroller_petcontroller_processupdateform",
+              "target": "petcontroller_petcontroller_updatepetdetails"
+            },
+            {
+              "relation": "calls",
+              "source": "petcontroller_petcontroller_processupdateform",
+              "target": "petcontroller_petcontroller_isduplicatepetnameviolation"
+            }
+          ],
+          "graph_node_ids": [
+            "owner_owner_addpet",
+            "owner_owner_getpet",
+            "petcontroller_petcontroller_processcreationform",
+            "petcontroller_petcontroller_processupdateform",
+            "petcontroller_petcontroller_updatepetdetails",
+            "petcontroller_petcontroller_isduplicatepetnameviolation",
+            "petvalidator_petvalidator_validate"
+          ]
+        }
+      },
+      "judgment": {
+        "active_review_seconds": null,
+        "evidence_validity": null,
+        "limitations": null,
+        "outcome": null,
+        "precision": null,
+        "review_action": null,
+        "reviewer_notes": null,
+        "suggested_name": null,
+        "unsupported_claims": null,
+        "usefulness": null
+      },
+      "limitations": [
+        "Database uniqueness scripts and test behavior are delivery evidence but are not represented as graph nodes in the Java-only graph.",
+        "The graph does not provide cross-file edges between the controller, owner entity, and validator; convergence depends on shared delivery episodes.",
+        "The proposal intentionally does not decide whether creation, update, and validation are one Product Capability or several."
+      ]
+    },
+    {
+      "blind_id": "BR-002",
+      "candidate_basis": "Pet creation methods, owner aggregation, pet attribute mutators, and pet-type lookup form a coherent structural candidate for adding a typed, named, dated pet to an owner.",
+      "candidate_capability": "Register Pet",
+      "complete_realization_proposed": true,
+      "component_refs": [
+        "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java:L1"
+      ],
+      "confidence_score": 0.93,
+      "evidence_refs": {
+        "delivery": [],
+        "structural": [
+          {
+            "graph_node_id": "petcontroller_petcontroller_initcreationform",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L100"
+          },
+          {
+            "graph_node_id": "petcontroller_petcontroller_processcreationform",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L107"
+          },
+          {
+            "graph_node_id": "petcontroller_petcontroller_populatepettypes",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L62"
+          },
+          {
+            "graph_node_id": "owner_owner_addpet",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L97"
+          },
+          {
+            "graph_node_id": "namedentity_namedentity_setname",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/model/NamedEntity.java:L41"
+          },
+          {
+            "graph_node_id": "pet_pet_setbirthdate",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L61"
+          },
+          {
+            "graph_node_id": "pet_pet_settype",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L73"
+          },
+          {
+            "graph_node_id": "pettyperepository_pettyperepository_findpettypes",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java:L36"
+          }
+        ]
+      },
+      "judgment": {
+        "active_review_seconds": null,
+        "evidence_validity": null,
+        "limitations": null,
+        "outcome": null,
+        "precision": null,
+        "review_action": null,
+        "reviewer_notes": null,
+        "suggested_name": null,
+        "unsupported_claims": null,
+        "usefulness": null
+      },
+      "limitations": [
+        "The graph does not prove the transaction or UI binding joining these components."
+      ]
+    },
+    {
+      "blind_id": "BR-003",
+      "candidate_basis": "The graph connects list display to pagination and exposes resource-list, repository-list, collection, and specialty-access nodes; delivery history co-changed the directory components for pagination and later refined specialty ordering and controller representation handling.",
+      "candidate_capability": "Practitioner directory and specialty presentation",
+      "complete_realization_proposed": true,
+      "component_refs": [],
+      "confidence_score": 0.74,
+      "evidence_refs": {
+        "delivery": {
+          "changed_path_refs": [
+            {
+              "commit_sha": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+              "path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java"
+            },
+            {
+              "commit_sha": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+              "path": "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java"
+            },
+            {
+              "commit_sha": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+              "path": "src/main/java/org/springframework/samples/petclinic/vet/Vets.java"
+            },
+            {
+              "commit_sha": "73d73609b5dafb11e070f19150f66a4fc679d314",
+              "path": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java"
+            },
+            {
+              "commit_sha": "1312314e4ef7493f11596313d40c7ecb8429aed3",
+              "path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java"
+            }
+          ],
+          "commit_shas": [
+            "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+            "73d73609b5dafb11e070f19150f66a4fc679d314",
+            "1312314e4ef7493f11596313d40c7ecb8429aed3"
+          ],
+          "pull_request_numbers": [
+            1775,
+            2491
+          ]
+        },
+        "structural": {
+          "graph_edges": [
+            {
+              "relation": "calls",
+              "source": "vetcontroller_vetcontroller_showvetlist",
+              "target": "vetcontroller_vetcontroller_findpaginated"
+            },
+            {
+              "relation": "calls",
+              "source": "vetcontroller_vetcontroller_showvetlist",
+              "target": "vetcontroller_vetcontroller_addpaginationmodel"
+            }
+          ],
+          "graph_node_ids": [
+            "vet_vet_getspecialties",
+            "vetcontroller_vetcontroller_showvetlist",
+            "vetcontroller_vetcontroller_addpaginationmodel",
+            "vetcontroller_vetcontroller_findpaginated",
+            "vetcontroller_vetcontroller_showresourcesvetlist",
+            "vetrepository_vetrepository_findall",
+            "vets_vets_getvetlist"
+          ]
+        }
+      },
+      "judgment": {
+        "active_review_seconds": null,
+        "evidence_validity": null,
+        "limitations": null,
+        "outcome": null,
+        "precision": null,
+        "review_action": null,
+        "reviewer_notes": null,
+        "suggested_name": null,
+        "unsupported_claims": null,
+        "usefulness": null
+      },
+      "limitations": [
+        "The pagination commit is broad and changes owner, visit, cache, and practitioner paths together, weakening boundary precision.",
+        "Two cited pull requests are maintenance or refactoring changes and do not independently prove an end-user capability.",
+        "The HTML and serialized representations are not nodes in the Java-only graph."
+      ]
+    },
+    {
+      "blind_id": "BR-004",
+      "candidate_basis": "The controller exposes find-form, find-processing, and paginated last-name search methods, while the repository exposes a matching last-name-prefix query. Together these are direct structural candidates for search and result navigation.",
+      "candidate_capability": "Find Owners",
+      "complete_realization_proposed": true,
+      "component_refs": [
+        "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java:L1"
+      ],
+      "confidence_score": 0.95,
+      "evidence_refs": {
+        "delivery": [],
+        "structural": [
+          {
+            "graph_node_id": "ownercontroller_ownercontroller_initfindform",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L89"
+          },
+          {
+            "graph_node_id": "ownercontroller_ownercontroller_processfindform",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L94"
+          },
+          {
+            "graph_node_id": "ownercontroller_ownercontroller_findpaginatedforownerslastname",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L133"
+          },
+          {
+            "graph_node_id": "ownerrepository_ownerrepository_findbylastnamestartingwith",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java:L45"
+          }
+        ]
+      },
+      "judgment": {
+        "active_review_seconds": null,
+        "evidence_validity": null,
+        "limitations": null,
+        "outcome": null,
+        "precision": null,
+        "review_action": null,
+        "reviewer_notes": null,
+        "suggested_name": null,
+        "unsupported_claims": null,
+        "usefulness": null
+      },
+      "limitations": [
+        "Graph structure does not expose rendered result links or request mappings."
+      ]
+    },
+    {
+      "blind_id": "BR-005",
+      "candidate_basis": "Visit creation and processing methods explicitly load a pet with a visit, while the Visit model exposes date and description mutation and Owner exposes visit aggregation.",
+      "candidate_capability": "Record Pet Visit",
+      "complete_realization_proposed": true,
+      "component_refs": [
+        "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+      ],
+      "confidence_score": 0.96,
+      "evidence_refs": {
+        "delivery": [],
+        "structural": [
+          {
+            "graph_node_id": "visitcontroller_visitcontroller_loadpetwithvisit",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L63"
+          },
+          {
+            "graph_node_id": "visitcontroller_visitcontroller_initnewvisitform",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L90"
+          },
+          {
+            "graph_node_id": "visitcontroller_visitcontroller_processnewvisitform",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L97"
+          },
+          {
+            "graph_node_id": "visit_visit_setdate",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L56"
+          },
+          {
+            "graph_node_id": "visit_visit_setdescription",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L64"
+          },
+          {
+            "graph_node_id": "owner_owner_addvisit",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L173"
+          }
+        ]
+      },
+      "judgment": {
+        "active_review_seconds": null,
+        "evidence_validity": null,
+        "limitations": null,
+        "outcome": null,
+        "precision": null,
+        "review_action": null,
+        "reviewer_notes": null,
+        "suggested_name": null,
+        "unsupported_claims": null,
+        "usefulness": null
+      },
+      "limitations": [
+        "The extracted graph does not demonstrate persistence success or validation behavior."
+      ]
+    },
+    {
+      "blind_id": "BR-006",
+      "candidate_basis": "VetController exposes list and pagination methods, VetRepository exposes collection retrieval, and Vets exposes a list accessor, providing convergent structure for veterinarian browsing.",
+      "candidate_capability": "Browse Veterinarians",
+      "complete_realization_proposed": true,
+      "component_refs": [
+        "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/vet/Vets.java:L1"
+      ],
+      "confidence_score": 0.95,
+      "evidence_refs": {
+        "delivery": [],
+        "structural": [
+          {
+            "graph_node_id": "vetcontroller_vetcontroller_showvetlist",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L44"
+          },
+          {
+            "graph_node_id": "vetcontroller_vetcontroller_addpaginationmodel",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L50"
+          },
+          {
+            "graph_node_id": "vetcontroller_vetcontroller_findpaginated",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L59"
+          },
+          {
+            "graph_node_id": "vetrepository_vetrepository_findall",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java:L44"
+          },
+          {
+            "graph_node_id": "vets_vets_getvetlist",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vets.java:L35"
+          }
+        ]
+      },
+      "judgment": {
+        "active_review_seconds": null,
+        "evidence_validity": null,
+        "limitations": null,
+        "outcome": null,
+        "precision": null,
+        "review_action": null,
+        "reviewer_notes": null,
+        "suggested_name": null,
+        "unsupported_claims": null,
+        "usefulness": null
+      },
+      "limitations": [
+        "List presentation and navigation controls are outside the Java-only graph."
+      ]
+    },
+    {
+      "blind_id": "BR-007",
+      "candidate_basis": "The owner detail entry point, owner-to-pets accessor, pet-to-visits accessor, and visit display fields form a structural chain for reviewing visit history in owner and pet context.",
+      "candidate_capability": "Review Pet Visit History",
+      "complete_realization_proposed": true,
+      "component_refs": [
+        "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L1"
+      ],
+      "confidence_score": 0.84,
+      "evidence_refs": {
+        "delivery": [],
+        "structural": [
+          {
+            "graph_node_id": "ownercontroller_ownercontroller_showowner",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L169"
+          },
+          {
+            "graph_node_id": "owner_owner_getpets",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L93"
+          },
+          {
+            "graph_node_id": "pet_pet_getvisits",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L77"
+          },
+          {
+            "graph_node_id": "visit_visit_getdate",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L52"
+          },
+          {
+            "graph_node_id": "visit_visit_getdescription",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L60"
+          }
+        ]
+      },
+      "judgment": {
+        "active_review_seconds": null,
+        "evidence_validity": null,
+        "limitations": null,
+        "outcome": null,
+        "precision": null,
+        "review_action": null,
+        "reviewer_notes": null,
+        "suggested_name": null,
+        "unsupported_claims": null,
+        "usefulness": null
+      },
+      "limitations": [
+        "No view-template node confirms that the visit collection is rendered or ordered as history."
+      ]
+    },
+    {
+      "blind_id": "BR-008",
+      "candidate_basis": "The bound graph contains visit date accessors and controller nodes for minimum-date calculation and new-visit processing; one focused pull request changed both Java components together to validate future dates.",
+      "candidate_capability": "Visit date intake safeguards",
+      "complete_realization_proposed": true,
+      "component_refs": [],
+      "confidence_score": 0.88,
+      "evidence_refs": {
+        "delivery": {
+          "changed_path_refs": [
+            {
+              "commit_sha": "753d35c2f84432d88c0f3b61c9302a16069b78dd",
+              "path": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java"
+            },
+            {
+              "commit_sha": "753d35c2f84432d88c0f3b61c9302a16069b78dd",
+              "path": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java"
+            }
+          ],
+          "commit_shas": [
+            "753d35c2f84432d88c0f3b61c9302a16069b78dd"
+          ],
+          "pull_request_numbers": [
+            2490
+          ]
+        },
+        "structural": {
+          "graph_edges": [],
+          "graph_node_ids": [
+            "visit_visit_getdate",
+            "visit_visit_setdate",
+            "visitcontroller_visitcontroller_minvisitdate",
+            "visitcontroller_visitcontroller_processnewvisitform"
+          ]
+        }
+      },
+      "judgment": {
+        "active_review_seconds": null,
+        "evidence_validity": null,
+        "limitations": null,
+        "outcome": null,
+        "precision": null,
+        "review_action": null,
+        "reviewer_notes": null,
+        "suggested_name": null,
+        "unsupported_claims": null,
+        "usefulness": null
+      },
+      "limitations": [
+        "Only one delivery episode is cited, so independent repetition is absent.",
+        "No cross-file graph edge connects the visit entity and controller in this extraction.",
+        "The exact business exception policy and user wording are not established by the frozen evidence."
+      ]
+    },
+    {
+      "blind_id": "BR-009",
+      "candidate_basis": "WelcomeController.welcome is evidence for only the landing-page portion. Because the frozen capability also requires primary navigation and the Java-only graph contains no view or navigation nodes, the full capability cannot be mapped without exceeding the evidence boundary.",
+      "candidate_capability": "Access Clinic Home",
+      "complete_realization_proposed": false,
+      "component_refs": [],
+      "confidence_score": 0.96,
+      "evidence_refs": {
+        "delivery": [],
+        "structural": [
+          {
+            "graph_node_id": "welcomecontroller_welcomecontroller_welcome",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java:L25"
+          }
+        ]
+      },
+      "judgment": {
+        "active_review_seconds": null,
+        "evidence_validity": null,
+        "limitations": null,
+        "outcome": null,
+        "precision": null,
+        "review_action": null,
+        "reviewer_notes": null,
+        "suggested_name": null,
+        "unsupported_claims": null,
+        "usefulness": null
+      },
+      "limitations": [
+        "The WelcomeController remains partial evidence, not a realization proposal for the complete capability.",
+        "The Java-only graph contains no home template or navigation links."
+      ]
+    },
+    {
+      "blind_id": "BR-010",
+      "candidate_basis": "The graph exposes a find-form path into paginated owner lookup and a repository prefix-search operation; delivery episodes added owner-list pagination and later corrected whitespace handling on the same controller path.",
+      "candidate_capability": "Client record search and result browsing",
+      "complete_realization_proposed": true,
+      "component_refs": [],
+      "confidence_score": 0.86,
+      "evidence_refs": {
+        "delivery": {
+          "changed_path_refs": [
+            {
+              "commit_sha": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+              "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java"
+            },
+            {
+              "commit_sha": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+              "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java"
+            },
+            {
+              "commit_sha": "bb37aad8c332264723817d855e8b3b96b7c392bc",
+              "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java"
+            }
+          ],
+          "commit_shas": [
+            "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+            "bb37aad8c332264723817d855e8b3b96b7c392bc"
+          ],
+          "pull_request_numbers": [
+            2589
+          ]
+        },
+        "structural": {
+          "graph_edges": [
+            {
+              "relation": "calls",
+              "source": "ownercontroller_ownercontroller_processfindform",
+              "target": "ownercontroller_ownercontroller_findpaginatedforownerslastname"
+            }
+          ],
+          "graph_node_ids": [
+            "ownercontroller_ownercontroller_processfindform",
+            "ownercontroller_ownercontroller_findpaginatedforownerslastname",
+            "ownerrepository_ownerrepository_findbylastnamestartingwith"
+          ]
+        }
+      },
+      "judgment": {
+        "active_review_seconds": null,
+        "evidence_validity": null,
+        "limitations": null,
+        "outcome": null,
+        "precision": null,
+        "review_action": null,
+        "reviewer_notes": null,
+        "suggested_name": null,
+        "unsupported_claims": null,
+        "usefulness": null
+      },
+      "limitations": [
+        "The graph has no direct controller-to-repository call edge, so the repository association is supported by co-change and naming rather than a graph path.",
+        "The graph does not index the HTML templates, so the visible pagination experience is inferred from delivery paths and subjects.",
+        "This proposal does not establish the Product Team's preferred terminology or boundary."
+      ]
+    },
+    {
+      "blind_id": "BR-011",
+      "candidate_basis": "The graph exposes locale resolution and locale-change interception registered in web configuration; one linked delivery episode changed that same configuration alongside multiple translation bundles and presentation templates.",
+      "candidate_capability": "Locale-selectable presentation",
+      "complete_realization_proposed": true,
+      "component_refs": [],
+      "confidence_score": 0.79,
+      "evidence_refs": {
+        "delivery": {
+          "changed_path_refs": [
+            {
+              "commit_sha": "0c88f916db87a2a54c3cfa235d635248d400808b",
+              "path": "src/main/java/org/springframework/samples/petclinic/system/WebConfiguration.java"
+            },
+            {
+              "commit_sha": "0c88f916db87a2a54c3cfa235d635248d400808b",
+              "path": "src/main/resources/messages/messages_es.properties"
+            },
+            {
+              "commit_sha": "0c88f916db87a2a54c3cfa235d635248d400808b",
+              "path": "src/main/resources/templates/fragments/layout.html"
+            }
+          ],
+          "commit_shas": [
+            "0c88f916db87a2a54c3cfa235d635248d400808b"
+          ],
+          "pull_request_numbers": [
+            1856
+          ]
+        },
+        "structural": {
+          "graph_edges": [
+            {
+              "relation": "calls",
+              "source": "webconfiguration_webconfiguration_localechangeinterceptor",
+              "target": "webconfiguration_webconfiguration_addinterceptors"
+            }
+          ],
+          "graph_node_ids": [
+            "webconfiguration_webconfiguration_localeresolver",
+            "webconfiguration_webconfiguration_localechangeinterceptor",
+            "webconfiguration_webconfiguration_addinterceptors"
+          ]
+        }
+      },
+      "judgment": {
+        "active_review_seconds": null,
+        "evidence_validity": null,
+        "limitations": null,
+        "outcome": null,
+        "precision": null,
+        "review_action": null,
+        "reviewer_notes": null,
+        "suggested_name": null,
+        "unsupported_claims": null,
+        "usefulness": null
+      },
+      "limitations": [
+        "Translation completeness and runtime rendering are not proven by the Java-only graph.",
+        "Only one delivery episode overlaps the web configuration and localized resources in this proposal.",
+        "Language coverage and terminology remain Product Team review questions."
+      ]
+    },
+    {
+      "blind_id": "BR-012",
+      "candidate_basis": "Creation-form controller methods align with record registration, and person/owner mutators structurally cover name, address, and telephone contact fields.",
+      "candidate_capability": "Register Owner",
+      "complete_realization_proposed": true,
+      "component_refs": [
+        "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+      ],
+      "confidence_score": 0.93,
+      "evidence_refs": {
+        "delivery": [],
+        "structural": [
+          {
+            "graph_node_id": "ownercontroller_ownercontroller_initcreationform",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L72"
+          },
+          {
+            "graph_node_id": "ownercontroller_ownercontroller_processcreationform",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L77"
+          },
+          {
+            "graph_node_id": "person_person_setfirstname",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/model/Person.java:L45"
+          },
+          {
+            "graph_node_id": "person_person_setlastname",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/model/Person.java:L53"
+          },
+          {
+            "graph_node_id": "owner_owner_setaddress",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L73"
+          },
+          {
+            "graph_node_id": "owner_owner_settelephone",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L89"
+          }
+        ]
+      },
+      "judgment": {
+        "active_review_seconds": null,
+        "evidence_validity": null,
+        "limitations": null,
+        "outcome": null,
+        "precision": null,
+        "review_action": null,
+        "reviewer_notes": null,
+        "suggested_name": null,
+        "unsupported_claims": null,
+        "usefulness": null
+      },
+      "limitations": [
+        "Persistence calls and field validation are not proven by the extracted cross-component graph."
+      ]
+    },
+    {
+      "blind_id": "BR-013",
+      "candidate_basis": "The PetController has explicit update initialization, processing, and detail-update methods, paired with Pet mutators for identifying classification data.",
+      "candidate_capability": "Maintain Pet Details",
+      "complete_realization_proposed": true,
+      "component_refs": [
+        "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L1"
+      ],
+      "confidence_score": 0.95,
+      "evidence_refs": {
+        "delivery": [],
+        "structural": [
+          {
+            "graph_node_id": "petcontroller_petcontroller_initupdateform",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L139"
+          },
+          {
+            "graph_node_id": "petcontroller_petcontroller_processupdateform",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L144"
+          },
+          {
+            "graph_node_id": "petcontroller_petcontroller_updatepetdetails",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L186"
+          },
+          {
+            "graph_node_id": "pet_pet_setbirthdate",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L61"
+          },
+          {
+            "graph_node_id": "pet_pet_settype",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L73"
+          }
+        ]
+      },
+      "judgment": {
+        "active_review_seconds": null,
+        "evidence_validity": null,
+        "limitations": null,
+        "outcome": null,
+        "precision": null,
+        "review_action": null,
+        "reviewer_notes": null,
+        "suggested_name": null,
+        "unsupported_claims": null,
+        "usefulness": null
+      },
+      "limitations": [
+        "Name handling is inherited through NamedEntity and the graph does not establish form field coverage."
+      ]
+    },
+    {
+      "blind_id": "BR-014",
+      "candidate_basis": "Explicit owner update-form and show-owner methods support profile maintenance, while the Owner node exposes profile mutation and associated-pet access structure.",
+      "candidate_capability": "Maintain Owner Details",
+      "complete_realization_proposed": true,
+      "component_refs": [
+        "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+      ],
+      "confidence_score": 0.94,
+      "evidence_refs": {
+        "delivery": [],
+        "structural": [
+          {
+            "graph_node_id": "ownercontroller_ownercontroller_initupdateownerform",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L139"
+          },
+          {
+            "graph_node_id": "ownercontroller_ownercontroller_processupdateownerform",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L144"
+          },
+          {
+            "graph_node_id": "ownercontroller_ownercontroller_showowner",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L169"
+          },
+          {
+            "graph_node_id": "owner_owner_getpets",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L93"
+          },
+          {
+            "graph_node_id": "owner_owner_setcity",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L81"
+          }
+        ]
+      },
+      "judgment": {
+        "active_review_seconds": null,
+        "evidence_validity": null,
+        "limitations": null,
+        "outcome": null,
+        "precision": null,
+        "review_action": null,
+        "reviewer_notes": null,
+        "suggested_name": null,
+        "unsupported_claims": null,
+        "usefulness": null
+      },
+      "limitations": [
+        "Associated activity rendering is inferred only from structural accessors, not template evidence."
+      ]
+    },
+    {
+      "blind_id": "BR-015",
+      "candidate_basis": "The veterinarian list entry point and Vet specialty accessors, together with the Specialty type, directly support a candidate realization for associating specialties with each listed veterinarian.",
+      "candidate_capability": "Review Veterinarian Specialties",
+      "complete_realization_proposed": true,
+      "component_refs": [
+        "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/vet/Vet.java:L1",
+        "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java:L1"
+      ],
+      "confidence_score": 0.87,
+      "evidence_refs": {
+        "delivery": [],
+        "structural": [
+          {
+            "graph_node_id": "vetcontroller_vetcontroller_showvetlist",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L44"
+          },
+          {
+            "graph_node_id": "vet_vet_getspecialties",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java:L59"
+          },
+          {
+            "graph_node_id": "vet_vet_getnrofspecialties",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java:L66"
+          },
+          {
+            "graph_node_id": "specialty",
+            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java:L1"
+          }
+        ]
+      },
+      "judgment": {
+        "active_review_seconds": null,
+        "evidence_validity": null,
+        "limitations": null,
+        "outcome": null,
+        "precision": null,
+        "review_action": null,
+        "reviewer_notes": null,
+        "suggested_name": null,
+        "unsupported_claims": null,
+        "usefulness": null
+      },
+      "limitations": [
+        "The graph does not include the view responsible for displaying specialty names."
+      ]
+    }
+  ],
+  "judgment_dimensions": [
+    "evidence_validity",
+    "usefulness",
+    "unsupported_claims",
+    "precision",
+    "limitations",
+    "active_review_seconds"
+  ],
+  "packet_id": "pkb001-task6-blind-comparison-v1",
+  "review_status": "AWAITING_JUDGMENTS",
+  "schema_version": "pkb001.task6.blind-review-packet.v1"
+}

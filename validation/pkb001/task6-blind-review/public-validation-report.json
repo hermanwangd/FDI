@@ -1,0 +1,67 @@
+{
+  "checks": [
+    {
+      "detail": "Every packet input matches its recorded SHA-256",
+      "name": "input_digests",
+      "passed": true
+    },
+    {
+      "detail": "Both runs bind the same source commit and graph digest",
+      "name": "shared_source_binding",
+      "passed": true
+    },
+    {
+      "detail": "Every source record remains proposal-only",
+      "name": "proposal_only_bindings",
+      "passed": true
+    },
+    {
+      "detail": "All source attestation booleans explicitly remain false",
+      "name": "explicit_non_access_witness_booleans",
+      "passed": true
+    },
+    {
+      "detail": "Source artifact and manifest digests resolve",
+      "name": "source_artifact_digests",
+      "passed": true
+    },
+    {
+      "detail": "9 forward mappings, 1 unresolved forward result, and 5 reverse hypotheses are all present",
+      "name": "exact_item_accounting",
+      "passed": true
+    },
+    {
+      "detail": "Packet and separately sealed key digests bind exactly",
+      "name": "sealed_key_digest_binding",
+      "passed": true
+    },
+    {
+      "detail": "Packet contains neither arm labels nor source identifiers",
+      "name": "arm_label_and_identity_blinding",
+      "passed": true
+    },
+    {
+      "detail": "All 15 blank judgments use the frozen vocabulary and required dimensions",
+      "name": "frozen_judgment_vocabulary",
+      "passed": true
+    },
+    {
+      "detail": "Both evaluator workspaces contain identical packet bytes and cannot access keys or each other future judgments",
+      "name": "reviewer_isolation_contracts",
+      "passed": true
+    },
+    {
+      "detail": "Instructions separate measurement from human Product meaning authority",
+      "name": "authority_instructions",
+      "passed": true
+    },
+    {
+      "detail": "Packet preparation did not fabricate review or a final decision",
+      "name": "no_fabricated_judgment_or_final_decision",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "schema_version": "pkb001.task6.public-validation-report.v1",
+  "validation_scope": "PUBLIC_SEAM_ONLY_NO_JUDGMENT_OR_DECISION"
+}
