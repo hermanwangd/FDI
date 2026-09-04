@@ -1,4 +1,4 @@
-# Grafel Adapter Contract v0.2
+# Graphify Adapter Contract v0.2
 
 **FDI release:** v0.4.7.1
 **Classification:** reference provider adapter; not a governing Layer 1 or Product Asset contract.
@@ -15,14 +15,14 @@ trace
 diff
 ```
 
-The reference adapter maps that surface to Grafel v0.x operations:
+The reference adapter maps that surface to Graphify operations:
 
 ```text
-orient  → grafel_orient
-find    → grafel_find
-expand  → grafel_subgraph
-trace   → grafel_find_paths
-diff    → grafel_diff (aspect=refs)
+orient  → graphify_orient
+find    → graphify_find
+expand  → graphify_subgraph
+trace   → graphify_find_paths
+diff    → graphify_diff (aspect=refs)
 ```
 
 Provider tool names, raw response schemas, and provider provenance mechanics are adapter-local. They are not FDI governing contract vocabulary.
@@ -40,7 +40,7 @@ provider/version-specific binding_attestor
         ↓
 SnapshotBindingAttestation
         ↓
-GrafelAdapter routes with the attested provider scope + provider ref
+GraphifyAdapter routes with the attested provider scope + provider ref
         ↓
 bounded graph query
 ```
@@ -60,19 +60,19 @@ freshness = LIVE_CURRENT | FROZEN_INDEXED
 
 A metadata-only snapshot MUST NOT be described as source-bound execution evidence.
 
-### Why `grafel_index_status` is not the FDI binding contract
+### Why `graphify_index_status` is not the FDI binding contract
 
-Grafel's current index-status surface is useful for scheduler/current-index freshness, but **`grafel_index_status` alone is insufficient** as FDI's exact frozen-source attestation. Grafel also supports historical per-ref graph snapshots and explicit `ref` routing; a frozen ref may be queryable while not being the repository's current HEAD.
+Graphify's current index-status surface is useful for scheduler/current-index freshness, but **`graphify_index_status` alone is insufficient** as FDI's exact frozen-source attestation. Graphify also supports historical per-ref graph snapshots and explicit `ref` routing; a frozen ref may be queryable while not being the repository's current HEAD.
 
-The exact Grafel attestation mechanism is therefore intentionally injected. A version-specific implementation may combine Grafel ref/session provenance, provider store metadata, and source-control verification. v0.4.7.1 defines the fail-closed seam but does **not** claim that a live Grafel binding attestor has been executed.
+The exact Graphify attestation mechanism is therefore intentionally injected. A version-specific implementation may combine Graphify ref/session provenance, provider store metadata, and source-control verification. v0.4.7.1 defines the fail-closed seam but does **not** claim that a live Graphify binding attestor has been executed.
 
 ## Query routing MUST match the attestation
 
-After attestation, `GrafelAdapter` MUST pass the same provider route into the graph call:
+After attestation, `GraphifyAdapter` MUST pass the same provider route into the graph call:
 
 ```text
-SnapshotBindingAttestation.provider_route.scope_id → Grafel group
-SnapshotBindingAttestation.provider_route.ref      → Grafel ref
+SnapshotBindingAttestation.provider_route.scope_id → Graphify group
+SnapshotBindingAttestation.provider_route.ref      → Graphify ref
 ```
 
 The adapter MUST NOT attest one provider snapshot and then query an implicit cwd/current ref.
@@ -85,7 +85,7 @@ The adapter MUST NOT attest one provider snapshot and then query an implicit cwd
 before StructuralSnapshotRef
       ↓ binding_attestor
 before provider ref ─────┐
-                         ├─→ grafel_diff(aspect=refs)
+                         ├─→ graphify_diff(aspect=refs)
 after provider ref ──────┘
       ↑ binding_attestor
 after StructuralSnapshotRef
@@ -95,7 +95,7 @@ Both refs MUST:
 
 - be queryable;
 - prove exact canonical repository revisions;
-- belong to the same provider scope for one Grafel ref-to-ref diff;
+- belong to the same provider scope for one Graphify ref-to-ref diff;
 - be distinct provider refs.
 
 They do **not** both need `LIVE_CURRENT`; a frozen indexed before-ref and a live/current after-ref is valid.
@@ -113,7 +113,7 @@ and remains `non_authoritative = true`.
 
 ## Bounded normalization
 
-Provider results are eligible only after response mapping to FDI-normalized records. FDI enforces its own postconditions even if Grafel also accepts provider-side limits:
+Provider results are eligible only after response mapping to FDI-normalized records. FDI enforces its own postconditions even if Graphify also accepts provider-side limits:
 
 ```text
 relation allowlist
@@ -128,6 +128,6 @@ For trace/path operations, the mapper MUST emit stable `path_id` provenance. Wit
 
 ## Authority boundary
 
-Grafel observations, paths, impact hints, and diffs may guide candidate investigation or Product Intelligence maintenance. They cannot directly establish current `CONFIRMED`, `EXCLUDED`, `ChangeSurfaceSet`, `SPEC_READY`, Product Asset publication, or lifecycle transitions.
+Graphify observations, paths, impact hints, and diffs may guide candidate investigation or Product Intelligence maintenance. They cannot directly establish current `CONFIRMED`, `EXCLUDED`, `ChangeSurfaceSet`, `SPEC_READY`, Product Asset publication, or lifecycle transitions.
 
-This overlay still does not claim a live Grafel daemon/MCP integration run. A future Grafel version change should modify only the binding attestor, adapter, or mapper unless the provider-neutral FDI contract itself intentionally changes.
+This overlay still does not claim a live Graphify daemon/MCP integration run. A future Graphify version change should modify only the binding attestor, adapter, or mapper unless the provider-neutral FDI contract itself intentionally changes.

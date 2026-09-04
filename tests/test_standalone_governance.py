@@ -195,7 +195,10 @@ def test_active_provider_surface_uses_graphify_names_only():
     )
     for relative in tracked_paths():
         if relative.startswith(active):
-            text=(ROOT/relative).read_text()
+            path=ROOT/relative
+            if not path.exists():
+                continue
+            text=path.read_text()
             assert not re.search(r'Grafel|GRAFEL|grafel', text), relative
 
 
@@ -373,8 +376,8 @@ def test_reorganized_document_targets_exist_and_old_paths_are_absent():
         "docs/specifications/framework/product-knowledge/PRODUCT-KNOWLEDGE-MAINTENANCE-PATH-v0.1.md",
         "docs/specifications/framework/source-integration/AZURE-REPOS-EXACT-SOURCE-BINDING.md",
         "docs/specifications/framework/structural-intelligence/FEATURE-DISCOVERY-INTEGRATION-v0.2.md",
-        "docs/specifications/framework/structural-intelligence/GRAFEL-ADAPTER-CONTRACT-v0.2.md",
-        "docs/specifications/framework/structural-intelligence/GRAFEL-BINDING-ATTESTOR-v0.2.md",
+        "docs/specifications/framework/structural-intelligence/GRAPHIFY-ADAPTER-CONTRACT-v0.2.md",
+        "docs/specifications/framework/structural-intelligence/GRAPHIFY-BINDING-ATTESTOR-v0.2.md",
         "docs/specifications/framework/structural-intelligence/MAINTAIN-PRODUCT-INTEGRATION-v0.1.md",
         "docs/specifications/proposals/PA-01/PA-01-MINIMAL-PRODUCT-SEMANTICS-PROFILE-v0.1-approval-candidate.md",
         "docs/planning/DEVELOPMENT-BACKLOG.md",
@@ -576,7 +579,7 @@ def test_verification_summary_never_claims_pass_without_execution_evidence(tmp_p
         "unit_tests": "NOT_RUN",
     }
     assert "PASS" not in json.dumps(summary)
-    for key in ("real_product_binding", "live_grafel", "DEV204", "F001"):
+    for key in ("real_product_binding", "live_graphify", "DEV204", "F001"):
         assert summary["claims"][key] == "NOT_EXECUTED"
 
 
@@ -642,8 +645,8 @@ def test_overview_documents_runtime_implementation_and_evidence_readiness():
     assert "# 34. Runtime Implementation" in overview
     assert "Java 17" in overview
     assert "Spring Boot 3.4.1" in overview
-    assert "Grafel-named provider integration" in overview
-    assert "Graphify rename/migration is planned and separate" in overview
+    assert "Graphify-named provider integration" in overview
+    assert "Graphify naming and local contract migration is implemented" in overview
     assert "# 35. Readiness and Evidence Status" in overview
 
 
@@ -671,7 +674,7 @@ def test_validation_tooling_and_template_targets_exist_and_old_paths_are_absent(
         "validation/deterministic/OPTION-B-PAIRED-REPLAY-PROTOCOL-v0.1.md",
         "validation/deterministic/REALIZATION-TRAVERSAL-GUARD-SPEC-v0.1.md",
         "validation/reports",
-        "contracts/providers/graphify/grafel-binding-evidence-v0.1.schema.json",
+        "contracts/providers/graphify/graphify-binding-evidence-v0.1.schema.json",
         "tooling/packaging",
         "tooling/verification",
         "tooling/migration",

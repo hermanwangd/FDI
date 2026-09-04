@@ -20,7 +20,7 @@ summary={
     "standalone_governing_content_available": "NOT_RECORDED",
     "upstream_byte_identity": "NOT_CLAIMED",
     "real_product_binding": "NOT_EXECUTED",
-    "live_grafel": "NOT_EXECUTED",
+    "live_graphify": "NOT_EXECUTED",
     "DEV204": "NOT_EXECUTED",
     "F001": "NOT_EXECUTED",
     "empirical_uplift": "NOT_ESTABLISHED"

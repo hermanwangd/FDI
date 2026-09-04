@@ -7,7 +7,7 @@
 | DEV-218 | archival approved-byte rehydration / exact upstream byte proof | OPEN — semantic content is local, upstream byte identity not claimed | exact upstream bytes/digests reconciled without semantic change |
 | DEV-219 | complete Git Product Intelligence Store | READY | ProductAssetRepository/Governance/Registry path complete |
 | DEV-220 | Azure Repos exact source binding | READY | real read-only repo set bound to full SHAs |
-| DEV-221 | real Grafel exact binding | READY_AFTER_DEV220 | SnapshotBindingAttestation against real repos |
+| DEV-221 | real Graphify exact binding | READY_AFTER_DEV220 | SnapshotBindingAttestation against real repos |
 | DEV-222 | PA-03 bootstrap | READY_AFTER_DEV220 | real bounded repository inventory proposal |
 | DEV-223 | Product Knowledge synthesis / PA-01 proposal | READY_AFTER_DEV222 | governed proposal; no silent authority |
 | DEV-224 | publication + Registry | READY_AFTER_ACCOUNTABLE_REVIEW | exact published active refs resolvable |

@@ -15,4 +15,4 @@ Separate responsibilities:
 - `ProductAssetRepository` persists exact revisions (MVP: Git adapter);
 - `ProductAssetRegistry` is derived/rebuildable navigation/selection, never independent authority.
 
-Published semantic revisions are immutable. New meaning creates a new Asset revision. Registry must be rebuildable from authoritative Asset state. Structural Intelligence (Grafel) is rebuildable code intelligence and is **not** the canonical Product Intelligence store.
+Published semantic revisions are immutable. New meaning creates a new Asset revision. Registry must be rebuildable from authoritative Asset state. Structural Intelligence (Graphify) is rebuildable code intelligence and is **not** the canonical Product Intelligence store.
