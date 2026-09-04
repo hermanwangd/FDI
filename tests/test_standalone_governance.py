@@ -62,7 +62,7 @@ def stale_path_patterns():
         if old_path in {"skills", "workflows"}:
             yield r'(?<![A-Za-z0-9_./-])' + re.escape(old_path) + r'/'
             continue
-        prefix = r'(?<!/)' if '/' not in old_path else ''
+        prefix = r'(?<![A-Za-z0-9_./-])' if '/' not in old_path else ''
         yield prefix + re.escape(old_path) + r'(?![A-Za-z0-9_.-])'
 def local_markdown_links(path):
     text=path.read_text()
@@ -154,6 +154,19 @@ def test_pkb001_candidate_spec_has_fail_closed_phase_zero_gate():
     assert 'rc4 is not rc9' in text
     assert 'PROPOSAL_ONLY' in text
     assert 'CURRENT_STRUCTURE_HEURISTIC' in text
+
+
+def test_rc9_candidate_is_materialized_exactly_and_plan_identity_is_clean():
+    rc9=ROOT/'docs/specifications/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc9.md'
+    plan=ROOT/'docs/planning/IMPLEMENTATION-PLAN-v0.13-RC9-PRODUCT-SEMANTICS-MANUAL-SEED.md'
+    assert sha(rc9)=='b63c13abe4c0a593597def930ca3ee26258c437aeeafc8d274b7d0454ffecb06'
+    text=plan.read_text()
+    assert '**Framework Spec:** FDI Framework Specification v0.1-rc9' in text
+    for stale in ('implements the rc4 Lean Core', 'active rc4 files', 'rc4 spec digest'):
+        assert stale not in text
+    reconciliation=json.loads((ROOT/'docs/reviews/RC9-AUTHORITY-RECONCILIATION.json').read_text())
+    assert reconciliation['fc03_fix_source']=='EMBEDDED_IN_RC9_SECTIONS_7_4_AND_9'
+    assert reconciliation['governance_status']=='CONTRACT_CANDIDATE_NOT_GOVERNING_APPROVED'
 
 
 def test_pkb001_validation_local_schemas_are_strict_and_non_authoritative():

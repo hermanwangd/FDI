@@ -287,7 +287,10 @@ MAVEN_OPTS='-Xmx2g' ./mvnw package
 
 ## 13. Current disposition
 
-`REVISE / BLOCKED`: this specification resolves the protocol gaps, but rc9
-authority/provenance closure, live Graphify readiness, executable PK-S1/PK-S2,
-and a pinned calibration snapshot are not established by this document. PKB-001
-has not been executed.
+`REVISE / BLOCKED`: the exact rc9 candidate bytes and the identity-corrected
+implementation plan are now materialized and reconciled in
+`docs/reviews/RC9-AUTHORITY-RECONCILIATION.json`. They remain non-governing
+until an approved governance lock and matching release chain promote them.
+Live Graphify readiness, executable PK-S1/PK-S2, and a pinned calibration
+snapshot are also not established by this document. PKB-001 has not been
+executed.

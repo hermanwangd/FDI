@@ -23,6 +23,8 @@ Every entry is labelled by authority. This index is navigational and does not su
 
 ## Candidate specifications and implementation guidance
 
+- [FDI Framework Specification v0.1-rc9](specifications/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc9.md) — byte-exact candidate supplied for reconciliation; not governing-approved.
+- [RC9 Product Semantics manual-seed plan](planning/IMPLEMENTATION-PLAN-v0.13-RC9-PRODUCT-SEMANTICS-MANUAL-SEED.md) and [authority reconciliation record](reviews/RC9-AUTHORITY-RECONCILIATION.json) — corrected candidate implementation identity and provenance; neither changes the active governance lock.
 - [Product Intelligence](specifications/framework/product-intelligence/), [Product Knowledge](specifications/framework/product-knowledge/), [source integration](specifications/framework/source-integration/), and [Structural Intelligence](specifications/framework/structural-intelligence/) — non-governing specifications unless separately listed in the governing-source lock.
 - [Architecture decisions](architecture/decisions/) — implementation decisions; they do not override approved semantics.
 - [Configuration guidance](../config/) — runtime examples and Multica mapping instructions.

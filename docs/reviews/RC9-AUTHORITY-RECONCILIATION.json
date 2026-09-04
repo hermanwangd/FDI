@@ -1,0 +1,31 @@
+{
+  "record_version": "0.1",
+  "status": "CANDIDATE_CHAIN_RECONCILED",
+  "framework": {
+    "path": "docs/specifications/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc9.md",
+    "source_locator": "user-supplied Downloads artifact",
+    "sha256": "b63c13abe4c0a593597def930ca3ee26258c437aeeafc8d274b7d0454ffecb06",
+    "bytes_preserved_exactly": true
+  },
+  "implementation_plan": {
+    "path": "docs/planning/IMPLEMENTATION-PLAN-v0.13-RC9-PRODUCT-SEMANTICS-MANUAL-SEED.md",
+    "source_sha256": "9881fe8754275ff343c5d2395e3a71043ab8784e13264235f310add4a70d7234",
+    "materialized_sha256": "22e10e8c8fea1383c8dedeab7d26339940d9a7ae973acba8be744ff937f03040",
+    "identity_corrections": [
+      "implements the rc4 Lean Core -> implements the rc9 Lean Core",
+      "active rc4 files -> active rc9 files",
+      "rc4 spec digest -> rc9 spec digest",
+      "inline stale-root grep -> repository stale-path governance test"
+    ]
+  },
+  "fc03_fix_source": "EMBEDDED_IN_RC9_SECTIONS_7_4_AND_9",
+  "fc03_public_surface_change": "NONE",
+  "governance_status": "CONTRACT_CANDIDATE_NOT_GOVERNING_APPROVED",
+  "active_governance_lock_changed": false,
+  "release_metadata_status": "INCLUDED_IN_REGENERATED_RELEASE_METADATA",
+  "limitations": [
+    "The rc9 intended-project-location metadata names the pre-reorganization specs/framework path; candidate bytes are preserved exactly.",
+    "No independent FC-03 patch artifact was supplied; the embedded rc9 FC-03 sections are treated as final for candidate reconciliation.",
+    "This record does not promote rc9 into governance/approved."
+  ]
+}
