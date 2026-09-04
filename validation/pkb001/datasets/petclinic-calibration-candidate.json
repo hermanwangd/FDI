@@ -1,0 +1,40 @@
+{
+  "selection_id": "pkb001-petclinic-818c413-candidate",
+  "status": "STRUCTURAL_EVIDENCE_FROZEN",
+  "repository": "https://github.com/spring-projects/spring-petclinic.git",
+  "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "source_tree_oid": "0bb31bb92bc1839f6378e832e54c8b4af03e4ee2",
+  "source_ref_kind": "IMMUTABLE_GIT_COMMIT",
+  "license": "Apache-2.0",
+  "observed_file_count": 132,
+  "observed_java_file_count": 50,
+  "graphify_input": {
+    "path": "src/main/java",
+    "git_tree_oid": "f92df0b05c91c7d29d81e70cf86f8678b0545bd2",
+    "java_file_count": 30
+  },
+  "graphify": {
+    "provider": "graphifyy",
+    "provider_version": "0.1.14",
+    "binding_status": "EXACTLY_BOUND",
+    "mode": "AST_ONLY_NO_LLM",
+    "artifact_path": "validation/pkb001/artifacts/petclinic-graph-818c413.json",
+    "artifact_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+    "node_count": 140,
+    "edge_count": 142,
+    "source_paths": "REPOSITORY_RELATIVE"
+  },
+  "delivery_history": {
+    "status": "FROZEN",
+    "cutoff": "2026-08-26T10:57:54Z",
+    "artifact_path": "validation/pkb001/datasets/petclinic-delivery-history.json",
+    "artifact_sha256": "87b70439f69bb82cee0139b65108ecce6044aff1a4d1b5ce6324933acbeab2d1",
+    "commit_count": 1042,
+    "pull_request_count": 91,
+    "pull_request_acquisition_limit": 100,
+    "post_cutoff_knowledge_policy": "EXCLUDE_AFTER_CUTOFF"
+  },
+  "selection_reason": "Non-FDI Java product with explicit owner, pet, visit, and veterinarian workflows plus substantial pull-request history.",
+  "self_referential_bias": false,
+  "post_cutoff_knowledge_policy": "EXCLUDE_AFTER_CUTOFF"
+}

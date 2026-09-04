@@ -17,7 +17,8 @@ def test_four_active_truth_entries_exist_and_resolve():
         'phase': 'prototype',
         'framework_spec': 'FRAMEWORK-SPEC.md',
         'implementation_plan': 'IMPLEMENTATION-PLAN.md',
-        'next_action': 'Review the six real Skill proposals in the prepared Chinese blind packet and obtain reviewer 2',
+        'decision': 'REVISE',
+        'next_action': 'Approve or revise the 10-capability Petclinic Product Semantics candidate before freezing evaluator mappings and running the experiments',
         'archived_documents_are_authority': False,
     }
 
@@ -61,15 +62,15 @@ def test_runtime_probe_without_descriptor_makes_no_api_claim(tmp_path):
     assert result['api_assumptions'] == []
 
 
-def test_phase0_is_ready_only_after_all_six_flags_pass():
+def test_phase0_is_blocked_pending_product_approval_and_evaluator_seal():
     report = json.loads((ROOT/'validation/pkb001/reports/phase0-readiness.json').read_text())
-    assert report['status'] == 'READY'
-    assert report['readiness_state'] == 'READY'
+    assert report['status'] == 'BLOCKED'
+    assert report['readiness_state'] == 'NOT_READY'
     assert report['readiness_flags'] == {
-        'PRODUCT_SEMANTICS_FROZEN': True,
-        'LIVE_GRAPHIFY_INTERFACE_VERIFIED': True,
+        'PRODUCT_SEMANTICS_FROZEN': False,
+        'LIVE_GRAPHIFY_INTERFACE_VERIFIED': False,
         'PK_S1_EXECUTION_READY': True,
         'PK_S2_EXECUTION_READY': True,
-        'CALIBRATION_DATASET_FROZEN': True,
-        'GROUND_TRUTH_SEALED': True,
+        'CALIBRATION_DATASET_FROZEN': False,
+        'GROUND_TRUTH_SEALED': False,
     }

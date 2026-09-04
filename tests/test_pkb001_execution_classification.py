@@ -16,15 +16,16 @@ def test_deterministic_outputs_are_classified_only_as_code_baseline():
     assert record['claim_boundary'] == 'NOT_SKILL_EXECUTION_NOT_PRODUCT_TRUTH'
 
 
-def test_pk_s1_and_fresh_context_pk_s2_are_executed_as_skills():
+def test_leaked_pk_s1_is_invalidated_and_pk_s2_remains_proposal_only():
     pk_s1 = json.loads((
-        ROOT/'validation/pkb001/skill-runs/PK-S1-510a397/output.json'
+        ROOT/'validation/pkb001/baselines/leaked-forward/PK-S1-510a397/output.json'
     ).read_text())
     pk_s2 = json.loads((
         ROOT/'validation/pkb001/skill-runs/PK-S2-510a397/output.json'
     ).read_text())
     assert pk_s1['execution_kind'] == 'SKILL_EXECUTION'
-    assert pk_s1['status'] == 'COMPLETE'
+    assert pk_s1['status'] == 'INVALIDATED_INPUT_LEAKAGE'
+    assert pk_s1['evaluation_valid'] is False
     assert pk_s1['authority_status'] == 'PROPOSAL_ONLY'
     assert len(pk_s1['mappings']) == 2
     assert pk_s2['status'] == 'COMPLETED'
@@ -32,9 +33,9 @@ def test_pk_s1_and_fresh_context_pk_s2_are_executed_as_skills():
     assert len(pk_s2['hypotheses']) == 4
 
 
-def test_pk_s1_evidence_resolves_in_exact_graph():
+def test_invalidated_pk_s1_evidence_still_resolves_in_exact_graph():
     output = json.loads((
-        ROOT/'validation/pkb001/skill-runs/PK-S1-510a397/output.json'
+        ROOT/'validation/pkb001/baselines/leaked-forward/PK-S1-510a397/output.json'
     ).read_text())
     graph = json.loads((
         ROOT/'validation/pkb001/artifacts/graph-510a397.json'

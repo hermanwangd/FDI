@@ -22,10 +22,10 @@ If an input is absent, mismatched, ambiguous, or outside the frozen snapshot, re
 
 For each frozen capability:
 
-1. Read its identifier, description, and expected realization boundary.
+1. Read only its identifier, name, and description; do not access expected components or realization boundaries.
 2. Query only the exactly bound Graphify graph for candidate files, types, neighbors, and bounded paths.
 3. Retain citations to graph nodes and source locations.
-4. Emit a mapping only when the evidence is inside the declared boundary; otherwise emit an unresolved item.
+4. Emit a mapping only when structural evidence supports the capability description; otherwise emit an unresolved item.
 5. Record confidence and all limitations without shortening or duplicating the revision.
 
 ## Output boundary

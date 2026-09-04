@@ -1,25 +1,25 @@
 {
   "experiment": "PKB-001",
-  "status": "READY",
-  "readiness_state": "READY",
+  "status": "BLOCKED",
+  "readiness_state": "NOT_READY",
   "readiness_flags": {
-    "PRODUCT_SEMANTICS_FROZEN": true,
-    "LIVE_GRAPHIFY_INTERFACE_VERIFIED": true,
+    "PRODUCT_SEMANTICS_FROZEN": false,
+    "LIVE_GRAPHIFY_INTERFACE_VERIFIED": false,
     "PK_S1_EXECUTION_READY": true,
     "PK_S2_EXECUTION_READY": true,
-    "CALIBRATION_DATASET_FROZEN": true,
-    "GROUND_TRUTH_SEALED": true
+    "CALIBRATION_DATASET_FROZEN": false,
+    "GROUND_TRUTH_SEALED": false
   },
   "prerequisites": [
     {
       "id": "P0-01",
-      "status": "SATISFIED",
-      "reason": "Product Semantics frozen by Product Team"
+      "status": "MISMATCH",
+      "reason": "Product Semantics is not frozen by Product Team"
     },
     {
       "id": "P0-02",
-      "status": "SATISFIED",
-      "reason": "exact Graphify binding verified"
+      "status": "MISMATCH",
+      "reason": "Graphify evidence is incomplete or invalid"
     },
     {
       "id": "P0-03",
@@ -28,13 +28,13 @@
     },
     {
       "id": "P0-04",
-      "status": "SATISFIED",
-      "reason": "calibration dataset frozen"
+      "status": "MISMATCH",
+      "reason": "calibration or post-cutoff policy is incomplete"
     },
     {
       "id": "P0-05",
-      "status": "SATISFIED",
-      "reason": "evaluator ground truth sealed"
+      "status": "MISMATCH",
+      "reason": "ground truth, isolation, or review protocol is incomplete"
     }
   ]
 }

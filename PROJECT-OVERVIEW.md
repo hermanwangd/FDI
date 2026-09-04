@@ -22,4 +22,4 @@ Everything under `archive/` is historical reference and must not be used to dete
 
 ## Current next action
 
-Complete the prepared six-item Chinese blind review packet for the real Skill outputs, then obtain an independent second review. PK-S1 produced two proposal-only forward mappings; fresh-context PK-S2 produced four proposal-only reverse hypotheses using only the exactly bound Graphify graph and frozen Delivery History. The earlier 21 outputs remain a deterministic code baseline and are not included in Skill evaluation. No GO / REVISE / STOP decision is valid yet.
+Review the 10-capability Spring Petclinic Product Semantics candidate. Exact-revision Graphify Structural Intelligence and cutoff-bounded Delivery History evidence are prepared, but evaluator mappings and experiments remain blocked until Product Team approval freezes capability meaning. The previous FDI forward Skill output was invalidated because expected realization boundaries leaked into Skill-visible semantics. The prior deterministic outputs remain code baselines only. Current prototype decision: `REVISE`.
