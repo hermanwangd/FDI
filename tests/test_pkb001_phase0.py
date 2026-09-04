@@ -23,6 +23,7 @@ def valid_acquisition_manifest(source_root, **overrides):
         'acquisition_method': 'git fetch by immutable commit',
         'history_source': 'https://api.github.com/repos/example/project',
         'history_cutoff': '2026-09-04T00:00:00Z',
+        'post_cutoff_knowledge_policy': 'EXCLUDE_AFTER_CUTOFF',
         'license': 'AGPL-3.0-only',
         'max_repository_bytes': 1024,
         'max_file_count': 10,
@@ -44,18 +45,26 @@ def test_gate_blocks_when_any_prerequisite_is_missing(tmp_path):
     result = evaluate_readiness(tmp_path, {})
     assert result['status'] == 'BLOCKED'
     assert [item['id'] for item in result['prerequisites']] == [
-        'P0-01', 'P0-02', 'P0-03', 'P0-04', 'P0-05', 'P0-06', 'P0-07']
+        'P0-01', 'P0-02', 'P0-03', 'P0-04', 'P0-05']
     assert all(item['status'] == 'MISSING' for item in result['prerequisites'])
+    assert result['readiness_flags'] == {
+        'RC9_AUTHORITY_VERIFIED': False,
+        'LIVE_GRAPHIFY_INTERFACE_VERIFIED': False,
+        'PK_S1_EXECUTION_READY': False,
+        'PK_S2_EXECUTION_READY': False,
+        'CALIBRATION_DATASET_FROZEN': False,
+        'GROUND_TRUTH_SEALED': False,
+    }
 
 
 def test_gate_never_treats_rc4_as_rc9(tmp_path):
     framework = tmp_path/'framework.md'
     framework.write_text('framework rc4')
-    evidence = {'framework': {
+    evidence = {'rc9_authority': {'framework': {
         'version': 'v0.1-rc4',
         'path': 'framework.md',
         'sha256': hashlib.sha256(framework.read_bytes()).hexdigest(),
-    }}
+    }}}
     result = evaluate_readiness(tmp_path, evidence)
     assert result['prerequisites'][0]['status'] == 'MISMATCH'
 
@@ -67,20 +76,54 @@ def test_gate_is_ready_only_with_all_verified_evidence(tmp_path):
     (tmp_path/'pk-s1/SKILL.md').write_text('# PK-S1')
     (tmp_path/'pk-s2/SKILL.md').parent.mkdir(parents=True)
     (tmp_path/'pk-s2/SKILL.md').write_text('# PK-S2')
+    authority_sha = hashlib.sha256(framework.read_bytes()).hexdigest()
+    authority = {'framework': {'version': 'v0.1-rc9', 'path': 'framework.md',
+                               'sha256': authority_sha}}
+    for key, name in (
+        ('fc03_fix', 'fc03.md'), ('implementation_plan', 'implementation-plan.md'),
+        ('governance_lock', 'governance-lock.json'), ('release_metadata', 'manifest.json')):
+        path = tmp_path/name
+        path.write_text(key + ' aligned to rc9')
+        authority[key] = {'path': name,
+                          'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+                          'authority_sha256': authority_sha}
     evidence = {
-        'framework': {'version': 'v0.1-rc9', 'path': 'framework.md',
-                      'sha256': hashlib.sha256(framework.read_bytes()).hexdigest()},
+        'rc9_authority': authority,
         'graphify': {'result': 'EXACTLY_BOUND', 'queryable': True,
-                     'runtime_version': '1.0.0', 'wire_version': 'mcp-1',
-                     'adapter_version': '0.4.8.3', 'repository_revisions': {'repo': 'a'*40},
+                     'runtime_identity': 'graphify-local', 'runtime_version': '1.0.0',
+                     'transport': 'MCP', 'wire_version': 'mcp-1',
+                     'supported_operations': ['native-node', 'native-path'],
+                     'exact_revision_opened': True,
+                     'source_location_provenance': 'file:///frozen/repo',
+                     'structural_proof': {'node_query': True, 'path_query': True},
+                     'snapshot_binding': {'requested_revision': 'a'*40,
+                                          'indexed_revision': 'a'*40},
                      'graph_sha256': 'b'*64, 'input_policy_sha256': 'c'*64},
-        'skills': {'pk_s1_path': 'pk-s1/SKILL.md', 'pk_s2_path': 'pk-s2/SKILL.md'},
-        'acquisition': {'status': 'VALIDATED'},
-        'isolation': {'status': 'VERIFIED'},
-        'metrics': {'status': 'FROZEN'},
-        'resource_security': {'status': 'FROZEN'},
+        'skills': {'pk_s1_path': 'pk-s1/SKILL.md', 'pk_s2_path': 'pk-s2/SKILL.md',
+                   'pk_s1_registration': 'REGISTERED_NON_GOVERNING',
+                   'pk_s2_registration': 'REGISTERED_NON_GOVERNING'},
+        'calibration': {'status': 'FROZEN', 'resource_policy_status': 'FROZEN',
+                        'post_cutoff_knowledge_policy': 'EXCLUDE_AFTER_CUTOFF'},
+        'ground_truth': {'status': 'SEALED', 'gold_sha256': 'd'*64,
+                         'isolation_status': 'VERIFIED', 'review_protocol_status': 'FROZEN',
+                         'reviewers': ['reviewer-a', 'reviewer-b'],
+                         'judgment_vocabulary': [
+                             'ACCEPT', 'RENAME', 'MERGE', 'SPLIT', 'REJECT', 'ADD_MISSING']},
     }
     assert evaluate_readiness(tmp_path, evidence)['status'] == 'READY'
+
+
+def test_gate_rejects_unregistered_skill_files(tmp_path):
+    for name in ('pk-s1', 'pk-s2'):
+        path = tmp_path/name/'SKILL.md'
+        path.parent.mkdir()
+        path.write_text('# Candidate only')
+    evidence = {'skills': {
+        'pk_s1_path': 'pk-s1/SKILL.md', 'pk_s2_path': 'pk-s2/SKILL.md'}}
+    result = evaluate_readiness(tmp_path, evidence)
+    assert result['prerequisites'][2]['status'] == 'MISMATCH'
+    assert result['readiness_flags']['PK_S1_EXECUTION_READY'] is False
+    assert result['readiness_flags']['PK_S2_EXECUTION_READY'] is False
 
 
 def test_repository_phase0_remains_blocked_without_external_evidence():
@@ -139,6 +182,13 @@ def test_acquisition_rejects_credentials(acquisition_root):
         source_tree_sha256=tree_sha256(acquisition_root, ('README.md', 'src/App.java')),
     )
     with pytest.raises(ValueError, match='credential'):
+        validate_acquisition(acquisition_root, manifest)
+
+
+def test_acquisition_requires_post_cutoff_knowledge_policy(acquisition_root):
+    manifest = valid_acquisition_manifest(acquisition_root)
+    del manifest['post_cutoff_knowledge_policy']
+    with pytest.raises(ValueError, match='post-cutoff'):
         validate_acquisition(acquisition_root, manifest)
 
 
@@ -233,7 +283,8 @@ def judgments_for(items, outcomes):
     for item, outcome in zip(items, outcomes):
         for reviewer in ('reviewer-a', 'reviewer-b'):
             rows.append({'proposal_id': item['proposal_id'], 'reviewer_id': reviewer,
-                         'outcome': outcome, 'evidence_valid': True,
+                         'outcome': outcome, 'review_action': 'ACCEPT',
+                         'evidence_valid': True,
                          'active_review_seconds': 30})
     return rows
 
@@ -315,3 +366,12 @@ def test_build_decision_report_requires_explicit_ground_truth_digest():
     }
     with pytest.raises(ValueError, match='ground truth SHA-256'):
         build_decision_report('report-2', 'unknown', evaluation)
+
+
+def test_evaluator_judgment_schema_has_frozen_review_actions():
+    schema = json.loads((
+        ROOT/'validation/pkb001/schemas/evaluator-judgment-v0.1.schema.json'
+    ).read_text())
+    assert 'review_action' in schema['required']
+    assert set(schema['properties']['review_action']['enum']) == {
+        'ACCEPT', 'RENAME', 'MERGE', 'SPLIT', 'REJECT', 'ADD_MISSING'}

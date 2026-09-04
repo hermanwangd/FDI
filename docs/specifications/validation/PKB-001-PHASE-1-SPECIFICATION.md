@@ -46,32 +46,38 @@ FC-05 human-governed path only after those owners are actually available.
 
 ## 3. Phase 0 prerequisite gate
 
-All seven items must be recorded as `SATISFIED` in an approved readiness record
+All five items must be recorded as `SATISFIED` in an approved readiness record
 before any R1, R2, R3, or F1 run. Missing, ambiguous, or unverifiable evidence
 fails closed. As of this candidate, execution remains blocked.
 
-### P0-01 — Framework authority
+### P0-01 — Verify rc9 authority
 
-Materialize the exact declared FDI Framework Specification v0.1-rc9, record its
-repository path and SHA-256 in the applicable governance mechanism, and verify
-the bytes. The current repository contains rc4; **rc4 is not rc9**. No agent may
-invent rc9, silently substitute rc4, or update governing pointers without
-explicit governance approval.
+Reconcile the exact rc9 bytes, FC-03 rc9 fix, active implementation plan,
+governance lock, and release metadata into one SHA-256/provenance chain. The rc9
+document may exist outside this checkout, but existence is not authority
+closure. The active plan must not retain `implements the rc4 Lean Core`, `active
+rc4 files`, or `rc4 spec digest` identity. **rc4 is not rc9**; downgrade is a
+separate governance decision used only when provenance cannot be established.
+Exit: `RC9_AUTHORITY_VERIFIED`.
 
-### P0-02 — Graphify runtime readiness
+### P0-02 — Probe real Graphify runtime
 
-Complete and verify the approved Graphify migration. Evidence must include the
-Graphify runtime version, adapter version, wire protocol version, exact source
-commit, graph artifact digest, indexed-input policy digest, repository route,
-and successful queryability attestation. Provider output remains
-non-authoritative.
+Discover rather than assume provider-native operation names. Record runtime
+identity/version, transport, actual supported operations, source-location
+provenance, exact-revision opening/indexing, node and bounded-path proof, graph
+artifact digest, input-policy digest, and snapshot binding where indexed
+revision equals the requested full Git SHA. Provider-native names remain
+adapter-local. A diff operation is not a PKB-001 prerequisite. Provider output
+remains non-authoritative. Exit: `LIVE_GRAPHIFY_INTERFACE_VERIFIED`.
 
-### P0-03 — Skill availability
+### P0-03 — Physicalize PK-S1 and PK-S2
 
-Verify that PK-S1 and PK-S2 are approved, materialized, and resolvable through
-the active governing baseline. A catalog candidate is not an executable Skill.
-If either is absent, PKB-001 remains blocked unless a separately approved
-revision replaces the dependency with validation-local orchestration.
+Review, materialize, and register PK-S1 and PK-S2 as non-governing execution
+Skills. They create proposal-compatible output, preserve ambiguity, and cannot
+publish or establish Product/current Feature truth. Reuse `SourceRef`,
+`Observation`, `StructuralObservationSet`, and `ProductAssetProposal`; do not
+add Product Semantics, Product Realization, or Capability Hypothesis public
+contracts. Exits: `PK_S1_EXECUTION_READY` and `PK_S2_EXECUTION_READY`.
 
 ### P0-04 — Calibration snapshot
 
@@ -84,34 +90,29 @@ The manifest must record:
 - source-tree digest and retained-path policy digest;
 - Graphify graph and indexed-input-policy digests;
 - issue and pull-request source, cutoff time, and acquisition method;
-- license and retention boundary.
+- license and retention boundary;
+- excluded paths, input policy, resource/query limits, and timeout; and
+- `POST_CUTOFF_KNOWLEDGE_POLICY=EXCLUDE_AFTER_CUTOFF`.
 
 The proposed `calcom/cal.diy` repository is not selected until this manifest is
 complete and reviewed.
 
-### P0-05 — Evaluator isolation
+### P0-05 — Seal evaluator ground truth
 
 Ground truth must be sealed before arm execution. Record a deterministic digest
 of evaluator-only inputs. Execute R1–R3 in workspaces that do not contain or
 mount `validation/pkb001/ground-truth/`. Each arm receives an explicit input
 allowlist. Supplying a ground-truth path must fail. F1 may consume only its
-declared Product Semantics input; it cannot consume delivery history.
+declared Product Semantics input; it cannot consume delivery history. Freeze the
+evaluator guide, matching rules, denominators, minimum sample size,
+adjudication process, uncertainty reporting, human-effort protocol, reviewers,
+and the judgment vocabulary `ACCEPT`, `RENAME`, `MERGE`, `SPLIT`, `REJECT`, and
+`ADD_MISSING`. Seal the Capability Gold Set and Capability-to-Component mapping
+digest. Section 8 remains normative. Exit: `GROUND_TRUTH_SEALED`.
 
-### P0-06 — Metric protocol
-
-Freeze the evaluator guide, matching rules, denominators, minimum sample size,
-adjudication process, uncertainty reporting, and human-effort protocol before
-opening sealed ground truth. Section 8 is normative for PKB-001.
-
-### P0-07 — Resource and security bounds
-
-Freeze limits before acquisition: maximum repository bytes, file count,
-individual file bytes, Graphify nodes/edges/paths/result bytes, wall-clock
-timeout, and concurrency. Target-repository automation and builds must never be
-executed. Reject credentials and excluded binaries/generated content. Network
-access is limited to declared acquisition endpoints and disabled during arm
-execution. No process may exceed the repository 8 GB ceiling; normal Maven
-execution remains capped at 2 GB.
+P0-04 also freezes maximum repository/file sizes, Graphify query bounds,
+timeouts, concurrency, excluded binaries/generated content, network policy,
+and the 8 GB process ceiling. Target-repository automation must not execute.
 
 ## 4. Experiment arms
 
@@ -238,7 +239,7 @@ large source repositories remain untracked.
 
 ## 10. Ordered work packages
 
-1. **P1-00:** satisfy and review P0-01 through P0-07.
+1. **P1-00:** satisfy and review P0-01 through P0-05.
 2. **P1-01:** resolve the approved baseline and verify governing bytes.
 3. **P1-02:** acquire and seal the calibration snapshot and gold sets.
 4. **P1-03:** attest the Graphify snapshot and bounded queryability.
@@ -275,7 +276,7 @@ git diff --check
 
 The first command currently exits `2` and reports `BLOCKED`. That is the
 required outcome until separately reviewed external evidence satisfies all
-seven prerequisites.
+five prerequisites and all six readiness flags.
 
 If runtime code or configuration changes in a later work package:
 
@@ -286,6 +287,7 @@ MAVEN_OPTS='-Xmx2g' ./mvnw package
 
 ## 13. Current disposition
 
-`REVISE / BLOCKED`: this specification resolves the protocol gaps, but rc9,
-live Graphify readiness, executable PK-S1/PK-S2, and a pinned calibration
-snapshot are not established by this document. PKB-001 has not been executed.
+`REVISE / BLOCKED`: this specification resolves the protocol gaps, but rc9
+authority/provenance closure, live Graphify readiness, executable PK-S1/PK-S2,
+and a pinned calibration snapshot are not established by this document. PKB-001
+has not been executed.

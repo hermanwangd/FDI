@@ -9,8 +9,8 @@ Prove that the Graphify graph queried by FDI is exactly bound to the repository 
 The concrete attestor separates five independently testable concerns:
 
 ```text
-Graphify MCP transport
-  -> graphify_orient(view=me, group=<scope>, ref=<ref>)
+Graphify transport
+  -> discovered provider operation with explicit scope and ref
   -> exact route is queryable + wire_version
 
 GraphifyRefMetadataProvider
@@ -40,7 +40,7 @@ v0.4.7.3 includes `GraphifyMcpWorktreeRefMetadataProvider`.
 For every Graphify repo slug, configure the dedicated replay worktree path materialized at the frozen cutoff. The provider calls:
 
 ```text
-graphify_index_status(
+configured_index_status_operation(
   group = <provider_scope_id>,
   repo  = <exact replay worktree path>
 )
@@ -57,7 +57,7 @@ row.indexed_commit or indexed_commit_short is present
 
 It then returns normalized per-repo provenance to `GraphifyBindingAttestor`.
 
-This path is preferable to `GET /api/v2/groups/{group}` for replay because it is scoped by the dedicated repository/worktree path and exposes the graph-indexed commit. `GET /api/v2/groups/{group}/refs` or `graphify branches --json` may prove that a ref slot exists, but ref-slot existence alone is not exact commit provenance.
+This path must be scoped by the dedicated repository/worktree path and expose the graph-indexed commit. A provider ref-listing operation may prove that a ref slot exists, but ref-slot existence alone is not exact commit provenance. Provider-native operation names must be discovered from the installed runtime and recorded in evidence.
 
 If a deployment cannot expose per-repository graph-indexed commit identity for the requested ref, binding MUST fail closed.
 

@@ -45,35 +45,64 @@ def _item(identifier: str, status: str, reason: str) -> Dict[str, str]:
     return {'id': identifier, 'status': status, 'reason': reason}
 
 
-def _framework(root: Path, value: object) -> Dict[str, str]:
+def _authority(root: Path, value: object) -> Dict[str, str]:
     if not isinstance(value, dict):
-        return _item('P0-01', 'MISSING', 'framework evidence is absent')
-    path = _safe_file(root, value.get('path'))
-    digest = value.get('sha256')
-    if value.get('version') != 'v0.1-rc9':
+        return _item('P0-01', 'MISSING', 'rc9 authority-chain evidence is absent')
+    framework = value.get('framework')
+    if not isinstance(framework, dict):
+        return _item('P0-01', 'MISMATCH', 'rc9 framework evidence is absent')
+    path = _safe_file(root, framework.get('path'))
+    digest = framework.get('sha256')
+    if framework.get('version') != 'v0.1-rc9':
         return _item('P0-01', 'MISMATCH', 'framework version must be v0.1-rc9')
     if path is None or not isinstance(digest, str) or not SHA256.fullmatch(digest):
         return _item('P0-01', 'MISMATCH', 'framework path or SHA-256 is invalid')
     actual = hashlib.sha256(path.read_bytes()).hexdigest()
     if actual != digest:
         return _item('P0-01', 'MISMATCH', 'framework SHA-256 does not match bytes')
-    return _item('P0-01', 'SATISFIED', 'exact rc9 bytes verified')
+    for key in ('fc03_fix', 'implementation_plan', 'governance_lock', 'release_metadata'):
+        record = value.get(key)
+        if not isinstance(record, dict):
+            return _item('P0-01', 'MISMATCH', key + ' evidence is absent')
+        record_path = _safe_file(root, record.get('path'))
+        record_digest = record.get('sha256')
+        if (record_path is None or not isinstance(record_digest, str)
+                or not SHA256.fullmatch(record_digest)
+                or hashlib.sha256(record_path.read_bytes()).hexdigest() != record_digest):
+            return _item('P0-01', 'MISMATCH', key + ' bytes or SHA-256 are invalid')
+        if record.get('authority_sha256') != digest:
+            return _item('P0-01', 'MISMATCH', key + ' is not reconciled to rc9')
+        if key == 'implementation_plan':
+            text = record_path.read_text()
+            stale = ('implements the rc4 Lean Core', 'active rc4 files', 'rc4 spec digest')
+            if any(phrase in text for phrase in stale):
+                return _item('P0-01', 'MISMATCH', 'implementation plan retains stale rc4 identity')
+    return _item('P0-01', 'SATISFIED', 'rc9 authority chain verified')
 
 
 def _graphify(value: object) -> Dict[str, str]:
     if not isinstance(value, dict):
         return _item('P0-02', 'MISSING', 'Graphify evidence is absent')
-    strings = ('runtime_version', 'wire_version', 'adapter_version')
+    strings = ('runtime_identity', 'runtime_version', 'transport', 'wire_version',
+               'source_location_provenance')
     digests = ('graph_sha256', 'input_policy_sha256')
-    revisions = value.get('repository_revisions')
+    operations = value.get('supported_operations')
+    proof = value.get('structural_proof')
+    binding = value.get('snapshot_binding')
     valid = (
         value.get('result') == 'EXACTLY_BOUND'
         and value.get('queryable') is True
         and all(isinstance(value.get(key), str) and value[key] for key in strings)
         and all(isinstance(value.get(key), str) and SHA256.fullmatch(value[key]) for key in digests)
-        and isinstance(revisions, dict) and bool(revisions)
-        and all(isinstance(revision, str) and GIT_SHA.fullmatch(revision)
-                for revision in revisions.values())
+        and isinstance(operations, list) and bool(operations)
+        and all(isinstance(operation, str) and operation for operation in operations)
+        and value.get('exact_revision_opened') is True
+        and isinstance(proof, dict) and proof.get('node_query') is True
+        and proof.get('path_query') is True
+        and isinstance(binding, dict)
+        and isinstance(binding.get('requested_revision'), str)
+        and GIT_SHA.fullmatch(binding['requested_revision'])
+        and binding.get('indexed_revision') == binding.get('requested_revision')
     )
     return _item('P0-02', 'SATISFIED' if valid else 'MISMATCH',
                  'exact Graphify binding verified' if valid else 'Graphify evidence is incomplete or invalid')
@@ -82,8 +111,12 @@ def _graphify(value: object) -> Dict[str, str]:
 def _skills(root: Path, value: object) -> Dict[str, str]:
     if not isinstance(value, dict):
         return _item('P0-03', 'MISSING', 'Skill evidence is absent')
-    valid = all(_safe_file(root, value.get(key)) is not None
-                for key in ('pk_s1_path', 'pk_s2_path'))
+    valid = (
+        all(_safe_file(root, value.get(key)) is not None
+            for key in ('pk_s1_path', 'pk_s2_path'))
+        and value.get('pk_s1_registration') == 'REGISTERED_NON_GOVERNING'
+        and value.get('pk_s2_registration') == 'REGISTERED_NON_GOVERNING'
+    )
     return _item('P0-03', 'SATISFIED' if valid else 'MISMATCH',
                  'PK-S1 and PK-S2 materialized' if valid else 'PK-S1 or PK-S2 is unavailable')
 
@@ -96,20 +129,64 @@ def _status(identifier: str, value: object, expected: str, label: str) -> Dict[s
                  label + ' verified' if valid else label + ' status is invalid')
 
 
+def _calibration(value: object) -> Dict[str, str]:
+    if not isinstance(value, dict):
+        return _item('P0-04', 'MISSING', 'calibration dataset evidence is absent')
+    valid = (
+        value.get('status') == 'FROZEN'
+        and value.get('resource_policy_status') == 'FROZEN'
+        and value.get('post_cutoff_knowledge_policy') == 'EXCLUDE_AFTER_CUTOFF'
+    )
+    return _item('P0-04', 'SATISFIED' if valid else 'MISMATCH',
+                 'calibration dataset frozen' if valid
+                 else 'calibration or post-cutoff policy is incomplete')
+
+
+def _ground_truth(value: object) -> Dict[str, str]:
+    if not isinstance(value, dict):
+        return _item('P0-05', 'MISSING', 'evaluator ground truth evidence is absent')
+    vocabulary = {'ACCEPT', 'RENAME', 'MERGE', 'SPLIT', 'REJECT', 'ADD_MISSING'}
+    reviewers = value.get('reviewers')
+    valid = (
+        value.get('status') == 'SEALED'
+        and isinstance(value.get('gold_sha256'), str)
+        and SHA256.fullmatch(value['gold_sha256'])
+        and value.get('isolation_status') == 'VERIFIED'
+        and value.get('review_protocol_status') == 'FROZEN'
+        and isinstance(reviewers, list) and len(set(reviewers)) >= 2
+        and set(value.get('judgment_vocabulary', [])) == vocabulary
+    )
+    return _item('P0-05', 'SATISFIED' if valid else 'MISMATCH',
+                 'evaluator ground truth sealed' if valid
+                 else 'ground truth, isolation, or review protocol is incomplete')
+
+
 def evaluate_readiness(root: Path, evidence: dict) -> dict:
     root = Path(root).resolve()
     prerequisites = [
-        _framework(root, evidence.get('framework')),
+        _authority(root, evidence.get('rc9_authority')),
         _graphify(evidence.get('graphify')),
         _skills(root, evidence.get('skills')),
-        _status('P0-04', evidence.get('acquisition'), 'VALIDATED', 'calibration acquisition'),
-        _status('P0-05', evidence.get('isolation'), 'VERIFIED', 'evaluator isolation'),
-        _status('P0-06', evidence.get('metrics'), 'FROZEN', 'metric protocol'),
-        _status('P0-07', evidence.get('resource_security'), 'FROZEN', 'resource/security policy'),
+        _calibration(evidence.get('calibration')),
+        _ground_truth(evidence.get('ground_truth')),
     ]
     ready = all(item['status'] == 'SATISFIED' for item in prerequisites)
+    skills = evidence.get('skills') if isinstance(evidence.get('skills'), dict) else {}
+    flags = {
+        'RC9_AUTHORITY_VERIFIED': prerequisites[0]['status'] == 'SATISFIED',
+        'LIVE_GRAPHIFY_INTERFACE_VERIFIED': prerequisites[1]['status'] == 'SATISFIED',
+        'PK_S1_EXECUTION_READY': (
+            _safe_file(root, skills.get('pk_s1_path')) is not None
+            and skills.get('pk_s1_registration') == 'REGISTERED_NON_GOVERNING'),
+        'PK_S2_EXECUTION_READY': (
+            _safe_file(root, skills.get('pk_s2_path')) is not None
+            and skills.get('pk_s2_registration') == 'REGISTERED_NON_GOVERNING'),
+        'CALIBRATION_DATASET_FROZEN': prerequisites[3]['status'] == 'SATISFIED',
+        'GROUND_TRUTH_SEALED': prerequisites[4]['status'] == 'SATISFIED',
+    }
     return {'experiment': 'PKB-001', 'status': 'READY' if ready else 'BLOCKED',
-            'prerequisites': prerequisites}
+            'readiness_state': 'READY' if ready else 'NOT_READY',
+            'readiness_flags': flags, 'prerequisites': prerequisites}
 
 
 def main(argv: Optional[List[str]] = None) -> int:

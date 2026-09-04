@@ -5,13 +5,14 @@
   "x-fdi-authority": "VALIDATION_LOCAL_NON_GOVERNING",
   "type": "object",
   "additionalProperties": false,
-  "required": ["judgment_id", "proposal_id", "reviewer_id", "arm_blinded", "outcome", "evidence_refs", "active_review_seconds", "sealed_at"],
+  "required": ["judgment_id", "proposal_id", "reviewer_id", "arm_blinded", "outcome", "review_action", "evidence_refs", "active_review_seconds", "sealed_at"],
   "properties": {
     "judgment_id": {"type": "string", "minLength": 1},
     "proposal_id": {"type": "string", "minLength": 1},
     "reviewer_id": {"type": "string", "minLength": 1},
     "arm_blinded": {"const": true},
     "outcome": {"enum": ["SUPPORTED", "PARTIALLY_SUPPORTED", "UNSUPPORTED", "DUPLICATE"]},
+    "review_action": {"enum": ["ACCEPT", "RENAME", "MERGE", "SPLIT", "REJECT", "ADD_MISSING"]},
     "evidence_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
     "active_review_seconds": {"type": "integer", "minimum": 0},
     "sealed_at": {"type": "string", "format": "date-time"}

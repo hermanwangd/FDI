@@ -7,6 +7,10 @@ reviewers judge every unique proposal. If they disagree, a third independent
 reviewer supplies the adjudicated outcome. Evidence references accompany every
 judgment.
 
+The frozen review actions are `ACCEPT`, `RENAME`, `MERGE`, `SPLIT`, `REJECT`,
+and `ADD_MISSING`. Metric support outcomes remain separately recorded as
+`SUPPORTED`, `PARTIALLY_SUPPORTED`, `UNSUPPORTED`, or `DUPLICATE`.
+
 Duplicate proposals collapse by arm, target, relation type, operation, and
 declared gold set; the least favorable adjudicated result is retained. `MERGE`
 and `SPLIT` are supported only when all declared gold items match. Partially

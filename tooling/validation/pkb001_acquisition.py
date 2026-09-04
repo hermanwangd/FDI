@@ -73,6 +73,8 @@ def validate_acquisition(root: Path, manifest: dict) -> dict:
             raise ValueError(field + ' is required')
     _timestamp(manifest.get('acquired_at'), 'acquired_at')
     _timestamp(manifest.get('history_cutoff'), 'history_cutoff')
+    if manifest.get('post_cutoff_knowledge_policy') != 'EXCLUDE_AFTER_CUTOFF':
+        raise ValueError('post-cutoff knowledge policy must be EXCLUDE_AFTER_CUTOFF')
 
     limits = {}
     for field in ('max_repository_bytes', 'max_file_count', 'max_file_bytes'):

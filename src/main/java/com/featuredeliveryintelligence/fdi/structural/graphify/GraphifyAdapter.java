@@ -5,18 +5,11 @@ import java.util.*;
 import java.util.function.BiFunction;
 
 public final class GraphifyAdapter implements CodeIntelligenceProvider {
-    private static final Map<String, String> DEFAULT_TOOLS = Map.of(
-            "ORIENT", "graphify_orient", "FIND", "graphify_find", "EXPAND", "graphify_subgraph",
-            "TRACE", "graphify_find_paths", "DIFF", "graphify_diff");
     private final GraphifyTransport transport;
     private final SnapshotBindingAttestor attestor;
     private final Map<String, String> tools;
     private final BiFunction<String, Map<String, Object>, Map<String, Object>> responseMapper;
     private final ObjectMapper objectMapper = new ObjectMapper();
-
-    public GraphifyAdapter(GraphifyTransport transport, SnapshotBindingAttestor attestor) {
-        this(transport, attestor, DEFAULT_TOOLS, (operation, raw) -> raw);
-    }
 
     public GraphifyAdapter(GraphifyTransport transport, SnapshotBindingAttestor attestor,
             Map<String, String> tools, BiFunction<String, Map<String, Object>, Map<String, Object>> responseMapper) {

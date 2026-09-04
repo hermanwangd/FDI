@@ -143,13 +143,11 @@ def test_pkb001_candidate_spec_has_fail_closed_phase_zero_gate():
     text=path.read_text()
     assert 'Status: CANDIDATE — EXECUTION BLOCKED' in text
     for required in (
-        'P0-01 — Framework authority',
-        'P0-02 — Graphify runtime readiness',
-        'P0-03 — Skill availability',
+        'P0-01 — Verify rc9 authority',
+        'P0-02 — Probe real Graphify runtime',
+        'P0-03 — Physicalize PK-S1 and PK-S2',
         'P0-04 — Calibration snapshot',
-        'P0-05 — Evaluator isolation',
-        'P0-06 — Metric protocol',
-        'P0-07 — Resource and security bounds',
+        'P0-05 — Seal evaluator ground truth',
         'CONTINUE / REVISE / STOP',
     ):
         assert required in text

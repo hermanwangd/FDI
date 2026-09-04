@@ -18,11 +18,11 @@ diff
 The reference adapter maps that surface to Graphify operations:
 
 ```text
-orient  → graphify_orient
-find    → graphify_find
-expand  → graphify_subgraph
-trace   → graphify_find_paths
-diff    → graphify_diff (aspect=refs)
+orient  → configured native provider-description/snapshot operation
+find    → configured native node-query operation
+expand  → configured native bounded-neighborhood operation
+trace   → configured native bounded-path operation
+diff    → optional configured native diff operation (not required by PKB-001)
 ```
 
 Provider tool names, raw response schemas, and provider provenance mechanics are adapter-local. They are not FDI governing contract vocabulary.
@@ -60,9 +60,9 @@ freshness = LIVE_CURRENT | FROZEN_INDEXED
 
 A metadata-only snapshot MUST NOT be described as source-bound execution evidence.
 
-### Why `graphify_index_status` is not the FDI binding contract
+### Why a provider index-status operation is not the FDI binding contract
 
-Graphify's current index-status surface is useful for scheduler/current-index freshness, but **`graphify_index_status` alone is insufficient** as FDI's exact frozen-source attestation. Graphify also supports historical per-ref graph snapshots and explicit `ref` routing; a frozen ref may be queryable while not being the repository's current HEAD.
+Graphify's discovered index-status surface may be useful for scheduler/current-index freshness, but **an index-status result alone is insufficient** as FDI's exact frozen-source attestation. A frozen ref may be queryable while not being the repository's current HEAD.
 
 The exact Graphify attestation mechanism is therefore intentionally injected. A version-specific implementation may combine Graphify ref/session provenance, provider store metadata, and source-control verification. v0.4.7.1 defines the fail-closed seam but does **not** claim that a live Graphify binding attestor has been executed.
 
@@ -85,7 +85,7 @@ The adapter MUST NOT attest one provider snapshot and then query an implicit cwd
 before StructuralSnapshotRef
       ↓ binding_attestor
 before provider ref ─────┐
-                         ├─→ graphify_diff(aspect=refs)
+                         ├─→ optional configured native diff operation
 after provider ref ──────┘
       ↑ binding_attestor
 after StructuralSnapshotRef

@@ -4,7 +4,7 @@
 
 **Goal:** Replace the active Grafel-named provider implementation with Graphify while preserving provider-neutral FDI contracts, exact snapshot binding, bounded queries, and conservative readiness claims.
 
-**Architecture:** `CodeIntelligenceProvider` and `SnapshotBindingAttestor` remain unchanged. Provider-specific classes, configuration, evidence schema, tests, and active implementation documentation move atomically from `Grafel*`/`grafel_*` to `Graphify*`/`graphify_*`; locked governing sources and historical plans remain byte-identical. The migration proves local behavior only and leaves live Graphify status `NOT_EXECUTED` until separately attested.
+**Architecture:** `CodeIntelligenceProvider` and `SnapshotBindingAttestor` remain unchanged. Provider-specific classes, configuration, evidence schema, tests, and active implementation documentation move atomically from Grafel naming to Graphify naming. Native operations are discovered from the installed runtime and injected into the adapter; locked governing sources remain byte-identical. The migration proves local behavior only and leaves live Graphify status `NOT_EXECUTED` until separately attested.
 
 **Tech Stack:** Java 17, Spring Boot 3.4.1, Maven Wrapper, JUnit 5, AssertJ, JSON Schema 2020-12, Python repository governance tests.
 
@@ -30,11 +30,11 @@
 
 - [ ] **Step 1: Rename test imports and expectations before production classes**
 
-Replace imports and construction with `GraphifyAdapter`, `GraphifyTransport`, `GraphifyBindingAttestor`, and `GraphifyBindingEvidence`. Rename the adapter test and require the exact tool mapping:
+Replace imports and construction with `GraphifyAdapter`, `GraphifyTransport`, `GraphifyBindingAttestor`, and `GraphifyBindingEvidence`. Rename the adapter test and prove that an injected discovered operation is used:
 
 ```java
 assertThat(calls).extracting(call -> call.get("tool"))
-    .containsExactly("graphify_find_paths");
+    .containsExactly("discovered_native_path_operation");
 ```
 
 Preserve tests for exact route/ref propagation, duplicate repository rejection, revision mismatch, queryability, node/edge/path bounds, and serialized response size.
@@ -82,7 +82,7 @@ git add src/test tests/test_standalone_governance.py
 git commit -m "test: define Graphify provider migration contract"
 ```
 
-### Task 2: Rename the provider implementation and tool mapping
+### Task 2: Rename the provider implementation and require discovered mapping
 
 **Files:**
 - Rename: `src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GrafelAdapter.java` → `GraphifyAdapter.java`
@@ -103,18 +103,17 @@ public final class GraphifyBindingEvidence
 
 Keep `CodeIntelligenceProvider`, `SnapshotBindingAttestor`, `StructuralIntelligence`, snapshot validation, result normalization, and bounds enforcement unchanged.
 
-- [ ] **Step 2: Replace the default tool map**
+- [ ] **Step 2: Remove assumed native defaults and inject the discovered map**
 
 ```java
-private static final Map<String, String> DEFAULT_TOOLS = Map.of(
-    "ORIENT", "graphify_orient",
-    "FIND", "graphify_find",
-    "EXPAND", "graphify_subgraph",
-    "TRACE", "graphify_find_paths",
-    "DIFF", "graphify_diff");
+new GraphifyAdapter(
+    transport,
+    attestor,
+    Map.of("TRACE", "discovered_native_path_operation"),
+    responseMapper);
 ```
 
-Change provider-specific exceptions and evidence IDs from `Grafel`/`grafel-binding:` to `Graphify`/`graphify-binding:`.
+Do not expose a two-argument constructor with assumed operations. Change provider-specific exceptions and evidence IDs from Grafel naming to Graphify naming.
 
 - [ ] **Step 3: Run the focused Java tests**
 
