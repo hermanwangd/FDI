@@ -197,6 +197,16 @@ def test_active_provider_surface_uses_graphify_names_only():
         if relative.startswith(active):
             text=(ROOT/relative).read_text()
             assert not re.search(r'Grafel|GRAFEL|grafel', text), relative
+
+
+def test_graphify_provider_artifacts_are_canonical():
+    assert (ROOT/'config/graphify.example.yaml').exists()
+    assert not (ROOT/'config/grafel.example.yaml').exists()
+    path=ROOT/'contracts/providers/graphify/graphify-binding-evidence-v0.1.schema.json'
+    schema=json.loads(path.read_text())
+    provider=schema['$defs']['snapshotRef']['properties']['provider']['properties']['name']
+    assert provider['const']=='GRAPHIFY'
+    assert not (ROOT/'contracts/providers/graphify/grafel-binding-evidence-v0.1.schema.json').exists()
 def independently_parse_project_tree(text):
     paths=set()
     directories=[]

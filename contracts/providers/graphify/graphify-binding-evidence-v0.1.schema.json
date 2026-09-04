@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "FDI Grafel Binding Evidence Record v0.1",
+  "title": "FDI Graphify Binding Evidence Record v0.1",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -48,7 +48,7 @@
           "additionalProperties": false,
           "required": ["name", "version"],
           "properties": {
-            "name": {"const": "GRAFEL"},
+            "name": {"const": "GRAPHIFY"},
             "version": {"type": "string", "pattern": "^v?[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$"}
           }
         },
