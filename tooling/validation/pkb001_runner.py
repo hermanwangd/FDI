@@ -76,7 +76,8 @@ def _safe_command(command: Tuple[str, ...]) -> None:
         raise ValueError('prohibited command: ' + ' '.join(command))
 
 
-def execute_arm(command: Tuple[str, ...], workspace: Path, env: Dict[str, str]) -> int:
+def execute_arm(command: Tuple[str, ...], workspace: Path, env: Dict[str, str], *,
+                protected_paths: Tuple[Path, ...] = ()) -> int:
     root = Path(workspace).resolve(strict=True)
     _verified_readiness(root)
     _safe_command(command)
@@ -92,7 +93,17 @@ def execute_arm(command: Tuple[str, ...], workspace: Path, env: Dict[str, str]) 
         'PKB_NETWORK_ISOLATION': 'ENFORCED',
         'TMPDIR': str(temporary),
     })
+    resolved_protected = tuple(Path(path).resolve(strict=True) for path in protected_paths)
+    protections = ' '.join(
+        f'(deny file-read* file-write* (subpath (param "PROTECTED_{index}")))'
+        for index in range(len(resolved_protected)))
+    sandbox_profile = f'(version 1) (allow default) (deny network*) {protections}'
+    parameters = tuple(
+        item for index, path in enumerate(resolved_protected)
+        for item in ('-D', f'PROTECTED_{index}={path}'))
+    sandboxed_command = (
+        '/usr/bin/sandbox-exec', *parameters, '-p', sandbox_profile, *command)
     result = subprocess.run(
-        command, cwd=root, env=sanitized, check=False, timeout=300,
+        sandboxed_command, cwd=root, env=sanitized, check=False, timeout=300,
     )
     return result.returncode

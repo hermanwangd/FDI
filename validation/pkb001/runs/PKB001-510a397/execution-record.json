@@ -1,0 +1,58 @@
+{
+  "execution_id": "PKB001-510a397",
+  "status": "GENERATION_COMPLETE_EVALUATION_PENDING",
+  "executed_at": "2026-09-04T14:55:58Z",
+  "source_commit_sha": "510a397c134324026fe6b20333dfbfa645ab67b4",
+  "phase0_readiness_sha256": "2e866cf73fa1a7379bf8fdd6d86e8db87cfdccf3d85bfd2c854aa40a5cc0954c",
+  "generator_sha256": "04f11df1bd2fceabcf5ce1719df98a4dc77c3789af6459ad382e65ec32936015",
+  "runner_sha256": "901bbabee7391bb7ce565a1ebcb957fe342ad7360dd54e1990f686897a120628",
+  "sandbox": {
+    "runtime": "macOS sandbox-exec",
+    "network": "DENIED_AND_PROBED",
+    "evaluator_ground_truth": "READ_WRITE_DENIED_AND_PROBED"
+  },
+  "inputs": {
+    "structure": {
+      "path": "validation/pkb001/artifacts/graph-510a397.json",
+      "sha256": "b416bded2b325e01bbecb97f5c07cd0a65225a27b890a5f4972f15f893808509"
+    },
+    "history": {
+      "path": "validation/pkb001/datasets/delivery-history.json",
+      "sha256": "a9202a9189d114edc312eee203ca55d19ee0f79fbdc5823f814d973311bae2c9"
+    },
+    "semantics": {
+      "path": "validation/pkb001/datasets/product-semantics.json",
+      "sha256": "d6bb8a64b864ee9beae5f6eb970b17615390a4c96014649ddff4296f4149cccf"
+    }
+  },
+  "arms": {
+    "R1": {
+      "allowed_inputs": ["structure"],
+      "proposal_count": 6,
+      "output": "validation/pkb001/runs/PKB001-510a397/R1-proposals.json",
+      "output_sha256": "5488973bbf08f6eb7435c55764a6ff82c08954a755dd6160d8d8361e09bf2361"
+    },
+    "R2": {
+      "allowed_inputs": ["history"],
+      "proposal_count": 7,
+      "output": "validation/pkb001/runs/PKB001-510a397/R2-proposals.json",
+      "output_sha256": "83240be3a6c0030804644fb79cdae2d7b3691fd57b804a35c10a4600d51549c0"
+    },
+    "R3": {
+      "allowed_inputs": ["structure", "history"],
+      "proposal_count": 6,
+      "output": "validation/pkb001/runs/PKB001-510a397/R3-proposals.json",
+      "output_sha256": "c6aa76f763388dca88577be5db09ff254619f5f7cba542a894150cd24b22d315"
+    },
+    "F1": {
+      "allowed_inputs": ["semantics", "structure"],
+      "proposal_count": 2,
+      "output": "validation/pkb001/runs/PKB001-510a397/F1-proposals.json",
+      "output_sha256": "65e42ea53d116e94b00f42046c370f00ee06c4e73cf1ca9fbf650a416040c5a0"
+    }
+  },
+  "authority_status": "PROPOSAL_ONLY",
+  "evaluation_status": "PENDING_TWO_INDEPENDENT_BLIND_REVIEWERS",
+  "sample_status": "BELOW_FROZEN_MINIMUM_30_PROPOSALS_10_GOLD_ITEMS",
+  "claim_boundary": "GENERATION_EXECUTED_CALIBRATION_ONLY_NOT_PRODUCT_TRUTH"
+}

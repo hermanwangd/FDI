@@ -303,13 +303,19 @@ def test_execute_arm_uses_verified_readiness_and_sanitized_environment(
     result = execute_arm(
         ('python3', 'safe_runner.py'), arm_workspace,
         {'PATH': '/usr/bin', 'API_TOKEN': 'remove-me',
-         'PKB_NETWORK_ISOLATION': 'ENFORCED'})
+         'PKB_NETWORK_ISOLATION': 'ENFORCED'},
+        protected_paths=(arm_workspace/'validation/pkb001/ground-truth',))
     assert result == 0
     assert observed['cwd'] == arm_workspace.resolve()
     assert observed['check'] is False
     assert observed['timeout'] == 300
     assert observed['env']['PKB_NETWORK_ISOLATION'] == 'ENFORCED'
     assert 'API_TOKEN' not in observed['env']
+    assert observed['command'][0] == '/usr/bin/sandbox-exec'
+    assert '(deny network*)' in observed['command'][4]
+    assert '(deny file-read* file-write* (subpath (param "PROTECTED_0")))' in observed['command'][4]
+    assert observed['command'][2] == (
+        'PROTECTED_0=' + str(arm_workspace/'validation/pkb001/ground-truth'))
 
 
 @pytest.mark.parametrize('command', [

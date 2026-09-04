@@ -22,4 +22,4 @@ Everything under `archive/` is historical reference and must not be used to dete
 
 ## Current next action
 
-Execute the isolated PKB-001 experiment arms. Product Semantics, exact-revision Graphify evidence, cutoff-bounded Delivery History, the calibration snapshot, PK-S1/PK-S2, and evaluator-only ground truth are prepared; no experiment result has yet been produced.
+Conduct two independent blind human/evaluator reviews of the executed R1/R2/R3/F1 proposal sets. Generation is complete under network and ground-truth isolation, but no proposal is accepted Product truth and no GO / REVISE / STOP decision is valid until review is complete. The current two-capability calibration set also remains below the frozen 30-proposal / 10-gold-item minimum.
