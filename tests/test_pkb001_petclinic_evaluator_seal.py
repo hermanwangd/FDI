@@ -1,7 +1,12 @@
 import hashlib
 import json
 import subprocess
+from copy import deepcopy
 from pathlib import Path
+
+import pytest
+
+from tooling.validation.pkb001_gate import evaluate_readiness
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,6 +34,69 @@ def git(*args, text=True):
         ['git', '-C', str(SOURCE), *args], check=True, capture_output=True,
         text=text,
     ).stdout
+
+
+def agent_roles():
+    reviewers = [
+        'agent-context:expected-realization-author',
+        'agent-context:seal-integrity-verifier',
+    ]
+    roles = {
+        reviewers[0]: {
+            'actor_type': 'AI_AGENT_CONTEXT',
+            'context_id': reviewers[0],
+            'independent_context': True,
+            'role': 'EXPECTED_REALIZATION_AUTHOR',
+        },
+        reviewers[1]: {
+            'actor_type': 'AI_AGENT_CONTEXT',
+            'context_id': reviewers[1],
+            'independent_context': True,
+            'role': 'DIGEST_ISOLATION_AND_RESOLUTION_VERIFIER',
+        },
+    }
+    return reviewers, roles
+
+
+def ground_truth_fixture(tmp_path):
+    gold_path = tmp_path/'gold.json'
+    seal_path = tmp_path/'seal.json'
+    gold_path.write_text('{}')
+    reviewers, roles = agent_roles()
+    seal = {
+        'status': 'SEALED',
+        'gold_path': gold_path.name,
+        'gold_sha256': digest(gold_path),
+        'isolation_status': 'VERIFIED',
+        'review_protocol_status': 'FROZEN',
+        'reviewers': reviewers,
+        'reviewer_roles': roles,
+        'judgment_vocabulary': [
+            'ACCEPT', 'RENAME', 'MERGE', 'SPLIT', 'REJECT', 'ADD_MISSING'],
+        'creation_before_generation_ordering': {
+            'status': 'VERIFIED',
+            'rule': 'SEALED_BEFORE_VALID_EXPERIMENT_GENERATION',
+            'valid_experiment_generation_started': False,
+        },
+        'human_review_completed': False,
+        'non_human_review_completed': True,
+        'human_review_status': 'PENDING_POST_GENERATION_SECTION_6',
+    }
+    evidence = deepcopy(seal)
+    evidence['seal_path'] = seal_path.name
+    write_fixture_seal(seal_path, seal, evidence)
+    return seal_path, seal, evidence
+
+
+def write_fixture_seal(seal_path, seal, evidence):
+    seal_path.write_text(json.dumps(seal))
+    evidence['seal_sha256'] = digest(seal_path)
+
+
+def assert_ground_truth_rejected(tmp_path, evidence):
+    result = evaluate_readiness(tmp_path, {'ground_truth': evidence})
+    assert result['prerequisites'][4]['status'] == 'MISMATCH'
+    assert result['readiness_flags']['GROUND_TRUTH_SEALED'] is False
 
 
 def test_gold_mapping_covers_each_frozen_capability_exactly_once():
@@ -84,7 +152,19 @@ def test_ground_truth_seal_binds_all_authorities_and_review_protocol():
     assert seal['review_protocol_status'] == 'FROZEN'
     assert len(seal['reviewers']) >= 2
     assert set(seal['reviewer_roles']) == set(seal['reviewers'])
-    assert all(seal['reviewer_roles'][reviewer] for reviewer in seal['reviewers'])
+    assert all(reviewer.startswith('agent-context:') for reviewer in seal['reviewers'])
+    contexts = []
+    for reviewer in seal['reviewers']:
+        role = seal['reviewer_roles'][reviewer]
+        assert role['actor_type'] == 'AI_AGENT_CONTEXT'
+        assert role['context_id'] == reviewer
+        assert role['independent_context'] is True
+        assert role['role']
+        contexts.append(role['context_id'])
+    assert len(set(contexts)) == len(contexts)
+    assert seal['human_review_completed'] is False
+    assert seal['non_human_review_completed'] is True
+    assert seal['human_review_status'] == 'PENDING_POST_GENERATION_SECTION_6'
     assert seal['judgment_vocabulary'] == [
         'ACCEPT', 'RENAME', 'MERGE', 'SPLIT', 'REJECT', 'ADD_MISSING']
     assert seal['creation_before_generation_ordering'] == {
@@ -93,7 +173,10 @@ def test_ground_truth_seal_binds_all_authorities_and_review_protocol():
         'valid_experiment_generation_started': False,
     }
     for key in ('status', 'gold_path', 'gold_sha256', 'isolation_status',
-                'review_protocol_status', 'reviewers', 'judgment_vocabulary'):
+                'review_protocol_status', 'reviewers', 'reviewer_roles',
+                'judgment_vocabulary', 'creation_before_generation_ordering',
+                'human_review_completed', 'non_human_review_completed',
+                'human_review_status'):
         assert phase0['ground_truth'][key] == seal[key]
     assert phase0['ground_truth']['seal_sha256'] == digest(SEAL_PATH)
     assert gold['mapping_set_id'] == seal['mapping_set_id']
@@ -118,6 +201,83 @@ def test_evaluator_truth_is_absent_from_product_and_skill_visible_inputs():
     assert semantics['realization_hints_included'] is False
     assert all(set(item) == {'capability_id', 'name', 'description'}
                for item in semantics['capabilities'])
+
+
+def test_gate_rejects_protocol_actor_names_without_explicit_agent_contexts(tmp_path):
+    seal_path, seal, evidence = ground_truth_fixture(tmp_path)
+    seal['reviewers'] = evidence['reviewers'] = [
+        'fresh-context-evaluator', 'public-seam-integrity-verifier']
+    seal['reviewer_roles'] = evidence['reviewer_roles'] = {
+        'fresh-context-evaluator': 'EXPECTED_REALIZATION_AUTHOR',
+        'public-seam-integrity-verifier': 'DIGEST_ISOLATION_AND_RESOLUTION_VERIFIER',
+    }
+    write_fixture_seal(seal_path, seal, evidence)
+
+    assert_ground_truth_rejected(tmp_path, evidence)
+
+
+@pytest.mark.parametrize('mutation', ('missing', 'duplicate-context', 'not-independent'))
+def test_gate_rejects_missing_or_mutated_agent_reviewer_roles(tmp_path, mutation):
+    seal_path, seal, evidence = ground_truth_fixture(tmp_path)
+    roles = evidence['reviewer_roles']
+    if mutation == 'missing':
+        del seal['reviewer_roles']
+        del evidence['reviewer_roles']
+    elif mutation == 'duplicate-context':
+        identities = list(roles)
+        roles[identities[1]]['context_id'] = roles[identities[0]]['context_id']
+        seal['reviewer_roles'] = deepcopy(roles)
+    else:
+        roles[next(iter(roles))]['independent_context'] = False
+        seal['reviewer_roles'] = deepcopy(roles)
+    write_fixture_seal(seal_path, seal, evidence)
+
+    assert_ground_truth_rejected(tmp_path, evidence)
+
+
+def test_gate_rejects_valid_agent_roles_that_disagree_with_seal(tmp_path):
+    _, _, evidence = ground_truth_fixture(tmp_path)
+    reviewer = next(iter(evidence['reviewer_roles']))
+    evidence['reviewer_roles'][reviewer]['role'] = 'ALTERNATE_AGENT_ROLE'
+
+    assert_ground_truth_rejected(tmp_path, evidence)
+
+
+@pytest.mark.parametrize('mutation', ('missing', 'wrong-rule', 'generation-started'))
+def test_gate_rejects_missing_or_mutated_creation_ordering(tmp_path, mutation):
+    seal_path, seal, evidence = ground_truth_fixture(tmp_path)
+    if mutation == 'missing':
+        del seal['creation_before_generation_ordering']
+        del evidence['creation_before_generation_ordering']
+    elif mutation == 'wrong-rule':
+        seal['creation_before_generation_ordering']['rule'] = 'UNBOUND'
+        evidence['creation_before_generation_ordering']['rule'] = 'UNBOUND'
+    else:
+        seal['creation_before_generation_ordering']['valid_experiment_generation_started'] = True
+        evidence['creation_before_generation_ordering']['valid_experiment_generation_started'] = True
+    write_fixture_seal(seal_path, seal, evidence)
+
+    assert_ground_truth_rejected(tmp_path, evidence)
+
+
+def test_gate_rejects_creation_ordering_that_disagrees_with_seal(tmp_path):
+    _, _, evidence = ground_truth_fixture(tmp_path)
+    evidence['creation_before_generation_ordering']['status'] = 'MISMATCHED_EVIDENCE'
+
+    assert_ground_truth_rejected(tmp_path, evidence)
+
+
+@pytest.mark.parametrize('field,value', (
+    ('human_review_completed', True),
+    ('non_human_review_completed', False),
+    ('human_review_status', 'COMPLETE'),
+))
+def test_gate_preserves_human_review_as_pending_after_generation(tmp_path, field, value):
+    seal_path, seal, evidence = ground_truth_fixture(tmp_path)
+    seal[field] = evidence[field] = value
+    write_fixture_seal(seal_path, seal, evidence)
+
+    assert_ground_truth_rejected(tmp_path, evidence)
 
 
 def test_calibration_freeze_binds_source_tree_graph_runtime_and_history():
@@ -167,6 +327,11 @@ def test_repository_has_all_six_phase0_flags_and_ready_report():
         'GROUND_TRUTH_SEALED': True,
     }
     assert all(item['status'] == 'SATISFIED' for item in report['prerequisites'])
+    assert report['review_state'] == {
+        'phase0_protocol_actors': 'INDEPENDENT_AI_AGENT_CONTEXTS',
+        'non_human_review_completed': True,
+        'human_review_status': 'PENDING_POST_GENERATION_SECTION_6',
+    }
 
 
 def test_public_registry_and_status_announce_readiness_without_exposing_gold():
@@ -178,4 +343,5 @@ def test_public_registry_and_status_announce_readiness_without_exposing_gold():
     assert registry['phase0_readiness'] == 'READY'
     assert status['phase0_readiness'] == 'READY'
     assert status['next_action'] == 'Run PKB-001 experiments under the sealed Phase 0 inputs'
+    assert status['human_review_status'] == 'PENDING_POST_GENERATION_SECTION_6'
     assert 'gold' not in json.dumps(registry).lower()

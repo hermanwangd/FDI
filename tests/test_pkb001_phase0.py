@@ -75,14 +75,33 @@ def test_gate_is_ready_only_with_all_verified_evidence(tmp_path):
     (tmp_path/'pk-s2/SKILL.md').write_text('# PK-S2')
     (tmp_path/'delivery-history.json').write_text('{"episodes": []}')
     (tmp_path/'gold-mappings.json').write_text('{"mappings": []}')
-    (tmp_path/'ground-truth-seal.json').write_text(json.dumps({
+    reviewers = [
+        'agent-context:expected-realization-author',
+        'agent-context:seal-integrity-verifier',
+    ]
+    reviewer_roles = {
+        reviewers[0]: {'actor_type': 'AI_AGENT_CONTEXT', 'context_id': reviewers[0],
+                       'independent_context': True, 'role': 'EXPECTED_REALIZATION_AUTHOR'},
+        reviewers[1]: {'actor_type': 'AI_AGENT_CONTEXT', 'context_id': reviewers[1],
+                       'independent_context': True,
+                       'role': 'DIGEST_ISOLATION_AND_RESOLUTION_VERIFIER'},
+    }
+    ordering = {'status': 'VERIFIED',
+                'rule': 'SEALED_BEFORE_VALID_EXPERIMENT_GENERATION',
+                'valid_experiment_generation_started': False}
+    seal_path = tmp_path/'ground-truth-seal.json'
+    seal_path.write_text(json.dumps({
         'status': 'SEALED', 'gold_path': 'gold-mappings.json',
         'gold_sha256': hashlib.sha256(
             (tmp_path/'gold-mappings.json').read_bytes()).hexdigest(),
         'isolation_status': 'VERIFIED', 'review_protocol_status': 'FROZEN',
-        'reviewers': ['reviewer-a', 'reviewer-b'],
+        'reviewers': reviewers, 'reviewer_roles': reviewer_roles,
         'judgment_vocabulary': [
             'ACCEPT', 'RENAME', 'MERGE', 'SPLIT', 'REJECT', 'ADD_MISSING'],
+        'creation_before_generation_ordering': ordering,
+        'human_review_completed': False,
+        'non_human_review_completed': True,
+        'human_review_status': 'PENDING_POST_GENERATION_SECTION_6',
     }))
     authority = {'status': 'FROZEN', 'path': framework.name,
                  'sha256': hashlib.sha256(framework.read_bytes()).hexdigest(),
@@ -113,10 +132,15 @@ def test_gate_is_ready_only_with_all_verified_evidence(tmp_path):
                          'gold_sha256': hashlib.sha256(
                              (tmp_path/'gold-mappings.json').read_bytes()).hexdigest(),
                          'seal_path': 'ground-truth-seal.json',
+                         'seal_sha256': hashlib.sha256(seal_path.read_bytes()).hexdigest(),
                          'isolation_status': 'VERIFIED', 'review_protocol_status': 'FROZEN',
-                         'reviewers': ['reviewer-a', 'reviewer-b'],
+                         'reviewers': reviewers, 'reviewer_roles': reviewer_roles,
                          'judgment_vocabulary': [
-                             'ACCEPT', 'RENAME', 'MERGE', 'SPLIT', 'REJECT', 'ADD_MISSING']},
+                             'ACCEPT', 'RENAME', 'MERGE', 'SPLIT', 'REJECT', 'ADD_MISSING'],
+                         'creation_before_generation_ordering': ordering,
+                         'human_review_completed': False,
+                         'non_human_review_completed': True,
+                         'human_review_status': 'PENDING_POST_GENERATION_SECTION_6'},
     }
     assert evaluate_readiness(tmp_path, evidence)['status'] == 'READY'
 

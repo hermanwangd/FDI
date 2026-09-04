@@ -139,9 +139,12 @@ def _ground_truth(root: Path, value: object) -> Dict[str, str]:
         return _item('P0-05', 'MISSING', 'evaluator ground truth evidence is absent')
     vocabulary = {'ACCEPT', 'RENAME', 'MERGE', 'SPLIT', 'REJECT', 'ADD_MISSING'}
     reviewers = value.get('reviewers')
+    reviewer_roles = value.get('reviewer_roles')
+    ordering = value.get('creation_before_generation_ordering')
     gold = _safe_file(root, value.get('gold_path'))
     seal_path = _safe_file(root, value.get('seal_path'))
     digest = value.get('gold_sha256')
+    seal_digest = value.get('seal_sha256')
     try:
         seal = json.loads(seal_path.read_text()) if seal_path is not None else None
     except (OSError, json.JSONDecodeError):
@@ -149,18 +152,48 @@ def _ground_truth(root: Path, value: object) -> Dict[str, str]:
     sealed_fields_match = isinstance(seal, dict) and all(
         seal.get(key) == value.get(key) for key in (
             'status', 'gold_path', 'gold_sha256', 'isolation_status',
-            'review_protocol_status', 'reviewers', 'judgment_vocabulary'))
+            'review_protocol_status', 'reviewers', 'reviewer_roles',
+            'judgment_vocabulary', 'creation_before_generation_ordering',
+            'human_review_completed', 'non_human_review_completed',
+            'human_review_status'))
+    valid_agent_contexts = (
+        isinstance(reviewers, list)
+        and all(isinstance(reviewer, str) and reviewer.startswith('agent-context:')
+                for reviewer in reviewers)
+        and len(set(reviewers)) >= 2
+        and isinstance(reviewer_roles, dict)
+        and set(reviewer_roles) == set(reviewers)
+        and all(
+            isinstance(reviewer_roles[reviewer], dict)
+            and reviewer_roles[reviewer].get('actor_type') == 'AI_AGENT_CONTEXT'
+            and reviewer_roles[reviewer].get('context_id') == reviewer
+            and reviewer_roles[reviewer].get('independent_context') is True
+            and isinstance(reviewer_roles[reviewer].get('role'), str)
+            and bool(reviewer_roles[reviewer]['role'])
+            for reviewer in reviewers
+        )
+    )
+    valid_ordering = ordering == {
+        'status': 'VERIFIED',
+        'rule': 'SEALED_BEFORE_VALID_EXPERIMENT_GENERATION',
+        'valid_experiment_generation_started': False,
+    }
     valid = (
         value.get('status') == 'SEALED'
         and gold is not None
+        and seal_path is not None
         and sealed_fields_match
         and isinstance(digest, str) and SHA256.fullmatch(digest)
         and hashlib.sha256(gold.read_bytes()).hexdigest() == digest
+        and isinstance(seal_digest, str) and SHA256.fullmatch(seal_digest)
+        and hashlib.sha256(seal_path.read_bytes()).hexdigest() == seal_digest
         and value.get('isolation_status') == 'VERIFIED'
         and value.get('review_protocol_status') == 'FROZEN'
-        and isinstance(reviewers, list)
-        and all(isinstance(reviewer, str) and reviewer for reviewer in reviewers)
-        and len(set(reviewers)) >= 2
+        and valid_agent_contexts
+        and valid_ordering
+        and value.get('human_review_completed') is False
+        and value.get('non_human_review_completed') is True
+        and value.get('human_review_status') == 'PENDING_POST_GENERATION_SECTION_6'
         and set(value.get('judgment_vocabulary', [])) == vocabulary
     )
     return _item('P0-05', 'SATISFIED' if valid else 'MISMATCH',
@@ -189,9 +222,19 @@ def evaluate_readiness(root: Path, evidence: dict) -> dict:
         'CALIBRATION_DATASET_FROZEN': prerequisites[3]['status'] == 'SATISFIED',
         'GROUND_TRUTH_SEALED': prerequisites[4]['status'] == 'SATISFIED',
     }
+    review_state = ({
+        'phase0_protocol_actors': 'INDEPENDENT_AI_AGENT_CONTEXTS',
+        'non_human_review_completed': True,
+        'human_review_status': 'PENDING_POST_GENERATION_SECTION_6',
+    } if flags['GROUND_TRUTH_SEALED'] else {
+        'phase0_protocol_actors': 'UNVERIFIED',
+        'non_human_review_completed': False,
+        'human_review_status': 'UNVERIFIED',
+    })
     return {'experiment': 'PKB-001', 'status': 'READY' if ready else 'BLOCKED',
             'readiness_state': 'READY' if ready else 'NOT_READY',
-            'readiness_flags': flags, 'prerequisites': prerequisites}
+            'readiness_flags': flags, 'prerequisites': prerequisites,
+            'review_state': review_state}
 
 
 def main(argv: Optional[List[str]] = None) -> int:

@@ -63,20 +63,33 @@
     "gold_path": "validation/pkb001/evaluator/petclinic-818c413/gold-mappings.json",
     "gold_sha256": "4d22799e4d7597e0bbc302c9db3cd0510f70cc946cb5de5909ded9c4b1b112d1",
     "seal_path": "validation/pkb001/evaluator/petclinic-818c413/ground-truth-seal.json",
-    "seal_sha256": "58afbe2ff5422a0f33dc8e962de48850c97a6bde6fbeb2692b09043f5fc4b0ca",
+    "seal_sha256": "7290fd4aec80cbdd5cea52b30f9da5323e455843948746fc53208eecf6e2a55a",
     "product_semantics_sha256": "72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea",
     "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
     "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
     "isolation_status": "VERIFIED",
     "review_protocol_status": "FROZEN",
     "reviewers": [
-      "fresh-context-evaluator",
-      "public-seam-integrity-verifier"
+      "agent-context:expected-realization-author",
+      "agent-context:seal-integrity-verifier"
     ],
     "reviewer_roles": {
-      "fresh-context-evaluator": "EXPECTED_REALIZATION_AUTHOR",
-      "public-seam-integrity-verifier": "DIGEST_ISOLATION_AND_RESOLUTION_VERIFIER"
+      "agent-context:expected-realization-author": {
+        "actor_type": "AI_AGENT_CONTEXT",
+        "context_id": "agent-context:expected-realization-author",
+        "independent_context": true,
+        "role": "EXPECTED_REALIZATION_AUTHOR"
+      },
+      "agent-context:seal-integrity-verifier": {
+        "actor_type": "AI_AGENT_CONTEXT",
+        "context_id": "agent-context:seal-integrity-verifier",
+        "independent_context": true,
+        "role": "DIGEST_ISOLATION_AND_RESOLUTION_VERIFIER"
+      }
     },
+    "human_review_completed": false,
+    "non_human_review_completed": true,
+    "human_review_status": "PENDING_POST_GENERATION_SECTION_6",
     "judgment_vocabulary": [
       "ACCEPT",
       "RENAME",
@@ -85,6 +98,10 @@
       "REJECT",
       "ADD_MISSING"
     ],
-    "creation_before_generation_ordering": "VERIFIED"
+    "creation_before_generation_ordering": {
+      "status": "VERIFIED",
+      "rule": "SEALED_BEFORE_VALID_EXPERIMENT_GENERATION",
+      "valid_experiment_generation_started": false
+    }
   }
 }
