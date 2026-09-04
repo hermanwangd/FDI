@@ -1,0 +1,520 @@
+{
+  "schema_version": "1.0",
+  "run_id": "pkb001-petclinic-pk-s1-forward-818c4136",
+  "experiment_id": "PKB-001",
+  "subject": "spring-petclinic",
+  "execution_kind": "SKILL_EXECUTION",
+  "skill": "pk-s1-product-realization",
+  "authority": "PROPOSAL_ONLY",
+  "run_status": "COMPLETED",
+  "bindings": {
+    "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+    "product_semantics_sha256": "72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea"
+  },
+  "input_policy": {
+    "visible_inputs": [
+      ".superpowers/sdd/IMPLEMENTATION-PLAN/task-4-brief.md",
+      "skills/pkb001/pk-s1-product-realization/SKILL.md",
+      "validation/pkb001/datasets/petclinic-product-semantics-candidate.json",
+      "validation/pkb001/artifacts/petclinic-graph-818c413.json",
+      "validation/pkb001/runtime/graphify-petclinic-live-evidence.json",
+      "validation/pkb001/reports/phase0-readiness.json"
+    ],
+    "forbidden_inputs_accessed": false,
+    "product_semantics_fields_read_per_capability": [
+      "capability_id",
+      "name",
+      "description"
+    ],
+    "post_cutoff_sources_used": false
+  },
+  "confidence": {
+    "overall": 0.86,
+    "scale": "0.0_to_1.0",
+    "basis": "Structural agreement among controller, domain, and repository nodes in the exactly bound Java graph."
+  },
+  "limitations": [
+    "The frozen graph contains deterministic Java AST structure only; view templates, route annotations, configuration metadata, and runtime behavior are not represented.",
+    "Method names and graph adjacency support component candidacy but do not prove end-to-end behavior or ownership.",
+    "No proposal is accepted Product truth; every mapping requires separate evaluator review."
+  ],
+  "capability_results": [
+    {
+      "capability_id": "PET-CAP-01",
+      "name": "Find Owners",
+      "outcome": "MAPPING_PROPOSAL",
+      "mapping_status": "PROPOSAL_ONLY",
+      "proposed_components": [
+        {
+          "graph_node_id": "ownercontroller",
+          "label": "OwnerController.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1"
+        },
+        {
+          "graph_node_id": "ownerrepository",
+          "label": "OwnerRepository.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java:L1"
+        }
+      ],
+      "evidence_refs": [
+        {
+          "graph_node_id": "ownercontroller_ownercontroller_initfindform",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L89"
+        },
+        {
+          "graph_node_id": "ownercontroller_ownercontroller_processfindform",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L94"
+        },
+        {
+          "graph_node_id": "ownercontroller_ownercontroller_findpaginatedforownerslastname",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L133"
+        },
+        {
+          "graph_node_id": "ownerrepository_ownerrepository_findbylastnamestartingwith",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java:L45"
+        }
+      ],
+      "reasoning": "The controller exposes find-form, find-processing, and paginated last-name search methods, while the repository exposes a matching last-name-prefix query. Together these are direct structural candidates for search and result navigation.",
+      "confidence": 0.95,
+      "limitations": [
+        "Graph structure does not expose rendered result links or request mappings."
+      ]
+    },
+    {
+      "capability_id": "PET-CAP-02",
+      "name": "Register Owner",
+      "outcome": "MAPPING_PROPOSAL",
+      "mapping_status": "PROPOSAL_ONLY",
+      "proposed_components": [
+        {
+          "graph_node_id": "ownercontroller",
+          "label": "OwnerController.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1"
+        },
+        {
+          "graph_node_id": "owner",
+          "label": "Owner.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+        }
+      ],
+      "evidence_refs": [
+        {
+          "graph_node_id": "ownercontroller_ownercontroller_initcreationform",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L72"
+        },
+        {
+          "graph_node_id": "ownercontroller_ownercontroller_processcreationform",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L77"
+        },
+        {
+          "graph_node_id": "person_person_setfirstname",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/model/Person.java:L45"
+        },
+        {
+          "graph_node_id": "person_person_setlastname",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/model/Person.java:L53"
+        },
+        {
+          "graph_node_id": "owner_owner_setaddress",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L73"
+        },
+        {
+          "graph_node_id": "owner_owner_settelephone",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L89"
+        }
+      ],
+      "reasoning": "Creation-form controller methods align with record registration, and person/owner mutators structurally cover name, address, and telephone contact fields.",
+      "confidence": 0.93,
+      "limitations": [
+        "Persistence calls and field validation are not proven by the extracted cross-component graph."
+      ]
+    },
+    {
+      "capability_id": "PET-CAP-03",
+      "name": "Maintain Owner Details",
+      "outcome": "MAPPING_PROPOSAL",
+      "mapping_status": "PROPOSAL_ONLY",
+      "proposed_components": [
+        {
+          "graph_node_id": "ownercontroller",
+          "label": "OwnerController.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1"
+        },
+        {
+          "graph_node_id": "owner",
+          "label": "Owner.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+        }
+      ],
+      "evidence_refs": [
+        {
+          "graph_node_id": "ownercontroller_ownercontroller_initupdateownerform",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L139"
+        },
+        {
+          "graph_node_id": "ownercontroller_ownercontroller_processupdateownerform",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L144"
+        },
+        {
+          "graph_node_id": "ownercontroller_ownercontroller_showowner",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L169"
+        },
+        {
+          "graph_node_id": "owner_owner_getpets",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L93"
+        },
+        {
+          "graph_node_id": "owner_owner_setcity",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L81"
+        }
+      ],
+      "reasoning": "Explicit owner update-form and show-owner methods support profile maintenance, while the Owner node exposes profile mutation and associated-pet access structure.",
+      "confidence": 0.94,
+      "limitations": [
+        "Associated activity rendering is inferred only from structural accessors, not template evidence."
+      ]
+    },
+    {
+      "capability_id": "PET-CAP-04",
+      "name": "Register Pet",
+      "outcome": "MAPPING_PROPOSAL",
+      "mapping_status": "PROPOSAL_ONLY",
+      "proposed_components": [
+        {
+          "graph_node_id": "petcontroller",
+          "label": "PetController.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L1"
+        },
+        {
+          "graph_node_id": "owner",
+          "label": "Owner.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+        },
+        {
+          "graph_node_id": "pet",
+          "label": "Pet.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L1"
+        },
+        {
+          "graph_node_id": "pettyperepository",
+          "label": "PetTypeRepository.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java:L1"
+        }
+      ],
+      "evidence_refs": [
+        {
+          "graph_node_id": "petcontroller_petcontroller_initcreationform",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L100"
+        },
+        {
+          "graph_node_id": "petcontroller_petcontroller_processcreationform",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L107"
+        },
+        {
+          "graph_node_id": "petcontroller_petcontroller_populatepettypes",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L62"
+        },
+        {
+          "graph_node_id": "owner_owner_addpet",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L97"
+        },
+        {
+          "graph_node_id": "namedentity_namedentity_setname",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/model/NamedEntity.java:L41"
+        },
+        {
+          "graph_node_id": "pet_pet_setbirthdate",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L61"
+        },
+        {
+          "graph_node_id": "pet_pet_settype",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L73"
+        },
+        {
+          "graph_node_id": "pettyperepository_pettyperepository_findpettypes",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java:L36"
+        }
+      ],
+      "reasoning": "Pet creation methods, owner aggregation, pet attribute mutators, and pet-type lookup form a coherent structural candidate for adding a typed, named, dated pet to an owner.",
+      "confidence": 0.93,
+      "limitations": [
+        "The graph does not prove the transaction or UI binding joining these components."
+      ]
+    },
+    {
+      "capability_id": "PET-CAP-05",
+      "name": "Maintain Pet Details",
+      "outcome": "MAPPING_PROPOSAL",
+      "mapping_status": "PROPOSAL_ONLY",
+      "proposed_components": [
+        {
+          "graph_node_id": "petcontroller",
+          "label": "PetController.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L1"
+        },
+        {
+          "graph_node_id": "pet",
+          "label": "Pet.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L1"
+        }
+      ],
+      "evidence_refs": [
+        {
+          "graph_node_id": "petcontroller_petcontroller_initupdateform",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L139"
+        },
+        {
+          "graph_node_id": "petcontroller_petcontroller_processupdateform",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L144"
+        },
+        {
+          "graph_node_id": "petcontroller_petcontroller_updatepetdetails",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L186"
+        },
+        {
+          "graph_node_id": "pet_pet_setbirthdate",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L61"
+        },
+        {
+          "graph_node_id": "pet_pet_settype",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L73"
+        }
+      ],
+      "reasoning": "The PetController has explicit update initialization, processing, and detail-update methods, paired with Pet mutators for identifying classification data.",
+      "confidence": 0.95,
+      "limitations": [
+        "Name handling is inherited through NamedEntity and the graph does not establish form field coverage."
+      ]
+    },
+    {
+      "capability_id": "PET-CAP-06",
+      "name": "Record Pet Visit",
+      "outcome": "MAPPING_PROPOSAL",
+      "mapping_status": "PROPOSAL_ONLY",
+      "proposed_components": [
+        {
+          "graph_node_id": "visitcontroller",
+          "label": "VisitController.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L1"
+        },
+        {
+          "graph_node_id": "visit",
+          "label": "Visit.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L1"
+        },
+        {
+          "graph_node_id": "owner",
+          "label": "Owner.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+        }
+      ],
+      "evidence_refs": [
+        {
+          "graph_node_id": "visitcontroller_visitcontroller_loadpetwithvisit",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L63"
+        },
+        {
+          "graph_node_id": "visitcontroller_visitcontroller_initnewvisitform",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L90"
+        },
+        {
+          "graph_node_id": "visitcontroller_visitcontroller_processnewvisitform",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L97"
+        },
+        {
+          "graph_node_id": "visit_visit_setdate",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L56"
+        },
+        {
+          "graph_node_id": "visit_visit_setdescription",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L64"
+        },
+        {
+          "graph_node_id": "owner_owner_addvisit",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L173"
+        }
+      ],
+      "reasoning": "Visit creation and processing methods explicitly load a pet with a visit, while the Visit model exposes date and description mutation and Owner exposes visit aggregation.",
+      "confidence": 0.96,
+      "limitations": [
+        "The extracted graph does not demonstrate persistence success or validation behavior."
+      ]
+    },
+    {
+      "capability_id": "PET-CAP-07",
+      "name": "Review Pet Visit History",
+      "outcome": "MAPPING_PROPOSAL",
+      "mapping_status": "PROPOSAL_ONLY",
+      "proposed_components": [
+        {
+          "graph_node_id": "ownercontroller",
+          "label": "OwnerController.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1"
+        },
+        {
+          "graph_node_id": "owner",
+          "label": "Owner.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+        },
+        {
+          "graph_node_id": "pet",
+          "label": "Pet.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L1"
+        },
+        {
+          "graph_node_id": "visit",
+          "label": "Visit.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L1"
+        }
+      ],
+      "evidence_refs": [
+        {
+          "graph_node_id": "ownercontroller_ownercontroller_showowner",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L169"
+        },
+        {
+          "graph_node_id": "owner_owner_getpets",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L93"
+        },
+        {
+          "graph_node_id": "pet_pet_getvisits",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L77"
+        },
+        {
+          "graph_node_id": "visit_visit_getdate",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L52"
+        },
+        {
+          "graph_node_id": "visit_visit_getdescription",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L60"
+        }
+      ],
+      "reasoning": "The owner detail entry point, owner-to-pets accessor, pet-to-visits accessor, and visit display fields form a structural chain for reviewing visit history in owner and pet context.",
+      "confidence": 0.84,
+      "limitations": [
+        "No view-template node confirms that the visit collection is rendered or ordered as history."
+      ]
+    },
+    {
+      "capability_id": "PET-CAP-08",
+      "name": "Browse Veterinarians",
+      "outcome": "MAPPING_PROPOSAL",
+      "mapping_status": "PROPOSAL_ONLY",
+      "proposed_components": [
+        {
+          "graph_node_id": "vetcontroller",
+          "label": "VetController.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L1"
+        },
+        {
+          "graph_node_id": "vetrepository",
+          "label": "VetRepository.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java:L1"
+        },
+        {
+          "graph_node_id": "vets",
+          "label": "Vets.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vets.java:L1"
+        }
+      ],
+      "evidence_refs": [
+        {
+          "graph_node_id": "vetcontroller_vetcontroller_showvetlist",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L44"
+        },
+        {
+          "graph_node_id": "vetcontroller_vetcontroller_addpaginationmodel",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L50"
+        },
+        {
+          "graph_node_id": "vetcontroller_vetcontroller_findpaginated",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L59"
+        },
+        {
+          "graph_node_id": "vetrepository_vetrepository_findall",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java:L44"
+        },
+        {
+          "graph_node_id": "vets_vets_getvetlist",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vets.java:L35"
+        }
+      ],
+      "reasoning": "VetController exposes list and pagination methods, VetRepository exposes collection retrieval, and Vets exposes a list accessor, providing convergent structure for veterinarian browsing.",
+      "confidence": 0.95,
+      "limitations": [
+        "List presentation and navigation controls are outside the Java-only graph."
+      ]
+    },
+    {
+      "capability_id": "PET-CAP-09",
+      "name": "Review Veterinarian Specialties",
+      "outcome": "MAPPING_PROPOSAL",
+      "mapping_status": "PROPOSAL_ONLY",
+      "proposed_components": [
+        {
+          "graph_node_id": "vetcontroller",
+          "label": "VetController.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L1"
+        },
+        {
+          "graph_node_id": "vet",
+          "label": "Vet.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java:L1"
+        },
+        {
+          "graph_node_id": "specialty",
+          "label": "Specialty.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java:L1"
+        }
+      ],
+      "evidence_refs": [
+        {
+          "graph_node_id": "vetcontroller_vetcontroller_showvetlist",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L44"
+        },
+        {
+          "graph_node_id": "vet_vet_getspecialties",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java:L59"
+        },
+        {
+          "graph_node_id": "vet_vet_getnrofspecialties",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java:L66"
+        },
+        {
+          "graph_node_id": "specialty",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java:L1"
+        }
+      ],
+      "reasoning": "The veterinarian list entry point and Vet specialty accessors, together with the Specialty type, directly support a candidate realization for associating specialties with each listed veterinarian.",
+      "confidence": 0.87,
+      "limitations": [
+        "The graph does not include the view responsible for displaying specialty names."
+      ]
+    },
+    {
+      "capability_id": "PET-CAP-10",
+      "name": "Access Clinic Home",
+      "outcome": "MAPPING_PROPOSAL",
+      "mapping_status": "PROPOSAL_ONLY",
+      "proposed_components": [
+        {
+          "graph_node_id": "welcomecontroller",
+          "label": "WelcomeController.java",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java:L1"
+        }
+      ],
+      "evidence_refs": [
+        {
+          "graph_node_id": "welcomecontroller_welcomecontroller_welcome",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java:L25"
+        }
+      ],
+      "reasoning": "A dedicated WelcomeController and welcome method are direct structural candidates for the clinic landing entry point.",
+      "confidence": 0.64,
+      "limitations": [
+        "The Java-only graph contains no home template or navigation links, so primary navigation into owner and veterinarian workflows is not structurally verified."
+      ]
+    }
+  ]
+}
