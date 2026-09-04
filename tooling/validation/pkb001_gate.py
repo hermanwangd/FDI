@@ -45,39 +45,20 @@ def _item(identifier: str, status: str, reason: str) -> Dict[str, str]:
     return {'id': identifier, 'status': status, 'reason': reason}
 
 
-def _authority(root: Path, value: object) -> Dict[str, str]:
+def _product_semantics(root: Path, value: object) -> Dict[str, str]:
     if not isinstance(value, dict):
-        return _item('P0-01', 'MISSING', 'rc9 authority-chain evidence is absent')
-    framework = value.get('framework')
-    if not isinstance(framework, dict):
-        return _item('P0-01', 'MISMATCH', 'rc9 framework evidence is absent')
-    path = _safe_file(root, framework.get('path'))
-    digest = framework.get('sha256')
-    if framework.get('version') != 'v0.1-rc9':
-        return _item('P0-01', 'MISMATCH', 'framework version must be v0.1-rc9')
+        return _item('P0-01', 'MISSING', 'Product Semantics evidence is absent')
+    path = _safe_file(root, value.get('path'))
+    digest = value.get('sha256')
     if path is None or not isinstance(digest, str) or not SHA256.fullmatch(digest):
-        return _item('P0-01', 'MISMATCH', 'framework path or SHA-256 is invalid')
+        return _item('P0-01', 'MISMATCH', 'Product Semantics path or SHA-256 is invalid')
     actual = hashlib.sha256(path.read_bytes()).hexdigest()
     if actual != digest:
-        return _item('P0-01', 'MISMATCH', 'framework SHA-256 does not match bytes')
-    for key in ('fc03_fix', 'implementation_plan', 'governance_lock', 'release_metadata'):
-        record = value.get(key)
-        if not isinstance(record, dict):
-            return _item('P0-01', 'MISMATCH', key + ' evidence is absent')
-        record_path = _safe_file(root, record.get('path'))
-        record_digest = record.get('sha256')
-        if (record_path is None or not isinstance(record_digest, str)
-                or not SHA256.fullmatch(record_digest)
-                or hashlib.sha256(record_path.read_bytes()).hexdigest() != record_digest):
-            return _item('P0-01', 'MISMATCH', key + ' bytes or SHA-256 are invalid')
-        if record.get('authority_sha256') != digest:
-            return _item('P0-01', 'MISMATCH', key + ' is not reconciled to rc9')
-        if key == 'implementation_plan':
-            text = record_path.read_text()
-            stale = ('implements the rc4 Lean Core', 'active rc4 files', 'rc4 spec digest')
-            if any(phrase in text for phrase in stale):
-                return _item('P0-01', 'MISMATCH', 'implementation plan retains stale rc4 identity')
-    return _item('P0-01', 'SATISFIED', 'rc9 authority chain verified')
+        return _item('P0-01', 'MISMATCH', 'Product Semantics SHA-256 does not match bytes')
+    valid = value.get('status') == 'FROZEN' and value.get('owner') == 'PRODUCT_TEAM'
+    return _item('P0-01', 'SATISFIED' if valid else 'MISMATCH',
+                 'Product Semantics frozen by Product Team' if valid
+                 else 'Product Semantics is not frozen by Product Team')
 
 
 def _graphify(value: object) -> Dict[str, str]:
@@ -164,7 +145,7 @@ def _ground_truth(value: object) -> Dict[str, str]:
 def evaluate_readiness(root: Path, evidence: dict) -> dict:
     root = Path(root).resolve()
     prerequisites = [
-        _authority(root, evidence.get('rc9_authority')),
+        _product_semantics(root, evidence.get('product_semantics')),
         _graphify(evidence.get('graphify')),
         _skills(root, evidence.get('skills')),
         _calibration(evidence.get('calibration')),
@@ -173,7 +154,7 @@ def evaluate_readiness(root: Path, evidence: dict) -> dict:
     ready = all(item['status'] == 'SATISFIED' for item in prerequisites)
     skills = evidence.get('skills') if isinstance(evidence.get('skills'), dict) else {}
     flags = {
-        'RC9_AUTHORITY_VERIFIED': prerequisites[0]['status'] == 'SATISFIED',
+        'PRODUCT_SEMANTICS_FROZEN': prerequisites[0]['status'] == 'SATISFIED',
         'LIVE_GRAPHIFY_INTERFACE_VERIFIED': prerequisites[1]['status'] == 'SATISFIED',
         'PK_S1_EXECUTION_READY': (
             _safe_file(root, skills.get('pk_s1_path')) is not None

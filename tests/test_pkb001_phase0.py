@@ -48,7 +48,7 @@ def test_gate_blocks_when_any_prerequisite_is_missing(tmp_path):
         'P0-01', 'P0-02', 'P0-03', 'P0-04', 'P0-05']
     assert all(item['status'] == 'MISSING' for item in result['prerequisites'])
     assert result['readiness_flags'] == {
-        'RC9_AUTHORITY_VERIFIED': False,
+        'PRODUCT_SEMANTICS_FROZEN': False,
         'LIVE_GRAPHIFY_INTERFACE_VERIFIED': False,
         'PK_S1_EXECUTION_READY': False,
         'PK_S2_EXECUTION_READY': False,
@@ -57,38 +57,27 @@ def test_gate_blocks_when_any_prerequisite_is_missing(tmp_path):
     }
 
 
-def test_gate_never_treats_rc4_as_rc9(tmp_path):
-    framework = tmp_path/'framework.md'
-    framework.write_text('framework rc4')
-    evidence = {'rc9_authority': {'framework': {
-        'version': 'v0.1-rc4',
-        'path': 'framework.md',
-        'sha256': hashlib.sha256(framework.read_bytes()).hexdigest(),
-    }}}
+def test_gate_rejects_unfrozen_product_semantics(tmp_path):
+    semantics = tmp_path/'product-semantics.json'
+    semantics.write_text('{}')
+    evidence = {'product_semantics': {'status': 'DRAFT', 'path': semantics.name,
+                'sha256': hashlib.sha256(semantics.read_bytes()).hexdigest()}}
     result = evaluate_readiness(tmp_path, evidence)
     assert result['prerequisites'][0]['status'] == 'MISMATCH'
 
 
 def test_gate_is_ready_only_with_all_verified_evidence(tmp_path):
-    framework = tmp_path/'framework.md'
-    framework.write_text('authentic external rc9 fixture')
+    framework = tmp_path/'product-semantics.json'
+    framework.write_text('{"capabilities": []}')
     (tmp_path/'pk-s1/SKILL.md').parent.mkdir(parents=True)
     (tmp_path/'pk-s1/SKILL.md').write_text('# PK-S1')
     (tmp_path/'pk-s2/SKILL.md').parent.mkdir(parents=True)
     (tmp_path/'pk-s2/SKILL.md').write_text('# PK-S2')
-    authority_sha = hashlib.sha256(framework.read_bytes()).hexdigest()
-    authority = {'framework': {'version': 'v0.1-rc9', 'path': 'framework.md',
-                               'sha256': authority_sha}}
-    for key, name in (
-        ('fc03_fix', 'fc03.md'), ('implementation_plan', 'implementation-plan.md'),
-        ('governance_lock', 'governance-lock.json'), ('release_metadata', 'manifest.json')):
-        path = tmp_path/name
-        path.write_text(key + ' aligned to rc9')
-        authority[key] = {'path': name,
-                          'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
-                          'authority_sha256': authority_sha}
+    authority = {'status': 'FROZEN', 'path': framework.name,
+                 'sha256': hashlib.sha256(framework.read_bytes()).hexdigest(),
+                 'owner': 'PRODUCT_TEAM'}
     evidence = {
-        'rc9_authority': authority,
+        'product_semantics': authority,
         'graphify': {'result': 'EXACTLY_BOUND', 'queryable': True,
                      'runtime_identity': 'graphify-local', 'runtime_version': '1.0.0',
                      'transport': 'MCP', 'wire_version': 'mcp-1',
