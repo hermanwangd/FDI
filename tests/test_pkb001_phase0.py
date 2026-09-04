@@ -6,9 +6,36 @@ from pathlib import Path
 import pytest
 
 from tooling.validation.pkb001_gate import evaluate_readiness
+from tooling.validation.pkb001_acquisition import tree_sha256, validate_acquisition
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def valid_acquisition_manifest(source_root, **overrides):
+    values = {
+        'source_commit_sha': 'a'*40,
+        'retained_paths': ['README.md', 'src/App.java'],
+        'source_tree_sha256': tree_sha256(source_root, ('README.md', 'src/App.java')),
+        'acquired_at': '2026-09-04T00:00:00Z',
+        'acquisition_method': 'git fetch by immutable commit',
+        'history_source': 'https://api.github.com/repos/example/project',
+        'history_cutoff': '2026-09-04T00:00:00Z',
+        'license': 'AGPL-3.0-only',
+        'max_repository_bytes': 1024,
+        'max_file_count': 10,
+        'max_file_bytes': 512,
+    }
+    values.update(overrides)
+    return values
+
+
+@pytest.fixture
+def acquisition_root(tmp_path):
+    (tmp_path/'README.md').write_text('example')
+    (tmp_path/'src').mkdir()
+    (tmp_path/'src/App.java').write_text('final class App {}')
+    return tmp_path
 
 
 def test_gate_blocks_when_any_prerequisite_is_missing(tmp_path):
@@ -62,3 +89,40 @@ def test_repository_phase0_remains_blocked_without_external_evidence():
     assert result.returncode == 2
     assert 'BLOCKED' in result.stdout
     assert 'P0-01' in result.stdout and 'P0-04' in result.stdout
+
+
+def test_acquisition_rejects_mutable_revision(acquisition_root):
+    manifest = valid_acquisition_manifest(acquisition_root, source_commit_sha='main')
+    with pytest.raises(ValueError, match='40-character'):
+        validate_acquisition(acquisition_root, manifest)
+
+
+def test_acquisition_rejects_tree_digest_mismatch(acquisition_root):
+    manifest = valid_acquisition_manifest(acquisition_root, source_tree_sha256='0'*64)
+    with pytest.raises(ValueError, match='tree digest'):
+        validate_acquisition(acquisition_root, manifest)
+
+
+def test_acquisition_validates_exact_bounded_tree(acquisition_root):
+    result = validate_acquisition(
+        acquisition_root, valid_acquisition_manifest(acquisition_root))
+    assert result['status'] == 'VALIDATED'
+    assert result['file_count'] == 2
+    assert result['repository_bytes'] > 0
+
+
+@pytest.mark.parametrize('unsafe_path', ['../outside', '/tmp/outside', '.git/config'])
+def test_acquisition_rejects_unsafe_retained_paths(acquisition_root, unsafe_path):
+    manifest = valid_acquisition_manifest(acquisition_root, retained_paths=[unsafe_path])
+    with pytest.raises(ValueError, match='unsafe retained path'):
+        validate_acquisition(acquisition_root, manifest)
+
+
+def test_acquisition_rejects_credentials(acquisition_root):
+    (acquisition_root/'README.md').write_text('api_key = super-sensitive-value')
+    manifest = valid_acquisition_manifest(
+        acquisition_root,
+        source_tree_sha256=tree_sha256(acquisition_root, ('README.md', 'src/App.java')),
+    )
+    with pytest.raises(ValueError, match='credential'):
+        validate_acquisition(acquisition_root, manifest)
