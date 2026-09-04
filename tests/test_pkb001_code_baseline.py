@@ -2,7 +2,7 @@ import pytest
 
 import json
 
-from tooling.validation.pkb001_generate import generate_arm, main
+from tooling.validation.pkb001_code_baseline import generate_arm, main
 
 
 SHA = 'a' * 40

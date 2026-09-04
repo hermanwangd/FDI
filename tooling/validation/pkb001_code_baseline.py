@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic proposal-only generator for isolated PKB-001 arms."""
+"""Deterministic code baseline; this does not execute PK-S1 or PK-S2."""
 
 import argparse
 import json

@@ -22,4 +22,4 @@ Everything under `archive/` is historical reference and must not be used to dete
 
 ## Current next action
 
-Complete the prepared Chinese reviewer-1 blind packet, then obtain an independent second blind review. Generation is complete under network and ground-truth isolation, but no proposal is accepted Product truth and no GO / REVISE / STOP decision is valid until review is complete. The current two-capability calibration set also remains below the frozen 30-proposal / 10-gold-item minimum.
+Run PK-S2 in a fresh context that can see only the exactly bound Graphify graph and frozen Delivery History. PK-S1 has been executed as a Skill and produced two proposal-only forward mappings. The earlier 21 outputs are retained only as a deterministic code baseline; they are not Skill results and must not be sent for human Skill evaluation. No GO / REVISE / STOP decision is valid yet.

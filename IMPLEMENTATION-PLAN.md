@@ -16,6 +16,8 @@ Collect Git commits, pull requests, changed paths, and traceable feature-deliver
 
 For each known Capability, combine Product Semantics with exact-revision structural observations to propose Capability-to-Component mappings. Score mappings against evaluator-only expected realizations.
 
+A deterministic code implementation may be retained as a baseline, but it must be labeled `CODE_BASELINE` and must not be represented as PK-S1 or PK-S2 Skill execution.
+
 ## 5. Reverse experiment
 
 Hide Product Semantics from the reverse arm. Combine structural observations with delivery evidence to produce proposal-only Capability hypotheses with evidence references, confidence, and limitations.

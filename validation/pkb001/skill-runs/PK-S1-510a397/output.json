@@ -1,0 +1,70 @@
+{
+  "run_id": "PK-S1-510a397",
+  "skill": "PK-S1 Product Semantics to Realization Proposal",
+  "execution_kind": "SKILL_EXECUTION",
+  "executor": "Codex main agent applying skills/pkb001/pk-s1-product-realization/SKILL.md",
+  "status": "COMPLETE",
+  "authority_status": "PROPOSAL_ONLY",
+  "source_commit_sha": "510a397c134324026fe6b20333dfbfa645ab67b4",
+  "graph_sha256": "b416bded2b325e01bbecb97f5c07cd0a65225a27b890a5f4972f15f893808509",
+  "product_semantics_sha256": "d6bb8a64b864ee9beae5f6eb970b17615390a4c96014649ddff4296f4149cccf",
+  "visible_inputs": [
+    "validation/pkb001/datasets/product-semantics.json",
+    "validation/pkb001/artifacts/graph-510a397.json"
+  ],
+  "mappings": [
+    {
+      "capability_id": "PKB-CAP-01",
+      "capability_name": "Product Semantics Ownership",
+      "status": "PROPOSAL_ONLY",
+      "component_refs": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/product/ProductSemantics.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/product/ProductKnowledgeMaintenance.java"
+      ],
+      "evidence_refs": [
+        "graph-node:productsemantics_productsemantics_validate@L2",
+        "graph-node:productsemantics_productsemantics_resolvelayer1ref@L2",
+        "graph-node:productknowledgemaintenance_productknowledgemaintenance_createdraft@L3",
+        "graph-node:productknowledgemaintenance_productknowledgemaintenance_publish@L3"
+      ],
+      "confidence": 0.96,
+      "reason": "The validation and resolution operations enforce Product asset lifecycle rules, while draft and publish operations require accountable human publication authority.",
+      "limitations": [
+        "This mapping identifies technical enforcement points; it does not transfer Product meaning ownership to code or Graphify."
+      ]
+    },
+    {
+      "capability_id": "PKB-CAP-02",
+      "capability_name": "Exact-Revision Structural Intelligence",
+      "status": "PROPOSAL_ONLY",
+      "component_refs": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/CodeIntelligenceProvider.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/SnapshotBindingAttestor.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/StructuralIntelligence.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyAdapter.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyBindingAttestor.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyBindingEvidence.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyTransport.java"
+      ],
+      "evidence_refs": [
+        "graph-node:codeintelligenceprovider_codeintelligenceprovider@L5",
+        "graph-node:snapshotbindingattestor_snapshotbindingattestor_attest@L7",
+        "graph-node:structuralintelligence_structuralintelligence_validatesnapshotref@L11",
+        "graph-node:graphifyadapter_graphifyadapter_invoke@L41",
+        "graph-node:graphifyadapter_graphifyadapter_enforcebounds@L62",
+        "graph-node:graphifybindingattestor_graphifybindingattestor_attest@L28",
+        "graph-node:graphifybindingevidence_graphifybindingevidence_build@L14",
+        "graph-node:graphifytransport_graphifytransport_invoke@L7"
+      ],
+      "confidence": 0.97,
+      "reason": "Provider-neutral query contracts, Graphify transport and adapter boundaries, revision attestation, and binding evidence jointly implement exactly bound structural observations.",
+      "limitations": [
+        "Graphify graph bytes do not embed the Git revision; the exact binding depends on the separately verified controlled extraction attestation."
+      ]
+    }
+  ],
+  "limitations": [
+    "Only the two frozen Product Team capabilities were processed.",
+    "No mapping is accepted Product truth until evaluator review."
+  ]
+}
