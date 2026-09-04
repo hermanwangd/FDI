@@ -199,6 +199,7 @@ project-folder-reorg/
 │   └── product-instance/
 │       └── README.md
 ├── tests/
+│   ├── test_pkb001_phase0.py
 │   └── test_standalone_governance.py
 ├── tooling/
 │   ├── migration/
@@ -212,6 +213,11 @@ project-folder-reorg/
 │   │   ├── generate_project_tree.py
 │   │   ├── generate_verification_summary.py
 │   │   └── release_metadata.py
+│   ├── validation/
+│   │   ├── pkb001_acquisition.py
+│   │   ├── pkb001_evaluate.py
+│   │   ├── pkb001_gate.py
+│   │   └── pkb001_runner.py
 │   └── verification/
 │       ├── evaluate_dev204_pair.py
 │       └── verify_standalone_bundle.py
@@ -266,12 +272,15 @@ project-folder-reorg/
 │   ├── f001/
 │   │   └── FDI-v0.4.7.1-ABLATION-PROTOCOL.md
 │   ├── pkb001/
-│   │   └── schemas/
-│   │       ├── capability-hypothesis-set-v0.1.schema.json
-│   │       ├── evaluator-judgment-v0.1.schema.json
-│   │       ├── historical-delivery-episode-v0.1.schema.json
-│   │       ├── pkb-decision-report-v0.1.schema.json
-│   │       └── pkb-run-manifest-v0.1.schema.json
+│   │   ├── schemas/
+│   │   │   ├── capability-hypothesis-set-v0.1.schema.json
+│   │   │   ├── evaluator-judgment-v0.1.schema.json
+│   │   │   ├── historical-delivery-episode-v0.1.schema.json
+│   │   │   ├── pkb-decision-report-v0.1.schema.json
+│   │   │   └── pkb-run-manifest-v0.1.schema.json
+│   │   └── spec/
+│   │       ├── EVALUATION-PROTOCOL.md
+│   │       └── PHASE-0-READINESS-PROTOCOL.md
 │   └── reports/
 │       └── .gitkeep
 ├── .gitignore
