@@ -37,7 +37,14 @@
     "live_evidence_sha256": "fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8"
   },
   "calibration": {
-    "status": "AWAITING_PRODUCT_TEAM_APPROVAL",
+    "status": "FROZEN",
+    "path": "validation/pkb001/datasets/petclinic-calibration-candidate.json",
+    "sha256": "103fca15071c9f741492c6207f41e68b751e129543f05fd2d63f1c206ae224a7",
+    "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "source_tree_oid": "0bb31bb92bc1839f6378e832e54c8b4af03e4ee2",
+    "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+    "live_evidence_sha256": "fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8",
+    "delivery_history_sha256": "87b70439f69bb82cee0139b65108ecce6044aff1a4d1b5ce6324933acbeab2d1",
     "resource_policy_status": "FROZEN",
     "post_cutoff_knowledge_policy": "EXCLUDE_AFTER_CUTOFF"
   },
@@ -52,8 +59,32 @@
     "post_cutoff_knowledge_policy": "EXCLUDE_AFTER_CUTOFF"
   },
   "ground_truth": {
-    "status": "NOT_CREATED",
-    "isolation_status": "PENDING_PRODUCT_TEAM_APPROVAL",
-    "review_protocol_status": "PENDING"
+    "status": "SEALED",
+    "gold_path": "validation/pkb001/evaluator/petclinic-818c413/gold-mappings.json",
+    "gold_sha256": "4d22799e4d7597e0bbc302c9db3cd0510f70cc946cb5de5909ded9c4b1b112d1",
+    "seal_path": "validation/pkb001/evaluator/petclinic-818c413/ground-truth-seal.json",
+    "seal_sha256": "58afbe2ff5422a0f33dc8e962de48850c97a6bde6fbeb2692b09043f5fc4b0ca",
+    "product_semantics_sha256": "72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea",
+    "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+    "isolation_status": "VERIFIED",
+    "review_protocol_status": "FROZEN",
+    "reviewers": [
+      "fresh-context-evaluator",
+      "public-seam-integrity-verifier"
+    ],
+    "reviewer_roles": {
+      "fresh-context-evaluator": "EXPECTED_REALIZATION_AUTHOR",
+      "public-seam-integrity-verifier": "DIGEST_ISOLATION_AND_RESOLUTION_VERIFIER"
+    },
+    "judgment_vocabulary": [
+      "ACCEPT",
+      "RENAME",
+      "MERGE",
+      "SPLIT",
+      "REJECT",
+      "ADD_MISSING"
+    ],
+    "creation_before_generation_ordering": "VERIFIED"
   }
 }

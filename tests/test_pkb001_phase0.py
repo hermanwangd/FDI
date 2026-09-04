@@ -185,7 +185,7 @@ def test_repository_phase0_remains_blocked_without_external_evidence():
     assert 'P0-01' in result.stdout and 'P0-04' in result.stdout
 
 
-def test_live_graphify_verifier_records_exact_mcp_proof_and_keeps_phase0_not_ready(tmp_path):
+def test_live_graphify_verifier_records_exact_mcp_proof_and_preserves_phase0_readiness(tmp_path):
     evidence_path = tmp_path/'graphify-live-evidence.json'
     result = subprocess.run(
         ['python3', str(ROOT/'tooling/validation/graphify_live_verifier.py'),
@@ -231,10 +231,10 @@ def test_live_graphify_verifier_records_exact_mcp_proof_and_keeps_phase0_not_rea
     assert phase0['graphify']['supported_operations'] == evidence['supported_operations']
     assert phase0['graphify']['snapshot_binding'] == evidence['snapshot_binding']
     readiness = evaluate_readiness(ROOT, phase0)
-    assert readiness['readiness_state'] == 'NOT_READY'
+    assert readiness['readiness_state'] == 'READY'
     assert readiness['readiness_flags']['LIVE_GRAPHIFY_INTERFACE_VERIFIED'] is True
-    assert readiness['readiness_flags']['CALIBRATION_DATASET_FROZEN'] is False
-    assert readiness['readiness_flags']['GROUND_TRUTH_SEALED'] is False
+    assert readiness['readiness_flags']['CALIBRATION_DATASET_FROZEN'] is True
+    assert readiness['readiness_flags']['GROUND_TRUTH_SEALED'] is True
 
 
 def test_live_graphify_verifier_writes_not_bound_evidence_for_missing_runtime_root(tmp_path):

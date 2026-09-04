@@ -1,0 +1,54 @@
+{
+  "seal_id": "pkb001-petclinic-818c413-ground-truth-v1",
+  "mapping_set_id": "pkb001-petclinic-818c413-evaluator-v1",
+  "status": "SEALED",
+  "sealed_at": "2026-09-04T16:28:28Z",
+  "gold_path": "validation/pkb001/evaluator/petclinic-818c413/gold-mappings.json",
+  "gold_sha256": "4d22799e4d7597e0bbc302c9db3cd0510f70cc946cb5de5909ded9c4b1b112d1",
+  "product_semantics_path": "validation/pkb001/datasets/petclinic-product-semantics-candidate.json",
+  "product_semantics_sha256": "72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea",
+  "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "graph_path": "validation/pkb001/artifacts/petclinic-graph-818c413.json",
+  "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+  "isolation_status": "VERIFIED",
+  "isolation_controls": {
+    "evaluator_truth_authority": "EVALUATOR_ONLY",
+    "product_semantics_contains_realization_hints": false,
+    "skill_input_manifests_contain_gold_path_or_digest": false,
+    "generation_access": "DENIED"
+  },
+  "review_protocol_status": "FROZEN",
+  "review_protocol": {
+    "arm_identity": "BLINDED_WHERE_PRACTICAL",
+    "score_against": "SEALED_EXPECTED_REALIZATIONS",
+    "record": [
+      "evidence_validity",
+      "usefulness",
+      "unsupported_claims",
+      "precision",
+      "review_time"
+    ],
+    "mapping_changes_after_seal": "REQUIRE_NEW_MAPPING_SET_AND_SEAL"
+  },
+  "reviewers": [
+    "fresh-context-evaluator",
+    "public-seam-integrity-verifier"
+  ],
+  "reviewer_roles": {
+    "fresh-context-evaluator": "EXPECTED_REALIZATION_AUTHOR",
+    "public-seam-integrity-verifier": "DIGEST_ISOLATION_AND_RESOLUTION_VERIFIER"
+  },
+  "judgment_vocabulary": [
+    "ACCEPT",
+    "RENAME",
+    "MERGE",
+    "SPLIT",
+    "REJECT",
+    "ADD_MISSING"
+  ],
+  "creation_before_generation_ordering": {
+    "status": "VERIFIED",
+    "rule": "SEALED_BEFORE_VALID_EXPERIMENT_GENERATION",
+    "valid_experiment_generation_started": false
+  }
+}

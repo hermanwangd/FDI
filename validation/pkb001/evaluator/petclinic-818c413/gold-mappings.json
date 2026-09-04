@@ -1,0 +1,161 @@
+{
+  "mapping_set_id": "pkb001-petclinic-818c413-evaluator-v1",
+  "status": "EVALUATOR_ONLY_FROZEN",
+  "authority": "EVALUATOR_TRUTH_ONLY",
+  "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "product_semantics_path": "validation/pkb001/datasets/petclinic-product-semantics-candidate.json",
+  "product_semantics_sha256": "72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea",
+  "graph_path": "validation/pkb001/artifacts/petclinic-graph-818c413.json",
+  "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+  "mappings": [
+    {
+      "capability_id": "PET-CAP-01",
+      "capability_name": "Find Owners",
+      "expected_components": [
+        {"component_ref": "graph-node:ownercontroller_ownercontroller_processfindform", "graph_node_id": "ownercontroller_ownercontroller_processfindform", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java", "source_location": "L94"},
+        {"component_ref": "graph-node:ownerrepository_ownerrepository_findbylastnamestartingwith", "graph_node_id": "ownerrepository_ownerrepository_findbylastnamestartingwith", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java", "source_location": "L45"}
+      ],
+      "source_refs": [
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java", "git_blob_oid": "b4b614559e5d3fc67ff2138ab0e2891b94845cb7", "sha256": "f1f61c17a818e0a0643bf3cd9bb3eaf32d6e019b3dac4f5dfd4890dc1221d16e", "line_start": 89, "line_end": 137},
+        {"path": "src/main/resources/templates/owners/findOwners.html", "git_blob_oid": "703351c7d6ba80548eb89ce596467d08c740f4df", "sha256": "8e18cd0058ac41b8746aa21e6084f3e39b7c0a774defa918cfdc25513bf05c83", "line_start": 7, "line_end": 29},
+        {"path": "src/main/resources/templates/owners/ownersList.html", "git_blob_oid": "01223c1c57a7652c5b6465c9824e879cd4e5f9a5", "sha256": "0592b5f3bd373b806e9bc7149f5d9667403f1b47cdb38d454cbffabdde82b6a0", "line_start": 7, "line_end": 58}
+      ],
+      "boundary_note": "Owner lookup includes the search/list HTTP flow and repository query; owner creation and editing are separate capabilities."
+    },
+    {
+      "capability_id": "PET-CAP-02",
+      "capability_name": "Register Owner",
+      "expected_components": [
+        {"component_ref": "graph-node:ownercontroller_ownercontroller_processcreationform", "graph_node_id": "ownercontroller_ownercontroller_processcreationform", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java", "source_location": "L77"},
+        {"component_ref": "graph-node:owner_owner", "graph_node_id": "owner_owner", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java", "source_location": "L47"}
+      ],
+      "source_refs": [
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java", "git_blob_oid": "b4b614559e5d3fc67ff2138ab0e2891b94845cb7", "sha256": "f1f61c17a818e0a0643bf3cd9bb3eaf32d6e019b3dac4f5dfd4890dc1221d16e", "line_start": 72, "line_end": 87},
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java", "git_blob_oid": "44ff8c509f3182a764c0f89e8c3fb575ae27870b", "sha256": "7cac66179350f35c0b3b0622a8a9f79de3b232641aac88da4e816437451c7daa", "line_start": 47, "line_end": 62},
+        {"path": "src/main/resources/templates/owners/createOrUpdateOwnerForm.html", "git_blob_oid": "4cd6e115b83e6f46111328d5debf588d46a44150", "sha256": "a4672fd8918978eb6cbc975a202c948f7b1d525b596c7cb54fa7f637a3803c7f", "line_start": 7, "line_end": 22}
+      ],
+      "boundary_note": "Registration is the new-owner GET/POST form and persistence path, excluding later owner updates."
+    },
+    {
+      "capability_id": "PET-CAP-03",
+      "capability_name": "Maintain Owner Details",
+      "expected_components": [
+        {"component_ref": "graph-node:ownercontroller_ownercontroller_processupdateownerform", "graph_node_id": "ownercontroller_ownercontroller_processupdateownerform", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java", "source_location": "L144"},
+        {"component_ref": "graph-node:ownercontroller_ownercontroller_showowner", "graph_node_id": "ownercontroller_ownercontroller_showowner", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java", "source_location": "L169"},
+        {"component_ref": "graph-node:owner_owner", "graph_node_id": "owner_owner", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java", "source_location": "L47"}
+      ],
+      "source_refs": [
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java", "git_blob_oid": "b4b614559e5d3fc67ff2138ab0e2891b94845cb7", "sha256": "f1f61c17a818e0a0643bf3cd9bb3eaf32d6e019b3dac4f5dfd4890dc1221d16e", "line_start": 139, "line_end": 177},
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java", "git_blob_oid": "44ff8c509f3182a764c0f89e8c3fb575ae27870b", "sha256": "7cac66179350f35c0b3b0622a8a9f79de3b232641aac88da4e816437451c7daa", "line_start": 47, "line_end": 95},
+        {"path": "src/main/resources/templates/owners/createOrUpdateOwnerForm.html", "git_blob_oid": "4cd6e115b83e6f46111328d5debf588d46a44150", "sha256": "a4672fd8918978eb6cbc975a202c948f7b1d525b596c7cb54fa7f637a3803c7f", "line_start": 7, "line_end": 22},
+        {"path": "src/main/resources/templates/owners/ownerDetails.html", "git_blob_oid": "cc175cd131514fafb5b294e9863188961e604fd0", "sha256": "adf2ef3ba0e6994f67bed35b6bf3ee9f7d3197af96bec35c90c003dba74bfbf2", "line_start": 17, "line_end": 39}
+      ],
+      "boundary_note": "Owner maintenance covers profile display and update while pet and visit mutations remain separately scored."
+    },
+    {
+      "capability_id": "PET-CAP-04",
+      "capability_name": "Register Pet",
+      "expected_components": [
+        {"component_ref": "graph-node:petcontroller_petcontroller_processcreationform", "graph_node_id": "petcontroller_petcontroller_processcreationform", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java", "source_location": "L107"},
+        {"component_ref": "graph-node:pet_pet", "graph_node_id": "pet_pet", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java", "source_location": "L44"},
+        {"component_ref": "graph-node:pettyperepository_pettyperepository_findpettypes", "graph_node_id": "pettyperepository_pettyperepository_findpettypes", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java", "source_location": "L36"}
+      ],
+      "source_refs": [
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java", "git_blob_oid": "845c116633b5bfa7dd8b1376081708aebb394b15", "sha256": "1a8a8097ff334b85d3a62c4df79ec52c2dbee8777925970e140081cff7e7c25e", "line_start": 62, "line_end": 137},
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java", "git_blob_oid": "4f8409ef247f7483517b023eda64bf8541c194db", "sha256": "ec77c2d70ae043c6eb441e47ebc93a3d848d8ae9729068e8f4e997aedfa0bbd7", "line_start": 44, "line_end": 75},
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java", "git_blob_oid": "0b0d7bbd08b6373c160e10f0d37bdd1271c35f8f", "sha256": "696705e51ab5835ac28630397de2d3f3541d3f419f19461e11755a9aac2afa04", "line_start": 30, "line_end": 39},
+        {"path": "src/main/resources/templates/pets/createOrUpdatePetForm.html", "git_blob_oid": "396963d419b07d9030d38fecc5fe02adc251417b", "sha256": "b1af6097ef7275d1a59aa32e50835dc134702eb51a67aa0ed62e68b73deed268", "line_start": 7, "line_end": 30}
+      ],
+      "boundary_note": "Pet registration includes owner-scoped creation, type selection, validation, and persistence."
+    },
+    {
+      "capability_id": "PET-CAP-05",
+      "capability_name": "Maintain Pet Details",
+      "expected_components": [
+        {"component_ref": "graph-node:petcontroller_petcontroller_processupdateform", "graph_node_id": "petcontroller_petcontroller_processupdateform", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java", "source_location": "L144"},
+        {"component_ref": "graph-node:petcontroller_petcontroller_updatepetdetails", "graph_node_id": "petcontroller_petcontroller_updatepetdetails", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java", "source_location": "L186"},
+        {"component_ref": "graph-node:pet_pet", "graph_node_id": "pet_pet", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java", "source_location": "L44"}
+      ],
+      "source_refs": [
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java", "git_blob_oid": "845c116633b5bfa7dd8b1376081708aebb394b15", "sha256": "1a8a8097ff334b85d3a62c4df79ec52c2dbee8777925970e140081cff7e7c25e", "line_start": 139, "line_end": 200},
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java", "git_blob_oid": "4f8409ef247f7483517b023eda64bf8541c194db", "sha256": "ec77c2d70ae043c6eb441e47ebc93a3d848d8ae9729068e8f4e997aedfa0bbd7", "line_start": 44, "line_end": 75},
+        {"path": "src/main/resources/templates/pets/createOrUpdatePetForm.html", "git_blob_oid": "396963d419b07d9030d38fecc5fe02adc251417b", "sha256": "b1af6097ef7275d1a59aa32e50835dc134702eb51a67aa0ed62e68b73deed268", "line_start": 7, "line_end": 30},
+        {"path": "src/main/resources/templates/owners/ownerDetails.html", "git_blob_oid": "cc175cd131514fafb5b294e9863188961e604fd0", "sha256": "adf2ef3ba0e6994f67bed35b6bf3ee9f7d3197af96bec35c90c003dba74bfbf2", "line_start": 48, "line_end": 74}
+      ],
+      "boundary_note": "Pet maintenance covers existing-pet display and edit, excluding new-pet registration and visit recording."
+    },
+    {
+      "capability_id": "PET-CAP-06",
+      "capability_name": "Record Pet Visit",
+      "expected_components": [
+        {"component_ref": "graph-node:visitcontroller_visitcontroller_processnewvisitform", "graph_node_id": "visitcontroller_visitcontroller_processnewvisitform", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java", "source_location": "L97"},
+        {"component_ref": "graph-node:visit_visit", "graph_node_id": "visit_visit", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java", "source_location": "L34"},
+        {"component_ref": "graph-node:owner_owner_addvisit", "graph_node_id": "owner_owner_addvisit", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java", "source_location": "L173"}
+      ],
+      "source_refs": [
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java", "git_blob_oid": "b8b270073e81d82967bf11b7fc572551a0c6728c", "sha256": "b7c8f9cb7b2b2b5827d85787d1f18c95762a0213760013cef9d0a9e1c2c0f8d8", "line_start": 63, "line_end": 112},
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java", "git_blob_oid": "3bb78e85507f5458fb85b03782e03b655f2fd777", "sha256": "8587d71a42308feb8fe427236a4d3e211bd1b3554e645d0e235afd681683226c", "line_start": 34, "line_end": 66},
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java", "git_blob_oid": "44ff8c509f3182a764c0f89e8c3fb575ae27870b", "sha256": "7cac66179350f35c0b3b0622a8a9f79de3b232641aac88da4e816437451c7daa", "line_start": 168, "line_end": 185},
+        {"path": "src/main/resources/templates/pets/createOrUpdateVisitForm.html", "git_blob_oid": "4f03e12d5544bfadc14a6c19c483992948d52ee7", "sha256": "7c225e4ff3b1acf9bef865ca0c33b098f7c2581fba3923a4c02f6f42df0a7553", "line_start": 7, "line_end": 42}
+      ],
+      "boundary_note": "Visit recording includes the owner/pet-scoped form, dated visit model, and persistence operation."
+    },
+    {
+      "capability_id": "PET-CAP-07",
+      "capability_name": "Review Pet Visit History",
+      "expected_components": [
+        {"component_ref": "graph-node:ownercontroller_ownercontroller_showowner", "graph_node_id": "ownercontroller_ownercontroller_showowner", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java", "source_location": "L169"},
+        {"component_ref": "graph-node:pet_pet_getvisits", "graph_node_id": "pet_pet_getvisits", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java", "source_location": "L77"},
+        {"component_ref": "graph-node:visit_visit", "graph_node_id": "visit_visit", "source_path": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java", "source_location": "L34"}
+      ],
+      "source_refs": [
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java", "git_blob_oid": "b4b614559e5d3fc67ff2138ab0e2891b94845cb7", "sha256": "f1f61c17a818e0a0643bf3cd9bb3eaf32d6e019b3dac4f5dfd4890dc1221d16e", "line_start": 169, "line_end": 177},
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java", "git_blob_oid": "4f8409ef247f7483517b023eda64bf8541c194db", "sha256": "ec77c2d70ae043c6eb441e47ebc93a3d848d8ae9729068e8f4e997aedfa0bbd7", "line_start": 56, "line_end": 83},
+        {"path": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java", "git_blob_oid": "3bb78e85507f5458fb85b03782e03b655f2fd777", "sha256": "8587d71a42308feb8fe427236a4d3e211bd1b3554e645d0e235afd681683226c", "line_start": 34, "line_end": 66},
+        {"path": "src/main/resources/templates/owners/ownerDetails.html", "git_blob_oid": "cc175cd131514fafb5b294e9863188961e604fd0", "sha256": "adf2ef3ba0e6994f67bed35b6bf3ee9f7d3197af96bec35c90c003dba74bfbf2", "line_start": 44, "line_end": 74}
+      ],
+      "boundary_note": "Visit history is read in owner/pet context and is distinct from the mutation path that records a visit."
+    },
+    {
+      "capability_id": "PET-CAP-08",
+      "capability_name": "Browse Veterinarians",
+      "expected_components": [
+        {"component_ref": "graph-node:vetcontroller_vetcontroller_showvetlist", "graph_node_id": "vetcontroller_vetcontroller_showvetlist", "source_path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java", "source_location": "L44"},
+        {"component_ref": "graph-node:vetrepository_vetrepository_findall", "graph_node_id": "vetrepository_vetrepository_findall", "source_path": "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java", "source_location": "L44"}
+      ],
+      "source_refs": [
+        {"path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java", "git_blob_oid": "867d0b5f40f656a25f6006ee5b68cdcb37434c08", "sha256": "8a0d285d35e59e61ec98e650506b0b19d0142d75a0886268dd139530f3efb8b8", "line_start": 44, "line_end": 63},
+        {"path": "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java", "git_blob_oid": "dbf68d0297221e41d54b1961cf2d5c95f8afcb7b", "sha256": "732888e66084f9f94dd79c181e29dbbe2c752959c10ebf82b0940700f61c0dde", "line_start": 38, "line_end": 48},
+        {"path": "src/main/resources/templates/vets/vetList.html", "git_blob_oid": "e40fd654e47a667f3da5964974a10ee69bf45be8", "sha256": "f3d365c7fbb347f829732f3d7d52b28a3256f026438e320b32da6df54d381ebb", "line_start": 7, "line_end": 25}
+      ],
+      "boundary_note": "Veterinarian browsing includes the paginated list retrieval and list presentation."
+    },
+    {
+      "capability_id": "PET-CAP-09",
+      "capability_name": "Review Veterinarian Specialties",
+      "expected_components": [
+        {"component_ref": "graph-node:vet_vet_getspecialties", "graph_node_id": "vet_vet_getspecialties", "source_path": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java", "source_location": "L59"},
+        {"component_ref": "graph-node:specialty_specialty", "graph_node_id": "specialty_specialty", "source_path": "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java", "source_location": "L28"}
+      ],
+      "source_refs": [
+        {"path": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java", "git_blob_oid": "fb2bd71ee0ac0d43062a1a20500ff74b2316d0ab", "sha256": "8548e47aaf310b276d5cc9f58976756339b16a02ac47944f778260f2ed121b78", "line_start": 43, "line_end": 72},
+        {"path": "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java", "git_blob_oid": "184bf5e6b75bb33c3bf5b09ba41c8cd638ff5d3b", "sha256": "0fa07bcb3b7b4ddb380a278d98dcfe03bec5e3a1e42b9f08c555d75a6be256d0", "line_start": 28, "line_end": 32},
+        {"path": "src/main/resources/templates/vets/vetList.html", "git_blob_oid": "e40fd654e47a667f3da5964974a10ee69bf45be8", "sha256": "f3d365c7fbb347f829732f3d7d52b28a3256f026438e320b32da6df54d381ebb", "line_start": 12, "line_end": 22}
+      ],
+      "boundary_note": "Specialty review is the specialty association and rendering within each veterinarian row."
+    },
+    {
+      "capability_id": "PET-CAP-10",
+      "capability_name": "Access Clinic Home",
+      "expected_components": [
+        {"component_ref": "graph-node:welcomecontroller_welcomecontroller_welcome", "graph_node_id": "welcomecontroller_welcomecontroller_welcome", "source_path": "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java", "source_location": "L25"}
+      ],
+      "source_refs": [
+        {"path": "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java", "git_blob_oid": "d77a35ea8c6ad572342c4b2f6e11ec0b9979ae17", "sha256": "cfdffa794c8ec7a0c634a7d39d39f9abc1dd2ddc4b4d7a591b341136015a6f66", "line_start": 22, "line_end": 28},
+        {"path": "src/main/resources/templates/welcome.html", "git_blob_oid": "eb795c2f4872aa4fca5c998c1852b4a897b62e4e", "sha256": "5c210fb0a3b5c32b1a2986beed3e4ca279df08b92e369ccc15cc65eda96d55ea", "line_start": 7, "line_end": 12},
+        {"path": "src/main/resources/templates/fragments/layout.html", "git_blob_oid": "7c5cd0d8653a95deb9918d81ddd390e4f1f4e042", "sha256": "ed52e1986bad09c16367bdf97e5bafb6ca55f6754c7a24eab14d718b4cc44bd3", "line_start": 39, "line_end": 54}
+      ],
+      "boundary_note": "Clinic home includes the root route, landing view, and primary navigation to owner and veterinarian workflows."
+    }
+  ]
+}

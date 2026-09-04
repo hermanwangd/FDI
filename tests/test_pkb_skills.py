@@ -87,7 +87,7 @@ def test_petclinic_structural_candidate_is_exactly_bound():
     candidate = json.loads((ROOT/'validation/pkb001/datasets/petclinic-calibration-candidate.json').read_text())
     graph_path = ROOT/candidate['graphify']['artifact_path']
     graph = json.loads(graph_path.read_text())
-    assert candidate['status'] == 'STRUCTURAL_EVIDENCE_FROZEN'
+    assert candidate['status'] == 'FROZEN'
     assert candidate['source_commit_sha'] == '818c4136ea971c21674525f9053de0d9c7ad8cfe'
     assert candidate['graphify']['binding_status'] == 'EXACTLY_BOUND'
     assert candidate['graphify']['mode'] == 'AST_ONLY_NO_LLM'

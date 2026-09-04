@@ -1,14 +1,14 @@
 {
   "experiment": "PKB-001",
-  "status": "BLOCKED",
-  "readiness_state": "NOT_READY",
+  "status": "READY",
+  "readiness_state": "READY",
   "readiness_flags": {
     "PRODUCT_SEMANTICS_FROZEN": true,
     "LIVE_GRAPHIFY_INTERFACE_VERIFIED": true,
     "PK_S1_EXECUTION_READY": true,
     "PK_S2_EXECUTION_READY": true,
-    "CALIBRATION_DATASET_FROZEN": false,
-    "GROUND_TRUTH_SEALED": false
+    "CALIBRATION_DATASET_FROZEN": true,
+    "GROUND_TRUTH_SEALED": true
   },
   "prerequisites": [
     {
@@ -28,13 +28,13 @@
     },
     {
       "id": "P0-04",
-      "status": "MISMATCH",
-      "reason": "calibration or post-cutoff policy is incomplete"
+      "status": "SATISFIED",
+      "reason": "calibration dataset frozen"
     },
     {
       "id": "P0-05",
-      "status": "MISMATCH",
-      "reason": "ground truth, isolation, or review protocol is incomplete"
+      "status": "SATISFIED",
+      "reason": "evaluator ground truth sealed"
     }
   ]
 }
