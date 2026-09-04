@@ -22,4 +22,4 @@ Everything under `archive/` is historical reference and must not be used to dete
 
 ## Current next action
 
-Reconstruct cutoff-bounded Delivery History for PK-S2, then seal evaluator-only ground truth. Product Semantics, Graphify exact-revision verification, the calibration snapshot, and PK-S1 are ready; experiment execution remains blocked on PK-S2 evidence and evaluator isolation.
+Execute the isolated PKB-001 experiment arms. Product Semantics, exact-revision Graphify evidence, cutoff-bounded Delivery History, the calibration snapshot, PK-S1/PK-S2, and evaluator-only ground truth are prepared; no experiment result has yet been produced.

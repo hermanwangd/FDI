@@ -17,7 +17,7 @@ def test_four_active_truth_entries_exist_and_resolve():
         'phase': 'prototype',
         'framework_spec': 'FRAMEWORK-SPEC.md',
         'implementation_plan': 'IMPLEMENTATION-PLAN.md',
-        'next_action': 'Reconstruct frozen Delivery History for PK-S2 and seal evaluator-only ground truth',
+        'next_action': 'Execute isolated PKB-001 forward and reverse experiment arms',
         'archived_documents_are_authority': False,
     }
 
@@ -61,12 +61,15 @@ def test_runtime_probe_without_descriptor_makes_no_api_claim(tmp_path):
     assert result['api_assumptions'] == []
 
 
-def test_phase0_records_graphify_and_calibration_without_overclaiming_readiness():
+def test_phase0_is_ready_only_after_all_six_flags_pass():
     report = json.loads((ROOT/'validation/pkb001/reports/phase0-readiness.json').read_text())
-    assert report['status'] == 'BLOCKED'
-    assert report['readiness_flags']['LIVE_GRAPHIFY_INTERFACE_VERIFIED'] is True
-    assert report['readiness_flags']['CALIBRATION_DATASET_FROZEN'] is True
-    assert report['readiness_flags']['PRODUCT_SEMANTICS_FROZEN'] is True
-    assert report['readiness_flags']['PK_S1_EXECUTION_READY'] is True
-    assert report['readiness_flags']['PK_S2_EXECUTION_READY'] is False
-    assert report['readiness_flags']['GROUND_TRUTH_SEALED'] is False
+    assert report['status'] == 'READY'
+    assert report['readiness_state'] == 'READY'
+    assert report['readiness_flags'] == {
+        'PRODUCT_SEMANTICS_FROZEN': True,
+        'LIVE_GRAPHIFY_INTERFACE_VERIFIED': True,
+        'PK_S1_EXECUTION_READY': True,
+        'PK_S2_EXECUTION_READY': True,
+        'CALIBRATION_DATASET_FROZEN': True,
+        'GROUND_TRUTH_SEALED': True,
+    }

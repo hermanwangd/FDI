@@ -30,4 +30,4 @@ Blind arm identity where practical. Review proposals using a frozen judgment voc
 - **REVISE:** execution remains safe and evidence-valid but quality thresholds are missed.
 - **STOP:** snapshot identity, isolation, evidence integrity, or Product-truth boundaries are violated.
 
-No R1/R2/R3/F1 experiment run begins until the real Graphify runtime is verified and an exact-revision calibration repository is frozen.
+No R1/R2/R3/F1 experiment run begins until all six Phase 0 readiness flags pass: Product Semantics frozen, live Graphify interface verified, PK-S1 ready, PK-S2 ready with cutoff-bounded Delivery History, calibration dataset frozen, and evaluator ground truth sealed and isolated.

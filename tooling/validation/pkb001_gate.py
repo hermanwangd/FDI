@@ -134,18 +134,33 @@ def _calibration(value: object) -> Dict[str, str]:
                  else 'calibration or post-cutoff policy is incomplete')
 
 
-def _ground_truth(value: object) -> Dict[str, str]:
+def _ground_truth(root: Path, value: object) -> Dict[str, str]:
     if not isinstance(value, dict):
         return _item('P0-05', 'MISSING', 'evaluator ground truth evidence is absent')
     vocabulary = {'ACCEPT', 'RENAME', 'MERGE', 'SPLIT', 'REJECT', 'ADD_MISSING'}
     reviewers = value.get('reviewers')
+    gold = _safe_file(root, value.get('gold_path'))
+    seal_path = _safe_file(root, value.get('seal_path'))
+    digest = value.get('gold_sha256')
+    try:
+        seal = json.loads(seal_path.read_text()) if seal_path is not None else None
+    except (OSError, json.JSONDecodeError):
+        seal = None
+    sealed_fields_match = isinstance(seal, dict) and all(
+        seal.get(key) == value.get(key) for key in (
+            'status', 'gold_path', 'gold_sha256', 'isolation_status',
+            'review_protocol_status', 'reviewers', 'judgment_vocabulary'))
     valid = (
         value.get('status') == 'SEALED'
-        and isinstance(value.get('gold_sha256'), str)
-        and SHA256.fullmatch(value['gold_sha256'])
+        and gold is not None
+        and sealed_fields_match
+        and isinstance(digest, str) and SHA256.fullmatch(digest)
+        and hashlib.sha256(gold.read_bytes()).hexdigest() == digest
         and value.get('isolation_status') == 'VERIFIED'
         and value.get('review_protocol_status') == 'FROZEN'
-        and isinstance(reviewers, list) and len(set(reviewers)) >= 2
+        and isinstance(reviewers, list)
+        and all(isinstance(reviewer, str) and reviewer for reviewer in reviewers)
+        and len(set(reviewers)) >= 2
         and set(value.get('judgment_vocabulary', [])) == vocabulary
     )
     return _item('P0-05', 'SATISFIED' if valid else 'MISMATCH',
@@ -160,7 +175,7 @@ def evaluate_readiness(root: Path, evidence: dict) -> dict:
         _graphify(evidence.get('graphify')),
         _skills(root, evidence.get('skills')),
         _calibration(evidence.get('calibration')),
-        _ground_truth(evidence.get('ground_truth')),
+        _ground_truth(root, evidence.get('ground_truth')),
     ]
     ready = all(item['status'] == 'SATISFIED' for item in prerequisites)
     skills = evidence.get('skills') if isinstance(evidence.get('skills'), dict) else {}

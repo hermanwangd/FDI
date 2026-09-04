@@ -74,6 +74,16 @@ def test_gate_is_ready_only_with_all_verified_evidence(tmp_path):
     (tmp_path/'pk-s2/SKILL.md').parent.mkdir(parents=True)
     (tmp_path/'pk-s2/SKILL.md').write_text('# PK-S2')
     (tmp_path/'delivery-history.json').write_text('{"episodes": []}')
+    (tmp_path/'gold-mappings.json').write_text('{"mappings": []}')
+    (tmp_path/'ground-truth-seal.json').write_text(json.dumps({
+        'status': 'SEALED', 'gold_path': 'gold-mappings.json',
+        'gold_sha256': hashlib.sha256(
+            (tmp_path/'gold-mappings.json').read_bytes()).hexdigest(),
+        'isolation_status': 'VERIFIED', 'review_protocol_status': 'FROZEN',
+        'reviewers': ['reviewer-a', 'reviewer-b'],
+        'judgment_vocabulary': [
+            'ACCEPT', 'RENAME', 'MERGE', 'SPLIT', 'REJECT', 'ADD_MISSING'],
+    }))
     authority = {'status': 'FROZEN', 'path': framework.name,
                  'sha256': hashlib.sha256(framework.read_bytes()).hexdigest(),
                  'owner': 'PRODUCT_TEAM'}
@@ -99,13 +109,43 @@ def test_gate_is_ready_only_with_all_verified_evidence(tmp_path):
                    'post_cutoff_knowledge_policy': 'EXCLUDE_AFTER_CUTOFF'},
         'calibration': {'status': 'FROZEN', 'resource_policy_status': 'FROZEN',
                         'post_cutoff_knowledge_policy': 'EXCLUDE_AFTER_CUTOFF'},
-        'ground_truth': {'status': 'SEALED', 'gold_sha256': 'd'*64,
+        'ground_truth': {'status': 'SEALED', 'gold_path': 'gold-mappings.json',
+                         'gold_sha256': hashlib.sha256(
+                             (tmp_path/'gold-mappings.json').read_bytes()).hexdigest(),
+                         'seal_path': 'ground-truth-seal.json',
                          'isolation_status': 'VERIFIED', 'review_protocol_status': 'FROZEN',
                          'reviewers': ['reviewer-a', 'reviewer-b'],
                          'judgment_vocabulary': [
                              'ACCEPT', 'RENAME', 'MERGE', 'SPLIT', 'REJECT', 'ADD_MISSING']},
     }
     assert evaluate_readiness(tmp_path, evidence)['status'] == 'READY'
+
+
+def test_gate_rejects_unbound_ground_truth_digest(tmp_path):
+    evidence = {'ground_truth': {
+        'status': 'SEALED', 'gold_sha256': 'd'*64,
+        'isolation_status': 'VERIFIED', 'review_protocol_status': 'FROZEN',
+        'reviewers': ['reviewer-a', 'reviewer-b'],
+        'judgment_vocabulary': [
+            'ACCEPT', 'RENAME', 'MERGE', 'SPLIT', 'REJECT', 'ADD_MISSING'],
+    }}
+    result = evaluate_readiness(tmp_path, evidence)
+    assert result['prerequisites'][4]['status'] == 'MISMATCH'
+
+
+def test_gate_rejects_ground_truth_without_matching_seal(tmp_path):
+    gold = tmp_path/'gold.json'
+    gold.write_text('{}')
+    evidence = {'ground_truth': {
+        'status': 'SEALED', 'gold_path': gold.name,
+        'gold_sha256': hashlib.sha256(gold.read_bytes()).hexdigest(),
+        'isolation_status': 'VERIFIED', 'review_protocol_status': 'FROZEN',
+        'reviewers': ['reviewer-a', 'reviewer-b'],
+        'judgment_vocabulary': [
+            'ACCEPT', 'RENAME', 'MERGE', 'SPLIT', 'REJECT', 'ADD_MISSING'],
+    }}
+    result = evaluate_readiness(tmp_path, evidence)
+    assert result['prerequisites'][4]['status'] == 'MISMATCH'
 
 
 def test_gate_rejects_unregistered_skill_files(tmp_path):
@@ -220,6 +260,14 @@ def test_reverse_arms_reject_ground_truth_and_product_semantics(arm_workspace, a
             arm_workspace, arm, ('validation/pkb001/ground-truth/gold.json',))
     with pytest.raises(ValueError, match='prohibited input'):
         validate_arm_inputs(arm_workspace, arm, ('inputs/semantics/input.json',))
+
+
+@pytest.mark.parametrize('arm', ['R1', 'R2', 'R3', 'F1'])
+def test_all_generation_arms_reject_evaluator_ground_truth(arm_workspace, arm):
+    with pytest.raises(ValueError, match='prohibited input'):
+        validate_arm_inputs(
+            arm_workspace, arm,
+            ('validation/pkb001/ground-truth/gold.json',))
 
 
 def test_arm_allowlists_are_exact(arm_workspace):

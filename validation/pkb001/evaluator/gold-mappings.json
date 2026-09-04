@@ -1,0 +1,31 @@
+{
+  "dataset_id": "pkb001-evaluator-gold-v1",
+  "status": "FROZEN",
+  "visibility": "EVALUATOR_ONLY",
+  "source_commit_sha": "510a397c134324026fe6b20333dfbfa645ab67b4",
+  "product_semantics_sha256": "d6bb8a64b864ee9beae5f6eb970b17615390a4c96014649ddff4296f4149cccf",
+  "mappings": [
+    {
+      "capability_id": "PKB-CAP-01",
+      "expected_components": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/product/ProductKnowledgeMaintenance.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/product/ProductSemantics.java"
+      ],
+      "rationale": "ProductSemantics validates Product assets and lifecycle constraints; ProductKnowledgeMaintenance enforces human-authorized draft and publication transitions."
+    },
+    {
+      "capability_id": "PKB-CAP-02",
+      "expected_components": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/CodeIntelligenceProvider.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/SnapshotBindingAttestor.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/StructuralIntelligence.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyAdapter.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyBindingAttestor.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyBindingEvidence.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyTransport.java"
+      ],
+      "rationale": "Provider-neutral structural contracts, the Graphify adapter and transport, and exact-revision binding evidence jointly realize structural intelligence without assigning Product meaning to Graphify."
+    }
+  ],
+  "evidence_boundary": "Expected mappings are evaluator labels and are not available to generation arms."
+}

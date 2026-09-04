@@ -1,14 +1,14 @@
 {
   "experiment": "PKB-001",
-  "status": "BLOCKED",
-  "readiness_state": "NOT_READY",
+  "status": "READY",
+  "readiness_state": "READY",
   "readiness_flags": {
     "PRODUCT_SEMANTICS_FROZEN": true,
     "LIVE_GRAPHIFY_INTERFACE_VERIFIED": true,
     "PK_S1_EXECUTION_READY": true,
-    "PK_S2_EXECUTION_READY": false,
+    "PK_S2_EXECUTION_READY": true,
     "CALIBRATION_DATASET_FROZEN": true,
-    "GROUND_TRUTH_SEALED": false
+    "GROUND_TRUTH_SEALED": true
   },
   "prerequisites": [
     {
@@ -23,8 +23,8 @@
     },
     {
       "id": "P0-03",
-      "status": "MISMATCH",
-      "reason": "PK-S1 or PK-S2 is unavailable"
+      "status": "SATISFIED",
+      "reason": "PK-S1 and PK-S2 materialized"
     },
     {
       "id": "P0-04",
@@ -33,8 +33,8 @@
     },
     {
       "id": "P0-05",
-      "status": "MISSING",
-      "reason": "evaluator ground truth evidence is absent"
+      "status": "SATISFIED",
+      "reason": "evaluator ground truth sealed"
     }
   ]
 }
