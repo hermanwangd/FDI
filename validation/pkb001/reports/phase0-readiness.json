@@ -3,7 +3,7 @@
   "status": "BLOCKED",
   "readiness_state": "NOT_READY",
   "readiness_flags": {
-    "PRODUCT_SEMANTICS_FROZEN": false,
+    "PRODUCT_SEMANTICS_FROZEN": true,
     "LIVE_GRAPHIFY_INTERFACE_VERIFIED": false,
     "PK_S1_EXECUTION_READY": true,
     "PK_S2_EXECUTION_READY": true,
@@ -13,8 +13,8 @@
   "prerequisites": [
     {
       "id": "P0-01",
-      "status": "MISMATCH",
-      "reason": "Product Semantics is not frozen by Product Team"
+      "status": "SATISFIED",
+      "reason": "Product Semantics frozen by Product Team"
     },
     {
       "id": "P0-02",

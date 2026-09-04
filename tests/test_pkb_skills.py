@@ -20,11 +20,11 @@ def test_pk_s1_is_registered_and_preserves_product_ownership():
     assert 'MUST NOT publish Product truth' in text
 
 
-def test_product_semantics_candidate_matches_registry_digest():
+def test_product_semantics_is_frozen_and_matches_active_registry_digest():
     registry = json.loads((ROOT/'skills/pkb001/REGISTRY.json').read_text())
     semantics = ROOT/registry['product_semantics_path']
     payload = json.loads(semantics.read_text())
-    assert payload['status'] == 'AWAITING_PRODUCT_TEAM_APPROVAL'
+    assert payload['status'] == 'FROZEN'
     assert registry['product_semantics_status'] == payload['status']
     assert payload['owner'] == 'PRODUCT_TEAM'
     assert payload['source_commit_sha'] == '818c4136ea971c21674525f9053de0d9c7ad8cfe'
@@ -52,15 +52,27 @@ def test_pk_s1_skill_does_not_receive_evaluator_realization_hints():
     assert 'expected realization boundary' not in text.lower()
 
 
-def test_petclinic_candidate_has_ten_unhinted_product_capabilities():
+def test_frozen_petclinic_semantics_has_ten_unhinted_product_capabilities():
     candidate = json.loads((ROOT/'validation/pkb001/datasets/petclinic-product-semantics-candidate.json').read_text())
-    assert candidate['status'] == 'AWAITING_PRODUCT_TEAM_APPROVAL'
+    assert candidate['status'] == 'FROZEN'
     assert candidate['owner'] == 'PRODUCT_TEAM'
     assert len(candidate['capabilities']) == 10
     assert len({item['capability_id'] for item in candidate['capabilities']}) == 10
     assert candidate['realization_hints_included'] is False
     assert all(set(item) == {'capability_id', 'name', 'description'}
                for item in candidate['capabilities'])
+
+
+def test_fdi_semantics_and_evaluator_labels_are_historical_baselines_only():
+    historical = ROOT/'validation/pkb001/baselines/PKB001-510a397'
+    semantics = historical/'product-semantics.json'
+    evaluator = historical/'evaluator'
+    assert semantics.is_file()
+    assert evaluator.joinpath('gold-mappings.json').is_file()
+    assert evaluator.joinpath('ground-truth-seal.json').is_file()
+    assert not (ROOT/'validation/pkb001/datasets/product-semantics.json').exists()
+    assert not (ROOT/'validation/pkb001/evaluator/gold-mappings.json').exists()
+    assert not (ROOT/'validation/pkb001/evaluator/ground-truth-seal.json').exists()
 
 
 def test_petclinic_structural_candidate_is_exactly_bound():
