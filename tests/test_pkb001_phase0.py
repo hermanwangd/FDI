@@ -7,6 +7,7 @@ import pytest
 
 from tooling.validation.pkb001_gate import evaluate_readiness
 from tooling.validation.pkb001_acquisition import tree_sha256, validate_acquisition
+from tooling.validation.pkb001_runner import execute_arm, validate_arm_inputs
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -126,3 +127,79 @@ def test_acquisition_rejects_credentials(acquisition_root):
     )
     with pytest.raises(ValueError, match='credential'):
         validate_acquisition(acquisition_root, manifest)
+
+
+@pytest.fixture
+def arm_workspace(tmp_path):
+    for category in ('structure', 'history', 'semantics'):
+        path = tmp_path/'inputs'/category
+        path.mkdir(parents=True)
+        (path/'input.json').write_text('{}')
+    ground = tmp_path/'validation/pkb001/ground-truth'
+    ground.mkdir(parents=True)
+    (ground/'gold.json').write_text('{}')
+    return tmp_path
+
+
+@pytest.mark.parametrize('arm', ['R1', 'R2', 'R3'])
+def test_reverse_arms_reject_ground_truth_and_product_semantics(arm_workspace, arm):
+    with pytest.raises(ValueError, match='prohibited input'):
+        validate_arm_inputs(
+            arm_workspace, arm, ('validation/pkb001/ground-truth/gold.json',))
+    with pytest.raises(ValueError, match='prohibited input'):
+        validate_arm_inputs(arm_workspace, arm, ('inputs/semantics/input.json',))
+
+
+def test_arm_allowlists_are_exact(arm_workspace):
+    assert validate_arm_inputs(
+        arm_workspace, 'R1', ('inputs/structure/input.json',))
+    assert validate_arm_inputs(
+        arm_workspace, 'R2', ('inputs/history/input.json',))
+    assert validate_arm_inputs(
+        arm_workspace, 'R3', ('inputs/structure/input.json', 'inputs/history/input.json'))
+    assert validate_arm_inputs(
+        arm_workspace, 'F1', ('inputs/semantics/input.json', 'inputs/structure/input.json'))
+    with pytest.raises(ValueError, match='prohibited input'):
+        validate_arm_inputs(arm_workspace, 'F1', ('inputs/history/input.json',))
+    with pytest.raises(ValueError, match='prohibited input'):
+        validate_arm_inputs(arm_workspace, 'R1', ('inputs/history/input.json',))
+    with pytest.raises(ValueError, match='prohibited input'):
+        validate_arm_inputs(arm_workspace, 'R2', ('inputs/structure/input.json',))
+
+
+def test_execute_arm_uses_verified_readiness_and_sanitized_environment(
+        arm_workspace, monkeypatch):
+    readiness = arm_workspace/'phase0-readiness.json'
+    readiness.write_text(json.dumps({'status': 'READY'}))
+    (arm_workspace/'phase0-readiness.sha256').write_text(
+        hashlib.sha256(readiness.read_bytes()).hexdigest() + '\n')
+    observed = {}
+
+    def fake_run(command, **kwargs):
+        observed.update(command=command, **kwargs)
+        return subprocess.CompletedProcess(command, 0)
+
+    monkeypatch.setattr(subprocess, 'run', fake_run)
+    result = execute_arm(
+        ('python3', 'safe_runner.py'), arm_workspace,
+        {'PATH': '/usr/bin', 'API_TOKEN': 'remove-me',
+         'PKB_NETWORK_ISOLATION': 'ENFORCED'})
+    assert result == 0
+    assert observed['cwd'] == arm_workspace.resolve()
+    assert observed['check'] is False
+    assert observed['timeout'] == 300
+    assert observed['env']['PKB_NETWORK_ISOLATION'] == 'ENFORCED'
+    assert 'API_TOKEN' not in observed['env']
+
+
+@pytest.mark.parametrize('command', [
+    ('./mvnw', 'test'), ('gradle', 'build'), ('npm', 'install'),
+    ('bash', 'target-repository-script.sh'),
+])
+def test_execute_arm_rejects_target_build_commands(arm_workspace, command):
+    readiness = arm_workspace/'phase0-readiness.json'
+    readiness.write_text(json.dumps({'status': 'READY'}))
+    (arm_workspace/'phase0-readiness.sha256').write_text(
+        hashlib.sha256(readiness.read_bytes()).hexdigest() + '\n')
+    with pytest.raises(ValueError, match='prohibited command'):
+        execute_arm(command, arm_workspace, {'PKB_NETWORK_ISOLATION': 'ENFORCED'})
