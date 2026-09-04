@@ -1,0 +1,594 @@
+{
+  "bindings": {
+    "artifacts": {
+      "validation/pkb001/artifacts/petclinic-pk-s1-forward-run-818c413-manifest.json": "271e859f1f24ace30354b7a7f3315f0db2366d067ff6d30666bc57894ae53994",
+      "validation/pkb001/artifacts/petclinic-pk-s1-forward-run-818c413-witness.json": "36fb66c248d698ca2e29744bf35b8f3cadaaa5cbcd7b4ca40a97597e1be050a5",
+      "validation/pkb001/artifacts/petclinic-pk-s1-forward-run-818c413.json": "bfb2d72045a350e3684464ad1bae7cbdd8c06111882e1e9f02276211b81a0992",
+      "validation/pkb001/evaluator/petclinic-818c413/gold-mappings.json": "4d22799e4d7597e0bbc302c9db3cd0510f70cc946cb5de5909ded9c4b1b112d1",
+      "validation/pkb001/evaluator/petclinic-818c413/ground-truth-seal.json": "7290fd4aec80cbdd5cea52b30f9da5323e455843948746fc53208eecf6e2a55a",
+      "validation/pkb001/reverse-task5-pkb001_reverse_run/capability-hypotheses.json": "8037b14aae0ff1f9adbce30409ea29ba13d4d024f07dcaa3835eddcaba7cb450",
+      "validation/pkb001/reverse-task5-pkb001_reverse_run/manifest.json": "f749bd9e02530f0d41c6af796d31f144ed424bda7263dce9bb3efb33e733e950",
+      "validation/pkb001/reverse-task5-pkb001_reverse_run/provenance-witness.json": "d725a7d2f25f227c38ff382da1e1d7581bd2093cd43eefd35e61530b23773f12",
+      "validation/pkb001/task6-blind-review/blind-review-packet.json": "13451c06a6b635f6d6ea58e7cb3faa8fdfd8f9cc6c011d8fdc3dbebac395c89a",
+      "validation/pkb001/task6-blind-review/judgment-workspaces/reviewer-01/judgment-template.json": "7858befe88bd30c7f1de537b31cb51a455478acb7a1532d8e9f94c1ce2a59084",
+      "validation/pkb001/task6-blind-review/judgment-workspaces/reviewer-02/judgment-template.json": "5a29738eb8821a21b62e77d7f34f2ecff46af4ee554277d07025a1c154b25f73",
+      "validation/pkb001/task6-blind-review/sealed-blind-key.json": "3f22e51bcbfbfeeef9438334daa361aadb9e1eeffca93f31bb7539887425047d"
+    },
+    "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+    "reverse_delivery_history_sha256": "87b70439f69bb82cee0139b65108ecce6044aff1a4d1b5ce6324933acbeab2d1",
+    "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe"
+  },
+  "decision": "REVISE",
+  "decision_scope": "BOUNDED_PROTOTYPE_DECISION_NO_SEMANTIC_PUBLICATION",
+  "forward_expected_realization_comparison": {
+    "authority": "EVALUATOR_ONLY_COMPARISON_NOT_PRODUCT_TRUTH",
+    "by_capability": [
+      {
+        "capability_id": "PET-CAP-01",
+        "exact_graph_node_match_count": 0,
+        "expected_component_count": 2,
+        "expected_components_with_proposed_source_path": 2,
+        "proposed_component_count": 2,
+        "proposed_components_on_expected_source_path": 2,
+        "run_outcome": "MAPPING_PROPOSAL"
+      },
+      {
+        "capability_id": "PET-CAP-02",
+        "exact_graph_node_match_count": 0,
+        "expected_component_count": 2,
+        "expected_components_with_proposed_source_path": 2,
+        "proposed_component_count": 2,
+        "proposed_components_on_expected_source_path": 2,
+        "run_outcome": "MAPPING_PROPOSAL"
+      },
+      {
+        "capability_id": "PET-CAP-03",
+        "exact_graph_node_match_count": 0,
+        "expected_component_count": 3,
+        "expected_components_with_proposed_source_path": 3,
+        "proposed_component_count": 2,
+        "proposed_components_on_expected_source_path": 2,
+        "run_outcome": "MAPPING_PROPOSAL"
+      },
+      {
+        "capability_id": "PET-CAP-04",
+        "exact_graph_node_match_count": 0,
+        "expected_component_count": 3,
+        "expected_components_with_proposed_source_path": 3,
+        "proposed_component_count": 4,
+        "proposed_components_on_expected_source_path": 3,
+        "run_outcome": "MAPPING_PROPOSAL"
+      },
+      {
+        "capability_id": "PET-CAP-05",
+        "exact_graph_node_match_count": 0,
+        "expected_component_count": 3,
+        "expected_components_with_proposed_source_path": 3,
+        "proposed_component_count": 2,
+        "proposed_components_on_expected_source_path": 2,
+        "run_outcome": "MAPPING_PROPOSAL"
+      },
+      {
+        "capability_id": "PET-CAP-06",
+        "exact_graph_node_match_count": 0,
+        "expected_component_count": 3,
+        "expected_components_with_proposed_source_path": 3,
+        "proposed_component_count": 3,
+        "proposed_components_on_expected_source_path": 3,
+        "run_outcome": "MAPPING_PROPOSAL"
+      },
+      {
+        "capability_id": "PET-CAP-07",
+        "exact_graph_node_match_count": 0,
+        "expected_component_count": 3,
+        "expected_components_with_proposed_source_path": 3,
+        "proposed_component_count": 4,
+        "proposed_components_on_expected_source_path": 3,
+        "run_outcome": "MAPPING_PROPOSAL"
+      },
+      {
+        "capability_id": "PET-CAP-08",
+        "exact_graph_node_match_count": 0,
+        "expected_component_count": 2,
+        "expected_components_with_proposed_source_path": 2,
+        "proposed_component_count": 3,
+        "proposed_components_on_expected_source_path": 2,
+        "run_outcome": "MAPPING_PROPOSAL"
+      },
+      {
+        "capability_id": "PET-CAP-09",
+        "exact_graph_node_match_count": 0,
+        "expected_component_count": 2,
+        "expected_components_with_proposed_source_path": 2,
+        "proposed_component_count": 3,
+        "proposed_components_on_expected_source_path": 2,
+        "run_outcome": "MAPPING_PROPOSAL"
+      },
+      {
+        "capability_id": "PET-CAP-10",
+        "exact_graph_node_match_count": 0,
+        "expected_component_count": 1,
+        "expected_components_with_proposed_source_path": 0,
+        "proposed_component_count": 0,
+        "proposed_components_on_expected_source_path": 0,
+        "run_outcome": "UNRESOLVED"
+      }
+    ],
+    "capabilities_expected": 10,
+    "comparison_limit": "PATH_LEVEL_OVERLAP_IS_NOT_AN_EXACT_GRAPH_NODE_MATCH",
+    "exact_graph_node_matches": 0,
+    "exact_graph_node_recall": 0.0,
+    "expected_component_path_recall": 0.9583333333,
+    "expected_components": 24,
+    "expected_components_with_proposed_source_path": 23,
+    "mapping_proposals": 9,
+    "proposed_component_path_precision": 0.84,
+    "proposed_components": 25,
+    "proposed_components_on_expected_source_path": 21,
+    "unresolved": 1
+  },
+  "human_product_team_review": {
+    "authority": "PRODUCT_TEAM_ONLY",
+    "completed_by_non_human_reviewers": false,
+    "semantic_publication_allowed": false,
+    "status": "PENDING"
+  },
+  "integrity": {
+    "evidence_integrity": "PASSED",
+    "hard_stop_violations": [],
+    "product_truth_boundary": "PASSED",
+    "reviewer_isolation": "ATTESTED_AND_CONTRACT_VALIDATED",
+    "snapshot_binding": "PASSED",
+    "status": "PASSED"
+  },
+  "metrics": {
+    "by_arm": {
+      "FORWARD": {
+        "action_counts": {
+          "ACCEPT": 16,
+          "ADD_MISSING": 2,
+          "MERGE": 0,
+          "REJECT": 0,
+          "RENAME": 2,
+          "SPLIT": 0
+        },
+        "agreement": {
+          "action_agreement_count": 8,
+          "action_agreement_rate": 0.8,
+          "action_disagreement_ids": [
+            "BR-007",
+            "BR-015"
+          ],
+          "exact_action_and_outcome_agreement_count": 1,
+          "exact_action_and_outcome_agreement_ids": [
+            "BR-009"
+          ],
+          "exact_action_and_outcome_agreement_rate": 0.1,
+          "item_count": 10,
+          "outcome_agreement_count": 3,
+          "outcome_agreement_rate": 0.3,
+          "outcome_disagreement_ids": [
+            "BR-002",
+            "BR-004",
+            "BR-005",
+            "BR-006",
+            "BR-012",
+            "BR-013",
+            "BR-014"
+          ],
+          "reviewers": [
+            "reviewer-01",
+            "reviewer-02"
+          ]
+        },
+        "coverage": {
+          "item_coverage": 1.0,
+          "items_expected": 10,
+          "items_judged_by_both": 10,
+          "judgment_coverage": 1.0,
+          "judgments_complete": 20,
+          "judgments_expected": 20
+        },
+        "evidence_validity_mean": 0.904,
+        "judgments_with_unsupported_claims": 19,
+        "outcome_counts": {
+          "DUPLICATE": 0,
+          "PARTIALLY_SUPPORTED": 13,
+          "SUPPORTED": 7,
+          "UNSUPPORTED": 0
+        },
+        "precision_mean": 0.8975,
+        "review_time_seconds": {
+          "combined_per_item_iqr": [
+            75.0,
+            80.0
+          ],
+          "mean_per_judgment": 39.8,
+          "median_combined_per_item": 79.5,
+          "median_per_judgment": 38.5,
+          "total": 796
+        },
+        "unsupported_claim_count": 20,
+        "unsupported_claim_judgment_rate": 0.95,
+        "usefulness_mean": 0.9055
+      },
+      "REVERSE": {
+        "action_counts": {
+          "ACCEPT": 1,
+          "ADD_MISSING": 0,
+          "MERGE": 2,
+          "REJECT": 0,
+          "RENAME": 3,
+          "SPLIT": 4
+        },
+        "agreement": {
+          "action_agreement_count": 4,
+          "action_agreement_rate": 0.8,
+          "action_disagreement_ids": [
+            "BR-011"
+          ],
+          "exact_action_and_outcome_agreement_count": 3,
+          "exact_action_and_outcome_agreement_ids": [
+            "BR-001",
+            "BR-003",
+            "BR-010"
+          ],
+          "exact_action_and_outcome_agreement_rate": 0.6,
+          "item_count": 5,
+          "outcome_agreement_count": 4,
+          "outcome_agreement_rate": 0.8,
+          "outcome_disagreement_ids": [
+            "BR-008"
+          ],
+          "reviewers": [
+            "reviewer-01",
+            "reviewer-02"
+          ]
+        },
+        "coverage": {
+          "item_coverage": 1.0,
+          "items_expected": 5,
+          "items_judged_by_both": 5,
+          "judgment_coverage": 1.0,
+          "judgments_complete": 10,
+          "judgments_expected": 10
+        },
+        "evidence_validity_mean": 0.876,
+        "judgments_with_unsupported_claims": 10,
+        "outcome_counts": {
+          "DUPLICATE": 2,
+          "PARTIALLY_SUPPORTED": 7,
+          "SUPPORTED": 1,
+          "UNSUPPORTED": 0
+        },
+        "precision_mean": 0.72,
+        "review_time_seconds": {
+          "combined_per_item_iqr": [
+            106.0,
+            124.0
+          ],
+          "mean_per_judgment": 56.2,
+          "median_combined_per_item": 107,
+          "median_per_judgment": 53.5,
+          "total": 562
+        },
+        "unsupported_claim_count": 15,
+        "unsupported_claim_judgment_rate": 1.0,
+        "usefulness_mean": 0.827
+      }
+    },
+    "interpretation": "DESCRIPTIVE_ONLY_NO_RETROACTIVE_ACCEPTANCE_GATE",
+    "overall": {
+      "action_counts": {
+        "ACCEPT": 17,
+        "ADD_MISSING": 2,
+        "MERGE": 2,
+        "REJECT": 0,
+        "RENAME": 5,
+        "SPLIT": 4
+      },
+      "coverage": {
+        "item_coverage": 1.0,
+        "items_expected": 15,
+        "items_judged_by_both": 15,
+        "judgment_coverage": 1.0,
+        "judgments_complete": 30,
+        "judgments_expected": 30
+      },
+      "evidence_validity_mean": 0.8946666667,
+      "judgments_with_unsupported_claims": 29,
+      "outcome_counts": {
+        "DUPLICATE": 2,
+        "PARTIALLY_SUPPORTED": 20,
+        "SUPPORTED": 8,
+        "UNSUPPORTED": 0
+      },
+      "precision_mean": 0.8383333333,
+      "review_time_seconds": {
+        "combined_per_item_iqr": [
+          78.5,
+          102.5
+        ],
+        "mean_per_judgment": 45.2666666667,
+        "median_combined_per_item": 80,
+        "median_per_judgment": 45.0,
+        "total": 1358
+      },
+      "unsupported_claim_count": 35,
+      "unsupported_claim_judgment_rate": 0.9666666667,
+      "usefulness_mean": 0.8793333333
+    }
+  },
+  "next_experiment_requirements": [
+    "Pre-register numeric acceptance thresholds before generation and judgment.",
+    "Add UI/template evidence to Graphify input or narrow capability descriptions to indexed evidence.",
+    "Repeat the comparison with real human Product Team reviewers.",
+    "Preserve the exact source revision and delivery-history cutoff."
+  ],
+  "pending_third_review": {
+    "basis": "FROZEN_PROTOCOL_REQUIRES_THIRD_REVIEW_WHEN_REVIEWERS_DISAGREE",
+    "item_count": 11,
+    "items": [
+      {
+        "blind_id": "BR-002",
+        "reasons": [
+          "OUTCOME_DISAGREEMENT"
+        ]
+      },
+      {
+        "blind_id": "BR-004",
+        "reasons": [
+          "OUTCOME_DISAGREEMENT"
+        ]
+      },
+      {
+        "blind_id": "BR-005",
+        "reasons": [
+          "OUTCOME_DISAGREEMENT"
+        ]
+      },
+      {
+        "blind_id": "BR-006",
+        "reasons": [
+          "OUTCOME_DISAGREEMENT"
+        ]
+      },
+      {
+        "blind_id": "BR-007",
+        "reasons": [
+          "ACTION_DISAGREEMENT"
+        ]
+      },
+      {
+        "blind_id": "BR-008",
+        "reasons": [
+          "OUTCOME_DISAGREEMENT"
+        ]
+      },
+      {
+        "blind_id": "BR-011",
+        "reasons": [
+          "ACTION_DISAGREEMENT"
+        ]
+      },
+      {
+        "blind_id": "BR-012",
+        "reasons": [
+          "OUTCOME_DISAGREEMENT"
+        ]
+      },
+      {
+        "blind_id": "BR-013",
+        "reasons": [
+          "OUTCOME_DISAGREEMENT"
+        ]
+      },
+      {
+        "blind_id": "BR-014",
+        "reasons": [
+          "OUTCOME_DISAGREEMENT"
+        ]
+      },
+      {
+        "blind_id": "BR-015",
+        "reasons": [
+          "ACTION_DISAGREEMENT"
+        ]
+      }
+    ],
+    "status": "PENDING_INDEPENDENT_THIRD_REVIEW"
+  },
+  "pre_unblinding_validation": {
+    "item_count": 15,
+    "packet_sha256": "13451c06a6b635f6d6ea58e7cb3faa8fdfd8f9cc6c011d8fdc3dbebac395c89a",
+    "passed": true,
+    "reviewers": [
+      {
+        "actor_type": "NON_HUMAN",
+        "authority": "EVALUATOR_ONLY",
+        "can_complete_product_team_review": false,
+        "judgment_count": 15,
+        "judgment_sha256": "7858befe88bd30c7f1de537b31cb51a455478acb7a1532d8e9f94c1ce2a59084",
+        "workspace_id": "reviewer-01"
+      },
+      {
+        "actor_type": "NON_HUMAN",
+        "authority": "EVALUATOR_ONLY",
+        "can_complete_product_team_review": false,
+        "judgment_count": 15,
+        "judgment_sha256": "5a29738eb8821a21b62e77d7f34f2ecff46af4ee554277d07025a1c154b25f73",
+        "workspace_id": "reviewer-02"
+      }
+    ],
+    "validated_before_sealed_key_read": true
+  },
+  "proof_limits": [
+    "Reviewer isolation is supported by distinct workspaces and recorded non-access attestations, not cryptographic proof of model context.",
+    "Path-level expected-realization overlap is reported separately and is not relabeled as exact graph-node matching.",
+    "Non-human evaluator judgments do not establish Product meaning or permit semantic publication."
+  ],
+  "report_id": "pkb001-task7-petclinic-818c413-v1",
+  "reverse_proposal_review_results": [
+    {
+      "blind_id": "BR-001",
+      "label": "Companion record identity and update safeguards",
+      "reviewers": [
+        {
+          "evidence_validity": 0.86,
+          "outcome": "PARTIALLY_SUPPORTED",
+          "precision": 0.66,
+          "review_action": "SPLIT",
+          "usefulness": 0.78,
+          "workspace_id": "reviewer-01"
+        },
+        {
+          "evidence_validity": 0.94,
+          "outcome": "PARTIALLY_SUPPORTED",
+          "precision": 0.58,
+          "review_action": "SPLIT",
+          "usefulness": 0.78,
+          "workspace_id": "reviewer-02"
+        }
+      ],
+      "source_identifier": "PKS2-HYP-002",
+      "third_review_status": "NOT_REQUIRED"
+    },
+    {
+      "blind_id": "BR-003",
+      "label": "Practitioner directory and specialty presentation",
+      "reviewers": [
+        {
+          "evidence_validity": 0.8,
+          "outcome": "PARTIALLY_SUPPORTED",
+          "precision": 0.58,
+          "review_action": "SPLIT",
+          "usefulness": 0.72,
+          "workspace_id": "reviewer-01"
+        },
+        {
+          "evidence_validity": 0.88,
+          "outcome": "PARTIALLY_SUPPORTED",
+          "precision": 0.61,
+          "review_action": "SPLIT",
+          "usefulness": 0.82,
+          "workspace_id": "reviewer-02"
+        }
+      ],
+      "source_identifier": "PKS2-HYP-004",
+      "third_review_status": "NOT_REQUIRED"
+    },
+    {
+      "blind_id": "BR-008",
+      "label": "Visit date intake safeguards",
+      "reviewers": [
+        {
+          "evidence_validity": 0.86,
+          "outcome": "PARTIALLY_SUPPORTED",
+          "precision": 0.76,
+          "review_action": "RENAME",
+          "usefulness": 0.84,
+          "workspace_id": "reviewer-01"
+        },
+        {
+          "evidence_validity": 0.91,
+          "outcome": "SUPPORTED",
+          "precision": 0.78,
+          "review_action": "RENAME",
+          "usefulness": 0.89,
+          "workspace_id": "reviewer-02"
+        }
+      ],
+      "source_identifier": "PKS2-HYP-003",
+      "third_review_status": "PENDING"
+    },
+    {
+      "blind_id": "BR-010",
+      "label": "Client record search and result browsing",
+      "reviewers": [
+        {
+          "evidence_validity": 0.87,
+          "outcome": "DUPLICATE",
+          "precision": 0.83,
+          "review_action": "MERGE",
+          "usefulness": 0.82,
+          "workspace_id": "reviewer-01"
+        },
+        {
+          "evidence_validity": 0.92,
+          "outcome": "DUPLICATE",
+          "precision": 0.78,
+          "review_action": "MERGE",
+          "usefulness": 0.9,
+          "workspace_id": "reviewer-02"
+        }
+      ],
+      "source_identifier": "PKS2-HYP-001",
+      "third_review_status": "NOT_REQUIRED"
+    },
+    {
+      "blind_id": "BR-011",
+      "label": "Locale-selectable presentation",
+      "reviewers": [
+        {
+          "evidence_validity": 0.84,
+          "outcome": "PARTIALLY_SUPPORTED",
+          "precision": 0.8,
+          "review_action": "RENAME",
+          "usefulness": 0.84,
+          "workspace_id": "reviewer-01"
+        },
+        {
+          "evidence_validity": 0.88,
+          "outcome": "PARTIALLY_SUPPORTED",
+          "precision": 0.82,
+          "review_action": "ACCEPT",
+          "usefulness": 0.88,
+          "workspace_id": "reviewer-02"
+        }
+      ],
+      "source_identifier": "PKS2-HYP-005",
+      "third_review_status": "PENDING"
+    }
+  ],
+  "reviewer_agreement": {
+    "action_agreement_count": 12,
+    "action_agreement_rate": 0.8,
+    "action_disagreement_ids": [
+      "BR-007",
+      "BR-011",
+      "BR-015"
+    ],
+    "exact_action_and_outcome_agreement_count": 4,
+    "exact_action_and_outcome_agreement_ids": [
+      "BR-001",
+      "BR-003",
+      "BR-009",
+      "BR-010"
+    ],
+    "exact_action_and_outcome_agreement_rate": 0.2666666667,
+    "item_count": 15,
+    "outcome_agreement_count": 7,
+    "outcome_agreement_rate": 0.4666666667,
+    "outcome_disagreement_ids": [
+      "BR-002",
+      "BR-004",
+      "BR-005",
+      "BR-006",
+      "BR-008",
+      "BR-012",
+      "BR-013",
+      "BR-014"
+    ],
+    "reviewers": [
+      "reviewer-01",
+      "reviewer-02"
+    ]
+  },
+  "schema_version": "pkb001.task7.evaluation-report.v1",
+  "thresholds": {
+    "defect": "NUMERIC_ACCEPTANCE_THRESHOLDS_NOT_FROZEN_BEFORE_GENERATION_AND_JUDGMENT",
+    "effect": "GO_IS_NOT_SUPPORTABLE_FROM_THIS_RUN",
+    "observed_metrics_used_as_acceptance_thresholds": false,
+    "preregistered_before_execution": false
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "checks": [
+    {
+      "detail": "Fresh evaluation exactly matches the committed report",
+      "name": "deterministic_evaluation",
+      "passed": true
+    },
+    {
+      "detail": "Both complete evaluator-only workspaces validated before key access",
+      "name": "pre_unblind_order",
+      "passed": true
+    },
+    {
+      "detail": "Packet, key, judgments, runs, gold, and seal are digest-bound",
+      "name": "digest_bindings",
+      "passed": true
+    },
+    {
+      "detail": "Per-arm and overall metrics cover all 15 items and five reverse proposals",
+      "name": "metric_surface",
+      "passed": true
+    },
+    {
+      "detail": "All action/outcome disagreements are listed without a fabricated third judgment",
+      "name": "disagreement_accounting",
+      "passed": true
+    },
+    {
+      "detail": "Expected-realization comparison keeps exact-node and path overlap distinct",
+      "name": "forward_gold_comparison_limit",
+      "passed": true
+    },
+    {
+      "detail": "Missing preregistration prevents GO without inventing a threshold",
+      "name": "bounded_decision",
+      "passed": true
+    },
+    {
+      "detail": "Non-human evaluation does not complete Product Team review or publish semantics",
+      "name": "human_authority_pending",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "schema_version": "pkb001.task7.public-validation-report.v1",
+  "validation_scope": "DETERMINISTIC_EVALUATION_PUBLIC_SEAM"
+}

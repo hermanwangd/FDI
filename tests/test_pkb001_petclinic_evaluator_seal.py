@@ -342,6 +342,8 @@ def test_public_registry_and_status_announce_readiness_without_exposing_gold():
     assert registry['evaluator_ground_truth_status'] == 'SEALED'
     assert registry['phase0_readiness'] == 'READY'
     assert status['phase0_readiness'] == 'READY'
-    assert status['next_action'] == 'Run PKB-001 experiments under the sealed Phase 0 inputs'
-    assert status['human_review_status'] == 'PENDING_POST_GENERATION_SECTION_6'
+    assert status['evaluation_status'] == 'COMPLETE_BOUNDED_REVISE'
+    assert status['next_action'].startswith('Pre-register thresholds')
+    assert status['human_review_status'] == 'PENDING_PRODUCT_TEAM_REVIEW'
+    assert status['semantic_publication_allowed'] is False
     assert 'gold' not in json.dumps(registry).lower()

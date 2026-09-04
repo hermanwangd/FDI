@@ -33,3 +33,7 @@ Blind arm identity where practical. Review proposals using a frozen judgment voc
 - **STOP:** snapshot identity, isolation, evidence integrity, or Product-truth boundaries are violated.
 
 No R1/R2/R3/F1 experiment run begins until all six Phase 0 readiness flags pass: Product Semantics frozen, live Graphify interface verified, PK-S1 ready, PK-S2 ready with cutoff-bounded Delivery History, calibration dataset frozen, and evaluator ground truth sealed and isolated.
+
+**Execution result:** Phase 0 and both Petclinic experiment executions passed their binding and evidence-integrity checks. Two isolated non-human evaluator judgments cover all 15 blind items. The bounded decision is `REVISE` because numeric acceptance thresholds were not pre-registered; observed metrics are not backfit into a `GO` gate. Eleven action/outcome disagreements are listed for independent third review. Human Product Team review remains pending and no Product Semantics may be published from this run.
+
+**Next experiment:** pre-register numeric thresholds before execution, add UI/templates to Graphify input or narrow capability descriptions, repeat with real human Product Team reviewers, and preserve source commit `818c4136ea971c21674525f9053de0d9c7ad8cfe` plus Delivery History cutoff `2026-08-26T10:57:54Z`.

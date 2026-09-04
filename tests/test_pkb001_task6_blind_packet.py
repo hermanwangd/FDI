@@ -112,7 +112,7 @@ def test_task6_packet_exposes_the_frozen_judgment_contract_and_non_human_limit()
     assert 'cannot complete Product Team human review' in instructions
 
 
-def test_task6_workspaces_receive_identical_packet_inputs_and_are_isolated():
+def test_task6_workspaces_retain_identical_inputs_and_isolation_after_review():
     packet = load(PACKET_PATH)
     workspace_paths = [
         PACKET_DIR / 'judgment-workspaces/reviewer-01',
@@ -124,7 +124,14 @@ def test_task6_workspaces_receive_identical_packet_inputs_and_are_isolated():
         template = load(workspace / 'judgment-template.json')
         assert workspace_packet.read_bytes() == PACKET_PATH.read_bytes()
         assert template['packet_sha256'] == digest(PACKET_PATH)
-        assert template['judgments'] == []
+        assert len(template['judgments']) == len(packet['items']) == 15
+        assert [row['blind_id'] for row in template['judgments']] == [
+            item['blind_id'] for item in packet['items']
+        ]
+        assert all(row['review_action'] in packet['allowed_review_actions']
+                   for row in template['judgments'])
+        assert all(row['outcome'] in packet['allowed_outcomes']
+                   for row in template['judgments'])
         assert template['reviewer_context']['actor_type'] == 'NON_HUMAN'
         assert template['reviewer_context']['can_complete_product_team_review'] is False
         assert template['reviewer_isolation']['other_workspace_future_judgments_accessible'] is False

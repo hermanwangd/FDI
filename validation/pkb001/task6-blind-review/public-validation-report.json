@@ -51,7 +51,7 @@
       "passed": true
     },
     {
-      "detail": "Both evaluator workspaces contain identical packet bytes and cannot access keys or each other future judgments",
+      "detail": "Both evaluator workspaces retain identical packet bytes, valid judgment state, and isolation contracts",
       "name": "reviewer_isolation_contracts",
       "passed": true
     },
@@ -61,12 +61,12 @@
       "passed": true
     },
     {
-      "detail": "Packet preparation did not fabricate review or a final decision",
-      "name": "no_fabricated_judgment_or_final_decision",
+      "detail": "Task 6 creation manifest records no fabricated review or final decision",
+      "name": "task6_creation_boundary",
       "passed": true
     }
   ],
   "passed": true,
   "schema_version": "pkb001.task6.public-validation-report.v1",
-  "validation_scope": "PUBLIC_SEAM_ONLY_NO_JUDGMENT_OR_DECISION"
+  "validation_scope": "PACKET_AND_REVIEW_WORKSPACE_CONTRACT_ONLY"
 }

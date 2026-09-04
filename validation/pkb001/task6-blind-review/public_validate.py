@@ -53,6 +53,20 @@ def uniquely_identifying_arm_signatures(items, key_items):
     }
 
 
+def complete_judgments(rows, packet_ids):
+    return (
+        isinstance(rows, list)
+        and len(rows) == len(packet_ids)
+        and [row.get('blind_id') for row in rows] == packet_ids
+        and all(row.get('review_action') in ACTIONS for row in rows)
+        and all(row.get('outcome') in {
+            'SUPPORTED', 'PARTIALLY_SUPPORTED', 'UNSUPPORTED', 'DUPLICATE'
+        } for row in rows)
+        and all(isinstance(row.get('active_review_seconds'), int)
+                and row['active_review_seconds'] >= 0 for row in rows)
+    )
+
+
 def validate(root: Path) -> dict:
     checks = []
 
@@ -90,16 +104,19 @@ def validate(root: Path) -> dict:
         template = load(workspace / 'judgment-template.json')
         workspace_ok &= (workspace / 'packet-input.json').read_bytes() == (root / PACKET).read_bytes()
         workspace_ok &= template['packet_sha256'] == digest(root / PACKET)
-        workspace_ok &= template['judgments'] == []
+        workspace_ok &= (
+            template['judgments'] == []
+            or complete_judgments(template['judgments'], ids)
+        )
         workspace_ok &= template['reviewer_context'] == {'actor_type': 'NON_HUMAN', 'authority': 'EVALUATOR_ONLY', 'can_complete_product_team_review': False}
         workspace_ok &= template['reviewer_isolation']['other_workspace_future_judgments_accessible'] is False
         workspace_ok &= template['reviewer_isolation']['sealed_key_accessible'] is False
-    check('reviewer_isolation_contracts', workspace_ok, 'Both evaluator workspaces contain identical packet bytes and cannot access keys or each other future judgments')
+    check('reviewer_isolation_contracts', workspace_ok, 'Both evaluator workspaces retain identical packet bytes, valid judgment state, and isolation contracts')
     instruction_text = (root / INSTRUCTIONS).read_text(encoding='utf-8')
     check('authority_instructions', 'Expected realization scoring is evaluator-only' in instruction_text and 'Only the human Product Team can finalize Product meaning' in instruction_text and 'cannot complete Product Team human review' in instruction_text, 'Instructions separate measurement from human Product meaning authority')
-    check('no_fabricated_judgment_or_final_decision', manifest['decision_boundary'] == {'judgments_fabricated': False, 'product_team_human_review_completed': False, 'final_go_revise_stop_decision_made': False}, 'Packet preparation did not fabricate review or a final decision')
+    check('task6_creation_boundary', manifest['decision_boundary'] == {'judgments_fabricated': False, 'product_team_human_review_completed': False, 'final_go_revise_stop_decision_made': False}, 'Task 6 creation manifest records no fabricated review or final decision')
 
-    return {'schema_version': 'pkb001.task6.public-validation-report.v1', 'validation_scope': 'PUBLIC_SEAM_ONLY_NO_JUDGMENT_OR_DECISION', 'passed': all(check['passed'] for check in checks), 'checks': checks}
+    return {'schema_version': 'pkb001.task6.public-validation-report.v1', 'validation_scope': 'PACKET_AND_REVIEW_WORKSPACE_CONTRACT_ONLY', 'passed': all(check['passed'] for check in checks), 'checks': checks}
 
 
 def main() -> int:

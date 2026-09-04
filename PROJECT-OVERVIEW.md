@@ -20,6 +20,8 @@ Only these four root files define the current prototype:
 
 Everything under `archive/` is historical reference and must not be used to determine current project truth. Supporting source code, contracts, configuration, validation assets, and tooling implement or test this prototype; they do not override these four entries.
 
-## Current next action
+## Current result and next action
 
-Review the 10-capability Spring Petclinic Product Semantics candidate. Exact-revision Graphify Structural Intelligence and cutoff-bounded Delivery History evidence are prepared, but evaluator mappings and experiments remain blocked until Product Team approval freezes capability meaning. The previous FDI forward Skill output was invalidated because expected realization boundaries leaked into Skill-visible semantics. The prior deterministic outputs remain code baselines only. Current prototype decision: `REVISE`.
+The approved 10-capability Spring Petclinic calibration ran at source commit `818c4136ea971c21674525f9053de0d9c7ad8cfe` with exactly bound Graphify evidence and cutoff-bounded Delivery History. PK-S1 and PK-S2 outputs were reviewed by two isolated `NON_HUMAN`, evaluator-only contexts. The bounded result is `REVISE`: input binding and evidence integrity passed, but numeric acceptance thresholds were not pre-registered before generation and judgment, so observed values cannot support `GO`.
+
+Human Product Team review remains pending, semantic publication is prohibited, and 11 action/outcome disagreements await an independent third evaluation. The next experiment must pre-register thresholds, add UI/template evidence to Graphify input or narrow capability descriptions, repeat with real human Product Team reviewers, and preserve the exact revision and cutoff.

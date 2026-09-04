@@ -14,13 +14,20 @@ def test_four_active_truth_entries_exist_and_resolve():
     status = json.loads((ROOT/'STATUS.json').read_text())
     assert status == {
         'current_focus': 'PKB-001',
-        'phase': 'prototype',
+        'phase': 'prototype_evaluation',
         'framework_spec': 'FRAMEWORK-SPEC.md',
         'implementation_plan': 'IMPLEMENTATION-PLAN.md',
         'decision': 'REVISE',
         'phase0_readiness': 'READY',
-        'human_review_status': 'PENDING_POST_GENERATION_SECTION_6',
-        'next_action': 'Run PKB-001 experiments under the sealed Phase 0 inputs',
+        'evaluation_status': 'COMPLETE_BOUNDED_REVISE',
+        'human_review_status': 'PENDING_PRODUCT_TEAM_REVIEW',
+        'third_review_status': 'PENDING_11_DISAGREED_ITEMS',
+        'semantic_publication_allowed': False,
+        'next_action': (
+            'Pre-register thresholds, add UI/template evidence or narrow '
+            'capability descriptions, and repeat at the exact revision/cutoff '
+            'with human Product Team reviewers'
+        ),
         'archived_documents_are_authority': False,
     }
 
