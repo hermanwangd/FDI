@@ -237,6 +237,29 @@ def test_live_graphify_verifier_records_exact_mcp_proof_and_keeps_phase0_not_rea
     assert readiness['readiness_flags']['GROUND_TRUTH_SEALED'] is False
 
 
+def test_live_graphify_verifier_writes_not_bound_evidence_for_missing_runtime_root(tmp_path):
+    evidence_path = tmp_path/'graphify-not-bound.json'
+    missing_root = tmp_path/'missing-runtime-root'
+    result = subprocess.run(
+        ['python3', str(ROOT/'tooling/validation/graphify_live_verifier.py'),
+         '--root', str(missing_root), '--output', str(evidence_path)],
+        text=True, capture_output=True,
+    )
+    assert result.returncode == 2
+    assert evidence_path.is_file()
+    evidence = json.loads(evidence_path.read_text())
+    assert evidence == {
+        'verification_id': 'pkb001-graphify-live-818c413',
+        'result': 'NOT_BOUND',
+        'queryable': False,
+        'server_exit_status': 'ERROR',
+        'server_error': (
+            f'Graphify runtime is missing: {missing_root}/.fdi-work/'
+            'graphify-venv312/bin/python'),
+    }
+    assert 'Traceback' not in result.stderr
+
+
 def test_gate_rejects_output_outside_repository(tmp_path):
     root = tmp_path/'repo'
     root.mkdir()

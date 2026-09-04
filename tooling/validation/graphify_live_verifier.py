@@ -135,11 +135,12 @@ async def verify_live_interface(root: Path) -> dict[str, Any]:
 
     with tempfile.TemporaryDirectory(prefix='pkb001-graphify-mcp-', dir=root/'.fdi-work') as workdir:
         workdir_path = Path(workdir)
-        # Upstream accepts only paths below graphify-out/.  The symlink makes that
-        # guard point at the immutable artifact while the invoked argument remains
-        # the exact frozen graph file, without copying or modifying graph bytes.
+        # Upstream accepts only paths below graphify-out/.  Point that directory
+        # at the immutable artifact directory, then invoke the server through
+        # that path without copying or modifying graph bytes.
         (workdir_path/'graphify-out').symlink_to(graph.parent, target_is_directory=True)
-        server_args = ['-m', 'graphify.serve', str(graph)]
+        server_graph_argument = Path('graphify-out')/graph.name
+        server_args = ['-m', 'graphify.serve', str(server_graph_argument)]
         server = StdioServerParameters(
             command=str(runtime_python), args=server_args, cwd=workdir_path)
         async with stdio_client(server) as (reader, writer):
@@ -190,6 +191,7 @@ async def verify_live_interface(root: Path) -> dict[str, Any]:
         'wire_version': f'MCP {initialization.protocolVersion}',
         'server_info': initialization.serverInfo.model_dump(mode='json'),
         'server_command': [str(runtime_python), *server_args],
+        'resolved_graph_path': str(graph),
         'server_exit_status': 'CLEAN_SESSION_CLOSE',
         'server_error': None,
         'source_provenance': {
@@ -236,8 +238,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args(argv)
     root = args.root.resolve()
-    _ensure_runtime(root)
     try:
+        _ensure_runtime(root)
         evidence = asyncio.run(verify_live_interface(root))
         exit_code = 0
     except (OSError, RuntimeError, ValueError, json.JSONDecodeError) as error:
