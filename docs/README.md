@@ -28,6 +28,8 @@ Every entry is labelled by authority. This index is navigational and does not su
 - [Configuration guidance](../config/) — runtime examples and Multica mapping instructions.
 - [Graphify provider migration design](superpowers/specs/2026-09-03-graphify-provider-migration-design.md) — provider-boundary implementation design, not FDI semantic authority.
 - [PKB-001 Phase 1 specification](specifications/validation/PKB-001-PHASE-1-SPECIFICATION.md) — blocked, non-governing Product Knowledge bootstrap experiment and prerequisite gates.
+- [Graphify provider migration plan](superpowers/plans/2026-09-04-graphify-provider-migration.md) — test-first provider rename and hardening sequence.
+- [PKB-001 Phase 0 plan](superpowers/plans/2026-09-04-pkb-001-phase-0.md) — fail-closed readiness, isolation, and evaluation harness sequence.
 - [Project-folder reorganization design](superpowers/specs/2026-09-04-project-folder-reorganization-design.md) and [implementation plan](superpowers/plans/2026-09-04-project-folder-reorganization.md) — repository-layout guidance, not FDI semantic authority.
 
 ## Validation, tooling, and delivery material
