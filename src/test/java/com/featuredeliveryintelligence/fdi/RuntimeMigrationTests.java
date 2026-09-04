@@ -45,6 +45,29 @@ class RuntimeMigrationTests {
     }
 
     @Test
+    void graphifyEvidenceMatchesProviderContractKeys() {
+        GraphifyBindingAttestor attestor = new GraphifyBindingAttestor(ignored -> Map.of(
+                "queryable", true,
+                "runtime_version", "1.0.0",
+                "wire_version", "mcp-1",
+                "repository_bindings", List.of(Map.of(
+                        "repository_id", "repo",
+                        "indexed_revision", "a".repeat(40)))), "fdi-0.4.8.3");
+        Map<String, Object> binding = attestor.attest(snapshot());
+
+        Map<String, Object> evidence = GraphifyBindingEvidence.build(
+                snapshot(), binding, "product", "2026-09-04T00:00:00Z", List.of("local-only"));
+
+        assertThat(evidence.keySet()).containsExactlyInAnyOrder(
+                "schema_version", "evidence_id", "product_or_scenario_id", "snapshot_ref",
+                "snapshot_binding_attestation", "captured_at", "result", "limitations");
+        assertThat(evidence.get("evidence_id").toString()).matches("gbe:[0-9a-f]{24}");
+        assertThat(binding).containsEntry("binding_state", "VERIFIED");
+        assertThat(binding).containsKeys("provider_route", "repositories", "provider_runtime", "freshness");
+        assertThat(binding).doesNotContainKeys("repository_bindings", "runtime_version", "wire_version", "result");
+    }
+
+    @Test
     void verificationSummaryFailsClosedOnMismatchedResult() {
         Map<String, Object> pass = Map.of("result", "PASS", "passed", 2, "failed", 0);
         Map<String, Object> summary = VerificationAccounting.buildVerificationSummary("0.4.8.3", pass, pass, List.of("F001"));
