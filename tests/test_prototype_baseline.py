@@ -17,7 +17,7 @@ def test_four_active_truth_entries_exist_and_resolve():
         'phase': 'prototype',
         'framework_spec': 'FRAMEWORK-SPEC.md',
         'implementation_plan': 'IMPLEMENTATION-PLAN.md',
-        'next_action': 'Collect two independent blind evaluator reviews and expand calibration to the frozen minimum sample',
+        'next_action': 'Complete the prepared Chinese reviewer-1 blind packet, obtain reviewer 2, and expand the calibration sample',
         'archived_documents_are_authority': False,
     }
 
