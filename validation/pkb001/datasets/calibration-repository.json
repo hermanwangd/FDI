@@ -4,13 +4,34 @@
   "source_commit_sha": "510a397c134324026fe6b20333dfbfa645ab67b4",
   "source_tree_oid": "67ed864fdc26c9f227c6783d69290fb7bda6aae3",
   "source_ref_kind": "IMMUTABLE_GIT_COMMIT",
+  "source_tree_sha256": "469ec4e8c9bcd565e84dcbef452486d365401c6ff9a1cc01d460c2661f0bcf4b",
+  "retained_paths": [
+    "config/graphify.example.yaml",
+    "pom.xml",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/ProductSemantics.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/ProductKnowledgeMaintenance.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/CodeIntelligenceProvider.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/SnapshotBindingAttestor.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/StructuralIntelligence.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/StructuralMaintenance.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyAdapter.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyBindingAttestor.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyBindingEvidence.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyTransport.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/RuntimeMigrationTests.java"
+  ],
+  "acquired_at": "2026-09-04T22:30:00+08:00",
+  "acquisition_method": "local git archive by immutable commit",
+  "history_source": "https://github.com/hermanwangd/FDI.git",
   "history_cutoff": "2026-09-04T22:05:12+08:00",
   "post_cutoff_knowledge_policy": "EXCLUDE_AFTER_CUTOFF",
-  "status": "SELECTED_NOT_FROZEN",
-  "freeze_requirements": [
-    "materialize the exact commit in an isolated workspace",
-    "record retained paths and a content SHA-256 tree digest",
-    "record repository and file resource bounds",
-    "verify Graphify indexes the same full commit SHA"
-  ]
+  "license": "UNSPECIFIED_IN_SELECTED_SNAPSHOT",
+  "max_repository_bytes": 40000,
+  "max_file_count": 13,
+  "max_file_bytes": 7000,
+  "observed_repository_bytes": 35539,
+  "status": "FROZEN_SOURCE_SNAPSHOT",
+  "graphify_binding_status": "EXACTLY_BOUND",
+  "graph_artifact": "validation/pkb001/artifacts/graph-510a397.json",
+  "graph_sha256": "b416bded2b325e01bbecb97f5c07cd0a65225a27b890a5f4972f15f893808509"
 }

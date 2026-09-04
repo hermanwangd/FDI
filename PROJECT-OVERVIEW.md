@@ -22,4 +22,4 @@ Everything under `archive/` is historical reference and must not be used to dete
 
 ## Current next action
 
-Verify the real installed Graphify runtime without assuming its API, then select and freeze an exact-revision calibration repository.
+Freeze the human-owned Product Semantics input, then materialize PK-S1 and PK-S2 execution skills. Graphify runtime verification and the exact-revision calibration snapshot are complete; experiment execution remains blocked on the remaining inputs.

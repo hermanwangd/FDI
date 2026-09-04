@@ -1,0 +1,40 @@
+{
+  "experiment": "PKB-001",
+  "status": "BLOCKED",
+  "readiness_state": "NOT_READY",
+  "readiness_flags": {
+    "PRODUCT_SEMANTICS_FROZEN": false,
+    "LIVE_GRAPHIFY_INTERFACE_VERIFIED": true,
+    "PK_S1_EXECUTION_READY": false,
+    "PK_S2_EXECUTION_READY": false,
+    "CALIBRATION_DATASET_FROZEN": true,
+    "GROUND_TRUTH_SEALED": false
+  },
+  "prerequisites": [
+    {
+      "id": "P0-01",
+      "status": "MISSING",
+      "reason": "Product Semantics evidence is absent"
+    },
+    {
+      "id": "P0-02",
+      "status": "SATISFIED",
+      "reason": "exact Graphify binding verified"
+    },
+    {
+      "id": "P0-03",
+      "status": "MISSING",
+      "reason": "Skill evidence is absent"
+    },
+    {
+      "id": "P0-04",
+      "status": "SATISFIED",
+      "reason": "calibration dataset frozen"
+    },
+    {
+      "id": "P0-05",
+      "status": "MISSING",
+      "reason": "evaluator ground truth evidence is absent"
+    }
+  ]
+}
