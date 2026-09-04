@@ -18,12 +18,18 @@
   "$defs": {
     "metrics": {
       "type": "object", "additionalProperties": false,
-      "required": ["arm", "proposal_count", "gold_item_count", "point_estimate", "wilson_low", "wilson_high", "median_review_seconds"],
+      "required": ["arm", "proposal_count", "gold_item_count", "supported_count", "partially_supported_count", "unsupported_count", "useful_rate", "unsupported_rate", "precision", "evidence_validity", "wilson_low", "wilson_high", "median_review_seconds"],
       "properties": {
         "arm": {"enum": ["R1", "R2", "R3", "F1"]},
         "proposal_count": {"type": "integer", "minimum": 0},
         "gold_item_count": {"type": "integer", "minimum": 0},
-        "point_estimate": {"type": "number", "minimum": 0, "maximum": 1},
+        "supported_count": {"type": "integer", "minimum": 0},
+        "partially_supported_count": {"type": "integer", "minimum": 0},
+        "unsupported_count": {"type": "integer", "minimum": 0},
+        "useful_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "unsupported_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "precision": {"type": "number", "minimum": 0, "maximum": 1},
+        "evidence_validity": {"type": "number", "minimum": 0, "maximum": 1},
         "wilson_low": {"type": "number", "minimum": 0, "maximum": 1},
         "wilson_high": {"type": "number", "minimum": 0, "maximum": 1},
         "median_review_seconds": {"type": "number", "minimum": 0}
