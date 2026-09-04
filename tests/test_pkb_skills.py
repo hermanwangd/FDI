@@ -67,9 +67,17 @@ def test_fdi_semantics_and_evaluator_labels_are_historical_baselines_only():
     historical = ROOT/'validation/pkb001/baselines/PKB001-510a397'
     semantics = historical/'product-semantics.json'
     evaluator = historical/'evaluator'
+    classification = json.loads((historical/'BASELINE-CLASSIFICATION.json').read_text())
+    seal = json.loads((evaluator/'ground-truth-seal.json').read_text())
+    gold = evaluator/'gold-mappings.json'
     assert semantics.is_file()
-    assert evaluator.joinpath('gold-mappings.json').is_file()
-    assert evaluator.joinpath('ground-truth-seal.json').is_file()
+    assert gold.is_file()
+    assert (evaluator/'ground-truth-seal.json').is_file()
+    assert classification['execution_input'] is False
+    assert classification['product_truth_authority'] is False
+    assert classification['evaluator_truth_authority'] is False
+    assert seal['gold_path'] == 'validation/pkb001/baselines/PKB001-510a397/evaluator/gold-mappings.json'
+    assert hashlib.sha256(gold.read_bytes()).hexdigest() == seal['gold_sha256']
     assert not (ROOT/'validation/pkb001/datasets/product-semantics.json').exists()
     assert not (ROOT/'validation/pkb001/evaluator/gold-mappings.json').exists()
     assert not (ROOT/'validation/pkb001/evaluator/ground-truth-seal.json').exists()
