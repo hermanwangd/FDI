@@ -36,3 +36,26 @@ def test_blind_ids_and_order_are_deterministic():
     second = build_blind_packet('run-1', list(reversed(outputs)))
     assert first == second
     assert [item['blind_id'] for item in first[0]['items']] == ['BR-001', 'BR-002']
+
+
+def test_blind_packet_accepts_forward_mappings_and_reverse_hypotheses():
+    outputs = [{
+        'run_id': 'PK-S1-run',
+        'mappings': [{
+            'capability_id': 'CAP-1', 'capability_name': 'Known capability',
+            'component_refs': ['src/Known.java'], 'evidence_refs': ['graph-node:k@L1'],
+            'limitations': [],
+        }],
+    }, {
+        'run_id': 'PK-S2-run',
+        'hypotheses': [{
+            'hypothesis_id': 'H-1', 'label': 'Unknown capability',
+            'component_refs': ['unknown'], 'evidence_refs': ['graph-node:u@L1'],
+            'limitations': [],
+        }],
+    }]
+    packet, key = build_blind_packet('run-1', outputs)
+    assert len(packet['items']) == 2
+    assert 'PK-S1' not in str(packet) and 'PK-S2' not in str(packet)
+    assert {item['source_kind'] for item in key['items']} == {
+        'FORWARD_SKILL', 'REVERSE_SKILL'}

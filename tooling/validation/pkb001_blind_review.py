@@ -32,12 +32,35 @@ ZH_LABELS = {
     'Validation implemented delivery capability': '驗證與評估實作與交付能力',
     'Product Semantics Ownership': '產品語意所有權',
     'Exact-Revision Structural Intelligence': '精確版本程式結構情報',
+    'Bounded structural code intelligence queries': '有範圍限制的程式結構查詢',
+    'Structural binding evidence attestation': '程式結構版本綁定與證據證明',
+    'Feature evidence discovery and realization planning': '功能證據探索與實作規劃',
+    'Fail-closed validation and readiness gating': '失敗即阻擋的驗證與就緒檢查',
 }
 
 
 def build_blind_packet(run_id: str, outputs: list) -> tuple:
-    proposals = [dict(proposal, arm=proposal.get('arm', output.get('arm')))
-                 for output in outputs for proposal in output['proposals']]
+    proposals = []
+    for output in outputs:
+        for proposal in output.get('proposals', []):
+            proposals.append(dict(
+                proposal, arm=proposal.get('arm', output.get('arm')),
+                source_kind='CODE_BASELINE'))
+        for mapping in output.get('mappings', []):
+            proposals.append({
+                **mapping,
+                'proposal_id': mapping['capability_id'],
+                'label': mapping['capability_name'],
+                'arm': None,
+                'source_kind': 'FORWARD_SKILL',
+            })
+        for hypothesis in output.get('hypotheses', []):
+            proposals.append({
+                **hypothesis,
+                'proposal_id': hypothesis['hypothesis_id'],
+                'arm': None,
+                'source_kind': 'REVERSE_SKILL',
+            })
     ordered = sorted(proposals, key=lambda proposal: hashlib.sha256(
         (run_id + '\0' + proposal['proposal_id']).encode()).hexdigest())
     packet_items, key_items = [], []
@@ -58,6 +81,7 @@ def build_blind_packet(run_id: str, outputs: list) -> tuple:
             'blind_id': blind_id,
             'proposal_id': proposal['proposal_id'],
             'arm': proposal['arm'],
+            'source_kind': proposal['source_kind'],
         })
     packet = {
         'packet_id': run_id + '-blind-review-v1',

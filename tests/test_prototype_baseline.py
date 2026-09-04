@@ -17,7 +17,7 @@ def test_four_active_truth_entries_exist_and_resolve():
         'phase': 'prototype',
         'framework_spec': 'FRAMEWORK-SPEC.md',
         'implementation_plan': 'IMPLEMENTATION-PLAN.md',
-        'next_action': 'Run PK-S2 in a fresh context with only frozen structural and delivery evidence',
+        'next_action': 'Review the six real Skill proposals in the prepared Chinese blind packet and obtain reviewer 2',
         'archived_documents_are_authority': False,
     }
 

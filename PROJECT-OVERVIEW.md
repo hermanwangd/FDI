@@ -22,4 +22,4 @@ Everything under `archive/` is historical reference and must not be used to dete
 
 ## Current next action
 
-Run PK-S2 in a fresh context that can see only the exactly bound Graphify graph and frozen Delivery History. PK-S1 has been executed as a Skill and produced two proposal-only forward mappings. The earlier 21 outputs are retained only as a deterministic code baseline; they are not Skill results and must not be sent for human Skill evaluation. No GO / REVISE / STOP decision is valid yet.
+Complete the prepared six-item Chinese blind review packet for the real Skill outputs, then obtain an independent second review. PK-S1 produced two proposal-only forward mappings; fresh-context PK-S2 produced four proposal-only reverse hypotheses using only the exactly bound Graphify graph and frozen Delivery History. The earlier 21 outputs remain a deterministic code baseline and are not included in Skill evaluation. No GO / REVISE / STOP decision is valid yet.
