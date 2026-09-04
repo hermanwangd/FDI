@@ -2,6 +2,7 @@ import hashlib
 import json
 import subprocess
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 
@@ -20,6 +21,27 @@ def load(path):
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def schema_signature(value):
+    if isinstance(value, dict):
+        return ('object', tuple(sorted((key, schema_signature(item)) for key, item in value.items())))
+    if isinstance(value, list):
+        return ('array', tuple(sorted({schema_signature(item) for item in value})))
+    if value is None:
+        return 'null'
+    return type(value).__name__
+
+
+def uniquely_identifying_arm_signatures(items, key_items):
+    arm_by_id = {item['blind_id']: item['source_arm'] for item in key_items}
+    arms_by_signature = defaultdict(set)
+    for item in items:
+        arms_by_signature[schema_signature(item)].add(arm_by_id[item['blind_id']])
+    return {
+        signature: arms for signature, arms in arms_by_signature.items()
+        if len(arms) == 1
+    }
 
 
 def test_task6_packet_accounts_for_every_valid_run_item_without_judgments():
@@ -49,6 +71,27 @@ def test_task6_key_binds_exact_packet_and_keeps_source_identity_sealed():
     assert all(item['source_arm'] in {'FORWARD', 'REVERSE'} for item in key['items'])
     for forbidden in ('FORWARD', 'REVERSE', 'PKS1-', 'PET-CAP-'):
         assert forbidden not in rendered_packet
+
+
+def test_task6_packet_schema_signatures_cannot_identify_source_arm():
+    packet = load(PACKET_PATH)
+    key = load(KEY_PATH)
+    old_forward_shape = {
+        'blind_id': 'BR-001', 'component_refs': ['src/Thing.java:L1'],
+        'evidence_refs': {'structural': [{'graph_node_id': 'thing'}], 'delivery': []},
+    }
+    old_reverse_shape = {
+        'blind_id': 'BR-002', 'component_refs': [],
+        'evidence_refs': {'structural': {'graph_node_ids': ['thing']}, 'delivery': {'commit_shas': ['a']}},
+    }
+
+    assert uniquely_identifying_arm_signatures(
+        [old_forward_shape, old_reverse_shape],
+        [{'blind_id': 'BR-001', 'source_arm': 'FORWARD'}, {'blind_id': 'BR-002', 'source_arm': 'REVERSE'}],
+    )
+    assert not uniquely_identifying_arm_signatures(packet['items'], key['items'])
+    assert all(item['component_refs'] for item in packet['items'])
+    assert all(item['evidence_refs'] for item in packet['items'])
 
 
 def test_task6_packet_exposes_the_frozen_judgment_contract_and_non_human_limit():

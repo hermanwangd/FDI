@@ -31,74 +31,230 @@
       "candidate_basis": "Bound create and update handlers call duplicate-name and update paths, while owner association and validator nodes are present; four linked delivery episodes exercise duplicate-name behavior, persisted association, name validation, and update regression coverage.",
       "candidate_capability": "Companion record identity and update safeguards",
       "complete_realization_proposed": true,
-      "component_refs": [],
-      "confidence_score": 0.93,
-      "evidence_refs": {
-        "delivery": {
-          "changed_path_refs": [
-            {
-              "commit_sha": "e0db9b184e028d41bcb626f3cbf03a942f67e104",
-              "path": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java"
-            },
-            {
-              "commit_sha": "676db04515ee5f289641cea6cb379dc02b40f67f",
-              "path": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java"
-            },
-            {
-              "commit_sha": "676db04515ee5f289641cea6cb379dc02b40f67f",
-              "path": "src/main/java/org/springframework/samples/petclinic/owner/PetValidator.java"
-            },
-            {
-              "commit_sha": "b11afec3af05e8ff5156566aa014f2036b276647",
-              "path": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java"
-            },
-            {
-              "commit_sha": "b3ee2c53e76e9267f03551a7cd36b0983c859c56",
-              "path": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java"
-            }
-          ],
-          "commit_shas": [
-            "b11afec3af05e8ff5156566aa014f2036b276647",
-            "b3ee2c53e76e9267f03551a7cd36b0983c859c56",
-            "e0db9b184e028d41bcb626f3cbf03a942f67e104",
-            "676db04515ee5f289641cea6cb379dc02b40f67f"
-          ],
-          "pull_request_numbers": [
-            2536,
-            2537,
-            2573,
-            2611
-          ]
+      "component_refs": [
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "owner_owner_addpet",
+          "source_location": "L97"
         },
-        "structural": {
-          "graph_edges": [
-            {
-              "relation": "calls",
-              "source": "petcontroller_petcontroller_processcreationform",
-              "target": "petcontroller_petcontroller_isduplicatepetnameviolation"
-            },
-            {
-              "relation": "calls",
-              "source": "petcontroller_petcontroller_processupdateform",
-              "target": "petcontroller_petcontroller_updatepetdetails"
-            },
-            {
-              "relation": "calls",
-              "source": "petcontroller_petcontroller_processupdateform",
-              "target": "petcontroller_petcontroller_isduplicatepetnameviolation"
-            }
-          ],
-          "graph_node_ids": [
-            "owner_owner_addpet",
-            "owner_owner_getpet",
-            "petcontroller_petcontroller_processcreationform",
-            "petcontroller_petcontroller_processupdateform",
-            "petcontroller_petcontroller_updatepetdetails",
-            "petcontroller_petcontroller_isduplicatepetnameviolation",
-            "petvalidator_petvalidator_validate"
-          ]
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "owner_owner_getpet",
+          "source_location": "L117"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "petcontroller_petcontroller_processcreationform",
+          "source_location": "L107"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "petcontroller_petcontroller_processupdateform",
+          "source_location": "L144"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "petcontroller_petcontroller_updatepetdetails",
+          "source_location": "L186"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "petcontroller_petcontroller_isduplicatepetnameviolation",
+          "source_location": "L202"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "petvalidator_petvalidator_validate",
+          "source_location": "L38"
         }
-      },
+      ],
+      "confidence_score": 0.93,
+      "evidence_refs": [
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "owner_owner_addpet",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L97"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "owner_owner_getpet",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L117"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "petcontroller_petcontroller_processcreationform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L107"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "petcontroller_petcontroller_processupdateform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L144"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "petcontroller_petcontroller_updatepetdetails",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L186"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "petcontroller_petcontroller_isduplicatepetnameviolation",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L202"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "petvalidator_petvalidator_validate",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L38"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "petcontroller_petcontroller_processcreationform",
+          "related_reference": "petcontroller_petcontroller_isduplicatepetnameviolation",
+          "relation": "calls",
+          "source_location": "L107"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "petcontroller_petcontroller_processupdateform",
+          "related_reference": "petcontroller_petcontroller_updatepetdetails",
+          "relation": "calls",
+          "source_location": "L144"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "petcontroller_petcontroller_processupdateform",
+          "related_reference": "petcontroller_petcontroller_isduplicatepetnameviolation",
+          "relation": "calls",
+          "source_location": "L144"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "b11afec3af05e8ff5156566aa014f2036b276647",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "b3ee2c53e76e9267f03551a7cd36b0983c859c56",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "e0db9b184e028d41bcb626f3cbf03a942f67e104",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "676db04515ee5f289641cea6cb379dc02b40f67f",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "2536",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "2537",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "2573",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "2611",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "e0db9b184e028d41bcb626f3cbf03a942f67e104",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "676db04515ee5f289641cea6cb379dc02b40f67f",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "676db04515ee5f289641cea6cb379dc02b40f67f",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetValidator.java"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "b11afec3af05e8ff5156566aa014f2036b276647",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "b3ee2c53e76e9267f03551a7cd36b0983c859c56",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java"
+        }
+      ],
       "judgment": {
         "active_review_seconds": null,
         "evidence_validity": null,
@@ -123,49 +279,94 @@
       "candidate_capability": "Register Pet",
       "complete_realization_proposed": true,
       "component_refs": [
-        "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java:L1"
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "petcontroller",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "owner",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "pet",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "pettyperepository",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java:L1"
+        }
       ],
       "confidence_score": 0.93,
-      "evidence_refs": {
-        "delivery": [],
-        "structural": [
-          {
-            "graph_node_id": "petcontroller_petcontroller_initcreationform",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L100"
-          },
-          {
-            "graph_node_id": "petcontroller_petcontroller_processcreationform",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L107"
-          },
-          {
-            "graph_node_id": "petcontroller_petcontroller_populatepettypes",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L62"
-          },
-          {
-            "graph_node_id": "owner_owner_addpet",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L97"
-          },
-          {
-            "graph_node_id": "namedentity_namedentity_setname",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/model/NamedEntity.java:L41"
-          },
-          {
-            "graph_node_id": "pet_pet_setbirthdate",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L61"
-          },
-          {
-            "graph_node_id": "pet_pet_settype",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L73"
-          },
-          {
-            "graph_node_id": "pettyperepository_pettyperepository_findpettypes",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java:L36"
-          }
-        ]
-      },
+      "evidence_refs": [
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "petcontroller_petcontroller_initcreationform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L100"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "petcontroller_petcontroller_processcreationform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L107"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "petcontroller_petcontroller_populatepettypes",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L62"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "owner_owner_addpet",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L97"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "namedentity_namedentity_setname",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/model/NamedEntity.java:L41"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "pet_pet_setbirthdate",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L61"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "pet_pet_settype",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L73"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "pettyperepository_pettyperepository_findpettypes",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java:L36"
+        }
+      ],
       "judgment": {
         "active_review_seconds": null,
         "evidence_validity": null,
@@ -187,66 +388,198 @@
       "candidate_basis": "The graph connects list display to pagination and exposes resource-list, repository-list, collection, and specialty-access nodes; delivery history co-changed the directory components for pagination and later refined specialty ordering and controller representation handling.",
       "candidate_capability": "Practitioner directory and specialty presentation",
       "complete_realization_proposed": true,
-      "component_refs": [],
-      "confidence_score": 0.74,
-      "evidence_refs": {
-        "delivery": {
-          "changed_path_refs": [
-            {
-              "commit_sha": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
-              "path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java"
-            },
-            {
-              "commit_sha": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
-              "path": "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java"
-            },
-            {
-              "commit_sha": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
-              "path": "src/main/java/org/springframework/samples/petclinic/vet/Vets.java"
-            },
-            {
-              "commit_sha": "73d73609b5dafb11e070f19150f66a4fc679d314",
-              "path": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java"
-            },
-            {
-              "commit_sha": "1312314e4ef7493f11596313d40c7ecb8429aed3",
-              "path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java"
-            }
-          ],
-          "commit_shas": [
-            "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
-            "73d73609b5dafb11e070f19150f66a4fc679d314",
-            "1312314e4ef7493f11596313d40c7ecb8429aed3"
-          ],
-          "pull_request_numbers": [
-            1775,
-            2491
-          ]
+      "component_refs": [
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "vet_vet_getspecialties",
+          "source_location": "L59"
         },
-        "structural": {
-          "graph_edges": [
-            {
-              "relation": "calls",
-              "source": "vetcontroller_vetcontroller_showvetlist",
-              "target": "vetcontroller_vetcontroller_findpaginated"
-            },
-            {
-              "relation": "calls",
-              "source": "vetcontroller_vetcontroller_showvetlist",
-              "target": "vetcontroller_vetcontroller_addpaginationmodel"
-            }
-          ],
-          "graph_node_ids": [
-            "vet_vet_getspecialties",
-            "vetcontroller_vetcontroller_showvetlist",
-            "vetcontroller_vetcontroller_addpaginationmodel",
-            "vetcontroller_vetcontroller_findpaginated",
-            "vetcontroller_vetcontroller_showresourcesvetlist",
-            "vetrepository_vetrepository_findall",
-            "vets_vets_getvetlist"
-          ]
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "vetcontroller_vetcontroller_showvetlist",
+          "source_location": "L44"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "vetcontroller_vetcontroller_addpaginationmodel",
+          "source_location": "L50"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "vetcontroller_vetcontroller_findpaginated",
+          "source_location": "L59"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "vetcontroller_vetcontroller_showresourcesvetlist",
+          "source_location": "L65"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "vetrepository_vetrepository_findall",
+          "source_location": "L44"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "vets_vets_getvetlist",
+          "source_location": "L35"
         }
-      },
+      ],
+      "confidence_score": 0.74,
+      "evidence_refs": [
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vet_vet_getspecialties",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L59"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vetcontroller_vetcontroller_showvetlist",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L44"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vetcontroller_vetcontroller_addpaginationmodel",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L50"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vetcontroller_vetcontroller_findpaginated",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L59"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vetcontroller_vetcontroller_showresourcesvetlist",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L65"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vetrepository_vetrepository_findall",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L44"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vets_vets_getvetlist",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L35"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vetcontroller_vetcontroller_showvetlist",
+          "related_reference": "vetcontroller_vetcontroller_findpaginated",
+          "relation": "calls",
+          "source_location": "L44"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vetcontroller_vetcontroller_showvetlist",
+          "related_reference": "vetcontroller_vetcontroller_addpaginationmodel",
+          "relation": "calls",
+          "source_location": "L44"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "73d73609b5dafb11e070f19150f66a4fc679d314",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "1312314e4ef7493f11596313d40c7ecb8429aed3",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "1775",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "2491",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vets.java"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "73d73609b5dafb11e070f19150f66a4fc679d314",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "1312314e4ef7493f11596313d40c7ecb8429aed3",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java"
+        }
+      ],
       "judgment": {
         "active_review_seconds": null,
         "evidence_validity": null,
@@ -271,31 +604,52 @@
       "candidate_capability": "Find Owners",
       "complete_realization_proposed": true,
       "component_refs": [
-        "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java:L1"
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "ownercontroller",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "ownerrepository",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java:L1"
+        }
       ],
       "confidence_score": 0.95,
-      "evidence_refs": {
-        "delivery": [],
-        "structural": [
-          {
-            "graph_node_id": "ownercontroller_ownercontroller_initfindform",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L89"
-          },
-          {
-            "graph_node_id": "ownercontroller_ownercontroller_processfindform",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L94"
-          },
-          {
-            "graph_node_id": "ownercontroller_ownercontroller_findpaginatedforownerslastname",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L133"
-          },
-          {
-            "graph_node_id": "ownerrepository_ownerrepository_findbylastnamestartingwith",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java:L45"
-          }
-        ]
-      },
+      "evidence_refs": [
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "ownercontroller_ownercontroller_initfindform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L89"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "ownercontroller_ownercontroller_processfindform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L94"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "ownercontroller_ownercontroller_findpaginatedforownerslastname",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L133"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "ownerrepository_ownerrepository_findbylastnamestartingwith",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java:L45"
+        }
+      ],
       "judgment": {
         "active_review_seconds": null,
         "evidence_validity": null,
@@ -318,40 +672,73 @@
       "candidate_capability": "Record Pet Visit",
       "complete_realization_proposed": true,
       "component_refs": [
-        "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "visitcontroller",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "visit",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "owner",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+        }
       ],
       "confidence_score": 0.96,
-      "evidence_refs": {
-        "delivery": [],
-        "structural": [
-          {
-            "graph_node_id": "visitcontroller_visitcontroller_loadpetwithvisit",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L63"
-          },
-          {
-            "graph_node_id": "visitcontroller_visitcontroller_initnewvisitform",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L90"
-          },
-          {
-            "graph_node_id": "visitcontroller_visitcontroller_processnewvisitform",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L97"
-          },
-          {
-            "graph_node_id": "visit_visit_setdate",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L56"
-          },
-          {
-            "graph_node_id": "visit_visit_setdescription",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L64"
-          },
-          {
-            "graph_node_id": "owner_owner_addvisit",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L173"
-          }
-        ]
-      },
+      "evidence_refs": [
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "visitcontroller_visitcontroller_loadpetwithvisit",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L63"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "visitcontroller_visitcontroller_initnewvisitform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L90"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "visitcontroller_visitcontroller_processnewvisitform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:L97"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "visit_visit_setdate",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L56"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "visit_visit_setdescription",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L64"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "owner_owner_addvisit",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L173"
+        }
+      ],
       "judgment": {
         "active_review_seconds": null,
         "evidence_validity": null,
@@ -374,36 +761,65 @@
       "candidate_capability": "Browse Veterinarians",
       "complete_realization_proposed": true,
       "component_refs": [
-        "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/vet/Vets.java:L1"
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "vetcontroller",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "vetrepository",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "vets",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vets.java:L1"
+        }
       ],
       "confidence_score": 0.95,
-      "evidence_refs": {
-        "delivery": [],
-        "structural": [
-          {
-            "graph_node_id": "vetcontroller_vetcontroller_showvetlist",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L44"
-          },
-          {
-            "graph_node_id": "vetcontroller_vetcontroller_addpaginationmodel",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L50"
-          },
-          {
-            "graph_node_id": "vetcontroller_vetcontroller_findpaginated",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L59"
-          },
-          {
-            "graph_node_id": "vetrepository_vetrepository_findall",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java:L44"
-          },
-          {
-            "graph_node_id": "vets_vets_getvetlist",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vets.java:L35"
-          }
-        ]
-      },
+      "evidence_refs": [
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vetcontroller_vetcontroller_showvetlist",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L44"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vetcontroller_vetcontroller_addpaginationmodel",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L50"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vetcontroller_vetcontroller_findpaginated",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L59"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vetrepository_vetrepository_findall",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java:L44"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vets_vets_getvetlist",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vets.java:L35"
+        }
+      ],
       "judgment": {
         "active_review_seconds": null,
         "evidence_validity": null,
@@ -426,37 +842,70 @@
       "candidate_capability": "Review Pet Visit History",
       "complete_realization_proposed": true,
       "component_refs": [
-        "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L1"
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "ownercontroller",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "owner",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "pet",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "visit",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L1"
+        }
       ],
       "confidence_score": 0.84,
-      "evidence_refs": {
-        "delivery": [],
-        "structural": [
-          {
-            "graph_node_id": "ownercontroller_ownercontroller_showowner",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L169"
-          },
-          {
-            "graph_node_id": "owner_owner_getpets",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L93"
-          },
-          {
-            "graph_node_id": "pet_pet_getvisits",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L77"
-          },
-          {
-            "graph_node_id": "visit_visit_getdate",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L52"
-          },
-          {
-            "graph_node_id": "visit_visit_getdescription",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L60"
-          }
-        ]
-      },
+      "evidence_refs": [
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "ownercontroller_ownercontroller_showowner",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L169"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "owner_owner_getpets",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L93"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "pet_pet_getvisits",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L77"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "visit_visit_getdate",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L52"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "visit_visit_getdescription",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java:L60"
+        }
+      ],
       "judgment": {
         "active_review_seconds": null,
         "evidence_validity": null,
@@ -478,37 +927,95 @@
       "candidate_basis": "The bound graph contains visit date accessors and controller nodes for minimum-date calculation and new-visit processing; one focused pull request changed both Java components together to validate future dates.",
       "candidate_capability": "Visit date intake safeguards",
       "complete_realization_proposed": true,
-      "component_refs": [],
-      "confidence_score": 0.88,
-      "evidence_refs": {
-        "delivery": {
-          "changed_path_refs": [
-            {
-              "commit_sha": "753d35c2f84432d88c0f3b61c9302a16069b78dd",
-              "path": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java"
-            },
-            {
-              "commit_sha": "753d35c2f84432d88c0f3b61c9302a16069b78dd",
-              "path": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java"
-            }
-          ],
-          "commit_shas": [
-            "753d35c2f84432d88c0f3b61c9302a16069b78dd"
-          ],
-          "pull_request_numbers": [
-            2490
-          ]
+      "component_refs": [
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "visit_visit_getdate",
+          "source_location": "L52"
         },
-        "structural": {
-          "graph_edges": [],
-          "graph_node_ids": [
-            "visit_visit_getdate",
-            "visit_visit_setdate",
-            "visitcontroller_visitcontroller_minvisitdate",
-            "visitcontroller_visitcontroller_processnewvisitform"
-          ]
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "visit_visit_setdate",
+          "source_location": "L56"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "visitcontroller_visitcontroller_minvisitdate",
+          "source_location": "L83"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "visitcontroller_visitcontroller_processnewvisitform",
+          "source_location": "L97"
         }
-      },
+      ],
+      "confidence_score": 0.88,
+      "evidence_refs": [
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "visit_visit_getdate",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L52"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "visit_visit_setdate",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L56"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "visitcontroller_visitcontroller_minvisitdate",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L83"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "visitcontroller_visitcontroller_processnewvisitform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L97"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "753d35c2f84432d88c0f3b61c9302a16069b78dd",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "2490",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "753d35c2f84432d88c0f3b61c9302a16069b78dd",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "753d35c2f84432d88c0f3b61c9302a16069b78dd",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java"
+        }
+      ],
       "judgment": {
         "active_review_seconds": null,
         "evidence_validity": null,
@@ -532,17 +1039,24 @@
       "candidate_basis": "WelcomeController.welcome is evidence for only the landing-page portion. Because the frozen capability also requires primary navigation and the Java-only graph contains no view or navigation nodes, the full capability cannot be mapped without exceeding the evidence boundary.",
       "candidate_capability": "Access Clinic Home",
       "complete_realization_proposed": false,
-      "component_refs": [],
+      "component_refs": [
+        {
+          "evidence_state": "INCOMPLETE_EVIDENCE",
+          "reference": "welcomecontroller_welcomecontroller_welcome",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java:L25"
+        }
+      ],
       "confidence_score": 0.96,
-      "evidence_refs": {
-        "delivery": [],
-        "structural": [
-          {
-            "graph_node_id": "welcomecontroller_welcomecontroller_welcome",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java:L25"
-          }
-        ]
-      },
+      "evidence_refs": [
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "welcomecontroller_welcomecontroller_welcome",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java:L25"
+        }
+      ],
       "judgment": {
         "active_review_seconds": null,
         "evidence_validity": null,
@@ -565,47 +1079,106 @@
       "candidate_basis": "The graph exposes a find-form path into paginated owner lookup and a repository prefix-search operation; delivery episodes added owner-list pagination and later corrected whitespace handling on the same controller path.",
       "candidate_capability": "Client record search and result browsing",
       "complete_realization_proposed": true,
-      "component_refs": [],
-      "confidence_score": 0.86,
-      "evidence_refs": {
-        "delivery": {
-          "changed_path_refs": [
-            {
-              "commit_sha": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
-              "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java"
-            },
-            {
-              "commit_sha": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
-              "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java"
-            },
-            {
-              "commit_sha": "bb37aad8c332264723817d855e8b3b96b7c392bc",
-              "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java"
-            }
-          ],
-          "commit_shas": [
-            "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
-            "bb37aad8c332264723817d855e8b3b96b7c392bc"
-          ],
-          "pull_request_numbers": [
-            2589
-          ]
+      "component_refs": [
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "ownercontroller_ownercontroller_processfindform",
+          "source_location": "L94"
         },
-        "structural": {
-          "graph_edges": [
-            {
-              "relation": "calls",
-              "source": "ownercontroller_ownercontroller_processfindform",
-              "target": "ownercontroller_ownercontroller_findpaginatedforownerslastname"
-            }
-          ],
-          "graph_node_ids": [
-            "ownercontroller_ownercontroller_processfindform",
-            "ownercontroller_ownercontroller_findpaginatedforownerslastname",
-            "ownerrepository_ownerrepository_findbylastnamestartingwith"
-          ]
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "ownercontroller_ownercontroller_findpaginatedforownerslastname",
+          "source_location": "L133"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "ownerrepository_ownerrepository_findbylastnamestartingwith",
+          "source_location": "L45"
         }
-      },
+      ],
+      "confidence_score": 0.86,
+      "evidence_refs": [
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "ownercontroller_ownercontroller_processfindform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L94"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "ownercontroller_ownercontroller_findpaginatedforownerslastname",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L133"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "ownerrepository_ownerrepository_findbylastnamestartingwith",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L45"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "ownercontroller_ownercontroller_processfindform",
+          "related_reference": "ownercontroller_ownercontroller_findpaginatedforownerslastname",
+          "relation": "calls",
+          "source_location": "L94"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "bb37aad8c332264723817d855e8b3b96b7c392bc",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "2589",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "bb37aad8c332264723817d855e8b3b96b7c392bc",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java"
+        }
+      ],
       "judgment": {
         "active_review_seconds": null,
         "evidence_validity": null,
@@ -629,46 +1202,98 @@
       "candidate_basis": "The graph exposes locale resolution and locale-change interception registered in web configuration; one linked delivery episode changed that same configuration alongside multiple translation bundles and presentation templates.",
       "candidate_capability": "Locale-selectable presentation",
       "complete_realization_proposed": true,
-      "component_refs": [],
-      "confidence_score": 0.79,
-      "evidence_refs": {
-        "delivery": {
-          "changed_path_refs": [
-            {
-              "commit_sha": "0c88f916db87a2a54c3cfa235d635248d400808b",
-              "path": "src/main/java/org/springframework/samples/petclinic/system/WebConfiguration.java"
-            },
-            {
-              "commit_sha": "0c88f916db87a2a54c3cfa235d635248d400808b",
-              "path": "src/main/resources/messages/messages_es.properties"
-            },
-            {
-              "commit_sha": "0c88f916db87a2a54c3cfa235d635248d400808b",
-              "path": "src/main/resources/templates/fragments/layout.html"
-            }
-          ],
-          "commit_shas": [
-            "0c88f916db87a2a54c3cfa235d635248d400808b"
-          ],
-          "pull_request_numbers": [
-            1856
-          ]
+      "component_refs": [
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "webconfiguration_webconfiguration_localeresolver",
+          "source_location": "L32"
         },
-        "structural": {
-          "graph_edges": [
-            {
-              "relation": "calls",
-              "source": "webconfiguration_webconfiguration_localechangeinterceptor",
-              "target": "webconfiguration_webconfiguration_addinterceptors"
-            }
-          ],
-          "graph_node_ids": [
-            "webconfiguration_webconfiguration_localeresolver",
-            "webconfiguration_webconfiguration_localechangeinterceptor",
-            "webconfiguration_webconfiguration_addinterceptors"
-          ]
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "webconfiguration_webconfiguration_localechangeinterceptor",
+          "source_location": "L44"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "webconfiguration_webconfiguration_addinterceptors",
+          "source_location": "L55"
         }
-      },
+      ],
+      "confidence_score": 0.79,
+      "evidence_refs": [
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "webconfiguration_webconfiguration_localeresolver",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L32"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "webconfiguration_webconfiguration_localechangeinterceptor",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L44"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "webconfiguration_webconfiguration_addinterceptors",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "L55"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "webconfiguration_webconfiguration_localechangeinterceptor",
+          "related_reference": "webconfiguration_webconfiguration_addinterceptors",
+          "relation": "calls",
+          "source_location": "L44"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "0c88f916db87a2a54c3cfa235d635248d400808b",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "1856",
+          "related_reference": "",
+          "relation": "",
+          "source_location": ""
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "0c88f916db87a2a54c3cfa235d635248d400808b",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/system/WebConfiguration.java"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "0c88f916db87a2a54c3cfa235d635248d400808b",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/resources/messages/messages_es.properties"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "DELIVERY",
+          "reference": "0c88f916db87a2a54c3cfa235d635248d400808b",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/resources/templates/fragments/layout.html"
+        }
+      ],
       "judgment": {
         "active_review_seconds": null,
         "evidence_validity": null,
@@ -693,39 +1318,68 @@
       "candidate_capability": "Register Owner",
       "complete_realization_proposed": true,
       "component_refs": [
-        "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "ownercontroller",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "owner",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+        }
       ],
       "confidence_score": 0.93,
-      "evidence_refs": {
-        "delivery": [],
-        "structural": [
-          {
-            "graph_node_id": "ownercontroller_ownercontroller_initcreationform",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L72"
-          },
-          {
-            "graph_node_id": "ownercontroller_ownercontroller_processcreationform",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L77"
-          },
-          {
-            "graph_node_id": "person_person_setfirstname",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/model/Person.java:L45"
-          },
-          {
-            "graph_node_id": "person_person_setlastname",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/model/Person.java:L53"
-          },
-          {
-            "graph_node_id": "owner_owner_setaddress",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L73"
-          },
-          {
-            "graph_node_id": "owner_owner_settelephone",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L89"
-          }
-        ]
-      },
+      "evidence_refs": [
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "ownercontroller_ownercontroller_initcreationform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L72"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "ownercontroller_ownercontroller_processcreationform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L77"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "person_person_setfirstname",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/model/Person.java:L45"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "person_person_setlastname",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/model/Person.java:L53"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "owner_owner_setaddress",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L73"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "owner_owner_settelephone",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L89"
+        }
+      ],
       "judgment": {
         "active_review_seconds": null,
         "evidence_validity": null,
@@ -748,35 +1402,60 @@
       "candidate_capability": "Maintain Pet Details",
       "complete_realization_proposed": true,
       "component_refs": [
-        "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L1"
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "petcontroller",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "pet",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L1"
+        }
       ],
       "confidence_score": 0.95,
-      "evidence_refs": {
-        "delivery": [],
-        "structural": [
-          {
-            "graph_node_id": "petcontroller_petcontroller_initupdateform",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L139"
-          },
-          {
-            "graph_node_id": "petcontroller_petcontroller_processupdateform",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L144"
-          },
-          {
-            "graph_node_id": "petcontroller_petcontroller_updatepetdetails",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L186"
-          },
-          {
-            "graph_node_id": "pet_pet_setbirthdate",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L61"
-          },
-          {
-            "graph_node_id": "pet_pet_settype",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L73"
-          }
-        ]
-      },
+      "evidence_refs": [
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "petcontroller_petcontroller_initupdateform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L139"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "petcontroller_petcontroller_processupdateform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L144"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "petcontroller_petcontroller_updatepetdetails",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:L186"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "pet_pet_setbirthdate",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L61"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "pet_pet_settype",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java:L73"
+        }
+      ],
       "judgment": {
         "active_review_seconds": null,
         "evidence_validity": null,
@@ -799,35 +1478,60 @@
       "candidate_capability": "Maintain Owner Details",
       "complete_realization_proposed": true,
       "component_refs": [
-        "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "ownercontroller",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "owner",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L1"
+        }
       ],
       "confidence_score": 0.94,
-      "evidence_refs": {
-        "delivery": [],
-        "structural": [
-          {
-            "graph_node_id": "ownercontroller_ownercontroller_initupdateownerform",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L139"
-          },
-          {
-            "graph_node_id": "ownercontroller_ownercontroller_processupdateownerform",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L144"
-          },
-          {
-            "graph_node_id": "ownercontroller_ownercontroller_showowner",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L169"
-          },
-          {
-            "graph_node_id": "owner_owner_getpets",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L93"
-          },
-          {
-            "graph_node_id": "owner_owner_setcity",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L81"
-          }
-        ]
-      },
+      "evidence_refs": [
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "ownercontroller_ownercontroller_initupdateownerform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L139"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "ownercontroller_ownercontroller_processupdateownerform",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L144"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "ownercontroller_ownercontroller_showowner",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:L169"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "owner_owner_getpets",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L93"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "owner_owner_setcity",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java:L81"
+        }
+      ],
       "judgment": {
         "active_review_seconds": null,
         "evidence_validity": null,
@@ -850,32 +1554,57 @@
       "candidate_capability": "Review Veterinarian Specialties",
       "complete_realization_proposed": true,
       "component_refs": [
-        "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/vet/Vet.java:L1",
-        "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java:L1"
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "vetcontroller",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "vet",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java:L1"
+        },
+        {
+          "evidence_state": "CANDIDATE_COMPONENT",
+          "reference": "specialty",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java:L1"
+        }
       ],
       "confidence_score": 0.87,
-      "evidence_refs": {
-        "delivery": [],
-        "structural": [
-          {
-            "graph_node_id": "vetcontroller_vetcontroller_showvetlist",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L44"
-          },
-          {
-            "graph_node_id": "vet_vet_getspecialties",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java:L59"
-          },
-          {
-            "graph_node_id": "vet_vet_getnrofspecialties",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java:L66"
-          },
-          {
-            "graph_node_id": "specialty",
-            "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java:L1"
-          }
-        ]
-      },
+      "evidence_refs": [
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vetcontroller_vetcontroller_showvetlist",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:L44"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vet_vet_getspecialties",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java:L59"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "vet_vet_getnrofspecialties",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java:L66"
+        },
+        {
+          "availability": "EVIDENCED",
+          "evidence_category": "STRUCTURAL",
+          "reference": "specialty",
+          "related_reference": "",
+          "relation": "",
+          "source_location": "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java:L1"
+        }
+      ],
       "judgment": {
         "active_review_seconds": null,
         "evidence_validity": null,

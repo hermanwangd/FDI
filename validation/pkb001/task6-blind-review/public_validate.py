@@ -4,7 +4,7 @@
 import hashlib
 import json
 import sys
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 
 
@@ -29,6 +29,28 @@ def digest(path: Path) -> str:
 
 def load(path: Path):
     return json.loads(path.read_text(encoding='utf-8'))
+
+
+def schema_signature(value):
+    if isinstance(value, dict):
+        return ('object', tuple(sorted(
+            (key, schema_signature(item)) for key, item in value.items())))
+    if isinstance(value, list):
+        return ('array', tuple(sorted({schema_signature(item) for item in value})))
+    if value is None:
+        return 'null'
+    return type(value).__name__
+
+
+def uniquely_identifying_arm_signatures(items, key_items):
+    arm_by_id = {item['blind_id']: item['source_arm'] for item in key_items}
+    arms_by_signature = defaultdict(set)
+    for item in items:
+        arms_by_signature[schema_signature(item)].add(arm_by_id[item['blind_id']])
+    return {
+        signature: arms for signature, arms in arms_by_signature.items()
+        if len(arms) == 1
+    }
 
 
 def validate(root: Path) -> dict:
@@ -59,6 +81,7 @@ def validate(root: Path) -> dict:
     check('sealed_key_digest_binding', key['sealed_packet_sha256'] == digest(root / PACKET) and manifest['packet_sha256'] == digest(root / PACKET) and manifest['sealed_key_sha256'] == digest(root / KEY), 'Packet and separately sealed key digests bind exactly')
     rendered_packet = (root / PACKET).read_text(encoding='utf-8')
     check('arm_label_and_identity_blinding', all(value not in rendered_packet for value in ('FORWARD', 'REVERSE', 'PET-CAP-', 'PKS2-HYP-')), 'Packet contains neither arm labels nor source identifiers')
+    check('schema_signature_arm_blinding', not uniquely_identifying_arm_signatures(packet['items'], key['items']) and all(item['component_refs'] and item['evidence_refs'] for item in packet['items']), 'No packet-only schema, type, or field-population signature identifies an arm')
     check('frozen_judgment_vocabulary', packet['allowed_review_actions'] == ACTIONS and packet['judgment_dimensions'] == DIMENSIONS and all(item['judgment'] == packet['empty_judgment'] for item in packet['items']), 'All 15 blank judgments use the frozen vocabulary and required dimensions')
 
     workspace_ok = True

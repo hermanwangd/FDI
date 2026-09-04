@@ -46,3 +46,14 @@ Primary packet implementation: `e1a1e1d5d0a358babbcb7797e57c2b75ee7d4318` (`feat
 - The sealed key is a repository artifact with a strict visibility contract, not cryptographic encryption or access control. Deliver it separately from evaluator workspaces when running an actual review.
 - The two packet copies are intentionally byte-identical to prove input parity; they increase repository size but are required to keep the workspaces independent.
 - `NON_HUMAN` contexts may assist only with evaluator-only measurement. Human Product Team review remains pending.
+
+## Fix round 1 — packet-schema arm inference
+
+The original packet leaked arm identity through packet-only shape differences: forward items used string component references and object fields with a structural list plus empty delivery list, while reverse items used empty components and nested structural/delivery objects.
+
+- RED: the new public seam test `test_task6_packet_schema_signatures_cannot_identify_source_arm` failed against that packet because a recursive type/field-population signature uniquely identified `FORWARD`.
+- GREEN: every packet item now has non-empty `component_refs` and `evidence_refs` arrays of neutral records with the same fixed fields and scalar types. Reverse component records are resolved from the bound graph; the single forward unresolved item carries an `INCOMPLETE_EVIDENCE` component record instead of an empty array.
+- The regenerated public validator adds `schema_signature_arm_blinding`; it passed together with all other checks (13/13).
+
+Regenerated packet SHA-256: `13451c06a6b635f6d6ea58e7cb3faa8fdfd8f9cc6c011d8fdc3dbebac395c89a`.
+Regenerated sealed-key SHA-256: `3f22e51bcbfbfeeef9438334daa361aadb9e1eeffca93f31bb7539887425047d`.

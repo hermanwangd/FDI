@@ -106,22 +106,57 @@ def empty_judgment() -> dict:
             'reviewer_notes': None}
 
 
+def component_record(reference: str, source_location: str, evidence_state: str) -> dict:
+    return {'reference': reference, 'source_location': source_location,
+            'evidence_state': evidence_state}
+
+
+def evidence_record(evidence_category: str, reference: str, source_location: str = '',
+                    related_reference: str = '', relation: str = '',
+                    availability: str = 'EVIDENCED') -> dict:
+    """Use one neutral record shape for all packet-facing evidence."""
+    return {'evidence_category': evidence_category, 'reference': reference,
+            'source_location': source_location, 'related_reference': related_reference,
+            'relation': relation, 'availability': availability}
+
+
 def _forward_candidate(result: dict) -> dict:
+    components = [component_record(
+        item['graph_node_id'], item['source_location'], 'CANDIDATE_COMPONENT')
+        for item in result.get('proposed_components', [])]
+    if not components:
+        partial = result['evidence_refs'][0]
+        components = [component_record(
+            partial['graph_node_id'], partial['source_location'], 'INCOMPLETE_EVIDENCE')]
     return {'source_identifier': result['capability_id'], 'source_arm': 'FORWARD',
             'candidate_capability': result['name'],
             'complete_realization_proposed': result['outcome'] == 'MAPPING_PROPOSAL',
-            'component_refs': [item['source_location'] for item in result.get('proposed_components', [])],
-            'evidence_refs': {'structural': [{'graph_node_id': item['graph_node_id'], 'source_location': item['source_location']} for item in result.get('evidence_refs', [])], 'delivery': []},
+            'component_refs': components,
+            'evidence_refs': [evidence_record(
+                'STRUCTURAL', item['graph_node_id'], item['source_location'])
+                for item in result.get('evidence_refs', [])],
             'confidence_score': result['confidence'], 'limitations': result['limitations'],
             'candidate_basis': result.get('reasoning', result.get('unresolved_reason', ''))}
 
 
-def _reverse_candidate(hypothesis: dict) -> dict:
+def _reverse_candidate(hypothesis: dict, graph_nodes: dict) -> dict:
     refs = hypothesis['evidence_refs']
+    components = [component_record(
+        node_id, graph_nodes[node_id]['source_location'], 'CANDIDATE_COMPONENT')
+        for node_id in refs['graph_node_ids']]
+    evidence = [evidence_record(
+        'STRUCTURAL', node_id, graph_nodes[node_id]['source_location'])
+        for node_id in refs['graph_node_ids']]
+    evidence.extend(evidence_record(
+        'STRUCTURAL', edge['source'], graph_nodes[edge['source']]['source_location'],
+        edge['target'], edge['relation']) for edge in refs['graph_edges'])
+    evidence.extend(evidence_record('DELIVERY', commit_sha) for commit_sha in refs['commit_shas'])
+    evidence.extend(evidence_record('DELIVERY', str(number)) for number in refs['pull_request_numbers'])
+    evidence.extend(evidence_record(
+        'DELIVERY', change['commit_sha'], change['path']) for change in refs['changed_path_refs'])
     return {'source_identifier': hypothesis['proposal_id'], 'source_arm': 'REVERSE',
             'candidate_capability': hypothesis['label'], 'complete_realization_proposed': True,
-            'component_refs': [],
-            'evidence_refs': {'structural': {'graph_node_ids': refs['graph_node_ids'], 'graph_edges': refs['graph_edges']}, 'delivery': {'commit_shas': refs['commit_shas'], 'pull_request_numbers': refs['pull_request_numbers'], 'changed_path_refs': refs['changed_path_refs']}},
+            'component_refs': components, 'evidence_refs': evidence,
             'confidence_score': hypothesis['confidence']['score'], 'limitations': hypothesis['limitations'],
             'candidate_basis': hypothesis['structural_delivery_convergence']}
 
@@ -135,8 +170,10 @@ def build_task6_packet(root: Path) -> tuple[dict, dict, dict]:
     forward_binding, reverse_binding = forward['bindings'], reverse['source_binding']
     require(forward_binding['source_commit_sha'] == reverse_binding['source_commit_sha'], 'runs use different source commits')
     require(forward_binding['graph_sha256'] == reverse_binding['graph_sha256'], 'runs use different graph digests')
+    graph = load_json(root / 'validation/pkb001/artifacts/petclinic-graph-818c413.json')
+    graph_nodes = {node['id']: node for node in graph['nodes']}
     candidates = [_forward_candidate(item) for item in forward['capability_results']]
-    candidates.extend(_reverse_candidate(item) for item in reverse['hypotheses'])
+    candidates.extend(_reverse_candidate(item, graph_nodes) for item in reverse['hypotheses'])
     ordered = sorted(candidates, key=lambda item: hashlib.sha256(('pkb001-task6-blind-order-v1\0' + item['source_identifier']).encode('utf-8')).hexdigest())
     packet_items, key_items = [], []
     for number, candidate in enumerate(ordered, 1):
