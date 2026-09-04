@@ -22,4 +22,4 @@ Everything under `archive/` is historical reference and must not be used to dete
 
 ## Current next action
 
-Freeze the human-owned Product Semantics input, then materialize PK-S1 and PK-S2 execution skills. Graphify runtime verification and the exact-revision calibration snapshot are complete; experiment execution remains blocked on the remaining inputs.
+Reconstruct cutoff-bounded Delivery History for PK-S2, then seal evaluator-only ground truth. Product Semantics, Graphify exact-revision verification, the calibration snapshot, and PK-S1 are ready; experiment execution remains blocked on PK-S2 evidence and evaluator isolation.

@@ -17,7 +17,7 @@ def test_four_active_truth_entries_exist_and_resolve():
         'phase': 'prototype',
         'framework_spec': 'FRAMEWORK-SPEC.md',
         'implementation_plan': 'IMPLEMENTATION-PLAN.md',
-        'next_action': 'Freeze Product Semantics input and materialize PK-S1/PK-S2 execution skills',
+        'next_action': 'Reconstruct frozen Delivery History for PK-S2 and seal evaluator-only ground truth',
         'archived_documents_are_authority': False,
     }
 
@@ -66,5 +66,7 @@ def test_phase0_records_graphify_and_calibration_without_overclaiming_readiness(
     assert report['status'] == 'BLOCKED'
     assert report['readiness_flags']['LIVE_GRAPHIFY_INTERFACE_VERIFIED'] is True
     assert report['readiness_flags']['CALIBRATION_DATASET_FROZEN'] is True
-    assert report['readiness_flags']['PRODUCT_SEMANTICS_FROZEN'] is False
+    assert report['readiness_flags']['PRODUCT_SEMANTICS_FROZEN'] is True
+    assert report['readiness_flags']['PK_S1_EXECUTION_READY'] is True
+    assert report['readiness_flags']['PK_S2_EXECUTION_READY'] is False
     assert report['readiness_flags']['GROUND_TRUTH_SEALED'] is False

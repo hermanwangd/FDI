@@ -3,9 +3,9 @@
   "status": "BLOCKED",
   "readiness_state": "NOT_READY",
   "readiness_flags": {
-    "PRODUCT_SEMANTICS_FROZEN": false,
+    "PRODUCT_SEMANTICS_FROZEN": true,
     "LIVE_GRAPHIFY_INTERFACE_VERIFIED": true,
-    "PK_S1_EXECUTION_READY": false,
+    "PK_S1_EXECUTION_READY": true,
     "PK_S2_EXECUTION_READY": false,
     "CALIBRATION_DATASET_FROZEN": true,
     "GROUND_TRUTH_SEALED": false
@@ -13,8 +13,8 @@
   "prerequisites": [
     {
       "id": "P0-01",
-      "status": "MISSING",
-      "reason": "Product Semantics evidence is absent"
+      "status": "SATISFIED",
+      "reason": "Product Semantics frozen by Product Team"
     },
     {
       "id": "P0-02",
@@ -23,8 +23,8 @@
     },
     {
       "id": "P0-03",
-      "status": "MISSING",
-      "reason": "Skill evidence is absent"
+      "status": "MISMATCH",
+      "reason": "PK-S1 or PK-S2 is unavailable"
     },
     {
       "id": "P0-04",

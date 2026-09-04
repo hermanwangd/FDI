@@ -73,6 +73,7 @@ def test_gate_is_ready_only_with_all_verified_evidence(tmp_path):
     (tmp_path/'pk-s1/SKILL.md').write_text('# PK-S1')
     (tmp_path/'pk-s2/SKILL.md').parent.mkdir(parents=True)
     (tmp_path/'pk-s2/SKILL.md').write_text('# PK-S2')
+    (tmp_path/'delivery-history.json').write_text('{"episodes": []}')
     authority = {'status': 'FROZEN', 'path': framework.name,
                  'sha256': hashlib.sha256(framework.read_bytes()).hexdigest(),
                  'owner': 'PRODUCT_TEAM'}
@@ -90,7 +91,12 @@ def test_gate_is_ready_only_with_all_verified_evidence(tmp_path):
                      'graph_sha256': 'b'*64, 'input_policy_sha256': 'c'*64},
         'skills': {'pk_s1_path': 'pk-s1/SKILL.md', 'pk_s2_path': 'pk-s2/SKILL.md',
                    'pk_s1_registration': 'REGISTERED_NON_GOVERNING',
-                   'pk_s2_registration': 'REGISTERED_NON_GOVERNING'},
+                   'pk_s2_registration': 'REGISTERED_NON_GOVERNING',
+                   'delivery_history_path': 'delivery-history.json',
+                   'delivery_history_sha256': hashlib.sha256(
+                       (tmp_path/'delivery-history.json').read_bytes()).hexdigest(),
+                   'delivery_history_status': 'FROZEN',
+                   'post_cutoff_knowledge_policy': 'EXCLUDE_AFTER_CUTOFF'},
         'calibration': {'status': 'FROZEN', 'resource_policy_status': 'FROZEN',
                         'post_cutoff_knowledge_policy': 'EXCLUDE_AFTER_CUTOFF'},
         'ground_truth': {'status': 'SEALED', 'gold_sha256': 'd'*64,
@@ -112,6 +118,20 @@ def test_gate_rejects_unregistered_skill_files(tmp_path):
     result = evaluate_readiness(tmp_path, evidence)
     assert result['prerequisites'][2]['status'] == 'MISMATCH'
     assert result['readiness_flags']['PK_S1_EXECUTION_READY'] is False
+    assert result['readiness_flags']['PK_S2_EXECUTION_READY'] is False
+
+
+def test_pk_s2_requires_frozen_delivery_history(tmp_path):
+    for name in ('pk-s1', 'pk-s2'):
+        path = tmp_path/name/'SKILL.md'
+        path.parent.mkdir()
+        path.write_text('# Registered')
+    evidence = {'skills': {
+        'pk_s1_path': 'pk-s1/SKILL.md', 'pk_s2_path': 'pk-s2/SKILL.md',
+        'pk_s1_registration': 'REGISTERED_NON_GOVERNING',
+        'pk_s2_registration': 'REGISTERED_NON_GOVERNING'}}
+    result = evaluate_readiness(tmp_path, evidence)
+    assert result['readiness_flags']['PK_S1_EXECUTION_READY'] is True
     assert result['readiness_flags']['PK_S2_EXECUTION_READY'] is False
 
 

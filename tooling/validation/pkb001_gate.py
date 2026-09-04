@@ -92,14 +92,25 @@ def _graphify(value: object) -> Dict[str, str]:
 def _skills(root: Path, value: object) -> Dict[str, str]:
     if not isinstance(value, dict):
         return _item('P0-03', 'MISSING', 'Skill evidence is absent')
-    valid = (
-        all(_safe_file(root, value.get(key)) is not None
-            for key in ('pk_s1_path', 'pk_s2_path'))
-        and value.get('pk_s1_registration') == 'REGISTERED_NON_GOVERNING'
-        and value.get('pk_s2_registration') == 'REGISTERED_NON_GOVERNING'
-    )
+    valid = _pk_s1_ready(root, value) and _pk_s2_ready(root, value)
     return _item('P0-03', 'SATISFIED' if valid else 'MISMATCH',
                  'PK-S1 and PK-S2 materialized' if valid else 'PK-S1 or PK-S2 is unavailable')
+
+
+def _pk_s1_ready(root: Path, value: dict) -> bool:
+    return (_safe_file(root, value.get('pk_s1_path')) is not None
+            and value.get('pk_s1_registration') == 'REGISTERED_NON_GOVERNING')
+
+
+def _pk_s2_ready(root: Path, value: dict) -> bool:
+    history = _safe_file(root, value.get('delivery_history_path'))
+    digest = value.get('delivery_history_sha256')
+    return (_safe_file(root, value.get('pk_s2_path')) is not None
+            and value.get('pk_s2_registration') == 'REGISTERED_NON_GOVERNING'
+            and history is not None and isinstance(digest, str) and SHA256.fullmatch(digest)
+            and hashlib.sha256(history.read_bytes()).hexdigest() == digest
+            and value.get('delivery_history_status') == 'FROZEN'
+            and value.get('post_cutoff_knowledge_policy') == 'EXCLUDE_AFTER_CUTOFF')
 
 
 def _status(identifier: str, value: object, expected: str, label: str) -> Dict[str, str]:
@@ -157,11 +168,9 @@ def evaluate_readiness(root: Path, evidence: dict) -> dict:
         'PRODUCT_SEMANTICS_FROZEN': prerequisites[0]['status'] == 'SATISFIED',
         'LIVE_GRAPHIFY_INTERFACE_VERIFIED': prerequisites[1]['status'] == 'SATISFIED',
         'PK_S1_EXECUTION_READY': (
-            _safe_file(root, skills.get('pk_s1_path')) is not None
-            and skills.get('pk_s1_registration') == 'REGISTERED_NON_GOVERNING'),
+            _pk_s1_ready(root, skills)),
         'PK_S2_EXECUTION_READY': (
-            _safe_file(root, skills.get('pk_s2_path')) is not None
-            and skills.get('pk_s2_registration') == 'REGISTERED_NON_GOVERNING'),
+            _pk_s2_ready(root, skills)),
         'CALIBRATION_DATASET_FROZEN': prerequisites[3]['status'] == 'SATISFIED',
         'GROUND_TRUTH_SEALED': prerequisites[4]['status'] == 'SATISFIED',
     }
