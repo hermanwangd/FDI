@@ -64,3 +64,7 @@ This report is committed separately so it can record the immutable primary artif
 - Pull-request evidence is limited by the frozen dataset's acquisition boundary.
 - The committed witness is review evidence, not cryptographic proof of context isolation; its own digest and the post-attestation validation report are excluded to avoid recursive digest dependencies.
 - Human Product Team review is mandatory. No Product Semantics was modified and no final GO/REVISE/STOP decision was made.
+
+## Auditability minors resolved
+
+The later Task 7 audit closed both deferred minors without changing this run output or its provenance witness. `public_validate.py` explicitly checks the non-access booleans as attestations, and `public-validation-transcript.txt` records a fresh exit `0`, identical stdout/report SHA-256, byte-comparison exit `0`, and 24/24 passing checks.

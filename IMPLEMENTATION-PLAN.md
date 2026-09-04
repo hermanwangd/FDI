@@ -24,11 +24,11 @@ Hide Product Semantics from the reverse arm. Combine structural observations wit
 
 ## 6. Human/evaluator comparison
 
-Blind arm identity where practical. Review proposals using a frozen judgment vocabulary and record evidence validity, usefulness, unsupported claims, precision, and review time. Keep ground truth isolated from generation.
+Apply deterministic label/order blinding while keeping ground truth isolated from generation. This removes explicit labels and source identifiers but does not provide content-level arm anonymity: `ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT`. Review proposals using a frozen judgment vocabulary and record evidence validity, usefulness, unsupported claims, precision, and review time.
 
 ## 7. GO / REVISE / STOP decision
 
-- **GO:** exact snapshot binding and evidence validity pass, forward mappings are useful, and reverse proposals meet the frozen acceptance thresholds.
+- **GO:** exact snapshot binding and evidence validity pass, forward mappings are useful, reverse proposals meet the frozen acceptance thresholds, and completed Product Team human review approves the experiment decision. A `GO` decision does not itself publish semantics; semantic publication remains a separate explicit Product Team action.
 - **REVISE:** execution remains safe and evidence-valid but quality thresholds are missed.
 - **STOP:** snapshot identity, isolation, evidence integrity, or Product-truth boundaries are violated.
 

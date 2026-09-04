@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Public-seam validation for the PKB-001 Task 6 blind comparison packet."""
+"""Validate the PKB-001 Task 6 deterministic label/order-blinded packet."""
 
 import hashlib
 import json
@@ -94,8 +94,9 @@ def validate(root: Path) -> dict:
     check('exact_item_accounting', len(packet['items']) == 15 and ids == [f'BR-{number:03d}' for number in range(1, 16)] and len(set(ids)) == 15 and arm_counts == {'FORWARD': 10, 'REVERSE': 5} and sum(item['complete_realization_proposed'] for item in packet['items']) == 14, '9 forward mappings, 1 unresolved forward result, and 5 reverse hypotheses are all present')
     check('sealed_key_digest_binding', key['sealed_packet_sha256'] == digest(root / PACKET) and manifest['packet_sha256'] == digest(root / PACKET) and manifest['sealed_key_sha256'] == digest(root / KEY), 'Packet and separately sealed key digests bind exactly')
     rendered_packet = (root / PACKET).read_text(encoding='utf-8')
-    check('arm_label_and_identity_blinding', all(value not in rendered_packet for value in ('FORWARD', 'REVERSE', 'PET-CAP-', 'PKS2-HYP-')), 'Packet contains neither arm labels nor source identifiers')
-    check('schema_signature_arm_blinding', not uniquely_identifying_arm_signatures(packet['items'], key['items']) and all(item['component_refs'] and item['evidence_refs'] for item in packet['items']), 'No packet-only schema, type, or field-population signature identifies an arm')
+    blinding = manifest.get('blinding', {})
+    check('deterministic_label_and_order_blinding', all(value not in rendered_packet for value in ('FORWARD', 'REVERSE', 'PET-CAP-', 'PKS2-HYP-')) and blinding.get('scope') == 'DETERMINISTIC_LABEL_AND_ORDER_BLINDING', 'Packet removes explicit arm labels/source identifiers and uses deterministic obscured ordering')
+    check('uniform_packet_record_shape', not uniquely_identifying_arm_signatures(packet['items'], key['items']) and all(item['component_refs'] and item['evidence_refs'] for item in packet['items']), 'Record shapes are uniform; this check does not establish content-level arm anonymity')
     check('frozen_judgment_vocabulary', packet['allowed_review_actions'] == ACTIONS and packet['judgment_dimensions'] == DIMENSIONS and all(item['judgment'] == packet['empty_judgment'] for item in packet['items']), 'All 15 blank judgments use the frozen vocabulary and required dimensions')
 
     workspace_ok = True
@@ -113,6 +114,7 @@ def validate(root: Path) -> dict:
         workspace_ok &= template['reviewer_isolation']['sealed_key_accessible'] is False
     check('reviewer_isolation_contracts', workspace_ok, 'Both evaluator workspaces retain identical packet bytes, valid judgment state, and isolation contracts')
     instruction_text = (root / INSTRUCTIONS).read_text(encoding='utf-8')
+    check('content_arm_inference_limit_disclosed', blinding == {'scope': 'DETERMINISTIC_LABEL_AND_ORDER_BLINDING', 'explicit_arm_labels_absent': True, 'source_identifiers_absent': True, 'content_level_arm_anonymity_claimed': False, 'limitation': 'ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT'} and 'ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT' in instruction_text, 'Evidence categories and values can permit arm inference; no content-anonymity claim is made')
     check('authority_instructions', 'Expected realization scoring is evaluator-only' in instruction_text and 'Only the human Product Team can finalize Product meaning' in instruction_text and 'cannot complete Product Team human review' in instruction_text, 'Instructions separate measurement from human Product meaning authority')
     check('task6_creation_boundary', manifest['decision_boundary'] == {'judgments_fabricated': False, 'product_team_human_review_completed': False, 'final_go_revise_stop_decision_made': False}, 'Task 6 creation manifest records no fabricated review or final decision')
 

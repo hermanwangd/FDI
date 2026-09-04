@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:fdi:validation:pkb001:task7-stop:v1",
+  "title": "PKB-001 Task 7 fail-closed STOP report",
+  "x-fdi-authority": "VALIDATION_LOCAL_NON_GOVERNING",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "report_id",
+    "decision",
+    "decision_scope",
+    "failure_stage",
+    "stop_reasons",
+    "pre_unblinding_validation",
+    "integrity",
+    "unblinding_performed",
+    "metrics_computed",
+    "semantic_publication_allowed",
+    "human_product_team_review",
+    "documented_exit_code"
+  ],
+  "properties": {
+    "schema_version": {"const": "pkb001.task7.stop-report.v1"},
+    "report_id": {"type": "string", "minLength": 1},
+    "decision": {"const": "STOP"},
+    "decision_scope": {"const": "BOUNDED_PROTOTYPE_DECISION_NO_SEMANTIC_PUBLICATION"},
+    "failure_stage": {
+      "enum": ["PRE_UNBLINDING_VALIDATION", "BOUND_INPUT_VALIDATION"]
+    },
+    "stop_reasons": {"type": "array", "minItems": 1},
+    "pre_unblinding_validation": {"type": "object"},
+    "integrity": {"type": "object"},
+    "unblinding_performed": {"const": false},
+    "metrics_computed": {"const": false},
+    "semantic_publication_allowed": {"const": false},
+    "human_product_team_review": {"type": "object"},
+    "documented_exit_code": {"const": 2}
+  }
+}

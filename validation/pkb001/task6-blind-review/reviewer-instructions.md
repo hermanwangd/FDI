@@ -1,6 +1,6 @@
-# PKB-001 blind comparison instructions
+# PKB-001 deterministic label/order-blinded comparison instructions
 
-This packet is a blinded comparison input. Do not infer an item source arm from its ID or position, and do not access the sealed blind key.
+This packet removes explicit source-arm labels and deterministically obscures source ordering. It does not provide content-level arm anonymity: `ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT`. Do not use evidence categories or values to infer an arm, and do not access the sealed identity key.
 
 For each item, record one frozen review action (`ACCEPT`, `RENAME`, `MERGE`, `SPLIT`, `REJECT`, or `ADD_MISSING`) and an evidence outcome. Record evidence validity, usefulness, unsupported claims, precision, limitations, and active review time. Leave a clear note when a claim exceeds the supplied evidence.
 

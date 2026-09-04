@@ -1,4 +1,5 @@
 import hashlib
+import importlib.metadata
 import json
 import subprocess
 from pathlib import Path
@@ -9,6 +10,7 @@ from tooling.validation.pkb001_gate import evaluate_readiness
 from tooling.validation.pkb001_acquisition import tree_sha256, validate_acquisition
 from tooling.validation.pkb001_runner import execute_arm, validate_arm_inputs
 from tooling.validation.pkb001_evaluate import build_decision_report, evaluate, wilson_interval
+from tooling.validation import graphify_live_verifier
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -209,6 +211,10 @@ def test_repository_phase0_remains_blocked_without_external_evidence():
     assert 'P0-01' in result.stdout and 'P0-04' in result.stdout
 
 
+@pytest.mark.skipif(
+    not (ROOT/'.fdi-work/graphify-venv312/bin/python').is_file(),
+    reason='integration test requires ignored frozen Graphify runtime',
+)
 def test_live_graphify_verifier_records_exact_mcp_proof_and_preserves_phase0_readiness(tmp_path):
     evidence_path = tmp_path/'graphify-live-evidence.json'
     result = subprocess.run(
@@ -282,6 +288,29 @@ def test_live_graphify_verifier_writes_not_bound_evidence_for_missing_runtime_ro
             'graphify-venv312/bin/python'),
     }
     assert 'Traceback' not in result.stderr
+
+
+def test_live_graphify_verifier_persists_not_bound_for_missing_package(
+        tmp_path, monkeypatch):
+    evidence_path = tmp_path/'graphify-package-not-bound.json'
+
+    monkeypatch.setattr(graphify_live_verifier, '_ensure_runtime', lambda root: None)
+
+    async def missing_package(root):
+        raise importlib.metadata.PackageNotFoundError('graphifyy')
+
+    monkeypatch.setattr(
+        graphify_live_verifier, 'verify_live_interface', missing_package)
+
+    result = graphify_live_verifier.main([
+        '--root', str(tmp_path), '--output', str(evidence_path),
+    ])
+
+    assert result == 2
+    evidence = json.loads(evidence_path.read_text())
+    assert evidence['result'] == 'NOT_BOUND'
+    assert evidence['queryable'] is False
+    assert 'graphifyy' in evidence['server_error']
 
 
 def test_gate_rejects_output_outside_repository(tmp_path):
@@ -537,3 +566,9 @@ def test_evaluator_judgment_schema_has_frozen_review_actions():
     assert 'review_action' in schema['required']
     assert set(schema['properties']['review_action']['enum']) == {
         'ACCEPT', 'RENAME', 'MERGE', 'SPLIT', 'REJECT', 'ADD_MISSING'}
+    assert 'arm_blinded' not in schema['required']
+    assert 'arm_blinded' not in schema['properties']
+    assert schema['properties']['label_order_blinded'] == {'const': True}
+    assert schema['properties']['arm_inference_limitation'] == {
+        'const': 'ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT'
+    }

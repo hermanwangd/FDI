@@ -1,4 +1,8 @@
 import json
+import os
+import shutil
+import subprocess
+import sys
 from pathlib import Path
 
 from tooling.validation.graphify_runtime_probe import inspect_runtime
@@ -23,6 +27,8 @@ def test_four_active_truth_entries_exist_and_resolve():
         'human_review_status': 'PENDING_PRODUCT_TEAM_REVIEW',
         'third_review_status': 'PENDING_11_DISAGREED_ITEMS',
         'semantic_publication_allowed': False,
+        'blinding_scope': 'DETERMINISTIC_LABEL_AND_ORDER_BLINDING',
+        'blinding_limitation': 'ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT',
         'next_action': (
             'Pre-register thresholds, add UI/template evidence or narrow '
             'capability descriptions, and repeat at the exact revision/cutoff '
@@ -83,3 +89,56 @@ def test_phase0_is_ready_after_calibration_freeze_and_petclinic_evaluator_seal()
         'CALIBRATION_DATASET_FROZEN': True,
         'GROUND_TRUTH_SEALED': True,
     }
+
+
+def test_active_truth_discloses_blinding_and_publication_boundaries():
+    status = json.loads((ROOT/'STATUS.json').read_text())
+    active_text = '\n'.join((ROOT/name).read_text() for name in (
+        'PROJECT-OVERVIEW.md', 'FRAMEWORK-SPEC.md', 'IMPLEMENTATION-PLAN.md',
+    ))
+
+    assert status['blinding_scope'] == 'DETERMINISTIC_LABEL_AND_ORDER_BLINDING'
+    assert status['blinding_limitation'] == (
+        'ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT'
+    )
+    assert 'ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT' in active_text
+    assert 'completed Product Team human review' in (ROOT/'IMPLEMENTATION-PLAN.md').read_text()
+    assert 'separate explicit Product Team action' in (
+        ROOT/'IMPLEMENTATION-PLAN.md'
+    ).read_text()
+
+
+def test_default_python_suite_passes_in_clean_tracked_copy(tmp_path):
+    assert 'norecursedirs = .fdi-work' in (ROOT/'pytest.ini').read_text()
+    if (
+        os.environ.get('PKB001_CLEAN_TRACKED_COPY_CHILD') == '1'
+        or not (ROOT/'.git').exists()
+    ):
+        assert not (ROOT/'.fdi-work').exists()
+        return
+
+    tracked = subprocess.run(
+        ['git', 'ls-files', '-z'], cwd=ROOT, check=True, capture_output=True,
+    ).stdout.split(b'\0')
+    clean_root = tmp_path/'tracked-checkout'
+    for encoded in tracked:
+        if not encoded:
+            continue
+        relative = Path(os.fsdecode(encoded))
+        source = ROOT/relative
+        target = clean_root/relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        if source.is_symlink():
+            target.symlink_to(os.readlink(source))
+        else:
+            shutil.copy2(source, target)
+
+    environment = os.environ.copy()
+    environment['PKB001_CLEAN_TRACKED_COPY_CHILD'] = '1'
+    completed = subprocess.run(
+        [sys.executable, '-m', 'pytest', '-q'], cwd=clean_root,
+        env=environment, text=True, capture_output=True, timeout=180,
+    )
+
+    assert not (clean_root/'.fdi-work').exists()
+    assert completed.returncode == 0, completed.stdout + completed.stderr

@@ -35,12 +35,19 @@
     },
     {
       "path": "validation/pkb001/schemas/evaluator-judgment-v0.1.schema.json",
-      "sha256": "b7779e6249137dee30efd22ff7322b08c705b8ac10ceba0ea0c72032dfb5bac6"
+      "sha256": "bd81e6367ef163fcf29ed82c16c422c98398768b5be44ef9d09b507070c25617"
     }
   ],
+  "blinding": {
+    "content_level_arm_anonymity_claimed": false,
+    "explicit_arm_labels_absent": true,
+    "limitation": "ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT",
+    "scope": "DETERMINISTIC_LABEL_AND_ORDER_BLINDING",
+    "source_identifiers_absent": true
+  },
   "isolation": {
     "future_judgments_shared_between_reviewers": false,
-    "packet_contains_arm_identity": false,
+    "packet_contains_explicit_arm_labels": false,
     "packet_contains_source_identifiers": false,
     "sealed_key_in_reviewer_workspaces": false
   },

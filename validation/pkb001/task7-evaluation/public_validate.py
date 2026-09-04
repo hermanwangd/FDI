@@ -68,9 +68,29 @@ def validate(root):
         "forward_gold_comparison_limit",
         persisted["forward_expected_realization_comparison"]["authority"]
         == "EVALUATOR_ONLY_COMPARISON_NOT_PRODUCT_TRUTH"
-        and persisted["forward_expected_realization_comparison"]["comparison_limit"]
-        == "PATH_LEVEL_OVERLAP_IS_NOT_AN_EXACT_GRAPH_NODE_MATCH",
-        "Expected-realization comparison keeps exact-node and path overlap distinct",
+        and persisted["forward_expected_realization_comparison"][
+            "file_component_path_comparison"
+        ]["expected_component_references"] == 24
+        and persisted["forward_expected_realization_comparison"][
+            "expected_graph_node_coverage"
+        ]["expected_graph_nodes_cited"] == 17
+        and persisted["forward_expected_realization_comparison"][
+            "proposed_component_exact_graph_node_comparison"
+        ]["proposed_component_exact_graph_node_matches"] == 0
+        and persisted["forward_expected_realization_comparison"]["comparison_limits"]
+        == [
+            "PATH_LEVEL_OVERLAP_IS_NOT_AN_EXACT_GRAPH_NODE_MATCH",
+            "EVIDENCE_CITATION_COVERAGE_IS_NOT_A_PROPOSED_COMPONENT_MATCH",
+        ],
+        "File-path, expected-node citation, and exact proposed-node metrics remain separate",
+    )
+    check(
+        "task6_blinding_claim_boundary",
+        any(
+            "ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT" in limit
+            for limit in persisted["proof_limits"]
+        ),
+        "Evaluation discloses deterministic label/order blinding without content anonymity",
     )
     check(
         "bounded_decision",

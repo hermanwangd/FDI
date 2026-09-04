@@ -112,16 +112,31 @@ def test_task7_forward_gold_comparison_and_reverse_results_are_transparent():
     assert forward["capabilities_expected"] == 10
     assert forward["mapping_proposals"] == 9
     assert forward["unresolved"] == 1
-    assert forward["expected_components"] == 24
-    assert forward["exact_graph_node_matches"] == 0
-    assert forward["expected_components_with_proposed_source_path"] == 23
-    assert forward["expected_component_path_recall"] == pytest.approx(23 / 24)
-    assert forward["proposed_components"] == 25
-    assert forward["proposed_components_on_expected_source_path"] == 21
-    assert forward["proposed_component_path_precision"] == pytest.approx(21 / 25)
-    assert forward["comparison_limit"] == (
-        "PATH_LEVEL_OVERLAP_IS_NOT_AN_EXACT_GRAPH_NODE_MATCH"
-    )
+    path_metrics = forward["file_component_path_comparison"]
+    assert path_metrics["expected_component_references"] == 24
+    assert path_metrics["expected_component_references_with_proposed_source_path"] == 23
+    assert path_metrics["expected_component_path_recall"] == pytest.approx(23 / 24)
+    assert path_metrics["proposed_component_references"] == 25
+    assert path_metrics["proposed_component_references_on_expected_source_path"] == 21
+    assert path_metrics["proposed_component_path_precision"] == pytest.approx(21 / 25)
+    assert path_metrics["granularity"] == "FILE_COMPONENT_REFERENCE_AT_SOURCE_PATH"
+    node_coverage = forward["expected_graph_node_coverage"]
+    assert node_coverage == {
+        "expected_graph_nodes": 24,
+        "expected_graph_nodes_cited": 17,
+        "expected_graph_node_coverage_rate": pytest.approx(17 / 24),
+        "proposal_citation_scope": "PROPOSED_COMPONENTS_PLUS_EVIDENCE_REFS",
+        "granularity": "GRAPH_NODE_ID",
+    }
+    assert forward["proposed_component_exact_graph_node_comparison"] == {
+        "expected_graph_nodes": 24,
+        "proposed_component_exact_graph_node_matches": 0,
+        "proposed_component_exact_graph_node_recall": 0.0,
+    }
+    assert forward["comparison_limits"] == [
+        "PATH_LEVEL_OVERLAP_IS_NOT_AN_EXACT_GRAPH_NODE_MATCH",
+        "EVIDENCE_CITATION_COVERAGE_IS_NOT_A_PROPOSED_COMPONENT_MATCH",
+    ]
     assert len(report["reverse_proposal_review_results"]) == 5
     assert {item["source_identifier"] for item in report["reverse_proposal_review_results"]} == {
         "PKS2-HYP-001", "PKS2-HYP-002", "PKS2-HYP-003",
@@ -138,8 +153,15 @@ def test_task7_validates_judgments_before_unblinding(tmp_path):
     judgment.write_text(json.dumps(payload))
     (root / TASK6 / "sealed-blind-key.json").write_text("not valid JSON")
 
-    with pytest.raises(evaluator.EvaluationError, match="15 complete judgments"):
-        evaluator.evaluate_repository(root)
+    report = evaluator.evaluate_repository(root)
+
+    assert report["decision"] == "STOP"
+    assert report["failure_stage"] == "PRE_UNBLINDING_VALIDATION"
+    assert report["unblinding_performed"] is False
+    assert report["metrics_computed"] is False
+    assert report["semantic_publication_allowed"] is False
+    assert "15 complete judgments" in report["stop_reasons"][0]["detail"]
+    assert "metrics" not in report
 
 
 @pytest.mark.parametrize(
@@ -158,8 +180,45 @@ def test_task7_rejects_bound_input_mutations(tmp_path, mutation):
     }
     targets[mutation].write_bytes(targets[mutation].read_bytes() + b"\n")
 
-    with pytest.raises(evaluator.EvaluationError, match="digest"):
-        evaluator.evaluate_repository(root)
+    report = evaluator.evaluate_repository(root)
+
+    assert report["decision"] == "STOP"
+    assert report["failure_stage"] in {
+        "PRE_UNBLINDING_VALIDATION", "BOUND_INPUT_VALIDATION",
+    }
+    assert report["unblinding_performed"] is False
+    assert report["metrics_computed"] is False
+    assert report["semantic_publication_allowed"] is False
+    assert "digest" in report["stop_reasons"][0]["detail"]
+    assert "metrics" not in report
+
+
+def test_task7_cli_persists_stop_and_returns_documented_nonzero_exit(tmp_path):
+    root = copied_evaluation_root(tmp_path / "mutated-root")
+    packet = root / TASK6 / "blind-review-packet.json"
+    packet.write_bytes(packet.read_bytes() + b"\n")
+    report_path = tmp_path / "stop-report.json"
+    pending_path = tmp_path / "must-not-exist.json"
+
+    completed = subprocess.run(
+        [
+            sys.executable, str(MODULE_PATH), "--root", str(root),
+            "--report", str(report_path), "--pending", str(pending_path),
+        ],
+        check=False,
+        text=True,
+        capture_output=True,
+    )
+
+    assert completed.returncode == 2
+    persisted = json.loads(report_path.read_text())
+    assert persisted["decision"] == "STOP"
+    assert persisted["documented_exit_code"] == 2
+    assert persisted["unblinding_performed"] is False
+    assert persisted["metrics_computed"] is False
+    assert persisted["semantic_publication_allowed"] is False
+    assert not pending_path.exists()
+    assert json.loads(completed.stdout) == persisted
 
 
 def test_task7_decision_boundary_never_backfits_observed_metrics():
@@ -209,3 +268,17 @@ def test_task5_deferred_audit_minors_have_committed_evidence():
     assert "24/24 checks passed" in transcript
     assert "forbidden_inputs_not_accessed" in validator
     assert "Both records attest false" in validator
+    ledger = (ROOT / ".superpowers/sdd/IMPLEMENTATION-PLAN/progress.md").read_text()
+    task5_report = (
+        ROOT / ".superpowers/sdd/IMPLEMENTATION-PLAN/task-5-report.md"
+    ).read_text()
+    assert "Task 5: auditability minors resolved" in ledger
+    assert "Auditability minors resolved" in task5_report
+
+
+def test_task7_markdown_reports_unsupported_claim_decimal_rates():
+    report = (ROOT / ".superpowers/sdd/IMPLEMENTATION-PLAN/task-7-report.md").read_text()
+
+    assert "19/20 (0.9500)" in report
+    assert "10/10 (1.0000)" in report
+    assert "29/30 (0.9667)" in report

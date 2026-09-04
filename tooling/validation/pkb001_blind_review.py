@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Build deterministic, arm-blinded review material for PKB-001."""
+"""Build deterministic label/order-blinded review material for PKB-001."""
 
 import argparse
 import hashlib
 import json
+import sys
 from pathlib import Path
 from typing import Any, List, Optional
 
@@ -24,7 +25,7 @@ JUDGMENT_SCHEMA = Path('validation/pkb001/schemas/evaluator-judgment-v0.1.schema
 
 
 class BindingError(ValueError):
-    """A source run cannot safely be included in the blind comparison."""
+    """A source run cannot safely enter the label/order-blinded comparison."""
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -184,14 +185,14 @@ def build_task6_packet(root: Path) -> tuple[dict, dict, dict]:
     packet_digest = sha256_bytes(json_bytes(packet))
     key = {'schema_version': 'pkb001.task6.sealed-blind-key.v1', 'key_id': 'pkb001-task6-sealed-blind-key-v1', 'visibility': 'SEALED_KEY_CUSTODIAN_ONLY', 'sealed_packet_sha256': packet_digest, 'item_count': len(key_items), 'items': key_items}
     inputs = [TASK6_BRIEF, FORWARD_ARTIFACT, FORWARD_MANIFEST, FORWARD_WITNESS, REVERSE_ARTIFACT, REVERSE_MANIFEST, REVERSE_WITNESS, JUDGMENT_SCHEMA]
-    manifest = {'schema_version': 'pkb001.task6.blind-review-manifest.v1', 'packet_id': packet['packet_id'], 'source_bindings': {'shared_source_commit_sha': forward_binding['source_commit_sha'], 'shared_graph_sha256': forward_binding['graph_sha256'], 'reverse_delivery_history_sha256': reverse_binding['delivery_history_sha256']}, 'input_digests': [{'path': str(path), 'sha256': sha256_file(root / path)} for path in inputs], 'packet_sha256': packet_digest, 'sealed_key_sha256': sha256_bytes(json_bytes(key)), 'item_accounting': {'forward_mapping_proposals': 9, 'forward_unresolved_results': 1, 'reverse_hypotheses': 5, 'total_packet_items': len(packet_items)}, 'reviewer_workspaces': ['reviewer-01', 'reviewer-02'], 'isolation': {'packet_contains_arm_identity': False, 'packet_contains_source_identifiers': False, 'sealed_key_in_reviewer_workspaces': False, 'future_judgments_shared_between_reviewers': False}, 'decision_boundary': {'judgments_fabricated': False, 'product_team_human_review_completed': False, 'final_go_revise_stop_decision_made': False}}
+    manifest = {'schema_version': 'pkb001.task6.blind-review-manifest.v1', 'packet_id': packet['packet_id'], 'source_bindings': {'shared_source_commit_sha': forward_binding['source_commit_sha'], 'shared_graph_sha256': forward_binding['graph_sha256'], 'reverse_delivery_history_sha256': reverse_binding['delivery_history_sha256']}, 'input_digests': [{'path': str(path), 'sha256': sha256_file(root / path)} for path in inputs], 'packet_sha256': packet_digest, 'sealed_key_sha256': sha256_bytes(json_bytes(key)), 'item_accounting': {'forward_mapping_proposals': 9, 'forward_unresolved_results': 1, 'reverse_hypotheses': 5, 'total_packet_items': len(packet_items)}, 'reviewer_workspaces': ['reviewer-01', 'reviewer-02'], 'blinding': {'scope': 'DETERMINISTIC_LABEL_AND_ORDER_BLINDING', 'explicit_arm_labels_absent': True, 'source_identifiers_absent': True, 'content_level_arm_anonymity_claimed': False, 'limitation': 'ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT'}, 'isolation': {'packet_contains_explicit_arm_labels': False, 'packet_contains_source_identifiers': False, 'sealed_key_in_reviewer_workspaces': False, 'future_judgments_shared_between_reviewers': False}, 'decision_boundary': {'judgments_fabricated': False, 'product_team_human_review_completed': False, 'final_go_revise_stop_decision_made': False}}
     return packet, key, manifest
 
 
 def reviewer_instructions() -> str:
-    return """# PKB-001 blind comparison instructions
+    return """# PKB-001 deterministic label/order-blinded comparison instructions
 
-This packet is a blinded comparison input. Do not infer an item source arm from its ID or position, and do not access the sealed blind key.
+This packet removes explicit source-arm labels and deterministically obscures source ordering. It does not provide content-level arm anonymity: `ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT`. Do not use evidence categories or values to infer an arm, and do not access the sealed identity key.
 
 For each item, record one frozen review action (`ACCEPT`, `RENAME`, `MERGE`, `SPLIT`, `REJECT`, or `ADD_MISSING`) and an evidence outcome. Record evidence validity, usefulness, unsupported claims, precision, limitations, and active review time. Leave a clear note when a claim exceeds the supplied evidence.
 
@@ -207,9 +208,28 @@ def reviewer_template(packet_digest: str, workspace_id: str) -> dict:
     return {'schema_version': 'pkb001.task6.blind-judgment-workspace.v1', 'workspace_id': workspace_id, 'packet_sha256': packet_digest, 'reviewer_context': {'actor_type': 'NON_HUMAN', 'authority': 'EVALUATOR_ONLY', 'can_complete_product_team_review': False}, 'reviewer_isolation': {'other_workspace_future_judgments_accessible': False, 'sealed_key_accessible': False, 'ground_truth_accessible_from_packet_workspace': False}, 'judgments': [], 'entry_template': {'blind_id': 'BR-###', **empty_judgment()}}
 
 
+def _protect_existing_judgments(destination: Path) -> None:
+    for reviewer in ('reviewer-01', 'reviewer-02'):
+        path = destination / 'judgment-workspaces' / reviewer / 'judgment-template.json'
+        if not path.exists():
+            continue
+        try:
+            judgments = load_json(path).get('judgments')
+        except (OSError, json.JSONDecodeError, AttributeError) as error:
+            raise BindingError(
+                f'cannot safely inspect existing judgment workspace {path}: {error}'
+            ) from error
+        if judgments:
+            raise BindingError(
+                'refusing to overwrite completed judgments; initialize a new '
+                'version with an explicit --output-dir'
+            )
+
+
 def write_task6_artifacts(root: Path, output_dir: Path = TASK6_DIR) -> dict:
-    packet, key, manifest = build_task6_packet(root)
     destination = root / output_dir
+    _protect_existing_judgments(destination)
+    packet, key, manifest = build_task6_packet(root)
     destination.mkdir(parents=True, exist_ok=True)
     (destination / 'blind-review-packet.json').write_bytes(json_bytes(packet))
     (destination / 'sealed-blind-key.json').write_bytes(json_bytes(key))
@@ -248,7 +268,11 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument('--root', type=Path, default=Path.cwd())
     parser.add_argument('--output-dir', type=Path, default=TASK6_DIR)
     args = parser.parse_args(argv)
-    manifest = write_task6_artifacts(args.root.resolve(), args.output_dir)
+    try:
+        manifest = write_task6_artifacts(args.root.resolve(), args.output_dir)
+    except BindingError as error:
+        print(str(error), file=sys.stderr)
+        return 2
     print(json.dumps({'packet_id': manifest['packet_id'], 'packet_sha256': manifest['packet_sha256']}, sort_keys=True))
     return 0
 

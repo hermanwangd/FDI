@@ -36,13 +36,13 @@
       "passed": true
     },
     {
-      "detail": "Packet contains neither arm labels nor source identifiers",
-      "name": "arm_label_and_identity_blinding",
+      "detail": "Packet removes explicit arm labels/source identifiers and uses deterministic obscured ordering",
+      "name": "deterministic_label_and_order_blinding",
       "passed": true
     },
     {
-      "detail": "No packet-only schema, type, or field-population signature identifies an arm",
-      "name": "schema_signature_arm_blinding",
+      "detail": "Record shapes are uniform; this check does not establish content-level arm anonymity",
+      "name": "uniform_packet_record_shape",
       "passed": true
     },
     {
@@ -53,6 +53,11 @@
     {
       "detail": "Both evaluator workspaces retain identical packet bytes, valid judgment state, and isolation contracts",
       "name": "reviewer_isolation_contracts",
+      "passed": true
+    },
+    {
+      "detail": "Evidence categories and values can permit arm inference; no content-anonymity claim is made",
+      "name": "content_arm_inference_limit_disclosed",
       "passed": true
     },
     {

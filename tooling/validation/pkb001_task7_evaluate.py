@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic Task 7 evaluation for the completed PKB-001 blind review.
+"""Deterministic Task 7 evaluation for the completed PKB-001 comparison.
 
 The evaluator validates both sealed judgment workspaces before it reads the
 blind key. It then verifies every bound input, computes descriptive metrics,
@@ -52,10 +52,43 @@ GOLD_SEAL = Path(
 ACTIONS = ("ACCEPT", "ADD_MISSING", "MERGE", "RENAME", "REJECT", "SPLIT")
 OUTCOMES = ("DUPLICATE", "PARTIALLY_SUPPORTED", "SUPPORTED", "UNSUPPORTED")
 EXPECTED_ITEMS = 15
+STOP_EXIT_CODE = 2
 
 
 class EvaluationError(ValueError):
     """Raised when a sealed input or evaluation invariant does not validate."""
+
+
+def stop_report(stage: str, error: EvaluationError) -> dict[str, Any]:
+    """Create a persistable fail-closed decision without metrics or unblinding."""
+    return {
+        "schema_version": "pkb001.task7.stop-report.v1",
+        "report_id": "pkb001-task7-petclinic-818c413-stop-v1",
+        "decision": "STOP",
+        "decision_scope": "BOUNDED_PROTOTYPE_DECISION_NO_SEMANTIC_PUBLICATION",
+        "failure_stage": stage,
+        "stop_reasons": [{
+            "code": f"{stage}_FAILED",
+            "detail": str(error),
+        }],
+        "pre_unblinding_validation": {
+            "passed": False,
+            "validated_before_sealed_key_read": True,
+        },
+        "integrity": {
+            "status": "FAILED",
+            "hard_stop_violations": [f"{stage}_FAILED"],
+        },
+        "unblinding_performed": False,
+        "metrics_computed": False,
+        "semantic_publication_allowed": False,
+        "human_product_team_review": {
+            "status": "PENDING",
+            "semantic_publication_allowed": False,
+            "authority": "PRODUCT_TEAM_ONLY",
+        },
+        "documented_exit_code": STOP_EXIT_CODE,
+    }
 
 
 def sha256(path: Path) -> str:
@@ -311,15 +344,20 @@ def _forward_comparison(forward: dict[str, Any], gold: dict[str, Any]) -> dict[s
         proposed = result["proposed_components"]
         wanted = expected[capability_id]["expected_components"]
         proposed_ids = {row["graph_node_id"] for row in proposed}
+        cited_ids = proposed_ids | {
+            row["graph_node_id"] for row in result.get("evidence_refs", [])
+        }
         expected_ids = {row["graph_node_id"] for row in wanted}
         proposed_paths = [_source_path(row) for row in proposed]
         expected_paths = {_source_path(row) for row in wanted}
-        exact = len(proposed_ids & expected_ids)
+        proposed_exact = len(proposed_ids & expected_ids)
+        expected_nodes_cited = len(cited_ids & expected_ids)
         expected_path_matches = sum(_source_path(row) in set(proposed_paths) for row in wanted)
         proposed_path_matches = sum(path in expected_paths for path in proposed_paths)
         totals.update(
             expected_components=len(wanted),
-            exact_graph_node_matches=exact,
+            proposed_component_exact_graph_node_matches=proposed_exact,
+            expected_graph_nodes_cited=expected_nodes_cited,
             expected_path_matches=expected_path_matches,
             proposed_components=len(proposed),
             proposed_path_matches=proposed_path_matches,
@@ -329,9 +367,18 @@ def _forward_comparison(forward: dict[str, Any], gold: dict[str, Any]) -> dict[s
             "run_outcome": result["outcome"],
             "expected_component_count": len(wanted),
             "proposed_component_count": len(proposed),
-            "exact_graph_node_match_count": exact,
-            "expected_components_with_proposed_source_path": expected_path_matches,
-            "proposed_components_on_expected_source_path": proposed_path_matches,
+            "file_component_path_comparison": {
+                "expected_component_references": len(wanted),
+                "expected_component_references_with_proposed_source_path": expected_path_matches,
+                "proposed_component_references": len(proposed),
+                "proposed_component_references_on_expected_source_path": proposed_path_matches,
+            },
+            "expected_graph_node_coverage": {
+                "expected_graph_nodes": len(expected_ids),
+                "expected_graph_nodes_cited": expected_nodes_cited,
+                "proposal_citation_scope": "PROPOSED_COMPONENTS_PLUS_EVIDENCE_REFS",
+            },
+            "proposed_component_exact_graph_node_matches": proposed_exact,
         })
     _require(set(expected) == {row["capability_id"] for row in forward["capability_results"]},
              "forward/gold capability sets do not match")
@@ -344,21 +391,43 @@ def _forward_comparison(forward: dict[str, Any], gold: dict[str, Any]) -> dict[s
         "unresolved": sum(
             row["outcome"] == "UNRESOLVED" for row in forward["capability_results"]
         ),
-        "expected_components": totals["expected_components"],
-        "exact_graph_node_matches": totals["exact_graph_node_matches"],
-        "exact_graph_node_recall": round(
-            totals["exact_graph_node_matches"] / totals["expected_components"], 10
-        ),
-        "expected_components_with_proposed_source_path": totals["expected_path_matches"],
-        "expected_component_path_recall": round(
-            totals["expected_path_matches"] / totals["expected_components"], 10
-        ),
-        "proposed_components": totals["proposed_components"],
-        "proposed_components_on_expected_source_path": totals["proposed_path_matches"],
-        "proposed_component_path_precision": round(
-            totals["proposed_path_matches"] / totals["proposed_components"], 10
-        ),
-        "comparison_limit": "PATH_LEVEL_OVERLAP_IS_NOT_AN_EXACT_GRAPH_NODE_MATCH",
+        "file_component_path_comparison": {
+            "granularity": "FILE_COMPONENT_REFERENCE_AT_SOURCE_PATH",
+            "expected_component_references": totals["expected_components"],
+            "expected_component_references_with_proposed_source_path": totals["expected_path_matches"],
+            "expected_component_path_recall": round(
+                totals["expected_path_matches"] / totals["expected_components"], 10
+            ),
+            "proposed_component_references": totals["proposed_components"],
+            "proposed_component_references_on_expected_source_path": totals["proposed_path_matches"],
+            "proposed_component_path_precision": round(
+                totals["proposed_path_matches"] / totals["proposed_components"], 10
+            ),
+        },
+        "expected_graph_node_coverage": {
+            "granularity": "GRAPH_NODE_ID",
+            "expected_graph_nodes": totals["expected_components"],
+            "expected_graph_nodes_cited": totals["expected_graph_nodes_cited"],
+            "expected_graph_node_coverage_rate": round(
+                totals["expected_graph_nodes_cited"] / totals["expected_components"], 10
+            ),
+            "proposal_citation_scope": "PROPOSED_COMPONENTS_PLUS_EVIDENCE_REFS",
+        },
+        "proposed_component_exact_graph_node_comparison": {
+            "expected_graph_nodes": totals["expected_components"],
+            "proposed_component_exact_graph_node_matches": totals[
+                "proposed_component_exact_graph_node_matches"
+            ],
+            "proposed_component_exact_graph_node_recall": round(
+                totals["proposed_component_exact_graph_node_matches"]
+                / totals["expected_components"],
+                10,
+            ),
+        },
+        "comparison_limits": [
+            "PATH_LEVEL_OVERLAP_IS_NOT_AN_EXACT_GRAPH_NODE_MATCH",
+            "EVIDENCE_CITATION_COVERAGE_IS_NOT_A_PROPOSED_COMPONENT_MATCH",
+        ],
         "by_capability": details,
     }
 
@@ -373,12 +442,6 @@ def _validate_bound_inputs(root: Path, pre: dict[str, Any]) -> dict[str, Any]:
         sha256(root / SEALED_KEY) == task6_manifest.get("sealed_key_sha256"),
         "sealed key digest does not match Task 6 manifest",
     )
-    key = load_json(root / SEALED_KEY)
-    _require(
-        key.get("sealed_packet_sha256") == pre["packet_sha256"],
-        "sealed key packet digest mismatch",
-    )
-
     task6_inputs = {row["path"]: row["sha256"] for row in task6_manifest["input_digests"]}
     for relative in (
         FORWARD_RUN, FORWARD_MANIFEST, FORWARD_WITNESS,
@@ -406,13 +469,24 @@ def _validate_bound_inputs(root: Path, pre: dict[str, Any]) -> dict[str, Any]:
         and seal.get("graph_sha256") == bindings["shared_graph_sha256"],
         "evaluator gold source binding mismatch",
     )
+    key = load_json(root / SEALED_KEY)
+    _require(
+        key.get("sealed_packet_sha256") == pre["packet_sha256"],
+        "sealed key packet digest mismatch",
+    )
     return {"task6_manifest": task6_manifest, "key": key, "seal": seal}
 
 
 def evaluate_repository(root: Path) -> dict[str, Any]:
     root = root.resolve()
-    pre = validate_pre_unblinding(root)
-    bound = _validate_bound_inputs(root, pre)
+    try:
+        pre = validate_pre_unblinding(root)
+    except EvaluationError as error:
+        return stop_report("PRE_UNBLINDING_VALIDATION", error)
+    try:
+        bound = _validate_bound_inputs(root, pre)
+    except EvaluationError as error:
+        return stop_report("BOUND_INPUT_VALIDATION", error)
     packet = load_json(root / PACKET)
     forward = load_json(root / FORWARD_RUN)
     reverse = load_json(root / REVERSE_RUN)
@@ -559,7 +633,8 @@ def evaluate_repository(root: Path) -> dict[str, Any]:
         ],
         "proof_limits": [
             "Reviewer isolation is supported by distinct workspaces and recorded non-access attestations, not cryptographic proof of model context.",
-            "Path-level expected-realization overlap is reported separately and is not relabeled as exact graph-node matching.",
+            "The Task 6 packet provides deterministic label/order blinding only; ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT.",
+            "File-component path overlap, expected graph-node citation coverage, and exact proposed-component graph-node matching are separate metrics.",
             "Non-human evaluator judgments do not establish Product meaning or permit semantic publication.",
         ],
     }
@@ -597,6 +672,9 @@ def main() -> int:
     report = evaluate_repository(args.root)
     if args.report:
         _write_json(args.report, report)
+    if report["decision"] == "STOP":
+        print(json.dumps(report, indent=2, sort_keys=True))
+        return STOP_EXIT_CODE
     if args.pending:
         _write_json(args.pending, build_third_review_packet(report))
     print(json.dumps(report, indent=2, sort_keys=True))

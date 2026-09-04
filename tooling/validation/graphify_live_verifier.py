@@ -242,7 +242,14 @@ def main(argv: list[str] | None = None) -> int:
         _ensure_runtime(root)
         evidence = asyncio.run(verify_live_interface(root))
         exit_code = 0
-    except (OSError, RuntimeError, ValueError, json.JSONDecodeError) as error:
+    except (
+        importlib.metadata.PackageNotFoundError,
+        ModuleNotFoundError,
+        OSError,
+        RuntimeError,
+        ValueError,
+        json.JSONDecodeError,
+    ) as error:
         evidence = {
             'verification_id': 'pkb001-graphify-live-818c413',
             'result': 'NOT_BOUND', 'queryable': False,

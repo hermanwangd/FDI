@@ -117,6 +117,10 @@ def test_gold_mapping_covers_each_frozen_capability_exactly_once():
     assert all(item['expected_components'] and item['source_refs'] for item in mappings)
 
 
+@pytest.mark.skipif(
+    not (SOURCE / '.git').exists(),
+    reason='integration test requires ignored exact-revision Petclinic checkout',
+)
 def test_every_component_and_source_ref_resolves_at_exact_petclinic_revision():
     graph = load(GRAPH_PATH)
     graph_nodes = {item['id']: item for item in graph['nodes']}
@@ -280,6 +284,10 @@ def test_gate_preserves_human_review_as_pending_after_generation(tmp_path, field
     assert_ground_truth_rejected(tmp_path, evidence)
 
 
+@pytest.mark.skipif(
+    not (SOURCE / '.git').exists(),
+    reason='integration test requires ignored exact-revision Petclinic checkout',
+)
 def test_calibration_freeze_binds_source_tree_graph_runtime_and_history():
     calibration = load(CALIBRATION_PATH)
     phase0 = load(PHASE0_PATH)

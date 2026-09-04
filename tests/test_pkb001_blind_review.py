@@ -1,7 +1,7 @@
 from tooling.validation.pkb001_blind_review import build_blind_packet
 
 
-def test_blind_packet_hides_arm_and_proposal_identity():
+def test_legacy_packet_omits_explicit_arm_and_proposal_identity():
     outputs = [{
         'arm': 'R3',
         'proposals': [{

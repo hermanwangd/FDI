@@ -1,8 +1,8 @@
-# Task 6 Report — Blind Comparison and Independent Evaluator Inputs
+# Task 6 Report — Deterministic Label/Order-Blinded Comparison Inputs
 
 ## Status
 
-COMPLETE — prepared the blinded comparison packet and two empty evaluator workspaces. No reviewer judgment, Product Team conclusion, Product Semantics change, evaluator gold change, or final GO / REVISE / STOP decision was created.
+COMPLETE — prepared a deterministic label/order-blinded comparison packet and two evaluator workspaces, initially empty and now preserved with completed judgments. No Product Team conclusion, Product Semantics change, evaluator gold change, or final GO / REVISE / STOP decision was created in Task 6.
 
 ## Public seams and TDD evidence
 
@@ -22,7 +22,9 @@ The Task 6 brief pre-agreed the public seams: packet generation from the two val
 - Manifest: `validation/pkb001/task6-blind-review/manifest.json`
   - Verifies all source input digests, shared source commit `818c4136ea971c21674525f9053de0d9c7ad8cfe`, shared graph SHA, and reverse Delivery History SHA.
 
-The packet contains exactly 15 blank judgment items: 9 forward mapping proposals, 1 forward unresolved result, and 5 reverse hypotheses. The deterministic blind IDs are `BR-001` through `BR-015`; source arm labels and identifiers are absent from packet-facing material.
+The packet contains exactly 15 blank judgment fields: 9 forward mapping proposals, 1 forward unresolved result, and 5 reverse hypotheses. The deterministic IDs are `BR-001` through `BR-015`; explicit source-arm labels and source identifiers are absent from packet-facing material.
+
+This is deterministic label/order blinding only, not content-level arm anonymity: `ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT`. Evidence categories and values may make an arm inferable. The separately sealed identity key remains useful for post-validation evaluation, but neither the packet nor this report claims full arm blinding.
 
 ## Independent evaluator inputs
 
@@ -35,7 +37,7 @@ Each workspace contains byte-identical packet input, an empty judgment list, the
 
 ## Validator and deferred-minor coverage
 
-`validation/pkb001/task6-blind-review/public_validate.py` checks input/source digests, proposal-only binding, all source non-access witness booleans, exact accounting, packet/key digest binding, arm/identity blinding, judgment vocabulary, isolation, and no fabricated judgment or decision. It bases comparison claims only on those verified artifacts and witness records.
+`validation/pkb001/task6-blind-review/public_validate.py` checks input/source digests, proposal-only binding, all source non-access witness booleans, exact accounting, packet/key digest binding, deterministic label/order blinding, the explicit content-inference limitation, judgment vocabulary, isolation, and no fabricated judgment or decision. It bases comparison claims only on those verified artifacts and witness records.
 
 ## Commit
 
@@ -51,9 +53,9 @@ Primary packet implementation: `e1a1e1d5d0a358babbcb7797e57c2b75ee7d4318` (`feat
 
 The original packet leaked arm identity through packet-only shape differences: forward items used string component references and object fields with a structural list plus empty delivery list, while reverse items used empty components and nested structural/delivery objects.
 
-- RED: the new public seam test `test_task6_packet_schema_signatures_cannot_identify_source_arm` failed against that packet because a recursive type/field-population signature uniquely identified `FORWARD`.
+- RED: the new public seam test `test_task6_packet_record_shapes_do_not_uniquely_identify_source_arm` failed against that packet because a recursive type/field-population signature uniquely identified `FORWARD`.
 - GREEN: every packet item now has non-empty `component_refs` and `evidence_refs` arrays of neutral records with the same fixed fields and scalar types. Reverse component records are resolved from the bound graph; the single forward unresolved item carries an `INCOMPLETE_EVIDENCE` component record instead of an empty array.
-- The regenerated public validator adds `schema_signature_arm_blinding`; it passed together with all other checks (13/13).
+- The regenerated public validator checked a uniform record shape. The final fix correctly limits that result: uniform shape does not establish content-level arm anonymity.
 
 The current packet and sealed-key digests are the authoritative values in the **Packet and binding** section above.
 
@@ -61,3 +63,9 @@ The current packet and sealed-key digests are the authoritative values in the **
 
 - RED: `test_task6_report_has_one_current_digest_set` failed because the current-value section still contained the superseded pre-normalization digests.
 - GREEN: that section now contains the regenerated packet/key values exactly once, matching the manifest. The superseded digest values are removed rather than presented as current evidence.
+
+## Final safety correction
+
+Task 6 generation now refuses to touch a destination when either reviewer workspace contains judgments. Reinitialization requires a distinct explicit `--output-dir`, preserving all 30 completed judgments and the packet binding. The current packet and judgment bytes were not regenerated.
+
+The final qualified public validator passes 14/14 checks, including deterministic label/order blinding and the explicit content-inference limitation.
