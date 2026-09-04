@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:fdi:validation:pkb001:decision-report:v0.1",
+  "title": "PKB-001 Decision Report",
+  "x-fdi-authority": "VALIDATION_LOCAL_NON_GOVERNING",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["report_id", "ground_truth_sha256", "minimum_sample_satisfied", "hard_gate_failures", "arm_metrics", "decision", "claim_boundary"],
+  "properties": {
+    "report_id": {"type": "string", "minLength": 1},
+    "ground_truth_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "minimum_sample_satisfied": {"type": "boolean"},
+    "hard_gate_failures": {"type": "array", "items": {"type": "string"}},
+    "arm_metrics": {"type": "array", "items": {"$ref": "#/$defs/metrics"}},
+    "decision": {"enum": ["CONTINUE", "REVISE", "STOP"]},
+    "claim_boundary": {"const": "CALIBRATION_ONLY_NOT_PRODUCTION_EVIDENCE"}
+  },
+  "$defs": {
+    "metrics": {
+      "type": "object", "additionalProperties": false,
+      "required": ["arm", "proposal_count", "gold_item_count", "point_estimate", "wilson_low", "wilson_high", "median_review_seconds"],
+      "properties": {
+        "arm": {"enum": ["R1", "R2", "R3", "F1"]},
+        "proposal_count": {"type": "integer", "minimum": 0},
+        "gold_item_count": {"type": "integer", "minimum": 0},
+        "point_estimate": {"type": "number", "minimum": 0, "maximum": 1},
+        "wilson_low": {"type": "number", "minimum": 0, "maximum": 1},
+        "wilson_high": {"type": "number", "minimum": 0, "maximum": 1},
+        "median_review_seconds": {"type": "number", "minimum": 0}
+      }
+    }
+  }
+}

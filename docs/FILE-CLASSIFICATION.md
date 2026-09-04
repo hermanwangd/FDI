@@ -28,6 +28,12 @@ validation/dev204/scenarios/EXECUTION-GUIDE-*.md	DEV-204 validation execution pr
 validation/dev204/schemas/**	DEV-204 validation evidence schema
 validation/f001/**	F001 validation protocol
 validation/deterministic/**	Deterministic validation protocol or guard specification
+validation/pkb001/spec/**	PKB-001 validation-local execution protocol
+validation/pkb001/schemas/**	PKB-001 validation-local evidence schema
+validation/pkb001/datasets/**	PKB-001 pinned input manifest or immutable dataset metadata
+validation/pkb001/ground-truth/**	PKB-001 evaluator-only sealed ground truth
+validation/pkb001/runs/**	PKB-001 arm execution record
+validation/pkb001/reports/**	PKB-001 evaluator report
 validation/reports/**	Generated validation report location
 tooling/packaging/build_handoff_bundle.py	Packaging utility source
 tooling/packaging/build_manifest.py	Release-manifest generation utility source

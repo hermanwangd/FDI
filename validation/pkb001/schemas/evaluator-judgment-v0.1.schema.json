@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:fdi:validation:pkb001:evaluator-judgment:v0.1",
+  "title": "PKB-001 Evaluator Judgment",
+  "x-fdi-authority": "VALIDATION_LOCAL_NON_GOVERNING",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["judgment_id", "proposal_id", "reviewer_id", "arm_blinded", "outcome", "evidence_refs", "active_review_seconds", "sealed_at"],
+  "properties": {
+    "judgment_id": {"type": "string", "minLength": 1},
+    "proposal_id": {"type": "string", "minLength": 1},
+    "reviewer_id": {"type": "string", "minLength": 1},
+    "arm_blinded": {"const": true},
+    "outcome": {"enum": ["SUPPORTED", "PARTIALLY_SUPPORTED", "UNSUPPORTED", "DUPLICATE"]},
+    "evidence_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+    "active_review_seconds": {"type": "integer", "minimum": 0},
+    "sealed_at": {"type": "string", "format": "date-time"}
+  }
+}

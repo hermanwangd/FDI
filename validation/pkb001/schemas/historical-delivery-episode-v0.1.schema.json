@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:fdi:validation:pkb001:historical-delivery-episode:v0.1",
+  "title": "PKB-001 Historical Delivery Episode",
+  "x-fdi-authority": "VALIDATION_LOCAL_NON_GOVERNING",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["episode_id", "feature_or_issue_ref", "pull_request_refs", "commit_shas", "changed_paths", "component_refs", "linkage_status", "linkage_algorithm_version", "source_artifact_sha256"],
+  "properties": {
+    "episode_id": {"type": "string", "minLength": 1},
+    "feature_or_issue_ref": {"type": "string", "minLength": 1},
+    "pull_request_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "commit_shas": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[0-9a-f]{40}$"}},
+    "changed_paths": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "component_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "linkage_status": {"enum": ["DIRECT", "PARTIAL", "AMBIGUOUS", "UNRESOLVED"]},
+    "linkage_algorithm_version": {"type": "string", "minLength": 1},
+    "source_artifact_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

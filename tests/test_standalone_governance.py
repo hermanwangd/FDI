@@ -136,6 +136,48 @@ def test_ft_t2_modern_vocabulary():
     assert 'CLOSED_WITHIN_DECLARED_SCOPE' in text
     assert 'ACCEPT_CLOSED_WITHIN_DECLARED_SCOPE' in text
     assert 'PROVISIONALLY_COMPLETE' not in text
+
+
+def test_pkb001_candidate_spec_has_fail_closed_phase_zero_gate():
+    path=ROOT/'docs/specifications/validation/PKB-001-PHASE-1-SPECIFICATION.md'
+    text=path.read_text()
+    assert 'Status: CANDIDATE — EXECUTION BLOCKED' in text
+    for required in (
+        'P0-01 — Framework authority',
+        'P0-02 — Graphify runtime readiness',
+        'P0-03 — Skill availability',
+        'P0-04 — Calibration snapshot',
+        'P0-05 — Evaluator isolation',
+        'P0-06 — Metric protocol',
+        'P0-07 — Resource and security bounds',
+        'CONTINUE / REVISE / STOP',
+    ):
+        assert required in text
+    assert 'rc4 is not rc9' in text
+    assert 'PROPOSAL_ONLY' in text
+    assert 'CURRENT_STRUCTURE_HEURISTIC' in text
+
+
+def test_pkb001_validation_local_schemas_are_strict_and_non_authoritative():
+    schema_dir=ROOT/'validation/pkb001/schemas'
+    expected={
+        'pkb-run-manifest-v0.1.schema.json',
+        'capability-hypothesis-set-v0.1.schema.json',
+        'historical-delivery-episode-v0.1.schema.json',
+        'evaluator-judgment-v0.1.schema.json',
+        'pkb-decision-report-v0.1.schema.json',
+    }
+    assert {p.name for p in schema_dir.glob('*.schema.json')} == expected
+    for path in schema_dir.glob('*.schema.json'):
+        schema=json.loads(path.read_text())
+        assert schema['$schema']=='https://json-schema.org/draft/2020-12/schema'
+        assert schema['additionalProperties'] is False
+        assert schema['x-fdi-authority']=='VALIDATION_LOCAL_NON_GOVERNING'
+    manifest=json.loads((schema_dir/'pkb-run-manifest-v0.1.schema.json').read_text())
+    assert manifest['properties']['source_commit_sha']['pattern']=='^[0-9a-f]{40}$'
+    assert set(manifest['properties']['claim_status']['enum'])=={'NOT_EXECUTED', 'EXECUTED'}
+    hypothesis=json.loads((schema_dir/'capability-hypothesis-set-v0.1.schema.json').read_text())
+    assert hypothesis['properties']['authority_status']['const']=='PROPOSAL_ONLY'
 def independently_parse_project_tree(text):
     paths=set()
     directories=[]

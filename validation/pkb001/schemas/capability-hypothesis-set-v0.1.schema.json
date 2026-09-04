@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:fdi:validation:pkb001:capability-hypothesis-set:v0.1",
+  "title": "PKB-001 Capability Hypothesis Set",
+  "x-fdi-authority": "VALIDATION_LOCAL_NON_GOVERNING",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["set_id", "run_id", "arm", "source_commit_sha", "graph_artifact_sha256", "authority_status", "hypotheses"],
+  "properties": {
+    "set_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "arm": {"enum": ["R1", "R2", "R3"]},
+    "source_commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "graph_artifact_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "authority_status": {"const": "PROPOSAL_ONLY"},
+    "hypotheses": {"type": "array", "items": {"$ref": "#/$defs/hypothesis"}}
+  },
+  "$defs": {
+    "hypothesis": {
+      "type": "object", "additionalProperties": false,
+      "required": ["hypothesis_id", "operation", "label", "evidence_refs", "confidence", "limitations"],
+      "properties": {
+        "hypothesis_id": {"type": "string", "minLength": 1},
+        "operation": {"enum": ["CREATE", "MERGE", "SPLIT", "REVISE"]},
+        "label": {"type": "string", "minLength": 1},
+        "evidence_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "limitations": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:fdi:validation:pkb001:run-manifest:v0.1",
+  "title": "PKB-001 Run Manifest",
+  "x-fdi-authority": "VALIDATION_LOCAL_NON_GOVERNING",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["run_id", "arm", "source_repository", "source_commit_sha", "source_tree_sha256", "graph_artifact_sha256", "input_policy_sha256", "graphify_runtime_version", "adapter_version", "history_cutoff", "temporal_mode", "allowed_inputs", "ground_truth_sha256", "claim_status"],
+  "properties": {
+    "run_id": {"type": "string", "pattern": "^PKB001-[A-Za-z0-9._-]+$"},
+    "arm": {"enum": ["R1", "R2", "R3", "F1"]},
+    "source_repository": {"type": "string", "format": "uri"},
+    "source_commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "source_tree_sha256": {"$ref": "#/$defs/sha256"},
+    "graph_artifact_sha256": {"$ref": "#/$defs/sha256"},
+    "input_policy_sha256": {"$ref": "#/$defs/sha256"},
+    "graphify_runtime_version": {"type": "string", "minLength": 1},
+    "adapter_version": {"type": "string", "minLength": 1},
+    "history_cutoff": {"type": "string", "format": "date-time"},
+    "temporal_mode": {"enum": ["EXACT_PRE_FEATURE_SNAPSHOT", "CURRENT_STRUCTURE_HEURISTIC", "NOT_APPLICABLE"]},
+    "allowed_inputs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+    "ground_truth_sha256": {"$ref": "#/$defs/sha256"},
+    "claim_status": {"enum": ["NOT_EXECUTED", "EXECUTED"]}
+  },
+  "$defs": {"sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}
