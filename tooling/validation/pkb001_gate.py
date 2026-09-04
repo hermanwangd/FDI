@@ -28,6 +28,19 @@ def _safe_file(root: Path, relative: object) -> Optional[Path]:
     return resolved
 
 
+def _safe_output(root: Path, requested: Path) -> Path:
+    root = root.resolve()
+    candidate = requested if requested.is_absolute() else root/requested
+    resolved = candidate.resolve(strict=False)
+    try:
+        resolved.relative_to(root)
+    except ValueError as error:
+        raise ValueError('output path must remain inside repository root') from error
+    if candidate.is_symlink():
+        raise ValueError('output path must not be a symlink')
+    return resolved
+
+
 def _item(identifier: str, status: str, reason: str) -> Dict[str, str]:
     return {'id': identifier, 'status': status, 'reason': reason}
 
@@ -109,11 +122,13 @@ def main(argv: Optional[List[str]] = None) -> int:
         evidence = json.loads(args.evidence.read_text()) if args.evidence else {}
         if not isinstance(evidence, dict):
             raise ValueError('evidence root must be an object')
-        report = evaluate_readiness(args.root, evidence)
+        root = args.root.resolve()
+        report = evaluate_readiness(root, evidence)
         rendered = json.dumps(report, indent=2) + '\n'
         if args.output:
-            args.output.parent.mkdir(parents=True, exist_ok=True)
-            args.output.write_text(rendered)
+            output = _safe_output(root, args.output)
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_text(rendered)
         print(rendered, end='')
         return 0 if report['status'] == 'READY' else 2
     except (OSError, ValueError, json.JSONDecodeError) as error:

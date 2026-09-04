@@ -35,6 +35,7 @@ Every entry is labelled by authority. This index is navigational and does not su
 ## Validation, tooling, and delivery material
 
 - [Validation](../validation/) — protocols, schemas, fixtures, and evidence records; each artifact's own status controls its claim scope.
+- [PKB-001 Phase 0 readiness protocol](../validation/pkb001/spec/PHASE-0-READINESS-PROTOCOL.md) and [evaluation protocol](../validation/pkb001/spec/EVALUATION-PROTOCOL.md) — fail-closed validation-local controls; current execution remains blocked.
 - [Tooling](../tooling/) — packaging, verification, and migration utilities.
 - [Templates](../templates/) — reusable instance scaffolding, not authority by existence.
 - [File classification](FILE-CLASSIFICATION.md) — current-to-target repository path classification and precedence.

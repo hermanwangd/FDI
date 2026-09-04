@@ -161,6 +161,9 @@ The schemas in `validation/pkb001/schemas/` define:
 These schemas are validation-local and non-governing. Their existence does not
 create a public API or establish truth.
 
+Execution must follow the [Phase 0 readiness protocol](../../../validation/pkb001/spec/PHASE-0-READINESS-PROTOCOL.md)
+and the [frozen evaluation protocol](../../../validation/pkb001/spec/EVALUATION-PROTOCOL.md).
+
 ## 8. Frozen evaluation protocol
 
 ### 8.1 Unit of evaluation
@@ -263,10 +266,16 @@ evidence is actually produced and reviewed.
 ## 12. Verification commands
 
 ```sh
+python3 tooling/validation/pkb001_gate.py --root .
+python3 -m pytest tests/test_pkb001_phase0.py -q
 python3 -m pytest tests/test_standalone_governance.py -q
 python3 tooling/verification/verify_standalone_bundle.py .
 git diff --check
 ```
+
+The first command currently exits `2` and reports `BLOCKED`. That is the
+required outcome until separately reviewed external evidence satisfies all
+seven prerequisites.
 
 If runtime code or configuration changes in a later work package:
 

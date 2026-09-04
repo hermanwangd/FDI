@@ -93,6 +93,18 @@ def test_repository_phase0_remains_blocked_without_external_evidence():
     assert 'P0-01' in result.stdout and 'P0-04' in result.stdout
 
 
+def test_gate_rejects_output_outside_repository(tmp_path):
+    root = tmp_path/'repo'
+    root.mkdir()
+    result = subprocess.run(
+        ['python3', str(ROOT/'tooling/validation/pkb001_gate.py'),
+         '--root', str(root), '--output', str(tmp_path/'outside.json')],
+        text=True, capture_output=True,
+    )
+    assert result.returncode == 1
+    assert not (tmp_path/'outside.json').exists()
+
+
 def test_acquisition_rejects_mutable_revision(acquisition_root):
     manifest = valid_acquisition_manifest(acquisition_root, source_commit_sha='main')
     with pytest.raises(ValueError, match='40-character'):
