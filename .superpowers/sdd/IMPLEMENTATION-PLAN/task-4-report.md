@@ -77,3 +77,64 @@ Implementation commit: `644c4fbcfea2cbded29d1622d8c4256b3f3d20f5` (`feat(pkb001)
 - The `Access Clinic Home` proposal has the lowest confidence (`0.64`): `WelcomeController.welcome` supports the landing entry point, but the graph cannot verify primary navigation links.
 - The visit-history and veterinarian-specialty proposals rely on domain accessors plus controller entry points; presentation and ordering remain unverified because views are absent.
 - Structural evidence makes these components reviewable candidates, not accepted Product truth or proof of end-to-end behavior.
+
+## Fix round 1 — Provenance witness and capability-boundary correction
+
+This section supersedes the original result-count, confidence, artifact-digest, validation-count, and `Access Clinic Home` statements above. The original section is retained as the execution record preceding reviewer feedback.
+
+### Reviewer findings addressed
+
+1. Added committed provenance witness `validation/pkb001/artifacts/petclinic-pk-s1-forward-run-818c413-witness.json`.
+2. Changed `PET-CAP-10` from `MAPPING_PROPOSAL` to `UNRESOLVED`. The frozen graph supports `WelcomeController.welcome` as partial landing-page evidence but has no view/navigation evidence for the full primary-navigation requirement.
+
+The corrected result distribution remains complete and non-duplicative: 10 capability IDs accounted for exactly once, with 9 mapping proposals and 1 unresolved result. Corrected overall confidence is `0.89`, reflecting confidence in the nine structural proposals and the evidence-bound unresolved decision.
+
+### Witness bindings
+
+The witness records:
+
+- orchestration identity `/root/pkb001_forward_run`;
+- fresh-context setting `fork_turns:none`;
+- `SKILL_EXECUTION` by `AGENT_REASONING`, with `deterministic_baseline_used:false`;
+- the five allowed input paths and exact SHA-256 values, plus the separately identified requirements brief;
+- the forbidden input categories and `forbidden_inputs_accessed:false` attestation;
+- Phase 0 `READY`, ground-truth seal commit `e900548ec92ecfa02b8617e3af688ad678f9acc5`, and local ordering markers;
+- generation material-output start marker `2026-09-04T16:48:54Z`, 430 seconds after the Phase 0 seal commit time `2026-09-04T16:41:44Z`;
+- corrected run-artifact and manifest paths and byte digests.
+
+The generation-start marker is the filesystem birth time of the first run artifact. The witness explicitly labels its assurance as `ATTESTATION_NOT_CRYPTOGRAPHIC_PROOF`: it binds the recorded statement and digests, but does not cryptographically prove non-access, agent freshness, internal reasoning, or trusted time.
+
+### RED/GREEN evidence
+
+RED:
+
+```text
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest validation.pkb001.tests.test_pk_s1_forward_run_public -v
+FAILED (errors=1): provenance witness did not exist.
+```
+
+An intermediate run then failed the new digest-binding assertion because the witness contained a mistyped graph SHA. This confirmed the test rejected an incorrect witness binding.
+
+GREEN:
+
+```text
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest validation.pkb001.tests.test_pk_s1_forward_run_public -v
+Ran 5 tests in 0.003s
+OK
+```
+
+The fifth test validates witness identity, fresh-context setting, skill execution mode, deterministic-baseline exclusion, exact allowed-input bindings, forbidden-category attestation, Phase 0 ordering, output paths/digests, and limited assurance scope. Public validation still does not assert evaluator correctness.
+
+### Corrected digests
+
+- Run artifact: `bfb2d72045a350e3684464ad1bae7cbdd8c06111882e1e9f02276211b81a0992`
+- Manifest: `271e859f1f24ace30354b7a7f3315f0db2366d067ff6d30666bc57894ae53994`
+- Provenance witness: `36fb66c248d698ca2e29744bf35b8f3cadaaa5cbcd7b4ca40a97597e1be050a5`
+
+### Fix commit
+
+Implementation fix commit: `b8d625046217c9e0cd71df28e4402eb2aad46685` (`fix(pkb001): add PK-S1 provenance witness`).
+
+### Remaining concern
+
+The committed witness improves auditability but is deliberately an agent attestation backed by repository bytes and local ordering metadata, not an independent or cryptographic execution proof.
