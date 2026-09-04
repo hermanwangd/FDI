@@ -4,21 +4,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.*;
 import java.util.function.BiFunction;
 
-public final class GrafelAdapter implements CodeIntelligenceProvider {
+public final class GraphifyAdapter implements CodeIntelligenceProvider {
     private static final Map<String, String> DEFAULT_TOOLS = Map.of(
-            "ORIENT", "grafel_orient", "FIND", "grafel_find", "EXPAND", "grafel_subgraph",
-            "TRACE", "grafel_find_paths", "DIFF", "grafel_diff");
-    private final GrafelTransport transport;
+            "ORIENT", "graphify_orient", "FIND", "graphify_find", "EXPAND", "graphify_subgraph",
+            "TRACE", "graphify_find_paths", "DIFF", "graphify_diff");
+    private final GraphifyTransport transport;
     private final SnapshotBindingAttestor attestor;
     private final Map<String, String> tools;
     private final BiFunction<String, Map<String, Object>, Map<String, Object>> responseMapper;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public GrafelAdapter(GrafelTransport transport, SnapshotBindingAttestor attestor) {
+    public GraphifyAdapter(GraphifyTransport transport, SnapshotBindingAttestor attestor) {
         this(transport, attestor, DEFAULT_TOOLS, (operation, raw) -> raw);
     }
 
-    public GrafelAdapter(GrafelTransport transport, SnapshotBindingAttestor attestor,
+    public GraphifyAdapter(GraphifyTransport transport, SnapshotBindingAttestor attestor,
             Map<String, String> tools, BiFunction<String, Map<String, Object>, Map<String, Object>> responseMapper) {
         this.transport = Objects.requireNonNull(transport);
         this.attestor = Objects.requireNonNull(attestor);
@@ -62,7 +62,7 @@ public final class GrafelAdapter implements CodeIntelligenceProvider {
 
     private String tool(String operation) {
         String tool = tools.get(operation);
-        if (tool == null || tool.isBlank()) throw new RuntimeContractException("missing Grafel tool mapping: " + operation);
+        if (tool == null || tool.isBlank()) throw new RuntimeContractException("missing Graphify tool mapping: " + operation);
         return tool;
     }
 
@@ -77,7 +77,7 @@ public final class GrafelAdapter implements CodeIntelligenceProvider {
                 if (objectMapper.writeValueAsBytes(result).length > limit.intValue())
                     throw new RuntimeContractException("max_result_bytes exceeded");
             } catch (RuntimeContractException error) { throw error; }
-            catch (Exception error) { throw new RuntimeContractException("Grafel response is not serializable", error); }
+            catch (Exception error) { throw new RuntimeContractException("Graphify response is not serializable", error); }
         }
     }
 }

@@ -3,6 +3,6 @@ package com.featuredeliveryintelligence.fdi.structural.graphify;import com.featu
 import java.util.Map;
 
 @FunctionalInterface
-public interface GrafelTransport {
+public interface GraphifyTransport {
     Map<String, Object> invoke(String tool, Map<String, Object> payload);
 }
