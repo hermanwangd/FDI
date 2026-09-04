@@ -2,7 +2,8 @@
   "schema_version": "1.0",
   "run_id": "pkb001-petclinic-pk-s1-forward-818c4136",
   "artifact": "validation/pkb001/artifacts/petclinic-pk-s1-forward-run-818c413.json",
-  "artifact_sha256": "46b2609c06abf0e5cb248cb66e0f1be402162660d63665674aace3f5b30c625e",
+  "artifact_sha256": "bfb2d72045a350e3684464ad1bae7cbdd8c06111882e1e9f02276211b81a0992",
+  "provenance_witness": "validation/pkb001/artifacts/petclinic-pk-s1-forward-run-818c413-witness.json",
   "execution_kind": "SKILL_EXECUTION",
   "authority": "PROPOSAL_ONLY",
   "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
@@ -28,11 +29,12 @@
   "forbidden_inputs_accessed": false,
   "capability_result_count": 10,
   "accounted_capability_count": 10,
-  "mapping_proposal_count": 10,
-  "unresolved_count": 0,
-  "confidence": 0.86,
+  "mapping_proposal_count": 9,
+  "unresolved_count": 1,
+  "confidence": 0.89,
   "limitations": [
     "The exactly bound graph contains deterministic Java AST structure only.",
+    "Access Clinic Home remains unresolved because primary-navigation evidence is absent.",
     "All mappings remain proposals pending separate review."
   ]
 }

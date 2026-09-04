@@ -30,9 +30,14 @@
     "post_cutoff_sources_used": false
   },
   "confidence": {
-    "overall": 0.86,
+    "overall": 0.89,
     "scale": "0.0_to_1.0",
-    "basis": "Structural agreement among controller, domain, and repository nodes in the exactly bound Java graph."
+    "basis": "Confidence in nine structurally supported proposals and in preserving the unresolved boundary where the graph supports only part of the capability description."
+  },
+  "result_summary": {
+    "capability_count": 10,
+    "mapping_proposal_count": 9,
+    "unresolved_count": 1
   },
   "limitations": [
     "The frozen graph contains deterministic Java AST structure only; view templates, route annotations, configuration metadata, and runtime behavior are not represented.",
@@ -495,25 +500,21 @@
     {
       "capability_id": "PET-CAP-10",
       "name": "Access Clinic Home",
-      "outcome": "MAPPING_PROPOSAL",
+      "outcome": "UNRESOLVED",
       "mapping_status": "PROPOSAL_ONLY",
-      "proposed_components": [
-        {
-          "graph_node_id": "welcomecontroller",
-          "label": "WelcomeController.java",
-          "source_location": "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java:L1"
-        }
-      ],
+      "proposed_components": [],
       "evidence_refs": [
         {
           "graph_node_id": "welcomecontroller_welcomecontroller_welcome",
           "source_location": "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java:L25"
         }
       ],
-      "reasoning": "A dedicated WelcomeController and welcome method are direct structural candidates for the clinic landing entry point.",
-      "confidence": 0.64,
+      "unresolved_reason": "The graph supports a clinic landing controller but contains no structural evidence for the capability's required primary navigation into both owner and veterinarian workflows.",
+      "reasoning": "WelcomeController.welcome is evidence for only the landing-page portion. Because the frozen capability also requires primary navigation and the Java-only graph contains no view or navigation nodes, the full capability cannot be mapped without exceeding the evidence boundary.",
+      "confidence": 0.96,
       "limitations": [
-        "The Java-only graph contains no home template or navigation links, so primary navigation into owner and veterinarian workflows is not structurally verified."
+        "The WelcomeController remains partial evidence, not a realization proposal for the complete capability.",
+        "The Java-only graph contains no home template or navigation links."
       ]
     }
   ]

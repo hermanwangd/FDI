@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0",
+  "witness_id": "pkb001-petclinic-pk-s1-forward-818c4136-provenance",
+  "run_id": "pkb001-petclinic-pk-s1-forward-818c4136",
+  "orchestration_identity": "/root/pkb001_forward_run",
+  "fresh_context": {
+    "fork_turns": "none",
+    "attested": true
+  },
+  "execution": {
+    "kind": "SKILL_EXECUTION",
+    "method": "AGENT_REASONING",
+    "skill": "pk-s1-product-realization",
+    "skill_path": "skills/pkb001/pk-s1-product-realization/SKILL.md",
+    "skill_sha256": "f97d4e5b13605de81ab1b149e338031feea736666dc2c6f0b7635ce9131a2ca9",
+    "deterministic_baseline_used": false,
+    "authority": "PROPOSAL_ONLY"
+  },
+  "requirements_brief": {
+    "path": ".superpowers/sdd/IMPLEMENTATION-PLAN/task-4-brief.md",
+    "sha256": "666316b4c11b37c35d57e646813ff0b84aed114562a744ae946b7eb4b2bf5f22",
+    "read_order": 1
+  },
+  "allowed_inputs": [
+    {
+      "path": "skills/pkb001/pk-s1-product-realization/SKILL.md",
+      "sha256": "f97d4e5b13605de81ab1b149e338031feea736666dc2c6f0b7635ce9131a2ca9",
+      "read_order": 2
+    },
+    {
+      "path": "validation/pkb001/datasets/petclinic-product-semantics-candidate.json",
+      "sha256": "72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea",
+      "read_order": 3
+    },
+    {
+      "path": "validation/pkb001/artifacts/petclinic-graph-818c413.json",
+      "sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+      "read_order": 4
+    },
+    {
+      "path": "validation/pkb001/runtime/graphify-petclinic-live-evidence.json",
+      "sha256": "fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8",
+      "read_order": 5
+    },
+    {
+      "path": "validation/pkb001/reports/phase0-readiness.json",
+      "sha256": "a6bb4627120558940639d5d8c56b2626644e486dd634e8b6073500c9f4b2c50c",
+      "read_order": 6,
+      "use_scope": "Confirm Phase 0 readiness and seal ordering only"
+    }
+  ],
+  "forbidden_categories": [
+    "validation/pkb001/evaluator/**",
+    "current_or_historical_pk_s1_pk_s2_outputs",
+    "petclinic_delivery_history",
+    "post_cutoff_sources",
+    "web_knowledge"
+  ],
+  "forbidden_inputs_accessed": false,
+  "generation_ordering": {
+    "phase0": {
+      "status": "READY",
+      "ground_truth_sealed": true,
+      "pk_s1_execution_ready": true,
+      "seal_commit": "e900548ec92ecfa02b8617e3af688ad678f9acc5",
+      "sealed_at_epoch": 1788540104,
+      "sealed_at_utc": "2026-09-04T16:41:44Z",
+      "timestamp_basis": "Git commit time of the commit that introduced the Phase 0 readiness report"
+    },
+    "generation_started_at_epoch": 1788540534,
+    "generation_started_at_utc": "2026-09-04T16:48:54Z",
+    "generation_start_basis": "Filesystem birth time of the first Task 4 run artifact; this is the durable material-output start marker",
+    "relation": "AFTER_PHASE0_SEAL",
+    "observed_delta_seconds": 430
+  },
+  "outputs": {
+    "artifact": {
+      "path": "validation/pkb001/artifacts/petclinic-pk-s1-forward-run-818c413.json",
+      "sha256": "bfb2d72045a350e3684464ad1bae7cbdd8c06111882e1e9f02276211b81a0992"
+    },
+    "manifest": {
+      "path": "validation/pkb001/artifacts/petclinic-pk-s1-forward-run-818c413-manifest.json",
+      "sha256": "271e859f1f24ace30354b7a7f3315f0db2366d067ff6d30666bc57894ae53994"
+    }
+  },
+  "assurance_level": "ATTESTATION_NOT_CRYPTOGRAPHIC_PROOF",
+  "assurance_scope": [
+    "This committed witness binds the stated orchestration identity, context setting, input paths and byte digests, declared access boundary, ordering markers, execution mode, and output byte digests.",
+    "It does not cryptographically prove non-access to forbidden inputs, semantic freshness of the agent, or the internal reasoning method.",
+    "Filesystem and Git timestamps establish recorded local ordering but are not trusted third-party timestamps."
+  ]
+}
