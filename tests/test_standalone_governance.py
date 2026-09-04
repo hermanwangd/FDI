@@ -178,6 +178,25 @@ def test_pkb001_validation_local_schemas_are_strict_and_non_authoritative():
     assert set(manifest['properties']['claim_status']['enum'])=={'NOT_EXECUTED', 'EXECUTED'}
     hypothesis=json.loads((schema_dir/'capability-hypothesis-set-v0.1.schema.json').read_text())
     assert hypothesis['properties']['authority_status']['const']=='PROPOSAL_ONLY'
+
+
+def tracked_paths():
+    return subprocess.run(
+        ['git', 'ls-files'], cwd=ROOT, check=True, text=True,
+        capture_output=True,
+    ).stdout.splitlines()
+
+
+def test_active_provider_surface_uses_graphify_names_only():
+    active=(
+        'src/', 'config/', 'contracts/providers/graphify/',
+        'docs/architecture/', 'docs/overview/', 'docs/planning/',
+        'docs/specifications/',
+    )
+    for relative in tracked_paths():
+        if relative.startswith(active):
+            text=(ROOT/relative).read_text()
+            assert not re.search(r'Grafel|GRAFEL|grafel', text), relative
 def independently_parse_project_tree(text):
     paths=set()
     directories=[]
