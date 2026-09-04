@@ -1,15 +1,15 @@
 # Governing Sources
 
-This standalone project does **not** treat opaque IDs as sufficient authority. Every active governing module resolves to local content through `approved-source-lock.json`.
+This standalone project does **not** treat opaque IDs as sufficient authority. Every active governing module resolves to local content through `locks/approved-source-lock.json`.
 
 | ID | Local authority path | Status |
 | --- | --- | --- |
-| L1-SEM | `specs/approved/layer1/fdi-layer1-specification-v0.2-approved.md` | APPROVED semantics materialized |
-| L1-IO | `specs/approved/layer1/fdi-layer1-markdown-io-profile-v0.1-approved.md` | APPROVED physical I/O materialized |
-| L2-FWK | `specs/approved/layer2/fdi-layer2-product-intelligence-framework-v0.1-approved.md` | APPROVED semantics materialized |
-| L2-PROFILE | `specs/approved/layer2/fdi-product-asset-profile-specification-v0.1-approved.md` | APPROVED PA-03/PA-05 profile semantics materialized |
-| L2-MAINT | `specs/approved/layer2/fdi-product-asset-maintenance-skill-contracts-v0.1-approved.md` | APPROVED maintenance semantics materialized |
-| FT-T2 | `specs/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md` + `contracts/ft-t2/` + `skills/ft-t2/` + `workflows/ft-t2/FEATURE-CLOSURE.md` | HERM-211 locked semantics, standalone normalized physical representation |
+| L1-SEM | `governance/approved/layer1/fdi-layer1-specification-v0.2-approved.md` | APPROVED semantics materialized |
+| L1-IO | `governance/approved/layer1/fdi-layer1-markdown-io-profile-v0.1-approved.md` | APPROVED physical I/O materialized |
+| L2-FWK | `governance/approved/layer2/fdi-layer2-product-intelligence-framework-v0.1-approved.md` | APPROVED semantics materialized |
+| L2-PROFILE | `governance/approved/layer2/fdi-product-asset-profile-specification-v0.1-approved.md` | APPROVED PA-03/PA-05 profile semantics materialized |
+| L2-MAINT | `governance/approved/layer2/fdi-product-asset-maintenance-skill-contracts-v0.1-approved.md` | APPROVED maintenance semantics materialized |
+| FT-T2 | `governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md` + `contracts/public/ft-t2/` + `agent/skills/ft-t2/` + `agent/workflows/ft-t2/FEATURE-CLOSURE.md` | HERM-211 locked semantics, standalone normalized physical representation |
 
 ## Provenance discipline
 

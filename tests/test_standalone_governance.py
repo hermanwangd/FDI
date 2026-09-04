@@ -1,8 +1,76 @@
-import json, hashlib
+import fnmatch, importlib.util, json, hashlib, re, shutil, subprocess
+import pytest
+from functools import lru_cache
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
+MOVED_OLD_PATHS=(
+    "/".join(("docs", "FDI-PROJECT-OVERVIEW-FRAMEWORK-CENTERED.md")),
+    "specs/product-intelligence", "specs/product-knowledge", "specs/source-integration",
+    "specs/structural-intelligence", "specs/proposals", "DEVELOPMENT-BACKLOG.md",
+    "STATUS.json", "governance/decisions", "MULTICA-HANDOFF.md", "MULTICA-PROJECT-PROMPT.txt",
+    "specs/approved/layer1", "specs/approved/layer2", "specs/approved/ft-t2",
+    "governance/approved-source-lock.json",
+    "contracts/layer1", "contracts/layer2", "contracts/ft-t2",
+    "contracts/source-integration", "contracts/structural-intelligence",
+    "skills", "workflows",
+    "validation/skill-behavior", "validation/grafel-binding-evidence-v0.1.schema.json",
+    "validation/FDI-v0.4.7.1-ABLATION-PROTOCOL.md",
+    "validation/OPTION-B-PAIRED-REPLAY-PROTOCOL-v0.1.md",
+    "validation/REALIZATION-TRAVERSAL-GUARD-SPEC-v0.1.md",
+    "scripts", "templates/product-intelligence",
+)
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
-def lock(): return json.loads((ROOT/'governance/approved-source-lock.json').read_text())
+APPROVED_FILE_DIGESTS={
+    'governance/approved/layer1/fdi-layer1-markdown-io-profile-v0.1-approved.md': '6c98deeb883f6b468a14f87647e9df25fcfffb5814e66aeddb3dcfc5b3b0bb8c',
+    'governance/approved/layer1/fdi-layer1-specification-v0.2-approved.md': '18fd5dac4196d01216454ec713d93fc5dd1f752f5db35a467d5fad0b16035928',
+    'governance/approved/layer2/fdi-layer2-product-intelligence-framework-v0.1-approved.md': 'fe1ab08cb3ef288dc5bb1bf8fd72546f00948c0889dcb046e3c00bf5e012e112',
+    'governance/approved/layer2/fdi-product-asset-maintenance-skill-contracts-v0.1-approved.md': 'c862a086eacba23ff7828743f78b7fc42c1eeda5d6a8a4e0ec06e08dbf910813',
+    'governance/approved/layer2/fdi-product-asset-profile-specification-v0.1-approved.md': '6d87b6d9396fe3556f543fd44f3ffd4b3f6d94aa51147190c45948c75aed03dc',
+    'governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md': 'e54c4cf7ac5b35985a27b17c0ce85ef64f01698a04556ee50948de2f45861561',
+}
+def lock(): return json.loads(current_lock_path().read_text())
+def current_values(root=ROOT):
+    values={}
+    for line in (root/'governance/CURRENT').read_text().splitlines():
+        if '=' in line:
+            key, value=line.split('=', 1)
+            values.setdefault(key, []).append(value)
+    return values
+def current_lock_path(root=ROOT):
+    values=current_values(root)['APPROVED_SOURCE_LOCK']
+    assert len(values)==1
+    return root/values[0]
+def path_pattern_matches(path, pattern):
+    path_parts=path.split('/')
+    pattern_parts=pattern.split('/')
+    @lru_cache(maxsize=None)
+    def matches(pattern_index, path_index):
+        if pattern_index == len(pattern_parts):
+            return path_index == len(path_parts)
+        if pattern_parts[pattern_index] == '**':
+            return matches(pattern_index + 1, path_index) or (
+                path_index < len(path_parts) and matches(pattern_index, path_index + 1)
+            )
+        return (
+            path_index < len(path_parts)
+            and fnmatch.fnmatchcase(path_parts[path_index], pattern_parts[pattern_index])
+            and matches(pattern_index + 1, path_index + 1)
+        )
+    return matches(0, 0)
+def stale_path_patterns():
+    for old_path in MOVED_OLD_PATHS:
+        if old_path in {"skills", "workflows"}:
+            yield r'(?<![A-Za-z0-9_./-])' + re.escape(old_path) + r'/'
+            continue
+        prefix = r'(?<!/)' if '/' not in old_path else ''
+        yield prefix + re.escape(old_path) + r'(?![A-Za-z0-9_.-])'
+def local_markdown_links(path):
+    text=path.read_text()
+    for raw_target in re.findall(r'(?<!!)\[[^]]+\]\(([^)]+)\)', text):
+        target=raw_target.strip().strip('<>')
+        if target.startswith(('#', 'http://', 'https://', 'mailto:')):
+            continue
+        yield target.split('#', 1)[0].split('?', 1)[0]
 def test_six_governing_modules_are_local():
     mods={m['id']:m for m in lock()['modules']}
     assert set(mods)=={'L1-SEM','L1-IO','L2-FWK','L2-PROFILE','L2-MAINT','FT-T2'}
@@ -15,30 +83,590 @@ def test_governing_docs_have_real_content():
 def test_five_single_source_hashes_match():
     for m in lock()['modules']:
         if 'sha256' in m: assert sha(ROOT/m['local_path'])==m['sha256']
+def test_approved_sources_are_relocated_byte_identically():
+    assert {m['local_path'] for m in lock()['modules']} == set(APPROVED_FILE_DIGESTS)
+    for path, digest in APPROVED_FILE_DIGESTS.items():
+        assert sha(ROOT/path) == digest
+def test_current_pointer_resolves_lock_and_ft_t2_tree_digest_matches_baseline():
+    lock_path=current_lock_path()
+    assert lock_path == ROOT/'governance/locks/approved-source-lock.json'
+    data=json.loads(lock_path.read_text())
+    ft=next(m for m in data['modules'] if m['id']=='FT-T2')
+    digest=hashlib.sha256()
+    for relative in ft['tree_paths']:
+        path=ROOT/relative
+        digest.update(relative.encode())
+        digest.update(b'\0')
+        digest.update(bytes.fromhex(sha(path)))
+    actual=digest.hexdigest()
+    assert actual == ft['tree_sha256']
+    baseline=(ROOT/'governance/baselines/GB-0001.yaml').read_text()
+    baseline_digest=re.search(r'^\s*tree_sha256:\s*([0-9a-f]{64})\s*$', baseline, re.MULTILINE)
+    assert baseline_digest
+    assert actual == baseline_digest.group(1)
+
+
+@pytest.mark.parametrize(
+    ('current_text', 'message'),
+    (
+        ('GOVERNING_BASELINE=GB-0001\n', 'missing APPROVED_SOURCE_LOCK'),
+        ('APPROVED_SOURCE_LOCK=governance/locks/a.json\nAPPROVED_SOURCE_LOCK=governance/locks/b.json\n', 'duplicate APPROVED_SOURCE_LOCK'),
+        ('APPROVED_SOURCE_LOCK=/tmp/outside.json\n', 'unsafe APPROVED_SOURCE_LOCK'),
+        ('APPROVED_SOURCE_LOCK=../outside.json\n', 'unsafe APPROVED_SOURCE_LOCK'),
+    ),
+)
+def test_verifier_rejects_invalid_current_lock_pointer(tmp_path, current_text, message):
+    governance=tmp_path/'governance'
+    governance.mkdir()
+    (governance/'CURRENT').write_text(current_text)
+    result=subprocess.run(
+        ['python3', str(ROOT/'tooling/verification/verify_standalone_bundle.py'), str(tmp_path)],
+        text=True, capture_output=True,
+    )
+    assert result.returncode != 0
+    assert message in result.stdout
 def test_ft_t2_surface_counts():
-    assert len(list((ROOT/'contracts/ft-t2').glob('*.md')))==6
-    assert len(list((ROOT/'contracts/ft-t2').glob('*.schema.json')))==6
-    assert len(list((ROOT/'skills/ft-t2').glob('*/SKILL.md')))==5
-    assert (ROOT/'workflows/ft-t2/FEATURE-CLOSURE.md').exists()
+    assert len(list((ROOT/'contracts/public/ft-t2').glob('*.md')))==6
+    assert len(list((ROOT/'contracts/public/ft-t2').glob('*.schema.json')))==6
+    assert len(list((ROOT/'agent/skills/ft-t2').glob('*/SKILL.md')))==5
+    assert (ROOT/'agent/workflows/ft-t2/FEATURE-CLOSURE.md').exists()
 def test_ft_t2_modern_vocabulary():
-    paths=list((ROOT/'contracts/ft-t2').glob('*.md'))+list((ROOT/'skills/ft-t2').glob('*/SKILL.md'))+[ROOT/'workflows/ft-t2/FEATURE-CLOSURE.md',ROOT/'specs/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md']
+    paths=list((ROOT/'contracts/public/ft-t2').glob('*.md'))+list((ROOT/'agent/skills/ft-t2').glob('*/SKILL.md'))+[ROOT/'agent/workflows/ft-t2/FEATURE-CLOSURE.md',ROOT/'governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md']
     text='\n'.join(p.read_text() for p in paths)
     assert 'CLOSED_WITHIN_DECLARED_SCOPE' in text
     assert 'ACCEPT_CLOSED_WITHIN_DECLARED_SCOPE' in text
     assert 'PROVISIONALLY_COMPLETE' not in text
-def test_all_markdown_basename_is_in_project_tree():
-    tree=(ROOT/'PROJECT-TREE.txt').read_text()
-    for p in ROOT.rglob('*.md'): assert p.name in tree
+def independently_parse_project_tree(text):
+    paths=set()
+    directories=[]
+    for line in text.splitlines()[1:]:
+        match=re.fullmatch(r'((?:│   |    )*)(?:├── |└── )(.+)', line)
+        assert match, line
+        depth=len(match.group(1))//4
+        name=match.group(2)
+        directories=directories[:depth]
+        relative='/'.join([*directories, name.rstrip('/')])
+        paths.add(relative)
+        if name.endswith('/'):
+            directories.append(name[:-1])
+    return paths
+
+
+def test_all_markdown_relative_paths_are_in_project_tree():
+    tree_paths=independently_parse_project_tree((ROOT/'release/PROJECT-TREE.txt').read_text())
+    for p in ROOT.rglob('*.md'):
+        relative=p.relative_to(ROOT).as_posix()
+        if not any(part in {'.git','.worktrees','.pytest_cache','__pycache__','target'} for part in p.relative_to(ROOT).parts):
+            assert relative in tree_paths
+
+
+def test_project_tree_generator_excludes_untracked_empty_legacy_directories(tmp_path):
+    kept=tmp_path/'docs/kept.md'
+    kept.parent.mkdir(parents=True)
+    kept.write_text('kept\n')
+    (tmp_path/'specs/approved').mkdir(parents=True)
+    result=subprocess.run(
+        ['python3', str(ROOT/'tooling/packaging/generate_project_tree.py'), str(tmp_path)],
+        text=True, capture_output=True,
+    )
+    assert result.returncode == 0, result.stderr
+    tree_paths=independently_parse_project_tree((tmp_path/'release/PROJECT-TREE.txt').read_text())
+    assert 'docs/kept.md' in tree_paths
+    assert 'specs' not in tree_paths
+    assert 'specs/approved' not in tree_paths
+
+
+def test_verifier_rejects_extra_stale_directory_in_project_tree(tmp_path):
+    copy=tmp_path/'repo'
+    shutil.copytree(ROOT, copy, ignore=shutil.ignore_patterns('.git','.worktrees','target','__pycache__','.pytest_cache','apache-maven-*'))
+    tree_result=subprocess.run(
+        ['python3', str(copy/'tooling/packaging/generate_project_tree.py'), str(copy)],
+        text=True, capture_output=True,
+    )
+    assert tree_result.returncode == 0, tree_result.stderr
+    tree_path=copy/'release/PROJECT-TREE.txt'
+    lines=tree_path.read_text().splitlines()
+    lines.insert(1, '├── specs/')
+    tree_path.write_text('\n'.join(lines)+'\n')
+    manifest_result=subprocess.run(
+        ['python3', str(copy/'tooling/packaging/build_manifest.py'), str(copy)],
+        text=True, capture_output=True,
+    )
+    assert manifest_result.returncode == 0, manifest_result.stderr
+    result=subprocess.run(
+        ['python3', str(copy/'tooling/verification/verify_standalone_bundle.py'), str(copy)],
+        text=True, capture_output=True,
+    )
+    assert result.returncode != 0
+    assert 'PROJECT-TREE exact path set' in result.stdout
+    assert "extra=['specs']" in result.stdout
+
+
+def test_project_tree_exact_verification_does_not_reuse_generator_file_selector():
+    source=(ROOT/'tooling/verification/verify_standalone_bundle.py').read_text()
+    assert 'from release_metadata import included_files' not in source
+
+
+def test_verifier_rejects_missing_non_markdown_file_in_project_tree(tmp_path):
+    copy=tmp_path/'repo'
+    shutil.copytree(ROOT, copy, ignore=shutil.ignore_patterns('.git','.worktrees','target','__pycache__','.pytest_cache','apache-maven-*'))
+    tree_path=copy/'release/PROJECT-TREE.txt'
+    lines=tree_path.read_text().splitlines()
+    lines.remove('├── pom.xml')
+    tree_path.write_text('\n'.join(lines)+'\n')
+    manifest_result=subprocess.run(
+        ['python3', str(copy/'tooling/packaging/build_manifest.py'), str(copy)],
+        text=True, capture_output=True,
+    )
+    assert manifest_result.returncode == 0, manifest_result.stderr
+    result=subprocess.run(
+        ['python3', str(copy/'tooling/verification/verify_standalone_bundle.py'), str(copy)],
+        text=True, capture_output=True,
+    )
+    assert result.returncode != 0
+    assert 'PROJECT-TREE exact path set' in result.stdout
+    assert "missing=['pom.xml']" in result.stdout
+
+
+def test_verifier_detects_one_missing_duplicate_named_markdown_path(tmp_path):
+    copy=tmp_path/'repo'
+    shutil.copytree(ROOT, copy, ignore=shutil.ignore_patterns('.git','.worktrees','target','__pycache__','.pytest_cache','apache-maven-*'))
+    tree_path=copy/'release/PROJECT-TREE.txt'
+    lines=tree_path.read_text().splitlines()
+    parsed=independently_parse_project_tree('\n'.join(lines)+'\n')
+    assert 'docs/README.md' in parsed
+    assert sum(path.endswith('/README.md') or path == 'README.md' for path in parsed)>1
+    for index in range(1,len(lines)):
+        if not lines[index].endswith('README.md'):
+            continue
+        candidate=lines[:index]+lines[index+1:]
+        if 'docs/README.md' not in independently_parse_project_tree('\n'.join(candidate)+'\n'):
+            del lines[index]
+            break
+    else:
+        pytest.fail('docs/README.md tree entry not found')
+    tree_path.write_text('\n'.join(lines)+'\n')
+    result=subprocess.run(
+        ['python3', str(copy/'tooling/verification/verify_standalone_bundle.py'), str(copy)],
+        text=True, capture_output=True,
+    )
+    assert result.returncode != 0
+    assert 'missing=[\'docs/README.md\']' in result.stdout
 def test_overview_and_handoff_exist():
     assert (ROOT/'PROJECT-OVERVIEW.md').exists()
-    assert (ROOT/'MULTICA-HANDOFF.md').exists()
-    assert (ROOT/'MULTICA-PROJECT-PROMPT.txt').exists()
+    assert (ROOT/'agent/handoff/MULTICA-HANDOFF.md').exists()
+    assert (ROOT/'agent/handoff/MULTICA-PROJECT-PROMPT.txt').exists()
 def test_no_governing_placeholder_readmes():
-    assert not (ROOT/'contracts/layer1/README.md').exists()
-    assert not (ROOT/'contracts/ft-t2/README.md').exists()
+    assert not (ROOT/'contracts/public/layer1/README.md').exists()
+    assert not (ROOT/'contracts/public/ft-t2/README.md').exists()
+
+
+def test_repository_navigation_entry_points_exist():
+    for path in ("AGENTS.md", "docs/README.md", "docs/FILE-CLASSIFICATION.md"):
+        assert (ROOT/path).is_file()
+
+
+def test_readme_links_to_current_authoritative_entry_points():
+    readme=(ROOT/'README.md').read_text()
+    for target in ("docs/overview/FDI-PROJECT-OVERVIEW.md", "governance/CURRENT", "docs/planning/STATUS.json"):
+        assert f"]({target})" in readme
+
+
+def test_active_handoff_commands_use_python3_for_standalone_verifier():
+    instruction_paths=(
+        ROOT/'agent/handoff/MULTICA-HANDOFF.md',
+        ROOT/'agent/handoff/MULTICA-PROJECT-PROMPT.txt',
+    )
+    bare=re.compile(r'(?<![A-Za-z0-9_])python\s+tooling/verification/verify_standalone_bundle\.py\s+\.')
+    for path in instruction_paths:
+        assert not bare.search(path.read_text()), path
+
+
+def test_framework_spec_declares_canonical_project_location():
+    spec=ROOT/'docs/specifications/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md'
+    expected='**Intended project location:** `docs/specifications/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md`'
+    assert expected in spec.read_text()
+
+
+def test_reorganized_document_targets_exist_and_old_paths_are_absent():
+    targets=(
+        "docs/overview/FDI-PROJECT-OVERVIEW.md",
+        "docs/specifications/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md",
+        "docs/specifications/framework/FRAMEWORK-CAPABILITY-FEATURE-CATALOG-v0.1-rc4.md",
+        "docs/specifications/framework/SKILL-OWNERSHIP-MAP-v0.1-rc4.md",
+        "docs/specifications/providers/graphify/GRAPHIFY-PROVIDER-PROFILE-v0.1-lean-rc4.md",
+        "docs/reviews/RC4-REVIEW-FIX-NOTE.md",
+        "docs/reviews/SPEC-VERIFICATION.json",
+        "docs/specifications/framework/product-intelligence/PRODUCT-INTELLIGENCE-STORE.md",
+        "docs/specifications/framework/product-knowledge/PA-01-MINIMAL-PRODUCT-SEMANTICS-PROFILE-v0.1-approval-candidate.md",
+        "docs/specifications/framework/product-knowledge/PRODUCT-KNOWLEDGE-MAINTENANCE-PATH-v0.1.md",
+        "docs/specifications/framework/source-integration/AZURE-REPOS-EXACT-SOURCE-BINDING.md",
+        "docs/specifications/framework/structural-intelligence/FEATURE-DISCOVERY-INTEGRATION-v0.2.md",
+        "docs/specifications/framework/structural-intelligence/GRAFEL-ADAPTER-CONTRACT-v0.2.md",
+        "docs/specifications/framework/structural-intelligence/GRAFEL-BINDING-ATTESTOR-v0.2.md",
+        "docs/specifications/framework/structural-intelligence/MAINTAIN-PRODUCT-INTEGRATION-v0.1.md",
+        "docs/specifications/proposals/PA-01/PA-01-MINIMAL-PRODUCT-SEMANTICS-PROFILE-v0.1-approval-candidate.md",
+        "docs/planning/DEVELOPMENT-BACKLOG.md",
+        "docs/planning/STATUS.json",
+        "docs/architecture/decisions/ADR-001-code-intelligence-provider.md",
+        "docs/architecture/decisions/ADR-002-product-intelligence-store.md",
+        "docs/architecture/decisions/ADR-003-azure-repos-acquisition.md",
+        "docs/architecture/decisions/ADR-004-standalone-governing-content.md",
+        "agent/handoff/MULTICA-HANDOFF.md",
+        "agent/handoff/MULTICA-PROJECT-PROMPT.txt",
+    )
+    for path in targets:
+        assert (ROOT/path).is_file(), path
+    for path in MOVED_OLD_PATHS:
+        assert not (ROOT/path).exists(), path
+
+
+def test_project_overview_is_a_resolving_compatibility_pointer():
+    overview=(ROOT/'PROJECT-OVERVIEW.md').read_text()
+    target="docs/overview/FDI-PROJECT-OVERVIEW.md"
+    assert f"]({target})" in overview
+    assert (ROOT/target).is_file()
+
+
+def test_active_non_governing_text_has_no_stale_moved_paths():
+    excluded_prefixes=("specs/approved/", "governance/approved/", "docs/superpowers/")
+    candidates=subprocess.run(
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
+        cwd=ROOT, check=True, text=True, capture_output=True,
+    ).stdout.splitlines()
+    for relative in candidates:
+        if relative.startswith(excluded_prefixes) or relative in {"release/MANIFEST.json", "release/MARKDOWN-INVENTORY.txt", "release/PROJECT-TREE.txt", "release/VERIFICATION-SUMMARY.json", "tests/test_standalone_governance.py"}:
+            continue
+        path=ROOT/relative
+        if not path.exists():
+            continue
+        try:
+            text=path.read_text()
+        except (UnicodeDecodeError, IsADirectoryError):
+            continue
+        for old in stale_path_patterns():
+            assert not re.search(old, text), f"stale path pattern {old!r} in {relative}"
+
+
+def test_stale_path_patterns_reject_bare_and_slash_suffixed_directory_references():
+    patterns=tuple(stale_path_patterns())
+    assert any(re.search(pattern, "See governance/decisions for details") for pattern in patterns)
+    assert any(re.search(pattern, "See governance/decisions/ADR-001.md") for pattern in patterns)
+
+
+def test_stale_path_patterns_do_not_match_sibling_or_filename_suffixes():
+    patterns=tuple(stale_path_patterns())
+    lookalikes=(
+        "specs/proposals-archive",
+        "specs/proposals_archive",
+        "STATUS.json.bak",
+        "MULTICA-PROJECT-PROMPT.txt.old",
+    )
+    for lookalike in lookalikes:
+        assert not any(re.search(pattern, lookalike) for pattern in patterns), lookalike
+
+
+def test_classification_globs_are_segment_aware_and_double_star_is_recursive():
+    source="src/main/java/com/example/App.java"
+    assert not path_pattern_matches(source, "src/main/*")
+    assert path_pattern_matches(source, "src/main/**")
+
+
+def test_every_tracked_or_pending_path_has_exactly_one_documented_classification():
+    classification=(ROOT/'docs/FILE-CLASSIFICATION.md').read_text()
+    match=re.search(r"```classification-rules\n(.*?)\n```", classification, re.DOTALL)
+    assert match, "missing machine-readable classification-rules block"
+    rules=[]
+    for line in match.group(1).splitlines():
+        pattern, category=line.split("\t", 1)
+        rules.append((pattern, category))
+    paths=subprocess.run(
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
+        cwd=ROOT, check=True, text=True, capture_output=True,
+    ).stdout.splitlines()
+    for path in paths:
+        if not (ROOT/path).exists():
+            continue
+        matches=[category for pattern, category in rules if path_pattern_matches(path, pattern)]
+        assert len(matches)==1, f"{path}: expected exactly one classification, got {matches}"
+
+
+def test_repository_navigation_local_links_resolve_and_dated_links_are_centralized():
+    navigation_paths=(ROOT/'README.md', ROOT/'AGENTS.md', ROOT/'docs/README.md')
+    for source in navigation_paths:
+        for target in local_markdown_links(source):
+            assert (source.parent/target).resolve().exists(), f"broken link in {source}: {target}"
+    agents=(ROOT/'AGENTS.md').read_text()
+    docs=(ROOT/'docs/README.md').read_text()
+    assert 'docs/superpowers/specs/2026-' not in agents
+    assert '(superpowers/specs/2026-09-03-graphify-provider-migration-design.md)' in docs
+    assert '(superpowers/specs/2026-09-04-project-folder-reorganization-design.md)' in docs
+    assert '(superpowers/plans/2026-09-04-project-folder-reorganization.md)' in docs
 
 
 def test_markdown_inventory_is_exact():
     actual=sorted(p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*.md") if not any(x in {".pytest_cache","__pycache__",".git"} for x in p.relative_to(ROOT).parts))
-    inv=[x.strip() for x in (ROOT/"MARKDOWN-INVENTORY.txt").read_text().splitlines() if x.strip()]
+    inv=[x.strip() for x in (ROOT/"release/MARKDOWN-INVENTORY.txt").read_text().splitlines() if x.strip()]
     assert inv==actual
+
+
+RELEASE_METADATA=("MANIFEST.json", "MARKDOWN-INVENTORY.txt", "PROJECT-TREE.txt", "VERIFICATION-SUMMARY.json")
+
+
+def test_release_metadata_exists_only_under_release():
+    for name in RELEASE_METADATA:
+        assert (ROOT/"release"/name).is_file(), name
+        assert not (ROOT/name).exists(), name
+
+
+@pytest.mark.parametrize("script", (
+    "tooling/packaging/generate_project_tree.py",
+    "tooling/packaging/generate_markdown_inventory.py",
+    "tooling/packaging/generate_verification_summary.py",
+    "tooling/packaging/build_manifest.py",
+))
+def test_release_generators_default_to_repository_root_from_another_cwd(tmp_path, script):
+    result=subprocess.run(["python3", str(ROOT/script)], cwd=tmp_path, text=True, capture_output=True)
+    assert result.returncode == 0, result.stderr
+    assert str(ROOT/"release") in result.stdout
+
+
+def test_manifest_and_tree_exclude_transient_and_sensitive_paths(tmp_path):
+    included=tmp_path/"docs/kept.md"
+    included.parent.mkdir()
+    included.write_text("kept\n")
+    excluded=(
+        ".git/config", ".worktrees/w/file", ".mvn/apache-maven-3.9.9/README.txt",
+        "target/app.jar", "__pycache__/x.pyc", ".pytest_cache/state", ".fdi-work/report.json",
+        "dist/app.js", "build/output", ".env", "credentials.json", "release/MANIFEST.json.tmp",
+    )
+    for relative in excluded:
+        path=tmp_path/relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("excluded\n")
+    for script in ("generate_project_tree.py", "generate_markdown_inventory.py", "build_manifest.py"):
+        result=subprocess.run(
+            ["python3", str(ROOT/"tooling/packaging"/script), str(tmp_path)],
+            text=True, capture_output=True,
+        )
+        assert result.returncode == 0, result.stderr
+    manifest=json.loads((tmp_path/"release/MANIFEST.json").read_text())
+    manifest_paths={entry["path"] for entry in manifest["files"]}
+    tree=(tmp_path/"release/PROJECT-TREE.txt").read_text()
+    inventory=(tmp_path/"release/MARKDOWN-INVENTORY.txt").read_text().splitlines()
+    assert "docs/kept.md" in manifest_paths
+    assert "docs/kept.md" in inventory
+    for relative in excluded:
+        assert relative not in manifest_paths
+        assert relative not in tree
+        assert relative not in inventory
+    assert "release/MANIFEST.json" not in manifest_paths
+
+
+def test_release_metadata_excludes_file_and_directory_symlinks(tmp_path):
+    outside=tmp_path.parent/(tmp_path.name + "-outside-secret")
+    outside.write_text("OUTSIDE_SECRET_BYTES\n")
+    internal=tmp_path/"docs/internal.txt"
+    internal.parent.mkdir()
+    internal.write_text("internal\n")
+    (tmp_path/"internal-link.txt").symlink_to(internal)
+    (tmp_path/"outside-link.txt").symlink_to(outside)
+    outside_dir=tmp_path.parent/(tmp_path.name + "-outside-dir")
+    outside_dir.mkdir()
+    (outside_dir/"secret.txt").write_text("OUTSIDE_DIRECTORY_SECRET\n")
+    (tmp_path/"linked-dir").symlink_to(outside_dir, target_is_directory=True)
+    for script in ("generate_project_tree.py", "generate_markdown_inventory.py", "build_manifest.py"):
+        result=subprocess.run(["python3", str(ROOT/"tooling/packaging"/script), str(tmp_path)], text=True, capture_output=True)
+        assert result.returncode == 0, result.stderr
+    manifest_text=(tmp_path/"release/MANIFEST.json").read_text()
+    manifest=json.loads(manifest_text)
+    paths={entry["path"] for entry in manifest["files"]}
+    assert "docs/internal.txt" in paths
+    assert not {"internal-link.txt", "outside-link.txt", "linked-dir/secret.txt"} & paths
+    assert "OUTSIDE_SECRET_BYTES" not in manifest_text
+    assert hashlib.sha256(outside.read_bytes()).hexdigest() not in manifest_text
+    tree=(tmp_path/"release/PROJECT-TREE.txt").read_text()
+    assert "internal-link.txt" not in tree
+    assert "outside-link.txt" not in tree
+    assert "linked-dir" not in tree
+
+
+def test_verification_summary_never_claims_pass_without_execution_evidence(tmp_path):
+    result=subprocess.run(
+        ["python3", str(ROOT/"tooling/packaging/generate_verification_summary.py"), str(tmp_path)],
+        text=True, capture_output=True,
+    )
+    assert result.returncode == 0, result.stderr
+    summary=json.loads((tmp_path/"release/VERIFICATION-SUMMARY.json").read_text())
+    assert summary["verification_execution"] == {
+        "manifest_integrity": "NOT_RUN",
+        "python_compile": "NOT_RUN",
+        "standalone_verifier": "NOT_RUN",
+        "unit_tests": "NOT_RUN",
+    }
+    assert "PASS" not in json.dumps(summary)
+    for key in ("real_product_binding", "live_grafel", "DEV204", "F001"):
+        assert summary["claims"][key] == "NOT_EXECUTED"
+
+
+def test_project_tree_models_all_release_outputs_with_structural_prefixes(tmp_path):
+    (tmp_path/"z-last.txt").write_text("last\n")
+    result=subprocess.run(
+        ["python3", str(ROOT/"tooling/packaging/generate_project_tree.py"), str(tmp_path)],
+        cwd=tmp_path.parent, text=True, capture_output=True,
+    )
+    assert result.returncode == 0, result.stderr
+    lines=(tmp_path/"release/PROJECT-TREE.txt").read_text().splitlines()
+    release_index=lines.index("├── release/")
+    assert lines[release_index + 1:release_index + 5] == [
+        "│   ├── MANIFEST.json",
+        "│   ├── MARKDOWN-INVENTORY.txt",
+        "│   ├── PROJECT-TREE.txt",
+        "│   └── VERIFICATION-SUMMARY.json",
+    ]
+    assert lines[release_index + 5] == "└── z-last.txt"
+
+
+def assert_numbered_sections_are_consistent(text):
+    current_section=None
+    top_level=[]
+    subsections={}
+    for line in text.splitlines():
+        top_match=re.match(r"^# (\d+)\. ", line)
+        if top_match:
+            current_section=int(top_match.group(1))
+            top_level.append(current_section)
+            continue
+        sub_match=re.match(r"^## (\d+)\.(\d+) ", line)
+        if sub_match:
+            section, subsection=map(int, sub_match.groups())
+            assert current_section is not None
+            assert section==current_section, f"{line!r} is under section {current_section}"
+            subsections.setdefault(section, []).append(subsection)
+    assert top_level, "no numbered top-level sections"
+    assert top_level==list(range(top_level[0], max(top_level) + 1)), f"top-level sections: {top_level}"
+    for section, numbers in subsections.items():
+        assert numbers==list(range(1, max(numbers) + 1)), f"section {section} subsections: {numbers}"
+
+
+def test_framework_spec_numbered_sections_are_consistent():
+    path=ROOT/"docs/specifications/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md"
+    assert_numbered_sections_are_consistent(path.read_text())
+
+
+def test_numbered_section_check_rejects_a_missing_subsection():
+    markdown="\n".join(f"# {number}. Section" for number in range(1, 45))
+    markdown += "\n## 44.1 First\n## 44.2 Second\n## 44.4 Fourth\n"
+    with pytest.raises(AssertionError):
+        assert_numbered_sections_are_consistent(markdown)
+
+
+def test_numbered_section_check_accepts_a_future_contiguous_top_level_section():
+    markdown="\n".join(f"# {number}. Section" for number in range(1, 46))
+    assert_numbered_sections_are_consistent(markdown)
+
+
+def test_overview_documents_runtime_implementation_and_evidence_readiness():
+    overview=(ROOT/"docs/overview/FDI-PROJECT-OVERVIEW.md").read_text()
+    assert "# 34. Runtime Implementation" in overview
+    assert "Java 17" in overview
+    assert "Spring Boot 3.4.1" in overview
+    assert "Grafel-named provider integration" in overview
+    assert "Graphify rename/migration is planned and separate" in overview
+    assert "# 35. Readiness and Evidence Status" in overview
+
+
+def test_overview_preserves_not_executed_validation_states():
+    overview=(ROOT/"docs/overview/FDI-PROJECT-OVERVIEW.md").read_text()
+    readiness=overview.split("# 35. Readiness and Evidence Status", 1)[1]
+    expected_rows=(
+        "| Live Graphify integration | `NOT_EXECUTED` |",
+        "| Real Product binding | `NOT_EXECUTED` |",
+        "| DEV-204 | `NOT_EXECUTED` |",
+        "| F001 | `NOT_EXECUTED` |",
+    )
+    for row in expected_rows:
+        assert row in readiness
+
+
+def test_validation_tooling_and_template_targets_exist_and_old_paths_are_absent():
+    targets=(
+        "validation/dev204/scenarios/SCENARIOS-v0.4.7.1.json",
+        "validation/dev204/scenarios/VALIDATION-PLAN-v0.4.7.1.json",
+        "validation/dev204/scenarios/EXECUTION-GUIDE-v0.4.7.1.md",
+        "validation/dev204/schemas/execution-record-v0.2.schema.json",
+        "validation/dev204/fixtures",
+        "validation/f001/FDI-v0.4.7.1-ABLATION-PROTOCOL.md",
+        "validation/deterministic/OPTION-B-PAIRED-REPLAY-PROTOCOL-v0.1.md",
+        "validation/deterministic/REALIZATION-TRAVERSAL-GUARD-SPEC-v0.1.md",
+        "validation/reports",
+        "contracts/providers/graphify/grafel-binding-evidence-v0.1.schema.json",
+        "tooling/packaging",
+        "tooling/verification",
+        "tooling/migration",
+        "templates/product-instance/README.md",
+    )
+    for path in targets:
+        assert (ROOT/path).exists(), path
+    for path in ("validation/skill-behavior", "validation/grafel-binding-evidence-v0.1.schema.json", "scripts", "templates/product-intelligence"):
+        assert not (ROOT/path).exists(), path
+
+
+def test_dev204_cli_prepares_frozen_corpus_without_execution_claim(tmp_path):
+    jar=ROOT/'target/fdi-0.4.8.3.jar'
+    assert jar.is_file(), "package the application before running the CLI test"
+    result=subprocess.run(
+        [
+            'java', '-jar', str(jar), 'dev204-prepare',
+            '--scenario-pack', str(ROOT/'validation/dev204/scenarios/SCENARIOS-v0.4.7.1.json'),
+            '--output-dir', str(tmp_path),
+        ],
+        text=True, capture_output=True,
+    )
+    assert result.returncode == 0, result.stderr
+    summary=json.loads(result.stdout)
+    assert summary['scenario_count'] == 12
+    assert summary['packet_count'] == 24
+    assert summary['claim_boundary'] == 'PACKETS_PREPARED_NOT_EXECUTED'
+    outputs=list(tmp_path.glob('*.json'))
+    assert len(outputs) == 36
+    assert len(list(tmp_path.glob('*-packet.json'))) == 24
+    assert len(list(tmp_path.glob('*-reviewer-rubric.json'))) == 12
+
+
+@pytest.mark.parametrize(
+    ('relative_script', 'argv', 'java_command'),
+    (
+        (
+            'tooling/migration/prepare_dev204_execution.py',
+            ['--scenario-pack', 'scenario.json', '--output-dir', 'prepared'],
+            ['dev204-prepare', '--scenario-pack', 'scenario.json', '--output-dir', 'prepared'],
+        ),
+        (
+            'tooling/verification/evaluate_dev204_pair.py',
+            ['--red', 'red.json', '--green', 'green.json'],
+            ['dev204-evaluate', '--red', 'red.json', '--green', 'green.json'],
+        ),
+    ),
+)
+def test_maven_wrappers_force_bounded_heap_and_preserve_cli_paths(monkeypatch, relative_script, argv, java_command):
+    path=ROOT/relative_script
+    spec=importlib.util.spec_from_file_location('wrapper_under_test', path)
+    module=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    calls=[]
+    monkeypatch.setenv('MAVEN_OPTS', '-Xmx12g')
+    monkeypatch.setattr(module.subprocess, 'run', lambda args, **kwargs: calls.append((args, kwargs)))
+
+    module.main(argv)
+
+    assert len(calls) == 2
+    maven_args, maven_kwargs=calls[0]
+    assert maven_args == [str(ROOT/'mvnw'), '-q', '-DskipTests', 'package']
+    assert maven_kwargs['cwd'] == ROOT
+    assert maven_kwargs['check'] is True
+    assert maven_kwargs['env']['MAVEN_OPTS'] == '-Xmx2g'
+    assert maven_kwargs['env'] is not __import__('os').environ
+    java_args, java_kwargs=calls[1]
+    assert java_args == ['java', '-jar', str(ROOT/'target/fdi-0.4.8.3.jar'), *java_command]
+    assert java_kwargs == {'check': True}

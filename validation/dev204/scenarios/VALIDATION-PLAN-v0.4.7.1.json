@@ -1,0 +1,114 @@
+{
+  "claim_boundary": "EXECUTION_READY_NOT_BEHAVIORALLY_VALIDATED",
+  "execution_record_schema": "validation/dev204/schemas/execution-record-v0.2.schema.json",
+  "execution_requirements": {
+    "current_session_executor_available": false,
+    "ground_truth_mounted": false,
+    "independent_fresh_contexts": true,
+    "independent_review_required": true,
+    "same_frozen_scenario_per_red_green_pair": true
+  },
+  "option_b_hypothesis_ref": "00-product/MVP-HYPOTHESIS-FREEZE-v0.4.7.1.md",
+  "release": "fdi-mvp-v0.4.7.1",
+  "scenarios": [
+    {
+      "green_requires_fresh_context": true,
+      "priority": 1,
+      "red_requires_fresh_context": true,
+      "skill_or_behavior": "PA-Codebase-Inventory",
+      "status": "NOT_EXECUTED",
+      "target_kind": "SKILL"
+    },
+    {
+      "green_requires_fresh_context": true,
+      "priority": 2,
+      "red_requires_fresh_context": true,
+      "skill_or_behavior": "PA-Historical-Delivery",
+      "status": "NOT_EXECUTED",
+      "target_kind": "SKILL"
+    },
+    {
+      "green_requires_fresh_context": true,
+      "priority": 3,
+      "red_requires_fresh_context": true,
+      "skill_or_behavior": "feature-intent-analysis",
+      "status": "NOT_EXECUTED",
+      "target_kind": "SKILL"
+    },
+    {
+      "green_requires_fresh_context": true,
+      "priority": 4,
+      "red_requires_fresh_context": true,
+      "skill_or_behavior": "repo-discovery",
+      "status": "NOT_EXECUTED",
+      "target_kind": "SKILL"
+    },
+    {
+      "green_requires_fresh_context": true,
+      "priority": 5,
+      "red_requires_fresh_context": true,
+      "skill_or_behavior": "changesurface-investigation",
+      "status": "NOT_EXECUTED",
+      "target_kind": "SKILL"
+    },
+    {
+      "green_requires_fresh_context": true,
+      "priority": 6,
+      "red_requires_fresh_context": true,
+      "skill_or_behavior": "dependency-closure",
+      "status": "NOT_EXECUTED",
+      "target_kind": "SKILL"
+    },
+    {
+      "green_requires_fresh_context": true,
+      "priority": 7,
+      "red_requires_fresh_context": true,
+      "skill_or_behavior": "closure-review",
+      "status": "NOT_EXECUTED",
+      "target_kind": "SKILL"
+    },
+    {
+      "green_requires_fresh_context": true,
+      "priority": 8,
+      "red_requires_fresh_context": true,
+      "skill_or_behavior": "ft-t1-intention",
+      "status": "NOT_EXECUTED",
+      "target_kind": "SKILL"
+    },
+    {
+      "green_requires_fresh_context": true,
+      "priority": 9,
+      "red_requires_fresh_context": true,
+      "skill_or_behavior": "ft-t2-delivery-spec",
+      "status": "NOT_EXECUTED",
+      "target_kind": "SKILL"
+    },
+    {
+      "green_requires_fresh_context": true,
+      "priority": 10,
+      "red_requires_fresh_context": true,
+      "skill_or_behavior": "product-team-onboarding-leader",
+      "status": "NOT_EXECUTED",
+      "target_kind": "SKILL"
+    },
+    {
+      "green_requires_fresh_context": true,
+      "kind": "SYSTEM_BEHAVIOR_NOT_SKILL",
+      "priority": 11,
+      "red_requires_fresh_context": true,
+      "skill_or_behavior": "product-knowledge-feature-discovery-closed-loop",
+      "status": "NOT_EXECUTED",
+      "target_kind": "SYSTEM_BEHAVIOR"
+    },
+    {
+      "green_requires_fresh_context": true,
+      "kind": "SYSTEM_BEHAVIOR_NOT_SKILL",
+      "priority": 12,
+      "red_requires_fresh_context": true,
+      "skill_or_behavior": "structural-intelligence-feature-discovery-integration",
+      "status": "NOT_EXECUTED",
+      "target_kind": "SYSTEM_BEHAVIOR"
+    }
+  ],
+  "validation_mode": "FRESH_CONTEXT_RED_GREEN"
+}

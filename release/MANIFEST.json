@@ -1,0 +1,880 @@
+{
+  "manifest_version": "0.4.8.3",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "6159464f589d8639309ad3c0a6fb642f3c4953263f5649bdada17aaf36a072f8",
+      "size": 130
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "5aea50176952c9245d8d86716df770b201c84e36d2de86b4bd970fdfcd2aa8fc",
+      "size": 3421
+    },
+    {
+      "path": "PROJECT-OVERVIEW.md",
+      "sha256": "b18c6a75a17c973eb44ce7a1053dc4417a6c88d1370217ebcae391acd7449f84",
+      "size": 279
+    },
+    {
+      "path": "README.md",
+      "sha256": "6e98b8693eda93692cf78dab84908f33040ac83ab7be897c465948ef8456824e",
+      "size": 499
+    },
+    {
+      "path": "mvnw",
+      "sha256": "ddb5bc6162a20b144a69bab53c75d0684419e93aaa76a757af565c0879db7293",
+      "size": 510
+    },
+    {
+      "path": "pom.xml",
+      "sha256": "a0d762bec6a48cc81655d498b139bfbc6a7dec0d40001363ca450a5ffecebb28",
+      "size": 1416
+    },
+    {
+      "path": ".mvn/wrapper/maven-wrapper.properties",
+      "sha256": "fe678b324a43f28edfc0c1c1448c1f192d3cb2123afe79235a815689d2f59084",
+      "size": 116
+    },
+    {
+      "path": "agent/handoff/MULTICA-HANDOFF.md",
+      "sha256": "655de4fe5dc4966651a47bf328178261663108ef7bdc46d49474ee572197c06c",
+      "size": 2193
+    },
+    {
+      "path": "agent/handoff/MULTICA-PROJECT-PROMPT.txt",
+      "sha256": "ea9c1c402954f1f5d6f16ecfe297581f6c87b9099b1179a69774fd57db7892ec",
+      "size": 846
+    },
+    {
+      "path": "agent/skills/ft-t2/changesurface-investigation/SKILL.md",
+      "sha256": "4d9471384b5b3e6ecaf2f4e5635e39c1b57d88eb1e065a8ea2c4b60807c1e824",
+      "size": 844
+    },
+    {
+      "path": "agent/skills/ft-t2/closure-review/SKILL.md",
+      "sha256": "4147cac2ead6c88a0d17dfdf3343bb8ebc31fe58a214b621c25a7370beaeedba",
+      "size": 844
+    },
+    {
+      "path": "agent/skills/ft-t2/dependency-closure/SKILL.md",
+      "sha256": "8a1796c256f14cb7c0e6a7d09982b8234f3d1607bcc29cae389187cc5be2bc9b",
+      "size": 954
+    },
+    {
+      "path": "agent/skills/ft-t2/feature-intent-analysis/SKILL.md",
+      "sha256": "4f1fe71d6e87ae0bac7cdad18e7ab20b5ff66a2f79de10fec605cf5fc46cc2f8",
+      "size": 701
+    },
+    {
+      "path": "agent/skills/ft-t2/repo-discovery/SKILL.md",
+      "sha256": "d0a5c00e937efe4c26d9ca8d030e9deb55d6b964a7c21a707cb20b02670cba92",
+      "size": 842
+    },
+    {
+      "path": "agent/skills/layer1/ft-t1-intention/SKILL.md",
+      "sha256": "62d224dbb81445c80af73de30b1234fef428b93b75b8d1211f5cc6791f7524c6",
+      "size": 950
+    },
+    {
+      "path": "agent/skills/layer1/ft-t2-delivery-spec/SKILL.md",
+      "sha256": "48bb6cb83a2de89197da9a6d790cc872e6b508fac711cb945bdba200f7af9ae1",
+      "size": 1286
+    },
+    {
+      "path": "agent/skills/layer1/ft-t3-implementation/SKILL.md",
+      "sha256": "c307b5c255f6a8d1e8c9b93608b9d831dfc46ea8e5c695c4b9eacf3ee362cd84",
+      "size": 774
+    },
+    {
+      "path": "agent/skills/layer1/ft-t4-correctness/SKILL.md",
+      "sha256": "a6e04ae4baf302411f401732b2a06462e726051616b02e632b5587c37a4b389f",
+      "size": 968
+    },
+    {
+      "path": "agent/skills/layer2/PA-Codebase-Inventory/SKILL.md",
+      "sha256": "eff7d4b1c6bca0d94f34bffae034fdaba764197ef95cafaea24e313cf0e2fe40",
+      "size": 912
+    },
+    {
+      "path": "agent/skills/layer2/PA-Historical-Delivery/SKILL.md",
+      "sha256": "d9eaa1d6e1299a170da57397afd580c5f0f1d424196c350c002a315d19d300b4",
+      "size": 947
+    },
+    {
+      "path": "agent/workflows/BOOTSTRAP-PRODUCT.md",
+      "sha256": "810c15a2f848eaeed33ba84f9e53f122e996c617ba1cbd7e78df7176ad9afcb9",
+      "size": 675
+    },
+    {
+      "path": "agent/workflows/DEVELOP-FEATURE.md",
+      "sha256": "5502a8bd360de93798ba9b044b37561a1ae4097a0d6245c7a98c2fb5315045e8",
+      "size": 807
+    },
+    {
+      "path": "agent/workflows/MAINTAIN-PRODUCT.md",
+      "sha256": "d5a71e3d592a803f3e57ce66479a81aa659610cedeec651db242a47a91c6b33e",
+      "size": 617
+    },
+    {
+      "path": "agent/workflows/ft-t2/FEATURE-CLOSURE.md",
+      "sha256": "e9f06372e04d8691d85ab59715700843e6f0ec90e8a8fe94ecbbb8bf58455ec7",
+      "size": 1247
+    },
+    {
+      "path": "config/azure-repos.example.yaml",
+      "sha256": "8a6e9b83919920336922a3afa009b1464df9d346a792335987a0cc286ee0d0ba",
+      "size": 252
+    },
+    {
+      "path": "config/grafel.example.yaml",
+      "sha256": "ad0866e86275eb420161d6ecfaae2d8ffd679c3367854c070854d2beea108e3e",
+      "size": 276
+    },
+    {
+      "path": "config/product-intelligence.example.yaml",
+      "sha256": "1f08fc409df8699007e075ec0a9a77ff2a5984f34fd842d6e8a2180697a4560e",
+      "size": 208
+    },
+    {
+      "path": "config/multica/MAPPING.md",
+      "sha256": "19c316a8593b3083dba26950d860a287cd37748dccc3276630c0df22fc9bf142",
+      "size": 754
+    },
+    {
+      "path": "config/multica/PROJECT-INSTRUCTIONS.md",
+      "sha256": "a42fb29207ceed71e37097fd3595b2aabb50368b72c583bdb035f260a28772ec",
+      "size": 687
+    },
+    {
+      "path": "contracts/providers/graphify/grafel-binding-evidence-v0.1.schema.json",
+      "sha256": "efbbf7cfe183a053550885a35efe4152a863cdfc4f01fa06b9da936faca6b27b",
+      "size": 4176
+    },
+    {
+      "path": "contracts/public/ft-t2/CandidateRepoSet.md",
+      "sha256": "5bc4fef1496e650f19871c3e2b8a7a6da960b76e4ed4348feab9b0a59fd29e5d",
+      "size": 1159
+    },
+    {
+      "path": "contracts/public/ft-t2/CandidateRepoSet.schema.json",
+      "sha256": "fbebde5cd1f31f7d7df2aedf4127e4fea64fbb190f70679e5555f04a6604b9f5",
+      "size": 1466
+    },
+    {
+      "path": "contracts/public/ft-t2/ChangeSurfaceSet.md",
+      "sha256": "60464f3846ed5f889652478955e356bebf51d4cfab9ffe84b61fa1cdf84cfb28",
+      "size": 1219
+    },
+    {
+      "path": "contracts/public/ft-t2/ChangeSurfaceSet.schema.json",
+      "sha256": "08ffdbbb02e8b191bc1f44fd12e45dd825847b0d254ee5104c1985ad763f2d0d",
+      "size": 2052
+    },
+    {
+      "path": "contracts/public/ft-t2/ClosurePackage.md",
+      "sha256": "91a1e050169abdc3cf3530570f623277fcaaedb0fd5a9636c471aac83cda5fb5",
+      "size": 1289
+    },
+    {
+      "path": "contracts/public/ft-t2/ClosurePackage.schema.json",
+      "sha256": "70a47a0ffa1ba95935a05ae4614e7f8ab651d12141d41fb099f0b09480614c4b",
+      "size": 1658
+    },
+    {
+      "path": "contracts/public/ft-t2/ClosureReview.md",
+      "sha256": "e4a9973135c460cc57f7b452911bf7c33102d238c828ba7f62aa1a04d493796a",
+      "size": 1094
+    },
+    {
+      "path": "contracts/public/ft-t2/ClosureReview.schema.json",
+      "sha256": "8c5868e3bfb1e173c11f85140804a9ccfb85dd4c9b9e3156168d86dea7560cf3",
+      "size": 1710
+    },
+    {
+      "path": "contracts/public/ft-t2/EvidenceRecord.md",
+      "sha256": "59972d5459d3f65241c67914c004728090b846f85b427c25029e9a0bb9771db0",
+      "size": 1043
+    },
+    {
+      "path": "contracts/public/ft-t2/EvidenceRecord.schema.json",
+      "sha256": "9005d642ebcf18dd2c76a2682d5642058108097e4b8aa3cb09f1634c1af532a1",
+      "size": 1234
+    },
+    {
+      "path": "contracts/public/ft-t2/IntentSpec.md",
+      "sha256": "754d7547e5c3cb7a3c4bca468029edd192aecff90609dc58c1b3d7df3d090f00",
+      "size": 939
+    },
+    {
+      "path": "contracts/public/ft-t2/IntentSpec.schema.json",
+      "sha256": "73f9df03464cebf1d89b5ec712d537090d0f67975dcec00ec7260c53fae3f448",
+      "size": 1331
+    },
+    {
+      "path": "contracts/public/layer1/CANONICAL-CONTRACT-INDEX.md",
+      "sha256": "45357a1f3171c0d60f955a75afaa1d687b678f335b6c26d9dd8947dc23ec1596",
+      "size": 589
+    },
+    {
+      "path": "contracts/public/layer2/ContextRequirement.schema.json",
+      "sha256": "e977b6fc97211426549435c08f035985b31728c0b39183b4640e863eadff0f2c",
+      "size": 736
+    },
+    {
+      "path": "contracts/public/layer2/LAYER2-CONTRACT-INDEX.md",
+      "sha256": "fd1af4b2104f60e94722b3ad2feb93d79d31b861bffed99ae9c30c749e2d1a84",
+      "size": 486
+    },
+    {
+      "path": "contracts/public/layer2/ProductAssetDescriptor.schema.json",
+      "sha256": "6b376313a7e12d2f58d48230e8323073ee1b5701f305d87f4e4a961702c078dc",
+      "size": 2056
+    },
+    {
+      "path": "contracts/public/layer2/ProductAssetProposal.schema.json",
+      "sha256": "ba8bd9077b399265a2f2955fc5aa96acfc65adf6c8623c9061257e46f0b4f890",
+      "size": 844
+    },
+    {
+      "path": "contracts/public/layer2/ProductAssetRef.schema.json",
+      "sha256": "4e062caf398915b6fc1bfe6b1bc665be3f10844cd1a27959a7ce0f65f59853d1",
+      "size": 862
+    },
+    {
+      "path": "contracts/public/layer2/ResolvedContextRef.schema.json",
+      "sha256": "9173c2f7edd27e0edb025b4b6c2de06754b96f97b2045f3917ff4aaeb3cdc3fe",
+      "size": 681
+    },
+    {
+      "path": "contracts/public/layer2/SourceSnapshotSet.schema.json",
+      "sha256": "7217d6b520b422875c7d3cb8555a3a2438fccf94be28adf9ce412009c960c2ed",
+      "size": 705
+    },
+    {
+      "path": "contracts/public/source/RepositorySourceConfig.schema.json",
+      "sha256": "eef11af4cee25eec1f231ecb1b94d396e0379d3f7a5a442f3f564e316f3bf727",
+      "size": 883
+    },
+    {
+      "path": "contracts/public/structural/structural-runtime-contracts.schema.json",
+      "sha256": "1925d240af46332150c761270804a0dff05b5203051c487772e5bfd82f00ee01",
+      "size": 13082
+    },
+    {
+      "path": "docs/FILE-CLASSIFICATION.md",
+      "sha256": "16c6c90948f982ef20fb3f706b5746960f45979e73412d44a6d9cf3f5d0d8b2b",
+      "size": 3736
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "28d941db960456b4aca4d35028db4ed78d5b56be5b405f433cd1b3f6242fb7f6",
+      "size": 2896
+    },
+    {
+      "path": "docs/architecture/decisions/ADR-001-code-intelligence-provider.md",
+      "sha256": "562031f053212d4d1b9a8573f31957ed34cf4632c30c89b820ae5dc344ad2fbb",
+      "size": 338
+    },
+    {
+      "path": "docs/architecture/decisions/ADR-002-product-intelligence-store.md",
+      "sha256": "b6cbc7aae98a24301d88d511355224cad7b565474405f81f0b7a6465c2a2616f",
+      "size": 338
+    },
+    {
+      "path": "docs/architecture/decisions/ADR-003-azure-repos-acquisition.md",
+      "sha256": "60cd289074740cda4fd7377501b56456639c87cd8a96c57de7175c33438bfdfe",
+      "size": 249
+    },
+    {
+      "path": "docs/architecture/decisions/ADR-004-standalone-governing-content.md",
+      "sha256": "fa0fc81e78c03cd6c7d32dee4410c9242ffe6103f2639ec13fcc45142d71bd03",
+      "size": 414
+    },
+    {
+      "path": "docs/overview/FDI-PROJECT-OVERVIEW.md",
+      "sha256": "b9de77a35f11be13dcef8ed7efc4ef042069ce05969cf40a7dafa2a97c228256",
+      "size": 25996
+    },
+    {
+      "path": "docs/planning/DEVELOPMENT-BACKLOG.md",
+      "sha256": "e49882b04d1faa319b2a3e0b9647c1f189010346ef8c30209bf57610d28a26f2",
+      "size": 1357
+    },
+    {
+      "path": "docs/planning/STATUS.json",
+      "sha256": "5ea62245a97da6322ac7d2c57edcf06255fea9458d83619eb046921701cd1674",
+      "size": 875
+    },
+    {
+      "path": "docs/reviews/RC4-REVIEW-FIX-NOTE.md",
+      "sha256": "1b6cc4d9a0cafb4e550f44a38ba59fbe73dab07c74bd2869ff6809a11aec6590",
+      "size": 1605
+    },
+    {
+      "path": "docs/reviews/SPEC-VERIFICATION.json",
+      "sha256": "c89ec12ee3c8bd1ddcb68c177deb287f4d37e33aca772d20ec233c0f04494d69",
+      "size": 1397
+    },
+    {
+      "path": "docs/specifications/framework/FDI-FRAMEWORK-SPECIFICATION-v0.1-rc4.md",
+      "sha256": "72909e8f21ea6aac78d6d4a33d219e9f5ed56f25b409c552153755027e3cef15",
+      "size": 54556
+    },
+    {
+      "path": "docs/specifications/framework/FRAMEWORK-CAPABILITY-FEATURE-CATALOG-v0.1-rc4.md",
+      "sha256": "3caeca6ec3925735e63b4714bf18c7edddef04fc00c1b1a7a5170905fcef3355",
+      "size": 21699
+    },
+    {
+      "path": "docs/specifications/framework/SKILL-OWNERSHIP-MAP-v0.1-rc4.md",
+      "sha256": "c42ae6e96d6f764a34d5409d6db5ab606871d4182521bc17a4bd40f329e95ab5",
+      "size": 2154
+    },
+    {
+      "path": "docs/specifications/framework/product-intelligence/PRODUCT-INTELLIGENCE-STORE.md",
+      "sha256": "8476beca8540f395ae9355bf5aa24f43e99219b1903d6c6952adbd5c60401c7a",
+      "size": 905
+    },
+    {
+      "path": "docs/specifications/framework/product-knowledge/PA-01-MINIMAL-PRODUCT-SEMANTICS-PROFILE-v0.1-approval-candidate.md",
+      "sha256": "0fdecda16efaa818be3ac3be820a3ab5742a5a7849b5ec8daae2790829a0f713",
+      "size": 5698
+    },
+    {
+      "path": "docs/specifications/framework/product-knowledge/PRODUCT-KNOWLEDGE-MAINTENANCE-PATH-v0.1.md",
+      "sha256": "78a5c544648302b1b1829e026590739718223e577643107760c6f616b1eee835",
+      "size": 2076
+    },
+    {
+      "path": "docs/specifications/framework/source-integration/AZURE-REPOS-EXACT-SOURCE-BINDING.md",
+      "sha256": "f98125e2049a95005ac352268219796f868b8120295a4c662d37ad29d187633b",
+      "size": 865
+    },
+    {
+      "path": "docs/specifications/framework/structural-intelligence/FEATURE-DISCOVERY-INTEGRATION-v0.2.md",
+      "sha256": "8458edc908e378980170a4f6a350c51d43a0ac6bba015cc2676db8b29dd4bc06",
+      "size": 1960
+    },
+    {
+      "path": "docs/specifications/framework/structural-intelligence/GRAFEL-ADAPTER-CONTRACT-v0.2.md",
+      "sha256": "44723ac1d2e0f580b0e3a63e2cba6be52ce5621dfc9550658f700ab9344849c6",
+      "size": 4835
+    },
+    {
+      "path": "docs/specifications/framework/structural-intelligence/GRAFEL-BINDING-ATTESTOR-v0.2.md",
+      "sha256": "68c2fc7b9ad1cbccc4290bfa913bd40f59d21ddffbb1a267b78438dd060af7ed",
+      "size": 3879
+    },
+    {
+      "path": "docs/specifications/framework/structural-intelligence/MAINTAIN-PRODUCT-INTEGRATION-v0.1.md",
+      "sha256": "8f3c883a052b856724b743de341053231dd2e0f9174e47bdfcfc89fb52908bf7",
+      "size": 792
+    },
+    {
+      "path": "docs/specifications/proposals/PA-01/PA-01-MINIMAL-PRODUCT-SEMANTICS-PROFILE-v0.1-approval-candidate.md",
+      "sha256": "0fdecda16efaa818be3ac3be820a3ab5742a5a7849b5ec8daae2790829a0f713",
+      "size": 5698
+    },
+    {
+      "path": "docs/specifications/providers/graphify/GRAPHIFY-PROVIDER-PROFILE-v0.1-lean-rc4.md",
+      "sha256": "f5a1b0fd50b5b318c135b8f9b04dc52efe1ac574984365b0e956aa93121a035e",
+      "size": 2973
+    },
+    {
+      "path": "docs/superpowers/plans/2026-09-04-project-folder-reorganization.md",
+      "sha256": "bd55141e7c820d87f2b01a7ac07cef573823e90c37a3ae37b8c97fd800d46676",
+      "size": 16299
+    },
+    {
+      "path": "docs/superpowers/specs/2026-09-03-graphify-provider-migration-design.md",
+      "sha256": "65a063791025b7e2ee3d60af9de3b660cfab6a5c1b19204bfe7c56e6ef0907b0",
+      "size": 4146
+    },
+    {
+      "path": "docs/superpowers/specs/2026-09-04-project-folder-reorganization-design.md",
+      "sha256": "7b86ab57cbe2b9923e3de937bb67e82a2fd1ade82db12c0e4cdc703ae5c95b28",
+      "size": 7700
+    },
+    {
+      "path": "governance/CURRENT",
+      "sha256": "440b3a74b59fff689983e301c060884bdaeb4e847df6cf97c59af39d92f5fac3",
+      "size": 284
+    },
+    {
+      "path": "governance/GOVERNING-CONTENT-MATERIALIZATION-REPORT.md",
+      "sha256": "0dda649a574385c68997541915abdf39c77f85150f169b7bdd3a71278f4c92e5",
+      "size": 2141
+    },
+    {
+      "path": "governance/GOVERNING-SOURCES.md",
+      "sha256": "b353b8efb3005bb036689fc93acce8be81dcccae552fe359e48c49d66f298ef2",
+      "size": 1894
+    },
+    {
+      "path": "governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md",
+      "sha256": "e54c4cf7ac5b35985a27b17c0ce85ef64f01698a04556ee50948de2f45861561",
+      "size": 2240
+    },
+    {
+      "path": "governance/approved/layer1/fdi-layer1-markdown-io-profile-v0.1-approved.md",
+      "sha256": "6c98deeb883f6b468a14f87647e9df25fcfffb5814e66aeddb3dcfc5b3b0bb8c",
+      "size": 16446
+    },
+    {
+      "path": "governance/approved/layer1/fdi-layer1-specification-v0.2-approved.md",
+      "sha256": "18fd5dac4196d01216454ec713d93fc5dd1f752f5db35a467d5fad0b16035928",
+      "size": 20327
+    },
+    {
+      "path": "governance/approved/layer2/fdi-layer2-product-intelligence-framework-v0.1-approved.md",
+      "sha256": "fe1ab08cb3ef288dc5bb1bf8fd72546f00948c0889dcb046e3c00bf5e012e112",
+      "size": 16333
+    },
+    {
+      "path": "governance/approved/layer2/fdi-product-asset-maintenance-skill-contracts-v0.1-approved.md",
+      "sha256": "c862a086eacba23ff7828743f78b7fc42c1eeda5d6a8a4e0ec06e08dbf910813",
+      "size": 18217
+    },
+    {
+      "path": "governance/approved/layer2/fdi-product-asset-profile-specification-v0.1-approved.md",
+      "sha256": "6d87b6d9396fe3556f543fd44f3ffd4b3f6d94aa51147190c45948c75aed03dc",
+      "size": 19025
+    },
+    {
+      "path": "governance/baselines/GB-0001.yaml",
+      "sha256": "4c21a9728ddaf5ddfcbb30edd10627d231eddce8104fd8e4331b9a8b0ceadb71",
+      "size": 1580
+    },
+    {
+      "path": "governance/locks/approved-source-lock.json",
+      "sha256": "a1b3adf46ac554485ed1677d1c3256be23b602b7f63c00a30aabe779fddd3be7",
+      "size": 3689
+    },
+    {
+      "path": "release/MARKDOWN-INVENTORY.txt",
+      "sha256": "a6f9651d59b15804a4fdc6647be63ce10e118ffdfe59643e359031c6d62483d8",
+      "size": 3739
+    },
+    {
+      "path": "release/PROJECT-TREE.txt",
+      "sha256": "3ccbe1014cbd07552033733c8efff5bfbf465cebaccdbd23d9cd97b53264d712",
+      "size": 12953
+    },
+    {
+      "path": "release/VERIFICATION-SUMMARY.json",
+      "sha256": "dc8019e5265a1a1ad46e34b4268b4d121f00c35fb3197e0e1834d3b0b6d9fb00",
+      "size": 685
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/application/Dev204Cli.java",
+      "sha256": "4eac9bdc2a434ff66a4b5fff4a9e803c41ca8c7af1093f11c33f4858a180c784",
+      "size": 1177
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/application/FdiApplication.java",
+      "sha256": "1e14310d39b622d7403e827403d2d2b6f1ac320ddceae51ec0be29854edac3c4",
+      "size": 447
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/application/RuntimeCapabilities.java",
+      "sha256": "8fa07bd7b7e7f587e0c196b2b52455ad068ef54d45b4b3922b7244d56466d822",
+      "size": 5001
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/feature/FeatureDiscovery.java",
+      "sha256": "a5f1998d406198b0504b8f61e31ed655b528f0fcc572ab2839ff8b246b86ffea",
+      "size": 2660
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/feature/FeatureKnowledgePlan.java",
+      "sha256": "dbccd9d8478ad02618f51e67c11de04a55012a472bcb042f415387b38ab0db5d",
+      "size": 2429
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/feature/RealizationTraversal.java",
+      "sha256": "adc19f3ed5ba2db208e448e2fbf40e7f2abae61148ef442dc11630ce27c82f2b",
+      "size": 4041
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/ProductKnowledgeMaintenance.java",
+      "sha256": "b859df7490938b9f67f6a0b29ea43f50ed3e27888281f8a2c1a3dc3c15d5f7f3",
+      "size": 2208
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/ProductSemantics.java",
+      "sha256": "20847665ba734c602f78a3cc920b6127a36b31cc9b381356dc90f3e5324f6aab",
+      "size": 3081
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/shared/RuntimeContractException.java",
+      "sha256": "23e7d1ab90b6ba6af4ee6264e34abd16d1c8389d83e1b81bde32e290bdb626ca",
+      "size": 296
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/shared/RuntimeMaps.java",
+      "sha256": "f6b44de0f96ead752f1d9837c8d6970e7c7273fae1a2b2d8b6443ead304e8a41",
+      "size": 1367
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/CodeIntelligenceProvider.java",
+      "sha256": "e90043e374625d0a6cfca0a7b16385e3fe0d1b175258c348730784a91c6d9012",
+      "size": 748
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/SnapshotBindingAttestor.java",
+      "sha256": "85c96e799f18da5da60c595fab1ae3f4c819ebed58af3e8621f905fc8faebe03",
+      "size": 352
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/StructuralIntelligence.java",
+      "sha256": "3a5c5cba3c8072b2f0b67ee3dc107bd29d1c4683bec6b02030db045be41cf870",
+      "size": 4484
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/StructuralMaintenance.java",
+      "sha256": "c975c68f1b802e597c3461b43d4031c9683841a532760fb171a3a15c367d78e5",
+      "size": 2599
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GrafelAdapter.java",
+      "sha256": "728851dbd85c46ef7d9a56b8d6d15c87153c59c9ab7287386217f53668d2d03d",
+      "size": 4971
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GrafelBindingAttestor.java",
+      "sha256": "8ba76784dc2cec29c2d71d788fe25c38c53b25b0d9acb55b370ad79bd34365d0",
+      "size": 3067
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GrafelBindingEvidence.java",
+      "sha256": "b4dff8e48000ed7d0232a09f367f5aafc6f8f24eea464f402b1e49c7efa3faf5",
+      "size": 1387
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GrafelTransport.java",
+      "sha256": "edba49673d4b12f2b7b1fbceedfaca12ce810785e68b318eda2a43bd6174972a",
+      "size": 684
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/validation/CanonicalBaseGate.java",
+      "sha256": "7920aaac7685858763820d8142d9598e3ccd026017c5ffdb3b19cfd6254b76d0",
+      "size": 4516
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/validation/Dev204Validation.java",
+      "sha256": "fa2a950c2ec4ebbcc8615755e100bd93945607b6cd0ab4b40820b273d5358d6f",
+      "size": 6920
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/validation/VerificationAccounting.java",
+      "sha256": "261646173af18ddaf2af90f4778612903ab60554355da788ac36d8a8847efd51",
+      "size": 2794
+    },
+    {
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/PackageArchitectureTests.java",
+      "sha256": "0b228665a20447ca588355752f1f2b8b2a78692c808699710bed4b8f370e2d63",
+      "size": 2713
+    },
+    {
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/ReviewRegressionTests.java",
+      "sha256": "992402d94ed45ef14b5303458a6e9bc955e30a9d30eeca76e04821c13c4c06b8",
+      "size": 4684
+    },
+    {
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/RuntimeMigrationTests.java",
+      "sha256": "05e1c785ed54fd3c03c3b41ed2265e2af1eef8149fbc662698138759833615b0",
+      "size": 5160
+    },
+    {
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/application/FdiApplicationTests.java",
+      "sha256": "8019332a8bd8fa462d4a0b0d877ad9456d7e5dcb3e88f36c3f3a155a05dcb54b",
+      "size": 234
+    },
+    {
+      "path": "templates/product-instance/README.md",
+      "sha256": "a44afd1a9ed290e7149ee0145335f89b61eda091fcf3efa6c93d12afea3916a0",
+      "size": 309
+    },
+    {
+      "path": "tests/test_standalone_governance.py",
+      "sha256": "cd5605dabf27153d6c0401be54308ae3e0d27a6c5825934602917312810bf27f",
+      "size": 32180
+    },
+    {
+      "path": "tooling/migration/prepare_dev204_execution.py",
+      "sha256": "9f80e8314f652fe88bef119bf4b483d4829aff1de8663bc1ded8c0286e32c4ae",
+      "size": 689
+    },
+    {
+      "path": "tooling/packaging/build_handoff_bundle.py",
+      "sha256": "96bc62f357ba67b843c314a39234077bcd945c9697c9240c1bfa8a571c94ff45",
+      "size": 4017
+    },
+    {
+      "path": "tooling/packaging/build_manifest.py",
+      "sha256": "c7da71c5e335b07c5b63e84c623d4d4982299dad23b4161a2917d3d3c035f899",
+      "size": 568
+    },
+    {
+      "path": "tooling/packaging/build_overlay_package.py",
+      "sha256": "b8d1138316d497afaa73ce5708e3e1067e4ee514a70c6a7ff78f57fdc6e448cd",
+      "size": 2265
+    },
+    {
+      "path": "tooling/packaging/build_package.py",
+      "sha256": "b11089d07b409ccb3475b9a36e20049336bf2d11c0e11c8478232f41bbd5231c",
+      "size": 683
+    },
+    {
+      "path": "tooling/packaging/generate_markdown_inventory.py",
+      "sha256": "59f2bd9f151b6fee4f5a67f3f3170b5b6ef5cad8c82647daf26f92dcfa70a623",
+      "size": 444
+    },
+    {
+      "path": "tooling/packaging/generate_project_tree.py",
+      "sha256": "38754d734be433a9885d018b5240834bff5d667043c114a4c62027f0a1379bc1",
+      "size": 1248
+    },
+    {
+      "path": "tooling/packaging/generate_verification_summary.py",
+      "sha256": "7881523fb3c56250fa3986cd589c6f1e73caf0ff1bf22872ec44927dae9730f8",
+      "size": 1159
+    },
+    {
+      "path": "tooling/packaging/release_metadata.py",
+      "sha256": "43099a7d5fbebd1d4c749e8ddf1af1519d5a5f86bdf7239371c5ec4b37ee4e8f",
+      "size": 2135
+    },
+    {
+      "path": "tooling/verification/evaluate_dev204_pair.py",
+      "sha256": "71fe306efeef9a9b3d9c6bc1b7f058371b52e81b492201ddbaa22be9d5a0d4d2",
+      "size": 645
+    },
+    {
+      "path": "tooling/verification/verify_standalone_bundle.py",
+      "sha256": "e0ba2592ada016501ecd16260cdb7333d50e1c1c2d1c08bfbd14c2dc34873d22",
+      "size": 10249
+    },
+    {
+      "path": "validation/deterministic/OPTION-B-PAIRED-REPLAY-PROTOCOL-v0.1.md",
+      "sha256": "6d47e89f58c9f31acfb7390b5616fd72e5eee4a505c366fae1de6923abd70995",
+      "size": 2875
+    },
+    {
+      "path": "validation/deterministic/REALIZATION-TRAVERSAL-GUARD-SPEC-v0.1.md",
+      "sha256": "402eed4241567fb9a8ee201ca0d99e49439a02290b65cc48f3eabd06b26975ae",
+      "size": 1936
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-CR-01-green-packet.json",
+      "sha256": "75b1cc83eaaaaf96b1bbe83d3889cea317ec7a4da204ae491ace4671afb43528",
+      "size": 779
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-CR-01-red-packet.json",
+      "sha256": "e2ec225b9723f3d44ceca36088d8a3f4cb22f59eabe47c5a31ac68e8dbd26484",
+      "size": 778
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-CR-01-reviewer-rubric.json",
+      "sha256": "731942f067e6d0ab047607b94bc6e90502a324517e71def5be97b0b007e62953",
+      "size": 706
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-CSI-01-green-packet.json",
+      "sha256": "8f03adf305379b5c0620bd9b3ba98fb4b8d7625f378e48ce69dce4e4cbf430a6",
+      "size": 792
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-CSI-01-red-packet.json",
+      "sha256": "849d29a40a36705ce9f9bf083eb51754792e02c43f18b13dcf7edb64635ff13e",
+      "size": 791
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-CSI-01-reviewer-rubric.json",
+      "sha256": "907fb4a496662192d7cba55b2030ff2eea6c006abadc9b701d8ea81fb3695f73",
+      "size": 726
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-DC-01-green-packet.json",
+      "sha256": "b370030d592166aa00a0662393eb9fb0960b65595392350b5c5b6213ed3e2f6a",
+      "size": 755
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-DC-01-red-packet.json",
+      "sha256": "e86dc97dd5a7f3c57b9cefc7980a7ef3a7ed26f9db94569218ae03fbe262b404",
+      "size": 754
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-DC-01-reviewer-rubric.json",
+      "sha256": "20cb4e87ef31af198d18d114dccf24d171ee033bbcb1510565b9d527246ee2bc",
+      "size": 715
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-FDI-SI-01-green-packet.json",
+      "sha256": "a88d9a1755cfcf5aa4e0fb4bdcfe6401959e4963814542fab73aa9b05d4c298f",
+      "size": 1422
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-FDI-SI-01-red-packet.json",
+      "sha256": "3f2334f1b71f1671e334940a402e46d8a39f42a9c96b6752aa455b25be1ff907",
+      "size": 1421
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-FDI-SI-01-reviewer-rubric.json",
+      "sha256": "f884ff8400c2d15271991e275fdae8ddd8a324876707bba3c460da2128888675",
+      "size": 1439
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-FIA-01-green-packet.json",
+      "sha256": "97790924565b1c38af92eace30595ef10562814f4358bee9de401c7fd52752c1",
+      "size": 783
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-FIA-01-red-packet.json",
+      "sha256": "de8ab7ceae6bd3b91d21eab607e1f499e7c3cc2ee44ebef1f0d52382d0d5a8d2",
+      "size": 782
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-FIA-01-reviewer-rubric.json",
+      "sha256": "8f4285a2bc4544090dd78390e691b32dce6ea318fdbadb4542a53c606b64c175",
+      "size": 689
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-FT-T1-01-green-packet.json",
+      "sha256": "5e0882487a55eda673359e329d516b2c66790109a28a50b8b395a42a65e1c749",
+      "size": 668
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-FT-T1-01-red-packet.json",
+      "sha256": "c0b7ff6c395dee49ca011f6e774fa6a73f4000f3b5ef343c1ec2f6f3ade72666",
+      "size": 667
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-FT-T1-01-reviewer-rubric.json",
+      "sha256": "8d6ff2021f7ffa8766d18e332b3e8fb8b0c11f42014201e83ef42ab81901e910",
+      "size": 740
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-FT-T2-01-green-packet.json",
+      "sha256": "31228b16d40cb55b3ae74ea909163da2240446db51dd2e4ad01a6c30f45d0305",
+      "size": 827
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-FT-T2-01-red-packet.json",
+      "sha256": "2ad09fa0f86593788c4d800a73e8f7168e17bb19366864d7e55a64d56eee7958",
+      "size": 826
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-FT-T2-01-reviewer-rubric.json",
+      "sha256": "ed8149b7799ed27fa437e9923b89820d0f153c1259d6bbcd91637f704514c5ad",
+      "size": 669
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-ONB-01-green-packet.json",
+      "sha256": "bcc6a8182fe8b1ef9270bf6f69f9aa2af5a16263dda1fedfdda861d873c61c5e",
+      "size": 732
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-ONB-01-red-packet.json",
+      "sha256": "5841d70f247b22215c4422930036743cfa99678d8b99e42c13205fed7a0639a1",
+      "size": 731
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-ONB-01-reviewer-rubric.json",
+      "sha256": "c050f3fc1edda586fe3ab791e0f72e6d06b815b29f2f86d1d5cbdfc71c2afa97",
+      "size": 746
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-OPT-B-01-green-packet.json",
+      "sha256": "9764d0363a70ef8bdbbcadce90571dde70f47d333594f7771c22b7f0443f34b1",
+      "size": 1226
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-OPT-B-01-red-packet.json",
+      "sha256": "93d91afe16ffd3fbe5b7fe219c5893b60abfac8bb44ecde3691ca25ebd058e1b",
+      "size": 1225
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-OPT-B-01-reviewer-rubric.json",
+      "sha256": "0f992ac403cc9edac086037884c3b38c407c9ed8e85dc854c21f32985d318888",
+      "size": 1156
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-PA-CB-01-green-packet.json",
+      "sha256": "c621f6a717cf31303e3f8917338e7b1816b0a486c270a8ac36d0b0e88fd2bab8",
+      "size": 808
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-PA-CB-01-red-packet.json",
+      "sha256": "efd437f5b8c10cc2c3247bfd915e59dbccb24777081f06a867f7f12f0f93416a",
+      "size": 807
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-PA-CB-01-reviewer-rubric.json",
+      "sha256": "847684b788d0dc2d86f53e5bf3214e5464d7823ab9fce172f84d6b71fbdb43e1",
+      "size": 680
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-PA-DH-01-green-packet.json",
+      "sha256": "bfc509eadf8def518518f184355101954872a48a2c159384c6c9b7798afe6b26",
+      "size": 786
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-PA-DH-01-red-packet.json",
+      "sha256": "30d5fdd525c264d7f275c0380e9648f0d86f9dd0e5a5797c42dee8efce794bd5",
+      "size": 785
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-PA-DH-01-reviewer-rubric.json",
+      "sha256": "0d19ce6752387ba34443a4d48e70fadc8d6a1e69edb5cea7ad9f769236cb9e05",
+      "size": 711
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-RD-01-green-packet.json",
+      "sha256": "e629fb9e43c8c41a1c2c5dcf420b30a56f57dd6dbe221675802157a3d0a248ee",
+      "size": 824
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-RD-01-red-packet.json",
+      "sha256": "83dcb4ba6dd5bd879312adc2601ea6f7eaaba2bce1b82ffaa9f39730d11335f2",
+      "size": 823
+    },
+    {
+      "path": "validation/dev204/fixtures/DEV204-RD-01-reviewer-rubric.json",
+      "sha256": "5d6c2660b19228d6de81ad709e07ca0c01b355fdb586d096a2247411c55542d5",
+      "size": 684
+    },
+    {
+      "path": "validation/dev204/scenarios/EXECUTION-GUIDE-v0.4.7.1.md",
+      "sha256": "c8d7ab3e758745b16d5a2ea2dc10678a5eea9b276566eda0435974cb7d1aa092",
+      "size": 1359
+    },
+    {
+      "path": "validation/dev204/scenarios/SCENARIOS-v0.4.7.1.json",
+      "sha256": "27528099dfadafee34b44a518fd9d8c0ef8d250ceab9cb0edebd28f46b3d2040",
+      "size": 13888
+    },
+    {
+      "path": "validation/dev204/scenarios/VALIDATION-PLAN-v0.4.7.1.json",
+      "sha256": "bd743ec6c67fb29d4c0a5f928cd4aae19a68c0687b355eff0192b1a1857de18a",
+      "size": 3548
+    },
+    {
+      "path": "validation/dev204/schemas/execution-record-v0.2.schema.json",
+      "sha256": "cbef9f72dde393164a02176a447fbb476b9ab92db48888210862d03ddd2a642e",
+      "size": 3211
+    },
+    {
+      "path": "validation/f001/FDI-v0.4.7.1-ABLATION-PROTOCOL.md",
+      "sha256": "c53b3b9be3c0cfa2d1b12d91d8a2746917d48a43ab3defbae1efac42308417ff",
+      "size": 3408
+    },
+    {
+      "path": "validation/reports/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    }
+  ]
+}
