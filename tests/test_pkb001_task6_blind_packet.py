@@ -13,6 +13,7 @@ KEY_PATH = PACKET_DIR / 'sealed-blind-key.json'
 MANIFEST_PATH = PACKET_DIR / 'manifest.json'
 INSTRUCTIONS_PATH = PACKET_DIR / 'reviewer-instructions.md'
 VALIDATOR_PATH = PACKET_DIR / 'public_validate.py'
+REPORT_PATH = ROOT / '.superpowers/sdd/IMPLEMENTATION-PLAN/task-6-report.md'
 
 
 def load(path):
@@ -150,3 +151,16 @@ def test_task6_manifest_input_digests_and_public_validator_pass():
     )
     assert completed.returncode == 0, completed.stdout + completed.stderr
     assert load(MANIFEST_PATH)['packet_sha256'] == digest(PACKET_PATH)
+
+
+def test_task6_report_has_one_current_digest_set():
+    manifest = load(MANIFEST_PATH)
+    report = REPORT_PATH.read_text()
+    stale_digests = {
+        'bfb2e4da0bb4f975827f8fe9007f156f92717630f989330c6bb87873d5ea0fa2',
+        '2db2b59e69ae6d4de565e5645a7ebf096c60d89b10c12c3c169f590132c5d25e',
+    }
+
+    assert report.count(manifest['packet_sha256']) == 1
+    assert report.count(manifest['sealed_key_sha256']) == 1
+    assert not any(digest in report for digest in stale_digests)

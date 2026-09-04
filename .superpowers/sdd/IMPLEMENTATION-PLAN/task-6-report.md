@@ -15,9 +15,9 @@ The Task 6 brief pre-agreed the public seams: packet generation from the two val
 ## Packet and binding
 
 - Packet: `validation/pkb001/task6-blind-review/blind-review-packet.json`
-  - SHA-256: `bfb2e4da0bb4f975827f8fe9007f156f92717630f989330c6bb87873d5ea0fa2`
+  - SHA-256: `13451c06a6b635f6d6ea58e7cb3faa8fdfd8f9cc6c011d8fdc3dbebac395c89a`
 - Sealed key: `validation/pkb001/task6-blind-review/sealed-blind-key.json`
-  - SHA-256: `2db2b59e69ae6d4de565e5645a7ebf096c60d89b10c12c3c169f590132c5d25e`
+  - SHA-256: `3f22e51bcbfbfeeef9438334daa361aadb9e1eeffca93f31bb7539887425047d`
   - Binds the exact packet SHA and is the only artifact containing source arm and source identifiers.
 - Manifest: `validation/pkb001/task6-blind-review/manifest.json`
   - Verifies all source input digests, shared source commit `818c4136ea971c21674525f9053de0d9c7ad8cfe`, shared graph SHA, and reverse Delivery History SHA.
@@ -55,5 +55,9 @@ The original packet leaked arm identity through packet-only shape differences: f
 - GREEN: every packet item now has non-empty `component_refs` and `evidence_refs` arrays of neutral records with the same fixed fields and scalar types. Reverse component records are resolved from the bound graph; the single forward unresolved item carries an `INCOMPLETE_EVIDENCE` component record instead of an empty array.
 - The regenerated public validator adds `schema_signature_arm_blinding`; it passed together with all other checks (13/13).
 
-Regenerated packet SHA-256: `13451c06a6b635f6d6ea58e7cb3faa8fdfd8f9cc6c011d8fdc3dbebac395c89a`.
-Regenerated sealed-key SHA-256: `3f22e51bcbfbfeeef9438334daa361aadb9e1eeffca93f31bb7539887425047d`.
+The current packet and sealed-key digests are the authoritative values in the **Packet and binding** section above.
+
+## Fix round 2 — report digest consistency
+
+- RED: `test_task6_report_has_one_current_digest_set` failed because the current-value section still contained the superseded pre-normalization digests.
+- GREEN: that section now contains the regenerated packet/key values exactly once, matching the manifest. The superseded digest values are removed rather than presented as current evidence.
