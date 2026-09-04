@@ -46,6 +46,7 @@ tooling/packaging/release_metadata.py	Release-metadata selection policy source
 tooling/verification/evaluate_dev204_pair.py	DEV-204 evaluation utility source
 tooling/verification/verify_standalone_bundle.py	Standalone verification utility source
 tooling/migration/prepare_dev204_execution.py	DEV-204 preparation utility source
+tooling/validation/**	Validation gate and evaluation utility source
 templates/**	Product-instance template
 release/**	Generated release metadata
 PROJECT-OVERVIEW.md	Compatibility overview pointer
