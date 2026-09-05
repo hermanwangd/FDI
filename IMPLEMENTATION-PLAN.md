@@ -44,19 +44,67 @@ Apply deterministic label/order blinding while keeping ground truth isolated fro
 
 ## 7. GO / REVISE / STOP decision
 
-- **GO:** exact snapshot binding and evidence validity pass, forward mappings are useful, reverse proposals meet the frozen acceptance thresholds, and completed Product Team human review approves the experiment decision. A `GO` decision does not itself publish semantics; semantic publication remains a separate explicit Product Team action.
+- **GO:** exact snapshot binding and evidence validity pass, forward mappings are useful, reverse proposals meet the frozen acceptance thresholds, and completed Human Reviewer human review approves the experiment decision. A `GO` decision does not itself publish semantics; formal semantic publication is outside this prototype.
 - **REVISE:** execution remains safe and evidence-valid, but quality thresholds are missed or were not pre-registered in time to support `GO`.
 - **STOP:** snapshot identity, isolation, evidence integrity, or Product-truth boundaries are violated.
 
 No R1/R2/R3/F1 experiment run begins until all six Phase 0 readiness flags pass: Product Semantics frozen, live Graphify interface verified, PK-S1 ready, PK-S2 ready with cutoff-bounded Delivery History, calibration dataset frozen, and evaluator ground truth sealed and isolated.
 
-**Execution result:** Phase 0 and both Petclinic experiment executions passed their binding and evidence-integrity checks. Two isolated non-human evaluator judgments cover all 15 blind items. The bounded decision is `REVISE` because numeric acceptance thresholds were not pre-registered; observed metrics are not backfit into a `GO` gate. Eleven action/outcome disagreements are listed for independent third review. Human Product Team review remains pending and no Product Semantics may be published from this run.
+**Execution result:** Phase 0 and both Petclinic experiment executions passed their binding and evidence-integrity checks. Two isolated non-human evaluator judgments cover all 15 blind items. The bounded decision is `REVISE` because numeric acceptance thresholds were not pre-registered; observed metrics are not backfit into a `GO` gate. Eleven action/outcome disagreements are listed for independent third review. Human Reviewer review remains pending and no Product Semantics may be published from this run.
 
-**Next experiment:** complete Product Team review, implement the component contract below, approve a blind holdout repository, pre-register numeric thresholds before execution, and either prove Graphify UI/template support or narrow capability descriptions. Preserve source commit `818c4136ea971c21674525f9053de0d9c7ad8cfe` plus Delivery History cutoff `2026-08-26T10:57:54Z` for Petclinic regression comparison.
+**Next experiment:** implement generated scenario proposals and individual review, then freeze user-accepted experiment inputs. Verify UI/template support and preserve evidence gaps. The completed component foundation and Petclinic artifacts remain unchanged.
 
 ---
 
+## Selected work: generated scenarios and individual review
+
+**Spec binding:** `FRAMEWORK-SPEC.md` at `eff92e0f7c2e41cd9880c33655ff23df796a5830`.
+**Selected backlog:** `PKB-BL-005` and `PKB-BL-023`.
+**State:** design and construction plan approved in scope; implementation pending.
+The present documentation update does not constitute a generated review packet
+or user acceptance of any Capability/scenario.
+
+1. Add the Java scenario proposal and review decision contracts under
+   `src/main/java/com/featuredeliveryintelligence/fdi/product/semantics/`,
+   with tests in the matching test directory. Define behavior fields separately
+   from evidence refs, confidence/rationale/limitations, revision/digest binding,
+   UNREVIEWED proposals and version-bound ACCEPT/EDIT/REJECT decisions.
+   Validate that rejected proposals and unconfirmed edits cannot be frozen.
+2. Add `validation/pkb001/schemas/scenario-proposal.schema.json` mirroring
+   that contract. Cover missing evidence bindings, unsupported confidence,
+   semantic/technical field mixing and malformed review records. The existing
+   v0.2 readiness gate remains a historical contract; extending it for reviewed
+   scenario input belongs to BL-007, not an owner-string replacement.
+3. Add `skills/pkb001/pk-scenario-proposal/SKILL.md` for bounded generation.
+   Allowed inputs are exact-revision structural evidence and cutoff-bounded
+   delivery history plus their manifests. Reject evaluator gold, judgments and
+   accepted Forward semantics. Cite evidence per behavioral claim; disclose
+   missing channels and unsupported hypotheses; emit proposal-only output.
+4. Add `tooling/validation/pkb001_scenario_review.py` to validate proposals and
+   deterministically render JSON and Markdown review material. Generation of
+   semantic text is performed by the skill/agent; the Python utility does not
+   invent semantic conclusions. Render Given/When/Then, evidence, inference
+   reason, confidence caveat and editable decision fields. Leave decisions empty.
+5. Verify with focused Java tests using `MAVEN_OPTS='-Xmx2g'` and focused
+   Python tests under `tests/test_pkb001_scenario_review.py`. Exercise missing/
+   forged references, edited-version mismatch, REJECT filtering, gold isolation,
+   duplicate run IDs and preservation of existing Petclinic bytes.
+6. Produce a fresh Petclinic proposal artifact only after these checks pass;
+   mark reconstruction consistency and reviewer exposure. Record evidence in
+   BL-005/023. Select BL-024 to point status to the resulting material; BL-025
+   waits for the user's actual review. Freezing and Forward execution remain
+   dependent work, not implicit effects of rendering the packet.
+
+Acceptance: a reviewable evidence-backed proposal surface, with no invented
+human decisions, and tested contract enforcement. No generator or review
+artifact has been delivered by the documentation update itself.
+
 ## Contract improvement tasks
+
+Tasks 1–5 below are the completed foundation ledger. Their PRODUCT_TEAM owner
+and earlier execution notes describe the frozen v0.2 contract, not the new
+individual-review workflow. Next-run migration is explicitly planned above.
+
 
 ### Task 1: Java structural component identity
 
@@ -675,7 +723,7 @@ Expected: positive v0.2 readiness passes. Mutations for v1 selection, skill dige
 
 Update this plan with completed commit IDs and record these remaining authorized decisions:
 
-1. Product Team completes the current 15-item review.
+1. Historical v0.2 prerequisite: Product Team completes the current 15-item review (superseded for the next run by the selected individual-review plan).
 2. User approves a second exact-revision holdout repository.
 3. Numeric thresholds are frozen before generating either next-run proposal.
 
@@ -738,27 +786,27 @@ Tasks 1–5. It applies only to a new Product Semantics revision, new skill
 version, and new immutable run. The completed Petclinic artifacts, PK-S1 v0.2,
 and bounded `REVISE` decision remain unchanged.
 
-### Task 6: Product-owned behavior-scenario contract
+### Task 6: Human-reviewed behavior-scenario contract
 
 - [ ] Define a provider-neutral scenario schema with stable scenario and
   Capability identifiers, Given/When/Then behavior, scope, boundaries, status,
-  Product Team ownership, approval provenance, and immutable revision binding.
+  Human Reviewer ownership, approval provenance, and immutable revision binding.
 - [ ] Reject implementation identifiers, Graphify nodes, evaluator mappings,
   and technical selection instructions from Product Semantics scenarios.
 - [ ] Keep reverse-generated `HYP-SCENARIO-*` proposals isolated as
   `PROPOSAL_ONLY / UNREVIEWED`.
-- [ ] Add validation proving only frozen Product Team scenarios can enter
+- [ ] Add validation proving only frozen Human Reviewer scenarios can enter
   Forward generation.
 
-### Task 7: Two-stage Product Team review
+### Task 7: Generated proposals and individual review
 
-- [ ] Produce a Stage A packet containing Capability intent, boundaries,
-  scenarios, and permitted reverse evidence summaries without evaluator gold,
-  expected components, proposed components, or technical scores.
-- [ ] Record and freeze Stage A decisions before technical unblinding.
-- [ ] Produce a separate Stage B packet for immutable realization proposals,
-  evaluator-only mappings, evidence gaps, and technical comparisons.
-- [ ] Prove Stage B cannot mutate or silently replace Stage A semantics.
+- [ ] Generate Capability and scenario proposals from Graphify and delivery history.
+- [ ] Produce one review surface with behavior, separate evidence, rationale,
+  confidence, limitations and ACCEPT / EDIT / REJECT decision fields.
+- [ ] Record user decisions against exact proposal versions; EDIT requires
+  explicit acceptance of the replacement; REJECT never enters accepted inputs.
+- [ ] Freeze only the accepted set; preserve the original proposal artifacts.
+- [ ] Record reviewer exposure and reconstruction-consistency limitations.
 
 ### Task 8: Scenario-grounded proposal contract
 
@@ -795,21 +843,21 @@ and bounded `REVISE` decision remain unchanged.
 - [ ] Extend evaluator truth with normalized component identity
   `(source_revision, source_path, granularity, qualified_symbol)`.
 - [ ] Derive acceptance thresholds from declared error costs and independent
-  calibration evidence. Until Product Team approval, every numeric proposal is
+  calibration evidence. Until Human Reviewer approval, every numeric proposal is
   `PROPOSED_NOT_FROZEN`; do not reuse observed Petclinic values as a gate.
 
 ### Task 11: User-approved sealed holdout and execution
 
 - [ ] Have an independent role propose a repository and exact revision, obtain
   explicit user approval, then seal the holdout before rule completion.
-- [ ] Freeze Stage A semantics, scenarios, metrics, thresholds, skill, schema,
+- [ ] Freeze reviewed experiment semantics, scenarios, metrics, thresholds, skill, schema,
   comparator, provider version, and Graphify query-bound digests before blind
   generation.
 - [ ] Run Petclinic regression without overwriting existing artifacts.
 - [ ] If any frozen input changes after regression, create a new protocol
   revision, re-freeze all digests, and restart regression while the holdout
   remains sealed.
-- [ ] Execute the blind holdout once, conduct Stage B review, and issue a bounded
+- [ ] Execute the blind holdout once, conduct individual result review, and issue a bounded
   `GO / REVISE / STOP` decision without automatic semantic publication.
 
 ## Explicitly deferred

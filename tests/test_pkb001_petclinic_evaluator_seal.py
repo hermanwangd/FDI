@@ -351,13 +351,13 @@ def test_public_registry_and_status_announce_readiness_without_exposing_gold():
     assert registry['phase0_readiness'] == 'READY'
     assert status['phase0_readiness'] == 'READY'
     assert status['evaluation_status'] == 'COMPLETE_BOUNDED_REVISE'
-    assert status['active_backlog_item'] == 'PKB-BL-001'
-    assert status['active_implementation_plan'] is None
-    assert status['stage_a_review_packet'] is None
-    assert status['stage_b_reference_packet'] == (
+    assert status['active_backlog_item'] == 'PKB-BL-005'
+    assert status['active_implementation_plan'] == 'IMPLEMENTATION-PLAN.md#selected-work-generated-scenarios-and-individual-review'
+    assert status['review_packet'] is None
+    assert status['evaluation_reference_packet'] == (
         'validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.zh-TW.md'
     )
-    assert status['human_review_status'] == 'PENDING_ISOLATED_STAGE_A_PACKET'
+    assert status['human_review_status'] == 'PENDING_SCENARIO_PROPOSALS'
     assert status['spec_maturity']['next_experiment_readiness'] == 'NOT_READY'
     assert status['semantic_publication_allowed'] is False
     assert 'gold' not in json.dumps(registry).lower()

@@ -112,17 +112,17 @@ must record its source. If that work changes normative behavior, update and
 approve the Spec first.
 
 Allowed delivery states are `READY`, `IN_PROGRESS`, `BLOCKED_DEPENDENCY`,
-`BLOCKED_PRODUCT_TEAM`, `BLOCKED_USER_APPROVAL`, `NEEDS_RECONCILIATION`,
+`BLOCKED_USER_APPROVAL`, `NEEDS_RECONCILIATION`,
 `DEFERRED`, and `VERIFIED`. `READY` means eligible for selection, not authorized
-to execute. Product Team and user blockers cannot be cleared by an agent.
+to execute. Human Reviewer and user blockers cannot be cleared by an agent.
 
 When a bound Spec requirement changes, mark affected Backlog items
 `NEEDS_RECONCILIATION`. Reconcile their scope, acceptance verification, and
 plans against the new Spec revision before further implementation or before
 retaining `VERIFIED`.
 
-The current 22-item PKB-001 backlog is reconciled to the exact Framework Spec
-revision recorded in `IMPLEMENTATION-PLAN.md`. Five entries are verified
+The current 22-active-item PKB-001 backlog is reconciled to the exact Framework Spec
+revision recorded in `BACKLOG.md`. Five entries are verified
 foundation delivery records and 17 represent the next experiment. If the bound
 Spec changes, apply `NEEDS_RECONCILIATION` before using the affected entries.
 
@@ -152,7 +152,7 @@ maturity as:
 - `M1_BACKLOGGED`: implementation gap and acceptance verification are defined;
 - `M2_IMPLEMENTED`: implementation exists but verification is incomplete;
 - `M3_VERIFIED`: contract and regression evidence pass;
-- `M4_VALIDATED`: exact-revision runtime evidence and required Product Team
+- `M4_VALIDATED`: exact-revision runtime evidence and required Human Reviewer
   review pass;
 - `M5_OPERATIONAL`: continuing operational ownership, monitoring, and recovery
   are established.
@@ -167,7 +167,12 @@ Current prototype focus is defined by `STATUS.json`.
 
 For PKB-001:
 
-- Product Team owns Product Semantics.
+- The user is the sole Human Reviewer / Experiment Owner.
+- Agents propose Capabilities and Behavior Scenarios from Graphify and delivery history.
+- The user reviews with ACCEPT / EDIT / REJECT; only accepted versions enter frozen experiment semantics.
+- Evidence references stay separate from implementation-agnostic scenario text.
+- No Product Team organization or Stage A/B packet split is required.
+- Report reconstruction consistency and reviewer exposure honestly; it is not independent product-requirements validation.
 - Graphify provides structural evidence, not Product truth.
 - Delivery History provides historical evidence, not Product truth.
 - `Product Semantics + Structural Intelligence → Capability → Component` is the forward experiment.

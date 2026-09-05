@@ -7,7 +7,7 @@ The prototype tests two hypotheses:
 - **Forward:** Product Semantics plus Graphify Structural Intelligence can recover a useful Capability-to-Component mapping from an exact source revision.
 - **Reverse:** Graphify Structural Intelligence plus Git, pull-request, and feature-delivery history can produce useful Capability hypotheses for human review.
 
-Reverse output is proposal-only. Product Team review owns Product meaning and is the only route by which a proposal can become accepted Product truth.
+Reverse output is proposal-only. Human Reviewer review owns Product meaning and is the only route by which a proposal can become accepted Product truth.
 
 ## Active project truth
 
@@ -27,6 +27,14 @@ The approved 10-capability Spring Petclinic calibration ran at source commit `81
 
 The comparison provides deterministic label/order blinding, not content-level arm anonymity: `ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT`. Evidence categories and values may allow arm inference even though explicit arm labels and source identifiers are absent and the sealed identity key remains separately useful.
 
-Human Product Team review remains pending, semantic publication is prohibited, and 11 action/outcome disagreements await an independent third evaluation. The existing combined decision packet remains evaluation reference material, but it is not a valid Stage A semantic-review surface because it includes evaluator technical comparisons. The immediate backlog item is `PKB-BL-001`: create an isolated Stage A packet before asking Product Team to freeze Capability boundaries and behavior scenarios.
+The user is the prototype's Human Reviewer / Experiment Owner. The system
+proposes Capabilities and Behavior Scenarios from Graphify and delivery history;
+the user accepts, edits or rejects them. Accepted versions are frozen as
+experiment inputs. A single evidence-backed review surface replaces the planned
+Stage A/B split. Eleven evaluator disagreements remain open. Existing evaluation
+artifacts remain reference evidence and the result remains `REVISE`.
+
+The next work is the scenario proposal/review contract and generator plan in
+`IMPLEMENTATION-PLAN.md`. These features are specified, not yet implemented.
 
 The verified component-contract foundation and the next scenario-grounded experiment have separate maturity. Five foundation requirements are `M3_VERIFIED`; 17 next-experiment requirements are `M1_BACKLOGGED`. The completed Petclinic Phase 0 remains `READY`, while the new scenario-grounded experiment is `NOT_READY` until its mandatory review, scenario, evaluation, threshold, holdout, and protocol gates pass.

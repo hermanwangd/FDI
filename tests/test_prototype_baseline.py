@@ -25,9 +25,9 @@ def test_five_active_truth_entries_exist_and_resolve():
         'decision': 'REVISE',
         'phase0_readiness': 'READY',
         'evaluation_status': 'COMPLETE_BOUNDED_REVISE',
-        'human_review_status': 'PENDING_ISOLATED_STAGE_A_PACKET',
-        'stage_a_review_packet': None,
-        'stage_b_reference_packet': (
+        'human_review_status': 'PENDING_SCENARIO_PROPOSALS',
+        'review_packet': None,
+        'evaluation_reference_packet': (
             'validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.zh-TW.md'
         ),
         'third_review_status': 'PENDING_11_DISAGREED_ITEMS',
@@ -35,17 +35,21 @@ def test_five_active_truth_entries_exist_and_resolve():
         'blinding_scope': 'DETERMINISTIC_LABEL_AND_ORDER_BLINDING',
         'blinding_limitation': 'ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT',
         'spec_maturity': {
-            'spec_revision': '4f8e903181bf79178af37672e1cb57699c4c93f7',
+            'spec_revision': 'eff92e0f7c2e41cd9880c33655ff23df796a5830',
             'normative_requirements': 22,
             'm3_verified': 5,
             'm1_backlogged': 17,
             'next_experiment_readiness': 'NOT_READY',
         },
-        'active_backlog_item': 'PKB-BL-001',
-        'active_implementation_plan': None,
+        'active_backlog_item': 'PKB-BL-005',
+        'active_implementation_plan': 'IMPLEMENTATION-PLAN.md#selected-work-generated-scenarios-and-individual-review',
+        'selected_backlog_items': ['PKB-BL-005', 'PKB-BL-023'],
+        'review_mode': 'INDIVIDUAL_EXPERIMENT_OWNER',
+        'scenario_generation': 'GRAPHIFY_AND_DELIVERY_HISTORY_PROPOSALS',
+        'scenario_generator_status': 'NOT_IMPLEMENTED',
         'next_action': (
-            'Select PKB-BL-001 and create a bounded implementation plan for '
-            'the isolated Stage A packet'
+            'Implement scenario proposal/review contracts, then generate evidence-backed '
+            'Capability and Behavior Scenario proposals for user review'
         ),
         'archived_documents_are_authority': False,
     }
@@ -69,7 +73,7 @@ def test_every_normative_requirement_has_one_bound_backlog_record():
     assert len(requirement_ids) == len(set(requirement_ids)) == 22
     assert len(records) == len({backlog_id for backlog_id, _ in records}) == 22
     assert {requirement_id for _, requirement_id in records} == set(requirement_ids)
-    assert '4f8e903181bf79178af37672e1cb57699c4c93f7' in backlog
+    assert 'eff92e0f7c2e41cd9880c33655ff23df796a5830' in backlog
 
 
 def test_legacy_truth_surfaces_are_archived():
@@ -137,8 +141,8 @@ def test_active_truth_discloses_blinding_and_publication_boundaries():
         'ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT'
     )
     assert 'ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT' in active_text
-    assert 'completed Product Team human review' in (ROOT/'IMPLEMENTATION-PLAN.md').read_text()
-    assert 'separate explicit Product Team action' in (
+    assert 'completed Human Reviewer human review' in (ROOT/'IMPLEMENTATION-PLAN.md').read_text()
+    assert 'formal semantic publication is outside this prototype' in (
         ROOT/'IMPLEMENTATION-PLAN.md'
     ).read_text()
 

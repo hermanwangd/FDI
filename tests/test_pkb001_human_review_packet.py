@@ -80,18 +80,18 @@ def test_human_review_markdown_covers_every_item_without_claiming_approval():
     assert markdown.count("Reverse proposal-only:") == 5
 
 
-def test_status_separates_pending_stage_a_from_the_combined_reference_packet():
+def test_status_separates_pending_proposals_from_existing_evaluation_reference():
     status = json.loads((ROOT / "STATUS.json").read_text())
 
     assert status["decision"] == "REVISE"
-    assert status["human_review_status"] == "PENDING_ISOLATED_STAGE_A_PACKET"
+    assert status["human_review_status"] == "PENDING_SCENARIO_PROPOSALS"
     assert status["semantic_publication_allowed"] is False
-    assert status["stage_a_review_packet"] is None
-    assert status["stage_b_reference_packet"] == (
+    assert status["review_packet"] is None
+    assert status["evaluation_reference_packet"] == (
         "validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.zh-TW.md"
     )
-    assert status["active_backlog_item"] == "PKB-BL-001"
-    assert status["active_implementation_plan"] is None
+    assert status["active_backlog_item"] == "PKB-BL-005"
+    assert status["active_implementation_plan"] == "IMPLEMENTATION-PLAN.md#selected-work-generated-scenarios-and-individual-review"
 
 
 def test_chinese_review_packet_preserves_all_pending_decisions_and_boundaries():
