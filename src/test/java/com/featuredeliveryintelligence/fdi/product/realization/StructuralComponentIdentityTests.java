@@ -3,6 +3,7 @@ package com.featuredeliveryintelligence.fdi.product.realization;
 import com.featuredeliveryintelligence.fdi.shared.RuntimeContractException;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -37,6 +38,21 @@ class StructuralComponentIdentityTests {
         assertThrows(RuntimeContractException.class, () -> identity(REVISION, "src\\OwnerController.java"));
         assertThrows(RuntimeContractException.class, () -> identity(REVISION, "src/../OwnerController.java"));
         assertThrows(RuntimeContractException.class, () -> identity(REVISION, "  "));
+    }
+
+    @Test
+    void rejectsNoncanonicalSourcePathAliases() {
+        assertAll(
+                () -> assertThrows(RuntimeContractException.class,
+                        () -> identity(REVISION, "src/./OwnerController.java")),
+                () -> assertThrows(RuntimeContractException.class,
+                        () -> identity(REVISION, "src//OwnerController.java")),
+                () -> assertThrows(RuntimeContractException.class,
+                        () -> identity(REVISION, "src/OwnerController.java/")),
+                () -> assertThrows(RuntimeContractException.class,
+                        () -> identity(REVISION, "C:src/OwnerController.java")),
+                () -> assertThrows(RuntimeContractException.class,
+                        () -> identity(REVISION, ".")));
     }
 
     @Test

@@ -30,16 +30,13 @@ public record StructuralComponentIdentity(
         if (sourceRevision == null || !sourceRevision.matches("[0-9a-f]{40}")) {
             throw new RuntimeContractException("sourceRevision must be a full lowercase Git SHA");
         }
-        if (sourcePath == null
-                || sourcePath.isBlank()
-                || sourcePath.startsWith("/")
-                || sourcePath.matches("^[A-Za-z]:/.*")
-                || sourcePath.contains("\\")
-                || hasTraversalSegment(sourcePath)) {
-            throw new RuntimeContractException("sourcePath must be repository-relative");
-        }
         if (granularity == null) {
             throw new RuntimeContractException("granularity is required");
+        }
+        if (sourcePath == null
+                || sourcePath.isBlank()
+                || isNoncanonicalPath(sourcePath, granularity)) {
+            throw new RuntimeContractException("sourcePath must be repository-relative");
         }
         if (SYMBOL_LEVEL_GRANULARITIES.contains(granularity)
                 && (qualifiedSymbol == null || qualifiedSymbol.isBlank())) {
@@ -50,9 +47,17 @@ public record StructuralComponentIdentity(
         }
     }
 
-    private static boolean hasTraversalSegment(String sourcePath) {
-        for (String segment : sourcePath.split("/")) {
-            if (segment.equals("..")) {
+    private static boolean isNoncanonicalPath(String sourcePath, Granularity granularity) {
+        if (sourcePath.equals(".")) {
+            return granularity != Granularity.REPOSITORY;
+        }
+        if (sourcePath.startsWith("/")
+                || sourcePath.matches("^[A-Za-z]:.*")
+                || sourcePath.contains("\\")) {
+            return true;
+        }
+        for (String segment : sourcePath.split("/", -1)) {
+            if (segment.isEmpty() || segment.equals(".") || segment.equals("..")) {
                 return true;
             }
         }
