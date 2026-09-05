@@ -14,6 +14,15 @@ Allowed actions: `ACCEPT`, `RENAME`, `MERGE`, `SPLIT`, `REJECT`, `ADD_MISSING`
 
 Items requiring explicit disagreement resolution: **11/15**
 
+## Forward comparison context
+
+- Expected component path recall: 23/24 (95.8%)
+- Proposed component path precision: 21/25 (84.0%)
+- Expected graph-node coverage across components and supporting evidence: 17/24 (70.8%)
+- Exact proposed-component graph-node matches: 0/24
+
+Plain language: the run generally found the correct code area, but its formal components did not precisely identify the evaluator's expected method/entity nodes. File-path overlap and supporting evidence are useful, but neither is an exact proposed-component match.
+
 ## Item decisions
 
 ### BR-001 — Companion record identity and update safeguards
@@ -23,6 +32,8 @@ Candidate basis: Bound create and update handlers call duplicate-name and update
 Confidence: `0.93`
 Resolution required: **NO**
 Resolution reasons: none
+
+Reverse proposal-only: this capability hypothesis is advisory and has no Forward expected-component comparison.
 
 - reviewer-01: `SPLIT` / `PARTIALLY_SUPPORTED`; suggested name: Pet identity validation and update safeguards
   - Notes: The cited handlers and validator support duplicate-name and update safeguards, but the proposed boundary combines several behaviors and overlaps broader pet registration and maintenance candidates. Human Product Team authority remains required for the final boundary.
@@ -45,6 +56,16 @@ Confidence: `0.93`
 Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
 
+Expected components: `petcontroller_petcontroller_processcreationform`, `pet_pet`, `pettyperepository_pettyperepository_findpettypes`
+
+Proposed components: `petcontroller`, `owner`, `pet`, `pettyperepository`
+
+Supporting evidence nodes: `petcontroller_petcontroller_initcreationform`, `petcontroller_petcontroller_processcreationform`, `petcontroller_petcontroller_populatepettypes`, `owner_owner_addpet`, `namedentity_namedentity_setname`, `pet_pet_setbirthdate`, `pet_pet_settype`, `pettyperepository_pettyperepository_findpettypes`
+
+Missing expected nodes: `pet_pet`
+
+Difference classification: `GRANULARITY_OR_IDENTIFIER_MISMATCH` — The proposal found relevant files or nearby evidence nodes, but its formal components do not exactly identify the expected nodes.
+
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
   - Notes: The creation methods, owner aggregation, pet attributes, and type lookup are coherent evidence for registration. Acceptance is evaluator-only because successful end-to-end registration is not demonstrated.
   - Unsupported claims: That the supplied structure alone proves a complete successful registration realization.
@@ -65,6 +86,8 @@ Candidate basis: The graph connects list display to pagination and exposes resou
 Confidence: `0.74`
 Resolution required: **NO**
 Resolution reasons: none
+
+Reverse proposal-only: this capability hypothesis is advisory and has no Forward expected-component comparison.
 
 - reviewer-01: `SPLIT` / `PARTIALLY_SUPPORTED`; suggested name: Veterinarian directory browsing and specialty review
   - Notes: Directory browsing and specialty presentation have related evidence but are independently describable behaviors. The combined capability is less precise than separate browse-directory and specialty-review candidates.
@@ -87,6 +110,16 @@ Confidence: `0.95`
 Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
 
+Expected components: `ownercontroller_ownercontroller_processfindform`, `ownerrepository_ownerrepository_findbylastnamestartingwith`
+
+Proposed components: `ownercontroller`, `ownerrepository`
+
+Supporting evidence nodes: `ownercontroller_ownercontroller_initfindform`, `ownercontroller_ownercontroller_processfindform`, `ownercontroller_ownercontroller_findpaginatedforownerslastname`, `ownerrepository_ownerrepository_findbylastnamestartingwith`
+
+Missing expected nodes: none
+
+Difference classification: `GRANULARITY_OR_IDENTIFIER_MISMATCH` — The proposal found relevant files or nearby evidence nodes, but its formal components do not exactly identify the expected nodes.
+
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
   - Notes: The find-form, processing, pagination, and repository prefix query provide a direct and precise structural candidate for finding owners. The complete user-visible result flow remains unproven.
   - Unsupported claims: That the complete rendered search and navigation experience is realized.
@@ -107,6 +140,16 @@ Candidate basis: Visit creation and processing methods explicitly load a pet wit
 Confidence: `0.96`
 Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
+
+Expected components: `visitcontroller_visitcontroller_processnewvisitform`, `visit_visit`, `owner_owner_addvisit`
+
+Proposed components: `visitcontroller`, `visit`, `owner`
+
+Supporting evidence nodes: `visitcontroller_visitcontroller_loadpetwithvisit`, `visitcontroller_visitcontroller_initnewvisitform`, `visitcontroller_visitcontroller_processnewvisitform`, `visit_visit_setdate`, `visit_visit_setdescription`, `owner_owner_addvisit`
+
+Missing expected nodes: `visit_visit`
+
+Difference classification: `GRANULARITY_OR_IDENTIFIER_MISMATCH` — The proposal found relevant files or nearby evidence nodes, but its formal components do not exactly identify the expected nodes.
 
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
   - Notes: The controller flow, pet loading, visit fields, and owner aggregation form strong structural evidence for recording a pet visit. Completeness is limited by absent persistence and validation evidence.
@@ -129,6 +172,16 @@ Confidence: `0.95`
 Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
 
+Expected components: `vetcontroller_vetcontroller_showvetlist`, `vetrepository_vetrepository_findall`
+
+Proposed components: `vetcontroller`, `vetrepository`, `vets`
+
+Supporting evidence nodes: `vetcontroller_vetcontroller_showvetlist`, `vetcontroller_vetcontroller_addpaginationmodel`, `vetcontroller_vetcontroller_findpaginated`, `vetrepository_vetrepository_findall`, `vets_vets_getvetlist`
+
+Missing expected nodes: none
+
+Difference classification: `GRANULARITY_OR_IDENTIFIER_MISMATCH` — The proposal found relevant files or nearby evidence nodes, but its formal components do not exactly identify the expected nodes.
+
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
   - Notes: Controller list and pagination methods, repository retrieval, and the list accessor converge on veterinarian browsing. The user-visible browsing experience is not directly evidenced.
   - Unsupported claims: That the complete rendered browsing experience is realized.
@@ -149,6 +202,16 @@ Candidate basis: The owner detail entry point, owner-to-pets accessor, pet-to-vi
 Confidence: `0.84`
 Resolution required: **YES**
 Resolution reasons: ACTION_DISAGREEMENT
+
+Expected components: `ownercontroller_ownercontroller_showowner`, `pet_pet_getvisits`, `visit_visit`
+
+Proposed components: `ownercontroller`, `owner`, `pet`, `visit`
+
+Supporting evidence nodes: `ownercontroller_ownercontroller_showowner`, `owner_owner_getpets`, `pet_pet_getvisits`, `visit_visit_getdate`, `visit_visit_getdescription`
+
+Missing expected nodes: `visit_visit`
+
+Difference classification: `GRANULARITY_OR_IDENTIFIER_MISMATCH` — The proposal found relevant files or nearby evidence nodes, but its formal components do not exactly identify the expected nodes.
 
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
   - Notes: The owner-to-pet-to-visit accessor chain supports retrieval of visit data in context. Calling it reviewable history exceeds the evidence unless presentation and ordering are verified.
@@ -171,6 +234,8 @@ Confidence: `0.88`
 Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
 
+Reverse proposal-only: this capability hypothesis is advisory and has no Forward expected-component comparison.
+
 - reviewer-01: `RENAME` / `PARTIALLY_SUPPORTED`; suggested name: Validate Visit Dates
   - Notes: The date accessors, minimum-date calculation, submission handler, and focused co-change support date validation. The proposed safeguards label is broader than the evidenced future-date check.
   - Unsupported claims: That the evidence establishes a broader set of visit-date intake safeguards beyond the cited future-date behavior.; That the exact user-facing policy is established.
@@ -191,6 +256,16 @@ Candidate basis: WelcomeController.welcome is evidence for only the landing-page
 Confidence: `0.96`
 Resolution required: **NO**
 Resolution reasons: none
+
+Expected components: `welcomecontroller_welcomecontroller_welcome`
+
+Proposed components: none
+
+Supporting evidence nodes: `welcomecontroller_welcomecontroller_welcome`
+
+Missing expected nodes: none
+
+Difference classification: `MISSING_EVIDENCE` — No component was proposed for the expected realization.
 
 - reviewer-01: `ADD_MISSING` / `PARTIALLY_SUPPORTED`; suggested name: none
   - Notes: The packet correctly limits the controller evidence to the landing-page portion. Completing the proposed capability requires missing navigation and presentation evidence; no complete realization should be inferred.
@@ -213,6 +288,8 @@ Confidence: `0.86`
 Resolution required: **NO**
 Resolution reasons: none
 
+Reverse proposal-only: this capability hypothesis is advisory and has no Forward expected-component comparison.
+
 - reviewer-01: `MERGE` / `DUPLICATE`; suggested name: Find Owners
   - Notes: This candidate substantially duplicates BR-004: both cover owner record search plus paginated result browsing through the same controller and repository path. The owner terminology is closer to the supplied structural identifiers; final terminology remains a human Product Team decision.
   - Unsupported claims: That visible pagination behavior is proven by the supplied Java graph.; That client record is the accepted Product term.
@@ -233,6 +310,8 @@ Candidate basis: The graph exposes locale resolution and locale-change intercept
 Confidence: `0.79`
 Resolution required: **YES**
 Resolution reasons: ACTION_DISAGREEMENT
+
+Reverse proposal-only: this capability hypothesis is advisory and has no Forward expected-component comparison.
 
 - reviewer-01: `RENAME` / `PARTIALLY_SUPPORTED`; suggested name: Select Presentation Locale
   - Notes: Locale resolution, locale-change interception, registration, and localized-resource co-change support selectable locale behavior. Presentation completeness is broader than the evidence.
@@ -255,6 +334,16 @@ Confidence: `0.93`
 Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
 
+Expected components: `ownercontroller_ownercontroller_processcreationform`, `owner_owner`
+
+Proposed components: `ownercontroller`, `owner`
+
+Supporting evidence nodes: `ownercontroller_ownercontroller_initcreationform`, `ownercontroller_ownercontroller_processcreationform`, `person_person_setfirstname`, `person_person_setlastname`, `owner_owner_setaddress`, `owner_owner_settelephone`
+
+Missing expected nodes: `owner_owner`
+
+Difference classification: `GRANULARITY_OR_IDENTIFIER_MISMATCH` — The proposal found relevant files or nearby evidence nodes, but its formal components do not exactly identify the expected nodes.
+
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
   - Notes: The creation handlers and owner/person field mutators provide strong structural evidence for owner registration. Successful validated persistence remains outside the supplied evidence.
   - Unsupported claims: That owner registration is persisted and validated end to end.
@@ -275,6 +364,16 @@ Candidate basis: The PetController has explicit update initialization, processin
 Confidence: `0.95`
 Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
+
+Expected components: `petcontroller_petcontroller_processupdateform`, `petcontroller_petcontroller_updatepetdetails`, `pet_pet`
+
+Proposed components: `petcontroller`, `pet`
+
+Supporting evidence nodes: `petcontroller_petcontroller_initupdateform`, `petcontroller_petcontroller_processupdateform`, `petcontroller_petcontroller_updatepetdetails`, `pet_pet_setbirthdate`, `pet_pet_settype`
+
+Missing expected nodes: `pet_pet`
+
+Difference classification: `GRANULARITY_OR_IDENTIFIER_MISMATCH` — The proposal found relevant files or nearby evidence nodes, but its formal components do not exactly identify the expected nodes.
 
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
   - Notes: Explicit update initialization, processing, detail update, and pet classification mutators strongly support pet-detail maintenance. The complete editable field set and successful persistence are not demonstrated.
@@ -297,6 +396,16 @@ Confidence: `0.94`
 Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
 
+Expected components: `ownercontroller_ownercontroller_processupdateownerform`, `ownercontroller_ownercontroller_showowner`, `owner_owner`
+
+Proposed components: `ownercontroller`, `owner`
+
+Supporting evidence nodes: `ownercontroller_ownercontroller_initupdateownerform`, `ownercontroller_ownercontroller_processupdateownerform`, `ownercontroller_ownercontroller_showowner`, `owner_owner_getpets`, `owner_owner_setcity`
+
+Missing expected nodes: `owner_owner`
+
+Difference classification: `GRANULARITY_OR_IDENTIFIER_MISMATCH` — The proposal found relevant files or nearby evidence nodes, but its formal components do not exactly identify the expected nodes.
+
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
   - Notes: The owner update handlers and profile mutation evidence support maintenance of owner details. Associated-pet review is contextual evidence and should not expand the maintenance boundary without presentation evidence.
   - Unsupported claims: That associated activity is rendered as part of owner-detail maintenance.; That the complete owner profile field set is evidenced.
@@ -317,6 +426,16 @@ Candidate basis: The veterinarian list entry point and Vet specialty accessors, 
 Confidence: `0.87`
 Resolution required: **YES**
 Resolution reasons: ACTION_DISAGREEMENT
+
+Expected components: `vet_vet_getspecialties`, `specialty_specialty`
+
+Proposed components: `vetcontroller`, `vet`, `specialty`
+
+Supporting evidence nodes: `vetcontroller_vetcontroller_showvetlist`, `vet_vet_getspecialties`, `vet_vet_getnrofspecialties`, `specialty`
+
+Missing expected nodes: `specialty_specialty`
+
+Difference classification: `GRANULARITY_OR_IDENTIFIER_MISMATCH` — The proposal found relevant files or nearby evidence nodes, but its formal components do not exactly identify the expected nodes.
 
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
   - Notes: The list entry point and veterinarian specialty accessors support associating specialties with listed veterinarians. Visible review of specialty names is not directly proven.

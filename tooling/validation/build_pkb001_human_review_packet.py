@@ -13,6 +13,9 @@ SOURCE_PATHS = {
     "reviewer_02": "validation/pkb001/task6-blind-review/judgment-workspaces/reviewer-02/judgment-template.json",
     "pending_disagreements": "validation/pkb001/task7-evaluation/third-review-pending.json",
     "evaluation_report": "validation/pkb001/task7-evaluation/evaluation-report.json",
+    "sealed_key": "validation/pkb001/task6-blind-review/sealed-blind-key.json",
+    "forward_run": "validation/pkb001/artifacts/petclinic-pk-s1-forward-run-818c413.json",
+    "evaluator_gold": "validation/pkb001/evaluator/petclinic-818c413/gold-mappings.json",
 }
 
 
@@ -34,10 +37,26 @@ def build_packet(root):
         row["blind_id"]: row["reasons"]
         for row in source["pending_disagreements"]["items"]
     }
+    identities = {
+        row["blind_id"]: row for row in source["sealed_key"]["items"]
+    }
+    forward_results = {
+        row["capability_id"]: row for row in source["forward_run"]["capability_results"]
+    }
+    gold_mappings = {
+        row["capability_id"]: row for row in source["evaluator_gold"]["mappings"]
+    }
+    evaluation_forward = source["evaluation_report"][
+        "forward_expected_realization_comparison"
+    ]
+    evaluation_by_capability = {
+        row["capability_id"]: row for row in evaluation_forward["by_capability"]
+    }
 
     items = []
     for candidate in source["blind_packet"]["items"]:
         blind_id = candidate["blind_id"]
+        identity = identities[blind_id]
         reviewer_summaries = []
         for reviewer in ("reviewer_01", "reviewer_02"):
             judgment = judgments[reviewer][blind_id]
@@ -52,9 +71,10 @@ def build_packet(root):
                     "unsupported_claims": judgment["unsupported_claims"],
                 }
             )
-        items.append(
-            {
+        item = {
                 "blind_id": blind_id,
+                "source_arm": identity["source_arm"],
+                "source_identifier": identity["source_identifier"],
                 "candidate_capability": candidate["candidate_capability"],
                 "candidate_basis": candidate["candidate_basis"],
                 "confidence_score": candidate["confidence_score"],
@@ -64,13 +84,72 @@ def build_packet(root):
                 "needs_resolution": blind_id in pending,
                 "resolution_reasons": pending.get(blind_id, []),
                 "evaluator_judgments": reviewer_summaries,
+                "proposal_only": identity["source_arm"] == "REVERSE",
+                "forward_component_comparison": None,
                 "product_team_decision": {
                     "action": None,
                     "approved_name": None,
                     "notes": None,
                 },
             }
-        )
+        if identity["source_arm"] == "FORWARD":
+            capability_id = identity["source_identifier"]
+            forward = forward_results[capability_id]
+            gold = gold_mappings[capability_id]
+            evaluated = evaluation_by_capability[capability_id]
+            expected_ids = [row["graph_node_id"] for row in gold["expected_components"]]
+            proposed_ids = [row["graph_node_id"] for row in forward["proposed_components"]]
+            cited_ids = set(proposed_ids)
+            cited_ids.update(row["graph_node_id"] for row in forward["evidence_refs"])
+            missing_ids = [node_id for node_id in expected_ids if node_id not in cited_ids]
+            item["forward_component_comparison"] = {
+                "expected_components": [
+                    {
+                        "graph_node_id": row["graph_node_id"],
+                        "source_path": row["source_path"],
+                        "source_location": row["source_location"],
+                    }
+                    for row in gold["expected_components"]
+                ],
+                "proposed_components": [
+                    {
+                        "graph_node_id": row["graph_node_id"],
+                        "source_location": row["source_location"],
+                    }
+                    for row in forward["proposed_components"]
+                ],
+                "supporting_evidence_node_ids": [
+                    row["graph_node_id"] for row in forward["evidence_refs"]
+                ],
+                "missing_expected_node_ids": missing_ids,
+                "expected_nodes_cited": evaluated["expected_graph_node_coverage"][
+                    "expected_graph_nodes_cited"
+                ],
+                "expected_nodes": evaluated["expected_graph_node_coverage"][
+                    "expected_graph_nodes"
+                ],
+                "exact_proposed_component_matches": evaluated[
+                    "proposed_component_exact_graph_node_matches"
+                ],
+                "difference_classification": (
+                    "MISSING_EVIDENCE"
+                    if forward["outcome"] == "UNRESOLVED"
+                    else "GRANULARITY_OR_IDENTIFIER_MISMATCH"
+                ),
+                "plain_language": (
+                    "No component was proposed for the expected realization."
+                    if forward["outcome"] == "UNRESOLVED"
+                    else "The proposal found relevant files or nearby evidence nodes, "
+                    "but its formal components do not exactly identify the expected nodes."
+                ),
+            }
+        items.append(item)
+
+    path_comparison = evaluation_forward["file_component_path_comparison"]
+    node_coverage = evaluation_forward["expected_graph_node_coverage"]
+    exact_comparison = evaluation_forward[
+        "proposed_component_exact_graph_node_comparison"
+    ]
 
     return {
         "schema_version": "pkb001.human-review-decision-packet.v1",
@@ -82,6 +161,33 @@ def build_packet(root):
             "Product meaning; completing this packet does not publish semantics."
         ),
         "allowed_product_team_actions": source["blind_packet"]["allowed_review_actions"],
+        "forward_comparison": {
+            "interpretation": (
+                "The run generally found the correct code area, but did not precisely "
+                "name the evaluator's expected realization nodes as proposed components."
+            ),
+            "expected_component_path_recall": path_comparison[
+                "expected_component_path_recall"
+            ],
+            "proposed_component_path_precision": path_comparison[
+                "proposed_component_path_precision"
+            ],
+            "expected_graph_node_coverage": {
+                "cited": node_coverage["expected_graph_nodes_cited"],
+                "expected": node_coverage["expected_graph_nodes"],
+                "rate": node_coverage["expected_graph_node_coverage_rate"],
+            },
+            "exact_proposed_component_matches": {
+                "matched": exact_comparison[
+                    "proposed_component_exact_graph_node_matches"
+                ],
+                "expected": exact_comparison["expected_graph_nodes"],
+                "rate": exact_comparison[
+                    "proposed_component_exact_graph_node_recall"
+                ],
+            },
+            "limits": evaluation_forward["comparison_limits"],
+        },
         "source_digests": {
             path: _sha256(root / path) for path in SOURCE_PATHS.values()
         },
@@ -114,6 +220,15 @@ def render_markdown(packet):
         "",
         f"Items requiring explicit disagreement resolution: **{sum(x['needs_resolution'] for x in packet['items'])}/15**",
         "",
+        "## Forward comparison context",
+        "",
+        "- Expected component path recall: 23/24 (95.8%)",
+        "- Proposed component path precision: 21/25 (84.0%)",
+        "- Expected graph-node coverage across components and supporting evidence: 17/24 (70.8%)",
+        "- Exact proposed-component graph-node matches: 0/24",
+        "",
+        "Plain language: the run generally found the correct code area, but its formal components did not precisely identify the evaluator's expected method/entity nodes. File-path overlap and supporting evidence are useful, but neither is an exact proposed-component match.",
+        "",
         "## Item decisions",
         "",
     ]
@@ -130,6 +245,42 @@ def render_markdown(packet):
                 "",
             ]
         )
+        comparison = item["forward_component_comparison"]
+        if comparison is None:
+            lines.extend(
+                [
+                    "Reverse proposal-only: this capability hypothesis is advisory and has no Forward expected-component comparison.",
+                    "",
+                ]
+            )
+        else:
+            expected = ", ".join(
+                f"`{row['graph_node_id']}`" for row in comparison["expected_components"]
+            )
+            proposed = ", ".join(
+                f"`{row['graph_node_id']}`" for row in comparison["proposed_components"]
+            ) or "none"
+            supporting = ", ".join(
+                f"`{node_id}`" for node_id in comparison["supporting_evidence_node_ids"]
+            ) or "none"
+            missing = ", ".join(
+                f"`{node_id}`" for node_id in comparison["missing_expected_node_ids"]
+            ) or "none"
+            lines.extend(
+                [
+                    f"Expected components: {expected}",
+                    "",
+                    f"Proposed components: {proposed}",
+                    "",
+                    f"Supporting evidence nodes: {supporting}",
+                    "",
+                    f"Missing expected nodes: {missing}",
+                    "",
+                    "Difference classification: "
+                    f"`{comparison['difference_classification']}` — {comparison['plain_language']}",
+                    "",
+                ]
+            )
         for judgment in item["evaluator_judgments"]:
             suggested = judgment["suggested_name"] or "none"
             lines.extend(
