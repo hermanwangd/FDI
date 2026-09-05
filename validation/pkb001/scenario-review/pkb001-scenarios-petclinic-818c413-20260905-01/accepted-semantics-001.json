@@ -1,0 +1,56 @@
+{
+  "schema_version": "pkb001.reviewed-experiment-semantics.v0.1",
+  "snapshot_id": "pkb001-petclinic-owner-search-001",
+  "status": "FROZEN",
+  "authority": "REVIEWED_EXPERIMENT_SEMANTICS",
+  "owner": "HUMAN_REVIEWER",
+  "applicable_source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "capabilities": [
+    {
+      "capability_id": "HYP-CAPABILITY-001",
+      "title": "飼主查詢與詳細資料檢視",
+      "description": "讓使用者依姓名條件尋找飼主，並從查詢結果進入個別飼主的詳細資料。",
+      "includes": [
+        "姓名條件查詢",
+        "多筆結果分批瀏覽",
+        "個別詳細資料檢視"
+      ],
+      "excludes": [
+        "新增或修改飼主資料",
+        "寵物資料維護"
+      ],
+      "non_goals": [
+        "規定搜尋排序或內部資料查詢方式"
+      ],
+      "scenarios": [
+        {
+          "scenario_id": "HYP-SCENARIO-001",
+          "title": "依姓氏找到一筆或多筆飼主資料",
+          "given": [
+            "系統中已有姓氏符合查詢條件的飼主資料。"
+          ],
+          "when": "使用者以姓氏輸入查詢條件。",
+          "then": [
+            "系統顯示符合條件的飼主。",
+            "結果較多時可以分批瀏覽。",
+            "使用者可以選取一筆查看詳細資料。"
+          ],
+          "scope": "REQUIRED_ACCEPTANCE"
+        },
+        {
+          "scenario_id": "HYP-SCENARIO-002",
+          "title": "查詢條件含前後空白仍可使用",
+          "given": [
+            "系統中已有可由某個姓氏條件找到的飼主資料。"
+          ],
+          "when": "使用者在姓氏前後加入空白後送出查詢。",
+          "then": [
+            "系統以正規化後的條件進行查詢。",
+            "原本可找到的資料不會只因前後空白而遺漏。"
+          ],
+          "scope": "REQUIRED_ACCEPTANCE"
+        }
+      ]
+    }
+  ]
+}

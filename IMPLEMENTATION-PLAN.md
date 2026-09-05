@@ -61,8 +61,12 @@ No R1/R2/R3/F1 experiment run begins until all six Phase 0 readiness flags pass:
 **Spec binding:** `FRAMEWORK-SPEC.md` at `eff92e0f7c2e41cd9880c33655ff23df796a5830`.
 **Selected backlog:** `PKB-BL-005` and `PKB-BL-023`.
 **State:** BL-005/023 implementation verified; BL-024 review pointer verified.
-BL-025 now awaits the user's decisions; no proposal has been accepted or frozen.
-Human acceptance of generated Capability/scenario content remains pending.
+BL-025 is partially reviewed: the user accepted Capability 001 and Scenarios
+001/002, now frozen as a separate first-slice snapshot. The other 13 decisions
+remain pending. BL-007 is selected for bounded planning; its construction plan
+and scenario-aware Forward input migration are not yet complete.
+Human acceptance exists only for the three first-slice items recorded in
+`STATUS.json` and its acceptance manifest; all other decisions remain pending.
 
 Execution inputs are the existing frozen Petclinic graph (140 nodes, 142
 links), exact-revision Graphify binding, and delivery history (1,042 commits,

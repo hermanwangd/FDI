@@ -84,14 +84,14 @@ def test_status_separates_pending_proposals_from_existing_evaluation_reference()
     status = json.loads((ROOT / "STATUS.json").read_text())
 
     assert status["decision"] == "REVISE"
-    assert status["human_review_status"] == "PENDING_USER_REVIEW"
+    assert status["human_review_status"] == "PARTIALLY_REVIEWED"
     assert status["semantic_publication_allowed"] is False
     assert (ROOT / status["review_packet"]).is_file()
     assert status["review_packet"] != status["evaluation_reference_packet"]
     assert status["evaluation_reference_packet"] == (
         "validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.zh-TW.md"
     )
-    assert status["active_backlog_item"] == "PKB-BL-025"
+    assert status["active_backlog_item"] == "PKB-BL-007"
     assert status["active_implementation_plan"] is None
 
 
@@ -120,7 +120,7 @@ def test_individual_scenario_packet_is_bound_and_has_no_invented_decisions():
     from tooling.validation.pkb001_scenario_review import validate_review, accepted_scenarios
 
     status = json.loads((ROOT / "STATUS.json").read_text())
-    review = json.loads((ROOT / status["review_json"]).read_text())
+    review = json.loads((ROOT / status["original_review_json"]).read_text())
     validated = validate_review(ROOT, review)
     capabilities = validated["capability_proposals"]
     scenarios = [scenario for cap in capabilities for scenario in cap["scenarios"]]
@@ -130,3 +130,42 @@ def test_individual_scenario_packet_is_bound_and_has_no_invented_decisions():
     assert all(scenario["decision"] is None for scenario in scenarios)
     assert len(validated["resolved_evidence"]) == 48
     assert accepted_scenarios(ROOT, review) == []
+
+
+def test_first_accepted_slice_matches_decisions_and_frozen_manifest():
+    import hashlib
+    from tooling.validation.pkb001_scenario_review import validate_review, accepted_scenarios
+
+    status = json.loads((ROOT / "STATUS.json").read_text())
+    review = json.loads((ROOT / status["review_json"]).read_text())
+    validate_review(ROOT, review)
+    selected = accepted_scenarios(ROOT, review)
+    assert {s["scenario_id"] for s in selected} == {"HYP-SCENARIO-001", "HYP-SCENARIO-002"}
+    assert all(s["capability_id"] == "HYP-CAPABILITY-001" for s in selected)
+    decisions = [d for c in review["capability_proposals"]
+                 for d in [c["decision"], *[s["decision"] for s in c["scenarios"]]]]
+    assert sum(d is not None for d in decisions) == 3
+    assert sum(d is None for d in decisions) == 13
+    assert all(d["action"] == "ACCEPT" for d in decisions if d is not None)
+    assert all(d["reviewer_identity"] == "current_user" for d in decisions if d is not None)
+    frozen = json.loads((ROOT / status["accepted_experiment_input"]).read_text())
+    assert frozen["status"] == "FROZEN"
+    assert frozen["owner"] == "HUMAN_REVIEWER"
+    assert frozen["applicable_source_commit_sha"] == review["source_revision"]
+    assert len(frozen["capabilities"]) == 1
+    cap = frozen["capabilities"][0]
+    original_cap = review["capability_proposals"][0]
+    for key in ("capability_id", "title", "description", "includes", "excludes", "non_goals"):
+        assert cap[key] == original_cap[key]
+    assert cap["scenarios"] == [
+        {k: v for k, v in scenario.items() if k != "capability_id"}
+        for scenario in selected
+    ]
+    manifest = json.loads((ROOT / status["acceptance_manifest"]).read_text())
+    for key in ("decision_artifact", "semantics_artifact"):
+        binding = manifest[key]
+        assert hashlib.sha256((ROOT / binding["path"]).read_bytes()).hexdigest() == binding["sha256"]
+    assert manifest["proposal_sha256"] == review["proposal_sha256"]
+    assert manifest["authorization"]["user_statement"] == "三項接受"
+    assert manifest["forward_execution_readiness"] == "NOT_READY"
+    assert status["spec_maturity"]["next_experiment_readiness"] == "NOT_READY"

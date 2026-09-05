@@ -135,7 +135,8 @@ retained here for history and are excluded from active requirement counts.
   reviewer identity, time and reason; accepted edited text where applicable
 - Acceptance: rejected/unreviewed/unconfirmed edits cannot enter frozen inputs;
   the agent never substitutes its judgment for the user's acceptance
-- Completion evidence: pending
+- Progress: First-slice evidence: the user explicitly accepted Capability 001 and Scenarios 001/002. Decisions are recorded in `review-decisions-001.json` under the current scenario run; the other 13 decisions remain pending. This item is partially complete, not VERIFIED.
+- Completion evidence: pending for the complete item scope
 
 ### PKB-BL-004 — Existing disagreement adjudication
 
@@ -177,7 +178,8 @@ retained here for history and are excluded from active requirement counts.
 - Acceptance: every Forward scenario is Human Reviewer-owned and `FROZEN`; old
   Petclinic semantics and artifacts remain byte-identical; no Reverse hypothesis
   enters the revision without an explicit Human Reviewer decision
-- Completion evidence: pending
+- Progress: First-slice evidence: `accepted-semantics-001.json` and `acceptance-manifest-001.json` under the current scenario run freeze exactly the accepted Capability 001 and two scenarios. The full six-Capability scope is not frozen; no overall readiness gate is cleared.
+- Completion evidence: pending for the complete item scope
 
 ### PKB-BL-007 — Scenario-grounded PK-S1 contract
 
@@ -191,7 +193,8 @@ retained here for history and are excluded from active requirement counts.
   realization chains, behavioral PRIMARY/SUPPORTING reasons, explicit evidence
   gaps, and separate `outcome`/`evidence_status` are enforced; v0.2 remains
   immutable; evaluator gold remains forbidden
-- Completion evidence: pending
+- Progress: Next planning scope: the accepted Capability 001 / Scenarios 001/002 snapshot is available. Define a bounded construction plan for the scenario-aware contract and input gate before implementation; full experiment execution remains gated.
+- Completion evidence: pending for the complete item scope
 
 ### PKB-BL-008 — Real Graphify UI/template capability verification
 
@@ -328,8 +331,10 @@ retained here for history and are excluded from active requirement counts.
 ## Backlog execution order
 
 The selected construction plan completed `PKB-BL-005` and `PKB-BL-023`.
-BL-024 now points to the generated review material. BL-025 awaits the user's
-ACCEPT / EDIT / REJECT decisions; BL-006 subsequently freezes accepted inputs.
+BL-024 now points to the current review progress. BL-025 has three accepted
+decisions and 13 pending decisions. BL-006 has frozen that first accepted slice;
+its full-scope completion remains pending. BL-007 is selected for first-slice
+construction planning, not for bypassing execution prerequisites.
 BL-007/010/011 then establish scenario mapping and evaluation. BL-008/009,
 thresholds, holdout approval and protocol prerequisites still gate later runs.
 BL-004 adjudicates the existing 11 disagreements independently of human review.
