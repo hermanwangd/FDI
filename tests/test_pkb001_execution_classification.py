@@ -192,3 +192,44 @@ def test_task5_plan_specifies_executable_fail_closed_next_run_gate():
     ):
         assert mutation in task
     assert '`BLOCKED` with no mappings' in task
+
+
+def test_task5_plan_requires_complete_exact_bound_generation_inputs():
+    task = (ROOT/'IMPLEMENTATION-PLAN.md').read_text().split(
+        '### Task 5: Next-run schema and readiness gate', 1
+    )[1]
+    for kind in (
+        'PRODUCT_SEMANTICS', 'GRAPHIFY_BINDING_EVIDENCE',
+        'FROZEN_GRAPH', 'PKS1_SKILL',
+    ):
+        assert f"'{kind}'" in task
+    assert 'exactly one input of each required kind' in task
+    assert '`status=FROZEN` and `owner=PRODUCT_TEAM`' in task
+    assert '`result=EXACTLY_BOUND` with nonempty query bounds' in task
+    assert 'requested revision, indexed revision, applicable revision, and proposal `source_revision`' in task
+    assert 'binding `graph_sha256` equals the verified frozen-graph SHA-256' in task
+    for mutation in (
+        'empty inputs', 'missing required kind', 'duplicate required kind',
+        'unfrozen semantics', 'wrong semantics owner', 'unbound Graphify evidence',
+        'missing query bounds', 'applicable revision mismatch',
+        'requested revision mismatch', 'indexed revision mismatch',
+        'frozen graph digest mismatch', 'binding graph digest mismatch',
+    ):
+        assert mutation in task
+
+
+def test_task5_schema_and_skill_share_the_v02_output_envelope():
+    task = (ROOT/'IMPLEMENTATION-PLAN.md').read_text().split(
+        '### Task 5: Next-run schema and readiness gate', 1
+    )[1]
+    skill = _pk_s1_text()
+    assert '"required": ["schema_version", "run_id", "authority", "source_revision", "graph_sha256", "capability_results"]' in task
+    assert '"required": ["capability_id", "outcome", "components", "evidence_refs", "confidence", "limitations"]' in task
+    assert '"confidence": {"type": "number", "minimum": 0, "maximum": 1}' in task
+    assert '"required": ["provider_node_id", "source_path", "source_location"]' in task
+    for mutation in ('missing graph_sha256', 'missing evidence_refs',
+                     'missing confidence', 'missing limitations'):
+        assert mutation in task
+    assert 'downstream writer MUST atomically create a non-existing output path and run ID' in task
+    assert 'run envelope MUST contain `source_revision` and `graph_sha256`' in skill
+    assert 'Each capability result MUST contain `evidence_refs`, `confidence`, and `limitations`' in skill

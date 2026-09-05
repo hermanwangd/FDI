@@ -379,11 +379,13 @@ from tooling.validation.pkb001_next_run_gate import validate_next_run
 
 def test_v02_readiness_is_ready(valid_request, root):
     report = validate_next_run(root, valid_request)
+    skill = next(item for item in valid_request['generation_inputs']
+                 if item['kind'] == 'PKS1_SKILL')
     assert report == {
         'status': 'READY', 'reasons': [], 'mappings': [],
         'run_id': valid_request['proposal']['run_id'],
         'skill_path': 'skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md',
-        'skill_sha256': valid_request['skill']['sha256'],
+        'skill_sha256': skill['sha256'],
     }
 
 
@@ -394,6 +396,22 @@ def test_v02_readiness_is_ready(valid_request, root):
     ('revision mismatch', 'COMPONENT_REVISION_MISMATCH'),
     ('duplicate run_id', 'RUN_ID_ALREADY_EXISTS'),
     ('malformed schema', 'SCHEMA_INVALID'),
+    ('empty inputs', 'REQUIRED_INPUT_SET_INVALID'),
+    ('missing required kind', 'REQUIRED_INPUT_SET_INVALID'),
+    ('duplicate required kind', 'REQUIRED_INPUT_SET_INVALID'),
+    ('unfrozen semantics', 'PRODUCT_SEMANTICS_NOT_FROZEN'),
+    ('wrong semantics owner', 'PRODUCT_SEMANTICS_OWNER_INVALID'),
+    ('unbound Graphify evidence', 'GRAPHIFY_BINDING_INVALID'),
+    ('missing query bounds', 'GRAPHIFY_QUERY_BOUNDS_MISSING'),
+    ('applicable revision mismatch', 'REVISION_BINDING_MISMATCH'),
+    ('requested revision mismatch', 'REVISION_BINDING_MISMATCH'),
+    ('indexed revision mismatch', 'REVISION_BINDING_MISMATCH'),
+    ('frozen graph digest mismatch', 'FROZEN_GRAPH_DIGEST_MISMATCH'),
+    ('binding graph digest mismatch', 'GRAPH_BINDING_DIGEST_MISMATCH'),
+    ('missing graph_sha256', 'SCHEMA_INVALID'),
+    ('missing evidence_refs', 'SCHEMA_INVALID'),
+    ('missing confidence', 'SCHEMA_INVALID'),
+    ('missing limitations', 'SCHEMA_INVALID'),
 ])
 def test_mutations_are_blocked_without_mappings(valid_request, root, mutation, reason):
     request = mutate(deepcopy(valid_request), mutation)
@@ -403,7 +421,7 @@ def test_mutations_are_blocked_without_mappings(valid_request, root, mutation, r
     assert report['mappings'] == []
 ```
 
-The positive fixture selects exactly `skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md`, records its actual SHA-256, uses a new nonblank `run_id`, supplies only allowlisted generation inputs, and contains a schema-valid proposal whose component revisions equal its top-level revision. Mutation helpers make literal fixture changes, not mocks.
+The positive fixture supplies exactly one input of each required kind: `PRODUCT_SEMANTICS`, `GRAPHIFY_BINDING_EVIDENCE`, `FROZEN_GRAPH`, and `PKS1_SKILL`. It selects exactly `skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md`, records its actual SHA-256, uses a new nonblank `run_id`, and contains a complete conforming v0.2 output whose component revisions equal its top-level revision. Mutation helpers make literal fixture changes, not mocks.
 
 - [ ] **Step 2: Verify RED**
 
@@ -421,12 +439,13 @@ Use this provider-neutral schema; it intentionally contains no Petclinic identif
   "$id": "realization-proposal-v0.2.schema.json",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "run_id", "authority", "source_revision", "capability_results"],
+  "required": ["schema_version", "run_id", "authority", "source_revision", "graph_sha256", "capability_results"],
   "properties": {
     "schema_version": {"const": "pkb001.realization-proposal.v0.2"},
     "run_id": {"type": "string", "minLength": 1},
     "authority": {"const": "PROPOSAL_ONLY"},
     "source_revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "graph_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "capability_results": {
       "type": "array",
       "minItems": 1,
@@ -434,6 +453,16 @@ Use this provider-neutral schema; it intentionally contains no Petclinic identif
     }
   },
   "$defs": {
+    "evidence_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider_node_id", "source_path", "source_location"],
+      "properties": {
+        "provider_node_id": {"type": "string", "minLength": 1},
+        "source_path": {"type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"},
+        "source_location": {"type": "string", "minLength": 1}
+      }
+    },
     "component": {
       "type": "object",
       "additionalProperties": false,
@@ -460,11 +489,17 @@ Use this provider-neutral schema; it intentionally contains no Petclinic identif
     "result": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["capability_id", "outcome", "components", "limitations"],
+      "required": ["capability_id", "outcome", "components", "evidence_refs", "confidence", "limitations"],
       "properties": {
         "capability_id": {"type": "string", "minLength": 1},
         "outcome": {"enum": ["MAPPING_PROPOSAL", "UNRESOLVED"]},
         "components": {"type": "array", "items": {"$ref": "#/$defs/component"}},
+        "evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/evidence_ref"}
+        },
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
         "limitations": {
           "type": "array",
           "minItems": 1,
@@ -501,13 +536,19 @@ JSON Schema alone cannot enforce revision equality, filesystem digests, input is
 validate_next_run(root, request) -> report dict
 ```
 
-The request supplies `skill`, `generation_inputs`, and `proposal`. Readiness selects exact `skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md` and records and verifies its SHA-256. The proposal contains `schema_version`, a new nonblank `run_id`, immutable `authority=PROPOSAL_ONLY`, top-level `source_revision`, and `capability_results`.
+The request supplies `generation_inputs` and `proposal`. The proposal contains `schema_version`, a new nonblank `run_id`, immutable `authority=PROPOSAL_ONLY`, top-level `source_revision`, `graph_sha256`, and `capability_results`. Each result contains `evidence_refs`, numeric `confidence` from 0 through 1, and nonempty `limitations`; the top-level binding is authoritative, so no redundant per-result source revision is added.
 
 The executable gate uses these constants and cross-field checks:
 
 ```python
+from collections import Counter
+
 SKILL_PATH = 'skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md'
-ALLOWED_INPUT_KINDS = frozenset({'product_semantics', 'graph_evidence', 'graphify_binding'})
+REQUIRED_INPUT_KINDS = (
+    'PRODUCT_SEMANTICS', 'GRAPHIFY_BINDING_EVIDENCE',
+    'FROZEN_GRAPH', 'PKS1_SKILL',
+)
+ALLOWED_INPUT_KINDS = frozenset(REQUIRED_INPUT_KINDS)
 FORBIDDEN_PATH_PARTS = frozenset({
     'evaluator', 'task6', 'task7', 'human-review', 'gold', 'judgments',
     'post-generation', 'comparison', 'evaluation',
@@ -515,24 +556,56 @@ FORBIDDEN_PATH_PARTS = frozenset({
 
 def validate_next_run(root, request):
     reasons = set()
-    skill = request.get('skill', {})
+    inputs = request.get('generation_inputs', [])
+    counts = Counter(item.get('kind') for item in inputs if isinstance(item, dict))
+    if set(counts) != ALLOWED_INPUT_KINDS or any(
+            counts[kind] != 1 for kind in REQUIRED_INPUT_KINDS):
+        reasons.add('REQUIRED_INPUT_SET_INVALID')
+    if any(not isinstance(item, dict) or
+           item.get('kind') not in ALLOWED_INPUT_KINDS for item in inputs):
+        reasons.add('GENERATION_INPUT_NOT_ALLOWLISTED')
+    if any(not isinstance(item, dict) or forbidden_path(item.get('path', ''))
+           for item in inputs):
+        reasons.add('FORBIDDEN_GENERATION_INPUT')
+    if any(not isinstance(item, dict) or not digest_matches(root, item)
+           for item in inputs):
+        reasons.add('INPUT_DIGEST_MISMATCH')
+    by_kind = {item['kind']: item for item in inputs
+               if isinstance(item, dict) and counts[item.get('kind')] == 1}
+    skill = by_kind.get('PKS1_SKILL', {})
     if skill.get('path') != SKILL_PATH:
         reasons.add('SKILL_VERSION_NOT_SELECTED')
-    elif sha256_file(root / SKILL_PATH) != skill.get('sha256'):
+    elif not digest_matches(root, skill):
         reasons.add('SKILL_DIGEST_MISMATCH')
-    inputs = request.get('generation_inputs', [])
-    if any(item.get('kind') not in ALLOWED_INPUT_KINDS for item in inputs):
-        reasons.add('GENERATION_INPUT_NOT_ALLOWLISTED')
-    if any(forbidden_path(item.get('path', '')) for item in inputs):
-        reasons.add('FORBIDDEN_GENERATION_INPUT')
-    if any(not digest_matches(root, item) for item in inputs):
-        reasons.add('INPUT_DIGEST_MISMATCH')
+    semantics = load_json_input(root, by_kind.get('PRODUCT_SEMANTICS'), reasons)
+    binding = load_json_input(root, by_kind.get('GRAPHIFY_BINDING_EVIDENCE'), reasons)
+    graph = by_kind.get('FROZEN_GRAPH', {})
+    if semantics.get('status') != 'FROZEN':
+        reasons.add('PRODUCT_SEMANTICS_NOT_FROZEN')
+    if semantics.get('owner') != 'PRODUCT_TEAM':
+        reasons.add('PRODUCT_SEMANTICS_OWNER_INVALID')
+    if binding.get('result') != 'EXACTLY_BOUND':
+        reasons.add('GRAPHIFY_BINDING_INVALID')
+    if not binding.get('query_bounds'):
+        reasons.add('GRAPHIFY_QUERY_BOUNDS_MISSING')
     proposal = request.get('proposal', {})
     reasons.update(schema_errors(proposal))
+    revision = proposal.get('source_revision')
+    if any(value != revision for value in (
+            semantics.get('applicable_source_commit_sha'),
+            binding.get('requested_revision'), binding.get('indexed_revision'))):
+        reasons.add('REVISION_BINDING_MISMATCH')
     if any(component.get('source_revision') != proposal.get('source_revision')
            for result in proposal.get('capability_results', [])
            for component in result.get('components', [])):
         reasons.add('COMPONENT_REVISION_MISMATCH')
+    frozen_graph_sha256 = verified_sha256(root, graph, reasons)
+    if graph.get('sha256') != frozen_graph_sha256:
+        reasons.add('FROZEN_GRAPH_DIGEST_MISMATCH')
+    if binding.get('graph_sha256') != frozen_graph_sha256:
+        reasons.add('GRAPH_BINDING_DIGEST_MISMATCH')
+    if proposal.get('graph_sha256') != frozen_graph_sha256:
+        reasons.add('GRAPH_BINDING_DIGEST_MISMATCH')
     run_id = proposal.get('run_id')
     if not isinstance(run_id, str) or not run_id.strip():
         reasons.add('RUN_ID_INVALID')
@@ -548,7 +621,9 @@ def validate_next_run(root, request):
 
 `schema_errors` validates with the checked-in Draft 2020-12 schema and returns `SCHEMA_INVALID` for any violation. Each component `source_revision` equals the proposal top-level `source_revision`; this is enforced after schema validation. `committed_pkb001_run_ids` reads JSON returned by `git ls-files validation/pkb001` and collects every nonblank `run_id` in committed PKB-001 artifacts and manifests. A requested ID must not collide with any existing immutable `run_id`, and the gate never overwrites a run or artifact.
 
-The explicit generation-input allowlist admits only the three `ALLOWED_INPUT_KINDS`, with repository-relative paths and verified SHA-256 values. It rejects `evaluator/`, task6, task7, human-review, gold, judgments, and post-generation comparison/evaluation inputs. Any forbidden input produces `BLOCKED` with no mappings.
+The explicit generation-input allowlist requires exactly one input of each required kind and rejects empty inputs, a missing required kind, a duplicate required kind, and any unknown kind. All four inputs require repository-relative paths and verified SHA-256 values. `PRODUCT_SEMANTICS` must have `status=FROZEN` and `owner=PRODUCT_TEAM`. `GRAPHIFY_BINDING_EVIDENCE` must have `result=EXACTLY_BOUND` with nonempty query bounds. The requested revision, indexed revision, applicable revision, and proposal `source_revision` must all be identical, as must every component revision. The binding `graph_sha256` equals the verified frozen-graph SHA-256 and the proposal `graph_sha256`; `PKS1_SKILL` selects exact v0.2 and records and verifies its SHA-256.
+
+The allowlist also rejects `evaluator/`, task6, task7, human-review, gold, judgments, and post-generation comparison/evaluation inputs. Any missing, duplicate, unbound, mismatched, or forbidden input produces `BLOCKED` with no mappings.
 
 The gate emits a deterministic `READY` or `BLOCKED` report with sorted reasons, defaults fail closed and does not execute generation. Missing keys, missing files, path-normalization failures, malformed JSON, schema errors, and digest/read failures are converted to stable `BLOCKED` reason codes rather than escaping as exceptions. The CLI only validates and writes a new report:
 
@@ -557,6 +632,8 @@ python3 tooling/validation/pkb001_next_run_gate.py --root . --request next-run-r
 ```
 
 The CLI exits `0` for `READY` and `1` for `BLOCKED`, serializes sorted-key JSON with a trailing newline, refuses to overwrite an existing report, never invokes PK-S1, and never emits proposal mappings.
+
+After a `READY` report, any downstream writer MUST atomically create a non-existing output path and run ID in one exclusive operation and abort on collision. This closes the gate-to-write TOCTOU window; the gate itself writes no generation output.
 
 - [ ] **Step 4: Verify schema and complete repository regression**
 
