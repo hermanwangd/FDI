@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -16,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -110,6 +114,15 @@ class ScenarioForwardGateTests {
         assertBlocked(fixture, "ACCEPTED_BEHAVIOR_MISMATCH");
     }
 
+    @Test void missingBlankAndNontextSnapshotIdsFailWithExactAcceptanceBindingReason() throws Exception {
+        for (String change : List.of("missing", "blank", "nontext")) {
+            Fixture fixture = fixture();
+            fixture.mutate("PRODUCT_SEMANTICS", value -> mutateSnapshot(value, change));
+            fixture.mutate("ACCEPTANCE_MANIFEST", value -> mutateSnapshot(value, change));
+            assertBlockedExactly(fixture, "ACCEPTANCE_BINDING_MISMATCH");
+        }
+    }
+
     @Test void graphifyProofBoundsDigestAndGraphReferenceFamiliesFailClosed() throws Exception {
         Fixture fixture = fixture();
         fixture.mutate("GRAPHIFY_BINDING_EVIDENCE", value -> value.with("structural_proof").put("path_query", false));
@@ -152,6 +165,24 @@ class ScenarioForwardGateTests {
         assertBlocked(fixture, "RUN_ID_REGISTRY_UNAVAILABLE");
     }
 
+    @Test void oversizedRegistryOutputIsBoundedAndProcessIsReaped() throws Exception {
+        Fixture fixture = fixture();
+        FakeProcess process = FakeProcess.completed(new byte[(int) ScenarioForwardRequestReader.MAX_BYTES + 1], 0);
+        ScenarioForwardReport report = fixture.validate(new ScenarioForwardGate(ignored -> process, Duration.ofSeconds(1)));
+        assertEquals(List.of("RUN_ID_REGISTRY_INVALID"), report.reasons());
+        assertTrue(process.destroyed, "overflow process must be destroyed");
+        assertTrue(process.waitedAfterDestroy, "overflow process must be reaped");
+    }
+
+    @Test void timedOutRegistryProcessIsForciblyDestroyedAndReaped() throws Exception {
+        Fixture fixture = fixture();
+        FakeProcess process = FakeProcess.hanging();
+        ScenarioForwardReport report = fixture.validate(new ScenarioForwardGate(ignored -> process, Duration.ofMillis(10)));
+        assertEquals(List.of("RUN_ID_REGISTRY_UNAVAILABLE"), report.reasons());
+        assertTrue(process.destroyedForcibly, "timeout process must be forcibly destroyed");
+        assertTrue(process.waitedAfterDestroy, "timeout process must be reaped");
+    }
+
     @Test void reasonsAreSortedDeduplicatedAndFailureNeverReturnsGenerationInputs() throws Exception {
         Fixture fixture = fixture();
         fixture.proposal.put("graph_sha256", "0".repeat(64));
@@ -165,9 +196,22 @@ class ScenarioForwardGateTests {
     private void assertBlocked(Fixture fixture, String reason) {
         ScenarioForwardReport report = fixture.validate();
         assertEquals(ScenarioForwardReport.Status.BLOCKED, report.status(), report.toString());
-        assertTrue(report.reasons().contains(reason), report.toString());
+        assertEquals(List.of(reason), report.reasons(), report.toString());
         assertEquals(List.of(), report.generationInputs());
         assertEquals(List.of(), report.mappings());
+    }
+
+    private void assertBlockedExactly(Fixture fixture, String reason) {
+        ScenarioForwardReport report = fixture.validate();
+        assertEquals(ScenarioForwardReport.Status.BLOCKED, report.status());
+        assertEquals(List.of(reason), report.reasons());
+        assertTrue(report.generationInputs().isEmpty());
+    }
+
+    private static void mutateSnapshot(ObjectNode value, String change) {
+        if (change.equals("missing")) value.remove("snapshot_id");
+        else if (change.equals("blank")) value.put("snapshot_id", " ");
+        else value.put("snapshot_id", 7);
     }
 
     private Fixture fixture() throws Exception {
@@ -245,6 +289,24 @@ class ScenarioForwardGateTests {
             });
             proposal.put("semantics_sha256", byKind.get("PRODUCT_SEMANTICS").sha256());
         }
-        ScenarioForwardReport validate() { return new ScenarioForwardGate().validate(root, new ScenarioForwardRequest(inputs, proposal)); }
+        ScenarioForwardReport validate() { return validate(new ScenarioForwardGate()); }
+        ScenarioForwardReport validate(ScenarioForwardGate gate) { return gate.validate(root, new ScenarioForwardRequest(inputs, proposal)); }
+    }
+
+    private static final class FakeProcess extends Process {
+        private final InputStream stdout; private final boolean initiallyAlive; private final int exit;
+        private boolean alive; boolean destroyed; boolean destroyedForcibly; boolean waitedAfterDestroy;
+        private FakeProcess(byte[] output, boolean alive, int exit) { this.stdout = new ByteArrayInputStream(output); this.initiallyAlive = alive; this.alive = alive; this.exit = exit; }
+        static FakeProcess completed(byte[] output, int exit) { return new FakeProcess(output, false, exit); }
+        static FakeProcess hanging() { return new FakeProcess(new byte[0], true, 0); }
+        @Override public OutputStream getOutputStream() { return OutputStream.nullOutputStream(); }
+        @Override public InputStream getInputStream() { return stdout; }
+        @Override public InputStream getErrorStream() { return InputStream.nullInputStream(); }
+        @Override public int waitFor() { alive = false; waitedAfterDestroy |= destroyed || destroyedForcibly; return exit; }
+        @Override public boolean waitFor(long timeout, java.util.concurrent.TimeUnit unit) { if (!alive) { waitedAfterDestroy |= destroyed || destroyedForcibly; return true; } if (destroyed || destroyedForcibly) { alive=false; waitedAfterDestroy=true; return true; } return false; }
+        @Override public int exitValue() { if (alive) throw new IllegalThreadStateException(); return exit; }
+        @Override public void destroy() { destroyed=true; alive=false; }
+        @Override public Process destroyForcibly() { destroyedForcibly=true; alive=false; return this; }
+        @Override public boolean isAlive() { return alive; }
     }
 }

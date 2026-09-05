@@ -11,11 +11,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SpecVersion;
 
-import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.OffsetDateTime;
+import java.time.Duration;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -56,6 +61,23 @@ public final class ScenarioForwardGate {
     private static final ObjectMapper JSON = new ObjectMapper(JsonFactory.builder()
             .enable(StreamReadFeature.STRICT_DUPLICATE_DETECTION).build())
             .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
+    private final RegistryProcessFactory registryProcessFactory;
+    private final Duration registryTimeout;
+
+    public ScenarioForwardGate() {
+        this(root -> new ProcessBuilder("git", "grep", "-h", "-o", "-E",
+                "\"run_id\"[[:space:]]*:[[:space:]]*\"[^\"[:cntrl:]]*\"", "HEAD", "--",
+                ":(glob)validation/pkb001/**/*.json").directory(root.toFile())
+                .redirectError(ProcessBuilder.Redirect.DISCARD).start(), Duration.ofSeconds(15));
+    }
+
+    ScenarioForwardGate(RegistryProcessFactory registryProcessFactory, Duration registryTimeout) {
+        this.registryProcessFactory = java.util.Objects.requireNonNull(registryProcessFactory);
+        this.registryTimeout = java.util.Objects.requireNonNull(registryTimeout);
+    }
+
+    @FunctionalInterface
+    interface RegistryProcessFactory { Process start(Path root) throws IOException; }
 
     public ScenarioForwardReport validate(Path trustedRoot, ScenarioForwardRequest request) {
         Set<String> reasons = new TreeSet<>();
@@ -196,7 +218,10 @@ public final class ScenarioForwardGate {
                 || !"PROPOSAL_ONLY".equals(text(original,"authority")) || !"SCENARIO_PROPOSAL".equals(text(original,"artifact_kind"))
                 || !"SCENARIO_REVIEW_SURFACE".equals(text(review,"artifact_kind"))) fail("AUTHORITY_INVALID");
         String digest=items.get("ORIGINAL_PROPOSAL").sha256(), reviewer=text(manifest,"reviewer_identity");
-        if (!text(manifest,"snapshot_id").equals(text(semantics,"snapshot_id")) || integer(manifest,"proposal_revision","ACCEPTANCE_BINDING_MISMATCH")!=revision
+        String semanticSnapshot = text(semantics, "snapshot_id");
+        String manifestSnapshot = text(manifest, "snapshot_id");
+        if (blank(semanticSnapshot) || blank(manifestSnapshot) || !manifestSnapshot.equals(semanticSnapshot)
+                || integer(manifest,"proposal_revision","ACCEPTANCE_BINDING_MISMATCH")!=revision
                 || integer(review,"proposal_revision","ACCEPTANCE_BINDING_MISMATCH")!=revision || !digest.equals(text(manifest,"proposal_sha256"))
                 || !digest.equals(text(review,"proposal_sha256")) || !items.get("ORIGINAL_PROPOSAL").path().equals(text(review,"proposal_artifact_path"))
                 || !artifact(manifest,"semantics_artifact",items.get("PRODUCT_SEMANTICS")) || !artifact(manifest,"decision_artifact",items.get("REVIEW_DECISIONS")))
@@ -253,9 +278,76 @@ public final class ScenarioForwardGate {
 
     private static void graphReferences(JsonNode graph,JsonNode proposal,JsonNode semantics){JsonNode nodes=graph.path("nodes");if(!nodes.isArray()||nodes.isEmpty())fail("GRAPH_SHAPE_INVALID");Map<String,JsonNode> byId=new HashMap<>();for(JsonNode node:nodes){String id=text(node,"id");if(blank(id)||byId.put(id,node)!=null)fail("GRAPH_SHAPE_INVALID");}Map<String,Set<String>> accepted=new HashMap<>();for(JsonNode cap:semantics.withArray("capabilities"))accepted.put(text(cap,"capability_id"),ids(cap.withArray("scenarios"),"scenario_id"));if(!ids(proposal.withArray("capability_results"),"capability_id").equals(accepted.keySet()))fail("ACCEPTED_SET_MISMATCH");for(JsonNode result:proposal.withArray("capability_results")){String cap=text(result,"capability_id");if(!ids(result.withArray("bound_scenarios"),"scenario_id").equals(accepted.get(cap)))fail("SCENARIO_MEMBERSHIP_INVALID");for(JsonNode item:result.withArray("components"))for(JsonNode identity:concat(List.of(item.path("component").path("identity")),item.withArray("directly_evidenced_methods"))){JsonNode node=byId.get(text(identity,"provider_node_id"));if(node==null||!text(node,"source_file").equals(text(identity,"source_path")))fail("GRAPH_COMPONENT_REFERENCE_INVALID");for(String key:List.of("qualified_symbol","granularity","source_revision"))if(node.has(key)&&!node.get(key).equals(identity.get(key)))fail("GRAPH_COMPONENT_REFERENCE_INVALID");}for(JsonNode trace:result.withArray("scenario_traces"))for(JsonNode step:trace.withArray("steps"))for(JsonNode ref:step.withArray("evidence_refs"))if(!byId.containsKey(ref.asText()))fail("GRAPH_EVIDENCE_REFERENCE_INVALID");}}
 
-    private static void runAvailable(Path root,String runId,Map<String,JsonNode> docs){
-        try{Process process=new ProcessBuilder("git","grep","-h","-o","-E","\"run_id\"[[:space:]]*:[[:space:]]*\"[^\"[:cntrl:]]*\"","HEAD","--",":(glob)validation/pkb001/**/*.json").directory(root.toFile()).redirectErrorStream(true).start();byte[] output=process.getInputStream().readNBytes((int)ScenarioForwardRequestReader.MAX_BYTES+1);if(!process.waitFor(15,java.util.concurrent.TimeUnit.SECONDS)||!Set.of(0,1).contains(process.exitValue()))fail("RUN_ID_REGISTRY_UNAVAILABLE");if(output.length>ScenarioForwardRequestReader.MAX_BYTES)fail("RUN_ID_REGISTRY_INVALID");if(new String(output,java.nio.charset.StandardCharsets.UTF_8).lines().anyMatch(line->line.contains("\""+runId+"\"")))fail("RUN_ID_ALREADY_EXISTS");}catch(IOException|InterruptedException failure){Thread.currentThread().interrupt();fail("RUN_ID_REGISTRY_UNAVAILABLE");}
+    private void runAvailable(Path root,String runId,Map<String,JsonNode> docs){
+        byte[] tracked = readTrackedRegistry(root);
+        if(new String(tracked,java.nio.charset.StandardCharsets.UTF_8).lines().anyMatch(line->line.contains("\""+runId+"\"")))fail("RUN_ID_ALREADY_EXISTS");
         for(JsonNode doc:docs.values())if(runId.equals(text(doc,"run_id")))fail("RUN_ID_ALREADY_EXISTS");Path directory=root.resolve("validation/pkb001");if(!Files.exists(directory))return;try(Stream<Path> paths=Files.walk(directory)){var iterator=paths.limit(10002).iterator();int count=0;while(iterator.hasNext()){Path path=iterator.next();if(++count>10001)fail("RUN_ID_REGISTRY_INVALID");String name=path.getFileName().toString();if(name.equals(runId)||name.equals(runId+".json"))fail("RUN_ID_ALREADY_EXISTS");if(Files.isRegularFile(path)&&name.endsWith(".json")&&!forbidden(root.relativize(path).toString().replace('\\','/'))){byte[] bytes=new ScenarioForwardRequestReader().readBoundFile(root,root.relativize(path).toString().replace('\\','/'));String value=new String(bytes,java.nio.charset.StandardCharsets.UTF_8);if(Pattern.compile("\\\"run_id\\\"\\s*:\\s*\\\""+Pattern.quote(runId)+"\\\"").matcher(value).find())fail("RUN_ID_ALREADY_EXISTS");}}}catch(IOException failure){fail("RUN_ID_REGISTRY_INVALID");}}
+
+    private byte[] readTrackedRegistry(Path root) {
+        Process process = null;
+        var executor = Executors.newSingleThreadExecutor(runnable -> {
+            Thread thread = new Thread(runnable, "scenario-forward-registry-drain");
+            thread.setDaemon(true);
+            return thread;
+        });
+        Future<BoundedOutput> drain = null;
+        boolean completed = false;
+        try {
+            process = registryProcessFactory.start(root);
+            Process started = process;
+            drain = executor.submit(() -> drainBounded(started));
+            if (!process.waitFor(registryTimeout.toMillis(), TimeUnit.MILLISECONDS)) {
+                fail("RUN_ID_REGISTRY_UNAVAILABLE");
+            }
+            if (!Set.of(0, 1).contains(process.exitValue())) {
+                fail("RUN_ID_REGISTRY_UNAVAILABLE");
+            }
+            BoundedOutput output = drain.get();
+            if (output.overflow()) {
+                fail("RUN_ID_REGISTRY_INVALID");
+            }
+            completed = true;
+            return output.bytes();
+        } catch (InterruptedException failure) {
+            Thread.currentThread().interrupt();
+            fail("RUN_ID_REGISTRY_UNAVAILABLE");
+            return new byte[0];
+        } catch (IOException | ExecutionException failure) {
+            fail("RUN_ID_REGISTRY_UNAVAILABLE");
+            return new byte[0];
+        } finally {
+            if (!completed && process != null) {
+                process.destroy();
+                process.destroyForcibly();
+                try {
+                    if (!process.waitFor(1, TimeUnit.SECONDS)) {
+                        process.destroyForcibly();
+                        process.waitFor(1, TimeUnit.SECONDS);
+                    }
+                } catch (InterruptedException failure) {
+                    process.destroyForcibly();
+                    Thread.currentThread().interrupt();
+                }
+            }
+            if (drain != null && !drain.isDone()) drain.cancel(true);
+            executor.shutdownNow();
+        }
+    }
+
+    private static BoundedOutput drainBounded(Process process) throws IOException {
+        ByteArrayOutputStream kept = new ByteArrayOutputStream();
+        boolean overflow = false;
+        byte[] buffer = new byte[8192];
+        int count;
+        while ((count = process.getInputStream().read(buffer)) != -1) {
+            int remaining = (int) ScenarioForwardRequestReader.MAX_BYTES - kept.size();
+            if (remaining > 0) kept.write(buffer, 0, Math.min(remaining, count));
+            if (count > remaining) overflow = true;
+        }
+        return new BoundedOutput(kept.toByteArray(), overflow);
+    }
+
+    private record BoundedOutput(byte[] bytes, boolean overflow) {}
 
     private static boolean forbidden(String path){if(!ScenarioForwardRequestReader.canonicalRelative(path))return false;Set<String> forbidden=Set.of("evaluator","gold","judgments","comparison","evaluation","task6","task7");for(String part:path.toLowerCase().split("/")){String[] tokens=part.split("[^a-z0-9]+");for(String token:tokens)if(forbidden.contains(token))return true;for(int i=0;i+1<tokens.length;i++)if((tokens[i].equals("human")&&tokens[i+1].equals("review"))||(tokens[i].equals("post")&&tokens[i+1].equals("generation")))return true;}return false;}
     private static void stripDecisions(JsonNode doc,boolean generated){for(JsonNode cap:doc.withArray("capability_proposals")){if(generated&&cap.hasNonNull("decision"))fail("GENERATED_DECISION_FORBIDDEN");((ObjectNode)cap).putNull("decision");for(JsonNode scenario:cap.withArray("scenarios")){if(generated&&scenario.hasNonNull("decision"))fail("GENERATED_DECISION_FORBIDDEN");((ObjectNode)scenario).putNull("decision");}}}
