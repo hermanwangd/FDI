@@ -86,9 +86,15 @@
     {
       "path": "tooling/validation/pkb001_next_run_gate.py",
       "responsibility": "Validate a PKB-001 v0.2 proposal run request with fail-closed controls.",
-      "active_callers": ["tests/test_pkb001_next_run_gate.py"],
-      "migration_state": "TRANSITIONAL",
-      "external_runtime": false
+      "active_callers": [],
+      "migration_state": "MIGRATED_TO_JAVA",
+      "external_runtime": false,
+      "java_api": "com.featuredeliveryintelligence.fdi.validation.nextrun.NextRunGate",
+      "java_cli": "java -jar target/fdi-0.4.8.3.jar next-run-validate --root <dir> --request <path> --report <path>",
+      "verification_evidence": {
+        "characterization_test_count": 82,
+        "java_test_count_at_cutover": 313
+      }
     },
     {
       "path": "tooling/validation/pkb001_runner.py",

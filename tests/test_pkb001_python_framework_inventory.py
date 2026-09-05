@@ -10,6 +10,7 @@ FIXTURES = ROOT / "validation/pkb001/fixtures/scenario-forward-parity.json"
 SELECTED = "tooling/validation/pkb001_scenario_forward_gate.py"
 COMPARE = "tooling/validation/pkb001_component_compare.py"
 BLIND = "tooling/validation/pkb001_blind_review.py"
+NEXT_RUN = "tooling/validation/pkb001_next_run_gate.py"
 JAVA_CLI = (
     "java -jar target/fdi-0.4.8.3.jar scenario-forward-validate "
     "--root . --request <request.json>"
@@ -17,6 +18,10 @@ JAVA_CLI = (
 BLIND_JAVA_CLI = (
     "java -jar target/fdi-0.4.8.3.jar blind-review-generate "
     "--root <dir> --output-dir <dir>"
+)
+NEXT_RUN_JAVA_CLI = (
+    "java -jar target/fdi-0.4.8.3.jar next-run-validate "
+    "--root <dir> --request <path> --report <path>"
 )
 
 
@@ -339,7 +344,7 @@ def test_python_framework_inventory_characterizes_the_migration_boundary():
         consumer["path"]
         for consumer in consumers
         if consumer["migration_state"] == "MIGRATED_TO_JAVA"
-    ] == [BLIND, COMPARE, SELECTED]
+    ] == [BLIND, COMPARE, NEXT_RUN, SELECTED]
     assert all(
         consumer["migration_state"] == "TRANSITIONAL"
         for consumer in consumers
@@ -435,3 +440,23 @@ def test_blind_review_consumer_is_cut_over_to_java():
     )
     assert migrated["java_cli"] == BLIND_JAVA_CLI
     assert migrated["verification_evidence"]["characterization_test_count"] == 14
+
+
+def test_next_run_gate_consumer_is_cut_over_to_java():
+    inventory = json.loads(INVENTORY.read_text())
+    migrated = next(
+        consumer
+        for consumer in inventory["repository_consumers"]
+        if consumer["path"] == NEXT_RUN
+    )
+
+    assert not (ROOT / NEXT_RUN).exists()
+    assert not (ROOT / "tests/test_pkb001_next_run_gate.py").exists()
+    assert migrated["migration_state"] == "MIGRATED_TO_JAVA"
+    assert migrated["active_callers"] == []
+    assert migrated["java_api"] == (
+        "com.featuredeliveryintelligence.fdi.validation.nextrun."
+        "NextRunGate"
+    )
+    assert migrated["java_cli"] == NEXT_RUN_JAVA_CLI
+    assert migrated["verification_evidence"]["characterization_test_count"] == 82
