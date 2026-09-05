@@ -12,11 +12,264 @@
 plans and future implementation outlines; backlog status, priority, dependency,
 and maturity are authoritative only in `BACKLOG.md`.
 
-**Current selection:** none. The Java-only framework migration is selected in
-`BACKLOG.md` as BL-026, but its implementation plan will be written only after
-review of the updated architecture. Existing Python plan sections below are
+**Current selection:** BL-026 first migration slice. Replace the repository-owned
+scenario-forward Python gate with a Java API/CLI, cut over its active callers,
+then remove that Python consumer. Existing Python plan sections below are
 completed or transitional delivery records and do not authorize new Python
 framework behavior.
+
+---
+
+## Selected work: BL-026 Java scenario-forward gate migration
+
+**Goal:** Replace `tooling/validation/pkb001_scenario_forward_gate.py` with a
+Java 17 API and CLI that preserves its fail-closed v0.3 contract, then remove
+the replaced Python module and its direct Python tests.
+
+**Spec binding:** `FRAMEWORK-SPEC.md` at
+`891e497968000c32984f26437eab811c063ec4cf`.
+
+**Selected backlog:** `PKB-BL-026`, first bounded consumer only. Completing
+this plan advances but does not close BL-026; remaining Python consumers stay
+in the same backlog item for later implementation-plan revisions.
+
+**Architecture:** Java owns request parsing, schema and domain validation,
+trusted-root file reads, digest/revision binding, Graphify-evidence checks,
+run-ID collision checks and the JSON report. It consumes existing Graphify
+evidence only; the external Graphify Python MCP runtime stays unchanged. The
+public result remains `CONTRACT_VALID` or `BLOCKED`, with empty `mappings` and
+no evaluator inputs.
+
+**Tech stack:** Java 17, Spring Boot 3.4.1, Jackson, networknt JSON Schema Draft
+2020-12, JUnit 5 and Maven. Python/pytest is used only to characterize the old
+consumer before cutover.
+
+### Task 1: Freeze inventory and observable behavior
+
+**Files:**
+
+- Create: `validation/pkb001/java-migration/python-framework-inventory.json`
+- Create: `src/test/java/com/featuredeliveryintelligence/fdi/validation/scenarioforward/ScenarioForwardCharacterizationTests.java`
+- Read: `tooling/validation/pkb001_scenario_forward_gate.py`
+- Read: `tests/test_pkb001_scenario_forward.py`
+
+- [ ] Record every active `tooling/validation/*.py` file with `path`,
+  `responsibility`, `active_callers`, `migration_state`, and `external_runtime`.
+  Mark only the scenario-forward gate `SELECTED`; mark other repository Python
+  modules `TRANSITIONAL`. Record Graphify as an external MCP runtime rather than
+  a repository Python consumer.
+- [ ] Add a Java characterization test which loads all shared cases and fixes
+  the stable report boundary:
+
+```java
+assertThat(fixtures).hasSize(36);
+assertThat(valid.keySet()).containsExactlyInAnyOrder(
+        "status", "reasons", "mappings", "run_id", "generation_inputs");
+assertThat(valid.get("status")).isEqualTo("CONTRACT_VALID");
+assertThat(valid.get("mappings")).isEqualTo(List.of());
+assertThat(blocked.get("status")).isEqualTo("BLOCKED");
+assertThat(blocked.get("generation_inputs")).isEqualTo(List.of());
+```
+
+- [ ] Run `python3 -m pytest -q tests/test_pkb001_scenario_forward.py` before
+  replacement. Save the exact passing count as `characterization_test_count`;
+  never weaken a rejected case for Java parity.
+- [ ] Commit the inventory and initially failing Java characterization test as
+  `test(fdi): characterize scenario forward migration`.
+
+### Task 2: Implement bounded Java input handling
+
+**Files:**
+
+- Create: `src/main/java/com/featuredeliveryintelligence/fdi/validation/scenarioforward/ScenarioForwardRequestReader.java`
+- Create: `src/main/java/com/featuredeliveryintelligence/fdi/validation/scenarioforward/ScenarioForwardRequest.java`
+- Create: `src/main/java/com/featuredeliveryintelligence/fdi/validation/scenarioforward/ScenarioForwardReport.java`
+- Create: `src/test/java/com/featuredeliveryintelligence/fdi/validation/scenarioforward/ScenarioForwardRequestReaderTests.java`
+
+- [ ] Write failing tests for canonical relative paths, absolute/traversal and
+  Windows paths, symlink files/directories, non-regular files, inputs over 8
+  MiB, malformed JSON, duplicate keys, non-object roots and post-read mutation.
+- [ ] Run `MAVEN_OPTS='-Xmx2g' ./mvnw -q
+  -Dtest=ScenarioForwardRequestReaderTests test`; expect compilation failure
+  because the reader is absent.
+- [ ] Implement this public boundary. Jackson enables strict duplicate-key
+detection; path inspection uses `NOFOLLOW_LINKS`; parsed trees are copied.
+
+```java
+public record ScenarioForwardRequest(List<BoundInput> inputs, JsonNode proposal) {
+    public record BoundInput(String kind, String path, String sha256) {}
+
+    public ScenarioForwardRequest {
+        inputs = List.copyOf(inputs);
+        proposal = proposal.deepCopy();
+    }
+}
+
+public final class ScenarioForwardRequestReader {
+    public static final long MAX_BYTES = 8L * 1024 * 1024;
+    public ScenarioForwardRequest read(Path trustedRoot, Path requestPath);
+    public byte[] readBoundFile(Path trustedRoot, String relativePath);
+    public static String sha256(byte[] bytes);
+    public static boolean canonicalRelative(String value);
+}
+```
+
+- [ ] Implement an immutable report which sorts/deduplicates reasons, always
+  keeps mappings empty, and removes generation inputs whenever blocked:
+
+```java
+public record ScenarioForwardReport(
+        Status status, List<String> reasons, List<Object> mappings,
+        String runId, List<GenerationInput> generationInputs) {
+    public enum Status { CONTRACT_VALID, BLOCKED }
+    public record GenerationInput(String kind, String path, String sha256) {}
+}
+```
+
+- [ ] Rerun the focused tests; expect zero failures. Commit as
+  `feat(fdi): add bounded scenario forward input reader`.
+
+### Task 3: Port contract and provenance validation
+
+**Files:**
+
+- Create: `src/main/java/com/featuredeliveryintelligence/fdi/validation/scenarioforward/ScenarioForwardGate.java`
+- Create: `src/test/java/com/featuredeliveryintelligence/fdi/validation/scenarioforward/ScenarioForwardGateTests.java`
+- Reuse: `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/ScenarioRealizationProposal.java`
+- Reuse: `validation/pkb001/schemas/realization-proposal-v0.3.schema.json`
+- Reuse: `validation/pkb001/fixtures/scenario-forward-parity.json`
+
+- [ ] Write failing parameterized tests for every existing reason family:
+  request/input shape; digests and selected versions; JSON Schema and Java
+  invariants; reviewed-semantics consistency; Graphify exact-revision evidence;
+  graph references; and run-ID uniqueness.
+- [ ] Implement one fail-closed entry point:
+
+```java
+public final class ScenarioForwardGate {
+    public static final String SCHEMA_PATH =
+            "validation/pkb001/schemas/realization-proposal-v0.3.schema.json";
+    public static final String SKILL_PATH =
+            "skills/pkb001/pk-s1-product-realization-v0.3/SKILL.md";
+    public ScenarioForwardReport validate(Path trustedRoot,
+                                          ScenarioForwardRequest request);
+}
+```
+
+Use networknt Draft 2020-12 validation before deserializing capability results
+to `ScenarioRealizationProposal`. Preserve existing public reason codes. Map
+unexpected runtime input to `REQUEST_INVALID`; never return stack traces,
+evaluator content or partially validated generation inputs.
+- [ ] Run `MAVEN_OPTS='-Xmx2g' ./mvnw -q
+  -Dtest=ScenarioForwardParityTests,ScenarioForwardGateTests,ScenarioForwardCharacterizationTests
+  test`. Expect all Java tests to pass and all 36 fixtures to retain the same
+  decision. Commit as `feat(fdi): port scenario forward gate to Java`.
+
+### Task 4: Expose the Java CLI
+
+**Files:**
+
+- Create: `src/main/java/com/featuredeliveryintelligence/fdi/application/ScenarioForwardCli.java`
+- Modify: `src/main/java/com/featuredeliveryintelligence/fdi/application/FdiApplication.java`
+- Create: `src/test/java/com/featuredeliveryintelligence/fdi/application/ScenarioForwardCliTests.java`
+- Create: `validation/pkb001/fixtures/scenario-forward-valid-request.json`
+
+- [ ] Write failing process-level tests for
+  `scenario-forward-validate --root <dir> --request <json>`, including missing,
+  duplicate and unknown options, valid and blocked reports, deterministic JSON,
+  and absence of stack traces.
+- [ ] Implement the dispatcher and invoke it before Spring startup:
+
+```java
+public final class ScenarioForwardCli {
+    public static boolean handles(String[] args) {
+        if (args.length == 0 || !"scenario-forward-validate".equals(args[0])) {
+            return false;
+        }
+        if (args.length != 5) throw new IllegalArgumentException(
+                "usage: scenario-forward-validate --root <dir> --request <json>");
+        Map<String, String> options = new LinkedHashMap<>();
+        for (int index = 1; index < args.length; index += 2) {
+            if (!Set.of("--root", "--request").contains(args[index])
+                    || options.put(args[index], args[index + 1]) != null) {
+                throw new IllegalArgumentException("invalid or duplicate option");
+            }
+        }
+        Path root = Path.of(required(options, "--root"));
+        Path requestPath = Path.of(required(options, "--request"));
+        ScenarioForwardRequest request = new ScenarioForwardRequestReader()
+                .read(root, requestPath);
+        ScenarioForwardReport report = new ScenarioForwardGate()
+                .validate(root, request);
+        try {
+            System.out.println(new ObjectMapper().writeValueAsString(report));
+        } catch (JsonProcessingException failure) {
+            throw new IllegalStateException("cannot serialize validation report", failure);
+        }
+        return true;
+    }
+
+    private static String required(Map<String, String> options, String key) {
+        String value = options.get(key);
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException("missing " + key);
+        }
+        return value;
+    }
+}
+```
+
+```java
+public static void main(String[] args) {
+    if (Dev204Cli.handles(args) || ScenarioForwardCli.handles(args)) return;
+    SpringApplication.run(FdiApplication.class, args);
+}
+```
+
+- [ ] Run the focused CLI test and `MAVEN_OPTS='-Xmx2g' ./mvnw -q package`;
+  expect zero failures. Smoke-test the packaged JAR with the frozen valid
+  request; expect one `CONTRACT_VALID` JSON object, empty mappings, and exactly
+  the three allowed generation-input kinds. Commit as
+  `feat(fdi): expose Java scenario forward validation CLI`.
+
+### Task 5: Cut over and remove only the replaced Python consumer
+
+**Files:**
+
+- Modify: `skills/pkb001/pk-s1-product-realization-v0.3/SKILL.md`
+- Modify: `validation/pkb001/java-migration/python-framework-inventory.json`
+- Delete: `tooling/validation/pkb001_scenario_forward_gate.py`
+- Delete: `tests/test_pkb001_scenario_forward.py`
+- Modify: `BACKLOG.md`, `STATUS.json`, `IMPLEMENTATION-PLAN.md`
+
+- [ ] Replace every active import/invocation of the Python scenario-forward
+  gate with the packaged Java CLI. Search may retain only explicitly historical
+  plan text before deletion.
+- [ ] Mark the inventory entry `MIGRATED_TO_JAVA`, record the Java API/CLI and
+  verification evidence, then delete only the replaced module and direct test.
+  Do not delete other Python consumers or modify external Graphify.
+- [ ] Run the complete verification set:
+
+```bash
+MAVEN_OPTS='-Xmx2g' ./mvnw clean package
+python3 -m pytest -q
+python3 validation/pkb001/task7-evaluation/public_validate.py .
+```
+
+Expected: Java build, remaining transitional Python regression and public
+validation all pass; no active caller imports the deleted module.
+- [ ] Update BL-026 progress and `STATUS.json` with test counts and commit IDs.
+Keep BL-026 active and `PKB-JAVA-001` below M3 because other Python consumers
+remain. Commit as `refactor(fdi): cut scenario forward validation over to Java`.
+
+### Plan acceptance boundary
+
+- Java preserves all 36 shared fixture decisions and every security/binding
+  family covered by the old gate.
+- Active PK-S1 calls Java; the replaced Python gate and its direct test are gone.
+- External Graphify remains Python over MCP and is not embedded or rewritten.
+- Historical evidence artifacts remain byte-identical.
+- BL-026 remains open for later consumers; no child Backlog Items are created.
 
 ---
 
@@ -65,7 +318,7 @@ No R1/R2/R3/F1 experiment run begins until all six Phase 0 readiness flags pass:
 ## Selected work: generated scenarios and individual review
 
 This section records completed construction work. The BL-007 section below is a
-transitional delivery record; no implementation plan is currently selected.
+transitional delivery record; BL-026 above is the current selected plan.
 
 ## Selected work: scenario-aware Forward contract
 

@@ -64,7 +64,7 @@ gate was cleared by this documentation amendment.
 
 | Backlog ID | Work type | Source requirement | Current gap / intended outcome | Scope boundary | Decision / implementation owner | Active plan |
 |---|---|---|---|---|---|---|
-| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Repository-owned Python framework consumers remain; migrate them one bounded consumer at a time to Java. | FDI framework only; external Graphify Python excluded; historical evidence immutable. | User / Engineering | `null` |
+| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Repository-owned Python framework consumers remain; migrate them one bounded consumer at a time to Java. | FDI framework only; external Graphify Python excluded; historical evidence immutable. | User / Engineering | `IMPLEMENTATION-PLAN.md#selected-work-bl-026-java-scenario-forward-gate-migration` |
 | `PKB-BL-023` | `FEATURE` | `PKB-REVIEW-003` | Generate evidence-backed Capability/scenario proposals and a single review surface. | Proposal generation and rendering; no human decisions. | User / Engineering | `IMPLEMENTATION-PLAN.md#selected-work-generated-scenarios-and-individual-review` |
 | `PKB-BL-024` | `DOCUMENTATION` | `PKB-STATUS-002` | Point status to actual generated review material and review state. | Verified pointer only; preserve previous packet. | User / Engineering | `null` |
 | `PKB-BL-025` | `FEATURE` | `PKB-REVIEW-004` | User reviews generated proposals with ACCEPT / EDIT / REJECT. | Version-bound human decisions only. | User / User | `null` |
@@ -208,7 +208,7 @@ retained here for history and are excluded from active requirement counts.
 ### PKB-BL-026 — Java-only framework migration
 
 - Priority: `P0`
-- Status: `BLOCKED_USER_APPROVAL`
+- Status: `READY`
 - Requirement: Framework implementation language and migration
 - Depends on: none
 - Deliverables: a complete inventory and classification of repository-owned
@@ -220,11 +220,11 @@ retained here for history and are excluded from active requirement counts.
   each Java replacement preserves valid/invalid contract behavior and fail-closed
   errors; all active callers are cut over before removal; immutable historical
   artifacts remain unchanged
-- Active plan: `null`; written architecture review is required before selecting
-  and writing an implementation plan
+- Active plan: `IMPLEMENTATION-PLAN.md#selected-work-bl-026-java-scenario-forward-gate-migration`
 - Progress: Java-only framework boundary recorded in `FRAMEWORK-SPEC.md` at
   `891e497968000c32984f26437eab811c063ec4cf`. The proposed first slice is the
-  repository-owned `tooling/validation/pkb001_scenario_forward_gate.py`; no
+  repository-owned `tooling/validation/pkb001_scenario_forward_gate.py`. The
+  user approved the two-level Backlog to Implementation Plan structure; no
   migration implementation has started.
 - Completion evidence: pending
 
@@ -362,8 +362,9 @@ retained here for history and are excluded from active requirement counts.
 
 ## Backlog execution order
 
-BL-026 is the current decision point: review the Java-only boundary, then write
-an implementation plan for one bounded Python-consumer replacement. The
+BL-026 is selected with an implementation plan for the first bounded
+Python-consumer replacement. Execute its inventory and characterization task
+before writing replacement Java code. The
 selected construction plan completed `PKB-BL-005` and `PKB-BL-023`.
 BL-024 now points to the current review progress. BL-025 has three accepted
 decisions and 13 pending decisions. BL-006 has frozen that first accepted slice;

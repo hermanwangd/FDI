@@ -36,8 +36,8 @@ def test_five_active_truth_entries_exist_and_resolve():
     if status['active_implementation_plan'] is not None:
         plan, anchor = status['active_implementation_plan'].split('#')
         assert (ROOT/plan).is_file()
-        assert anchor == 'selected-work-scenario-aware-forward-contract'
-        assert '## Selected work: scenario-aware Forward contract' in (ROOT/plan).read_text()
+        assert anchor == 'selected-work-bl-026-java-scenario-forward-gate-migration'
+        assert '## Selected work: BL-026 Java scenario-forward gate migration' in (ROOT/plan).read_text()
 
 
 def test_every_normative_requirement_has_one_bound_backlog_record():
