@@ -69,16 +69,32 @@ def test_exact_method_match_populates_every_level_without_missing_or_extra():
     assert result["missing_expected_components"] == []
 
 
-def test_same_qualified_symbol_on_different_path_is_not_an_exact_match():
-    proposed = component("src/a/OwnerController.java")
-    expected = component("src/b/OwnerController.java")
+def test_exact_symbol_match_is_independent_of_path_and_type():
+    proposed = component("src/a/OwnerController.java", "FirstOwner")
+    expected = component("src/b/OwnerController.java", "SecondOwner")
 
     result = compare_components([proposed], [expected])
 
-    assert result["type"] == metric(1, 1, 1)
-    assert result["exact_symbol"] == metric(0, 1, 1)
+    assert result["path"] == metric(0, 1, 1)
+    assert result["type"] == metric(0, 1, 1)
+    assert result["exact_symbol"] == metric(1, 1, 1)
+    assert result["expected_realization_chain_coverage"] == 1.0
     assert result["extra_proposed_components"] == [proposed]
     assert result["missing_expected_components"] == [expected]
+
+
+def test_supporting_symbol_citation_is_independent_of_path_and_type():
+    expected = component("src/expected.py", "Expected", "Shared.run")
+    supporting = component("src/support.py", "Support", "Shared.run")
+
+    result = compare_components([], [expected], [supporting])
+
+    assert result["exact_symbol"] == metric(0, 1, 0)
+    assert result["expected_realization_chain_coverage"] == 0.0
+    assert result["supporting_expected_symbols_cited"] == {
+        "count": 1,
+        "symbols": ["Shared.run"],
+    }
 
 
 def test_multiple_components_compute_recall_and_precision_independently():
@@ -99,7 +115,8 @@ def test_multiple_components_compute_recall_and_precision_independently():
     [
         None,
         "not rows",
-        (row for row in []),
+        b"not rows",
+        {"source_path": "src/file.py"},
         ["not a dict"],
         [{}],
         [component(path=" ")],
@@ -147,9 +164,39 @@ class ChangingSequence(Sequence):
         return iter(tuple(self.rows))
 
 
+class OneShotIterable:
+    def __init__(self, rows):
+        self.rows = rows
+        self.iterations = 0
+
+    def __iter__(self):
+        self.iterations += 1
+        if self.iterations > 1:
+            raise AssertionError("one-shot iterable was consumed more than once")
+        return iter(tuple(self.rows))
+
+
 def test_sequence_is_snapshotted_once_before_validation_and_comparison():
     row = component()
     proposed = ChangingSequence([row])
+
+    result = compare_components(proposed, [row])
+
+    assert result["exact_symbol"]["matched"] == 1
+    assert proposed.iterations == 1
+
+
+def test_generator_input_is_accepted_and_snapshotted():
+    row = component()
+
+    result = compare_components((item for item in [row]), (item for item in [row]))
+
+    assert result["exact_symbol"] == metric(1, 1, 1)
+
+
+def test_one_shot_iterable_is_consumed_exactly_once():
+    row = component()
+    proposed = OneShotIterable([row])
 
     result = compare_components(proposed, [row])
 

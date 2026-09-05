@@ -1,6 +1,6 @@
 """Deterministic, provider-neutral comparison of normalized components."""
 
-from collections.abc import Sequence
+from collections.abc import Mapping
 from pathlib import PurePosixPath
 import re
 
@@ -9,11 +9,18 @@ _FIELDS = ("source_path", "containing_type", "qualified_symbol")
 _WINDOWS_ABSOLUTE = re.compile(r"^[A-Za-z]:/")
 
 
-def _snapshot_and_validate(rows, collection_name):
-    if isinstance(rows, (str, bytes, bytearray)) or not isinstance(rows, Sequence):
-        raise ValueError(f"{collection_name} must be a sequence of component dicts")
+def _snapshot(rows, collection_name):
+    if isinstance(rows, (str, bytes, bytearray, Mapping)):
+        raise ValueError(f"{collection_name} must be an iterable of component dicts")
+    try:
+        return tuple(rows)
+    except Exception as error:
+        raise ValueError(
+            f"{collection_name} must be a finite iterable of component dicts"
+        ) from error
 
-    snapshot = tuple(rows)
+
+def _validate(snapshot, collection_name):
     normalized = []
     identities = set()
     for index, row in enumerate(snapshot):
@@ -70,27 +77,32 @@ def _component(identity):
 def compare_components(proposed, expected, supporting=()):
     """Compare normalized component sequences without consulting external state."""
 
-    proposed_rows = _snapshot_and_validate(proposed, "proposed")
-    expected_rows = _snapshot_and_validate(expected, "expected")
-    supporting_rows = _snapshot_and_validate(supporting, "supporting")
+    proposed_snapshot = _snapshot(proposed, "proposed")
+    expected_snapshot = _snapshot(expected, "expected")
+    supporting_snapshot = _snapshot(supporting, "supporting")
+    proposed_rows = _validate(proposed_snapshot, "proposed")
+    expected_rows = _validate(expected_snapshot, "expected")
+    supporting_rows = _validate(supporting_snapshot, "supporting")
 
     proposed_identities = set(proposed_rows)
     expected_identities = set(expected_rows)
-    exact_matches = proposed_identities & expected_identities
-    supporting_matches = set(supporting_rows) & expected_identities
 
     proposed_paths = {row[0] for row in proposed_rows}
     expected_paths = {row[0] for row in expected_rows}
     proposed_types = {row[1] for row in proposed_rows}
     expected_types = {row[1] for row in expected_rows}
+    proposed_symbols = {row[2] for row in proposed_rows}
+    expected_symbols = {row[2] for row in expected_rows}
+    exact_symbols = proposed_symbols & expected_symbols
+    supporting_symbols = {row[2] for row in supporting_rows} & expected_symbols
 
     return {
         "path": _metric(proposed_paths, expected_paths),
         "type": _metric(proposed_types, expected_types),
-        "exact_symbol": _metric(proposed_identities, expected_identities),
+        "exact_symbol": _metric(proposed_symbols, expected_symbols),
         "expected_realization_chain_coverage": (
-            len(exact_matches) / len(expected_identities)
-            if expected_identities
+            len(exact_symbols) / len(expected_symbols)
+            if expected_symbols
             else 1.0
         ),
         "extra_proposed_components": [
@@ -102,7 +114,7 @@ def compare_components(proposed, expected, supporting=()):
             for identity in sorted(expected_identities - proposed_identities)
         ],
         "supporting_expected_symbols_cited": {
-            "count": len(supporting_matches),
-            "symbols": sorted(identity[2] for identity in supporting_matches),
+            "count": len(supporting_symbols),
+            "symbols": sorted(supporting_symbols),
         },
     }
