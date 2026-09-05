@@ -61,7 +61,7 @@ No R1/R2/R3/F1 experiment run begins until all six Phase 0 readiness flags pass:
 - Create: `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/StructuralComponentIdentity.java`
 - Test: `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/StructuralComponentIdentityTests.java`
 
-- [ ] **Step 1: Write failing constructor-validation tests**
+- [x] **Step 1: Write failing constructor-validation tests**
 
 ```java
 @Test void acceptsExactMethodIdentity() {
@@ -88,13 +88,13 @@ No R1/R2/R3/F1 experiment run begins until all six Phase 0 readiness flags pass:
 }
 ```
 
-- [ ] **Step 2: Verify RED**
+- [x] **Step 2: Verify RED**
 
 Run: `MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=StructuralComponentIdentityTests test`
 
 Expected: compilation failure because `StructuralComponentIdentity` does not exist.
 
-- [ ] **Step 3: Implement the immutable identity contract**
+- [x] **Step 3: Implement the immutable identity contract**
 
 ```java
 public record StructuralComponentIdentity(
@@ -123,13 +123,13 @@ public record StructuralComponentIdentity(
 }
 ```
 
-- [ ] **Step 4: Verify GREEN and regression safety**
+- [x] **Step 4: Verify GREEN and regression safety**
 
 Run: `MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=StructuralComponentIdentityTests test`
 
 Expected: all `StructuralComponentIdentityTests` pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/main/java/com/featuredeliveryintelligence/fdi/product/realization/StructuralComponentIdentity.java src/test/java/com/featuredeliveryintelligence/fdi/product/realization/StructuralComponentIdentityTests.java
@@ -144,7 +144,7 @@ git commit -m "feat(pkb001): add structural component identity"
 - Create: `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/RealizationProposal.java`
 - Test: `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/RealizationProposalTests.java`
 
-- [ ] **Step 1: Write failing role and proposal-boundary tests**
+- [x] **Step 1: Write failing role and proposal-boundary tests**
 
 ```java
 @Test void mappingRequiresPrimaryComponent() {
@@ -167,13 +167,13 @@ git commit -m "feat(pkb001): add structural component identity"
 }
 ```
 
-- [ ] **Step 2: Verify RED**
+- [x] **Step 2: Verify RED**
 
 Run: `MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=RealizationProposalTests test`
 
 Expected: compilation failure because the proposal types do not exist.
 
-- [ ] **Step 3: Implement minimal records and enums**
+- [x] **Step 3: Implement minimal records and enums**
 
 ```java
 public record RealizationComponent(
@@ -207,13 +207,13 @@ public record RealizationProposal(
 }
 ```
 
-- [ ] **Step 4: Verify GREEN and full Java tests**
+- [x] **Step 4: Verify GREEN and full Java tests**
 
 Run: `MAVEN_OPTS='-Xmx2g' ./mvnw test -q`
 
 Expected: proposal tests and all existing Java tests pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/main/java/com/featuredeliveryintelligence/fdi/product/realization src/test/java/com/featuredeliveryintelligence/fdi/product/realization
@@ -230,7 +230,7 @@ git commit -m "feat(pkb001): enforce realization proposal boundaries"
 
 The original PK-S1 skill is a byte-bound input to the completed Petclinic run and must remain unchanged. The component contract applies to the versioned v0.2 skill for the next run.
 
-- [ ] **Step 1: Add a failing skill-contract test**
+- [x] **Step 1: Add a failing skill-contract test**
 
 ```python
 def test_pk_s1_requires_typed_primary_and_supporting_components_without_gold():
@@ -242,13 +242,13 @@ def test_pk_s1_requires_typed_primary_and_supporting_components_without_gold():
     assert 'evaluator gold' in text and 'MUST NOT' in text
 ```
 
-- [ ] **Step 2: Verify RED**
+- [x] **Step 2: Verify RED**
 
 Run: `python3 -m pytest -q tests/test_pkb001_execution_classification.py::test_pk_s1_requires_typed_primary_and_supporting_components_without_gold`
 
 Expected: failure because the versioned v0.2 skill does not exist yet.
 
-- [ ] **Step 3: Create versioned PK-S1 v0.2 with the exact output requirements**
+- [x] **Step 3: Create versioned PK-S1 v0.2 with the exact output requirements**
 
 ```markdown
 ## Component output contract
@@ -262,13 +262,13 @@ PK-S1 MUST NOT read evaluator gold, sealed expected mappings, judgments, or
 post-generation comparison results.
 ```
 
-- [ ] **Step 4: Verify GREEN and governance regressions**
+- [x] **Step 4: Verify GREEN and governance regressions**
 
 Run: `python3 -m pytest -q tests/test_pkb001_execution_classification.py tests/test_pkb001_phase0.py`
 
 Expected: all selected tests pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md tests/test_pkb001_execution_classification.py IMPLEMENTATION-PLAN.md
@@ -282,7 +282,7 @@ git commit -m "fix(pkb001): version the next-run PK-S1 contract"
 - Create: `tooling/validation/pkb001_component_compare.py`
 - Create: `tests/test_pkb001_component_compare.py`
 
-- [ ] **Step 1: Write failing independent metric and channel tests**
+- [x] **Step 1: Write failing independent metric and channel tests**
 
 ```python
 def test_comparison_keeps_all_hierarchical_levels_separate():
@@ -328,13 +328,13 @@ def test_comparison_does_not_promote_supporting_evidence_to_exact_component():
 
 Tests also prove that symbol-name overlap across different paths/types is diagnostic only; realization-chain coverage and missing/extra use exact component identity. Proposed rows with explicit `SUPPORTING` and supporting rows with explicit `PRIMARY` fail closed. Expected roles may be present but never grant proposal credit. Drive-relative paths such as `C:src/a.py`, hostile dictionary subclasses, and iterables exceeding 10,000 components fail closed. Finite generators and one-shot iterables within the bound are accepted and consumed once.
 
-- [ ] **Step 2: Verify RED**
+- [x] **Step 2: Verify RED**
 
 Run: `python3 -m pytest -q tests/test_pkb001_component_compare.py`
 
 Expected: import failure because the comparison utility does not exist.
 
-- [ ] **Step 3: Implement bounded deterministic set-based comparison**
+- [x] **Step 3: Implement bounded deterministic set-based comparison**
 
 ```python
 def compare_components(proposed, expected, supporting=()):
@@ -362,13 +362,13 @@ def compare_components(proposed, expected, supporting=()):
 
 The comparison identity is the canonical tuple `(source_path, containing_type, qualified_symbol)`. `symbol_name` is intentionally only a bare-name diagnostic. Supporting diagnostics expose both bare-name and exact-component citations independently and never alter `exact_component` or realization-chain coverage. `snapshot_and_validate` consumes at most 10,001 entries so unbounded iterables cannot cause unbounded memory growth.
 
-- [ ] **Step 4: Verify GREEN without touching the completed Task 7 report**
+- [x] **Step 4: Verify GREEN without touching the completed Task 7 report**
 
 Run: `python3 -m pytest -q tests/test_pkb001_component_compare.py tests/test_pkb001_task7_evaluation.py`
 
 Expected: all tests pass and `validation/pkb001/task7-evaluation/evaluation-report.json` remains byte-identical.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add tooling/validation/pkb001_component_compare.py tests/test_pkb001_component_compare.py
@@ -701,6 +701,21 @@ nonblank. Unlike the Java nullable record field, the active PK-S1 v0.2 envelope
 still requires the JSON field and its schema type remains string. Focused gate
 tests passed 75/75, the full Python suite passed 249/249, Task 7 remained 9/9,
 and isolated Maven tests passed with `MAVEN_OPTS='-Xmx2g'`.
+
+Completion ledger:
+
+- Task 1: `d483c39d`, `b634d0fb`
+- Task 2: `40adc0c`, `383cac7`
+- Task 3: `1b4cb7b`, `9ce4a58`, `67be4a7`, `300ce7c`
+- Task 4: `37d4aa6`, `d402e916`, `7fb1e796`, `27d3b45`
+- Task 5: `7eb1c88`, `1c5b879`, `934946b`, `73bd933`, `54042d3`
+
+Public-boundary record (2026-09-05): `54042d3` snapshots exact built-in JSON
+containers before any request access and rejects hostile subclasses, non-finite
+numbers, excessive nesting, and oversized input with deterministic `BLOCKED`
+and no mappings. It also aligns whitespace handling for `capability_id` and
+every limitation with the Java proposal contract. This is readiness validation
+only; no next-run generation was executed.
 
 - [x] **Step 6: Commit**
 
