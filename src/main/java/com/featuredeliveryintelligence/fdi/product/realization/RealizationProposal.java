@@ -2,6 +2,8 @@ package com.featuredeliveryintelligence.fdi.product.realization;
 
 import com.featuredeliveryintelligence.fdi.shared.RuntimeContractException;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public record RealizationProposal(
@@ -33,8 +35,13 @@ public record RealizationProposal(
             throw new RuntimeContractException("limitations are required");
         }
 
+        List<RealizationComponent> componentSnapshot =
+                Collections.unmodifiableList(new ArrayList<>(components));
+        List<String> limitationSnapshot =
+                Collections.unmodifiableList(new ArrayList<>(limitations));
+
         boolean hasPrimary = false;
-        for (RealizationComponent component : components) {
+        for (RealizationComponent component : componentSnapshot) {
             if (component == null) {
                 throw new RuntimeContractException("components cannot contain null elements");
             }
@@ -43,10 +50,10 @@ public record RealizationProposal(
             }
             hasPrimary |= component.role() == RealizationComponent.Role.PRIMARY;
         }
-        if (limitations.isEmpty()) {
+        if (limitationSnapshot.isEmpty()) {
             throw new RuntimeContractException("limitations must not be empty");
         }
-        for (String limitation : limitations) {
+        for (String limitation : limitationSnapshot) {
             if (limitation == null || limitation.isBlank()) {
                 throw new RuntimeContractException("limitations must be nonblank");
             }
@@ -54,11 +61,11 @@ public record RealizationProposal(
         if (outcome == Outcome.MAPPING_PROPOSAL && !hasPrimary) {
             throw new RuntimeContractException("mapping proposal requires PRIMARY component");
         }
-        if (outcome == Outcome.UNRESOLVED && !components.isEmpty()) {
+        if (outcome == Outcome.UNRESOLVED && !componentSnapshot.isEmpty()) {
             throw new RuntimeContractException("unresolved proposal cannot contain components");
         }
 
-        components = List.copyOf(components);
-        limitations = List.copyOf(limitations);
+        components = componentSnapshot;
+        limitations = limitationSnapshot;
     }
 }

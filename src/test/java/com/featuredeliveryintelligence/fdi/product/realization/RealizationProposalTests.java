@@ -3,6 +3,7 @@ package com.featuredeliveryintelligence.fdi.product.realization;
 import com.featuredeliveryintelligence.fdi.shared.RuntimeContractException;
 import org.junit.jupiter.api.Test;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,6 +138,31 @@ class RealizationProposalTests {
         assertThrows(UnsupportedOperationException.class, () -> proposal.limitations().add("new"));
     }
 
+    @Test
+    void validatesTheSameComponentSnapshotThatItStores() {
+        var primary = component(RealizationComponent.Role.PRIMARY, REVISION, "Direct behavior");
+        var supporting = component(RealizationComponent.Role.SUPPORTING, REVISION, "Nearby type");
+        var changingComponents = new FirstThenList<>(primary, supporting);
+
+        var proposal = new RealizationProposal("PET-CAP-01",
+                RealizationProposal.Outcome.MAPPING_PROPOSAL, REVISION,
+                changingComponents, List.of("bounded evidence"));
+
+        assertEquals(List.of(primary), proposal.components());
+    }
+
+    @Test
+    void validatesTheSameLimitationSnapshotThatItStores() {
+        var primary = component(RealizationComponent.Role.PRIMARY, REVISION, "Direct behavior");
+        var changingLimitations = new FirstThenList<>("bounded evidence", " ");
+
+        var proposal = new RealizationProposal("PET-CAP-01",
+                RealizationProposal.Outcome.MAPPING_PROPOSAL, REVISION,
+                List.of(primary), changingLimitations);
+
+        assertEquals(List.of("bounded evidence"), proposal.limitations());
+    }
+
     private static RealizationComponent component(
             RealizationComponent.Role role, String revision, String reason) {
         return new RealizationComponent(role, identity(revision), reason);
@@ -146,5 +172,29 @@ class RealizationProposalTests {
         return new StructuralComponentIdentity(revision, "src/main/java/example/OwnerController.java",
                 StructuralComponentIdentity.Granularity.METHOD,
                 "example.OwnerController.processFindForm", "ownercontroller-processfindform");
+    }
+
+    private static final class FirstThenList<T> extends AbstractList<T> {
+        private final T first;
+        private final T later;
+        private int reads;
+
+        private FirstThenList(T first, T later) {
+            this.first = first;
+            this.later = later;
+        }
+
+        @Override
+        public T get(int index) {
+            if (index != 0) {
+                throw new IndexOutOfBoundsException(index);
+            }
+            return reads++ == 0 ? first : later;
+        }
+
+        @Override
+        public int size() {
+            return 1;
+        }
     }
 }
