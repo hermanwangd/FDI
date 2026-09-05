@@ -49,7 +49,6 @@ consumer before cutover.
 **Files:**
 
 - Create: `validation/pkb001/java-migration/python-framework-inventory.json`
-- Create: `src/test/java/com/featuredeliveryintelligence/fdi/validation/scenarioforward/ScenarioForwardCharacterizationTests.java`
 - Read: `tooling/validation/pkb001_scenario_forward_gate.py`
 - Read: `tests/test_pkb001_scenario_forward.py`
 
@@ -58,8 +57,8 @@ consumer before cutover.
   Mark only the scenario-forward gate `SELECTED`; mark other repository Python
   modules `TRANSITIONAL`. Record Graphify as an external MCP runtime rather than
   a repository Python consumer.
-- [ ] Add a Java characterization test which loads all shared cases and fixes
-  the stable report boundary:
+- [ ] Record all 36 shared fixture cases and this stable public report boundary
+  in the inventory as the characterization target for the later Java tests:
 
 ```java
 assertThat(fixtures).hasSize(36);
@@ -74,7 +73,7 @@ assertThat(blocked.get("generation_inputs")).isEqualTo(List.of());
 - [ ] Run `python3 -m pytest -q tests/test_pkb001_scenario_forward.py` before
   replacement. Save the exact passing count as `characterization_test_count`;
   never weaken a rejected case for Java parity.
-- [ ] Commit the inventory and initially failing Java characterization test as
+- [ ] Commit the passing characterization inventory as
   `test(fdi): characterize scenario forward migration`.
 
 ### Task 2: Implement bounded Java input handling
@@ -134,6 +133,7 @@ public record ScenarioForwardReport(
 **Files:**
 
 - Create: `src/main/java/com/featuredeliveryintelligence/fdi/validation/scenarioforward/ScenarioForwardGate.java`
+- Create: `src/test/java/com/featuredeliveryintelligence/fdi/validation/scenarioforward/ScenarioForwardCharacterizationTests.java`
 - Create: `src/test/java/com/featuredeliveryintelligence/fdi/validation/scenarioforward/ScenarioForwardGateTests.java`
 - Reuse: `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/ScenarioRealizationProposal.java`
 - Reuse: `validation/pkb001/schemas/realization-proposal-v0.3.schema.json`
