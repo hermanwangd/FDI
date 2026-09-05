@@ -1,7 +1,7 @@
 # PKB-001 Human Review Decision Packet
 
-Status: **PENDING_PRODUCT_TEAM_REVIEW**  
-Current prototype decision: **REVISE**  
+Status: **PENDING_PRODUCT_TEAM_REVIEW**
+Current prototype decision: **REVISE**
 Semantic publication allowed: **false**
 
 ## Product Team instructions
@@ -20,8 +20,8 @@ Items requiring explicit disagreement resolution: **11/15**
 
 Candidate basis: Bound create and update handlers call duplicate-name and update paths, while owner association and validator nodes are present; four linked delivery episodes exercise duplicate-name behavior, persisted association, name validation, and update regression coverage.
 
-Confidence: `0.93`  
-Resolution required: **NO**  
+Confidence: `0.93`
+Resolution required: **NO**
 Resolution reasons: none
 
 - reviewer-01: `SPLIT` / `PARTIALLY_SUPPORTED`; suggested name: Pet identity validation and update safeguards
@@ -41,8 +41,8 @@ Product Team decision: **PENDING**
 
 Candidate basis: Pet creation methods, owner aggregation, pet attribute mutators, and pet-type lookup form a coherent structural candidate for adding a typed, named, dated pet to an owner.
 
-Confidence: `0.93`  
-Resolution required: **YES**  
+Confidence: `0.93`
+Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
 
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
@@ -62,8 +62,8 @@ Product Team decision: **PENDING**
 
 Candidate basis: The graph connects list display to pagination and exposes resource-list, repository-list, collection, and specialty-access nodes; delivery history co-changed the directory components for pagination and later refined specialty ordering and controller representation handling.
 
-Confidence: `0.74`  
-Resolution required: **NO**  
+Confidence: `0.74`
+Resolution required: **NO**
 Resolution reasons: none
 
 - reviewer-01: `SPLIT` / `PARTIALLY_SUPPORTED`; suggested name: Veterinarian directory browsing and specialty review
@@ -83,8 +83,8 @@ Product Team decision: **PENDING**
 
 Candidate basis: The controller exposes find-form, find-processing, and paginated last-name search methods, while the repository exposes a matching last-name-prefix query. Together these are direct structural candidates for search and result navigation.
 
-Confidence: `0.95`  
-Resolution required: **YES**  
+Confidence: `0.95`
+Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
 
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
@@ -104,8 +104,8 @@ Product Team decision: **PENDING**
 
 Candidate basis: Visit creation and processing methods explicitly load a pet with a visit, while the Visit model exposes date and description mutation and Owner exposes visit aggregation.
 
-Confidence: `0.96`  
-Resolution required: **YES**  
+Confidence: `0.96`
+Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
 
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
@@ -125,8 +125,8 @@ Product Team decision: **PENDING**
 
 Candidate basis: VetController exposes list and pagination methods, VetRepository exposes collection retrieval, and Vets exposes a list accessor, providing convergent structure for veterinarian browsing.
 
-Confidence: `0.95`  
-Resolution required: **YES**  
+Confidence: `0.95`
+Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
 
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
@@ -146,8 +146,8 @@ Product Team decision: **PENDING**
 
 Candidate basis: The owner detail entry point, owner-to-pets accessor, pet-to-visits accessor, and visit display fields form a structural chain for reviewing visit history in owner and pet context.
 
-Confidence: `0.84`  
-Resolution required: **YES**  
+Confidence: `0.84`
+Resolution required: **YES**
 Resolution reasons: ACTION_DISAGREEMENT
 
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
@@ -167,8 +167,8 @@ Product Team decision: **PENDING**
 
 Candidate basis: The bound graph contains visit date accessors and controller nodes for minimum-date calculation and new-visit processing; one focused pull request changed both Java components together to validate future dates.
 
-Confidence: `0.88`  
-Resolution required: **YES**  
+Confidence: `0.88`
+Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
 
 - reviewer-01: `RENAME` / `PARTIALLY_SUPPORTED`; suggested name: Validate Visit Dates
@@ -188,8 +188,8 @@ Product Team decision: **PENDING**
 
 Candidate basis: WelcomeController.welcome is evidence for only the landing-page portion. Because the frozen capability also requires primary navigation and the Java-only graph contains no view or navigation nodes, the full capability cannot be mapped without exceeding the evidence boundary.
 
-Confidence: `0.96`  
-Resolution required: **NO**  
+Confidence: `0.96`
+Resolution required: **NO**
 Resolution reasons: none
 
 - reviewer-01: `ADD_MISSING` / `PARTIALLY_SUPPORTED`; suggested name: none
@@ -209,8 +209,8 @@ Product Team decision: **PENDING**
 
 Candidate basis: The graph exposes a find-form path into paginated owner lookup and a repository prefix-search operation; delivery episodes added owner-list pagination and later corrected whitespace handling on the same controller path.
 
-Confidence: `0.86`  
-Resolution required: **NO**  
+Confidence: `0.86`
+Resolution required: **NO**
 Resolution reasons: none
 
 - reviewer-01: `MERGE` / `DUPLICATE`; suggested name: Find Owners
@@ -230,8 +230,8 @@ Product Team decision: **PENDING**
 
 Candidate basis: The graph exposes locale resolution and locale-change interception registered in web configuration; one linked delivery episode changed that same configuration alongside multiple translation bundles and presentation templates.
 
-Confidence: `0.79`  
-Resolution required: **YES**  
+Confidence: `0.79`
+Resolution required: **YES**
 Resolution reasons: ACTION_DISAGREEMENT
 
 - reviewer-01: `RENAME` / `PARTIALLY_SUPPORTED`; suggested name: Select Presentation Locale
@@ -251,8 +251,8 @@ Product Team decision: **PENDING**
 
 Candidate basis: Creation-form controller methods align with record registration, and person/owner mutators structurally cover name, address, and telephone contact fields.
 
-Confidence: `0.93`  
-Resolution required: **YES**  
+Confidence: `0.93`
+Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
 
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
@@ -272,8 +272,8 @@ Product Team decision: **PENDING**
 
 Candidate basis: The PetController has explicit update initialization, processing, and detail-update methods, paired with Pet mutators for identifying classification data.
 
-Confidence: `0.95`  
-Resolution required: **YES**  
+Confidence: `0.95`
+Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
 
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
@@ -293,8 +293,8 @@ Product Team decision: **PENDING**
 
 Candidate basis: Explicit owner update-form and show-owner methods support profile maintenance, while the Owner node exposes profile mutation and associated-pet access structure.
 
-Confidence: `0.94`  
-Resolution required: **YES**  
+Confidence: `0.94`
+Resolution required: **YES**
 Resolution reasons: OUTCOME_DISAGREEMENT
 
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none
@@ -314,8 +314,8 @@ Product Team decision: **PENDING**
 
 Candidate basis: The veterinarian list entry point and Vet specialty accessors, together with the Specialty type, directly support a candidate realization for associating specialties with each listed veterinarian.
 
-Confidence: `0.87`  
-Resolution required: **YES**  
+Confidence: `0.87`
+Resolution required: **YES**
 Resolution reasons: ACTION_DISAGREEMENT
 
 - reviewer-01: `ACCEPT` / `PARTIALLY_SUPPORTED`; suggested name: none

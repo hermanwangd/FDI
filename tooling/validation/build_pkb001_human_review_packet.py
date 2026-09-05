@@ -100,8 +100,8 @@ def render_markdown(packet):
     lines = [
         "# PKB-001 Human Review Decision Packet",
         "",
-        f"Status: **{packet['status']}**  ",
-        f"Current prototype decision: **{packet['current_prototype_decision']}**  ",
+        f"Status: **{packet['status']}**",
+        f"Current prototype decision: **{packet['current_prototype_decision']}**",
         "Semantic publication allowed: **false**",
         "",
         "## Product Team instructions",
@@ -124,8 +124,8 @@ def render_markdown(packet):
                 "",
                 f"Candidate basis: {item['candidate_basis']}",
                 "",
-                f"Confidence: `{item['confidence_score']}`  ",
-                "Resolution required: **" + ("YES" if item["needs_resolution"] else "NO") + "**  ",
+                f"Confidence: `{item['confidence_score']}`",
+                "Resolution required: **" + ("YES" if item["needs_resolution"] else "NO") + "**",
                 "Resolution reasons: " + (", ".join(item["resolution_reasons"]) or "none"),
                 "",
             ]
