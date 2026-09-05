@@ -102,6 +102,35 @@ def test_caller_discovery_is_transitive_and_requires_a_recognized_sink(tmp_path)
     }
 
 
+def test_caller_discovery_does_not_use_assignment_after_sink(tmp_path):
+    module_path = "tooling/validation/example_gate.py"
+    inactive = tmp_path / "tests/later_assignment.py"
+    inactive.parent.mkdir(parents=True)
+    inactive.write_text(
+        'command = ["python3", "other.py"]\n'
+        "subprocess.run(command)\n"
+        'command = ["python3", "tooling/validation/example_gate.py"]\n'
+    )
+
+    assert discover_active_callers(tmp_path, module_path) == set()
+
+
+def test_caller_discovery_keeps_same_name_isolated_between_functions(tmp_path):
+    module_path = "tooling/validation/example_gate.py"
+    inactive = tmp_path / "tests/scope_isolation.py"
+    inactive.parent.mkdir(parents=True)
+    inactive.write_text(
+        "def stores_target():\n"
+        '    command = ["python3", "tooling/validation/example_gate.py"]\n'
+        "    return command\n"
+        "\n"
+        "def runs_other(command):\n"
+        "    subprocess.run(command)\n"
+    )
+
+    assert discover_active_callers(tmp_path, module_path) == set()
+
+
 def _matches_module_literal(value, module_path, module_name):
     if not isinstance(value, str):
         return False
@@ -128,7 +157,6 @@ def _python_source_references_module(source, module_path):
     module_name = module_path.removesuffix(".py").replace("/", ".")
     module_parent, module_leaf = module_name.rsplit(".", 1)
     tree = ast.parse(source.read_text(), filename=str(source))
-    assignments = []
     for node in ast.walk(tree):
         if isinstance(node, ast.ImportFrom):
             if node.module == module_name:
@@ -141,19 +169,7 @@ def _python_source_references_module(source, module_path):
             alias.name == module_name for alias in node.names
         ):
             return True
-        elif isinstance(node, (ast.Assign, ast.AnnAssign)):
-            targets = node.targets if isinstance(node, ast.Assign) else [node.target]
-            names = {
-                child.id
-                for target in targets
-                for child in ast.walk(target)
-                if isinstance(child, ast.Name) and isinstance(child.ctx, ast.Store)
-            }
-            if names and node.value is not None:
-                assignments.append((names, node.value))
-    tainted_variables = set()
-
-    def expression_is_tainted(expression):
+    def expression_is_tainted(expression, tainted_variables):
         return any(
             (
                 isinstance(child, ast.Constant)
@@ -165,26 +181,96 @@ def _python_source_references_module(source, module_path):
             )
             for child in ast.walk(expression)
         )
-
-    changed = True
-    while changed:
-        changed = False
-        for names, value in assignments:
-            if expression_is_tainted(value) and not names <= tainted_variables:
-                tainted_variables.update(names)
-                changed = True
     dynamic_calls = {
         "subprocess.run", "subprocess.Popen", "subprocess.check_call",
         "subprocess.check_output", "importlib.import_module",
         "importlib.util.spec_from_file_location",
     }
-    for node in ast.walk(tree):
-        if not isinstance(node, ast.Call) or _call_name(node) not in dynamic_calls:
-            continue
-        arguments = [*node.args, *(keyword.value for keyword in node.keywords)]
-        if any(expression_is_tainted(argument) for argument in arguments):
-            return True
-    return False
+
+    def expression_reaches_sink(expression, tainted_variables):
+        for node in ast.walk(expression):
+            if not isinstance(node, ast.Call) or _call_name(node) not in dynamic_calls:
+                continue
+            arguments = [*node.args, *(keyword.value for keyword in node.keywords)]
+            if any(
+                expression_is_tainted(argument, tainted_variables)
+                for argument in arguments
+            ):
+                return True
+        return False
+
+    def target_names(targets):
+        return {
+            child.id
+            for target in targets
+            for child in ast.walk(target)
+            if isinstance(child, ast.Name) and isinstance(child.ctx, ast.Store)
+        }
+
+    def local_names(statements):
+        names = set()
+
+        class LocalBindingVisitor(ast.NodeVisitor):
+            def visit_FunctionDef(self, node):
+                names.add(node.name)
+
+            visit_AsyncFunctionDef = visit_FunctionDef
+
+            def visit_ClassDef(self, node):
+                names.add(node.name)
+
+            def visit_Name(self, node):
+                if isinstance(node.ctx, ast.Store):
+                    names.add(node.id)
+
+        visitor = LocalBindingVisitor()
+        for statement in statements:
+            visitor.visit(statement)
+        return names
+
+    def function_parameters(node):
+        arguments = node.args
+        return {
+            argument.arg
+            for argument in [
+                *arguments.posonlyargs, *arguments.args, *arguments.kwonlyargs,
+                *([arguments.vararg] if arguments.vararg else []),
+                *([arguments.kwarg] if arguments.kwarg else []),
+            ]
+        }
+
+    def analyze_scope(statements, inherited=frozenset(), shadowed=frozenset()):
+        tainted = set(inherited) - set(shadowed)
+        for statement in statements:
+            if isinstance(statement, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                function_shadowed = local_names(statement.body) | function_parameters(statement)
+                found, _ = analyze_scope(statement.body, tainted, function_shadowed)
+                if found:
+                    return True, tainted
+                tainted.discard(statement.name)
+                continue
+            if isinstance(statement, ast.ClassDef):
+                found, _ = analyze_scope(statement.body, tainted, local_names(statement.body))
+                if found:
+                    return True, tainted
+                tainted.discard(statement.name)
+                continue
+            if isinstance(statement, (ast.Assign, ast.AnnAssign)):
+                value = statement.value
+                if value is not None and expression_reaches_sink(value, tainted):
+                    return True, tainted
+                targets = statement.targets if isinstance(statement, ast.Assign) else [statement.target]
+                names = target_names(targets)
+                if value is not None and expression_is_tainted(value, tainted):
+                    tainted.update(names)
+                else:
+                    tainted.difference_update(names)
+                continue
+            if expression_reaches_sink(statement, tainted):
+                return True, tainted
+        return False, tainted
+
+    return analyze_scope(tree.body)[0]
 
 
 def discover_active_callers(root, module_path):
