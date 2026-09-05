@@ -170,3 +170,25 @@ def test_pk_s1_proposal_artifact_authority_is_immutable_and_review_is_separate()
     assert 'Evaluator and Product Team review produce separate decision artifacts' in text
     assert 'only a separate explicit Product Team publication action can change Product Semantics' in text
     assert 'PK-S1 never marks a proposal accepted' in text
+
+
+def test_task5_plan_specifies_executable_fail_closed_next_run_gate():
+    task = (ROOT/'IMPLEMENTATION-PLAN.md').read_text().split(
+        '### Task 5: Next-run schema and readiness gate', 1
+    )[1]
+    assert '`tooling/validation/pkb001_next_run_gate.py`' in task
+    assert '`tests/test_pkb001_next_run_gate.py`' in task
+    assert 'validate_next_run(root, request) -> report dict' in task
+    assert 'records and verifies its SHA-256' in task
+    assert 'explicit generation-input allowlist' in task
+    assert 'component `source_revision` equals the proposal top-level `source_revision`' in task
+    assert 'must not collide with any existing immutable `run_id`' in task
+    assert 'schema validation plus cross-field and runtime checks' in task
+    assert 'deterministic `READY` or `BLOCKED` report' in task
+    assert 'defaults fail closed and does not execute generation' in task
+    for mutation in (
+        'v1 selection', 'skill digest mismatch', 'forbidden input',
+        'revision mismatch', 'duplicate run_id', 'malformed schema',
+    ):
+        assert mutation in task
+    assert '`BLOCKED` with no mappings' in task

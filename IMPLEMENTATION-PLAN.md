@@ -363,31 +363,55 @@ Task 5 MUST enforce the component contract and input/authority boundaries struct
 **Files:**
 
 - Create: `validation/pkb001/schemas/realization-proposal-v0.2.schema.json`
-- Create: `tests/test_pkb001_realization_proposal_schema.py`
-- Modify: `IMPLEMENTATION-PLAN.md`
+- Create: `tooling/validation/pkb001_next_run_gate.py`
+- Create: `tests/test_pkb001_next_run_gate.py` (schema and executable-gate coverage)
+- Modify: `IMPLEMENTATION-PLAN.md` only for completion tracking
 
-- [ ] **Step 1: Write failing schema tests for roles, granularity, identity, and immutable run IDs**
+- [ ] **Step 1: Write failing schema and executable-gate tests**
 
 ```python
-def test_v02_schema_requires_primary_component_contract():
-    schema = load(SCHEMA)
-    valid = proposal_fixture(role='PRIMARY', granularity='METHOD')
-    validate(schema, valid)
-    for field in ('role', 'granularity', 'source_revision', 'source_path',
-                  'qualified_symbol', 'provider_node_id', 'selection_reason'):
-        invalid = deepcopy(valid)
-        del invalid['capability_results'][0]['components'][0][field]
-        with pytest.raises(ValidationError):
-            validate(schema, invalid)
+from copy import deepcopy
+
+import pytest
+
+from tooling.validation.pkb001_next_run_gate import validate_next_run
+
+
+def test_v02_readiness_is_ready(valid_request, root):
+    report = validate_next_run(root, valid_request)
+    assert report == {
+        'status': 'READY', 'reasons': [], 'mappings': [],
+        'run_id': valid_request['proposal']['run_id'],
+        'skill_path': 'skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md',
+        'skill_sha256': valid_request['skill']['sha256'],
+    }
+
+
+@pytest.mark.parametrize(('mutation', 'reason'), [
+    ('v1 selection', 'SKILL_VERSION_NOT_SELECTED'),
+    ('skill digest mismatch', 'SKILL_DIGEST_MISMATCH'),
+    ('forbidden input', 'FORBIDDEN_GENERATION_INPUT'),
+    ('revision mismatch', 'COMPONENT_REVISION_MISMATCH'),
+    ('duplicate run_id', 'RUN_ID_ALREADY_EXISTS'),
+    ('malformed schema', 'SCHEMA_INVALID'),
+])
+def test_mutations_are_blocked_without_mappings(valid_request, root, mutation, reason):
+    request = mutate(deepcopy(valid_request), mutation)
+    report = validate_next_run(root, request)
+    assert report['status'] == 'BLOCKED'
+    assert reason in report['reasons']
+    assert report['mappings'] == []
 ```
+
+The positive fixture selects exactly `skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md`, records its actual SHA-256, uses a new nonblank `run_id`, supplies only allowlisted generation inputs, and contains a schema-valid proposal whose component revisions equal its top-level revision. Mutation helpers make literal fixture changes, not mocks.
 
 - [ ] **Step 2: Verify RED**
 
-Run: `python3 -m pytest -q tests/test_pkb001_realization_proposal_schema.py`
+Run: `python3 -m pytest -q tests/test_pkb001_next_run_gate.py`
 
-Expected: failure because the v0.2 schema does not exist.
+Expected: import failure because the executable next-run gate does not exist.
 
-- [ ] **Step 3: Add the provider-neutral JSON Schema**
+- [ ] **Step 3: Add the provider-neutral JSON Schema and executable gate**
 
 Use this provider-neutral schema; it intentionally contains no Petclinic identifiers or evaluator paths:
 
@@ -471,6 +495,69 @@ Use this provider-neutral schema; it intentionally contains no Petclinic identif
 }
 ```
 
+JSON Schema alone cannot enforce revision equality, filesystem digests, input isolation, or committed run-ID uniqueness. Task 5 therefore requires schema validation plus cross-field and runtime checks through this public API:
+
+```python
+validate_next_run(root, request) -> report dict
+```
+
+The request supplies `skill`, `generation_inputs`, and `proposal`. Readiness selects exact `skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md` and records and verifies its SHA-256. The proposal contains `schema_version`, a new nonblank `run_id`, immutable `authority=PROPOSAL_ONLY`, top-level `source_revision`, and `capability_results`.
+
+The executable gate uses these constants and cross-field checks:
+
+```python
+SKILL_PATH = 'skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md'
+ALLOWED_INPUT_KINDS = frozenset({'product_semantics', 'graph_evidence', 'graphify_binding'})
+FORBIDDEN_PATH_PARTS = frozenset({
+    'evaluator', 'task6', 'task7', 'human-review', 'gold', 'judgments',
+    'post-generation', 'comparison', 'evaluation',
+})
+
+def validate_next_run(root, request):
+    reasons = set()
+    skill = request.get('skill', {})
+    if skill.get('path') != SKILL_PATH:
+        reasons.add('SKILL_VERSION_NOT_SELECTED')
+    elif sha256_file(root / SKILL_PATH) != skill.get('sha256'):
+        reasons.add('SKILL_DIGEST_MISMATCH')
+    inputs = request.get('generation_inputs', [])
+    if any(item.get('kind') not in ALLOWED_INPUT_KINDS for item in inputs):
+        reasons.add('GENERATION_INPUT_NOT_ALLOWLISTED')
+    if any(forbidden_path(item.get('path', '')) for item in inputs):
+        reasons.add('FORBIDDEN_GENERATION_INPUT')
+    if any(not digest_matches(root, item) for item in inputs):
+        reasons.add('INPUT_DIGEST_MISMATCH')
+    proposal = request.get('proposal', {})
+    reasons.update(schema_errors(proposal))
+    if any(component.get('source_revision') != proposal.get('source_revision')
+           for result in proposal.get('capability_results', [])
+           for component in result.get('components', [])):
+        reasons.add('COMPONENT_REVISION_MISMATCH')
+    run_id = proposal.get('run_id')
+    if not isinstance(run_id, str) or not run_id.strip():
+        reasons.add('RUN_ID_INVALID')
+    elif run_id in committed_pkb001_run_ids(root):
+        reasons.add('RUN_ID_ALREADY_EXISTS')
+    status = 'BLOCKED' if reasons else 'READY'
+    return {
+        'status': status, 'reasons': sorted(reasons), 'mappings': [],
+        'run_id': run_id, 'skill_path': skill.get('path'),
+        'skill_sha256': skill.get('sha256'),
+    }
+```
+
+`schema_errors` validates with the checked-in Draft 2020-12 schema and returns `SCHEMA_INVALID` for any violation. Each component `source_revision` equals the proposal top-level `source_revision`; this is enforced after schema validation. `committed_pkb001_run_ids` reads JSON returned by `git ls-files validation/pkb001` and collects every nonblank `run_id` in committed PKB-001 artifacts and manifests. A requested ID must not collide with any existing immutable `run_id`, and the gate never overwrites a run or artifact.
+
+The explicit generation-input allowlist admits only the three `ALLOWED_INPUT_KINDS`, with repository-relative paths and verified SHA-256 values. It rejects `evaluator/`, task6, task7, human-review, gold, judgments, and post-generation comparison/evaluation inputs. Any forbidden input produces `BLOCKED` with no mappings.
+
+The gate emits a deterministic `READY` or `BLOCKED` report with sorted reasons, defaults fail closed and does not execute generation. Missing keys, missing files, path-normalization failures, malformed JSON, schema errors, and digest/read failures are converted to stable `BLOCKED` reason codes rather than escaping as exceptions. The CLI only validates and writes a new report:
+
+```bash
+python3 tooling/validation/pkb001_next_run_gate.py --root . --request next-run-request.json --report next-run-readiness.json
+```
+
+The CLI exits `0` for `READY` and `1` for `BLOCKED`, serializes sorted-key JSON with a trailing newline, refuses to overwrite an existing report, never invokes PK-S1, and never emits proposal mappings.
+
 - [ ] **Step 4: Verify schema and complete repository regression**
 
 Run:
@@ -482,7 +569,7 @@ python3 validation/pkb001/task7-evaluation/public_validate.py .
 git diff --check
 ```
 
-Expected: all Python and Java tests pass, Task 7 remains 9/9, the decision remains `REVISE`, and current immutable Petclinic artifacts have no diff.
+Expected: positive v0.2 readiness passes. Mutations for v1 selection, skill digest mismatch, forbidden input, revision mismatch, duplicate run_id, and malformed schema each assert `BLOCKED` with no mappings. All Python and Java tests pass, Task 7 remains 9/9, the decision remains `REVISE`, and current immutable Petclinic artifacts have no diff.
 
 - [ ] **Step 5: Mark implementation readiness without selecting the holdout**
 
@@ -495,7 +582,7 @@ Update this plan with completed commit IDs and record these remaining authorized
 - [ ] **Step 6: Commit**
 
 ```bash
-git add validation/pkb001/schemas/realization-proposal-v0.2.schema.json tests/test_pkb001_realization_proposal_schema.py IMPLEMENTATION-PLAN.md
+git add validation/pkb001/schemas/realization-proposal-v0.2.schema.json tooling/validation/pkb001_next_run_gate.py tests/test_pkb001_next_run_gate.py IMPLEMENTATION-PLAN.md
 git commit -m "feat(pkb001): gate typed realization proposal runs"
 ```
 
