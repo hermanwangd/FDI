@@ -352,9 +352,7 @@ def test_public_registry_and_status_announce_readiness_without_exposing_gold():
     assert status['phase0_readiness'] == 'READY'
     assert status['evaluation_status'] == 'COMPLETE_BOUNDED_REVISE'
     assert status['active_backlog_item'] == 'PKB-BL-026'
-    assert status['active_implementation_plan'] == (
-        'IMPLEMENTATION-PLAN.md#selected-work-bl-026-java-scenario-forward-gate-migration'
-    )
+    assert status['active_implementation_plan'] is None
     assert status['framework_language_target'] == 'JAVA_17_SPRING_BOOT_3_4_1'
     assert status['external_graphify_runtime'] == (
         'PYTHON_MCP_PROVIDER_OUTSIDE_FRAMEWORK_MIGRATION'

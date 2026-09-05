@@ -12,9 +12,10 @@
 plans and future implementation outlines; backlog status, priority, dependency,
 and maturity are authoritative only in `BACKLOG.md`.
 
-**Current selection:** BL-026 first migration slice. Replace the repository-owned
-scenario-forward Python gate with a Java API/CLI, cut over its active callers,
-then remove that Python consumer. Existing Python plan sections below are
+**Current selection:** none. The first BL-026 migration slice is complete and
+retained below as its construction and verification record. The Human Reviewer
+must select the next bounded Python consumer before this plan is revised or
+another implementation is dispatched. Existing Python plan sections below are
 completed or transitional delivery records and do not authorize new Python
 framework behavior.
 
@@ -52,12 +53,12 @@ consumer before cutover.
 - Read: `tooling/validation/pkb001_scenario_forward_gate.py`
 - Read: `tests/test_pkb001_scenario_forward.py`
 
-- [ ] Record every active `tooling/validation/*.py` file with `path`,
+- [x] Record every active `tooling/validation/*.py` file with `path`,
   `responsibility`, `active_callers`, `migration_state`, and `external_runtime`.
   Mark only the scenario-forward gate `SELECTED`; mark other repository Python
   modules `TRANSITIONAL`. Record Graphify as an external MCP runtime rather than
   a repository Python consumer.
-- [ ] Record all 36 shared fixture cases and this stable public report boundary
+- [x] Record all 36 shared fixture cases and this stable public report boundary
   in the inventory as the characterization target for the later Java tests:
 
 ```java
@@ -70,10 +71,10 @@ assertThat(blocked.get("status")).isEqualTo("BLOCKED");
 assertThat(blocked.get("generation_inputs")).isEqualTo(List.of());
 ```
 
-- [ ] Run `python3 -m pytest -q tests/test_pkb001_scenario_forward.py` before
+- [x] Run `python3 -m pytest -q tests/test_pkb001_scenario_forward.py` before
   replacement. Save the exact passing count as `characterization_test_count`;
   never weaken a rejected case for Java parity.
-- [ ] Commit the passing characterization inventory as
+- [x] Commit the passing characterization inventory as
   `test(fdi): characterize scenario forward migration`.
 
 ### Task 2: Implement bounded Java input handling
@@ -85,13 +86,13 @@ assertThat(blocked.get("generation_inputs")).isEqualTo(List.of());
 - Create: `src/main/java/com/featuredeliveryintelligence/fdi/validation/scenarioforward/ScenarioForwardReport.java`
 - Create: `src/test/java/com/featuredeliveryintelligence/fdi/validation/scenarioforward/ScenarioForwardRequestReaderTests.java`
 
-- [ ] Write failing tests for canonical relative paths, absolute/traversal and
+- [x] Write failing tests for canonical relative paths, absolute/traversal and
   Windows paths, symlink files/directories, non-regular files, inputs over 8
   MiB, malformed JSON, duplicate keys, non-object roots and post-read mutation.
-- [ ] Run `MAVEN_OPTS='-Xmx2g' ./mvnw -q
+- [x] Run `MAVEN_OPTS='-Xmx2g' ./mvnw -q
   -Dtest=ScenarioForwardRequestReaderTests test`; expect compilation failure
   because the reader is absent.
-- [ ] Implement this public boundary. Jackson enables strict duplicate-key
+- [x] Implement this public boundary. Jackson enables strict duplicate-key
 detection; path inspection uses `NOFOLLOW_LINKS`; parsed trees are copied.
 
 ```java
@@ -113,7 +114,7 @@ public final class ScenarioForwardRequestReader {
 }
 ```
 
-- [ ] Implement an immutable report which sorts/deduplicates reasons, always
+- [x] Implement an immutable report which sorts/deduplicates reasons, always
   keeps mappings empty, and removes generation inputs whenever blocked:
 
 ```java
@@ -125,7 +126,7 @@ public record ScenarioForwardReport(
 }
 ```
 
-- [ ] Rerun the focused tests; expect zero failures. Commit as
+- [x] Rerun the focused tests; expect zero failures. Commit as
   `feat(fdi): add bounded scenario forward input reader`.
 
 ### Task 3: Port contract and provenance validation
@@ -139,11 +140,11 @@ public record ScenarioForwardReport(
 - Reuse: `validation/pkb001/schemas/realization-proposal-v0.3.schema.json`
 - Reuse: `validation/pkb001/fixtures/scenario-forward-parity.json`
 
-- [ ] Write failing parameterized tests for every existing reason family:
+- [x] Write failing parameterized tests for every existing reason family:
   request/input shape; digests and selected versions; JSON Schema and Java
   invariants; reviewed-semantics consistency; Graphify exact-revision evidence;
   graph references; and run-ID uniqueness.
-- [ ] Implement one fail-closed entry point:
+- [x] Implement one fail-closed entry point:
 
 ```java
 public final class ScenarioForwardGate {
@@ -160,7 +161,7 @@ Use networknt Draft 2020-12 validation before deserializing capability results
 to `ScenarioRealizationProposal`. Preserve existing public reason codes. Map
 unexpected runtime input to `REQUEST_INVALID`; never return stack traces,
 evaluator content or partially validated generation inputs.
-- [ ] Run `MAVEN_OPTS='-Xmx2g' ./mvnw -q
+- [x] Run `MAVEN_OPTS='-Xmx2g' ./mvnw -q
   -Dtest=ScenarioForwardParityTests,ScenarioForwardGateTests,ScenarioForwardCharacterizationTests
   test`. Expect all Java tests to pass and all 36 fixtures to retain the same
   decision. Commit as `feat(fdi): port scenario forward gate to Java`.
@@ -174,11 +175,11 @@ evaluator content or partially validated generation inputs.
 - Create: `src/test/java/com/featuredeliveryintelligence/fdi/application/ScenarioForwardCliTests.java`
 - Create: `validation/pkb001/fixtures/scenario-forward-valid-request.json`
 
-- [ ] Write failing process-level tests for
+- [x] Write failing process-level tests for
   `scenario-forward-validate --root <dir> --request <json>`, including missing,
   duplicate and unknown options, valid and blocked reports, deterministic JSON,
   and absence of stack traces.
-- [ ] Implement the dispatcher and invoke it before Spring startup:
+- [x] Implement the dispatcher and invoke it before Spring startup:
 
 ```java
 public final class ScenarioForwardCli {
@@ -226,7 +227,7 @@ public static void main(String[] args) {
 }
 ```
 
-- [ ] Run the focused CLI test and `MAVEN_OPTS='-Xmx2g' ./mvnw -q package`;
+- [x] Run the focused CLI test and `MAVEN_OPTS='-Xmx2g' ./mvnw -q package`;
   expect zero failures. Smoke-test the packaged JAR with the frozen valid
   request; expect one `CONTRACT_VALID` JSON object, empty mappings, and exactly
   the three allowed generation-input kinds. Commit as
@@ -270,6 +271,16 @@ passed `MAVEN_OPTS='-Xmx2g' ./mvnw clean package` with 162 Java tests,
 `python3 -m pytest -q` with 312 passed and 3 skipped, public validation 9/9,
 and `git diff --check`. All 36 shared scenario-forward fixtures remain enforced
 by Java tests.
+
+First-slice completion ledger:
+
+- Task 1 inventory and characterization: `4169a42`, `4270ce6`, `5c6b4db`,
+  `5ee1f60`, `6699cef`
+- Task 2 bounded Java request handling: `2116300`, `4e36bf0`
+- Task 3 Java contract and provenance gate: `868cf28`, `5b14ad6`, `40b917f`,
+  `95257cd`, `facc47a`, `c6bbe38`
+- Task 4 packaged Java CLI: `8cb01c3`
+- Task 5 caller cutover and control reconciliation: `f5ebd3a`, `b07c2be`
 
 ### Plan acceptance boundary
 
