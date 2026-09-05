@@ -1,3 +1,4 @@
+import ast
 import json
 from pathlib import Path
 
@@ -6,6 +7,31 @@ ROOT = Path(__file__).resolve().parents[1]
 INVENTORY = ROOT / "validation/pkb001/java-migration/python-framework-inventory.json"
 FIXTURES = ROOT / "validation/pkb001/fixtures/scenario-forward-parity.json"
 SELECTED = "tooling/validation/pkb001_scenario_forward_gate.py"
+
+
+def imported_python_callers(module_path):
+    module_name = module_path.removesuffix(".py").replace("/", ".")
+    callers = set()
+    for source_root in (ROOT / "tooling", ROOT / "tests", ROOT / "validation"):
+        for source in source_root.rglob("*.py"):
+            relative = source.relative_to(ROOT).as_posix()
+            if relative == module_path or "archive" in source.parts:
+                continue
+            tree = ast.parse(source.read_text(), filename=relative)
+            imports = {
+                node.module
+                for node in ast.walk(tree)
+                if isinstance(node, ast.ImportFrom) and node.module is not None
+            }
+            imports.update(
+                alias.name
+                for node in ast.walk(tree)
+                if isinstance(node, ast.Import)
+                for alias in node.names
+            )
+            if module_name in imports:
+                callers.add(relative)
+    return callers
 
 
 def test_python_framework_inventory_characterizes_the_migration_boundary():
@@ -27,6 +53,11 @@ def test_python_framework_inventory_characterizes_the_migration_boundary():
         for consumer in consumers
     )
     assert all(consumer["external_runtime"] is False for consumer in consumers)
+    assert all(
+        imported_python_callers(consumer["path"])
+        <= set(consumer["active_callers"])
+        for consumer in consumers
+    )
     assert [
         consumer["path"]
         for consumer in consumers
