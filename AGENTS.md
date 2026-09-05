@@ -180,6 +180,25 @@ For PKB-001:
 - Reverse inference produces proposals only and requires human review.
 - Do not automatically publish inferred Product Semantics.
 
+## Java Framework Rule
+
+All new executable FDI framework behavior must be implemented in Java 17 / Spring
+Boot. This includes contracts, validation gates, orchestration, isolation,
+comparison, evaluation, metrics, reports, and framework CLI entry points.
+
+The external Graphify Python runtime is not FDI framework code. Keep it behind
+`CodeIntelligenceProvider` and the Java Graphify adapter over MCP stdio. Do not
+rewrite, remove, reinstall, or silently change that external runtime without an
+explicitly selected provider task.
+
+Existing Python files in this repository are transitional migration inputs. Do
+not add new framework features to them. Port one bounded consumer at a time to
+Java, verify observable behavior and active callers, then remove only the replaced
+Python source and Python-only tests. A narrowly scoped Python correctness or
+security fix is allowed only when necessary to preserve evidence or migration
+parity. Skills and JSON Schemas are declarative assets and are not executable
+Python framework implementations.
+
 ## Agent Behavior
 
 Before implementation:

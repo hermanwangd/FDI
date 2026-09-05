@@ -26,6 +26,7 @@ a new Spec revision and reconciliation of every bound Backlog item.
 | `PKB-ISOLATION-001` | Data flow and isolation | PK-S1 generation is proposal-only and cannot access evaluator gold or post-generation judgments. |
 | `PKB-COMPARISON-001` | Hierarchical evaluation | Provider-neutral comparison keeps path, type, bare symbol, exact component, chain, and supporting diagnostics distinct. |
 | `PKB-READINESS-001` | Planned project placement and verification | The next-run gate selects the exact skill/input set and fails closed on binding, identity, authority, or run-ID conflicts. |
+| `PKB-JAVA-001` | Framework implementation language and migration | All executable FDI framework behavior is implemented in Java; Python is limited to the external Graphify provider and temporary migration evidence. |
 | `PKB-REVIEW-003` | Scenario authority and isolation | Generate evidence-backed Capability and scenario proposals for individual review. |
 | `PKB-STATUS-002` | Scenario authority and isolation | Active status identifies the proposal review surface and actual review state. |
 | `PKB-REVIEW-004` | Scenario authority and isolation | The user accepts, edits, or rejects proposals with version-bound decisions. |
@@ -203,20 +204,61 @@ Graphify operations must be discovered from the installed runtime. Structural ev
 
 Graph node source paths are repository-relative. Runtime/link provenance may retain extraction-time absolute paths and is therefore checkout-specific rather than portable; the frozen graph bytes are not normalized after extraction.
 
-## Component mapping contract design
+## Framework runtime and provider boundary
 
 ### Considered approaches
 
-1. **All Java:** rejected because rewriting the installed Graphify Python MCP runtime and Python experiment harness adds risk without improving the provider boundary.
-2. **All Python:** rejected because component identity and validation would bypass the Java 17 FDI runtime and create a second product contract.
-3. **Hybrid, selected:** Java owns durable contracts and provider validation; the existing Python Graphify runtime and PKB-001 evaluation tooling retain their bounded responsibilities; skills perform proposal-only semantic selection.
+1. **Java including a Graphify rewrite:** rejected. Graphify is an external
+   provider and rewriting it is not required to make the FDI framework Java-only.
+2. **Permanent Java/Python framework split:** rejected because duplicated
+   contracts and validators can disagree and require two framework toolchains.
+3. **Java framework with external Graphify, selected:** all executable FDI
+   framework behavior moves to Java. The installed Graphify Python runtime remains
+   unchanged behind the provider boundary and communicates through MCP stdio.
 
 ### Language and responsibility split
 
-- **Java 17 / Spring Boot 3.4.1** owns the durable FDI runtime contract: component roles, component granularity, normalized structural identity, validation, exact-revision binding, and the provider-neutral `CodeIntelligenceProvider` boundary.
-- **Graphify's installed Python runtime** remains an external MCP stdio provider behind the Java Graphify adapter. PKB-001 does not rewrite or assume unsupported Graphify APIs.
+- **Java 17 / Spring Boot 3.4.1** owns every executable FDI framework concern:
+  contracts, input gates, exact-revision binding, orchestration, isolation,
+  comparison, evaluation, metrics, deterministic report generation, and CLI entry
+  points.
+- **Graphify's installed Python runtime** is not FDI framework code. It remains an
+  external MCP stdio provider behind `CodeIntelligenceProvider` and the Java
+  Graphify adapter. FDI does not rewrite it or assume unsupported Graphify APIs.
 - **Skills/agents** perform semantic candidate selection from allowed Product Semantics and exactly bound structural evidence. Their output is always `PROPOSAL_ONLY` and must satisfy the Java-owned contract.
-- **Python tooling** owns experiment isolation, blinded evaluation, hierarchical comparison, metrics, deterministic reports, and human-review packet generation. Python evaluation contracts must mirror, not redefine, the Java contract.
+- **Skills and JSON Schemas** are declarative instruction and contract assets, not
+  executable framework implementations. Java loads and enforces the applicable
+  schema and produces the authoritative validation result.
+
+### Framework implementation language and migration
+
+New executable FDI framework behavior MUST be implemented in Java. A new
+requirement MUST NOT be delivered solely through Python production code, Python
+validation code, or a Python CLI. Tests for new Java behavior use JUnit; shared
+JSON fixtures MAY be retained where they express provider-neutral contracts.
+
+Existing Python framework tooling is transitional migration input, not the target
+architecture and not authority over the Java contract. It MUST NOT gain new product
+behavior. A narrowly scoped correctness or security fix MAY be made only when
+needed to preserve existing evidence or establish migration parity. That exception
+does not authorize a new Python feature.
+
+Migration is performed one bounded consumer at a time:
+
+1. record the Python consumer, inputs, outputs, error vocabulary and immutable
+   evidence it currently protects;
+2. implement a Java replacement behind a stable Java API and Java CLI where a CLI
+   is required;
+3. run Java tests plus fixture and regression comparisons against the existing
+   observable behavior, while keeping Product-truth and evaluator isolation intact;
+4. switch every active caller to Java;
+5. remove the replaced Python source and Python-only tests only after the Java
+   replacement and callers are verified.
+
+Historical immutable outputs are never regenerated merely to remove Python.
+Different behavior requires an explicit Spec change rather than being hidden as a
+port. Until a consumer completes these steps, its Python implementation is labeled
+`TRANSITIONAL`, and the associated Java-only maturity gate remains incomplete.
 
 ### Component roles and granularity
 
@@ -283,7 +325,7 @@ Frozen Product Semantics + frozen Human Reviewer behavior scenarios
 → scenario-grounded Skill/agent proposal generation without evaluator gold
 → Java contract validation
 → immutable proposal artifact
-→ Python blinded evaluation against sealed evaluator truth
+→ Java blinded evaluation against sealed evaluator truth
 → Human Reviewer experiment result realization review
 ```
 
@@ -318,7 +360,10 @@ Before adding template extraction, the installed Graphify runtime must be querie
 - Java rejects missing/invalid role, granularity, normalized identity, and revision binding.
 - PK-S1 emits separate primary and supporting components or returns `UNRESOLVED`.
 - Generation tests prove evaluator gold is not an allowed input.
-- Python evaluation reports path, type, exact-symbol, realization-chain, and precision metrics independently.
+- Java evaluation reports path, type, exact-symbol, realization-chain, and precision metrics independently.
+- No active FDI framework behavior depends on a Python interpreter after its
+  bounded Java migration is verified; the external Graphify provider remains
+  independently executable through MCP stdio.
 - Existing `REVISE`, proposal-only, human-authority, and no-publication boundaries remain intact.
 - The current Petclinic artifacts are not silently rewritten; a new run uses a new immutable run identifier and manifest.
 - Frozen Forward scenarios are Human Reviewer-owned and contain no implementation
@@ -335,16 +380,24 @@ Before adding template extraction, the installed Graphify runtime must be querie
 - Java component contract: `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/`
 - Java contract tests: `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/`
 - Provider integration remains under `structural/api/` and `structural/graphify/`.
+- Java gates, orchestration, evaluation and reports live under focused packages in
+  `src/main/java/com/featuredeliveryintelligence/fdi/`, with matching JUnit tests.
 - The historical PK-S1 directory and `skills/pkb001/pk-s1-product-realization-v0.2/` remain immutable for their existing experiments and contracts.
 - Scenario-grounded Forward work uses a separately versioned PK-S1 skill and proposal contract. Its readiness gate MUST explicitly select and verify that version and its schema digest, bind the reviewed frozen semantics and exact-revision evidence, and reject incompatible versions. This does not authorize experiment execution or bypass its remaining gates.
-- Python comparison logic remains in `tooling/validation/`; immutable outputs remain under `validation/pkb001/`.
+- Existing Python files under `tooling/validation/` are transitional migration
+  inputs. No new framework feature is added there. Immutable outputs remain under
+  `validation/pkb001/` and are unchanged by language migration.
 
-Implementation uses Java records/enums with constructor validation and immutable collections. Python uses deterministic transformations. Checked-in JSON Schema validation requires a Draft 2020-12-compatible `jsonschema` runtime and fails closed when that validator is unavailable.
+Implementation uses Java records/enums with constructor validation and immutable
+collections. Checked-in JSON Schema validation uses the Java Draft 2020-12-capable
+validator already declared by the build and fails closed when the schema is invalid
+or unavailable.
 
 Required verification commands are:
 
 ```bash
 MAVEN_OPTS='-Xmx2g' ./mvnw test -q
+# Transitional regression only, removed consumer by consumer after Java cutover:
 python3 -m pytest -q
 python3 validation/pkb001/task7-evaluation/public_validate.py .
 git diff --check

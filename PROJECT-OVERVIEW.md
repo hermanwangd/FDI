@@ -9,6 +9,13 @@ The prototype tests two hypotheses:
 
 Reverse output is proposal-only. Human Reviewer review owns Product meaning and is the only route by which a proposal can become accepted Product truth.
 
+The FDI framework target is Java 17 / Spring Boot 3.4.1 for all executable
+framework behavior. The installed Graphify Python runtime remains an external
+structural-intelligence provider behind the Java `CodeIntelligenceProvider`
+adapter over MCP stdio; it is not part of the Java migration. Existing repository
+Python tooling is transitional and is replaced consumer by consumer only after
+verified Java parity and caller cutover.
+
 ## Active project truth
 
 Only these five root files define the current prototype:
