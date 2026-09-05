@@ -17,6 +17,14 @@
   inspection.
 - Exclusive immutable output publication with an atomic run-ID claim, paired
   JSON/Markdown rollback on collision, and no overwrite behavior.
+- Review round 1 closes standalone Java child promotion and public lifecycle
+  construction: reviewed objects are created only from the aggregate
+  Capability proposal, and every accepted child is checked against the exact
+  parent scenario ID, behavior, revision, digest, and lifecycle status.
+- Input and output directory walks now fail closed on any intermediate
+  symlink. Forbidden generation paths are rejected before file reads, EDIT
+  replacement behavior receives the same semantic lint as original behavior,
+  and staging errors remove both the atomic run claim and temporary files.
 
 ## Authority and lifecycle behavior
 
@@ -36,6 +44,9 @@
 - `MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=ScenarioProposalContractsTests test`
   passed on JDK 23.0.2 while compiling with the POM's Java 17 release target.
 - `python3 -m pytest -q tests/test_pkb001_scenario_review.py` passed 39 tests.
+- Review-round focused verification passed 8 Java tests and 44 Python tests,
+  including the five task-review regressions. The Java rerun used JDK 23.0.2
+  with the POM's Java 17 release target and `MAVEN_OPTS='-Xmx2g'`.
 - The generated Petclinic draft validated with 6 Capability proposals and 48
   resolving evidence references.
 

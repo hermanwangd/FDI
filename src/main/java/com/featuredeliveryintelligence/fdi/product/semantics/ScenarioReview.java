@@ -11,7 +11,7 @@ public final class ScenarioReview {
     private ScenarioReview() {
     }
 
-    public static Optional<ReviewedScenario> apply(
+    private static Optional<ReviewedScenario> apply(
             ScenarioProposal proposal,
             String proposalDigest,
             ScenarioReviewDecision decision,
@@ -32,9 +32,8 @@ public final class ScenarioReview {
                 || !behavior.scenarioId().equals(proposal.behavior().scenarioId())) {
             throw new RuntimeContractException("edited scenario cannot change stable identifiers");
         }
-        return Optional.of(new ReviewedScenario(
-                proposal.behavior(), behavior, status,
-                ReviewedScenario.Owner.HUMAN_REVIEWER, decision));
+        return Optional.of(ReviewedScenario.create(
+                proposal, behavior, decision, status, proposalDigest));
     }
 
     public static Optional<ReviewedCapability> apply(
@@ -45,6 +44,12 @@ public final class ScenarioReview {
             ReviewedCapability.Status status) {
         if (proposal == null || decision == null || scenarioDecisions == null || status == null) {
             throw new RuntimeContractException("proposal, decisions, and status are required");
+        }
+        var proposalScenarioIds = proposal.scenarios().stream()
+                .map(item -> item.behavior().scenarioId())
+                .collect(java.util.stream.Collectors.toUnmodifiableSet());
+        if (!proposalScenarioIds.containsAll(scenarioDecisions.keySet())) {
+            throw new RuntimeContractException("scenario decision does not belong to capability proposal");
         }
         requireBinding(proposal.proposalRevision(), proposalDigest,
                 decision.proposalRevision(), decision.proposalDigest());
@@ -69,18 +74,8 @@ public final class ScenarioReview {
                         .ifPresent(reviewedScenarios::add);
             }
         }
-        return Optional.of(new ReviewedCapability(
-                proposal.behavior(), behavior, status, ReviewedCapability.Owner.HUMAN_REVIEWER,
-                decision, reviewedScenarios));
-    }
-
-    public static List<ReviewedScenario> requireForwardEligibleScenarios(
-            List<ReviewedScenario> scenarios) {
-        List<ReviewedScenario> snapshot = List.copyOf(scenarios);
-        if (snapshot.isEmpty() || !snapshot.stream().allMatch(ReviewedScenario::forwardEligible)) {
-            throw new RuntimeContractException("only frozen Human Reviewer scenarios enter Forward inputs");
-        }
-        return snapshot;
+        return Optional.of(ReviewedCapability.create(
+                proposal, behavior, decision, reviewedScenarios, status, proposalDigest));
     }
 
     public static ReviewedCapability requireForwardEligible(ReviewedCapability capability) {
@@ -90,7 +85,7 @@ public final class ScenarioReview {
         return capability;
     }
 
-    private static void requireBinding(
+    static void requireBinding(
             int proposalRevision, String proposalDigest,
             int decisionRevision, String decisionDigest) {
         if (proposalDigest == null

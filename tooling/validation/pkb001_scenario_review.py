@@ -92,10 +92,22 @@ def _forbidden_path(path):
     return any(component.lower() in FORBIDDEN_COMPONENTS for component in canonical.split("/"))
 
 
+def _has_symlink_component(root, canonical):
+    current = Path(root)
+    for component in canonical.split("/"):
+        current = current / component
+        if current.is_symlink():
+            return True
+    return False
+
+
 def _resolve_input(root, relative, reasons):
     canonical = _canonical_relative(relative)
     if canonical is None:
         reasons.add("INPUT_PATH_INVALID")
+        return None
+    if _has_symlink_component(root, canonical):
+        reasons.add("INPUT_PATH_SYMLINK")
         return None
     candidate = root / canonical
     try:
@@ -104,7 +116,7 @@ def _resolve_input(root, relative, reasons):
     except (OSError, RuntimeError, ValueError):
         reasons.add("INPUT_FILE_INVALID")
         return None
-    if candidate.is_symlink() or not resolved.is_file():
+    if not resolved.is_file():
         reasons.add("INPUT_FILE_INVALID")
         return None
     return resolved
@@ -170,6 +182,7 @@ def _verify_inputs(root, document, reasons):
         kind = item["kind"]
         if _forbidden_path(item.get("path")):
             reasons.add("FORBIDDEN_GENERATION_INPUT")
+            continue
         path = _resolve_input(root, item.get("path"), reasons)
         data = _read_bounded(path, reasons)
         digest = hashlib.sha256(data).hexdigest() if data is not None else None
@@ -349,6 +362,15 @@ def _semantic_strings(document):
             yield capability.get(field)
         for field in ("includes", "excludes", "non_goals"):
             yield from capability.get(field, []) if isinstance(capability.get(field), list) else []
+        capability_decision = capability.get("decision")
+        if isinstance(capability_decision, dict):
+            replacement = capability_decision.get("replacement_behavior")
+            if isinstance(replacement, dict):
+                for field in ("title", "description"):
+                    yield replacement.get(field)
+                for field in ("includes", "excludes", "non_goals"):
+                    values = replacement.get(field)
+                    yield from values if isinstance(values, list) else []
         for scenario in capability.get("scenarios", []):
             if not isinstance(scenario, dict):
                 continue
@@ -356,6 +378,15 @@ def _semantic_strings(document):
                 yield scenario.get(field)
             for field in ("given", "then"):
                 yield from scenario.get(field, []) if isinstance(scenario.get(field), list) else []
+            scenario_decision = scenario.get("decision")
+            if isinstance(scenario_decision, dict):
+                replacement = scenario_decision.get("replacement_behavior")
+                if isinstance(replacement, dict):
+                    for field in ("title", "when"):
+                        yield replacement.get(field)
+                    for field in ("given", "then"):
+                        values = replacement.get(field)
+                        yield from values if isinstance(values, list) else []
 
 
 def _verify_semantics(document, reasons):
@@ -621,17 +652,35 @@ def _safe_output(root, value, review_output=False):
     if review_output and not canonical.startswith("validation/pkb001/"):
         raise ScenarioReviewError(["OUTPUT_PATH_INVALID"])
     candidate = root / canonical
-    current = candidate.parent
-    while current != root:
-        if current.exists() and current.is_symlink():
-            raise ScenarioReviewError(["OUTPUT_PATH_INVALID"])
-        current = current.parent
+    parent_relative = candidate.parent.relative_to(root).as_posix()
+    if parent_relative != "." and _has_symlink_component(root, parent_relative):
+        raise ScenarioReviewError(["OUTPUT_PATH_SYMLINK"])
     return candidate
 
 
+def _ensure_safe_directory(root, relative):
+    canonical = _canonical_relative(relative)
+    if canonical is None:
+        raise ScenarioReviewError(["OUTPUT_PATH_INVALID"])
+    current = Path(root)
+    for component in canonical.split("/"):
+        current = current / component
+        if current.is_symlink():
+            raise ScenarioReviewError(["OUTPUT_PATH_SYMLINK"])
+        try:
+            current.mkdir()
+        except FileExistsError:
+            if current.is_symlink():
+                raise ScenarioReviewError(["OUTPUT_PATH_SYMLINK"])
+            if not current.is_dir():
+                raise ScenarioReviewError(["OUTPUT_PATH_INVALID"])
+        except OSError as error:
+            raise ScenarioReviewError(["OUTPUT_WRITE_FAILED"]) from error
+    return current
+
+
 def _reserve_run(root, review, json_path, markdown_path):
-    claim_dir = Path(root) / "validation/pkb001/scenario-review-runs"
-    claim_dir.mkdir(parents=True, exist_ok=True)
+    claim_dir = _ensure_safe_directory(root, "validation/pkb001/scenario-review-runs")
     claim_name = hashlib.sha256(review["run_id"].encode()).hexdigest() + ".claim.json"
     claim_path = claim_dir / claim_name
     body = (json.dumps({
@@ -658,11 +707,15 @@ def _reserve_run(root, review, json_path, markdown_path):
 def _stage(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     handle = tempfile.NamedTemporaryFile(prefix=".scenario-review-", dir=str(path.parent), delete=False)
+    staged = Path(handle.name)
     try:
         handle.write(data)
         handle.flush()
         os.fsync(handle.fileno())
-        return Path(handle.name)
+        return staged
+    except Exception:
+        staged.unlink(missing_ok=True)
+        raise
     finally:
         handle.close()
 
@@ -683,14 +736,18 @@ def write_review_outputs(root, proposal_path, json_output, markdown_output):
         raise ScenarioReviewError(["OUTPUT_PATH_INVALID"])
     if json_path.exists() or markdown_path.exists():
         raise ScenarioReviewError(["OUTPUT_ALREADY_EXISTS"])
+    _ensure_safe_directory(root, json_path.parent.relative_to(root).as_posix())
+    _ensure_safe_directory(root, markdown_path.parent.relative_to(root).as_posix())
     claim_path = _reserve_run(root, review, json_path, markdown_path)
     json_bytes = (json.dumps(review, ensure_ascii=False, sort_keys=True, indent=2) + "\n").encode()
     markdown_bytes = markdown.encode()
-    json_stage = _stage(json_path, json_bytes)
-    markdown_stage = _stage(markdown_path, markdown_bytes)
+    json_stage = None
+    markdown_stage = None
     json_created = False
     markdown_created = False
     try:
+        json_stage = _stage(json_path, json_bytes)
+        markdown_stage = _stage(markdown_path, markdown_bytes)
         os.link(str(json_stage), str(json_path))
         json_created = True
         os.link(str(markdown_stage), str(markdown_path))
@@ -712,8 +769,10 @@ def write_review_outputs(root, proposal_path, json_output, markdown_output):
         claim_path.unlink(missing_ok=True)
         raise ScenarioReviewError(["OUTPUT_WRITE_FAILED"])
     finally:
-        json_stage.unlink(missing_ok=True)
-        markdown_stage.unlink(missing_ok=True)
+        if json_stage is not None:
+            json_stage.unlink(missing_ok=True)
+        if markdown_stage is not None:
+            markdown_stage.unlink(missing_ok=True)
     return json_path, markdown_path
 
 

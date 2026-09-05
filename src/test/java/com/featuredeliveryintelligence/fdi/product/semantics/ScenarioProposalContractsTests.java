@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -100,44 +101,61 @@ class ScenarioProposalContractsTests {
 
     @Test
     void decisionsBindExactProposalRevisionAndDigest() {
-        var proposal = proposal();
+        var proposal = capabilityProposal();
+        var capabilityAccepted = capabilityDecision(CapabilityReviewDecision.Action.ACCEPT);
         var accepted = decision(ScenarioReviewDecision.Action.ACCEPT, 1, DIGEST, null, false);
         var wrongRevision = decision(ScenarioReviewDecision.Action.ACCEPT, 2, DIGEST, null, false);
         var wrongDigest = decision(ScenarioReviewDecision.Action.ACCEPT, 1, "b".repeat(64), null, false);
 
-        assertTrue(ScenarioReview.apply(proposal, DIGEST, accepted,
-                ReviewedScenario.Status.FROZEN).isPresent());
+        assertTrue(ScenarioReview.apply(proposal, DIGEST, capabilityAccepted,
+                Map.of("HYP-SCENARIO-001", accepted),
+                ReviewedCapability.Status.FROZEN).isPresent());
         assertThrows(RuntimeContractException.class, () -> ScenarioReview.apply(
-                proposal, DIGEST, wrongRevision, ReviewedScenario.Status.FROZEN));
+                proposal, DIGEST, capabilityAccepted,
+                Map.of("HYP-SCENARIO-001", wrongRevision),
+                ReviewedCapability.Status.FROZEN));
         assertThrows(RuntimeContractException.class, () -> ScenarioReview.apply(
-                proposal, DIGEST, wrongDigest, ReviewedScenario.Status.FROZEN));
+                proposal, DIGEST, capabilityAccepted,
+                Map.of("HYP-SCENARIO-001", wrongDigest),
+                ReviewedCapability.Status.FROZEN));
     }
 
     @Test
     void rejectAndUnconfirmedEditNeverEnterAcceptedOrForwardInputs() {
-        var proposal = proposal();
+        var proposal = capabilityProposal();
+        var capabilityAccepted = capabilityDecision(CapabilityReviewDecision.Action.ACCEPT);
         var rejected = decision(ScenarioReviewDecision.Action.REJECT, 1, DIGEST, null, false);
         var unconfirmedEdit = decision(ScenarioReviewDecision.Action.EDIT, 1, DIGEST,
                 editedBehavior(), false);
         var confirmedEdit = decision(ScenarioReviewDecision.Action.EDIT, 1, DIGEST,
                 editedBehavior(), true);
 
-        assertTrue(ScenarioReview.apply(proposal, DIGEST, rejected,
-                ReviewedScenario.Status.FROZEN).isEmpty());
-        assertTrue(ScenarioReview.apply(proposal, DIGEST, unconfirmedEdit,
-                ReviewedScenario.Status.FROZEN).isEmpty());
+        var rejectedCapability = ScenarioReview.apply(
+                proposal, DIGEST, capabilityAccepted,
+                Map.of("HYP-SCENARIO-001", rejected),
+                ReviewedCapability.Status.FROZEN).orElseThrow();
+        assertTrue(rejectedCapability.scenarios().isEmpty());
+        var pendingCapability = ScenarioReview.apply(
+                proposal, DIGEST, capabilityAccepted,
+                Map.of("HYP-SCENARIO-001", unconfirmedEdit),
+                ReviewedCapability.Status.FROZEN).orElseThrow();
+        assertTrue(pendingCapability.scenarios().isEmpty());
 
-        var reviewed = ScenarioReview.apply(proposal, DIGEST, confirmedEdit,
-                ReviewedScenario.Status.DRAFT).orElseThrow();
-        assertEquals(editedBehavior(), reviewed.behavior());
+        var reviewed = ScenarioReview.apply(
+                proposal, DIGEST, capabilityAccepted,
+                Map.of("HYP-SCENARIO-001", confirmedEdit),
+                ReviewedCapability.Status.DRAFT).orElseThrow();
+        assertEquals(editedBehavior(), reviewed.scenarios().get(0).behavior());
         assertFalse(reviewed.forwardEligible());
         assertThrows(RuntimeContractException.class,
-                () -> ScenarioReview.requireForwardEligibleScenarios(List.of(reviewed)));
+                () -> ScenarioReview.requireForwardEligible(reviewed));
 
-        var frozen = ScenarioReview.apply(proposal, DIGEST, confirmedEdit,
-                ReviewedScenario.Status.FROZEN).orElseThrow();
+        var frozen = ScenarioReview.apply(
+                proposal, DIGEST, capabilityAccepted,
+                Map.of("HYP-SCENARIO-001", confirmedEdit),
+                ReviewedCapability.Status.FROZEN).orElseThrow();
         assertTrue(frozen.forwardEligible());
-        assertEquals(List.of(frozen), ScenarioReview.requireForwardEligibleScenarios(List.of(frozen)));
+        assertEquals(frozen, ScenarioReview.requireForwardEligible(frozen));
     }
 
     @Test
@@ -179,22 +197,17 @@ class ScenarioProposalContractsTests {
 
     @Test
     void reviewedLifecycleRecordsCannotBeForgedWithRejectedOrMissingApproval() {
-        var rejected = decision(ScenarioReviewDecision.Action.REJECT, 1, DIGEST, null, false);
-        assertThrows(RuntimeContractException.class, () -> new ReviewedScenario(
-                behavior(), behavior(), ReviewedScenario.Status.FROZEN,
-                ReviewedScenario.Owner.HUMAN_REVIEWER, rejected));
-        assertThrows(RuntimeContractException.class, () -> new ReviewedScenario(
-                behavior(), behavior(), ReviewedScenario.Status.FROZEN,
-                ReviewedScenario.Owner.HUMAN_REVIEWER, null));
-
-        var capabilityRejected = new CapabilityReviewDecision(
-                CapabilityReviewDecision.Action.REJECT, "human-reviewer",
-                Instant.parse("2026-09-05T01:02:03Z"), "Rejected", 1, DIGEST,
-                null, false);
-        assertThrows(RuntimeContractException.class, () -> new ReviewedCapability(
-                capabilityProposal().behavior(), capabilityProposal().behavior(),
-                ReviewedCapability.Status.FROZEN,
-                ReviewedCapability.Owner.HUMAN_REVIEWER, capabilityRejected, List.of()));
+        assertEquals(0, ReviewedScenario.class.getConstructors().length);
+        assertEquals(0, ReviewedCapability.class.getConstructors().length);
+        assertFalse(Arrays.stream(ReviewedScenario.class.getMethods())
+                .anyMatch(method -> method.getName().equals("forwardEligible")
+                        && method.getDeclaringClass().equals(ReviewedScenario.class)));
+        assertThrows(RuntimeContractException.class, () -> ScenarioReview.apply(
+                capabilityProposal(), DIGEST,
+                capabilityDecision(CapabilityReviewDecision.Action.ACCEPT),
+                Map.of("HYP-SCENARIO-OTHER",
+                        decision(ScenarioReviewDecision.Action.ACCEPT, 1, DIGEST, null, false)),
+                ReviewedCapability.Status.FROZEN));
     }
 
     private static ScenarioProposal proposal() {
@@ -212,6 +225,12 @@ class ScenarioProposalContractsTests {
                 List.of(reference()), "Evidence supports this capability", 0.7,
                 ScenarioProposal.ConfidenceInterpretation.UNCALIBRATED_RANKING_HINT,
                 List.of("Reconstruction only"), List.of(proposal()));
+    }
+
+    private static CapabilityReviewDecision capabilityDecision(CapabilityReviewDecision.Action action) {
+        return new CapabilityReviewDecision(
+                action, "human-reviewer", Instant.parse("2026-09-05T01:02:03Z"),
+                "Capability reviewed", 1, DIGEST, null, false);
     }
 
     private static ScenarioProposal proposalWith(

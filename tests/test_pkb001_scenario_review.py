@@ -8,6 +8,8 @@ from pathlib import Path
 import pytest
 from jsonschema import Draft202012Validator
 
+import tooling.validation.pkb001_scenario_review as scenario_review_module
+
 from tooling.validation.pkb001_scenario_review import (
     ScenarioReviewError,
     accepted_scenarios,
@@ -333,6 +335,66 @@ def test_future_history_items_are_rejected(proposal_root):
     assert "POST_CUTOFF_HISTORY_ITEM" in caught.value.reasons
 
 
+def test_intermediate_input_symlink_is_rejected(proposal_root):
+    root, _, proposal = proposal_root
+    real = root / "validation/pkb001/artifacts"
+    alias = root / "validation/pkb001/graph-alias"
+    alias.symlink_to(real, target_is_directory=True)
+    graph_input = next(item for item in proposal["generation_inputs"]
+                       if item["kind"] == "FROZEN_GRAPH")
+    graph_input["path"] = "validation/pkb001/graph-alias/graph.json"
+    proposal["evidence_catalog"][0]["artifact_path"] = graph_input["path"]
+    with pytest.raises(ScenarioReviewError) as caught:
+        validate_proposal(root, proposal)
+    assert "INPUT_PATH_SYMLINK" in caught.value.reasons
+
+
+def test_forbidden_input_is_never_opened(proposal_root, monkeypatch):
+    root, _, proposal = proposal_root
+    forbidden_path = root / "validation/pkb001/evaluator/gold.json"
+    forbidden_path.parent.mkdir(parents=True)
+    forbidden_path.write_text('{"nodes": [], "links": []}\n')
+    graph_input = next(item for item in proposal["generation_inputs"]
+                       if item["kind"] == "FROZEN_GRAPH")
+    graph_input["path"] = "validation/pkb001/evaluator/gold.json"
+    graph_input["sha256"] = hashlib.sha256(forbidden_path.read_bytes()).hexdigest()
+    opened = []
+    real_read = scenario_review_module._read_bounded
+
+    def tracked_read(path, *args, **kwargs):
+        if path is not None:
+            opened.append(path)
+        return real_read(path, *args, **kwargs)
+
+    monkeypatch.setattr(scenario_review_module, "_read_bounded", tracked_read)
+    with pytest.raises(ScenarioReviewError) as caught:
+        validate_proposal(root, proposal)
+    assert "FORBIDDEN_GENERATION_INPUT" in caught.value.reasons
+    assert forbidden_path.resolve() not in opened
+
+
+def test_confirmed_edit_replacement_receives_semantic_lint(proposal_root):
+    root, proposal_path, proposal = proposal_root
+    review, _ = render_review(root, proposal, proposal_path)
+    base = {
+        "reviewer_identity": "human-reviewer",
+        "reviewed_at": "2026-09-05T01:02:03Z",
+        "reason": "逐項審查完成",
+        "proposal_revision": review["proposal_revision"],
+        "proposal_sha256": review["proposal_sha256"],
+    }
+    review["capability_proposals"][0]["decision"] = dict(base, action="ACCEPT")
+    review["capability_proposals"][0]["scenarios"][0]["decision"] = dict(
+        base, action="EDIT", edit_confirmed=True,
+        replacement_behavior={
+            "title": "Use SOURCE_PATH", "given": ["使用者開始搜尋。"],
+            "when": "使用者送出姓名。", "then": ["系統顯示結果。"],
+            "scope": "REQUIRED_ACCEPTANCE"})
+    with pytest.raises(ScenarioReviewError) as caught:
+        validate_review(root, review)
+    assert "TECHNICAL_IDENTIFIER_IN_BEHAVIOR" in caught.value.reasons
+
+
 @pytest.mark.parametrize("malformed", [[], None, {"capability_proposals": [None]}])
 def test_malformed_top_level_and_children_fail_closed(proposal_root, malformed):
     root, _, _ = proposal_root
@@ -406,6 +468,46 @@ def test_concurrent_same_run_claim_allows_exactly_one_complete_pair(proposal_roo
         and (root / ("validation/pkb001/reviews/%s.md" % suffix)).exists()
         for suffix in ("one", "two"))
     assert complete_pairs == 1
+
+
+def test_staging_failure_rolls_back_claim_and_temporary_file(proposal_root, monkeypatch):
+    root, proposal_path, _ = proposal_root
+    real_stage = scenario_review_module._stage
+    calls = []
+
+    def fail_second_stage(path, data):
+        calls.append(path)
+        if len(calls) == 2:
+            raise OSError("simulated staging failure")
+        return real_stage(path, data)
+
+    monkeypatch.setattr(scenario_review_module, "_stage", fail_second_stage)
+    with pytest.raises(ScenarioReviewError) as caught:
+        write_review_outputs(
+            root, proposal_path,
+            "validation/pkb001/reviews/review.json",
+            "validation/pkb001/reviews/review.md")
+    assert "OUTPUT_WRITE_FAILED" in caught.value.reasons
+    claim_dir = root / "validation/pkb001/scenario-review-runs"
+    assert not list(claim_dir.glob("*.claim.json"))
+    assert not list((root / "validation/pkb001/reviews").glob(".scenario-review-*"))
+    assert not (root / "validation/pkb001/reviews/review.json").exists()
+    assert not (root / "validation/pkb001/reviews/review.md").exists()
+
+
+def test_run_claim_directory_cannot_be_an_intermediate_symlink(proposal_root):
+    root, proposal_path, _ = proposal_root
+    real_claims = root / "validation/pkb001/real-claims"
+    real_claims.mkdir(parents=True)
+    claim_alias = root / "validation/pkb001/scenario-review-runs"
+    claim_alias.symlink_to(real_claims, target_is_directory=True)
+    with pytest.raises(ScenarioReviewError) as caught:
+        write_review_outputs(
+            root, proposal_path,
+            "validation/pkb001/reviews/review.json",
+            "validation/pkb001/reviews/review.md")
+    assert "OUTPUT_PATH_SYMLINK" in caught.value.reasons
+    assert not list(real_claims.iterdir())
 
 
 @pytest.mark.parametrize("output", ["../escape.json", "outside/review.json"])
