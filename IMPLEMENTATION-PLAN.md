@@ -282,10 +282,10 @@ git commit -m "fix(pkb001): version the next-run PK-S1 contract"
 - Create: `tooling/validation/pkb001_component_compare.py`
 - Create: `tests/test_pkb001_component_compare.py`
 
-- [ ] **Step 1: Write failing independent metric tests**
+- [ ] **Step 1: Write failing independent metric and channel tests**
 
 ```python
-def test_comparison_keeps_path_type_and_exact_symbol_separate():
+def test_comparison_keeps_all_hierarchical_levels_separate():
     proposed = [{'source_path': 'OwnerController.java',
                  'containing_type': 'OwnerController',
                  'qualified_symbol': 'OwnerController', 'role': 'PRIMARY'}]
@@ -297,9 +297,23 @@ def test_comparison_keeps_path_type_and_exact_symbol_separate():
     assert result == {
         'path': {'matched': 1, 'expected': 1, 'proposed': 1},
         'type': {'matched': 1, 'expected': 1, 'proposed': 1},
-        'exact_symbol': {'matched': 0, 'expected': 1, 'proposed': 1},
+        'symbol_name': {'matched': 0, 'expected': 1, 'proposed': 1},
+        'exact_component': {'matched': 0, 'expected': 1, 'proposed': 1},
         'expected_realization_chain_coverage': 0.0,
-        'extra_proposed_components': 1,
+        'extra_proposed_components': [{
+            'source_path': 'OwnerController.java',
+            'containing_type': 'OwnerController',
+            'qualified_symbol': 'OwnerController',
+        }],
+        'missing_expected_components': [{
+            'source_path': 'OwnerController.java',
+            'containing_type': 'OwnerController',
+            'qualified_symbol': 'OwnerController.processFindForm',
+        }],
+        'supporting_expected_citations': {
+            'symbol_name': {'count': 0, 'symbols': []},
+            'exact_component': {'count': 0, 'components': []},
+        },
     }
 
 def test_comparison_does_not_promote_supporting_evidence_to_exact_component():
@@ -307,9 +321,12 @@ def test_comparison_does_not_promote_supporting_evidence_to_exact_component():
                        'containing_type': 'OwnerController',
                        'qualified_symbol': 'OwnerController.processFindForm'}
     result = compare_components([], [expected_method], supporting=[expected_method])
-    assert result['exact_symbol']['matched'] == 0
-    assert result['supporting_expected_symbols_cited'] == 1
+    assert result['exact_component']['matched'] == 0
+    assert result['supporting_expected_citations']['symbol_name']['count'] == 1
+    assert result['supporting_expected_citations']['exact_component']['count'] == 1
 ```
+
+Tests also prove that symbol-name overlap across different paths/types is diagnostic only; realization-chain coverage and missing/extra use exact component identity. Proposed rows with explicit `SUPPORTING` and supporting rows with explicit `PRIMARY` fail closed. Expected roles may be present but never grant proposal credit. Drive-relative paths such as `C:src/a.py`, hostile dictionary subclasses, and iterables exceeding 10,000 components fail closed. Finite generators and one-shot iterables within the bound are accepted and consumed once.
 
 - [ ] **Step 2: Verify RED**
 
@@ -317,31 +334,33 @@ Run: `python3 -m pytest -q tests/test_pkb001_component_compare.py`
 
 Expected: import failure because the comparison utility does not exist.
 
-- [ ] **Step 3: Implement deterministic set-based comparison**
+- [ ] **Step 3: Implement bounded deterministic set-based comparison**
 
 ```python
 def compare_components(proposed, expected, supporting=()):
-    def values(rows, key):
-        return {row[key] for row in rows}
-    def counts(proposed_values, expected_values):
-        return {'matched': len(proposed_values & expected_values),
-                'expected': len(expected_values),
-                'proposed': len(proposed_values)}
-    def ratio(numerator, denominator):
-        return round(numerator / denominator, 10) if denominator else 1.0
-    proposed_paths, expected_paths = values(proposed, 'source_path'), values(expected, 'source_path')
-    proposed_types, expected_types = values(proposed, 'containing_type'), values(expected, 'containing_type')
-    proposed_symbols, expected_symbols = values(proposed, 'qualified_symbol'), values(expected, 'qualified_symbol')
-    exact = proposed_symbols & expected_symbols
+    proposed_rows = snapshot_and_validate(proposed, channel='proposed', limit=10_000)
+    expected_rows = snapshot_and_validate(expected, channel='expected', limit=10_000)
+    supporting_rows = snapshot_and_validate(supporting, channel='supporting', limit=10_000)
+    proposed_components = composite_identities(proposed_rows)
+    expected_components = composite_identities(expected_rows)
+    exact_components = proposed_components & expected_components
     return {
-        'path': counts(proposed_paths, expected_paths),
-        'type': counts(proposed_types, expected_types),
-        'exact_symbol': counts(proposed_symbols, expected_symbols),
-        'expected_realization_chain_coverage': ratio(len(exact), len(expected_symbols)),
-        'extra_proposed_components': len(proposed_symbols - expected_symbols),
-        'supporting_expected_symbols_cited': len(values(supporting, 'qualified_symbol') & expected_symbols),
+        'path': metric(paths(proposed_rows), paths(expected_rows)),
+        'type': metric(types(proposed_rows), types(expected_rows)),
+        'symbol_name': metric(symbols(proposed_rows), symbols(expected_rows)),
+        'exact_component': metric(proposed_components, expected_components),
+        'expected_realization_chain_coverage': ratio(
+            len(exact_components), len(expected_components)),
+        'extra_proposed_components': sorted_components(
+            proposed_components - expected_components),
+        'missing_expected_components': sorted_components(
+            expected_components - proposed_components),
+        'supporting_expected_citations': supporting_diagnostics(
+            supporting_rows, expected_rows),
     }
 ```
+
+The comparison identity is the canonical tuple `(source_path, containing_type, qualified_symbol)`. `symbol_name` is intentionally only a bare-name diagnostic. Supporting diagnostics expose both bare-name and exact-component citations independently and never alter `exact_component` or realization-chain coverage. `snapshot_and_validate` consumes at most 10,001 entries so unbounded iterables cannot cause unbounded memory growth.
 
 - [ ] **Step 4: Verify GREEN without touching the completed Task 7 report**
 

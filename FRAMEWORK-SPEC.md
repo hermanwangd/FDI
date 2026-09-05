@@ -99,11 +99,12 @@ Evaluation reports separate these levels rather than treating them as interchang
 
 1. source-path match;
 2. containing type/class match;
-3. exact method, entity, template, or configuration-symbol match;
-4. expected realization-chain coverage;
-5. extra proposed-component precision.
+3. qualified-symbol-name overlap as a diagnostic independent of path and type;
+4. exact component match using `(source_path, containing_type, qualified_symbol)`;
+5. expected realization-chain coverage based only on exact component matches;
+6. missing and extra components based only on exact component identity.
 
-Path overlap and supporting-evidence citation do not count as exact component matches. The existing Petclinic metrics remain descriptive regression evidence. New acceptance thresholds must be registered before the next blind/holdout execution and must not be selected from the observed Petclinic result.
+Path, type, or symbol-name overlap and supporting-evidence citation do not count as exact component matches. Supporting citations report symbol-name and exact-component overlap separately, but neither grants proposal credit. Rows in the proposed channel may explicitly declare only `PRIMARY`; rows in the supporting channel may explicitly declare only `SUPPORTING`; evaluator-expected roles do not grant proposal credit. Comparison inputs are snapshotted once with a 10,000-component-per-channel safety bound. The existing Petclinic metrics remain descriptive regression evidence. New acceptance thresholds must be registered before the next blind/holdout execution and must not be selected from the observed Petclinic result.
 
 ### Data flow and isolation
 

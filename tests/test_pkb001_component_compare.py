@@ -33,13 +33,17 @@ def test_class_does_not_substitute_for_method_at_exact_level():
     assert result == {
         "path": metric(1, 1, 1),
         "type": metric(1, 1, 1),
-        "exact_symbol": metric(0, 1, 1),
+        "symbol_name": metric(0, 1, 1),
+        "exact_component": metric(0, 1, 1),
         "expected_realization_chain_coverage": 0.0,
         "extra_proposed_components": [component(symbol="OwnerController")],
         "missing_expected_components": [
             component(symbol="OwnerController.processFindForm")
         ],
-        "supporting_expected_symbols_cited": {"count": 0, "symbols": []},
+        "supporting_expected_citations": {
+            "symbol_name": {"count": 0, "symbols": []},
+            "exact_component": {"count": 0, "components": []},
+        },
     }
 
 
@@ -48,11 +52,15 @@ def test_supporting_evidence_does_not_increase_exact_match_or_chain_coverage():
 
     result = compare_components([], [expected_method], supporting=[expected_method])
 
-    assert result["exact_symbol"] == metric(0, 1, 0)
+    assert result["symbol_name"] == metric(0, 1, 0)
+    assert result["exact_component"] == metric(0, 1, 0)
     assert result["expected_realization_chain_coverage"] == 0.0
-    assert result["supporting_expected_symbols_cited"] == {
-        "count": 1,
-        "symbols": ["OwnerController.processFindForm"],
+    assert result["supporting_expected_citations"] == {
+        "symbol_name": {
+            "count": 1,
+            "symbols": ["OwnerController.processFindForm"],
+        },
+        "exact_component": {"count": 1, "components": [expected_method]},
     }
 
 
@@ -63,13 +71,14 @@ def test_exact_method_match_populates_every_level_without_missing_or_extra():
 
     assert result["path"] == metric(1, 1, 1)
     assert result["type"] == metric(1, 1, 1)
-    assert result["exact_symbol"] == metric(1, 1, 1)
+    assert result["symbol_name"] == metric(1, 1, 1)
+    assert result["exact_component"] == metric(1, 1, 1)
     assert result["expected_realization_chain_coverage"] == 1.0
     assert result["extra_proposed_components"] == []
     assert result["missing_expected_components"] == []
 
 
-def test_exact_symbol_match_is_independent_of_path_and_type():
+def test_symbol_name_diagnostic_is_independent_but_exact_component_uses_full_identity():
     proposed = component("src/a/OwnerController.java", "FirstOwner")
     expected = component("src/b/OwnerController.java", "SecondOwner")
 
@@ -77,8 +86,9 @@ def test_exact_symbol_match_is_independent_of_path_and_type():
 
     assert result["path"] == metric(0, 1, 1)
     assert result["type"] == metric(0, 1, 1)
-    assert result["exact_symbol"] == metric(1, 1, 1)
-    assert result["expected_realization_chain_coverage"] == 1.0
+    assert result["symbol_name"] == metric(1, 1, 1)
+    assert result["exact_component"] == metric(0, 1, 1)
+    assert result["expected_realization_chain_coverage"] == 0.0
     assert result["extra_proposed_components"] == [proposed]
     assert result["missing_expected_components"] == [expected]
 
@@ -89,11 +99,12 @@ def test_supporting_symbol_citation_is_independent_of_path_and_type():
 
     result = compare_components([], [expected], [supporting])
 
-    assert result["exact_symbol"] == metric(0, 1, 0)
+    assert result["symbol_name"] == metric(0, 1, 0)
+    assert result["exact_component"] == metric(0, 1, 0)
     assert result["expected_realization_chain_coverage"] == 0.0
-    assert result["supporting_expected_symbols_cited"] == {
-        "count": 1,
-        "symbols": ["Shared.run"],
+    assert result["supporting_expected_citations"] == {
+        "symbol_name": {"count": 1, "symbols": ["Shared.run"]},
+        "exact_component": {"count": 0, "components": []},
     }
 
 
@@ -106,7 +117,8 @@ def test_multiple_components_compute_recall_and_precision_independently():
 
     assert result["path"] == metric(1, 2, 2)
     assert result["type"] == metric(1, 2, 1)
-    assert result["exact_symbol"] == metric(1, 2, 2)
+    assert result["symbol_name"] == metric(1, 2, 2)
+    assert result["exact_component"] == metric(1, 2, 2)
     assert result["expected_realization_chain_coverage"] == 0.5
 
 
@@ -122,6 +134,7 @@ def test_multiple_components_compute_recall_and_precision_independently():
         [component(path=" ")],
         [component(path="/absolute/file.py")],
         [component(path="C:/absolute/file.py")],
+        [component(path="C:relative/file.py")],
         [component(path="src\\file.py")],
         [component(path="src/../file.py")],
         [component(path="src/./file.py")],
@@ -144,6 +157,36 @@ def test_duplicate_composite_identity_within_each_collection_fails_closed(argume
 
     with pytest.raises(ValueError):
         compare_components(**values)
+
+
+def test_supporting_role_is_rejected_in_proposed_channel():
+    with pytest.raises(ValueError):
+        compare_components([component() | {"role": "SUPPORTING"}], [])
+
+
+def test_primary_role_is_rejected_in_supporting_channel():
+    with pytest.raises(ValueError):
+        compare_components([], [], [component() | {"role": "PRIMARY"}])
+
+
+def test_expected_role_does_not_grant_proposal_credit():
+    expected = component() | {"role": "PRIMARY"}
+
+    result = compare_components([], [expected])
+
+    assert result["exact_component"]["matched"] == 0
+
+
+class HostileDict(dict):
+    def get(self, key, default=None):
+        raise RuntimeError("hostile mapping access")
+
+
+def test_dict_subclass_row_fails_closed_without_invoking_overrides():
+    hostile = HostileDict(component())
+
+    with pytest.raises(ValueError):
+        compare_components([hostile], [])
 
 
 class ChangingSequence(Sequence):
@@ -182,7 +225,7 @@ def test_sequence_is_snapshotted_once_before_validation_and_comparison():
 
     result = compare_components(proposed, [row])
 
-    assert result["exact_symbol"]["matched"] == 1
+    assert result["exact_component"]["matched"] == 1
     assert proposed.iterations == 1
 
 
@@ -191,7 +234,8 @@ def test_generator_input_is_accepted_and_snapshotted():
 
     result = compare_components((item for item in [row]), (item for item in [row]))
 
-    assert result["exact_symbol"] == metric(1, 1, 1)
+    assert result["symbol_name"] == metric(1, 1, 1)
+    assert result["exact_component"] == metric(1, 1, 1)
 
 
 def test_one_shot_iterable_is_consumed_exactly_once():
@@ -200,8 +244,15 @@ def test_one_shot_iterable_is_consumed_exactly_once():
 
     result = compare_components(proposed, [row])
 
-    assert result["exact_symbol"]["matched"] == 1
+    assert result["exact_component"]["matched"] == 1
     assert proposed.iterations == 1
+
+
+def test_iterable_over_component_limit_fails_closed():
+    rows = (component(symbol=f"Component.{index}") for index in range(10_001))
+
+    with pytest.raises(ValueError):
+        compare_components(rows, [])
 
 
 def test_calls_and_input_order_are_deterministic_and_do_not_mutate_inputs():
