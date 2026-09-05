@@ -91,6 +91,10 @@ def _component(identity):
     return dict(zip(_FIELDS, identity))
 
 
+def _bare_symbol_name(qualified_symbol):
+    return qualified_symbol.rsplit(".", 1)[-1]
+
+
 def compare_components(proposed, expected, supporting=()):
     """Compare normalized component sequences without consulting external state."""
 
@@ -108,10 +112,12 @@ def compare_components(proposed, expected, supporting=()):
     expected_paths = {row[0] for row in expected_rows}
     proposed_types = {row[1] for row in proposed_rows}
     expected_types = {row[1] for row in expected_rows}
-    proposed_symbols = {row[2] for row in proposed_rows}
-    expected_symbols = {row[2] for row in expected_rows}
+    proposed_symbols = {_bare_symbol_name(row[2]) for row in proposed_rows}
+    expected_symbols = {_bare_symbol_name(row[2]) for row in expected_rows}
     exact_components = proposed_identities & expected_identities
-    supporting_symbols = {row[2] for row in supporting_rows} & expected_symbols
+    supporting_symbols = {
+        _bare_symbol_name(row[2]) for row in supporting_rows
+    } & expected_symbols
     supporting_components = set(supporting_rows) & expected_identities
 
     return {

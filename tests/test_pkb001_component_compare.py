@@ -58,7 +58,7 @@ def test_supporting_evidence_does_not_increase_exact_match_or_chain_coverage():
     assert result["supporting_expected_citations"] == {
         "symbol_name": {
             "count": 1,
-            "symbols": ["OwnerController.processFindForm"],
+            "symbols": ["processFindForm"],
         },
         "exact_component": {"count": 1, "components": [expected_method]},
     }
@@ -103,7 +103,43 @@ def test_supporting_symbol_citation_is_independent_of_path_and_type():
     assert result["exact_component"] == metric(0, 1, 0)
     assert result["expected_realization_chain_coverage"] == 0.0
     assert result["supporting_expected_citations"] == {
-        "symbol_name": {"count": 1, "symbols": ["Shared.run"]},
+        "symbol_name": {"count": 1, "symbols": ["run"]},
+        "exact_component": {"count": 0, "components": []},
+    }
+
+
+@pytest.mark.parametrize(
+    ("proposed_symbol", "expected_symbol"),
+    [
+        ("pkg.one.run", "pkg.two.run"),
+        ("pkg.one.OwnerController", "pkg.two.OwnerController"),
+    ],
+)
+def test_symbol_name_uses_final_qualified_symbol_segment(
+    proposed_symbol, expected_symbol
+):
+    proposed = component("src/proposed.py", "Proposed", proposed_symbol)
+    expected = component("src/expected.py", "Expected", expected_symbol)
+
+    result = compare_components([proposed], [expected])
+
+    assert result["symbol_name"] == metric(1, 1, 1)
+    assert result["exact_component"] == metric(0, 1, 1)
+    assert result["expected_realization_chain_coverage"] == 0.0
+    assert result["supporting_expected_citations"]["symbol_name"] == {
+        "count": 0,
+        "symbols": [],
+    }
+
+
+def test_supporting_symbol_name_citation_uses_final_qualified_symbol_segment():
+    expected = component("src/expected.py", "Expected", "pkg.expected.run")
+    supporting = component("src/support.py", "Support", "pkg.support.run")
+
+    result = compare_components([], [expected], [supporting])
+
+    assert result["supporting_expected_citations"] == {
+        "symbol_name": {"count": 1, "symbols": ["run"]},
         "exact_component": {"count": 0, "components": []},
     }
 
@@ -117,7 +153,7 @@ def test_multiple_components_compute_recall_and_precision_independently():
 
     assert result["path"] == metric(1, 2, 2)
     assert result["type"] == metric(1, 2, 1)
-    assert result["symbol_name"] == metric(1, 2, 2)
+    assert result["symbol_name"] == metric(1, 1, 1)
     assert result["exact_component"] == metric(1, 2, 2)
     assert result["expected_realization_chain_coverage"] == 0.5
 
