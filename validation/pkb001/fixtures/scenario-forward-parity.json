@@ -1,0 +1,2883 @@
+[
+  {
+    "name": "two_scenario_mapping",
+    "valid": true,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "unresolved",
+    "valid": true,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "UNRESOLVED",
+      "evidence_status": "INSUFFICIENT",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Fixture behavior",
+              "state": "EVIDENCE_GAP",
+              "component_refs": [],
+              "evidence_refs": [],
+              "evidence_gap": "No structural evidence selected in this synthetic contract fixture",
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Fixture behavior",
+              "state": "EVIDENCE_GAP",
+              "component_refs": [],
+              "evidence_refs": [],
+              "evidence_gap": "No structural evidence selected in this synthetic contract fixture",
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "partial_ui_gap",
+    "valid": true,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "PARTIAL",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            },
+            {
+              "behavioral_function": "Display search results",
+              "state": "EVIDENCE_GAP",
+              "component_refs": [],
+              "evidence_refs": [],
+              "evidence_gap": "UI and template relationships are not observed",
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "dangling_ref",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "absent"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "duplicate_component",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        },
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "unused_component",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "cross_parent",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-2"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "trace_parent",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-2",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "unknown_scenario",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "missing",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "missing_trace",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "duplicate_trace",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "duplicate_bound",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "revision",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "dddddddddddddddddddddddddddddddddddddddd",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "missing_primary",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "SUPPORTING",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "unresolved_components",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "UNRESOLVED",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "empty_evidence",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "extraneous_gap",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": "irrelevant",
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "not_applicable_missing_reason",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "NOT_APPLICABLE",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "extraneous_na_reason",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": "irrelevant"
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "duplicate_step_ref",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search",
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "duplicate_evidence_ref",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search",
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "blank_limit",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        " "
+      ]
+    }
+  },
+  {
+    "name": "invalid_path",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "../escape",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "symbol_missing",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": null,
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "type_replaces_method",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "TYPE",
+              "qualified_symbol": "Search",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [
+            {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            }
+          ],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "file_replaces_method",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "FILE",
+              "qualified_symbol": null,
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [
+            {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            }
+          ],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "direct_not_method",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [
+            {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "TYPE",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            }
+          ],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "direct_wrong_revision",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [
+            {
+              "source_revision": "dddddddddddddddddddddddddddddddddddddddd",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            }
+          ],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "duplicate_direct",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [
+            {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            }
+          ],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "missing_gap",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "UNRESOLVED",
+      "evidence_status": "INSUFFICIENT",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Fixture behavior",
+              "state": "EVIDENCE_GAP",
+              "component_refs": [],
+              "evidence_refs": [],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Fixture behavior",
+              "state": "EVIDENCE_GAP",
+              "component_refs": [],
+              "evidence_refs": [],
+              "evidence_gap": "No structural evidence selected in this synthetic contract fixture",
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "complete_gap",
+    "valid": false,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.find",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            },
+            {
+              "behavioral_function": "Display search results",
+              "state": "EVIDENCE_GAP",
+              "component_refs": [],
+              "evidence_refs": [],
+              "evidence_gap": "UI and template relationships are not observed",
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "nullable_file_symbol",
+    "valid": true,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "FILE",
+              "qualified_symbol": null,
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "blank_file_symbol",
+    "valid": true,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "FILE",
+              "qualified_symbol": " ",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "nullable_repository_symbol",
+    "valid": true,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": ".",
+              "granularity": "REPOSITORY",
+              "qualified_symbol": null,
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "blank_repository_symbol",
+    "valid": true,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": ".",
+              "granularity": "REPOSITORY",
+              "qualified_symbol": "",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  },
+  {
+    "name": "empty_method_name_parity",
+    "valid": true,
+    "result": {
+      "capability_id": "CAP-1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "MAPPING_PROPOSAL",
+      "evidence_status": "COMPLETE",
+      "bound_scenarios": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1"
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1"
+        }
+      ],
+      "components": [
+        {
+          "component_ref": "search",
+          "component": {
+            "role": "PRIMARY",
+            "identity": {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "TYPE",
+              "qualified_symbol": "Search",
+              "provider_node_id": "node-search"
+            },
+            "selection_reason": "Performs the fixture search behavior"
+          },
+          "directly_evidenced_methods": [
+            {
+              "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "source_path": "src/Search.java",
+              "granularity": "METHOD",
+              "qualified_symbol": "Search.()",
+              "provider_node_id": "node-search"
+            }
+          ],
+          "containing_component_reason": null
+        }
+      ],
+      "scenario_traces": [
+        {
+          "scenario_id": "SC-1",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        },
+        {
+          "scenario_id": "SC-2",
+          "capability_id": "CAP-1",
+          "steps": [
+            {
+              "behavioral_function": "Find matching records",
+              "state": "EVIDENCED",
+              "component_refs": [
+                "search"
+              ],
+              "evidence_refs": [
+                "node-search"
+              ],
+              "evidence_gap": null,
+              "not_applicable_reason": null
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic contract fixture, not an experiment mapping."
+      ]
+    }
+  }
+]
