@@ -63,6 +63,22 @@ excluded.
   overwrite refusal, symlink-escape refusal).
 - Verification at candidate: 313 Java tests; public validation 9/9.
 
+### Java code-baseline migration
+
+- Base: `a35e59fe80a2e3894d66b003b0ad0af2664c9475`.
+- Candidate (reviewed): `9d57c5153d6f9e28e7d7b0f7c4ba9bc8a9c815d7` on
+  `agent/delivery-engineer/herm-271`.
+- Commits: `18f29f2`, `ce1086d`, `1e39e9e`, `f49fb3b`, `1d8edd3`, `9d57c515`.
+- Replaced `pkb001_code_baseline.py` with the Java `CodeBaseline` API and
+  packaged `code-baseline-generate` CLI; all 6 collected characterization cases
+  are preserved by Java characterization and CLI tests, with byte-identical
+  output artifacts, exit codes, and stdout against the original Python
+  consumer on copied input roots.
+- Verification at candidate: 344 Java tests; Python suite exit 0; public
+  validation 9/9. Independent exact-candidate review: PASS (HERM-271).
+
+BL-026 is closed on this evidence; see `BACKLOG.md`.
+
 These are completion records, not authority to select the next consumer.
 
 ## Verified foundation ledger

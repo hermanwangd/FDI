@@ -15,7 +15,7 @@ exactly one backlog record. Status means:
 
 | Backlog ID | Type | Requirement | Outcome | Status | Dependency / evidence |
 |---|---|---|---|---|---|
-| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java, one bounded consumer at a time; exclude external Graphify. | `IN_PROGRESS` | Four consumers verified; the final pre-authorized consumer awaits dispatch. |
+| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java, one bounded consumer at a time; exclude external Graphify. | `VERIFIED` | All five pre-authorized consumers migrated with independent exact-revision PASS; Human Reviewer closure 2026-09-05; see the BL-026 delivery record below. |
 | `PKB-BL-023` | `FEATURE` | `PKB-REVIEW-003` | Generate evidence-backed Capability/scenario proposals and one review surface. | `VERIFIED` | Generator and review artifacts exercised. |
 | `PKB-BL-024` | `DOCUMENTATION` | `PKB-STATUS-002` | Point status to the actual generated review material and review state. | `VERIFIED` | Active pointers validated. |
 | `PKB-BL-025` | `FEATURE` | `PKB-REVIEW-004` | Record version-bound human ACCEPT / EDIT / REJECT decisions. | `BLOCKED_USER_APPROVAL` | 3 accepted; 13 pending. |
@@ -39,11 +39,20 @@ exactly one backlog record. Status means:
 | `PKB-BL-021` | `VALIDATION` | `PKB-COMPARISON-001` | Compare path, type, symbol, component, chain, and channel separately. | `VERIFIED` | Deterministic comparator regression passed. |
 | `PKB-BL-022` | `VALIDATION` | `PKB-READINESS-001` | Fail closed unless every next-run input and identity is verified. | `VERIFIED` | Schema, API/CLI, mutation, and clean-copy tests passed. |
 
-## Active delivery record — PKB-BL-026
+## Delivery record — PKB-BL-026 (closed)
 
-The migration is incremental. A completed slice does not complete BL-026.
+Closed by the Human Reviewer on 2026-09-05 (「approved closure」) after the
+Independent Adjudicator's fresh exact-revision review of candidate
+`9d57c5153d6f9e28e7d7b0f7c4ba9bc8a9c815d7` reproduced all five completion
+checks (PASS, HERM-271). `PKB-JAVA-001` is `VERIFIED` (M3) for the bound spec
+revision. The remaining `TRANSITIONAL` inventory consumers are outside BL-026;
+each further consumer requires a new explicit selection.
 
-1. Scenario-forward gate migrated to Java and its direct Python consumer removed.
+All five pre-authorized consumers are migrated, each with independent
+exact-candidate PASS:
+
+1. Scenario-forward gate migrated to Java and its direct Python consumer removed
+   (cutover `8cb01c3d925f5556b75e55470de1d761eccc78bc`; 36 shared parity cases).
 2. Component comparator migrated to Java and its direct Python consumer removed.
    Candidate `248066754da2210b81504138d974c69711524dd8` received independent PASS:
    205 Java tests; 273 Python passed and 3 skipped; 40/40 parity cases; public validation 9/9.
@@ -64,10 +73,14 @@ The migration is incremental. A completed slice does not complete BL-026.
    tests and public validation 9/9. Candidate (migration line tip)
    `8b4d0570921eb830513bba8f18cbeac2b60712f7`; the review tip adds only the
    completion-record commit on top.
-5. The final pre-authorized consumer (`pkb001_code_baseline.py`, HERM-268
-   option 3) awaits dispatch on a new issue; all other consumers remain
-   unselected. Selection must update `IMPLEMENTATION-PLAN.md` and
-   `STATUS.json` before implementation.
+5. Code baseline migrated to Java (`CodeBaseline` API and packaged
+   `code-baseline-generate` CLI; HERM-271) and its Python consumer plus its
+   direct Python-only test file removed. All 6 collected characterization cases
+   are preserved by Java characterization and CLI tests, with byte-identical
+   output artifacts, exit codes, and stdout against the original Python
+   consumer on copied input roots. Reviewed candidate
+   `9d57c5153d6f9e28e7d7b0f7c4ba9bc8a9c815d7`: 344 Java tests, Python suite
+   exit 0, public validation 9/9.
 
 External Graphify Python runtime, immutable historical evidence, and unrelated
 Python tooling are outside BL-026.
@@ -82,6 +95,6 @@ The next experiment remains `NOT_READY`. Construction order is:
 4. Preregister thresholds and seal a holdout (BL-012, BL-013).
 5. Freeze protocol, regress Petclinic, execute holdout, decide (BL-014–BL-017).
 
-Maturity for the bound spec revision: 23 normative requirements, 8 `VERIFIED`,
-15 not yet M3. Superseded BL-001 through BL-003 are historical and are not active
+Maturity for the bound spec revision: 23 normative requirements, 9 `VERIFIED`,
+14 not yet M3. Superseded BL-001 through BL-003 are historical and are not active
 records.
