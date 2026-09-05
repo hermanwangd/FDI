@@ -352,7 +352,9 @@ def test_public_registry_and_status_announce_readiness_without_exposing_gold():
     assert status['phase0_readiness'] == 'READY'
     assert status['evaluation_status'] == 'COMPLETE_BOUNDED_REVISE'
     assert status['active_backlog_item'] == 'PKB-BL-007'
-    assert status['active_implementation_plan'] is None
+    assert status['active_implementation_plan'] == (
+        'IMPLEMENTATION-PLAN.md#selected-work-scenario-aware-forward-contract'
+    )
     assert (ROOT/status['review_packet']).is_file()
     assert status['review_packet'] != status['evaluation_reference_packet']
     assert status['evaluation_reference_packet'] == (

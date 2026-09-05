@@ -38,7 +38,8 @@ The scenario proposal/review contracts and generation skill are implemented.
 The new review surface contains 6 Capability proposals and 10 behavior scenarios
 with 48 resolving evidence references. The user accepted Capability 001 and
 Scenarios 001/002; those exact definitions are frozen as a first-slice experiment
-input. The other 13 decisions remain pending. The next work is bounded BL-007
-planning for scenario-aware Forward mapping; this new Forward run has not executed.
+input. The other 13 decisions remain pending. The bounded BL-007 plan is ready
+for a separately versioned v0.3 scenario-aware contract and input gate. Implementation
+has not started, and this new Forward run has not executed. Existing v0.2 stays unchanged.
 
 The verified component-contract foundation and the next scenario-grounded experiment have separate maturity. Eight requirements are `M3_VERIFIED` (five foundation plus scenario contract, proposal generation/review surface and active pointer); 14 remaining requirements are `M1_BACKLOGGED`. The completed Petclinic Phase 0 remains `READY`, while the new scenario-grounded experiment is `NOT_READY` until its mandatory review, scenario, evaluation, threshold, holdout, and protocol gates pass.

@@ -51,9 +51,15 @@ PRODUCT_TEAM ownership and requires a new contract under BL-005/007 before
 HUMAN_REVIEWER inputs can run.
 
 All active records below bind to `FRAMEWORK-SPEC.md` at exact Git revision
-`eff92e0f7c2e41cd9880c33655ff23df796a5830`. This binding matrix is part of
+`06861c4575c4791f3aa6c262f5f0f4c45c2c2d75`. This binding matrix is part of
 each Backlog record; detailed priority, status, dependencies, deliverables,
 verification, and completion evidence follow in the item sections.
+
+Version-selection amendment reconciliation: BL-007 now plans an explicitly
+bound v0.3 contract. BL-020/022 retain VERIFIED evidence for their unchanged
+v0.2 scope, not for v0.3. Other requirement wording and implementation scopes
+are unchanged; their existing maturity and blockers remain. No experiment gate
+was cleared by this documentation amendment.
 
 | Backlog ID | Work type | Source requirement | Current gap / intended outcome | Scope boundary | Decision / implementation owner | Active plan |
 |---|---|---|---|---|---|---|
@@ -63,7 +69,7 @@ verification, and completion evidence follow in the item sections.
 | `PKB-BL-004` | `VALIDATION` | `PKB-EVAL-LEGACY-001` | Eleven evaluator disagreements remain; adjudicate only those items. | Existing evaluation only; no Product authority. | Evaluation owner / Independent evaluator | `null` |
 | `PKB-BL-005` | `FEATURE` | `PKB-SCENARIO-003` | Scenario rules are prose-only; make the lifecycle machine-verifiable. | Contract and validation; no scenario approval. | Human Reviewer / Engineering | `IMPLEMENTATION-PLAN.md#selected-work-generated-scenarios-and-individual-review` |
 | `PKB-BL-006` | `FEATURE` | `PKB-SCENARIO-004` | No approved frozen scenario-bearing revision exists; create one without overwriting Petclinic. | New semantics revision only. | Human Reviewer / Engineering | `null` |
-| `PKB-BL-007` | `FEATURE` | `PKB-MAPPING-001` | PK-S1 v0.2 lacks scenario traces; create a new compatible proposal contract. | New skill/contract version; preserve v0.2. | Human Reviewer / Engineering | `null` |
+| `PKB-BL-007` | `FEATURE` | `PKB-MAPPING-001` | PK-S1 v0.2 lacks scenario traces; create a new compatible proposal contract. | New skill/contract version; preserve v0.2. | Human Reviewer / Engineering | `IMPLEMENTATION-PLAN.md#selected-work-scenario-aware-forward-contract` |
 | `PKB-BL-008` | `RESEARCH` | `PKB-PROVIDER-001` | UI/template support is unverified; record actual runtime capability or gaps. | Read-only discovery; no assumed API or runtime replacement. | User / Engineering | `null` |
 | `PKB-BL-009` | `FEATURE` | `PKB-REVERSE-001` | Reverse output over-combines, duplicates, and overclaims; add proposal-only controls. | Proposal quality only; no semantic publication. | Human Reviewer / Engineering | `null` |
 | `PKB-BL-010` | `VALIDATION` | `PKB-EVAL-001` | Existing truth relies on provider IDs; add sealed normalized identity. | New evaluator truth format; generation remains isolated. | Evaluation owner / Engineering | `null` |
@@ -193,7 +199,8 @@ retained here for history and are excluded from active requirement counts.
   realization chains, behavioral PRIMARY/SUPPORTING reasons, explicit evidence
   gaps, and separate `outcome`/`evidence_status` are enforced; v0.2 remains
   immutable; evaluator gold remains forbidden
-- Progress: Next planning scope: the accepted Capability 001 / Scenarios 001/002 snapshot is available. Define a bounded construction plan for the scenario-aware contract and input gate before implementation; full experiment execution remains gated.
+- Active plan: `IMPLEMENTATION-PLAN.md#selected-work-scenario-aware-forward-contract`
+- Progress: Bounded contract construction plan prepared for accepted Capability 001 / Scenarios 001/002. Implementation has not started; full BL-006 and experiment execution remain gated.
 - Completion evidence: pending for the complete item scope
 
 ### PKB-BL-008 — Real Graphify UI/template capability verification
