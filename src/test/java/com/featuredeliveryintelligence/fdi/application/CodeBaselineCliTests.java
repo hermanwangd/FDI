@@ -9,6 +9,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -122,6 +123,25 @@ class CodeBaselineCliTests {
         assertEquals(1, result.exitCode());
         assertEquals("{\"status\": \"ERROR\", \"error\": \"[Errno 2] No such file or directory: '"
                 + temp.resolve("missing.json") + "'\"}" + System.lineSeparator(), result.stdout());
+    }
+
+    @Test
+    void cliRejectsInputLargerThanSafetyLimitWithoutReadingItAll() throws Exception {
+        Path oversized = temp.resolve("oversized.json");
+        try (RandomAccessFile file = new RandomAccessFile(oversized.toFile(), "rw")) {
+            file.setLength(CodeBaselineCli.MAX_INPUT_BYTES + 1L);
+        }
+
+        Result result = run(new String[] {"code-baseline-generate",
+                "--arm", "R1",
+                "--input", "structure=" + oversized,
+                "--output", temp.resolve("out.json").toString()});
+
+        assertEquals(1, result.exitCode());
+        assertEquals("{\"status\": \"ERROR\", \"error\": \"input exceeds "
+                + CodeBaselineCli.MAX_INPUT_BYTES + " byte limit: '" + oversized + "'\"}"
+                + System.lineSeparator(), result.stdout());
+        assertFalse(Files.exists(temp.resolve("out.json")));
     }
 
     @Test

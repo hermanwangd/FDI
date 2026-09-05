@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.AccessDeniedException;
@@ -33,6 +34,7 @@ import java.util.Map;
  * {@code ValueError} vocabulary); exit 2 on usage errors.
  */
 public final class CodeBaselineCli {
+    static final int MAX_INPUT_BYTES = 32 * 1024 * 1024;
     private static final String COMMAND = "code-baseline-generate";
     private static final String USAGE = "usage: code-baseline-generate --arm {F1,R1,R2,R3}"
             + " --input category=path [--input category=path ...]"
@@ -65,7 +67,7 @@ public final class CodeBaselineCli {
                 if (inputs.containsKey(category)) {
                     throw new IllegalArgumentException("inputs must use unique category=path bindings");
                 }
-                inputs.put(category, PythonJson.readTree(Files.readAllBytes(Path.of(filename))));
+                inputs.put(category, PythonJson.readTree(readInput(Path.of(filename))));
             }
             if (inputs.containsKey("structure")) {
                 ObjectNode structure = (ObjectNode) inputs.get("structure");
@@ -84,6 +86,17 @@ public final class CodeBaselineCli {
             stdout.println("{\"status\": \"ERROR\", \"error\": \""
                     + CodeBaselineResult.escape(pythonErrorMessage(failure)) + "\"}");
             return 1;
+        }
+    }
+
+    private static byte[] readInput(Path path) throws IOException {
+        try (InputStream stream = Files.newInputStream(path)) {
+            byte[] data = stream.readNBytes(MAX_INPUT_BYTES + 1);
+            if (data.length > MAX_INPUT_BYTES) {
+                throw new IllegalArgumentException("input exceeds " + MAX_INPUT_BYTES
+                        + " byte limit: '" + path + "'");
+            }
+            return data;
         }
     }
 

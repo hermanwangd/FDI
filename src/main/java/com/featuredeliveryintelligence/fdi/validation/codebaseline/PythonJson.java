@@ -25,9 +25,9 @@ import java.nio.charset.StandardCharsets;
  */
 public final class PythonJson {
     private static final StreamReadConstraints CONSTRAINTS = StreamReadConstraints.builder()
-            .maxNestingDepth(100_000)
-            .maxStringLength(Integer.MAX_VALUE - 8)
-            .maxNumberLength(Integer.MAX_VALUE - 8)
+            .maxNestingDepth(1_000)
+            .maxStringLength(16 * 1024 * 1024)
+            .maxNumberLength(10_000)
             .build();
     private static final JsonFactory FACTORY = JsonFactory.builder()
             .streamReadConstraints(CONSTRAINTS)
