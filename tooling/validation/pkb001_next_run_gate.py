@@ -4,6 +4,7 @@
 import argparse
 import hashlib
 import json
+import math
 import os
 import re
 import subprocess
@@ -24,6 +25,41 @@ REQUIRED_INPUT_KINDS = (
 )
 ALLOWED_INPUT_KINDS = frozenset(REQUIRED_INPUT_KINDS)
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
+MAX_REQUEST_NODES = 100_000
+MAX_REQUEST_DEPTH = 64
+
+
+def _blocked_request():
+    return {
+        "status": "BLOCKED", "reasons": ["REQUEST_INVALID"], "mappings": [],
+        "run_id": None, "skill_path": None, "skill_sha256": None,
+    }
+
+
+def _snapshot_json(value, depth=0, budget=None):
+    """Copy exact built-in JSON values without invoking subclass overrides."""
+    if budget is None:
+        budget = [MAX_REQUEST_NODES]
+    budget[0] -= 1
+    if budget[0] < 0 or depth > MAX_REQUEST_DEPTH:
+        raise ValueError("request is too large")
+    value_type = type(value)
+    if value_type is dict:
+        result = {}
+        for key, child in dict.items(value):
+            if type(key) is not str:
+                raise TypeError("JSON object keys must be built-in strings")
+            result[key] = _snapshot_json(child, depth + 1, budget)
+        return result
+    if value_type is list:
+        return [_snapshot_json(child, depth + 1, budget) for child in list.__iter__(value)]
+    if value_type in (str, bool) or value is None:
+        return value
+    if value_type is int:
+        return value
+    if value_type is float and math.isfinite(value):
+        return value
+    raise TypeError("request contains a non-JSON or hostile value")
 
 
 def _canonical_relative(value):
@@ -215,6 +251,19 @@ def _proposal_structure(proposal, reasons):
 
 
 def validate_next_run(root, request):
+    try:
+        snapshot = _snapshot_json(request)
+    except Exception:
+        return _blocked_request()
+    try:
+        return _validate_next_run(root, snapshot)
+    except Exception:
+        # This public trust boundary must never expose dependency, filesystem,
+        # or hostile-state exceptions as a readiness success or traceback.
+        return _blocked_request()
+
+
+def _validate_next_run(root, request):
     root = Path(root).resolve()
     reasons = set()
     if not isinstance(request, dict):

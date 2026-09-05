@@ -338,3 +338,51 @@ def test_malformed_checked_in_schema_fails_closed(valid_request, root):
     report = validate_next_run(root, valid_request)
     assert "SCHEMA_DEFINITION_INVALID" in report["reasons"]
     assert report["mappings"] == []
+
+
+@pytest.mark.parametrize("field", ["capability_id", "limitation"])
+def test_proposal_rejects_blank_java_required_text(valid_request, root, field):
+    result = valid_request["proposal"]["capability_results"][0]
+    if field == "capability_id":
+        result["capability_id"] = " \t"
+    else:
+        result["limitations"] = [" \t"]
+    report = validate_next_run(root, valid_request)
+    assert report["status"] == "BLOCKED"
+    assert "SCHEMA_INVALID" in report["reasons"]
+    assert report["mappings"] == []
+
+
+class _HostileDict(dict):
+    def get(self, *_args, **_kwargs):
+        raise RuntimeError("hostile get executed")
+
+    def items(self):
+        raise RuntimeError("hostile items executed")
+
+    def __iter__(self):
+        raise RuntimeError("hostile iteration executed")
+
+
+class _HostileList(list):
+    def __iter__(self):
+        raise RuntimeError("hostile list iteration executed")
+
+
+@pytest.mark.parametrize("location", ["request", "proposal", "input", "results"])
+def test_hostile_container_subclasses_are_rejected_before_access(valid_request, root, location):
+    if location == "request":
+        request = _HostileDict(valid_request)
+    else:
+        request = valid_request
+        if location == "proposal":
+            request["proposal"] = _HostileDict(request["proposal"])
+        elif location == "input":
+            request["generation_inputs"][0] = _HostileDict(request["generation_inputs"][0])
+        else:
+            request["proposal"]["capability_results"] = _HostileList(
+                request["proposal"]["capability_results"])
+    assert validate_next_run(root, request) == {
+        "status": "BLOCKED", "reasons": ["REQUEST_INVALID"], "mappings": [],
+        "run_id": None, "skill_path": None, "skill_sha256": None,
+    }
