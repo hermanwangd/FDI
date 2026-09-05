@@ -34,7 +34,10 @@ experiment inputs. A single evidence-backed review surface replaces the planned
 Stage A/B split. Eleven evaluator disagreements remain open. Existing evaluation
 artifacts remain reference evidence and the result remains `REVISE`.
 
-The next work is the scenario proposal/review contract and generator plan in
-`IMPLEMENTATION-PLAN.md`. These features are specified, not yet implemented.
+The scenario proposal/review contracts and generation skill are implemented.
+The new review surface contains 6 Capability proposals and 10 behavior scenarios
+with 48 resolving evidence references. All 16 decisions remain empty; the next
+work is the user's ACCEPT / EDIT / REJECT review through the packet linked in
+`STATUS.json`.
 
-The verified component-contract foundation and the next scenario-grounded experiment have separate maturity. Five foundation requirements are `M3_VERIFIED`; 17 next-experiment requirements are `M1_BACKLOGGED`. The completed Petclinic Phase 0 remains `READY`, while the new scenario-grounded experiment is `NOT_READY` until its mandatory review, scenario, evaluation, threshold, holdout, and protocol gates pass.
+The verified component-contract foundation and the next scenario-grounded experiment have separate maturity. Eight requirements are `M3_VERIFIED` (five foundation plus scenario contract, proposal generation/review surface and active pointer); 14 remaining requirements are `M1_BACKLOGGED`. The completed Petclinic Phase 0 remains `READY`, while the new scenario-grounded experiment is `NOT_READY` until its mandatory review, scenario, evaluation, threshold, holdout, and protocol gates pass.

@@ -60,9 +60,15 @@ No R1/R2/R3/F1 experiment run begins until all six Phase 0 readiness flags pass:
 
 **Spec binding:** `FRAMEWORK-SPEC.md` at `eff92e0f7c2e41cd9880c33655ff23df796a5830`.
 **Selected backlog:** `PKB-BL-005` and `PKB-BL-023`.
-**State:** design and construction plan approved in scope; implementation pending.
-The present documentation update does not constitute a generated review packet
-or user acceptance of any Capability/scenario.
+**State:** BL-005/023 implementation verified; BL-024 review pointer verified.
+BL-025 now awaits the user's decisions; no proposal has been accepted or frozen.
+Human acceptance of generated Capability/scenario content remains pending.
+
+Execution inputs are the existing frozen Petclinic graph (140 nodes, 142
+links), exact-revision Graphify binding, and delivery history (1,042 commits,
+91 PR records) through `2026-08-26T10:57:54Z`. The scenario generation context
+is separate from prior evaluator contexts and reads only these allowed inputs.
+This is preparation for human review, not a Forward run or a new GO decision.
 
 1. Add the Java scenario proposal and review decision contracts under
    `src/main/java/com/featuredeliveryintelligence/fdi/product/semantics/`,
@@ -95,9 +101,14 @@ or user acceptance of any Capability/scenario.
    waits for the user's actual review. Freezing and Forward execution remain
    dependent work, not implicit effects of rendering the packet.
 
-Acceptance: a reviewable evidence-backed proposal surface, with no invented
-human decisions, and tested contract enforcement. No generator or review
-artifact has been delivered by the documentation update itself.
+Acceptance delivered: a reviewable evidence-backed proposal surface, no invented
+human decisions, and tested contract enforcement. Implementation commits:
+`fc7b304`, `f5d8bc6`. Evidence and command results are recorded in
+`validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/verification.json`.
+The generated packet contains 6 Capabilities / 10 scenarios / 48 atomic evidence
+references. Java full-suite verification uses a clean Git archive in `/tmp`
+because existing worktree test reports are iCloud-dataless; the test JVM is
+JDK 23.0.2 with Java 17 compilation target and `MAVEN_OPTS='-Xmx2g'`.
 
 ## Contract improvement tasks
 
@@ -788,25 +799,26 @@ and bounded `REVISE` decision remain unchanged.
 
 ### Task 6: Human-reviewed behavior-scenario contract
 
-- [ ] Define a provider-neutral scenario schema with stable scenario and
+- [x] Define a provider-neutral scenario schema with stable scenario and
   Capability identifiers, Given/When/Then behavior, scope, boundaries, status,
   Human Reviewer ownership, approval provenance, and immutable revision binding.
-- [ ] Reject implementation identifiers, Graphify nodes, evaluator mappings,
+- [x] Reject implementation identifiers, Graphify nodes, evaluator mappings,
   and technical selection instructions from Product Semantics scenarios.
-- [ ] Keep reverse-generated `HYP-SCENARIO-*` proposals isolated as
+- [x] Keep reverse-generated `HYP-SCENARIO-*` proposals isolated as
   `PROPOSAL_ONLY / UNREVIEWED`.
 - [ ] Add validation proving only frozen Human Reviewer scenarios can enter
-  Forward generation.
+  Forward generation (Java lifecycle guard is verified; full next-run input
+  migration remains BL-007).
 
 ### Task 7: Generated proposals and individual review
 
-- [ ] Generate Capability and scenario proposals from Graphify and delivery history.
-- [ ] Produce one review surface with behavior, separate evidence, rationale,
+- [x] Generate Capability and scenario proposals from Graphify and delivery history.
+- [x] Produce one review surface with behavior, separate evidence, rationale,
   confidence, limitations and ACCEPT / EDIT / REJECT decision fields.
 - [ ] Record user decisions against exact proposal versions; EDIT requires
   explicit acceptance of the replacement; REJECT never enters accepted inputs.
 - [ ] Freeze only the accepted set; preserve the original proposal artifacts.
-- [ ] Record reviewer exposure and reconstruction-consistency limitations.
+- [x] Record reviewer exposure and reconstruction-consistency limitations.
 
 ### Task 8: Scenario-grounded proposal contract
 

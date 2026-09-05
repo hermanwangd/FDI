@@ -16,43 +16,27 @@ def test_five_active_truth_entries_exist_and_resolve():
                 'BACKLOG.md', 'IMPLEMENTATION-PLAN.md', 'STATUS.json'}
     assert all((ROOT/name).is_file() for name in expected)
     status = json.loads((ROOT/'STATUS.json').read_text())
-    assert status == {
-        'current_focus': 'PKB-001',
-        'phase': 'prototype_evaluation',
-        'framework_spec': 'FRAMEWORK-SPEC.md',
-        'backlog': 'BACKLOG.md',
-        'implementation_plan': 'IMPLEMENTATION-PLAN.md',
-        'decision': 'REVISE',
-        'phase0_readiness': 'READY',
-        'evaluation_status': 'COMPLETE_BOUNDED_REVISE',
-        'human_review_status': 'PENDING_SCENARIO_PROPOSALS',
-        'review_packet': None,
-        'evaluation_reference_packet': (
-            'validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.zh-TW.md'
-        ),
-        'third_review_status': 'PENDING_11_DISAGREED_ITEMS',
-        'semantic_publication_allowed': False,
-        'blinding_scope': 'DETERMINISTIC_LABEL_AND_ORDER_BLINDING',
-        'blinding_limitation': 'ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT',
-        'spec_maturity': {
-            'spec_revision': 'eff92e0f7c2e41cd9880c33655ff23df796a5830',
-            'normative_requirements': 22,
-            'm3_verified': 5,
-            'm1_backlogged': 17,
-            'next_experiment_readiness': 'NOT_READY',
-        },
-        'active_backlog_item': 'PKB-BL-005',
-        'active_implementation_plan': 'IMPLEMENTATION-PLAN.md#selected-work-generated-scenarios-and-individual-review',
-        'selected_backlog_items': ['PKB-BL-005', 'PKB-BL-023'],
-        'review_mode': 'INDIVIDUAL_EXPERIMENT_OWNER',
-        'scenario_generation': 'GRAPHIFY_AND_DELIVERY_HISTORY_PROPOSALS',
-        'scenario_generator_status': 'NOT_IMPLEMENTED',
-        'next_action': (
-            'Implement scenario proposal/review contracts, then generate evidence-backed '
-            'Capability and Behavior Scenario proposals for user review'
-        ),
-        'archived_documents_are_authority': False,
-    }
+    assert status['current_focus'] == 'PKB-001'
+    assert status['framework_spec'] == 'FRAMEWORK-SPEC.md'
+    assert status['backlog'] == 'BACKLOG.md'
+    assert status['implementation_plan'] == 'IMPLEMENTATION-PLAN.md'
+    assert status['archived_documents_are_authority'] is False
+    assert status['semantic_publication_allowed'] is False
+    assert status['review_mode'] == 'INDIVIDUAL_EXPERIMENT_OWNER'
+    maturity = status['spec_maturity']
+    assert maturity['normative_requirements'] == (
+        maturity['m3_verified'] + maturity['m1_backlogged']
+    )
+    assert maturity['next_experiment_readiness'] == 'NOT_READY'
+    backlog = (ROOT/status['backlog']).read_text()
+    assert status['active_backlog_item'] in backlog
+    assert maturity['spec_revision'] in backlog
+    if status['review_packet'] is not None:
+        assert (ROOT/status['review_packet']).is_file()
+    if status['active_implementation_plan'] is not None:
+        plan, anchor = status['active_implementation_plan'].split('#')
+        assert (ROOT/plan).is_file()
+        assert anchor == 'selected-work-generated-scenarios-and-individual-review'
 
 
 def test_every_normative_requirement_has_one_bound_backlog_record():

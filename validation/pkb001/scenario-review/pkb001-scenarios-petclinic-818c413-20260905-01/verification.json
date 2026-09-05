@@ -1,0 +1,90 @@
+{
+  "schema_version": "pkb001.scenario-review-verification.v1",
+  "status": "PASS",
+  "scope": "IMPLEMENTATION_AND_REVIEW_PACKET_INTEGRITY",
+  "spec_revision": "eff92e0f7c2e41cd9880c33655ff23df796a5830",
+  "implementation_commits": [
+    "fc7b3046f8955138ec0fc7660667c63a5f17ccc9",
+    "f5d8bc670f3743d9b01c877437bed82f5513d712"
+  ],
+  "verified_backlog_items": [
+    "PKB-BL-005",
+    "PKB-BL-023",
+    "PKB-BL-024"
+  ],
+  "human_review_status": "PENDING_USER_REVIEW",
+  "human_decisions_recorded": 0,
+  "semantic_publication_allowed": false,
+  "decision": "REVISE",
+  "deterministic_replay": true,
+  "accepted_scenarios": 0,
+  "capabilities": 6,
+  "scenarios": 10,
+  "resolved_evidence": 48,
+  "artifact_sha256": {
+    "proposal.json": "627c8f7d011dd61face12a6a9b2a3635a90beee22667fd8f9a401fc80ec7d584",
+    "review.json": "925055c3a3f3cfa6f27ccba4fa446f40dcdcfa733137138086793cc04956927f",
+    "review.md": "f6da2a6a89a1f76d7dacfb7661c5c95d3aa15bf8feccb28c9f9a31f366a12452"
+  },
+  "tool_bindings": [
+    {
+      "path": "tooling/validation/pkb001_scenario_review.py",
+      "sha256": "826e4c8d2774baad494b35eaa5a16c282841ee54c2a3b6d78fd19463b6dd838e"
+    },
+    {
+      "path": "validation/pkb001/schemas/scenario-proposal.schema.json",
+      "sha256": "7acd7b6a56ba503b0a1224982441feb28030018ca48286d0874927668d68135b"
+    },
+    {
+      "path": "skills/pkb001/pk-scenario-proposal/SKILL.md",
+      "sha256": "e4cd82a7f285f37d0a4b28766db4730ab1e4e7a73b42c7e77ad5e7625b081599"
+    }
+  ],
+  "verification_commands": [
+    {
+      "command": "python3 -m pytest -q",
+      "passed": 305,
+      "failed": 0,
+      "includes_clean_tracked_copy": true
+    },
+    {
+      "command": "MAVEN_OPTS='-Xmx2g' ./mvnw test -q",
+      "passed": 42,
+      "failed": 0,
+      "working_directory": "/tmp/fdi-scenario-final.h0fT4w",
+      "source": "git archive f5d8bc670f3743d9b01c877437bed82f5513d712",
+      "test_jvm": "OpenJDK 23.0.2",
+      "compilation_release": 17,
+      "notes": "Clean archive avoids iCloud-dataless reports and unrelated untracked duplicate Java in original worktree. Existing Mockito dynamic-agent warnings observed; no assertion failures."
+    },
+    {
+      "command": "python3 validation/pkb001/task7-evaluation/public_validate.py .",
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "generation_provenance": {
+    "generator_context": "codex:/root/scenario_evidence",
+    "evidence_inputs": "Only frozen Graphify graph, runtime binding and cutoff-bounded delivery history; skill provides generation instructions.",
+    "instruction_context": "Active project documents, AGENTS.md and memory control-boundary notes; not semantic evidence.",
+    "isolation_claim": "Separate generation context; no OS sandbox or content-level anonymity claimed.",
+    "limitations": [
+      "Reconstruction consistency is not independent validation of intended Product requirements.",
+      "Behavior lint rejects obvious technical identifiers; human semantic review remains necessary.",
+      "Formal Forward input migration and semantic snapshot freeze remain dependent backlog work."
+    ]
+  },
+  "preservation": {
+    "existing_petclinic_evidence": "No diff against 313dca1 in artifacts/datasets/runtime/human-review.",
+    "untracked_duplicate_java_sha256": "5091b9d7ae16e330c995945fcee8a9da773a334798d4a5784b5bc80989f6cdb3"
+  },
+  "code_review": {
+    "initial_findings": 5,
+    "all_addressed": true,
+    "approved_fix_commit": "f5d8bc670f3743d9b01c877437bed82f5513d712"
+  }
+}

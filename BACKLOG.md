@@ -45,7 +45,7 @@ states cannot be cleared by an agent.
 ## Prioritized backlog items
 
 Affected records were reconciled to the approved individual-review requirements;
-no new implementation maturity is claimed. The five foundation requirements
+BL-005/023/024 are now verified by their completion evidence. The five foundation requirements
 retain their existing verification evidence; their historical runtime accepts
 PRODUCT_TEAM ownership and requires a new contract under BL-005/007 before
 HUMAN_REVIEWER inputs can run.
@@ -103,7 +103,7 @@ retained here for history and are excluded from active requirement counts.
 ### PKB-BL-023 — Generated proposals and individual review surface
 
 - Priority: `P0`
-- Status: `BLOCKED_DEPENDENCY`
+- Status: `VERIFIED`
 - Requirement: `PKB-REVIEW-003`
 - Depends on: `PKB-BL-005`
 - Deliverables: versioned generation instructions, validated proposal envelope,
@@ -112,23 +112,23 @@ retained here for history and are excluded from active requirement counts.
   cited evidence resolves; scenarios separate behavior from technical evidence;
   confidence is labeled uncalibrated; unavailable channels are explicit;
   proposals remain PROPOSAL_ONLY / UNREVIEWED; generation cannot read gold
-- Completion evidence: pending
+- Completion evidence: scenario implementation commit `fc7b304` and `f5d8bc6`; 44 focused Python tests, Java contract tests, and immutable proposal/review artifacts under `validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/`. Final integration evidence is recorded in `verification.json` there.
 
 ### PKB-BL-024 — Active individual-review status pointer
 
 - Priority: `P0`
-- Status: `BLOCKED_DEPENDENCY`
+- Status: `VERIFIED`
 - Requirement: `PKB-STATUS-002`
 - Depends on: `PKB-BL-023`
 - Deliverables: status pointer to generated review material and actual state
 - Acceptance: pointer resolves and matches the declared proposal revision;
   pending decisions are not represented as accepted; existing packet preserved
-- Completion evidence: pending
+- Completion evidence: scenario implementation commit `fc7b304` and `f5d8bc6`; 44 focused Python tests, Java contract tests, and immutable proposal/review artifacts under `validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/`. Final integration evidence is recorded in `verification.json` there.
 
 ### PKB-BL-025 — Individual review decisions
 
 - Priority: `P0`
-- Status: `BLOCKED_DEPENDENCY`; then `BLOCKED_USER_APPROVAL`
+- Status: `BLOCKED_USER_APPROVAL`
 - Requirement: `PKB-REVIEW-004`
 - Depends on: `PKB-BL-023`, `PKB-BL-024`
 - Deliverables: user ACCEPT / EDIT / REJECT decisions bound to proposal digests,
@@ -153,7 +153,7 @@ retained here for history and are excluded from active requirement counts.
 ### PKB-BL-005 — Generated scenario and review lifecycle contract
 
 - Priority: `P1`
-- Status: `READY`
+- Status: `VERIFIED`
 - Requirement: Product Capability behavior scenarios / Scenario contract
 - Depends on: none
 - Deliverables: provider-neutral scenario schema, validation implementation,
@@ -163,7 +163,7 @@ retained here for history and are excluded from active requirement counts.
   accepted snapshot lifecycle, reviewer provenance and immutable revision binding
   are enforced; technical identifiers are permitted only in the separate evidence
   envelope; rejected and unconfirmed edited scenarios cannot enter Forward inputs
-- Completion evidence: pending
+- Completion evidence: scenario implementation commit `fc7b304` and `f5d8bc6`; 44 focused Python tests, Java contract tests, and immutable proposal/review artifacts under `validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/`. Final integration evidence is recorded in `verification.json` there.
 
 ### PKB-BL-006 — Frozen scenario-bearing semantics revision
 
@@ -327,9 +327,9 @@ retained here for history and are excluded from active requirement counts.
 
 ## Backlog execution order
 
-The selected construction plan covers `PKB-BL-005` then `PKB-BL-023`.
-Both are planned and unimplemented. Next: BL-024 points to generated review
-material; BL-025 records the user's review; BL-006 freezes accepted inputs.
+The selected construction plan completed `PKB-BL-005` and `PKB-BL-023`.
+BL-024 now points to the generated review material. BL-025 awaits the user's
+ACCEPT / EDIT / REJECT decisions; BL-006 subsequently freezes accepted inputs.
 BL-007/010/011 then establish scenario mapping and evaluation. BL-008/009,
 thresholds, holdout approval and protocol prerequisites still gate later runs.
 BL-004 adjudicates the existing 11 disagreements independently of human review.
@@ -342,22 +342,19 @@ foundation; it does not replace the completed bounded Petclinic decision.
 
 | Maturity | Requirement IDs | Count |
 |---|---|---:|
-| `M3_VERIFIED` | `PKB-COMPONENT-001`, `PKB-PROPOSAL-001`, `PKB-ISOLATION-001`, `PKB-COMPARISON-001`, `PKB-READINESS-001` | 5 |
-| `M1_BACKLOGGED` | `PKB-REVIEW-003`, `PKB-STATUS-002`, `PKB-REVIEW-004`, `PKB-EVAL-LEGACY-001`, `PKB-SCENARIO-003`, `PKB-SCENARIO-004`, `PKB-MAPPING-001`, `PKB-PROVIDER-001`, `PKB-REVERSE-001`, `PKB-EVAL-001`, `PKB-EVAL-002`, `PKB-CALIBRATION-001`, `PKB-HOLDOUT-001`, `PKB-PROTOCOL-001`, `PKB-REGRESSION-001`, `PKB-HOLDOUT-002`, `PKB-DECISION-001` | 17 |
+| `M3_VERIFIED` | `PKB-COMPONENT-001`, `PKB-PROPOSAL-001`, `PKB-ISOLATION-001`, `PKB-COMPARISON-001`, `PKB-READINESS-001`, `PKB-SCENARIO-003`, `PKB-REVIEW-003`, `PKB-STATUS-002` | 8 |
+| `M1_BACKLOGGED` | `PKB-REVIEW-004`, `PKB-EVAL-LEGACY-001`, `PKB-SCENARIO-004`, `PKB-MAPPING-001`, `PKB-PROVIDER-001`, `PKB-REVERSE-001`, `PKB-EVAL-001`, `PKB-EVAL-002`, `PKB-CALIBRATION-001`, `PKB-HOLDOUT-001`, `PKB-PROTOCOL-001`, `PKB-REGRESSION-001`, `PKB-HOLDOUT-002`, `PKB-DECISION-001` | 14 |
 
 ```yaml
 spec_binding:
   path: FRAMEWORK-SPEC.md
   revision: eff92e0f7c2e41cd9880c33655ff23df796a5830
 normative_requirements: 22
-m3_verified: 5
-m1_backlogged: 17
+m3_verified: 8
+m1_backlogged: 14
 next_experiment_readiness: NOT_READY
 blocking_requirements:
-  - PKB-REVIEW-003
-  - PKB-STATUS-002
   - PKB-REVIEW-004
-  - PKB-SCENARIO-003
   - PKB-SCENARIO-004
   - PKB-MAPPING-001
   - PKB-EVAL-001
