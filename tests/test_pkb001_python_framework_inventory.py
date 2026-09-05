@@ -1,5 +1,6 @@
 import ast
 import json
+import re
 from pathlib import Path
 
 
@@ -9,28 +10,141 @@ FIXTURES = ROOT / "validation/pkb001/fixtures/scenario-forward-parity.json"
 SELECTED = "tooling/validation/pkb001_scenario_forward_gate.py"
 
 
-def imported_python_callers(module_path):
+def test_caller_discovery_detects_supported_python_reference_forms(tmp_path):
+    module_path = "tooling/validation/example_gate.py"
+    sources = {
+        "tests/import.py": "import tooling.validation.example_gate as gate\n",
+        "tests/direct.py": "from tooling.validation.example_gate import main\n",
+        "tests/package.py": (
+            "from tooling.validation import example_gate as gate\n"
+        ),
+        "tests/dynamic.py": (
+            'MODULE_PATH = ROOT / "tooling/validation/example_gate.py"\n'
+            'importlib.util.spec_from_file_location("gate", MODULE_PATH)\n'
+        ),
+        "tests/importlib.py": (
+            'importlib.import_module("tooling.validation.example_gate")\n'
+        ),
+        "tests/subprocess.py": (
+            'subprocess.run(["python3", "tooling/validation/example_gate.py"])\n'
+        ),
+    }
+    for relative, content in sources.items():
+        target = tmp_path / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(content)
+
+    assert discover_active_callers(tmp_path, module_path) == set(sources)
+
+
+def test_caller_discovery_detects_skill_commands_but_excludes_history(tmp_path):
+    module_path = "tooling/validation/example_gate.py"
+    active = tmp_path / "skills/example/SKILL.md"
+    active.parent.mkdir(parents=True)
+    active.write_text("python3 tooling/validation/example_gate.py --root .\n")
+    history = tmp_path / "archive/old/SKILL.md"
+    history.parent.mkdir(parents=True)
+    history.write_text("python3 tooling/validation/example_gate.py --root .\n")
+    plan = tmp_path / "IMPLEMENTATION-PLAN.md"
+    plan.write_text("python3 tooling/validation/example_gate.py --root .\n")
+
+    assert discover_active_callers(tmp_path, module_path) == {
+        "skills/example/SKILL.md"
+    }
+
+
+def _matches_module_literal(value, module_path, module_name):
+    if not isinstance(value, str):
+        return False
+    normalized = value.replace("\\", "/")
+    return normalized in {
+        module_path,
+        module_name,
+        Path(module_path).name,
+    } or normalized.endswith("/" + module_path)
+
+
+def _call_name(call):
+    parts = []
+    node = call.func
+    while isinstance(node, ast.Attribute):
+        parts.append(node.attr)
+        node = node.value
+    if isinstance(node, ast.Name):
+        parts.append(node.id)
+    return ".".join(reversed(parts))
+
+
+def _python_source_references_module(source, module_path):
     module_name = module_path.removesuffix(".py").replace("/", ".")
-    callers = set()
-    for source_root in (ROOT / "tooling", ROOT / "tests", ROOT / "validation"):
-        for source in source_root.rglob("*.py"):
-            relative = source.relative_to(ROOT).as_posix()
-            if relative == module_path or "archive" in source.parts:
-                continue
-            tree = ast.parse(source.read_text(), filename=relative)
-            imports = {
-                node.module
-                for node in ast.walk(tree)
-                if isinstance(node, ast.ImportFrom) and node.module is not None
+    module_parent, module_leaf = module_name.rsplit(".", 1)
+    tree = ast.parse(source.read_text(), filename=str(source))
+    path_variables = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ImportFrom):
+            if node.module == module_name:
+                return True
+            if node.module == module_parent and any(
+                alias.name == module_leaf for alias in node.names
+            ):
+                return True
+        elif isinstance(node, ast.Import) and any(
+            alias.name == module_name for alias in node.names
+        ):
+            return True
+        elif isinstance(node, (ast.Assign, ast.AnnAssign)):
+            targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+            names = {
+                target.id
+                for target in targets
+                if isinstance(target, ast.Name)
             }
-            imports.update(
-                alias.name
-                for node in ast.walk(tree)
-                if isinstance(node, ast.Import)
-                for alias in node.names
-            )
-            if module_name in imports:
-                callers.add(relative)
+            if any("PATH" in name.upper() or "MODULE" in name.upper() for name in names):
+                if any(
+                    _matches_module_literal(child.value, module_path, module_name)
+                    for child in ast.walk(node.value)
+                    if isinstance(child, ast.Constant)
+                ):
+                    path_variables.update(names)
+    dynamic_calls = {
+        "run", "Popen", "check_call", "check_output", "import_module",
+        "spec_from_file_location",
+    }
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call) or _call_name(node).split(".")[-1] not in dynamic_calls:
+            continue
+        arguments = [*node.args, *(keyword.value for keyword in node.keywords)]
+        if any(
+            _matches_module_literal(child.value, module_path, module_name)
+            for argument in arguments
+            for child in ast.walk(argument)
+            if isinstance(child, ast.Constant)
+        ) or any(
+            child.id in path_variables
+            for argument in arguments
+            for child in ast.walk(argument)
+            if isinstance(child, ast.Name)
+        ):
+            return True
+    return False
+
+
+def discover_active_callers(root, module_path):
+    callers = set()
+    for source in root.rglob("*.py"):
+        relative = source.relative_to(root).as_posix()
+        if relative == module_path or any(
+            part == "archive" or part.startswith(".")
+            for part in Path(relative).parts
+        ):
+            continue
+        if _python_source_references_module(source, module_path):
+            callers.add(relative)
+    for source in (root / "skills").glob("**/*.md"):
+        relative = source.relative_to(root).as_posix()
+        command = re.compile(rf"\bpython3?\s+{re.escape(module_path)}(?:\s|$)")
+        if command.search(source.read_text()):
+            callers.add(relative)
     return callers
 
 
@@ -52,12 +166,12 @@ def test_python_framework_inventory_characterizes_the_migration_boundary():
         }
         for consumer in consumers
     )
+    assert inventoried == sorted(inventoried)
     assert all(consumer["external_runtime"] is False for consumer in consumers)
-    assert all(
-        imported_python_callers(consumer["path"])
-        <= set(consumer["active_callers"])
-        for consumer in consumers
-    )
+    for consumer in consumers:
+        callers = consumer["active_callers"]
+        assert callers == sorted(set(callers))
+        assert set(callers) == discover_active_callers(ROOT, consumer["path"])
     assert [
         consumer["path"]
         for consumer in consumers
