@@ -6,116 +6,13 @@ and executable continuation constraints. `FRAMEWORK-SPEC.md` defines what;
 
 ## Current selection
 
-**Current selection:** BL-026 fifth and final pre-authorized migration slice,
-selected by the Human Reviewer on HERM-268 (2026-09-06, options 1/2/3 as
-sequential slices 3–5) and dispatched on HERM-271. Replace the
-repository-owned code-baseline Python consumer with a Java API and packaged
-CLI, cut over its active caller, then remove that Python consumer; constructed
-under "Selected work: BL-026 Java code baseline migration" below. Slices 1–4
-are complete and retained below as their delivery records. This is the final
-pre-authorized slice; no further BL-026 consumer is selected or implied.
-Existing Python plan sections below are completed or transitional delivery
-records and do not authorize new Python framework behavior. External Graphify
-Python runtime is excluded.
-
-## Selected work: BL-026 Java code baseline migration
-
-**Goal:** Replace `tooling/validation/pkb001_code_baseline.py` with a Java 17
-API and packaged CLI that preserves its complete observable behavior — the
-deterministic proposal-only code-baseline arm generator (F1/R1/R2/R3) — then
-remove the replaced Python module and its direct Python-only test file.
-
-**Spec binding:** `FRAMEWORK-SPEC.md` at
-`891e497968000c32984f26437eab811c063ec4cf`; requirement `PKB-JAVA-001`.
-
-**Selected backlog:** `PKB-BL-026`, fifth and final pre-authorized bounded
-consumer only. Whether BL-026 moves to a completed delivery state is decided
-by the Human Reviewer after this slice's closure evidence.
-
-**Base:** `a35e59fe80a2e3894d66b003b0ad0af2664c9475` on
-`agent/delivery-engineer/01a073a3`; issue HERM-271.
-
-**Architecture:** Java owns the arm allowlist and input-category matching,
-exact-revision identity binding (all inputs must bind the same full
-lowercase source commit SHA; structure graph SHA-256 validated), area
-classification (`fdi` package → `application` for suffixed children,
-otherwise parent-directory name), structure file grouping by area with
-`(source_file, id)` dedup, history grouping by area over `src/` changed
-paths with per-SHA commit dedup, F1/R1/R2/R3 proposal assembly with sorted
-unique refs, the frozen-semantics and frozen-history checks, and the
-deterministic result rendering (`json.dumps(result, indent=2) + "\n"`,
-insertion order, `ensure_ascii` escaping, Python float rendering). The
-packaged CLI owns `--arm/--input/--source-sha/--graph-sha/--output`
-argument parsing, the structure revision/graph-SHA binding overrides, output
-parent creation plus write, the `{status, error}` stdout JSON on caught
-failures (exit 1), and exit 2 on usage errors. Uncaught hostile-input
-failures exit 1 like the Python consumer. No sealed input is modified or
-regenerated.
-
-**Tech stack:** Java 17, Spring Boot 3.4.1, Jackson, JUnit 5 and Maven.
-Python/pytest is used only to characterize the old consumer before cutover.
-
-### Task 1: Characterize observable behavior
-
-- [x] Run `python3 -m pytest -q tests/test_pkb001_code_baseline.py` before
-  replacement. Record the passing count: **6 collected characterization
-  cases**; all pass at base. Never weaken a rejected case for Java parity.
-- [x] Confirm the inventory records the consumer as `TRANSITIONAL` with the
-  single active caller `tests/test_pkb001_code_baseline.py`; no skill or tool
-  invokes it.
-- [ ] Record the observable contract to port: result shape
-  `{set_id, run_id, arm, source_commit_sha, graph_artifact_sha256,
-  authority_status, proposals}`; proposal shape `{proposal_id, arm, target_id,
-  relation_type, operation, label, component_refs, evidence_refs, confidence,
-  limitations}`; error vocabulary `inputs must use unique category=path
-  bindings`, `input categories do not match arm allowlist`, `all inputs must
-  bind the same full source commit SHA`, `structure graph SHA-256 is invalid`,
-  `F1 requires frozen Product Team semantics`, `R2 requires frozen
-  cutoff-bounded history`; CLI
-  `pkb001_code_baseline.py --arm <arm> --input <category=path> [--source-sha
-  <sha>] [--graph-sha <sha>] --output <path>`; success writes the pretty JSON
-  result and exits 0; caught failures print `{"status": "ERROR", "error": ...}`
-  and exit 1.
-
-### Task 2: Port characterization cases to Java (TDD)
-
-- [ ] Add `com.featuredeliveryintelligence.fdi.validation.codebaseline.CodeBaseline`
-  and `CodeBaselineResult` with a `generateArm(String arm, Map<String, JsonNode>
-  inputs)` API and the exact pretty-JSON rendering.
-- [ ] Add Java characterization tests covering all 6 collected cases plus the
-  supplementary probes (arm allowlist, identity binding, graph SHA defaulting,
-  area classification, dedup/sorting, R2 non-src path inclusion, R3
-  intersection, unknown `source_location` fallback).
-
-### Task 3: Packaged CLI
-
-- [ ] Add `CodeBaselineCli` (`code-baseline-generate --arm <arm> --input
-  <category=path> ... --output <path>`) dispatched from `FdiApplication`,
-  with the structure binding overrides, output parent creation, ERROR JSON
-  stdout, and exit-code contract, plus CLI tests.
-
-### Task 4: Cutover and removal
-
-- [ ] Update the inventory cutover entry following the slice-3/4 pattern
-  (state, empty callers, `java_api`, `java_cli`, verification evidence) plus
-  one new inventory cutover test; keep historical entries intact.
-- [ ] Run packaged-JAR smoke and supplementary parity probes against the
-  original Python consumer extracted at base on copied input roots: exit
-  codes, stdout, and byte-identical output artifacts for every arm and the
-  characterized error cases.
-- [ ] Remove only `tooling/validation/pkb001_code_baseline.py` and
-  `tests/test_pkb001_code_baseline.py` after verified parity.
-
-### Task 5: Verification
-
-- [ ] `MAVEN_OPTS='-Xmx2g' ./mvnw test` — all Java tests pass.
-- [ ] `./mvnw -q package` — packaged JAR builds.
-- [ ] `python3 -m pytest -q` — full suite green; explain collection
-  arithmetic vs base (6 removed characterization cases + 1 new cutover test).
-- [ ] `python3 validation/pkb001/task7-evaluation/public_validate.py .` — 9/9.
-- [ ] `git diff --check` clean; no sealed input modified or regenerated.
-- [ ] Record completion, clear this selection, and route one independent
-  exact-revision review (Independent Adjudicator).
+No implementation slice is selected. `PKB-BL-026` has no remaining
+pre-authorized consumer: all five pre-authorized bounded consumers are
+migrated and recorded below. Whether BL-026 moves to a completed delivery
+state is decided by the Human Reviewer from the five-slice closure evidence.
+Any further repository-owned Python framework consumer must be selected and
+bounded before code changes begin. External Graphify Python runtime is
+excluded.
 
 ## Completed BL-026 slices
 
