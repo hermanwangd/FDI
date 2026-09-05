@@ -8,6 +8,12 @@ PKB-001 validates whether product meaning, source structure, and delivery eviden
 
 ## Normative requirement index
 
+This revision supersedes the Stage A/B requirements `PKB-REVIEW-001`,
+`PKB-REVIEW-002`, `PKB-STATUS-001`, `PKB-SCENARIO-001`, and
+`PKB-SCENARIO-002`. Their replacement IDs below are new because their
+semantics changed. Retired IDs must not be reused.
+
+
 These identifiers are stable traceability anchors. The controlling requirement
 is the normative wording in the referenced section, not a restatement in a
 Backlog item or Implementation Plan. Changing a requirement's meaning requires
@@ -20,12 +26,12 @@ a new Spec revision and reconciliation of every bound Backlog item.
 | `PKB-ISOLATION-001` | Data flow and isolation | PK-S1 generation is proposal-only and cannot access evaluator gold or post-generation judgments. |
 | `PKB-COMPARISON-001` | Hierarchical evaluation | Provider-neutral comparison keeps path, type, bare symbol, exact component, chain, and supporting diagnostics distinct. |
 | `PKB-READINESS-001` | Planned project placement and verification | The next-run gate selects the exact skill/input set and fails closed on binding, identity, authority, or run-ID conflicts. |
-| `PKB-REVIEW-001` | Scenario authority and isolation | Provide a Stage A semantic review surface that excludes evaluator technical truth. |
-| `PKB-STATUS-001` | Scenario authority and isolation | Active status must point only to a review surface valid for its declared stage. |
-| `PKB-REVIEW-002` | Scenario authority and isolation | Product Team records Stage A decisions before technical unblinding. |
-| `PKB-EVAL-LEGACY-001` | Current bounded decision | Required evaluator disagreements are adjudicated without gaining Product Team authority. |
-| `PKB-SCENARIO-001` | Product Capability behavior scenarios | Behavior scenarios have a provider-neutral, Product Team-owned, immutable lifecycle contract. |
-| `PKB-SCENARIO-002` | Scenario authority and isolation | Only frozen approved scenarios enter Forward generation; Reverse hypotheses remain isolated. |
+| `PKB-REVIEW-003` | Scenario authority and isolation | Generate evidence-backed Capability and scenario proposals for individual review. |
+| `PKB-STATUS-002` | Scenario authority and isolation | Active status identifies the proposal review surface and actual review state. |
+| `PKB-REVIEW-004` | Scenario authority and isolation | The user accepts, edits, or rejects proposals with version-bound decisions. |
+| `PKB-EVAL-LEGACY-001` | Current bounded decision | Required evaluator disagreements are adjudicated without gaining Human Reviewer authority. |
+| `PKB-SCENARIO-003` | Product Capability behavior scenarios | Behavior scenarios have a provider-neutral, Human Reviewer-owned, immutable lifecycle contract. |
+| `PKB-SCENARIO-004` | Scenario authority and isolation | Only frozen approved scenarios enter Forward generation; Reverse hypotheses remain isolated. |
 | `PKB-MAPPING-001` | Scenario-grounded realization | Proposals trace scenarios through variable realization chains to justified component roles. |
 | `PKB-PROVIDER-001` | Template and UI evidence | UI/template claims use verified provider capability or declare an evidence gap. |
 | `PKB-REVERSE-001` | Reverse experiment / Scenario authority and isolation | Reverse quality controls improve proposals without publishing Product truth. |
@@ -36,7 +42,7 @@ a new Spec revision and reconciliation of every bound Backlog item.
 | `PKB-PROTOCOL-001` | Calibration strategy | The experiment protocol binds exact revisions and digests and fails closed on change. |
 | `PKB-REGRESSION-001` | Calibration strategy | Petclinic regression uses a new immutable run and cannot overwrite completed artifacts. |
 | `PKB-HOLDOUT-002` | Calibration strategy | The sealed blind holdout executes once under the unchanged frozen protocol. |
-| `PKB-DECISION-001` | Current bounded decision | Stage B produces a bounded decision without automatic semantic publication. |
+| `PKB-DECISION-001` | Current bounded decision | experiment result produces a bounded decision without automatic semantic publication. |
 
 ## Forward experiment
 
@@ -57,24 +63,24 @@ Graphify Structural Intelligence
 → Human Review
 ```
 
-Reverse results are proposals. They cannot establish Product semantics or publish Product truth without Product Team review.
+Reverse results are proposals. They cannot establish Product semantics or publish Product truth without Human Reviewer review.
 
 ## Ownership boundaries
 
-- Product Team owns Product meaning and accepted Capability definitions.
+- Human Reviewer owns Product meaning and accepted Capability definitions.
 - Graphify supplies structural observations, not Product semantics.
 - Git, pull requests, and feature history supply delivery evidence, not Product truth.
 - Human/evaluator review accepts, renames, merges, splits, rejects, or identifies missing proposals.
 
 ## Product Capability behavior scenarios
 
-A Product Capability MAY contain Product Team-owned behavior scenarios that
+A Product Capability MAY contain Human Reviewer-owned behavior scenarios that
 describe concrete, externally observable examples of the capability. Scenarios
 clarify Product meaning; they do not define technical realization.
 
 Each scenario has a stable `scenario_id`, parent `capability_id`, title,
 `given` preconditions, a `when` action or event, observable `then` outcomes,
-scope, status, and Product Team approval provenance. Scenario scope is either
+scope, status, and Human Reviewer approval provenance. Scenario scope is either
 `REQUIRED_ACCEPTANCE` or `ILLUSTRATIVE`; status is either `DRAFT` or `FROZEN`.
 Capability-level `includes`, `excludes`, and `non_goals` define the shared
 semantic boundary. A frozen scenario is immutable; changing its meaning
@@ -87,7 +93,7 @@ provider-native identifiers, evaluator expected mappings, or technical
 selection instructions. A scenario is an explicit acceptance example, not a
 claim that every valid behavior of the Capability has been enumerated.
 
-Product Team may define required UI or template behavior even when the current
+Human Reviewer may define required UI or template behavior even when the current
 structural provider cannot observe it. Missing provider evidence never
 authorizes an agent to weaken or rewrite Product Semantics. The realization
 proposal must instead record the evidence gap or return `UNRESOLVED` when the
@@ -95,22 +101,48 @@ core behavior cannot be supported.
 
 ### Scenario authority and isolation
 
-Only `FROZEN`, Product Team-owned scenarios may enter Forward generation.
-Reverse generation cannot access them. Reverse may propose scenario hypotheses,
-but each uses an independent `HYP-SCENARIO-*` namespace and remains
-`authority: PROPOSAL_ONLY` and `scenario_status: UNREVIEWED`. It cannot enter
-Forward input or Product Semantics without a separate Product Team approval and
-publication action.
+The user is the sole Human Reviewer / Experiment Owner for this prototype.
+No Product Team organization, Stage A/Stage B packet split, or formal semantic
+publication workflow is required.
 
-Product Team review has two ordered stages:
+Skills/agents generate Capability hypotheses and behavior scenario proposals
+from exact-revision Graphify structural evidence plus cutoff-bounded Git/PR/
+feature delivery history. Each proposal records its source revision, graph
+digest, history cutoff and evidence references, inference rationale, limitations,
+and confidence (0–1, a ranking hint rather than a calibrated probability).
+Unavailable evidence is explicitly marked; an empty evidence claim or invented
+reference is invalid. Both evidence channels are inspected where available,
+but a scenario need not have supporting evidence from both. Unsupported
+behavior is identified as a hypothesis, not reported as an observed fact.
 
-1. Stage A decides Capability names, intent, boundaries, scenarios, merges,
-   splits, renames, and rejections without evaluator expected components,
-   proposed technical components, gold identifiers, or technical scores.
-   Reverse evidence summaries may be shown only when they exclude that material.
-2. Stage B occurs after Stage A is recorded and compares immutable realization
-   proposals with evaluator-only technical mappings. Stage B cannot silently
-   revise the frozen Stage A semantics.
+Scenario text (title, Given/When/Then and semantic boundaries) remains free of
+implementation identifiers. A separate evidence envelope carries structural
+identifiers, paths and history references so the user can inspect the basis.
+
+Generated proposals use `HYP-SCENARIO-*`, `authority: PROPOSAL_ONLY` and
+`scenario_status: UNREVIEWED`. A single review surface shows the proposed
+behavior, evidence, rationale, confidence, limitations and decision fields.
+The user chooses `ACCEPT`, `EDIT` or `REJECT`. Each decision binds reviewer
+identity, time, reason and exact proposal revision/digest. EDIT records the
+replacement text and explicit acceptance of that exact edited version; an
+unconfirmed edit remains pending. REJECT never enters accepted semantics.
+
+Only accepted versions may be copied into a new immutable, `FROZEN`
+experiment Product Semantics snapshot. Proposal originals remain immutable
+and proposal-only; the accepted snapshot links back to proposals and decisions.
+The user can approve the accepted set and freeze in one review action.
+An agent must never manufacture that approval. Existing snapshots are unchanged.
+
+Forward generation consumes only that reviewed snapshot. Reverse generation
+cannot read the accepted snapshot, evaluator gold, or post-generation judgments.
+Technical evidence may be visible to the human reviewer; generation must still
+remain isolated from evaluator truth. Evaluation cannot silently edit semantics.
+
+Because scenarios inferred from the same repository are later mapped back to
+it, this experiment measures reconstruction consistency, not independent
+validation of intended product requirements. Reports record input provenance,
+reviewer exposure and this limitation; confidence and exact-match scores do
+not remove it.
 
 ### Scenario-grounded realization
 
@@ -126,7 +158,7 @@ chain. Each chain step describes a behavioral function, references zero or more
 proposed components, and records `EVIDENCED`, `EVIDENCE_GAP`, or
 `NOT_APPLICABLE`. Chains are not forced into a fixed controller, domain,
 persistence, or UI layering model. `NOT_APPLICABLE` requires a reason and
-remains proposal-only unless Product Team confirms the semantic assertion.
+remains proposal-only unless Human Reviewer confirms the semantic assertion.
 Given, When, and Then clauses do not require one-to-one component mappings.
 
 Component role remains behavioral:
@@ -164,7 +196,7 @@ Graphify → Structural Intelligence
 Git / PR / Feature History → Delivery Intelligence
 
 Structural Intelligence + Delivery Intelligence
-→ Capability Hypothesis → Product Team Review
+→ Capability Hypothesis → Human Reviewer Review
 ```
 
 Graphify operations must be discovered from the installed runtime. Structural evidence must bind the indexed source to an exact Git revision and frozen source snapshot.
@@ -227,7 +259,7 @@ Evaluation reports separate these levels rather than treating them as interchang
 Path, type, or symbol-name overlap and supporting-evidence citation do not count as exact component matches. Supporting citations report symbol-name and exact-component overlap separately, but neither grants proposal credit. Rows in the proposed channel may explicitly declare only `PRIMARY`; rows in the supporting channel may explicitly declare only `SUPPORTING`; evaluator-expected roles do not grant proposal credit. Comparison inputs are snapshotted once with a 10,000-component-per-channel safety bound. The existing Petclinic metrics remain descriptive regression evidence. New acceptance thresholds must be registered before the next blind/holdout execution and must not be selected from the observed Petclinic result.
 
 Next-run evaluation separates Product semantic quality from technical
-realization quality. Semantic measures include Product Team acceptance,
+realization quality. Semantic measures include Human Reviewer acceptance,
 rename/merge/split/reject decisions, duplicate or composite hypotheses, and
 unsupported behavior claims. Technical measures include scenario evidence
 coverage, complete-chain coverage, provider-neutral exact-component precision,
@@ -246,31 +278,31 @@ than relying only on provider node IDs.
 ### Data flow and isolation
 
 ```text
-Frozen Product Semantics + frozen Product Team behavior scenarios
+Frozen Product Semantics + frozen Human Reviewer behavior scenarios
 + exact-revision Graphify evidence
 → scenario-grounded Skill/agent proposal generation without evaluator gold
 → Java contract validation
 → immutable proposal artifact
 → Python blinded evaluation against sealed evaluator truth
-→ Product Team Stage B realization review
+→ Human Reviewer experiment result realization review
 ```
 
-Generation must fail closed when identity, granularity, role, source revision, or provider binding is absent or inconsistent. The Product Team decides capability meaning and boundaries; evaluator comparison measures realization quality but cannot publish Product Semantics.
+Generation must fail closed when identity, granularity, role, source revision, or provider binding is absent or inconsistent. The Human Reviewer decides capability meaning and boundaries; evaluator comparison measures realization quality but cannot publish Product Semantics.
 
 ### Template and UI evidence
 
-Before adding template extraction, the installed Graphify runtime must be queried to prove that it supports the required source type and relationships. If it does not, the prototype must either introduce a separately identified structural-evidence capability behind `CodeIntelligenceProvider` or report an explicit evidence gap. It must not fabricate UI realization from Java-only structure. Only Product Team may decide that the Capability itself should be narrowed or renamed.
+Before adding template extraction, the installed Graphify runtime must be queried to prove that it supports the required source type and relationships. If it does not, the prototype must either introduce a separately identified structural-evidence capability behind `CodeIntelligenceProvider` or report an explicit evidence gap. It must not fabricate UI realization from Java-only structure. Only Human Reviewer may decide that the Capability itself should be narrowed or renamed.
 
 ### Calibration strategy
 
 - Petclinic remains the regression dataset for detecting improvements and regressions.
 - A second exact-revision repository, unseen while selection rules are designed, is required as the blind holdout.
-- Product Team semantic review, evaluator truth preparation, proposal generation, and final evaluation remain role-separated.
+- The user performs human review; automated generation and evaluator truth remain input-isolated. Reports disclose reviewer access to technical comparisons.
 - Rules may be debugged with Petclinic, but a `GO` decision requires pre-registered thresholds and holdout evidence; improving Petclinic exact-match numbers alone is insufficient.
 - An independent role proposes the holdout repository and exact revision; the
   user must approve them before the holdout is sealed. The holdout remains
   inaccessible while selection rules and thresholds are completed.
-- Stage A semantics, scenarios, metrics, thresholds, skill digest, schema
+- reviewed experiment semantics, scenarios, metrics, thresholds, skill digest, schema
   digest, comparator digest, and Graphify query bounds are frozen before blind
   holdout generation.
 - If a Petclinic regression causes any frozen scenario, rule, threshold, skill,
@@ -289,14 +321,14 @@ Before adding template extraction, the installed Graphify runtime must be querie
 - Python evaluation reports path, type, exact-symbol, realization-chain, and precision metrics independently.
 - Existing `REVISE`, proposal-only, human-authority, and no-publication boundaries remain intact.
 - The current Petclinic artifacts are not silently rewritten; a new run uses a new immutable run identifier and manifest.
-- Frozen Forward scenarios are Product Team-owned and contain no implementation
+- Frozen Forward scenarios are Human Reviewer-owned and contain no implementation
   identifiers.
 - Every proposed component is traceable through a scenario realization chain.
 - Missing UI/template evidence produces an explicit evidence gap or
   `UNRESOLVED`, not modified Product Semantics.
 - Reverse-generated scenarios remain `UNREVIEWED` and `PROPOSAL_ONLY`.
-- Stage A semantic decisions are recorded before Stage B exposes evaluator
-  expected-component mappings.
+- Human decisions bind exact proposal versions; rejected and unreviewed scenarios
+  cannot enter frozen Forward inputs.
 
 ### Planned project placement and verification
 
@@ -328,6 +360,6 @@ Out of scope: full T1–T4, DEV-204, F001, full Product Knowledge governance, au
 
 ## Current bounded decision
 
-PKB-001 input binding, isolation contracts, and evidence integrity passed. The current Petclinic run remains `REVISE`, not `GO`, because numeric acceptance thresholds were not frozen before generation and judgment. Its metrics are descriptive only. Non-human evaluator review cannot finalize Product meaning; human Product Team review and any semantic publication remain pending.
+PKB-001 input binding, isolation contracts, and evidence integrity passed. The current Petclinic run remains `REVISE`, not `GO`, because numeric acceptance thresholds were not frozen before generation and judgment. Its metrics are descriptive only. Non-human evaluator review cannot finalize Product meaning; human review remains pending; formal semantic publication is outside this prototype.
 
 Task 6 provides deterministic label/order blinding only. `ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT`; no content-level arm-anonymity claim is made.
