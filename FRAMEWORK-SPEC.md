@@ -15,6 +15,11 @@ a new Spec revision and reconciliation of every bound Backlog item.
 
 | Requirement ID | Controlling section | Required outcome |
 |---|---|---|
+| `PKB-COMPONENT-001` | Component roles and granularity / Normalized structural identity | Java enforces provider-neutral component identity, granularity, and canonical revision/path rules. |
+| `PKB-PROPOSAL-001` | Component roles and granularity | Java enforces immutable proposal authority, outcome, component roles, and revision consistency. |
+| `PKB-ISOLATION-001` | Data flow and isolation | PK-S1 generation is proposal-only and cannot access evaluator gold or post-generation judgments. |
+| `PKB-COMPARISON-001` | Hierarchical evaluation | Provider-neutral comparison keeps path, type, bare symbol, exact component, chain, and supporting diagnostics distinct. |
+| `PKB-READINESS-001` | Planned project placement and verification | The next-run gate selects the exact skill/input set and fails closed on binding, identity, authority, or run-ID conflicts. |
 | `PKB-REVIEW-001` | Scenario authority and isolation | Provide a Stage A semantic review surface that excludes evaluator technical truth. |
 | `PKB-STATUS-001` | Scenario authority and isolation | Active status must point only to a review surface valid for its declared stage. |
 | `PKB-REVIEW-002` | Scenario authority and isolation | Product Team records Stage A decisions before technical unblinding. |
