@@ -681,6 +681,17 @@ Implementation record (2026-09-05): executable schema/readiness gate committed a
 passed with `MAVEN_OPTS='-Xmx2g'`. No holdout was selected and no proposal was
 generated. The three authorized decisions above remain open.
 
+Review hardening record (2026-09-05): `934946b` adds fail-closed hostile-shape
+handling, compound forbidden-path classification, Java identity parity checks,
+HEAD-blob run-ID collision checks, single-read digest/JSON verification,
+`Draft202012Validator` schema checking, and dir-fd/no-follow exclusive CLI
+report creation. Focused gate tests passed 66/66, the complete Python suite
+passed 240/240, Task 7 remained 9/9, and isolated Maven tests passed with
+`MAVEN_OPTS='-Xmx2g'`. The repository has no Python dependency manifest;
+`jsonschema` is present in the Graphify runtime (4.26.0) and verification
+interpreter (4.25.1). A runtime without `jsonschema` blocks with
+`SCHEMA_DEFINITION_INVALID` and never falls back to a partial validator.
+
 - [x] **Step 6: Commit**
 
 ```bash
