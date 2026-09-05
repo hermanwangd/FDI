@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "realization-proposal-v0.2.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "run_id", "authority", "source_revision", "graph_sha256", "capability_results"],
+  "properties": {
+    "schema_version": {"const": "pkb001.realization-proposal.v0.2"},
+    "run_id": {"type": "string", "minLength": 1},
+    "authority": {"const": "PROPOSAL_ONLY"},
+    "source_revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "graph_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "capability_results": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/result"}}
+  },
+  "$defs": {
+    "evidence_ref": {
+      "type": "object", "additionalProperties": false,
+      "required": ["provider_node_id", "source_path", "source_location"],
+      "properties": {
+        "provider_node_id": {"type": "string", "minLength": 1},
+        "source_path": {"type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"},
+        "source_location": {"type": "string", "minLength": 1}
+      }
+    },
+    "component": {
+      "type": "object", "additionalProperties": false,
+      "required": ["role", "granularity", "source_revision", "source_path", "qualified_symbol", "provider_node_id", "selection_reason"],
+      "properties": {
+        "role": {"enum": ["PRIMARY", "SUPPORTING"]},
+        "granularity": {"enum": ["REPOSITORY", "FILE", "TYPE", "METHOD", "TEMPLATE", "CONFIGURATION"]},
+        "source_revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "source_path": {"type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"},
+        "qualified_symbol": {"type": "string"},
+        "provider_node_id": {"type": "string", "minLength": 1},
+        "selection_reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "result": {
+      "type": "object", "additionalProperties": false,
+      "required": ["capability_id", "outcome", "components", "evidence_refs", "confidence", "limitations"],
+      "properties": {
+        "capability_id": {"type": "string", "minLength": 1},
+        "outcome": {"enum": ["MAPPING_PROPOSAL", "UNRESOLVED"]},
+        "components": {"type": "array", "items": {"$ref": "#/$defs/component"}},
+        "evidence_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence_ref"}},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      },
+      "allOf": [{
+        "if": {"properties": {"outcome": {"const": "MAPPING_PROPOSAL"}}},
+        "then": {"properties": {"components": {"minItems": 1, "contains": {"type": "object", "properties": {"role": {"const": "PRIMARY"}}, "required": ["role"]}, "minContains": 1}}},
+        "else": {"properties": {"components": {"maxItems": 0}}}
+      }]
+    }
+  }
+}
