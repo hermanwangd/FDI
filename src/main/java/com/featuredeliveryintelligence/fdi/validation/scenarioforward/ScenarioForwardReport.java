@@ -14,7 +14,7 @@ public record ScenarioForwardReport(
         @JsonProperty("generation_inputs") List<GenerationInput> generationInputs) {
 
     public ScenarioForwardReport {
-        if (status == null || reasons == null || mappings == null || runId == null || generationInputs == null) {
+        if (status == null || reasons == null || mappings == null || generationInputs == null) {
             throw new RuntimeContractException("scenario forward report fields must not be null");
         }
         try {
