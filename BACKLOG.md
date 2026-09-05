@@ -15,7 +15,7 @@ exactly one backlog record. Status means:
 
 | Backlog ID | Type | Requirement | Outcome | Status | Dependency / evidence |
 |---|---|---|---|---|---|
-| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java, one bounded consumer at a time; exclude external Graphify. | `IN_PROGRESS` | Two consumers verified; next consumer unselected. |
+| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java, one bounded consumer at a time; exclude external Graphify. | `IN_PROGRESS` | Three consumers verified; next consumer unselected. |
 | `PKB-BL-023` | `FEATURE` | `PKB-REVIEW-003` | Generate evidence-backed Capability/scenario proposals and one review surface. | `VERIFIED` | Generator and review artifacts exercised. |
 | `PKB-BL-024` | `DOCUMENTATION` | `PKB-STATUS-002` | Point status to the actual generated review material and review state. | `VERIFIED` | Active pointers validated. |
 | `PKB-BL-025` | `FEATURE` | `PKB-REVIEW-004` | Record version-bound human ACCEPT / EDIT / REJECT decisions. | `BLOCKED_USER_APPROVAL` | 3 accepted; 13 pending. |
@@ -47,7 +47,14 @@ The migration is incremental. A completed slice does not complete BL-026.
 2. Component comparator migrated to Java and its direct Python consumer removed.
    Candidate `248066754da2210b81504138d974c69711524dd8` received independent PASS:
    205 Java tests; 273 Python passed and 3 skipped; 40/40 parity cases; public validation 9/9.
-3. The next repository-owned Python framework consumer is not selected. Selection
+3. Blind review migrated to Java (`BlindReview` API and packaged
+   `blind-review-generate` CLI) and its Python consumer plus both Python-only
+   test files removed. All 14 collected characterization decisions are
+   preserved by 15 Java characterization tests and 6 CLI tests, with byte-level
+   rendering parity against the sealed historical artifacts. Verification
+   passed 226 Java tests, 260 Python passed and 3 skipped, and public
+   validation 9/9.
+4. The next repository-owned Python framework consumer is not selected. Selection
    must update `IMPLEMENTATION-PLAN.md` and `STATUS.json` before implementation.
 
 External Graphify Python runtime, immutable historical evidence, and unrelated

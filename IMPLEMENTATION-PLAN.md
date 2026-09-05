@@ -77,14 +77,14 @@ Python/pytest is used only to characterize the old consumer before cutover.
 - Read: `tests/test_pkb001_task6_blind_packet.py`
 - Read: `validation/pkb001/java-migration/python-framework-inventory.json`
 
-- [ ] Run `python3 -m pytest -q tests/test_pkb001_blind_review.py tests/test_pkb001_task6_blind_packet.py` before
+- [x] Run `python3 -m pytest -q tests/test_pkb001_blind_review.py tests/test_pkb001_task6_blind_packet.py` before
   replacement. Record the passing count: **14 collected characterization cases**
   (3 legacy `build_blind_packet` cases + 11 Task-6 packet cases); all pass.
   Never weaken a rejected case for Java parity.
-- [ ] Confirm the inventory records the consumer as `TRANSITIONAL` with exactly
+- [x] Confirm the inventory records the consumer as `TRANSITIONAL` with exactly
   the two active callers `tests/test_pkb001_blind_review.py` and
   `tests/test_pkb001_task6_blind_packet.py`; no skill or tool invokes it.
-- [ ] Record the observable contract to port:
+- [x] Record the observable contract to port:
   - JSON rendering: `json.dumps(indent=2, ensure_ascii=False, sort_keys=True) + '\n'`;
     SHA-256 hex digests over file bytes and over rendered JSON bytes.
   - Blind ordering: ascending SHA-256 hex of `pkb001-task6-blind-order-v1\0` +
@@ -134,7 +134,7 @@ Python/pytest is used only to characterize the old consumer before cutover.
 - Create: `src/main/java/com/featuredeliveryintelligence/fdi/validation/blindreview/LegacyBlindPacket.java`
 - Create: `src/test/java/com/featuredeliveryintelligence/fdi/validation/blindreview/BlindReviewCharacterizationTests.java`
 
-- [ ] Write failing tests porting every decision of the 14 Python
+- [x] Write failing tests porting every decision of the 14 Python
   characterization cases: the 3 legacy seam cases (arm/proposal identity
   omission, deterministic `BR-001`/`BR-002` ordering independent of input
   order, forward-mapping and reverse-hypothesis acceptance with
@@ -146,12 +146,12 @@ Python/pytest is used only to characterize the old consumer before cutover.
   and isolation after review; refusal to overwrite completed judgments without
   mutation; explicit new-version initialization; manifest input digests;
   one-current-digest-set in the Task-6 report).
-- [ ] Pin byte-level parity: rendering the packet, sealed key, manifest, and
+- [x] Pin byte-level parity: rendering the packet, sealed key, manifest, and
   reviewer instructions built from the sealed inputs must equal the sealed
   historical bytes under `validation/pkb001/task6-blind-review/` exactly.
-- [ ] Run `MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=BlindReviewCharacterizationTests test`;
+- [x] Run `MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=BlindReviewCharacterizationTests test`;
   expect compilation failure because the API is absent (RED).
-- [ ] Implement this public boundary. `BindingError` ports as
+- [x] Implement this public boundary. `BindingError` ports as
   `BlindReviewBindingException` (a `RuntimeContractException`); all other
   failures propagate unchanged.
 
@@ -169,7 +169,7 @@ public final class BlindReview {
 }
 ```
 
-- [ ] Rerun the focused tests; expect zero failures (GREEN). Commit as
+- [x] Rerun the focused tests; expect zero failures (GREEN). Commit as
   `feat(fdi): add Java blind review packet generation`.
 
 ### Task 3: Expose the Java CLI
@@ -180,7 +180,7 @@ public final class BlindReview {
 - Modify: `src/main/java/com/featuredeliveryintelligence/fdi/application/FdiApplication.java`
 - Create: `src/test/java/com/featuredeliveryintelligence/fdi/application/BlindReviewCliTests.java`
 
-- [ ] Write failing process-level tests for
+- [x] Write failing process-level tests for
   `blind-review-generate --root <dir> --output-dir <dir>` on a copied Task-6
   root: missing, duplicate, unknown, and `--option=value` forms; successful
   generation on a fresh output directory (exit 0, one deterministic JSON line,
@@ -188,12 +188,12 @@ public final class BlindReview {
   completed judgments` on stderr, no mutation, no traceback); `handles`
   dispatch isolation; and stable exit codes through `FdiApplication` without
   starting Spring.
-- [ ] Implement the dispatcher and invoke it before Spring startup, mirroring
+- [x] Implement the dispatcher and invoke it before Spring startup, mirroring
   `ScenarioForwardCli`: parse `--root` and `--output-dir` (both optional with
   the Python defaults), fail usage errors with exit 2 and no stack trace,
   catch only `BlindReviewBindingException` for the exit-2 contract, and print
   the compact sorted-key `{"packet_id", "packet_sha256"}` line on success.
-- [ ] Run the focused CLI tests and `MAVEN_OPTS='-Xmx2g' ./mvnw -q package`;
+- [x] Run the focused CLI tests and `MAVEN_OPTS='-Xmx2g' ./mvnw -q package`;
   expect zero failures. Smoke-test the packaged JAR against a copied Task-6
   root. Commit as `feat(fdi): expose Java blind review generation CLI`.
 
@@ -208,15 +208,15 @@ public final class BlindReview {
 - Delete: `tests/test_pkb001_task6_blind_packet.py`
 - Modify: `BACKLOG.md`, `STATUS.json`, `IMPLEMENTATION-PLAN.md`
 
-- [ ] Verify `tests/test_pkb001_blind_review.py` and
+- [x] Verify `tests/test_pkb001_blind_review.py` and
   `tests/test_pkb001_task6_blind_packet.py` are the only active callers; search
   may retain only explicitly historical plan text before deletion.
-- [ ] Mark the inventory entry `MIGRATED_TO_JAVA`, record the Java API, CLI,
+- [x] Mark the inventory entry `MIGRATED_TO_JAVA`, record the Java API, CLI,
   and verification evidence, extend the inventory test's migrated-list
   assertion, and add the blind-review cutover assertion. Delete only the
   replaced module and its two direct tests. Do not delete other Python
   consumers or modify external Graphify.
-- [ ] Run the complete verification set:
+- [x] Run the complete verification set:
 
 ```bash
 MAVEN_OPTS='-Xmx2g' ./mvnw test -q
@@ -227,16 +227,36 @@ git diff --check
 ```
 
 Expected: the Java suite grows beyond the 205-test second-slice baseline and
-never shrinks; remaining transitional Python regression passes at 267 tests
+never shrinks; remaining transitional Python regression passes at 260 tests
 with 3 skips (273 minus the 14 removed characterization cases plus the new
 blind-review cutover inventory test); public validation stays 9/9; no active
 caller imports the deleted module; sealed artifacts under
 `validation/pkb001/` are byte-identical.
-- [ ] Update BL-026 progress and `STATUS.json` with test counts and commit
+- [x] Update BL-026 progress and `STATUS.json` with test counts and commit
   IDs. Keep BL-026 active and `PKB-JAVA-001` below M3 because other Python
   consumers remain. Commit the cutover as
   `refactor(fdi): cut blind review generation over to Java` and the control
   reconciliation as `docs(fdi): record blind review Java cutover`.
+
+Third-slice completion ledger:
+
+- Plan revision: `73437f1`
+- Task 2 Java blind-review API and ported characterization tests: `a3c6b32`
+- Task 3 packaged `blind-review-generate` CLI and CLI tests: `4772a1e`
+- Task 4 caller cutover, inventory reconciliation, and removal: `1fad178`
+- Control reconciliation: recorded in the docs commit that records this
+  cutover
+
+Verification evidence at cutover: `MAVEN_OPTS='-Xmx2g' ./mvnw test` passed
+226 Java tests (205 second-slice baseline plus 21 new characterization and CLI
+tests); `python3 -m pytest -q` passed 260 tests with 3 skips; public
+validation 9/9; `git diff --check` clean; packaged-JAR smoke generation on a
+copied Task-6 root produced packet, sealed key, and reviewer instructions
+byte-identical to the sealed historical artifacts; `git diff --stat
+2480667..HEAD -- validation/pkb001` shows no modification to sealed inputs.
+All 14 Python characterization decisions (3 legacy seam cases plus 11 Task-6
+packet cases) remain enforced by the 15 Java characterization tests, and the 6
+CLI tests preserve the exit-code/stdout contract.
 
 ### Plan acceptance boundary
 
