@@ -6,17 +6,9 @@ and executable continuation constraints. `FRAMEWORK-SPEC.md` defines what;
 
 ## Current selection
 
-**Current selection:** BL-026 third migration slice, selected by the Human
-Reviewer on HERM-268 (2026-09-06, options 1/2/3 as sequential slices 3–5) and
-dispatched on HERM-269. Replace the repository-owned blind-review Python
-consumer with a Java API and packaged CLI, cut over its active callers, then
-remove that Python consumer; constructed under "Selected work: BL-026 Java
-blind-review migration" below. The first and second BL-026 migration slices are
-complete and retained below as their construction and verification records. The
-Human Reviewer must select each further bounded Python consumer before this
-plan is revised again or another implementation is dispatched. Existing Python
-plan sections below are completed or transitional delivery records and do not
-authorize new Python framework behavior.
+No implementation slice is selected. `PKB-BL-026` remains active, but its next
+repository-owned Python framework consumer must be selected and bounded before
+code changes begin. External Graphify Python runtime is excluded.
 
 ## Completed BL-026 slices
 
@@ -36,240 +28,22 @@ authorize new Python framework behavior.
 - Independent exact-candidate adjudication: PASS; 205 Java tests, 273 Python
   passed with 3 skipped, 40/40 parity fixtures, and public validation 9/9.
 
-## Selected work: BL-026 Java blind-review migration
+### Java blind-review migration
 
-**Goal:** Replace `tooling/validation/pkb001_blind_review.py` with a
-Java 17 API and packaged CLI that preserves its complete observable behavior —
-deterministic label/order blinding of PK-S1/PK-S2 review material — then remove
-the replaced Python module and its direct Python tests.
-
-**Spec binding:** `FRAMEWORK-SPEC.md` at
-`891e497968000c32984f26437eab811c063ec4cf`; requirement `PKB-JAVA-001`;
-behavior context: Task 6 deterministic label/order blinding
-(`ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT`).
-
-**Selected backlog:** `PKB-BL-026`, third bounded consumer only. Completing
-this plan advances but does not close BL-026; remaining Python consumers stay
-in the same backlog item for later implementation-plan revisions.
-
-**Architecture:** Java owns sealed-input verification (execution kind, run
-status, proposal-only authority attestations, artifact/manifest/witness digest
-binding, recorded input digests, forward item counts, reverse hypothesis
-counts, shared source/graph binding), deterministic blind ordering
-(SHA-256 of a fixed order salt plus the source identifier), the public packet,
-the sealed key, the non-recursive manifest, reviewer instructions, judgment
-workspace templates, completed-judgment overwrite protection, and the exact
-`sorted/indent-2/non-ASCII` JSON rendering and SHA-256 digest semantics of the
-Python consumer. The legacy `build_blind_packet` seam is ported unchanged.
-Inputs are the sealed read-only Petclinic artifacts; historical packet bytes
-under `validation/pkb001/task6-blind-review/` are never regenerated. Rendering
-is verified byte-for-byte against the sealed historical outputs.
-
-**Tech stack:** Java 17, Spring Boot 3.4.1, Jackson, JUnit 5 and Maven.
-Python/pytest is used only to characterize the old consumer before cutover.
-
-### Task 1: Characterize observable behavior
-
-**Files:**
-
-- Read: `tooling/validation/pkb001_blind_review.py`
-- Read: `tests/test_pkb001_blind_review.py`
-- Read: `tests/test_pkb001_task6_blind_packet.py`
-- Read: `validation/pkb001/java-migration/python-framework-inventory.json`
-
-- [x] Run `python3 -m pytest -q tests/test_pkb001_blind_review.py tests/test_pkb001_task6_blind_packet.py` before
-  replacement. Record the passing count: **14 collected characterization cases**
-  (3 legacy `build_blind_packet` cases + 11 Task-6 packet cases); all pass.
-  Never weaken a rejected case for Java parity.
-- [x] Confirm the inventory records the consumer as `TRANSITIONAL` with exactly
-  the two active callers `tests/test_pkb001_blind_review.py` and
-  `tests/test_pkb001_task6_blind_packet.py`; no skill or tool invokes it.
-- [x] Record the observable contract to port:
-  - JSON rendering: `json.dumps(indent=2, ensure_ascii=False, sort_keys=True) + '\n'`;
-    SHA-256 hex digests over file bytes and over rendered JSON bytes.
-  - Blind ordering: ascending SHA-256 hex of `pkb001-task6-blind-order-v1\0` +
-    `source_identifier` (Task-6 packet) and of `run_id + '\0' + proposal_id`
-    (legacy seam).
-  - Packet/key/manifest/workspace shapes and constants: packet
-    `pkb001.task6.blind-review-packet.v1` / `pkb001-task6-blind-comparison-v1`
-    with 15 `BR-###` items (9 forward mapping proposals, 1 forward unresolved,
-    5 reverse hypotheses), sealed key
-    `pkb001.task6.sealed-blind-key.v1` / `SEALED_KEY_CUSTODIAN_ONLY`,
-    non-recursive manifest `pkb001.task6.blind-review-manifest.v1` with fixed
-    input-digest list, blinding, isolation, and decision-boundary blocks;
-    `reviewer_instructions()` markdown; `reviewer_template(packet_digest,
-    workspace_id)` with `NON_HUMAN` / `EVALUATOR_ONLY` reviewer context,
-    isolation flags, empty `judgments`, and a `BR-###` entry template.
-  - Verification vocabulary (`BindingError` messages): `forward input is
-    missing: <path>`, `forward input digest mismatch: <path>`, `forward
-    execution kind is not a skill execution`, `forward run is not completed`,
-    `forward run is not proposal-only`, `forward manifest is not
-    proposal-only`, `forward artifact digest is not bound`, `forward witness
-    artifact digest is not bound`, `forward artifact did not attest non-access`,
-    `forward manifest did not attest non-access`, `forward witness did not
-    attest non-access`, `forward witness authority differs`, `forward witness
-    assurance limit is missing`, `forward <field> differs from manifest`,
-    `forward item count is not 10`, `forward mapping count is not 9`, `forward
-    unresolved count is not 1`, `forward item authority is not proposal-only`,
-    the mirrored `reverse ...` and `reverse input ...` messages, `runs use
-    different source commits`, `runs use different graph digests`, `cannot
-    safely inspect existing judgment workspace <path>: <error>`, and `refusing
-    to overwrite completed judgments; initialize a new version with an explicit
-    --output-dir`.
-  - CLI contract: `pkb001_blind_review.py --root <dir> --output-dir <dir>`
-    (argparse defaults: current directory, `validation/pkb001/task6-blind-review`);
-    success prints one line of compact sorted-key JSON
-    `{"packet_id": ..., "packet_sha256": ...}` and exits 0; `BindingError`
-    prints the message on stderr and exits 2; argparse usage errors exit 2;
-    unexpected failures propagate (traceback, exit 1). Overwrite protection
-    runs before any file is written.
-
-### Task 2: Implement the Java blind-review API
-
-**Files:**
-
-- Create: `src/main/java/com/featuredeliveryintelligence/fdi/validation/blindreview/BlindReview.java`
-- Create: `src/main/java/com/featuredeliveryintelligence/fdi/validation/blindreview/BlindReviewBindingException.java`
-- Create: `src/main/java/com/featuredeliveryintelligence/fdi/validation/blindreview/Task6Packet.java`
-- Create: `src/main/java/com/featuredeliveryintelligence/fdi/validation/blindreview/LegacyBlindPacket.java`
-- Create: `src/test/java/com/featuredeliveryintelligence/fdi/validation/blindreview/BlindReviewCharacterizationTests.java`
-
-- [x] Write failing tests porting every decision of the 14 Python
-  characterization cases: the 3 legacy seam cases (arm/proposal identity
-  omission, deterministic `BR-001`/`BR-002` ordering independent of input
-  order, forward-mapping and reverse-hypothesis acceptance with
-  `FORWARD_SKILL`/`REVERSE_SKILL` source kinds) and the 11 Task-6 cases
-  (packet accounting without judgments; sealed-key packet binding and absent
-  arm labels/identifiers; neutral record shapes not uniquely identifying an
-  arm; deterministic label/order blinding claims and disclosed limitation;
-  frozen judgment contract and `NON_HUMAN` limit; identical workspace inputs
-  and isolation after review; refusal to overwrite completed judgments without
-  mutation; explicit new-version initialization; manifest input digests;
-  one-current-digest-set in the Task-6 report).
-- [x] Pin byte-level parity: rendering the packet, sealed key, manifest, and
-  reviewer instructions built from the sealed inputs must equal the sealed
-  historical bytes under `validation/pkb001/task6-blind-review/` exactly.
-- [x] Run `MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=BlindReviewCharacterizationTests test`;
-  expect compilation failure because the API is absent (RED).
-- [x] Implement this public boundary. `BindingError` ports as
-  `BlindReviewBindingException` (a `RuntimeContractException`); all other
-  failures propagate unchanged.
-
-```java
-public final class BlindReview {
-    public static final String TASK6_DIR = "validation/pkb001/task6-blind-review";
-    public static Task6Packet buildTask6Packet(Path root);
-    public static ObjectNode writeTask6Artifacts(Path root, Path outputDir);
-    public static ObjectNode writeTask6Artifacts(Path root);
-    public static LegacyBlindPacket buildBlindPacket(String runId, List<Object> outputs);
-    public static String reviewerInstructions();
-    public static ObjectNode reviewerTemplate(String packetDigest, String workspaceId);
-    public static String sha256(byte[] bytes);
-    public static byte[] jsonBytes(Object value);
-}
-```
-
-- [x] Rerun the focused tests; expect zero failures (GREEN). Commit as
-  `feat(fdi): add Java blind review packet generation`.
-
-### Task 3: Expose the Java CLI
-
-**Files:**
-
-- Create: `src/main/java/com/featuredeliveryintelligence/fdi/application/BlindReviewCli.java`
-- Modify: `src/main/java/com/featuredeliveryintelligence/fdi/application/FdiApplication.java`
-- Create: `src/test/java/com/featuredeliveryintelligence/fdi/application/BlindReviewCliTests.java`
-
-- [x] Write failing process-level tests for
-  `blind-review-generate --root <dir> --output-dir <dir>` on a copied Task-6
-  root: missing, duplicate, unknown, and `--option=value` forms; successful
-  generation on a fresh output directory (exit 0, one deterministic JSON line,
-  no stack trace); completed-judgment refusal (exit 2, `refusing to overwrite
-  completed judgments` on stderr, no mutation, no traceback); `handles`
-  dispatch isolation; and stable exit codes through `FdiApplication` without
-  starting Spring.
-- [x] Implement the dispatcher and invoke it before Spring startup, mirroring
-  `ScenarioForwardCli`: parse `--root` and `--output-dir` (both optional with
-  the Python defaults), fail usage errors with exit 2 and no stack trace,
-  catch only `BlindReviewBindingException` for the exit-2 contract, and print
-  the compact sorted-key `{"packet_id", "packet_sha256"}` line on success.
-- [x] Run the focused CLI tests and `MAVEN_OPTS='-Xmx2g' ./mvnw -q package`;
-  expect zero failures. Smoke-test the packaged JAR against a copied Task-6
-  root. Commit as `feat(fdi): expose Java blind review generation CLI`.
-
-### Task 4: Cut over and remove only the replaced Python consumer
-
-**Files:**
-
-- Modify: `validation/pkb001/java-migration/python-framework-inventory.json`
-- Modify: `tests/test_pkb001_python_framework_inventory.py`
-- Delete: `tooling/validation/pkb001_blind_review.py`
-- Delete: `tests/test_pkb001_blind_review.py`
-- Delete: `tests/test_pkb001_task6_blind_packet.py`
-- Modify: `BACKLOG.md`, `STATUS.json`, `IMPLEMENTATION-PLAN.md`
-
-- [x] Verify `tests/test_pkb001_blind_review.py` and
-  `tests/test_pkb001_task6_blind_packet.py` are the only active callers; search
-  may retain only explicitly historical plan text before deletion.
-- [x] Mark the inventory entry `MIGRATED_TO_JAVA`, record the Java API, CLI,
-  and verification evidence, extend the inventory test's migrated-list
-  assertion, and add the blind-review cutover assertion. Delete only the
-  replaced module and its two direct tests. Do not delete other Python
-  consumers or modify external Graphify.
-- [x] Run the complete verification set:
-
-```bash
-MAVEN_OPTS='-Xmx2g' ./mvnw test -q
-MAVEN_OPTS='-Xmx2g' ./mvnw -q package
-python3 -m pytest -q
-python3 validation/pkb001/task7-evaluation/public_validate.py .
-git diff --check
-```
-
-Expected: the Java suite grows beyond the 205-test second-slice baseline and
-never shrinks; remaining transitional Python regression passes at 260 tests
-with 3 skips (273 minus the 14 removed characterization cases plus the new
-blind-review cutover inventory test); public validation stays 9/9; no active
-caller imports the deleted module; sealed artifacts under
-`validation/pkb001/` are byte-identical.
-- [x] Update BL-026 progress and `STATUS.json` with test counts and commit
-  IDs. Keep BL-026 active and `PKB-JAVA-001` below M3 because other Python
-  consumers remain. Commit the cutover as
-  `refactor(fdi): cut blind review generation over to Java` and the control
-  reconciliation as `docs(fdi): record blind review Java cutover`.
-
-Third-slice completion ledger:
-
-- Plan revision: `73437f1`
-- Task 2 Java blind-review API and ported characterization tests: `a3c6b32`
-- Task 3 packaged `blind-review-generate` CLI and CLI tests: `4772a1e`
-- Task 4 caller cutover, inventory reconciliation, and removal: `1fad178`
-- Control reconciliation: recorded in the docs commit that records this
-  cutover
-
-Verification evidence at cutover: `MAVEN_OPTS='-Xmx2g' ./mvnw test` passed
-226 Java tests (205 second-slice baseline plus 21 new characterization and CLI
-tests); `python3 -m pytest -q` passed 260 tests with 3 skips; public
-validation 9/9; `git diff --check` clean; packaged-JAR smoke generation on a
-copied Task-6 root produced packet, sealed key, and reviewer instructions
-byte-identical to the sealed historical artifacts; `git diff --stat
-2480667..HEAD -- validation/pkb001` shows no modification to sealed inputs.
-All 14 Python characterization decisions (3 legacy seam cases plus 11 Task-6
-packet cases) remain enforced by the 15 Java characterization tests, and the 6
-CLI tests preserve the exit-code/stdout contract.
-
-### Plan acceptance boundary
-
-- Java preserves every one of the 14 characterization decisions, the blind
-  ordering and digest semantics, byte-identical sorted JSON/Markdown rendering,
-  the fail-closed sealed-input verification and overwrite protection, and the
-  CLI exit-code/stdout contract.
-- The replaced Python module and its two direct tests are gone; no other
-  Python consumer is touched; external Graphify remains unchanged.
-- Historical evidence artifacts under `validation/pkb001/` remain byte-identical.
-- BL-026 remains open for later consumers; no child Backlog Items are created.
-
----
+- Base: `32a9b4b6840f6970ee2b0a5690c5788a533316e4`.
+- Candidate (migration line tip): `8ca458ea6eb30fc01df46c1e07371fb05d41f1a4`;
+  the review tip adds only the plan-compaction commit on top.
+- Commits: `484668a`, `8d340f3`, `e61126e`, `4070d7b`, `7942287`, `8ca458e`.
+- Replaced `pkb001_blind_review.py` with the Java `BlindReview` API and packaged
+  `blind-review-generate` CLI; all 14 Python characterization decisions are
+  preserved by 15 Java characterization tests and 6 CLI tests, with byte-level
+  parity of the packet, sealed key, and reviewer instructions against the
+  sealed historical artifacts.
+- Verification at candidate: 226 Java tests; 261 Python passed with 3 skipped
+  (rebased-base arithmetic: 274 at `32a9b4b` minus 14 removed characterization
+  cases plus 1 new inventory cutover test); public validation 9/9;
+  packaged-JAR smoke output byte-identical to a fresh run of the original
+  Python consumer extracted at base.
 
 These are completion records, not authority to select the next consumer.
 
