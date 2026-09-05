@@ -15,7 +15,7 @@ exactly one backlog record. Status means:
 
 | Backlog ID | Type | Requirement | Outcome | Status | Dependency / evidence |
 |---|---|---|---|---|---|
-| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java, one bounded consumer at a time; exclude external Graphify. | `IN_PROGRESS` | Three consumers verified; next consumer unselected. |
+| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java, one bounded consumer at a time; exclude external Graphify. | `IN_PROGRESS` | Four consumers verified; the final pre-authorized consumer awaits dispatch. |
 | `PKB-BL-023` | `FEATURE` | `PKB-REVIEW-003` | Generate evidence-backed Capability/scenario proposals and one review surface. | `VERIFIED` | Generator and review artifacts exercised. |
 | `PKB-BL-024` | `DOCUMENTATION` | `PKB-STATUS-002` | Point status to the actual generated review material and review state. | `VERIFIED` | Active pointers validated. |
 | `PKB-BL-025` | `FEATURE` | `PKB-REVIEW-004` | Record version-bound human ACCEPT / EDIT / REJECT decisions. | `BLOCKED_USER_APPROVAL` | 3 accepted; 13 pending. |
@@ -54,8 +54,20 @@ The migration is incremental. A completed slice does not complete BL-026.
    rendering parity against the sealed historical artifacts. Verification
    passed 226 Java tests, 260 Python passed and 3 skipped, and public
    validation 9/9.
-4. The next repository-owned Python framework consumer is not selected. Selection
-   must update `IMPLEMENTATION-PLAN.md` and `STATUS.json` before implementation.
+4. Next-run readiness gate migrated to Java (`NextRunGate` API and packaged
+   `next-run-validate` CLI; HERM-270) and its Python consumer plus its direct
+   Python-only test file removed. All 82 collected characterization cases are
+   preserved by 81 Java characterization tests and 6 CLI tests, with
+   byte-identical report bytes, exit codes, and stdout against the original
+   Python consumer on copied gate roots (READY, BLOCKED, nested parents,
+   overwrite refusal, symlink-escape refusal). Verification passed 313 Java
+   tests and public validation 9/9. Candidate (migration line tip)
+   `8b4d0570921eb830513bba8f18cbeac2b60712f7`; the review tip adds only the
+   completion-record commit on top.
+5. The final pre-authorized consumer (`pkb001_code_baseline.py`, HERM-268
+   option 3) awaits dispatch on a new issue; all other consumers remain
+   unselected. Selection must update `IMPLEMENTATION-PLAN.md` and
+   `STATUS.json` before implementation.
 
 External Graphify Python runtime, immutable historical evidence, and unrelated
 Python tooling are outside BL-026.
