@@ -53,6 +53,55 @@ def test_caller_discovery_detects_skill_commands_but_excludes_history(tmp_path):
     }
 
 
+def test_caller_discovery_propagates_arbitrary_script_variable(tmp_path):
+    module_path = "tooling/validation/example_gate.py"
+    caller = tmp_path / "tests/arbitrary_name.py"
+    caller.parent.mkdir(parents=True)
+    caller.write_text(
+        'script = ROOT / "tooling/validation/example_gate.py"\n'
+        'subprocess.run(["python3", str(script)])\n'
+    )
+
+    assert discover_active_callers(tmp_path, module_path) == {
+        "tests/arbitrary_name.py"
+    }
+
+
+def test_caller_discovery_propagates_assigned_command_list(tmp_path):
+    module_path = "tooling/validation/example_gate.py"
+    caller = tmp_path / "tests/assigned_command.py"
+    caller.parent.mkdir(parents=True)
+    caller.write_text(
+        'command = ["python3", str(ROOT / "tooling/validation/example_gate.py")]\n'
+        "subprocess.run(command)\n"
+    )
+
+    assert discover_active_callers(tmp_path, module_path) == {
+        "tests/assigned_command.py"
+    }
+
+
+def test_caller_discovery_is_transitive_and_requires_a_recognized_sink(tmp_path):
+    module_path = "tooling/validation/example_gate.py"
+    active = tmp_path / "tests/transitive.py"
+    active.parent.mkdir(parents=True)
+    active.write_text(
+        'seed = ROOT / "tooling/validation/example_gate.py"\n'
+        "forwarded = seed\n"
+        'command = ["python3", str(forwarded)]\n'
+        "subprocess.run(command)\n"
+    )
+    inactive = tmp_path / "tests/unused_literal.py"
+    inactive.write_text(
+        'reference = "tooling/validation/example_gate.py"\n'
+        "print(reference)\n"
+    )
+
+    assert discover_active_callers(tmp_path, module_path) == {
+        "tests/transitive.py"
+    }
+
+
 def _matches_module_literal(value, module_path, module_name):
     if not isinstance(value, str):
         return False
@@ -79,7 +128,7 @@ def _python_source_references_module(source, module_path):
     module_name = module_path.removesuffix(".py").replace("/", ".")
     module_parent, module_leaf = module_name.rsplit(".", 1)
     tree = ast.parse(source.read_text(), filename=str(source))
-    path_variables = set()
+    assignments = []
     for node in ast.walk(tree):
         if isinstance(node, ast.ImportFrom):
             if node.module == module_name:
@@ -95,36 +144,45 @@ def _python_source_references_module(source, module_path):
         elif isinstance(node, (ast.Assign, ast.AnnAssign)):
             targets = node.targets if isinstance(node, ast.Assign) else [node.target]
             names = {
-                target.id
+                child.id
                 for target in targets
-                if isinstance(target, ast.Name)
+                for child in ast.walk(target)
+                if isinstance(child, ast.Name) and isinstance(child.ctx, ast.Store)
             }
-            if any("PATH" in name.upper() or "MODULE" in name.upper() for name in names):
-                if any(
-                    _matches_module_literal(child.value, module_path, module_name)
-                    for child in ast.walk(node.value)
-                    if isinstance(child, ast.Constant)
-                ):
-                    path_variables.update(names)
+            if names and node.value is not None:
+                assignments.append((names, node.value))
+    tainted_variables = set()
+
+    def expression_is_tainted(expression):
+        return any(
+            (
+                isinstance(child, ast.Constant)
+                and _matches_module_literal(child.value, module_path, module_name)
+            )
+            or (
+                isinstance(child, ast.Name)
+                and child.id in tainted_variables
+            )
+            for child in ast.walk(expression)
+        )
+
+    changed = True
+    while changed:
+        changed = False
+        for names, value in assignments:
+            if expression_is_tainted(value) and not names <= tainted_variables:
+                tainted_variables.update(names)
+                changed = True
     dynamic_calls = {
-        "run", "Popen", "check_call", "check_output", "import_module",
-        "spec_from_file_location",
+        "subprocess.run", "subprocess.Popen", "subprocess.check_call",
+        "subprocess.check_output", "importlib.import_module",
+        "importlib.util.spec_from_file_location",
     }
     for node in ast.walk(tree):
-        if not isinstance(node, ast.Call) or _call_name(node).split(".")[-1] not in dynamic_calls:
+        if not isinstance(node, ast.Call) or _call_name(node) not in dynamic_calls:
             continue
         arguments = [*node.args, *(keyword.value for keyword in node.keywords)]
-        if any(
-            _matches_module_literal(child.value, module_path, module_name)
-            for argument in arguments
-            for child in ast.walk(argument)
-            if isinstance(child, ast.Constant)
-        ) or any(
-            child.id in path_variables
-            for argument in arguments
-            for child in ast.walk(argument)
-            if isinstance(child, ast.Name)
-        ):
+        if any(expression_is_tainted(argument) for argument in arguments):
             return True
     return False
 
