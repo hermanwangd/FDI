@@ -265,6 +265,9 @@ Before implementation:
 
 ## Resource Safety
 
+For MultiCA dispatch and post-slice KPI analysis, follow
+`validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md` (supporting guidance).
+
 Keep command memory use below 8 GB. Use bounded inputs and concurrency, and use
 `MAVEN_OPTS='-Xmx2g'` for Maven verification unless a stricter active control
 requires a lower limit.
