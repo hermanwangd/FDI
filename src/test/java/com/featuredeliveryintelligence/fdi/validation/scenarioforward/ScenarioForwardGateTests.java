@@ -145,6 +145,13 @@ class ScenarioForwardGateTests {
         assertBlocked(fixture, "RUN_ID_ALREADY_EXISTS");
     }
 
+    @Test void unavailableGitRegistryUsesStablePublicReason() throws Exception {
+        Fixture fixture = fixture();
+        Files.move(root.resolve(".git"), root.resolve(".git-unavailable"));
+        Files.writeString(root.resolve(".git"), "gitdir: missing-registry\n");
+        assertBlocked(fixture, "RUN_ID_REGISTRY_UNAVAILABLE");
+    }
+
     @Test void reasonsAreSortedDeduplicatedAndFailureNeverReturnsGenerationInputs() throws Exception {
         Fixture fixture = fixture();
         fixture.proposal.put("graph_sha256", "0".repeat(64));
