@@ -157,6 +157,36 @@ Do not interpret an unselected Backlog item as an active plan. Do not combine
 unrelated decision points, provider changes, and experiment execution into one
 plan. Bind every plan to the selected Backlog IDs and the same Spec revision.
 
+#### Compact plan maintenance lifecycle
+
+Maintain **One active plan file**: `IMPLEMENTATION-PLAN.md`. It must not duplicate the Backlog ledger,
+the Framework Spec, source code, schemas, test fixtures, terminal logs, or full
+historical reports. Link to those artifacts and retain only the constraints an
+agent needs to execute or verify the selected work. Keep the file at or below
+10 KB by default; exceeding that budget requires a concrete reason tied to the
+currently selected work.
+
+- **No selected work:** state that no implementation slice is selected, retain
+  only a compact verified-delivery ledger and continuation constraints, and set
+  `STATUS.json.active_implementation_plan` plus its plan anchor to `null`.
+- **Selection:** replace the current-selection section with one bounded plan
+  bound to its Backlog ID, requirement ID, exact Spec revision, base commit,
+  owned files, exclusions, acceptance criteria, TDD sequence, verification
+  commands, and commit/removal boundaries. Update the Backlog active-plan link
+  and `STATUS.json` in the same change.
+- **Execution:** update only material plan state, blockers, changed decisions,
+  and evidence references. Do not paste command output or repeat requirement and
+  backlog prose. Test results belong in concise evidence summaries or supporting
+  artifacts.
+- **Completion:** replace construction detail with a short ledger entry containing
+  the delivered behavior, exact commit, verification summary, and evidence path.
+  Clear the active-plan link and anchor; update Backlog status/maturity and
+  `STATUS.json` together. Git history preserves removed planning detail.
+
+If multiple agents work concurrently, only the owner of the explicitly selected
+slice may edit its current-plan section. Other agents must report a conflict or
+work in non-overlapping supporting files; they must not append competing plans.
+
 ### Evidence and maturity
 
 Moving a Backlog item to `VERIFIED` requires objective completion evidence:

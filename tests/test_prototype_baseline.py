@@ -143,6 +143,20 @@ def test_active_truth_discloses_blinding_and_publication_boundaries():
     ).read_text()
 
 
+def test_agents_define_compact_implementation_plan_lifecycle():
+    instructions = (ROOT/'AGENTS.md').read_text()
+    for rule in (
+        'One active plan file',
+        'No selected work',
+        'Selection',
+        'Execution',
+        'Completion',
+        '10 KB',
+        'must not duplicate the Backlog ledger',
+    ):
+        assert rule in instructions
+
+
 def test_default_python_suite_passes_in_clean_tracked_copy(tmp_path):
     assert 'norecursedirs = .fdi-work' in (ROOT/'pytest.ini').read_text()
     if (
