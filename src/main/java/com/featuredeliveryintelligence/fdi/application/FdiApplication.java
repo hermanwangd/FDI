@@ -9,6 +9,9 @@ public class FdiApplication {
         if (ScenarioForwardCli.handles(args)) {
             System.exit(ScenarioForwardCli.run(args, System.out, System.err));
         }
+        if (BlindReviewCli.handles(args)) {
+            System.exit(BlindReviewCli.run(args, System.out, System.err));
+        }
         if (Dev204Cli.handles(args)) return;
         SpringApplication.run(FdiApplication.class, args);
     }
