@@ -88,3 +88,56 @@ def test_fresh_pk_s2_evidence_resolves_only_in_allowed_inputs():
 def test_obsolete_code_baseline_review_packet_is_not_active():
     assert not (ROOT/'validation/pkb001/reviews/PKB001-510a397').exists()
     assert not (ROOT/'validation/pkb001/evaluator/PKB001-510a397-blind-key.json').exists()
+
+
+def _pk_s1_text():
+    return (ROOT/'skills/pkb001/pk-s1-product-realization/SKILL.md').read_text()
+
+
+def test_pk_s1_component_output_contract_is_complete_and_typed():
+    text = _pk_s1_text()
+    contract = text.split('## Component output contract', 1)[1]
+    required_fields = (
+        'role', 'granularity', 'source_revision', 'source_path',
+        'qualified_symbol', 'provider_node_id', 'selection_reason',
+    )
+    assert all(f'`{field}`' in contract for field in required_fields)
+    assert 'repository-relative `source_path`' in contract
+    assert '`PRIMARY`' in contract and '`SUPPORTING`' in contract
+    assert all(f'`{value}`' in contract for value in (
+        'REPOSITORY', 'FILE', 'TYPE', 'METHOD', 'TEMPLATE', 'CONFIGURATION',
+    ))
+    assert 'Every `MAPPING_PROPOSAL` MUST contain at least one `PRIMARY`' in contract
+    assert '`UNRESOLVED` MUST emit no components' in contract
+
+
+def test_pk_s1_preserves_exact_component_selection_and_binding_rules():
+    text = _pk_s1_text()
+    contract = text.split('## Component output contract', 1)[1]
+    assert 'A containing class or file must not replace a directly evidenced method node' in contract
+    assert 'Supporting evidence remains separate' in contract
+    assert 'cannot count as a primary exact component' in contract
+    assert 'full 40-character source revision' in contract
+    assert 'exact Graphify binding' in contract
+
+
+def test_pk_s1_forbidden_inputs_fail_closed_without_mappings():
+    text = _pk_s1_text()
+    assert 'PK-S1 **MUST NOT** read' in text
+    for forbidden in (
+        'evaluator gold',
+        'sealed expected mappings',
+        'reviewer judgments',
+        'post-generation comparison or evaluation results',
+        'current human-review decision packet',
+    ):
+        assert forbidden in text
+    assert 'supplied or accessed' in text
+    assert 'return `BLOCKED` with no mappings' in text
+
+
+def test_pk_s1_retains_product_team_proposal_only_boundary():
+    text = _pk_s1_text()
+    assert 'Product Semantics remains owned by `PRODUCT_TEAM`' in text
+    assert 'Mapping status is always `PROPOSAL_ONLY`' in text
+    assert 'MUST NOT publish Product truth' in text
