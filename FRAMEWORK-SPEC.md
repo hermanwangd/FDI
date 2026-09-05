@@ -335,8 +335,8 @@ Before adding template extraction, the installed Graphify runtime must be querie
 - Java component contract: `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/`
 - Java contract tests: `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/`
 - Provider integration remains under `structural/api/` and `structural/graphify/`.
-- The historical PK-S1 directory `skills/pkb001/pk-s1-product-realization/` remains immutable for completed runs; next-run instructions are in `skills/pkb001/pk-s1-product-realization-v0.2/`.
-- Next-run readiness MUST explicitly select PK-S1 v0.2 before generation.
+- The historical PK-S1 directory and `skills/pkb001/pk-s1-product-realization-v0.2/` remain immutable for their existing experiments and contracts.
+- Scenario-grounded Forward work uses a separately versioned PK-S1 skill and proposal contract. Its readiness gate MUST explicitly select and verify that version and its schema digest, bind the reviewed frozen semantics and exact-revision evidence, and reject incompatible versions. This does not authorize experiment execution or bypass its remaining gates.
 - Python comparison logic remains in `tooling/validation/`; immutable outputs remain under `validation/pkb001/`.
 
 Implementation uses Java records/enums with constructor validation and immutable collections. Python uses deterministic transformations. Checked-in JSON Schema validation requires a Draft 2020-12-compatible `jsonschema` runtime and fails closed when that validator is unavailable.
