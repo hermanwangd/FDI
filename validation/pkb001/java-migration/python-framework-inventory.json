@@ -73,7 +73,7 @@
     {
       "path": "tooling/validation/pkb001_next_run_gate.py",
       "responsibility": "Validate a PKB-001 v0.2 proposal run request with fail-closed controls.",
-      "active_callers": ["tests/test_pkb001_next_run_gate.py", "tooling/validation/pkb001_scenario_forward_gate.py"],
+      "active_callers": ["tests/test_pkb001_next_run_gate.py"],
       "migration_state": "TRANSITIONAL",
       "external_runtime": false
     },
@@ -87,14 +87,22 @@
     {
       "path": "tooling/validation/pkb001_scenario_forward_gate.py",
       "responsibility": "Validate bounded PKB-001 v0.3 scenario-forward proposals and emit the stable public report.",
-      "active_callers": ["tests/test_pkb001_scenario_forward.py"],
-      "migration_state": "SELECTED",
-      "external_runtime": false
+      "active_callers": [],
+      "migration_state": "MIGRATED_TO_JAVA",
+      "external_runtime": false,
+      "java_api": "com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioForwardGate",
+      "java_cli": "java -jar target/fdi-0.4.8.3.jar scenario-forward-validate --root . --request <request.json>",
+      "verification_evidence": {
+        "replacement_commit": "8cb01c3d925f5556b75e55470de1d761eccc78bc",
+        "shared_fixture": "validation/pkb001/fixtures/scenario-forward-parity.json",
+        "shared_fixture_cases": 36,
+        "java_test_count_at_cutover": 162
+      }
     },
     {
       "path": "tooling/validation/pkb001_scenario_review.py",
       "responsibility": "Validate PKB-001 scenario proposals and render immutable review surfaces.",
-      "active_callers": ["skills/pkb001/pk-scenario-proposal/SKILL.md", "tests/test_pkb001_human_review_packet.py", "tests/test_pkb001_scenario_review.py", "tooling/validation/pkb001_scenario_forward_gate.py"],
+      "active_callers": ["skills/pkb001/pk-scenario-proposal/SKILL.md", "tests/test_pkb001_human_review_packet.py", "tests/test_pkb001_scenario_review.py"],
       "migration_state": "TRANSITIONAL",
       "external_runtime": false
     },

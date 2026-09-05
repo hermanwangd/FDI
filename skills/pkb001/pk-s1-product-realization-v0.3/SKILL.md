@@ -53,3 +53,14 @@ bindings. Node identity/path checks do not establish semantic role, behavior,
 qualified-symbol correctness or complete UI coverage. A future writer must
 exclusively create a new run/output and recheck frozen digests; never overwrite an
 existing run. This Skill itself supplies no writer or publication path.
+
+Validate the completed request with the packaged Java framework CLI:
+
+```bash
+java -jar target/fdi-0.4.8.3.jar scenario-forward-validate --root . --request <request.json>
+```
+
+Only the JSON report written to standard output is authoritative. Exit `0` means
+the request was evaluated; read `status` to distinguish `CONTRACT_VALID` from
+`BLOCKED`. Exit `2` means the CLI arguments or request file were invalid. This
+validation does not authorize generation or publish Product Semantics.

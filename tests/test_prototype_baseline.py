@@ -152,6 +152,8 @@ def test_default_python_suite_passes_in_clean_tracked_copy(tmp_path):
         relative = Path(os.fsdecode(encoded))
         source = ROOT/relative
         target = clean_root/relative
+        if not source.exists() and not source.is_symlink():
+            continue
         target.parent.mkdir(parents=True, exist_ok=True)
         if source.is_symlink():
             target.symlink_to(os.readlink(source))

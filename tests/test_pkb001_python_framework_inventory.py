@@ -8,6 +8,10 @@ ROOT = Path(__file__).resolve().parents[1]
 INVENTORY = ROOT / "validation/pkb001/java-migration/python-framework-inventory.json"
 FIXTURES = ROOT / "validation/pkb001/fixtures/scenario-forward-parity.json"
 SELECTED = "tooling/validation/pkb001_scenario_forward_gate.py"
+JAVA_CLI = (
+    "java -jar target/fdi-0.4.8.3.jar scenario-forward-validate "
+    "--root . --request <request.json>"
+)
 
 
 def test_caller_discovery_detects_supported_python_reference_forms(tmp_path):
@@ -302,12 +306,16 @@ def test_python_framework_inventory_characterizes_the_migration_boundary():
     inventoried = [consumer["path"] for consumer in consumers]
 
     assert len(inventoried) == len(set(inventoried))
-    assert set(inventoried) == discovered
+    assert {
+        consumer["path"]
+        for consumer in consumers
+        if consumer["migration_state"] != "MIGRATED_TO_JAVA"
+    } == discovered
     assert all(
-        set(consumer) == {
+        {
             "path", "responsibility", "active_callers", "migration_state",
             "external_runtime",
-        }
+        }.issubset(consumer)
         for consumer in consumers
     )
     assert inventoried == sorted(inventoried)
@@ -320,11 +328,16 @@ def test_python_framework_inventory_characterizes_the_migration_boundary():
         consumer["path"]
         for consumer in consumers
         if consumer["migration_state"] == "SELECTED"
+    ] == []
+    assert [
+        consumer["path"]
+        for consumer in consumers
+        if consumer["migration_state"] == "MIGRATED_TO_JAVA"
     ] == [SELECTED]
     assert all(
         consumer["migration_state"] == "TRANSITIONAL"
         for consumer in consumers
-        if consumer["path"] != SELECTED
+        if consumer["migration_state"] != "MIGRATED_TO_JAVA"
     )
 
     external = inventory["external_runtimes"]
@@ -351,3 +364,27 @@ def test_python_framework_inventory_characterizes_the_migration_boundary():
         "command": "python3 -m pytest -q tests/test_pkb001_scenario_forward.py",
         "passed_test_count": 109,
     }
+
+
+def test_scenario_forward_consumer_is_cut_over_to_java():
+    inventory = json.loads(INVENTORY.read_text())
+    migrated = next(
+        consumer
+        for consumer in inventory["repository_consumers"]
+        if consumer["path"] == SELECTED
+    )
+    skill = (
+        ROOT / "skills/pkb001/pk-s1-product-realization-v0.3/SKILL.md"
+    ).read_text()
+
+    assert not (ROOT / SELECTED).exists()
+    assert not (ROOT / "tests/test_pkb001_scenario_forward.py").exists()
+    assert migrated["migration_state"] == "MIGRATED_TO_JAVA"
+    assert migrated["active_callers"] == []
+    assert migrated["java_api"] == (
+        "com.featuredeliveryintelligence.fdi.validation.scenarioforward."
+        "ScenarioForwardGate"
+    )
+    assert migrated["java_cli"] == JAVA_CLI
+    assert migrated["verification_evidence"]["shared_fixture_cases"] == 36
+    assert JAVA_CLI in skill
