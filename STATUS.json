@@ -13,15 +13,18 @@
   "blinding_scope": "DETERMINISTIC_LABEL_AND_ORDER_BLINDING",
   "blinding_limitation": "ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT",
   "spec_maturity": {
-    "spec_revision": "06861c4575c4791f3aa6c262f5f0f4c45c2c2d75",
-    "normative_requirements": 22,
+    "spec_revision": "891e497968000c32984f26437eab811c063ec4cf",
+    "normative_requirements": 23,
     "m3_verified": 8,
-    "m1_backlogged": 14,
+    "m1_backlogged": 15,
     "next_experiment_readiness": "NOT_READY"
   },
-  "active_backlog_item": "PKB-BL-007",
-  "active_implementation_plan": "IMPLEMENTATION-PLAN.md#selected-work-scenario-aware-forward-contract",
-  "next_action": "Review remaining next-experiment gates and scope BL-008 UI/template evidence verification; bounded BL-007 contract implementation is tested, but no Forward generation is authorized by CONTRACT_VALID.",
+  "active_backlog_item": "PKB-BL-026",
+  "active_implementation_plan": null,
+  "next_action": "Review the written Java-only framework boundary, then plan the first migration slice: replace pkb001_scenario_forward_gate.py with a Java API/CLI while keeping external Graphify unchanged.",
+  "framework_language_target": "JAVA_17_SPRING_BOOT_3_4_1",
+  "external_graphify_runtime": "PYTHON_MCP_PROVIDER_OUTSIDE_FRAMEWORK_MIGRATION",
+  "python_framework_status": "TRANSITIONAL_MIGRATION_INPUT",
   "archived_documents_are_authority": false,
   "review_packet": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-progress-001.md",
   "evaluation_reference_packet": "validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.zh-TW.md",
@@ -29,7 +32,7 @@
   "scenario_generation": "GRAPHIFY_AND_DELIVERY_HISTORY_PROPOSALS",
   "scenario_generator_status": "IMPLEMENTED_AND_EXERCISED",
   "selected_backlog_items": [
-    "PKB-BL-007"
+    "PKB-BL-026"
   ],
   "review_json": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-decisions-001.json",
   "original_review_packet": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review.md",

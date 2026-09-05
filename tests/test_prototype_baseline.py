@@ -55,8 +55,8 @@ def test_every_normative_requirement_has_one_bound_backlog_record():
         backlog, re.MULTILINE,
     )
 
-    assert len(requirement_ids) == len(set(requirement_ids)) == 22
-    assert len(records) == len({backlog_id for backlog_id, _ in records}) == 22
+    assert len(requirement_ids) == len(set(requirement_ids)) == 23
+    assert len(records) == len({backlog_id for backlog_id, _ in records}) == 23
     assert {requirement_id for _, requirement_id in records} == set(requirement_ids)
     status = json.loads((ROOT/'STATUS.json').read_text())
     assert status['spec_maturity']['spec_revision'] in backlog

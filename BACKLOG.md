@@ -51,25 +51,27 @@ PRODUCT_TEAM ownership and requires a new contract under BL-005/007 before
 HUMAN_REVIEWER inputs can run.
 
 All active records below bind to `FRAMEWORK-SPEC.md` at exact Git revision
-`06861c4575c4791f3aa6c262f5f0f4c45c2c2d75`. This binding matrix is part of
+`891e497968000c32984f26437eab811c063ec4cf`. This binding matrix is part of
 each Backlog record; detailed priority, status, dependencies, deliverables,
 verification, and completion evidence follow in the item sections.
 
-Version-selection amendment reconciliation: BL-007 now plans an explicitly
-bound v0.3 contract. BL-020/022 retain VERIFIED evidence for their unchanged
-v0.2 scope, not for v0.3. Other requirement wording and implementation scopes
-are unchanged; their existing maturity and blockers remain. No experiment gate
-was cleared by this documentation amendment.
+Java-boundary reconciliation: new requirement `PKB-JAVA-001` is tracked by
+BL-026. Existing verified records retain their functional completion evidence,
+but Python framework tooling is transitional and cannot demonstrate completion
+of the Java-only target. BL-007 therefore requires reconciliation before more
+implementation. External Graphify Python is excluded from BL-026. No experiment
+gate was cleared by this documentation amendment.
 
 | Backlog ID | Work type | Source requirement | Current gap / intended outcome | Scope boundary | Decision / implementation owner | Active plan |
 |---|---|---|---|---|---|---|
+| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Repository-owned Python framework consumers remain; migrate them one bounded consumer at a time to Java. | FDI framework only; external Graphify Python excluded; historical evidence immutable. | User / Engineering | `null` |
 | `PKB-BL-023` | `FEATURE` | `PKB-REVIEW-003` | Generate evidence-backed Capability/scenario proposals and a single review surface. | Proposal generation and rendering; no human decisions. | User / Engineering | `IMPLEMENTATION-PLAN.md#selected-work-generated-scenarios-and-individual-review` |
 | `PKB-BL-024` | `DOCUMENTATION` | `PKB-STATUS-002` | Point status to actual generated review material and review state. | Verified pointer only; preserve previous packet. | User / Engineering | `null` |
 | `PKB-BL-025` | `FEATURE` | `PKB-REVIEW-004` | User reviews generated proposals with ACCEPT / EDIT / REJECT. | Version-bound human decisions only. | User / User | `null` |
 | `PKB-BL-004` | `VALIDATION` | `PKB-EVAL-LEGACY-001` | Eleven evaluator disagreements remain; adjudicate only those items. | Existing evaluation only; no Product authority. | Evaluation owner / Independent evaluator | `null` |
 | `PKB-BL-005` | `FEATURE` | `PKB-SCENARIO-003` | Scenario rules are prose-only; make the lifecycle machine-verifiable. | Contract and validation; no scenario approval. | Human Reviewer / Engineering | `IMPLEMENTATION-PLAN.md#selected-work-generated-scenarios-and-individual-review` |
 | `PKB-BL-006` | `FEATURE` | `PKB-SCENARIO-004` | No approved frozen scenario-bearing revision exists; create one without overwriting Petclinic. | New semantics revision only. | Human Reviewer / Engineering | `null` |
-| `PKB-BL-007` | `FEATURE` | `PKB-MAPPING-001` | PK-S1 v0.2 lacks scenario traces; create a new compatible proposal contract. | New skill/contract version; preserve v0.2. | Human Reviewer / Engineering | `IMPLEMENTATION-PLAN.md#selected-work-scenario-aware-forward-contract` |
+| `PKB-BL-007` | `FEATURE` | `PKB-MAPPING-001` | PK-S1 v0.2 lacks scenario traces; reconcile the completed transitional gate with the Java-only target before further work. | New skill/contract version; preserve v0.2. | Human Reviewer / Engineering | `null` |
 | `PKB-BL-008` | `RESEARCH` | `PKB-PROVIDER-001` | UI/template support is unverified; record actual runtime capability or gaps. | Read-only discovery; no assumed API or runtime replacement. | User / Engineering | `null` |
 | `PKB-BL-009` | `FEATURE` | `PKB-REVERSE-001` | Reverse output over-combines, duplicates, and overclaims; add proposal-only controls. | Proposal quality only; no semantic publication. | Human Reviewer / Engineering | `null` |
 | `PKB-BL-010` | `VALIDATION` | `PKB-EVAL-001` | Existing truth relies on provider IDs; add sealed normalized identity. | New evaluator truth format; generation remains isolated. | Evaluation owner / Engineering | `null` |
@@ -190,7 +192,7 @@ retained here for history and are excluded from active requirement counts.
 ### PKB-BL-007 — Scenario-grounded PK-S1 contract
 
 - Priority: `P1`
-- Status: `BLOCKED_DEPENDENCY`
+- Status: `NEEDS_RECONCILIATION`
 - Requirement: Scenario-grounded realization
 - Depends on: `PKB-BL-005`, `PKB-BL-006`
 - Deliverables: new versioned PK-S1 skill, Java/provider-neutral contract,
@@ -199,9 +201,32 @@ retained here for history and are excluded from active requirement counts.
   realization chains, behavioral PRIMARY/SUPPORTING reasons, explicit evidence
   gaps, and separate `outcome`/`evidence_status` are enforced; v0.2 remains
   immutable; evaluator gold remains forbidden
-- Active plan: `IMPLEMENTATION-PLAN.md#selected-work-scenario-aware-forward-contract`
-- Progress: Bounded Tasks A–D implemented and verified: Java scenario-chain contract, v0.3 skill/schema, 36 cross-language parity fixtures and frozen-input gate. Evidence: `7ee1395`, `c12e2f7`; 109 focused/415 full Python tests, 94 Java tests, public validation 9/9. Actual first-slice contract validation passes without generation. Full BL-006 and experiment execution remain gated; this is not full-item completion.
+- Active plan: `null`; the prior plan remains a completed transitional delivery record.
+- Progress: Bounded Tasks A–D implemented and verified: Java scenario-chain contract, v0.3 skill/schema, 36 cross-language parity fixtures and a transitional Python frozen-input gate. Evidence: `7ee1395`, `c12e2f7`; 109 focused/415 full Python tests, 94 Java tests, public validation 9/9. The Python consumer must be replaced through BL-026 before it can represent the final framework architecture. Full BL-006 and experiment execution remain gated; this is not full-item completion.
 - Completion evidence: pending for the complete item scope
+
+### PKB-BL-026 — Java-only framework migration
+
+- Priority: `P0`
+- Status: `BLOCKED_USER_APPROVAL`
+- Requirement: Framework implementation language and migration
+- Depends on: none
+- Deliverables: a complete inventory and classification of repository-owned
+  Python framework consumers; ordered migration slices; Java API/CLI replacements;
+  caller cutover; regression evidence; and removal of each replaced Python
+  consumer after verification
+- Acceptance: no new Product or framework behavior is added in Python; external
+  Graphify Python remains unchanged behind the Java adapter and MCP boundary;
+  each Java replacement preserves valid/invalid contract behavior and fail-closed
+  errors; all active callers are cut over before removal; immutable historical
+  artifacts remain unchanged
+- Active plan: `null`; written architecture review is required before selecting
+  and writing an implementation plan
+- Progress: Java-only framework boundary recorded in `FRAMEWORK-SPEC.md` at
+  `891e497968000c32984f26437eab811c063ec4cf`. The proposed first slice is the
+  repository-owned `tooling/validation/pkb001_scenario_forward_gate.py`; no
+  migration implementation has started.
+- Completion evidence: pending
 
 ### PKB-BL-008 — Real Graphify UI/template capability verification
 
@@ -337,11 +362,13 @@ retained here for history and are excluded from active requirement counts.
 
 ## Backlog execution order
 
-The selected construction plan completed `PKB-BL-005` and `PKB-BL-023`.
+BL-026 is the current decision point: review the Java-only boundary, then write
+an implementation plan for one bounded Python-consumer replacement. The
+selected construction plan completed `PKB-BL-005` and `PKB-BL-023`.
 BL-024 now points to the current review progress. BL-025 has three accepted
 decisions and 13 pending decisions. BL-006 has frozen that first accepted slice;
-its full-scope completion remains pending. BL-007 is selected for first-slice
-construction planning, not for bypassing execution prerequisites.
+its full-scope completion remains pending. BL-007 needs reconciliation against
+BL-026 before any further implementation and cannot bypass execution prerequisites.
 BL-007/010/011 then establish scenario mapping and evaluation. BL-008/009,
 thresholds, holdout approval and protocol prerequisites still gate later runs.
 BL-004 adjudicates the existing 11 disagreements independently of human review.
@@ -355,17 +382,18 @@ foundation; it does not replace the completed bounded Petclinic decision.
 | Maturity | Requirement IDs | Count |
 |---|---|---:|
 | `M3_VERIFIED` | `PKB-COMPONENT-001`, `PKB-PROPOSAL-001`, `PKB-ISOLATION-001`, `PKB-COMPARISON-001`, `PKB-READINESS-001`, `PKB-SCENARIO-003`, `PKB-REVIEW-003`, `PKB-STATUS-002` | 8 |
-| `M1_BACKLOGGED` | `PKB-REVIEW-004`, `PKB-EVAL-LEGACY-001`, `PKB-SCENARIO-004`, `PKB-MAPPING-001`, `PKB-PROVIDER-001`, `PKB-REVERSE-001`, `PKB-EVAL-001`, `PKB-EVAL-002`, `PKB-CALIBRATION-001`, `PKB-HOLDOUT-001`, `PKB-PROTOCOL-001`, `PKB-REGRESSION-001`, `PKB-HOLDOUT-002`, `PKB-DECISION-001` | 14 |
+| `M1_BACKLOGGED` | `PKB-REVIEW-004`, `PKB-EVAL-LEGACY-001`, `PKB-SCENARIO-004`, `PKB-MAPPING-001`, `PKB-PROVIDER-001`, `PKB-REVERSE-001`, `PKB-EVAL-001`, `PKB-EVAL-002`, `PKB-CALIBRATION-001`, `PKB-HOLDOUT-001`, `PKB-PROTOCOL-001`, `PKB-REGRESSION-001`, `PKB-HOLDOUT-002`, `PKB-DECISION-001`, `PKB-JAVA-001` | 15 |
 
 ```yaml
 spec_binding:
   path: FRAMEWORK-SPEC.md
-  revision: eff92e0f7c2e41cd9880c33655ff23df796a5830
-normative_requirements: 22
+  revision: 891e497968000c32984f26437eab811c063ec4cf
+normative_requirements: 23
 m3_verified: 8
-m1_backlogged: 14
+m1_backlogged: 15
 next_experiment_readiness: NOT_READY
 blocking_requirements:
+  - PKB-JAVA-001
   - PKB-REVIEW-004
   - PKB-SCENARIO-004
   - PKB-MAPPING-001

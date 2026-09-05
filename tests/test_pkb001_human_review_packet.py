@@ -91,10 +91,8 @@ def test_status_separates_pending_proposals_from_existing_evaluation_reference()
     assert status["evaluation_reference_packet"] == (
         "validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.zh-TW.md"
     )
-    assert status["active_backlog_item"] == "PKB-BL-007"
-    assert status["active_implementation_plan"] == (
-        "IMPLEMENTATION-PLAN.md#selected-work-scenario-aware-forward-contract"
-    )
+    assert status["active_backlog_item"] == "PKB-BL-026"
+    assert status["active_implementation_plan"] is None
 
 
 def test_chinese_review_packet_preserves_all_pending_decisions_and_boundaries():

@@ -4,13 +4,19 @@
 
 **Goal:** Add a Java-owned, provider-neutral component contract and a gold-isolated hierarchical evaluator without rewriting the Graphify Python MCP runtime or changing the current bounded `REVISE` decision.
 
-**Architecture:** Skills generate proposal-only candidates from frozen Product Semantics and exactly bound Graphify evidence. Java validates component role, granularity, normalized identity, and revision consistency. Python evaluates immutable outputs at path, type, exact-symbol, realization-chain, and precision levels without exposing evaluator gold to generation.
+**Architecture record:** Skills generate proposal-only candidates from frozen Product Semantics and exactly bound Graphify evidence. Java validates component role, granularity, normalized identity, and revision consistency. Python evaluation described below is transitional delivery history, not the target architecture.
 
 **Tech Stack:** Java 17, Spring Boot 3.4.1, JUnit 5, Python 3 standard library, pytest, Graphify `graphifyy` MCP stdio runtime.
 
 **Backlog source:** `BACKLOG.md`. This document contains completed delivery
 plans and future implementation outlines; backlog status, priority, dependency,
 and maturity are authoritative only in `BACKLOG.md`.
+
+**Current selection:** none. The Java-only framework migration is selected in
+`BACKLOG.md` as BL-026, but its implementation plan will be written only after
+review of the updated architecture. Existing Python plan sections below are
+completed or transitional delivery records and do not authorize new Python
+framework behavior.
 
 ---
 
@@ -58,8 +64,8 @@ No R1/R2/R3/F1 experiment run begins until all six Phase 0 readiness flags pass:
 
 ## Selected work: generated scenarios and individual review
 
-This section records completed construction work. The current selected plan is
-the BL-007 section below; its execution remains separate from experiment runs.
+This section records completed construction work. The BL-007 section below is a
+transitional delivery record; no implementation plan is currently selected.
 
 ## Selected work: scenario-aware Forward contract
 

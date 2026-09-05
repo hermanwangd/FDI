@@ -121,9 +121,9 @@ When a bound Spec requirement changes, mark affected Backlog items
 plans against the new Spec revision before further implementation or before
 retaining `VERIFIED`.
 
-The current 22-active-item PKB-001 backlog is reconciled to the exact Framework Spec
+The current 23-active-item PKB-001 backlog is reconciled to the exact Framework Spec
 revision recorded in `BACKLOG.md`. Eight entries are verified (including five
-foundation delivery records); 14 remain for human review and the next experiment. If the bound
+foundation delivery records); 15 remain for human review, Java migration, and the next experiment. If the bound
 Spec changes, apply `NEEDS_RECONCILIATION` before using the affected entries.
 
 ### Implementation Plan
