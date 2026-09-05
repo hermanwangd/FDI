@@ -676,7 +676,7 @@ Update this plan with completed commit IDs and record these remaining authorized
 3. Numeric thresholds are frozen before generating either next-run proposal.
 
 Implementation record (2026-09-05): executable schema/readiness gate committed as
-`7eb1c88`. Focused gate tests passed 32/32, the complete Python suite passed
+`7eb1c88`, with checked-in-schema validation hardened in `1c5b879`. Focused gate tests passed 32/32, the complete Python suite passed
 206/206, Task 7 public validation remained 9/9, and the isolated Maven suite
 passed with `MAVEN_OPTS='-Xmx2g'`. No holdout was selected and no proposal was
 generated. The three authorized decisions above remain open.
