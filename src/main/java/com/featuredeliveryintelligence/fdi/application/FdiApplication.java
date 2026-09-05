@@ -15,6 +15,9 @@ public class FdiApplication {
         if (NextRunGateCli.handles(args)) {
             System.exit(NextRunGateCli.run(args, System.out, System.err));
         }
+        if (CodeBaselineCli.handles(args)) {
+            System.exit(CodeBaselineCli.run(args, System.out, System.err));
+        }
         if (Dev204Cli.handles(args)) return;
         SpringApplication.run(FdiApplication.class, args);
     }

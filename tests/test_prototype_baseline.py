@@ -32,15 +32,7 @@ def test_five_active_truth_entries_exist_and_resolve():
     assert status['active_backlog_item'] in backlog
     assert maturity['spec_revision'] in backlog
     execution = status['active_execution']
-    assert execution == {
-        'backlog_id': 'PKB-BL-026',
-        'plan_anchor': None,
-        'owner_role': 'HUMAN_REVIEWER',
-        'issue_ref': 'HERM-270',
-        'base_commit': '38df254f0a814cfd2106ee67ec33b66e8812cefa',
-        'candidate_commit': None,
-        'state': 'CONTEXT_REVIEW',
-    }
+    assert execution is None
     if status['review_packet'] is not None:
         assert (ROOT/status['review_packet']).is_file()
     if status['active_implementation_plan'] is not None:
