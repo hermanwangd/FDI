@@ -386,7 +386,7 @@ Task 5 MUST enforce the component contract and input/authority boundaries struct
 - Create: `tests/test_pkb001_next_run_gate.py` (schema and executable-gate coverage)
 - Modify: `IMPLEMENTATION-PLAN.md` only for completion tracking
 
-- [ ] **Step 1: Write failing schema and executable-gate tests**
+- [x] **Step 1: Write failing schema and executable-gate tests**
 
 ```python
 from copy import deepcopy
@@ -442,13 +442,13 @@ def test_mutations_are_blocked_without_mappings(valid_request, root, mutation, r
 
 The positive fixture supplies exactly one input of each required kind: `PRODUCT_SEMANTICS`, `GRAPHIFY_BINDING_EVIDENCE`, `FROZEN_GRAPH`, and `PKS1_SKILL`. It selects exactly `skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md`, records its actual SHA-256, uses a new nonblank `run_id`, and contains a complete conforming v0.2 output whose component revisions equal its top-level revision. Mutation helpers make literal fixture changes, not mocks.
 
-- [ ] **Step 2: Verify RED**
+- [x] **Step 2: Verify RED**
 
 Run: `python3 -m pytest -q tests/test_pkb001_next_run_gate.py`
 
 Expected: import failure because the executable next-run gate does not exist.
 
-- [ ] **Step 3: Add the provider-neutral JSON Schema and executable gate**
+- [x] **Step 3: Add the provider-neutral JSON Schema and executable gate**
 
 Use this provider-neutral schema; it intentionally contains no Petclinic identifiers or evaluator paths:
 
@@ -654,7 +654,7 @@ The CLI exits `0` for `READY` and `1` for `BLOCKED`, serializes sorted-key JSON 
 
 After a `READY` report, any downstream writer MUST atomically create a non-existing output path and run ID in one exclusive operation and abort on collision. This closes the gate-to-write TOCTOU window; the gate itself writes no generation output.
 
-- [ ] **Step 4: Verify schema and complete repository regression**
+- [x] **Step 4: Verify schema and complete repository regression**
 
 Run:
 
@@ -667,7 +667,7 @@ git diff --check
 
 Expected: positive v0.2 readiness passes. Mutations for v1 selection, skill digest mismatch, forbidden input, revision mismatch, duplicate run_id, and malformed schema each assert `BLOCKED` with no mappings. All Python and Java tests pass, Task 7 remains 9/9, the decision remains `REVISE`, and current immutable Petclinic artifacts have no diff.
 
-- [ ] **Step 5: Mark implementation readiness without selecting the holdout**
+- [x] **Step 5: Mark implementation readiness without selecting the holdout**
 
 Update this plan with completed commit IDs and record these remaining authorized decisions:
 
@@ -675,7 +675,13 @@ Update this plan with completed commit IDs and record these remaining authorized
 2. User approves a second exact-revision holdout repository.
 3. Numeric thresholds are frozen before generating either next-run proposal.
 
-- [ ] **Step 6: Commit**
+Implementation record (2026-09-05): executable schema/readiness gate committed as
+`7eb1c88`. Focused gate tests passed 32/32, the complete Python suite passed
+206/206, Task 7 public validation remained 9/9, and the isolated Maven suite
+passed with `MAVEN_OPTS='-Xmx2g'`. No holdout was selected and no proposal was
+generated. The three authorized decisions above remain open.
+
+- [x] **Step 6: Commit**
 
 ```bash
 git add validation/pkb001/schemas/realization-proposal-v0.2.schema.json tooling/validation/pkb001_next_run_gate.py tests/test_pkb001_next_run_gate.py IMPLEMENTATION-PLAN.md
