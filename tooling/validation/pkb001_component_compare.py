@@ -35,6 +35,10 @@ def _validate(snapshot, collection_name, required_role=None):
             raise ValueError(f"{collection_name}[{index}] must be a plain dict")
 
         role = row.get("role")
+        if role is not None and type(role) is not str:
+            raise ValueError(
+                f"{collection_name}[{index}].role must be a plain string when present"
+            )
         if role is not None and required_role is not None and role != required_role:
             raise ValueError(
                 f"{collection_name}[{index}].role must be {required_role} when present"
@@ -43,7 +47,7 @@ def _validate(snapshot, collection_name, required_role=None):
         values = []
         for field in _FIELDS:
             value = row.get(field)
-            if not isinstance(value, str) or not value.strip():
+            if type(value) is not str or not value.strip():
                 raise ValueError(
                     f"{collection_name}[{index}].{field} must be a nonblank string"
                 )

@@ -189,6 +189,33 @@ def test_dict_subclass_row_fails_closed_without_invoking_overrides():
         compare_components([hostile], [])
 
 
+class HostileFieldString(str):
+    def strip(self, *args, **kwargs):
+        raise RuntimeError("hostile field strip")
+
+
+class HostileRoleString(str):
+    def __eq__(self, other):
+        raise RuntimeError("hostile role comparison")
+
+    def __ne__(self, other):
+        raise RuntimeError("hostile role comparison")
+
+
+def test_string_subclass_in_required_field_fails_closed():
+    row = component(path=HostileFieldString("src/file.py"))
+
+    with pytest.raises(ValueError):
+        compare_components([row], [])
+
+
+def test_string_subclass_in_optional_role_fails_closed():
+    row = component() | {"role": HostileRoleString("PRIMARY")}
+
+    with pytest.raises(ValueError):
+        compare_components([row], [])
+
+
 class ChangingSequence(Sequence):
     def __init__(self, rows):
         self.rows = rows
