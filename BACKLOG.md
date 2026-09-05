@@ -15,7 +15,7 @@ exactly one backlog record. Status means:
 
 | Backlog ID | Type | Requirement | Outcome | Status | Dependency / evidence |
 |---|---|---|---|---|---|
-| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java, one bounded consumer at a time; exclude external Graphify. | `VERIFIED` | All five pre-authorized consumers migrated with independent exact-revision PASS; Human Reviewer closure 2026-09-05; see the BL-026 delivery record below. |
+| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java, one bounded consumer at a time; exclude external Graphify. | `IN_PROGRESS` | Five-consumer tranche migrated with independent exact-revision PASS; 10 inventoried consumers remain `TRANSITIONAL`. |
 | `PKB-BL-023` | `FEATURE` | `PKB-REVIEW-003` | Generate evidence-backed Capability/scenario proposals and one review surface. | `VERIFIED` | Generator and review artifacts exercised. |
 | `PKB-BL-024` | `DOCUMENTATION` | `PKB-STATUS-002` | Point status to the actual generated review material and review state. | `VERIFIED` | Active pointers validated. |
 | `PKB-BL-025` | `FEATURE` | `PKB-REVIEW-004` | Record version-bound human ACCEPT / EDIT / REJECT decisions. | `BLOCKED_USER_APPROVAL` | 3 accepted; 13 pending. |
@@ -39,14 +39,16 @@ exactly one backlog record. Status means:
 | `PKB-BL-021` | `VALIDATION` | `PKB-COMPARISON-001` | Compare path, type, symbol, component, chain, and channel separately. | `VERIFIED` | Deterministic comparator regression passed. |
 | `PKB-BL-022` | `VALIDATION` | `PKB-READINESS-001` | Fail closed unless every next-run input and identity is verified. | `VERIFIED` | Schema, API/CLI, mutation, and clean-copy tests passed. |
 
-## Delivery record — PKB-BL-026 (closed)
+## Completed five-consumer tranche — PKB-BL-026
 
-Closed by the Human Reviewer on 2026-09-05 (「approved closure」) after the
+The five-consumer tranche was accepted by the Human Reviewer on 2026-09-05
+(「approved closure」) after the
 Independent Adjudicator's fresh exact-revision review of candidate
 `9d57c5153d6f9e28e7d7b0f7c4ba9bc8a9c815d7` reproduced all five completion
-checks (PASS, HERM-271). `PKB-JAVA-001` is `VERIFIED` (M3) for the bound spec
-revision. The remaining `TRANSITIONAL` inventory consumers are outside BL-026;
-each further consumer requires a new explicit selection.
+checks (PASS, HERM-271). This closes the tranche, not the parent requirement.
+`PKB-JAVA-001` remains below M3 while 10 inventory consumers are
+`TRANSITIONAL`; their migration remains within BL-026 and proceeds through
+bounded selections.
 
 All five pre-authorized consumers are migrated, each with independent
 exact-candidate PASS:
@@ -95,6 +97,6 @@ The next experiment remains `NOT_READY`. Construction order is:
 4. Preregister thresholds and seal a holdout (BL-012, BL-013).
 5. Freeze protocol, regress Petclinic, execute holdout, decide (BL-014–BL-017).
 
-Maturity for the bound spec revision: 23 normative requirements, 9 `VERIFIED`,
-14 not yet M3. Superseded BL-001 through BL-003 are historical and are not active
+Maturity for the bound spec revision: 23 normative requirements, 8 `VERIFIED`,
+15 not yet M3. Superseded BL-001 through BL-003 are historical and are not active
 records.

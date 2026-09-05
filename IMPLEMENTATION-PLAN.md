@@ -6,13 +6,12 @@ and executable continuation constraints. `FRAMEWORK-SPEC.md` defines what;
 
 ## Current selection
 
-No implementation slice is selected. `PKB-BL-026` has no remaining
-pre-authorized consumer: all five pre-authorized bounded consumers are
-migrated and recorded below. BL-026 is closed with Human approval and
-independent closure review at `28b5089773659b2b9e3abb7b742d679ea9e043f5`.
-Any further repository-owned Python framework consumer must be selected and
-bounded before code changes begin. External Graphify Python runtime is
-excluded.
+No implementation slice is selected. The completed five-consumer tranche is
+recorded below, but `PKB-BL-026` remains `IN_PROGRESS`: 10 inventoried framework
+consumers are still `TRANSITIONAL`. Select and bound the next tranche before
+code changes begin. Independent child slices may run in parallel when they do
+not overlap; Human approval is required only before closing the parent backlog
+item. External Graphify Python runtime is excluded.
 
 ## Completed BL-026 slices
 
@@ -77,7 +76,7 @@ excluded.
 - Verification at candidate: 344 Java tests; Python suite exit 0; public
   validation 9/9. Independent exact-candidate review: PASS (HERM-271).
 
-BL-026 is closed on this evidence; see `BACKLOG.md`.
+This five-consumer tranche is closed on this evidence; see `BACKLOG.md`.
 
 These are completion records, not authority to select the next consumer.
 
@@ -92,69 +91,6 @@ These are completion records, not authority to select the next consumer.
 | `PKB-BL-022` | Next-run readiness gate | Schema, identity, digest, mutation, CLI, and clean-copy tests. |
 | `PKB-BL-005`, `PKB-BL-023` | Scenario proposal lifecycle and individual review surface | Validator and artifact tests. |
 | `PKB-BL-024` | Active review pointers | Baseline contract tests. |
-
-### Task 5: Next-run schema and readiness gate
-
-This completed foundation contract is retained because later work consumes it.
-The implementation lives at `tooling/validation/pkb001_next_run_gate.py`; its
-tests live at `tests/test_pkb001_next_run_gate.py`. Its stable API is
-`validate_next_run(root, request) -> report dict`.
-
-BL-026 note: this Python consumer is selected for the fourth Java migration
-slice (HERM-270); after cutover the executable implementation is the Java
-`NextRunGate` API and packaged CLI. The Python references above are retained
-as the historical foundation record.
-
-The gate defaults fail closed and does not execute generation. It performs
-schema validation plus cross-field and runtime checks and returns a deterministic
-`READY` or `BLOCKED` report. A blocked request is `BLOCKED` with no mappings.
-The output is a deterministic `READY` or `BLOCKED` report.
-
-Required inputs use kinds `'PRODUCT_SEMANTICS'`, `'GRAPHIFY_BINDING_EVIDENCE'`,
-`'FROZEN_GRAPH'`, and `'PKS1_SKILL'`, with exactly one input of each required kind.
-Product Semantics requires `status=FROZEN` and `owner=PRODUCT_TEAM`. Graphify
-binding evidence requires `result=EXACTLY_BOUND` with nonempty query bounds.
-The gate checks requested revision, indexed revision, applicable revision, and proposal `source_revision`.
-Every component `source_revision` equals the proposal
-top-level `source_revision`.
-Each component `source_revision` equals the proposal top-level `source_revision`.
-
-The frozen graph records and verifies its SHA-256. The binding `graph_sha256`
-equals the verified frozen-graph SHA-256. The PK-S1 request uses an explicit generation-input allowlist
-and must not collide with any existing immutable
-`run_id`. The downstream writer MUST atomically create a non-existing output path
-and run ID.
-The binding `graph_sha256` equals the verified frozen-graph SHA-256.
-The downstream writer MUST atomically create a non-existing output path and run ID.
-
-The proposal schema preserves these mandatory shapes:
-
-```json
-"required": ["schema_version", "run_id", "authority", "source_revision", "graph_sha256", "capability_results"]
-```
-
-```json
-"required": ["capability_id", "outcome", "components", "evidence_refs", "confidence", "limitations"]
-```
-
-```json
-"confidence": {"type": "number", "minimum": 0, "maximum": 1}
-```
-
-```json
-"required": ["provider_node_id", "source_path", "source_location"]
-```
-
-Mutation coverage includes v1 selection, skill digest mismatch, forbidden input,
-revision mismatch, duplicate run_id, malformed schema, empty inputs, missing
-required kind, duplicate required kind, unfrozen semantics, wrong semantics owner,
-unbound Graphify evidence, missing query bounds, applicable revision mismatch,
-requested revision mismatch, indexed revision mismatch, frozen graph digest
-mismatch, binding graph digest mismatch, missing graph_sha256, missing evidence_refs,
-missing confidence, and missing limitations.
-
-The run ID must not collide with any existing immutable `run_id`.
-Required mutation labels are: empty inputs; missing required kind; duplicate required kind; unfrozen semantics; wrong semantics owner; unbound Graphify evidence; missing query bounds; applicable revision mismatch; requested revision mismatch; indexed revision mismatch; frozen graph digest mismatch; binding graph digest mismatch.
 
 ## Next experiment construction sequence
 

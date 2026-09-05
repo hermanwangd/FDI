@@ -175,64 +175,8 @@ def test_pk_s1_proposal_artifact_authority_is_immutable_and_review_is_separate()
     assert 'PK-S1 never marks a proposal accepted' in text
 
 
-def test_task5_plan_specifies_executable_fail_closed_next_run_gate():
-    task = (ROOT/'IMPLEMENTATION-PLAN.md').read_text().split(
-        '### Task 5: Next-run schema and readiness gate', 1
-    )[1]
-    assert '`tooling/validation/pkb001_next_run_gate.py`' in task
-    assert '`tests/test_pkb001_next_run_gate.py`' in task
-    assert 'validate_next_run(root, request) -> report dict' in task
-    assert 'records and verifies its SHA-256' in task
-    assert 'explicit generation-input allowlist' in task
-    assert 'component `source_revision` equals the proposal top-level `source_revision`' in task
-    assert 'must not collide with any existing immutable `run_id`' in task
-    assert 'schema validation plus cross-field and runtime checks' in task
-    assert 'deterministic `READY` or `BLOCKED` report' in task
-    assert 'defaults fail closed and does not execute generation' in task
-    for mutation in (
-        'v1 selection', 'skill digest mismatch', 'forbidden input',
-        'revision mismatch', 'duplicate run_id', 'malformed schema',
-    ):
-        assert mutation in task
-    assert '`BLOCKED` with no mappings' in task
-
-
-def test_task5_plan_requires_complete_exact_bound_generation_inputs():
-    task = (ROOT/'IMPLEMENTATION-PLAN.md').read_text().split(
-        '### Task 5: Next-run schema and readiness gate', 1
-    )[1]
-    for kind in (
-        'PRODUCT_SEMANTICS', 'GRAPHIFY_BINDING_EVIDENCE',
-        'FROZEN_GRAPH', 'PKS1_SKILL',
-    ):
-        assert f"'{kind}'" in task
-    assert 'exactly one input of each required kind' in task
-    assert '`status=FROZEN` and `owner=PRODUCT_TEAM`' in task
-    assert '`result=EXACTLY_BOUND` with nonempty query bounds' in task
-    assert 'requested revision, indexed revision, applicable revision, and proposal `source_revision`' in task
-    assert 'binding `graph_sha256` equals the verified frozen-graph SHA-256' in task
-    for mutation in (
-        'empty inputs', 'missing required kind', 'duplicate required kind',
-        'unfrozen semantics', 'wrong semantics owner', 'unbound Graphify evidence',
-        'missing query bounds', 'applicable revision mismatch',
-        'requested revision mismatch', 'indexed revision mismatch',
-        'frozen graph digest mismatch', 'binding graph digest mismatch',
-    ):
-        assert mutation in task
-
-
-def test_task5_schema_and_skill_share_the_v02_output_envelope():
-    task = (ROOT/'IMPLEMENTATION-PLAN.md').read_text().split(
-        '### Task 5: Next-run schema and readiness gate', 1
-    )[1]
-    skill = _pk_s1_text()
-    assert '"required": ["schema_version", "run_id", "authority", "source_revision", "graph_sha256", "capability_results"]' in task
-    assert '"required": ["capability_id", "outcome", "components", "evidence_refs", "confidence", "limitations"]' in task
-    assert '"confidence": {"type": "number", "minimum": 0, "maximum": 1}' in task
-    assert '"required": ["provider_node_id", "source_path", "source_location"]' in task
-    for mutation in ('missing graph_sha256', 'missing evidence_refs',
-                     'missing confidence', 'missing limitations'):
-        assert mutation in task
-    assert 'downstream writer MUST atomically create a non-existing output path and run ID' in task
-    assert 'run envelope MUST contain `source_revision` and `graph_sha256`' in skill
-    assert 'Each capability result MUST contain `evidence_refs`, `confidence`, and `limitations`' in skill
+def test_plan_does_not_point_to_removed_next_run_python_consumer():
+    plan = (ROOT / 'IMPLEMENTATION-PLAN.md').read_text()
+    assert 'tooling/validation/pkb001_next_run_gate.py' not in plan
+    assert 'tests/test_pkb001_next_run_gate.py' not in plan
+    assert '`PKB-BL-026` remains `IN_PROGRESS`' in plan
