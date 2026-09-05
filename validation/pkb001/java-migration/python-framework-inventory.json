@@ -45,9 +45,14 @@
     {
       "path": "tooling/validation/pkb001_code_baseline.py",
       "responsibility": "Produce the deterministic PKB-001 code baseline without executing experiment arms.",
-      "active_callers": ["tests/test_pkb001_code_baseline.py"],
-      "migration_state": "TRANSITIONAL",
-      "external_runtime": false
+      "active_callers": [],
+      "migration_state": "MIGRATED_TO_JAVA",
+      "external_runtime": false,
+      "java_api": "com.featuredeliveryintelligence.fdi.validation.codebaseline.CodeBaseline",
+      "java_cli": "java -jar target/fdi-0.4.8.3.jar code-baseline-generate --arm <arm> --input <category=path> --output <path>",
+      "verification_evidence": {
+        "characterization_test_count": 6
+      }
     },
     {
       "path": "tooling/validation/pkb001_component_compare.py",

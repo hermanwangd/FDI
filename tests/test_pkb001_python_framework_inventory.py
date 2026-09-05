@@ -11,6 +11,11 @@ SELECTED = "tooling/validation/pkb001_scenario_forward_gate.py"
 COMPARE = "tooling/validation/pkb001_component_compare.py"
 BLIND = "tooling/validation/pkb001_blind_review.py"
 NEXT_RUN = "tooling/validation/pkb001_next_run_gate.py"
+CODE_BASELINE = "tooling/validation/pkb001_code_baseline.py"
+CODE_BASELINE_JAVA_CLI = (
+    "java -jar target/fdi-0.4.8.3.jar code-baseline-generate "
+    "--arm <arm> --input <category=path> --output <path>"
+)
 JAVA_CLI = (
     "java -jar target/fdi-0.4.8.3.jar scenario-forward-validate "
     "--root . --request <request.json>"
@@ -344,7 +349,7 @@ def test_python_framework_inventory_characterizes_the_migration_boundary():
         consumer["path"]
         for consumer in consumers
         if consumer["migration_state"] == "MIGRATED_TO_JAVA"
-    ] == [BLIND, COMPARE, NEXT_RUN, SELECTED]
+    ] == [BLIND, CODE_BASELINE, COMPARE, NEXT_RUN, SELECTED]
     assert all(
         consumer["migration_state"] == "TRANSITIONAL"
         for consumer in consumers
@@ -460,3 +465,23 @@ def test_next_run_gate_consumer_is_cut_over_to_java():
     )
     assert migrated["java_cli"] == NEXT_RUN_JAVA_CLI
     assert migrated["verification_evidence"]["characterization_test_count"] == 82
+
+
+def test_code_baseline_consumer_is_cut_over_to_java():
+    inventory = json.loads(INVENTORY.read_text())
+    migrated = next(
+        consumer
+        for consumer in inventory["repository_consumers"]
+        if consumer["path"] == CODE_BASELINE
+    )
+
+    assert not (ROOT / CODE_BASELINE).exists()
+    assert not (ROOT / "tests/test_pkb001_code_baseline.py").exists()
+    assert migrated["migration_state"] == "MIGRATED_TO_JAVA"
+    assert migrated["active_callers"] == []
+    assert migrated["java_api"] == (
+        "com.featuredeliveryintelligence.fdi.validation.codebaseline."
+        "CodeBaseline"
+    )
+    assert migrated["java_cli"] == CODE_BASELINE_JAVA_CLI
+    assert migrated["verification_evidence"]["characterization_test_count"] == 6
