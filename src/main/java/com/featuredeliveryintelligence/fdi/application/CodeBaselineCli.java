@@ -2,8 +2,8 @@ package com.featuredeliveryintelligence.fdi.application;
 
 import com.featuredeliveryintelligence.fdi.validation.codebaseline.CodeBaseline;
 import com.featuredeliveryintelligence.fdi.validation.codebaseline.CodeBaselineResult;
+import com.featuredeliveryintelligence.fdi.validation.codebaseline.PythonJson;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -37,7 +37,6 @@ public final class CodeBaselineCli {
     private static final String USAGE = "usage: code-baseline-generate --arm {F1,R1,R2,R3}"
             + " --input category=path [--input category=path ...]"
             + " [--source-sha SHA] [--graph-sha SHA] --output PATH";
-    private static final ObjectMapper JSON = new ObjectMapper();
 
     private CodeBaselineCli() { }
 
@@ -66,7 +65,7 @@ public final class CodeBaselineCli {
                 if (inputs.containsKey(category)) {
                     throw new IllegalArgumentException("inputs must use unique category=path bindings");
                 }
-                inputs.put(category, JSON.readTree(Files.readAllBytes(Path.of(filename))));
+                inputs.put(category, PythonJson.readTree(Files.readAllBytes(Path.of(filename))));
             }
             if (inputs.containsKey("structure")) {
                 ObjectNode structure = (ObjectNode) inputs.get("structure");
