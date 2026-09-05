@@ -6,6 +6,33 @@
 
 PKB-001 validates whether product meaning, source structure, and delivery evidence can support reliable Product Realization discovery without allowing machine observations to become Product truth automatically.
 
+## Normative requirement index
+
+These identifiers are stable traceability anchors. The controlling requirement
+is the normative wording in the referenced section, not a restatement in a
+Backlog item or Implementation Plan. Changing a requirement's meaning requires
+a new Spec revision and reconciliation of every bound Backlog item.
+
+| Requirement ID | Controlling section | Required outcome |
+|---|---|---|
+| `PKB-REVIEW-001` | Scenario authority and isolation | Provide a Stage A semantic review surface that excludes evaluator technical truth. |
+| `PKB-STATUS-001` | Scenario authority and isolation | Active status must point only to a review surface valid for its declared stage. |
+| `PKB-REVIEW-002` | Scenario authority and isolation | Product Team records Stage A decisions before technical unblinding. |
+| `PKB-EVAL-LEGACY-001` | Current bounded decision | Required evaluator disagreements are adjudicated without gaining Product Team authority. |
+| `PKB-SCENARIO-001` | Product Capability behavior scenarios | Behavior scenarios have a provider-neutral, Product Team-owned, immutable lifecycle contract. |
+| `PKB-SCENARIO-002` | Scenario authority and isolation | Only frozen approved scenarios enter Forward generation; Reverse hypotheses remain isolated. |
+| `PKB-MAPPING-001` | Scenario-grounded realization | Proposals trace scenarios through variable realization chains to justified component roles. |
+| `PKB-PROVIDER-001` | Template and UI evidence | UI/template claims use verified provider capability or declare an evidence gap. |
+| `PKB-REVERSE-001` | Reverse experiment / Scenario authority and isolation | Reverse quality controls improve proposals without publishing Product truth. |
+| `PKB-EVAL-001` | Hierarchical evaluation | Evaluator truth uses provider-neutral normalized component identity and remains isolated. |
+| `PKB-EVAL-002` | Hierarchical evaluation | Semantic, scenario, chain, component, and provider-native diagnostic metrics remain distinct. |
+| `PKB-CALIBRATION-001` | Calibration strategy | Acceptance thresholds derive from declared error costs and are frozen before generation. |
+| `PKB-HOLDOUT-001` | Calibration strategy | An independently proposed exact-revision holdout requires explicit user approval and sealing. |
+| `PKB-PROTOCOL-001` | Calibration strategy | The experiment protocol binds exact revisions and digests and fails closed on change. |
+| `PKB-REGRESSION-001` | Calibration strategy | Petclinic regression uses a new immutable run and cannot overwrite completed artifacts. |
+| `PKB-HOLDOUT-002` | Calibration strategy | The sealed blind holdout executes once under the unchanged frozen protocol. |
+| `PKB-DECISION-001` | Current bounded decision | Stage B produces a bounded decision without automatic semantic publication. |
+
 ## Forward experiment
 
 ```text
