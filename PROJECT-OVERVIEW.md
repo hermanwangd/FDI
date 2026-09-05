@@ -1,55 +1,47 @@
 # Feature Delivery Intelligence — PKB-001 Prototype
 
-This repository currently has one development objective: **PKB-001 — Product Knowledge Bootstrap & Realization Prototype**.
+## Objective
 
-The prototype tests two hypotheses:
+PKB-001 tests two exact-revision hypotheses:
 
-- **Forward:** Product Semantics plus Graphify Structural Intelligence can recover a useful Capability-to-Component mapping from an exact source revision.
-- **Reverse:** Graphify Structural Intelligence plus Git, pull-request, and feature-delivery history can produce useful Capability hypotheses for human review.
+- **Forward:** Product Semantics + Graphify structural evidence → Capability-to-Component proposals.
+- **Reverse:** Graphify structural evidence + delivery history → Capability hypotheses → human review.
 
-Reverse output is proposal-only. Human Reviewer review owns Product meaning and is the only route by which a proposal can become accepted Product truth.
+Reverse output is always proposal-only. The Human Reviewer owns Product meaning;
+Graphify owns structural observations; delivery history is evidence, not Product truth.
 
-The FDI framework target is Java 17 / Spring Boot 3.4.1 for all executable
-framework behavior. The installed Graphify Python runtime remains an external
-structural-intelligence provider behind the Java `CodeIntelligenceProvider`
-adapter over MCP stdio; it is not part of the Java migration. Existing repository
-Python tooling is transitional and is replaced consumer by consumer only after
-verified Java parity and caller cutover.
+The FDI framework target is Java 17 with Spring Boot 3.4.1. The external
+Graphify Python MCP runtime remains outside the framework migration and is
+accessed only through `CodeIntelligenceProvider` and its Graphify adapter.
 
 ## Active project truth
 
-Only these five root files define the current prototype:
+Read these files in order:
 
-1. `PROJECT-OVERVIEW.md`
-2. `FRAMEWORK-SPEC.md`
-3. `BACKLOG.md`
-4. `IMPLEMENTATION-PLAN.md`
-5. `STATUS.json`
+1. `PROJECT-OVERVIEW.md` — objective and boundaries.
+2. `FRAMEWORK-SPEC.md` — normative requirements and contracts.
+3. `BACKLOG.md` — one record per normative requirement and its maturity.
+4. `IMPLEMENTATION-PLAN.md` — selected work and verified delivery ledger.
+5. `STATUS.json` — machine-readable current state and next action.
 
-Everything under `archive/` is historical reference and must not be used to determine current project truth. Supporting source code, contracts, configuration, validation assets, and tooling implement or test this prototype; they do not override these five entries.
+`AGENTS.md` defines execution rules. Code, tests, schemas, and validation
+artifacts are supporting evidence. Everything under `archive/` is historical
+reference and MUST NOT determine current truth. Conflicts stop as
+`CONTEXT_CONFLICT`; agents must not infer authority from filenames or versions.
 
-## Current result and next action
+## Current result
 
-The approved 10-capability Spring Petclinic calibration ran at source commit `818c4136ea971c21674525f9053de0d9c7ad8cfe` with exactly bound Graphify evidence and cutoff-bounded Delivery History. PK-S1 and PK-S2 outputs were reviewed by two isolated `NON_HUMAN`, evaluator-only contexts. The bounded result is `REVISE`: input binding and evidence integrity passed, but numeric acceptance thresholds were not pre-registered before generation and judgment, so observed values cannot support `GO`.
+The frozen Petclinic prototype result is `REVISE`, not a Product-semantics
+publication decision. It achieved broad graph-node coverage but no exact
+proposed-component node matches, so component naming and granularity require
+calibration. No preregistered acceptance thresholds existed for that run.
 
-The comparison provides deterministic label/order blinding, not content-level arm anonymity: `ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT`. Evidence categories and values may allow arm inference even though explicit arm labels and source identifiers are absent and the sealed identity key remains separately useful.
+Human review has accepted 3 of 16 generated scenario proposals; 13 remain
+pending. Blinding is deterministic label/order blinding only, with
+`ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT` recorded as a limitation.
 
-The user is the prototype's Human Reviewer / Experiment Owner. The system
-proposes Capabilities and Behavior Scenarios from Graphify and delivery history;
-the user accepts, edits or rejects them. Accepted versions are frozen as
-experiment inputs. A single evidence-backed review surface replaces the planned
-Stage A/B split. Eleven evaluator disagreements remain open. Existing evaluation
-artifacts remain reference evidence and the result remains `REVISE`.
-
-The scenario proposal/review contracts and generation skill are implemented.
-The new review surface contains 6 Capability proposals and 10 behavior scenarios
-with 48 resolving evidence references. The user accepted Capability 001 and
-Scenarios 001/002; those exact definitions are frozen as a first-slice experiment
-input. The other 13 decisions remain pending. The bounded BL-007 plan is ready
-for a separately versioned v0.3 scenario-aware contract and input gate. The Java
-scenario-chain contract, v0.3 skill/schema and frozen-input gate are implemented
-and tested. The accepted first slice passes contract-only validation; this is not
-mapping generation or experiment readiness. This new Forward run has not executed.
-Existing v0.2 stays unchanged.
-
-The verified component-contract foundation and the next scenario-grounded experiment have separate maturity. Eight requirements are `M3_VERIFIED` (five foundation plus scenario contract, proposal generation/review surface and active pointer); 15 remaining requirements are `M1_BACKLOGGED`. The completed Petclinic Phase 0 remains `READY`, while the new scenario-grounded experiment is `NOT_READY` until its mandatory review, scenario, evaluation, threshold, holdout, and protocol gates pass.
+Specification maturity is 8 of 23 requirements verified and 15 backlogged.
+Phase 0 evidence is ready, but the next experiment is `NOT_READY`. Under
+`PKB-BL-026`, two bounded repository-owned Python framework consumers have been
+migrated to Java. The next migration consumer has not been selected. External
+Graphify is explicitly excluded from that migration.

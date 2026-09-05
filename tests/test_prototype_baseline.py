@@ -38,8 +38,8 @@ def test_five_active_truth_entries_exist_and_resolve():
         'owner_role': 'HUMAN_REVIEWER',
         'issue_ref': 'HERM-266',
         'base_commit': 'c123f24141972b53de66997f7782fcce1fd8cb05',
-        'candidate_commit': None,
-        'state': 'CONTEXT_REVIEW',
+        'candidate_commit': '248066754da2210b81504138d974c69711524dd8',
+        'state': 'COMPLETED_AWAITING_NEXT_SELECTION',
     }
     if status['review_packet'] is not None:
         assert (ROOT/status['review_packet']).is_file()
