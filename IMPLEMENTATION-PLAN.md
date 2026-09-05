@@ -224,14 +224,17 @@ git commit -m "feat(pkb001): enforce realization proposal boundaries"
 
 **Files:**
 
-- Modify: `skills/pkb001/pk-s1-product-realization/SKILL.md`
+- Preserve unchanged: `skills/pkb001/pk-s1-product-realization/SKILL.md` (immutable historical Petclinic input)
+- Create: `skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md`
 - Modify: `tests/test_pkb001_execution_classification.py`
+
+The original PK-S1 skill is a byte-bound input to the completed Petclinic run and must remain unchanged. The component contract applies to the versioned v0.2 skill for the next run.
 
 - [ ] **Step 1: Add a failing skill-contract test**
 
 ```python
 def test_pk_s1_requires_typed_primary_and_supporting_components_without_gold():
-    text = (ROOT/'skills/pkb001/pk-s1-product-realization/SKILL.md').read_text()
+    text = (ROOT/'skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md').read_text()
     assert '`PRIMARY`' in text and '`SUPPORTING`' in text
     assert all(f'`{value}`' in text for value in
                ('REPOSITORY', 'FILE', 'TYPE', 'METHOD', 'TEMPLATE', 'CONFIGURATION'))
@@ -243,9 +246,9 @@ def test_pk_s1_requires_typed_primary_and_supporting_components_without_gold():
 
 Run: `python3 -m pytest -q tests/test_pkb001_execution_classification.py::test_pk_s1_requires_typed_primary_and_supporting_components_without_gold`
 
-Expected: failure because the role/granularity contract is absent.
+Expected: failure because the versioned v0.2 skill does not exist yet.
 
-- [ ] **Step 3: Add the exact output requirements to PK-S1**
+- [ ] **Step 3: Create versioned PK-S1 v0.2 with the exact output requirements**
 
 ```markdown
 ## Component output contract
@@ -268,8 +271,8 @@ Expected: all selected tests pass.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add skills/pkb001/pk-s1-product-realization/SKILL.md tests/test_pkb001_execution_classification.py
-git commit -m "docs(pkb001): constrain PK-S1 component output"
+git add skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md tests/test_pkb001_execution_classification.py IMPLEMENTATION-PLAN.md
+git commit -m "fix(pkb001): version the next-run PK-S1 contract"
 ```
 
 ### Task 4: Gold-isolated hierarchical comparison utility

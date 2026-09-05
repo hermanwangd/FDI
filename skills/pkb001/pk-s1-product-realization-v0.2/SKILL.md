@@ -1,9 +1,9 @@
 ---
-name: pk-s1-product-realization
-description: Use when PKB-001 maps frozen Product Team capabilities to components using an exactly bound Graphify snapshot.
+name: pk-s1-product-realization-v0.2
+description: Use when PKB-001 maps frozen Product Team capabilities to typed components using an exactly bound Graphify snapshot for the next experiment.
 ---
 
-# PK-S1 Product Semantics to Realization Proposal
+# PK-S1 Product Semantics to Realization Proposal v0.2
 
 ## Purpose
 
@@ -18,6 +18,8 @@ Produce evidence-backed Capability-to-Component proposals for the PKB-001 forwar
 
 If an input is absent, mismatched, ambiguous, or outside the frozen snapshot, return `BLOCKED` with no mappings. Never repair a missing capability by inferring Product meaning from Graphify.
 
+PK-S1 **MUST NOT** read evaluator gold, sealed expected mappings, reviewer judgments, post-generation comparison or evaluation results, or the current human-review decision packet. If any forbidden input is supplied or accessed, return `BLOCKED` with no mappings.
+
 ## Procedure
 
 For each frozen capability:
@@ -27,6 +29,16 @@ For each frozen capability:
 3. Retain citations to graph nodes and source locations.
 4. Emit a mapping only when structural evidence supports the capability description; otherwise emit an unresolved item.
 5. Record confidence and all limitations without shortening or duplicating the revision.
+
+## Component output contract
+
+Every emitted component MUST contain exactly these fields: `role`, `granularity`, `source_revision`, repository-relative `source_path`, `qualified_symbol`, `provider_node_id`, and `selection_reason`.
+
+The only allowed `role` values are `PRIMARY` and `SUPPORTING`. The only allowed `granularity` values are `REPOSITORY`, `FILE`, `TYPE`, `METHOD`, `TEMPLATE`, and `CONFIGURATION`.
+
+Every `MAPPING_PROPOSAL` MUST contain at least one `PRIMARY` component. `UNRESOLVED` MUST emit no components. A containing class or file must not replace a directly evidenced method node. Supporting evidence remains separate and cannot count as a primary exact component.
+
+Every component MUST retain the full 40-character source revision and exact Graphify binding; abbreviated or inconsistent revisions and unbound provider nodes require `BLOCKED` with no mappings.
 
 ## Output boundary
 

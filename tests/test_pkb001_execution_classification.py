@@ -1,3 +1,4 @@
+import hashlib
 import json
 from pathlib import Path
 
@@ -91,7 +92,19 @@ def test_obsolete_code_baseline_review_packet_is_not_active():
 
 
 def _pk_s1_text():
-    return (ROOT/'skills/pkb001/pk-s1-product-realization/SKILL.md').read_text()
+    return (ROOT/'skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md').read_text()
+
+
+def test_historical_pk_s1_remains_bound_to_petclinic_manifest():
+    skill_path = ROOT/'skills/pkb001/pk-s1-product-realization/SKILL.md'
+    manifest = json.loads((
+        ROOT/'validation/pkb001/artifacts/petclinic-pk-s1-forward-run-818c413-manifest.json'
+    ).read_text())
+    recorded = manifest['visible_input_sha256'][
+        'skills/pkb001/pk-s1-product-realization/SKILL.md'
+    ]
+    assert recorded == 'f97d4e5b13605de81ab1b149e338031feea736666dc2c6f0b7635ce9131a2ca9'
+    assert hashlib.sha256(skill_path.read_bytes()).hexdigest() == recorded
 
 
 def test_pk_s1_component_output_contract_is_complete_and_typed():
