@@ -30,6 +30,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -293,16 +294,20 @@ public final class ScenarioForwardGate {
         Future<BoundedOutput> drain = null;
         boolean completed = false;
         try {
+            long deadline = System.nanoTime() + registryTimeout.toNanos();
             process = registryProcessFactory.start(root);
             Process started = process;
             drain = executor.submit(() -> drainBounded(started));
-            if (!process.waitFor(registryTimeout.toMillis(), TimeUnit.MILLISECONDS)) {
+            long processRemaining = deadline - System.nanoTime();
+            if (processRemaining <= 0 || !process.waitFor(processRemaining, TimeUnit.NANOSECONDS)) {
                 fail("RUN_ID_REGISTRY_UNAVAILABLE");
             }
             if (!Set.of(0, 1).contains(process.exitValue())) {
                 fail("RUN_ID_REGISTRY_UNAVAILABLE");
             }
-            BoundedOutput output = drain.get();
+            long drainRemaining = deadline - System.nanoTime();
+            if (drainRemaining <= 0) fail("RUN_ID_REGISTRY_UNAVAILABLE");
+            BoundedOutput output = drain.get(drainRemaining, TimeUnit.NANOSECONDS);
             if (output.overflow()) {
                 fail("RUN_ID_REGISTRY_INVALID");
             }
@@ -312,13 +317,14 @@ public final class ScenarioForwardGate {
             Thread.currentThread().interrupt();
             fail("RUN_ID_REGISTRY_UNAVAILABLE");
             return new byte[0];
-        } catch (IOException | ExecutionException failure) {
+        } catch (IOException | ExecutionException | TimeoutException failure) {
             fail("RUN_ID_REGISTRY_UNAVAILABLE");
             return new byte[0];
         } finally {
             if (!completed && process != null) {
                 process.destroy();
                 process.destroyForcibly();
+                try { process.getInputStream().close(); } catch (IOException ignored) { }
                 try {
                     if (!process.waitFor(1, TimeUnit.SECONDS)) {
                         process.destroyForcibly();

@@ -31,8 +31,11 @@ class ScenarioForwardCharacterizationTests {
                         .put("graph_sha256", "b".repeat(64))
                         .put("semantics_sha256", "c".repeat(64));
                 proposal.putArray("capability_results").add(fixture.get("result"));
-                boolean valid = new ScenarioForwardGate().validateProposalContract(proposal, schema).isEmpty();
-                assertEquals(fixture.path("valid").booleanValue(), valid);
+                List<String> reasons = new ScenarioForwardGate().validateProposalContract(proposal, schema);
+                List<String> expected = new ArrayList<>();
+                fixture.withArray("expected_reasons").forEach(reason -> expected.add(reason.asText()));
+                assertEquals(expected, reasons);
+                assertEquals(fixture.path("valid").booleanValue(), reasons.isEmpty());
             }));
         }
         assertEquals(36, tests.size());

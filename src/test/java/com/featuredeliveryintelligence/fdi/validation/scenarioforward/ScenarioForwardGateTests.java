@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.time.Duration;
+import java.util.concurrent.CountDownLatch;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -184,6 +185,16 @@ class ScenarioForwardGateTests {
         assertTrue(process.waitedAfterDestroy, "timeout process must be reaped");
     }
 
+    @Test void exitedProcessWhoseDescendantKeepsStdoutOpenStillHonorsOneDeadline() throws Exception {
+        Fixture fixture = fixture();
+        FakeProcess process = FakeProcess.exitedWithOpenStdout();
+        ScenarioForwardReport report = assertTimeoutPreemptively(Duration.ofMillis(500),
+                () -> fixture.validate(new ScenarioForwardGate(ignored -> process, Duration.ofMillis(20))));
+        assertEquals(List.of("RUN_ID_REGISTRY_UNAVAILABLE"), report.reasons());
+        assertTrue(process.destroyedForcibly);
+        assertTrue(process.waitedAfterDestroy);
+    }
+
     @Test void reasonsAreSortedDeduplicatedAndFailureNeverReturnsGenerationInputs() throws Exception {
         Fixture fixture = fixture();
         fixture.proposal.put("graph_sha256", "0".repeat(64));
@@ -297,9 +308,19 @@ class ScenarioForwardGateTests {
     private static final class FakeProcess extends Process {
         private final InputStream stdout; private final boolean initiallyAlive; private final int exit;
         private boolean alive; boolean destroyed; boolean destroyedForcibly; boolean waitedAfterDestroy;
-        private FakeProcess(byte[] output, boolean alive, int exit) { this.stdout = new ByteArrayInputStream(output); this.initiallyAlive = alive; this.alive = alive; this.exit = exit; }
+        private FakeProcess(byte[] output, boolean alive, int exit) { this(new ByteArrayInputStream(output), alive, exit); }
+        private FakeProcess(InputStream output, boolean alive, int exit) { this.stdout = output; this.initiallyAlive = alive; this.alive = alive; this.exit = exit; }
         static FakeProcess completed(byte[] output, int exit) { return new FakeProcess(output, false, exit); }
         static FakeProcess hanging() { return new FakeProcess(new byte[0], true, 0); }
+        static FakeProcess exitedWithOpenStdout() {
+            CountDownLatch never = new CountDownLatch(1);
+            return new FakeProcess(new InputStream() {
+                @Override public int read() throws IOException {
+                    try { never.await(); return -1; }
+                    catch (InterruptedException failure) { Thread.currentThread().interrupt(); throw new IOException(failure); }
+                }
+            }, false, 0);
+        }
         @Override public OutputStream getOutputStream() { return OutputStream.nullOutputStream(); }
         @Override public InputStream getInputStream() { return stdout; }
         @Override public InputStream getErrorStream() { return InputStream.nullInputStream(); }

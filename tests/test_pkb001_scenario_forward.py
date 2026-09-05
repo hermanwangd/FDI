@@ -15,7 +15,9 @@ def test_shared_contract_fixtures(case):
     proposal = dict(schema_version='pkb001.realization-proposal.v0.3', authority='PROPOSAL_ONLY',
                     run_id='fixture-only', source_revision='a' * 40, graph_sha256='b' * 64,
                     semantics_sha256='c' * 64, capability_results=[case['result']])
-    assert (validate_proposal_contract(proposal) == []) is case['valid'], case['name']
+    reasons = validate_proposal_contract(proposal)
+    assert reasons == case['expected_reasons'], case['name']
+    assert (reasons == []) is case['valid'], case['name']
 
 @pytest.fixture
 def accepted_request(tmp_path):

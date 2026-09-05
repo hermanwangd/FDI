@@ -76,7 +76,8 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": []
   },
   {
     "name": "unresolved",
@@ -130,7 +131,8 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": []
   },
   {
     "name": "partial_ui_gap",
@@ -217,7 +219,8 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": []
   },
   {
     "name": "dangling_ref",
@@ -296,7 +299,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "COMPONENT_REFERENCE_INVALID"
+    ]
   },
   {
     "name": "duplicate_component",
@@ -391,7 +397,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "DUPLICATE_COMPONENT"
+    ]
   },
   {
     "name": "unused_component",
@@ -466,7 +475,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "COMPONENT_REFERENCE_INVALID"
+    ]
   },
   {
     "name": "cross_parent",
@@ -545,7 +557,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "SCENARIO_PARENT_MISMATCH"
+    ]
   },
   {
     "name": "trace_parent",
@@ -624,7 +639,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "SCENARIO_PARENT_MISMATCH"
+    ]
   },
   {
     "name": "unknown_scenario",
@@ -703,7 +721,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "SCENARIO_MEMBERSHIP_INVALID"
+    ]
   },
   {
     "name": "missing_trace",
@@ -764,7 +785,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "SCENARIO_MEMBERSHIP_INVALID"
+    ]
   },
   {
     "name": "duplicate_trace",
@@ -861,7 +885,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "SCENARIO_MEMBERSHIP_INVALID"
+    ]
   },
   {
     "name": "duplicate_bound",
@@ -944,7 +971,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "SCENARIO_MEMBERSHIP_INVALID"
+    ]
   },
   {
     "name": "revision",
@@ -1023,7 +1053,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "COMPONENT_REVISION_MISMATCH"
+    ]
   },
   {
     "name": "missing_primary",
@@ -1102,7 +1135,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "OUTCOME_INVALID"
+    ]
   },
   {
     "name": "unresolved_components",
@@ -1181,7 +1217,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "OUTCOME_INVALID"
+    ]
   },
   {
     "name": "empty_evidence",
@@ -1258,7 +1297,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "STEP_EVIDENCE_REQUIRED"
+    ]
   },
   {
     "name": "extraneous_gap",
@@ -1337,7 +1379,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "STEP_GAP_INVALID"
+    ]
   },
   {
     "name": "not_applicable_missing_reason",
@@ -1416,7 +1461,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "STEP_NOT_APPLICABLE_INVALID"
+    ]
   },
   {
     "name": "extraneous_na_reason",
@@ -1495,7 +1543,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "STEP_NOT_APPLICABLE_INVALID"
+    ]
   },
   {
     "name": "duplicate_step_ref",
@@ -1575,7 +1626,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "SCHEMA_INVALID"
+    ]
   },
   {
     "name": "duplicate_evidence_ref",
@@ -1655,7 +1709,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "SCHEMA_INVALID"
+    ]
   },
   {
     "name": "blank_limit",
@@ -1734,7 +1791,10 @@
       "limitations": [
         " "
       ]
-    }
+    },
+    "expected_reasons": [
+      "SCHEMA_INVALID"
+    ]
   },
   {
     "name": "invalid_path",
@@ -1813,7 +1873,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "COMPONENT_IDENTITY_INVALID"
+    ]
   },
   {
     "name": "symbol_missing",
@@ -1892,7 +1955,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "COMPONENT_IDENTITY_INVALID"
+    ]
   },
   {
     "name": "type_replaces_method",
@@ -1979,7 +2045,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "CONTAINING_COMPONENT_REASON_REQUIRED"
+    ]
   },
   {
     "name": "file_replaces_method",
@@ -2066,7 +2135,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "CONTAINING_COMPONENT_REASON_REQUIRED"
+    ]
   },
   {
     "name": "direct_not_method",
@@ -2153,7 +2225,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "DIRECT_METHOD_INVALID"
+    ]
   },
   {
     "name": "direct_wrong_revision",
@@ -2240,7 +2315,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "COMPONENT_REVISION_MISMATCH"
+    ]
   },
   {
     "name": "duplicate_direct",
@@ -2334,7 +2412,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "DIRECT_METHOD_INVALID"
+    ]
   },
   {
     "name": "missing_gap",
@@ -2388,7 +2469,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "STEP_GAP_INVALID"
+    ]
   },
   {
     "name": "complete_gap",
@@ -2475,7 +2559,10 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": [
+      "EVIDENCE_STATUS_INVALID"
+    ]
   },
   {
     "name": "nullable_file_symbol",
@@ -2554,7 +2641,8 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": []
   },
   {
     "name": "blank_file_symbol",
@@ -2633,7 +2721,8 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": []
   },
   {
     "name": "nullable_repository_symbol",
@@ -2712,7 +2801,8 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": []
   },
   {
     "name": "blank_repository_symbol",
@@ -2791,7 +2881,8 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": []
   },
   {
     "name": "empty_method_name_parity",
@@ -2878,6 +2969,7 @@
       "limitations": [
         "Synthetic contract fixture, not an experiment mapping."
       ]
-    }
+    },
+    "expected_reasons": []
   }
 ]
