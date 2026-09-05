@@ -149,7 +149,7 @@ retained here for history and are excluded from active requirement counts.
 ### PKB-BL-004 — Existing disagreement adjudication
 
 - Priority: `P1`
-- Status: `READY`
+- Status: `IN_PROGRESS`
 - Requirement: current bounded evaluation protocol
 - Depends on: none
 - Deliverables: independent third evaluator judgments for the 11 recorded
@@ -222,10 +222,13 @@ retained here for history and are excluded from active requirement counts.
   artifacts remain unchanged
 - Active plan: `IMPLEMENTATION-PLAN.md#selected-work-bl-026-java-scenario-forward-gate-migration`
 - Progress: Java-only framework boundary recorded in `FRAMEWORK-SPEC.md` at
-  `891e497968000c32984f26437eab811c063ec4cf`. The proposed first slice is the
-  repository-owned `tooling/validation/pkb001_scenario_forward_gate.py`. The
-  user approved the two-level Backlog to Implementation Plan structure; no
-  migration implementation has started.
+  `891e497968000c32984f26437eab811c063ec4cf`. The first bounded consumer,
+  `tooling/validation/pkb001_scenario_forward_gate.py`, was replaced by the
+  Java API and packaged CLI, all active callers were cut over, and the Python
+  source plus its direct Python-only test were removed in `f5ebd3a`. Verification
+  passed 162 Java tests, 312 remaining Python tests with 3 skips, all 36 shared
+  parity fixtures, and public validation 9/9. Other repository-owned Python
+  consumers remain transitional; external Graphify Python is unchanged.
 - Completion evidence: pending
 
 ### PKB-BL-008 — Real Graphify UI/template capability verification

@@ -242,13 +242,13 @@ public static void main(String[] args) {
 - Delete: `tests/test_pkb001_scenario_forward.py`
 - Modify: `BACKLOG.md`, `STATUS.json`, `IMPLEMENTATION-PLAN.md`
 
-- [ ] Replace every active import/invocation of the Python scenario-forward
+- [x] Replace every active import/invocation of the Python scenario-forward
   gate with the packaged Java CLI. Search may retain only explicitly historical
   plan text before deletion.
-- [ ] Mark the inventory entry `MIGRATED_TO_JAVA`, record the Java API/CLI and
+- [x] Mark the inventory entry `MIGRATED_TO_JAVA`, record the Java API/CLI and
   verification evidence, then delete only the replaced module and direct test.
   Do not delete other Python consumers or modify external Graphify.
-- [ ] Run the complete verification set:
+- [x] Run the complete verification set:
 
 ```bash
 MAVEN_OPTS='-Xmx2g' ./mvnw clean package
@@ -258,9 +258,18 @@ python3 validation/pkb001/task7-evaluation/public_validate.py .
 
 Expected: Java build, remaining transitional Python regression and public
 validation all pass; no active caller imports the deleted module.
-- [ ] Update BL-026 progress and `STATUS.json` with test counts and commit IDs.
+- [x] Update BL-026 progress and `STATUS.json` with test counts and commit IDs.
 Keep BL-026 active and `PKB-JAVA-001` below M3 because other Python consumers
 remain. Commit as `refactor(fdi): cut scenario forward validation over to Java`.
+
+Task 5 completion record (2026-09-05): `f5ebd3a` switches the v0.3 Skill to
+the packaged Java CLI, records the migrated consumer and Java replacement in
+the inventory, removes only the replaced Python gate and its direct test, and
+keeps every other Python consumer plus external Graphify unchanged. Verification
+passed `MAVEN_OPTS='-Xmx2g' ./mvnw clean package` with 162 Java tests,
+`python3 -m pytest -q` with 312 passed and 3 skipped, public validation 9/9,
+and `git diff --check`. All 36 shared scenario-forward fixtures remain enforced
+by Java tests.
 
 ### Plan acceptance boundary
 
