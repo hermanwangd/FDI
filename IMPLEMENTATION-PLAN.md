@@ -708,15 +708,16 @@ Completion ledger:
 - Task 2: `40adc0c`, `383cac7`
 - Task 3: `1b4cb7b`, `9ce4a58`, `67be4a7`, `300ce7c`
 - Task 4: `37d4aa6`, `d402e916`, `7fb1e796`, `27d3b45`, `e89f77c`
-- Task 5: `7eb1c88`, `1c5b879`, `934946b`, `73bd933`, `54042d3`
+- Task 5: `7eb1c88`, `1c5b879`, `934946b`, `73bd933`, `54042d3`, `5f3c86b`
 
 Public-boundary record (2026-09-05): `54042d3` snapshots exact built-in JSON
 containers before any request access and rejects hostile subclasses, non-finite
 numbers, excessive nesting, and oversized input with deterministic `BLOCKED`
 and no mappings. It also aligns whitespace handling for `capability_id` and
 every limitation with the Java proposal contract. This is readiness validation
-only; no next-run generation was executed. Final focused gate tests passed
-81/81, the whole Python suite passed 258/258, Task 7 remained 9/9, and the
+only; no next-run generation was executed. Commit `5f3c86b` also rejects a
+whitespace-only evidence `source_location`. Final focused gate tests passed
+82/82, the whole Python suite passed 259/259, Task 7 remained 9/9, and the
 isolated Maven suite passed with `MAVEN_OPTS='-Xmx2g'`.
 
 - [x] **Step 6: Commit**
