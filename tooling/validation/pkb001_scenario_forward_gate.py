@@ -221,7 +221,9 @@ def _review_semantics(documents, items):
         raise ValueError('AUTHORITY_INVALID')
     if (type(manifest.get('proposal_revision')) is not int
             or type(review.get('proposal_revision')) is not int
-            or not semantics.get('snapshot_id') or manifest.get('snapshot_id') != semantics['snapshot_id']
+            or not isinstance(semantics.get('snapshot_id'), str) or not semantics['snapshot_id'].strip()
+            or not isinstance(manifest.get('snapshot_id'), str) or not manifest['snapshot_id'].strip()
+            or manifest['snapshot_id'] != semantics['snapshot_id']
             or manifest.get('proposal_sha256') != digest or review.get('proposal_sha256') != digest
             or manifest.get('proposal_revision') != revision or review.get('proposal_revision') != revision
             or review.get('proposal_artifact_path') != items['ORIGINAL_PROPOSAL']['path']):

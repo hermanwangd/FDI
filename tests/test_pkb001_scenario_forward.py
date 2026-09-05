@@ -323,3 +323,20 @@ def test_boolean_proposal_revision_is_not_an_integer_binding(accepted_request, k
     mutate_input(root, request, kind, mutate)
     rebind_review(root, request)
     assert_blocked(root, request)
+
+@pytest.mark.parametrize('value', [None, '', 7], ids=['missing', 'blank', 'nontext'])
+def test_snapshot_id_requires_nonblank_text_after_digest_rebinding(accepted_request, value):
+    from tooling.validation.pkb001_scenario_forward_gate import validate_scenario_forward
+    root, request = accepted_request
+    def mutate(document):
+        if value is None:
+            document.pop('snapshot_id')
+        else:
+            document['snapshot_id'] = value
+    mutate_input(root, request, 'PRODUCT_SEMANTICS', mutate)
+    mutate_input(root, request, 'ACCEPTANCE_MANIFEST', mutate)
+    rebind_review(root, request)
+    report = validate_scenario_forward(root, request)
+    assert report['status'] == 'BLOCKED'
+    assert report['reasons'] == ['ACCEPTANCE_BINDING_MISMATCH']
+    assert report['generation_inputs'] == []
