@@ -24,17 +24,51 @@ def test_four_active_truth_entries_exist_and_resolve():
         'decision': 'REVISE',
         'phase0_readiness': 'READY',
         'evaluation_status': 'COMPLETE_BOUNDED_REVISE',
-        'human_review_status': 'PENDING_PRODUCT_TEAM_REVIEW',
-        'human_review_packet': (
+        'human_review_status': 'PENDING_ISOLATED_STAGE_A_PACKET',
+        'stage_a_review_packet': None,
+        'stage_b_reference_packet': (
             'validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.zh-TW.md'
         ),
         'third_review_status': 'PENDING_11_DISAGREED_ITEMS',
         'semantic_publication_allowed': False,
         'blinding_scope': 'DETERMINISTIC_LABEL_AND_ORDER_BLINDING',
         'blinding_limitation': 'ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT',
-        'next_action': 'Complete Product Team human review decision packet',
+        'spec_maturity': {
+            'spec_revision': '4f8e903181bf79178af37672e1cb57699c4c93f7',
+            'normative_requirements': 22,
+            'm3_verified': 5,
+            'm1_backlogged': 17,
+            'next_experiment_readiness': 'NOT_READY',
+        },
+        'active_backlog_item': 'PKB-BL-001',
+        'active_implementation_plan': None,
+        'next_action': (
+            'Select PKB-BL-001 and create a bounded implementation plan for '
+            'the isolated Stage A packet'
+        ),
         'archived_documents_are_authority': False,
     }
+
+
+def test_every_normative_requirement_has_one_bound_backlog_record():
+    import re
+
+    framework = (ROOT/'FRAMEWORK-SPEC.md').read_text()
+    plan = (ROOT/'IMPLEMENTATION-PLAN.md').read_text()
+    requirement_ids = re.findall(
+        r'^\| `(PKB-[A-Z]+(?:-[A-Z]+)*-\d{3})` \|', framework, re.MULTILINE,
+    )
+    records = re.findall(
+        r'^\| `(PKB-BL-\d{3})` \| `(?:FEATURE|BUG|SECURITY|TECH_DEBT|'
+        r'VALIDATION|DOCUMENTATION|OPERATION|RESEARCH)` \| '
+        r'`(PKB-[A-Z]+(?:-[A-Z]+)*-\d{3})` \|',
+        plan, re.MULTILINE,
+    )
+
+    assert len(requirement_ids) == len(set(requirement_ids)) == 22
+    assert len(records) == len({backlog_id for backlog_id, _ in records}) == 22
+    assert {requirement_id for _, requirement_id in records} == set(requirement_ids)
+    assert '4f8e903181bf79178af37672e1cb57699c4c93f7' in plan
 
 
 def test_legacy_truth_surfaces_are_archived():

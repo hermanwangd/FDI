@@ -121,11 +121,10 @@ When a bound Spec requirement changes, mark affected Backlog items
 plans against the new Spec revision before further implementation or before
 retaining `VERIFIED`.
 
-The current 17-item PKB-001 backlog predates this record contract. Treat it as
-`NEEDS_RECONCILIATION` until stable Framework requirement IDs, `work_type`,
-Spec revision bindings, verification requirements, ownership, and plan links
-are added. Its current priority and dependency information remains useful, but
-does not satisfy the new traceability contract by itself.
+The current 22-item PKB-001 backlog is reconciled to the exact Framework Spec
+revision recorded in `IMPLEMENTATION-PLAN.md`. Five entries are verified
+foundation delivery records and 17 represent the next experiment. If the bound
+Spec changes, apply `NEEDS_RECONCILIATION` before using the affected entries.
 
 ### Implementation Plan
 

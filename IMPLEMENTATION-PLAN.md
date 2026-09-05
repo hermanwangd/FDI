@@ -757,6 +757,8 @@ Allowed status values are:
 - `BLOCKED_DEPENDENCY`: a listed prerequisite is not verified;
 - `BLOCKED_PRODUCT_TEAM`: Product Team meaning or approval is required;
 - `BLOCKED_USER_APPROVAL`: explicit user approval is required;
+- `NEEDS_RECONCILIATION`: the bound Spec changed and the item must be checked
+  against the new revision;
 - `DEFERRED`: intentionally outside the current execution window;
 - `VERIFIED`: deliverables exist and every acceptance check has objective
   evidence.
@@ -769,6 +771,49 @@ If a verified dependency changes, dependent items return to
 states cannot be cleared by an agent.
 
 ### Prioritized backlog items
+
+All records below bind to `FRAMEWORK-SPEC.md` at exact Git revision
+`4f8e903181bf79178af37672e1cb57699c4c93f7`. This binding matrix is part of
+each Backlog record; detailed priority, status, dependencies, deliverables,
+verification, and completion evidence follow in the item sections.
+
+| Backlog ID | Work type | Source requirement | Current gap / intended outcome | Scope boundary | Decision / implementation owner | Active plan |
+|---|---|---|---|---|---|---|
+| `PKB-BL-001` | `DOCUMENTATION` | `PKB-REVIEW-001` | Existing packet mixes semantic and technical review; provide an isolated Stage A surface. | Packet and isolation tests only; no Product decision. | Product Team / Engineering | `null` |
+| `PKB-BL-002` | `DOCUMENTATION` | `PKB-STATUS-001` | Status points to the combined packet; point it to verified Stage A material. | Active pointer only; preserve old packet. | Product Team / Engineering | `null` |
+| `PKB-BL-003` | `FEATURE` | `PKB-REVIEW-002` | Stage A meaning is undecided; record Product Team decisions. | Semantics only; no technical unblinding. | Product Team / Product Team | `null` |
+| `PKB-BL-004` | `VALIDATION` | `PKB-EVAL-LEGACY-001` | Eleven evaluator disagreements remain; adjudicate only those items. | Existing evaluation only; no Product authority. | Evaluation owner / Independent evaluator | `null` |
+| `PKB-BL-005` | `FEATURE` | `PKB-SCENARIO-001` | Scenario rules are prose-only; make the lifecycle machine-verifiable. | Contract and validation; no scenario approval. | Product Team / Engineering | `null` |
+| `PKB-BL-006` | `FEATURE` | `PKB-SCENARIO-002` | No approved frozen scenario-bearing revision exists; create one without overwriting Petclinic. | New semantics revision only. | Product Team / Engineering | `null` |
+| `PKB-BL-007` | `FEATURE` | `PKB-MAPPING-001` | PK-S1 v0.2 lacks scenario traces; create a new compatible proposal contract. | New skill/contract version; preserve v0.2. | Product Team / Engineering | `null` |
+| `PKB-BL-008` | `RESEARCH` | `PKB-PROVIDER-001` | UI/template support is unverified; record actual runtime capability or gaps. | Read-only discovery; no assumed API or runtime replacement. | User / Engineering | `null` |
+| `PKB-BL-009` | `FEATURE` | `PKB-REVERSE-001` | Reverse output over-combines, duplicates, and overclaims; add proposal-only controls. | Proposal quality only; no semantic publication. | Product Team / Engineering | `null` |
+| `PKB-BL-010` | `VALIDATION` | `PKB-EVAL-001` | Existing truth relies on provider IDs; add sealed normalized identity. | New evaluator truth format; generation remains isolated. | Evaluation owner / Engineering | `null` |
+| `PKB-BL-011` | `VALIDATION` | `PKB-EVAL-002` | Scenario, chain, component, and diagnostic measures are incomplete; add distinct metrics. | Deterministic evaluation only. | Evaluation owner / Engineering | `null` |
+| `PKB-BL-012` | `VALIDATION` | `PKB-CALIBRATION-001` | No preregistered numeric gate exists; freeze justified thresholds. | Threshold definition only; no generation. | Product Team / Evaluation owner | `null` |
+| `PKB-BL-013` | `RESEARCH` | `PKB-HOLDOUT-001` | No approved sealed holdout exists; propose, approve, and seal one exact revision. | Candidate metadata and seal; no execution. | User / Independent selector | `null` |
+| `PKB-BL-014` | `VALIDATION` | `PKB-PROTOCOL-001` | Next-run inputs are not jointly frozen; bind every executable input and digest. | Protocol manifest only; no run. | User / Engineering | `null` |
+| `PKB-BL-015` | `VALIDATION` | `PKB-REGRESSION-001` | New rules lack regression evidence; run Petclinic under a frozen new protocol. | New immutable run; preserve completed run. | Evaluation owner / Engineering | `null` |
+| `PKB-BL-016` | `VALIDATION` | `PKB-HOLDOUT-002` | Generalization is untested; execute the sealed holdout once. | One blind immutable execution. | User / Engineering | `null` |
+| `PKB-BL-017` | `VALIDATION` | `PKB-DECISION-001` | No next-run Stage B decision exists; review evidence and issue a bounded result. | Decision only; no automatic publication. | Product Team / Evaluation owner | `null` |
+| `PKB-BL-018` | `FEATURE` | `PKB-COMPONENT-001` | Completed foundation record: durable structural identity was absent; Java contract now enforces it. | Component identity contract and tests. | Product Team / Engineering | completed Task 1 |
+| `PKB-BL-019` | `FEATURE` | `PKB-PROPOSAL-001` | Completed foundation record: proposal boundaries were absent; immutable Java proposal contract now enforces them. | Proposal contract and tests. | Product Team / Engineering | completed Task 2 |
+| `PKB-BL-020` | `SECURITY` | `PKB-ISOLATION-001` | Completed foundation record: next-run proposal authority and gold isolation needed enforcement; v0.2 and gate tests enforce it. | Skill isolation and proposal-only boundary. | Product Team / Engineering | completed Task 3 |
+| `PKB-BL-021` | `VALIDATION` | `PKB-COMPARISON-001` | Completed foundation record: hierarchical metrics were conflated; deterministic comparator now separates them. | Pure comparison implementation and tests. | Evaluation owner / Engineering | completed Task 4 |
+| `PKB-BL-022` | `VALIDATION` | `PKB-READINESS-001` | Completed foundation record: next-run inputs lacked an executable gate; fail-closed readiness now exists. | Schema, readiness API/CLI, and tests; no generation. | User / Engineering | completed Task 5 |
+
+### Verified foundation delivery records
+
+The following items predate the current backlog format and are reconciled to
+the bound Spec revision through their existing task ledgers and test evidence.
+
+| Backlog ID | Priority | Status | Dependencies | Deliverables | Required verification | Completion evidence |
+|---|---|---|---|---|---|---|
+| `PKB-BL-018` | `P0` | `VERIFIED` | none | `StructuralComponentIdentity` and tests | Java constructor, canonical-path, granularity, and revision tests | Task 1 commits `d483c39d`, `b634d0fb`; full Java regression passed |
+| `PKB-BL-019` | `P0` | `VERIFIED` | `PKB-BL-018` | `RealizationComponent`, `RealizationProposal`, and tests | Authority, role, revision, immutability, and outcome tests | Task 2 commits `40adc0c`, `383cac7`; full Java regression passed |
+| `PKB-BL-020` | `P0` | `VERIFIED` | `PKB-BL-019` | versioned PK-S1 v0.2 and isolation tests | Historical digest, proposal-only, forbidden-input, and no-publication tests | Task 3 commits in completion ledger; full repository regression passed |
+| `PKB-BL-021` | `P0` | `VERIFIED` | `PKB-BL-018` | hierarchical comparator and tests | Path/type/bare-symbol/exact-component/chain/channel tests | Task 4 commits in completion ledger; full repository regression passed |
+| `PKB-BL-022` | `P0` | `VERIFIED` | `PKB-BL-019`, `PKB-BL-020` | v0.2 schema, readiness gate, CLI, and tests | Input/digest/revision/identity/run-ID/hostile-shape/CLI tests | Task 5 commits in completion ledger; 82 focused and 259 full tests passed |
 
 #### PKB-BL-001 — Isolated Stage A review packet
 
@@ -1022,6 +1067,39 @@ and does not grant Product Team authority or unblock scenario publication.
 
 The immediate backlog item is `PKB-BL-001`. No later execution item may be
 started merely because it appears in this ordered list.
+
+### Spec maturity traceability
+
+This summary covers every requirement in `FRAMEWORK-SPEC.md` at the bound
+revision. It measures the new scenario-grounded contract and its verified
+foundation; it does not replace the completed bounded Petclinic decision.
+
+| Maturity | Requirement IDs | Count |
+|---|---|---:|
+| `M3_VERIFIED` | `PKB-COMPONENT-001`, `PKB-PROPOSAL-001`, `PKB-ISOLATION-001`, `PKB-COMPARISON-001`, `PKB-READINESS-001` | 5 |
+| `M1_BACKLOGGED` | `PKB-REVIEW-001`, `PKB-STATUS-001`, `PKB-REVIEW-002`, `PKB-EVAL-LEGACY-001`, `PKB-SCENARIO-001`, `PKB-SCENARIO-002`, `PKB-MAPPING-001`, `PKB-PROVIDER-001`, `PKB-REVERSE-001`, `PKB-EVAL-001`, `PKB-EVAL-002`, `PKB-CALIBRATION-001`, `PKB-HOLDOUT-001`, `PKB-PROTOCOL-001`, `PKB-REGRESSION-001`, `PKB-HOLDOUT-002`, `PKB-DECISION-001` | 17 |
+
+```yaml
+spec_binding:
+  path: FRAMEWORK-SPEC.md
+  revision: 4f8e903181bf79178af37672e1cb57699c4c93f7
+normative_requirements: 22
+m3_verified: 5
+m1_backlogged: 17
+next_experiment_readiness: NOT_READY
+blocking_requirements:
+  - PKB-REVIEW-001
+  - PKB-STATUS-001
+  - PKB-REVIEW-002
+  - PKB-SCENARIO-001
+  - PKB-SCENARIO-002
+  - PKB-MAPPING-001
+  - PKB-EVAL-001
+  - PKB-EVAL-002
+  - PKB-CALIBRATION-001
+  - PKB-HOLDOUT-001
+  - PKB-PROTOCOL-001
+```
 
 ## Next experiment improvement phase
 
