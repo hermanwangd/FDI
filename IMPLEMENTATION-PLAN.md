@@ -692,6 +692,16 @@ passed 240/240, Task 7 remained 9/9, and isolated Maven tests passed with
 interpreter (4.25.1). A runtime without `jsonschema` blocks with
 `SCHEMA_DEFINITION_INVALID` and never falls back to a partial validator.
 
+Final parity record (2026-09-05): `73bd933` rejects whitespace-only component
+paths, provider node IDs, selection reasons, and evidence identities while
+matching the Java symbol rule for `TYPE`, `METHOD`, `TEMPLATE`, and
+`CONFIGURATION`. Java permits any `qualifiedSymbol` value for `REPOSITORY` and
+`FILE`; the v0.2 JSON contract accepts any string there, including blank or
+nonblank. Unlike the Java nullable record field, the active PK-S1 v0.2 envelope
+still requires the JSON field and its schema type remains string. Focused gate
+tests passed 75/75, the full Python suite passed 249/249, Task 7 remained 9/9,
+and isolated Maven tests passed with `MAVEN_OPTS='-Xmx2g'`.
+
 - [x] **Step 6: Commit**
 
 ```bash
