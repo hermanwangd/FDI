@@ -205,7 +205,7 @@ def test_cli_writes_deterministic_blocked_report_and_refuses_overwrite(root):
     assert json.loads(report_bytes)["mappings"] == []
     second = subprocess.run(command, capture_output=True, text=True)
     assert second.returncode == 1
-    assert "already exists" in second.stderr
+    assert "cannot exclusively create report" in second.stderr
     assert (root / "report.json").read_bytes() == report_bytes
 
 
@@ -220,3 +220,104 @@ def test_cli_refuses_report_path_through_escaping_parent_symlink(root):
     result = subprocess.run(command, capture_output=True, text=True)
     assert result.returncode == 1
     assert not (outside / "report.json").exists()
+
+
+@pytest.mark.parametrize("mutation", [
+    lambda request: request["generation_inputs"][0].update(kind=[]),
+    lambda request: request["proposal"].update(capability_results=None),
+    lambda request: request["proposal"]["capability_results"][0].update(components=None),
+    lambda request: request.update(generation_inputs=[None, [], "bad"]),
+])
+def test_json_compatible_hostile_shapes_fail_closed(valid_request, root, mutation):
+    mutation(valid_request)
+    report = validate_next_run(root, valid_request)
+    assert report["status"] == "BLOCKED"
+    assert report["reasons"]
+    assert report["mappings"] == []
+
+
+@pytest.mark.parametrize("path", [
+    "inputs/evaluator-gold.json",
+    "inputs/comparison-results.json",
+    "inputs/post-generation-results.json",
+    "inputs/task7-results.json",
+])
+def test_compound_forbidden_path_components_are_blocked(valid_request, root, path):
+    valid_request["generation_inputs"][2]["path"] = path
+    assert "FORBIDDEN_GENERATION_INPUT" in validate_next_run(root, valid_request)["reasons"]
+
+
+def test_forbidden_path_logic_does_not_use_substrings(valid_request, root):
+    graph = valid_request["generation_inputs"][2]
+    replacement = _write(root, "inputs/golden-data.json", b"safe\n")
+    graph.update(replacement)
+    report = validate_next_run(root, valid_request)
+    assert "FORBIDDEN_GENERATION_INPUT" not in report["reasons"]
+
+
+@pytest.mark.parametrize(("path", "granularity"), [
+    ("/src/App.java", "TYPE"), ("C:/src/App.java", "TYPE"),
+    ("src\\App.java", "TYPE"), ("src//App.java", "TYPE"),
+    ("src/./App.java", "TYPE"), ("src/../App.java", "TYPE"),
+    ("src/App.java/", "TYPE"), (".", "TYPE"),
+])
+def test_component_paths_match_java_canonical_contract(valid_request, root, path, granularity):
+    component = valid_request["proposal"]["capability_results"][0]["components"][0]
+    component.update(source_path=path, granularity=granularity)
+    assert "COMPONENT_IDENTITY_INVALID" in validate_next_run(root, valid_request)["reasons"]
+
+
+@pytest.mark.parametrize("path", ["/src/App.java", "C:src/App.java", "src\\App.java", "src//App.java", "src/../App.java", "."])
+def test_evidence_paths_are_canonical(valid_request, root, path):
+    valid_request["proposal"]["capability_results"][0]["evidence_refs"][0]["source_path"] = path
+    assert "COMPONENT_IDENTITY_INVALID" in validate_next_run(root, valid_request)["reasons"]
+
+
+@pytest.mark.parametrize("granularity", ["TYPE", "METHOD", "TEMPLATE", "CONFIGURATION"])
+def test_symbol_granularity_requires_qualified_symbol(valid_request, root, granularity):
+    component = valid_request["proposal"]["capability_results"][0]["components"][0]
+    component.update(granularity=granularity, qualified_symbol=" ")
+    assert "COMPONENT_IDENTITY_INVALID" in validate_next_run(root, valid_request)["reasons"]
+
+
+@pytest.mark.parametrize("granularity", ["REPOSITORY", "FILE"])
+def test_non_symbol_granularity_requires_empty_qualified_symbol(valid_request, root, granularity):
+    component = valid_request["proposal"]["capability_results"][0]["components"][0]
+    component.update(granularity=granularity, qualified_symbol="example.App",
+                     source_path="." if granularity == "REPOSITORY" else "src/App.java")
+    assert "COMPONENT_IDENTITY_INVALID" in validate_next_run(root, valid_request)["reasons"]
+
+
+def test_repository_dot_path_with_empty_symbol_is_valid(valid_request, root):
+    component = valid_request["proposal"]["capability_results"][0]["components"][0]
+    component.update(granularity="REPOSITORY", qualified_symbol="", source_path=".")
+    assert validate_next_run(root, valid_request)["status"] == "READY"
+
+
+@pytest.mark.parametrize("worktree_action", ["delete", "mutate"])
+def test_committed_run_ids_are_read_from_head(valid_request, root, worktree_action):
+    existing = root / "validation/pkb001/existing.json"
+    if worktree_action == "delete":
+        existing.unlink()
+    else:
+        existing.write_text('{"run_id":"changed-in-worktree"}\n')
+    valid_request["proposal"]["run_id"] = "already-used"
+    assert "RUN_ID_ALREADY_EXISTS" in validate_next_run(root, valid_request)["reasons"]
+
+
+def test_malformed_committed_json_fails_closed(valid_request, root):
+    bad = root / "validation/pkb001/bad.json"
+    bad.write_text("{not-json")
+    subprocess.run(["git", "add", str(bad.relative_to(root))], cwd=root, check=True)
+    subprocess.run(["git", "commit", "-qm", "bad fixture"], cwd=root, check=True)
+    assert "RUN_ID_REGISTRY_INVALID" in validate_next_run(root, valid_request)["reasons"]
+
+
+def test_malformed_checked_in_schema_fails_closed(valid_request, root):
+    schema_path = root / "validation/pkb001/schemas/realization-proposal-v0.2.schema.json"
+    schema = json.loads(schema_path.read_text())
+    schema["properties"]["run_id"]["pattern"] = "["
+    schema_path.write_text(json.dumps(schema))
+    report = validate_next_run(root, valid_request)
+    assert "SCHEMA_DEFINITION_INVALID" in report["reasons"]
+    assert report["mappings"] == []

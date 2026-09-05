@@ -9,7 +9,12 @@ import re
 import subprocess
 import sys
 from collections import Counter
-from pathlib import Path, PurePosixPath
+from pathlib import Path
+
+try:
+    from jsonschema import Draft202012Validator
+except ImportError:  # A missing declared runtime dependency blocks; it never falls back to a partial validator.
+    Draft202012Validator = None
 
 
 SKILL_PATH = "skills/pkb001/pk-s1-product-realization-v0.2/SKILL.md"
@@ -18,10 +23,6 @@ REQUIRED_INPUT_KINDS = (
     "PRODUCT_SEMANTICS", "GRAPHIFY_BINDING_EVIDENCE", "FROZEN_GRAPH", "PKS1_SKILL",
 )
 ALLOWED_INPUT_KINDS = frozenset(REQUIRED_INPUT_KINDS)
-FORBIDDEN_PATH_PARTS = frozenset({
-    "evaluator", "task6", "task7", "human-review", "gold", "judgments",
-    "post-generation", "comparison", "evaluation",
-})
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
 
@@ -30,11 +31,10 @@ def _canonical_relative(value):
         return None
     if value.startswith("/") or re.match(r"^[A-Za-z]:", value):
         return None
-    parts = PurePosixPath(value).parts
-    if not parts or any(part in ("", ".", "..") for part in parts) or value.endswith("/"):
+    parts = value.split("/")
+    if not parts or any(part in ("", ".", "..") for part in parts):
         return None
-    canonical = "/".join(parts)
-    return canonical if canonical == value else None
+    return value
 
 
 def _resolved_file(root, item, reasons):
@@ -58,32 +58,32 @@ def _resolved_file(root, item, reasons):
     return resolved
 
 
-def _actual_digest(path):
+def _read_bytes(path):
     try:
-        return hashlib.sha256(path.read_bytes()).hexdigest()
+        return path.read_bytes()
     except OSError:
         return None
 
 
-def _digest_matches(root, item, reasons, mismatch_reason="INPUT_DIGEST_MISMATCH"):
+def _read_verified(root, item, reasons, mismatch_reason="INPUT_DIGEST_MISMATCH"):
     path = _resolved_file(root, item, reasons)
     expected = item.get("sha256") if isinstance(item, dict) else None
     if path is None or not isinstance(expected, str) or not SHA256.fullmatch(expected):
         reasons.add(mismatch_reason)
-        return False
-    if _actual_digest(path) != expected:
+        return None
+    data = _read_bytes(path)
+    if data is None or hashlib.sha256(data).hexdigest() != expected:
         reasons.add(mismatch_reason)
-        return False
-    return True
+        return None
+    return data
 
 
-def _load_json_input(root, item, reasons):
-    path = _resolved_file(root, item, reasons)
-    if path is None:
+def _load_json_bytes(data, reasons):
+    if data is None:
         return {}
     try:
-        value = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, UnicodeError, json.JSONDecodeError):
+        value = json.loads(data)
+    except Exception:  # malformed encodings, JSON depth, and decoder failures all fail closed.
         reasons.add("INPUT_JSON_INVALID")
         return {}
     if not isinstance(value, dict):
@@ -100,114 +100,55 @@ def _forbidden_path(value):
     relative = _canonical_relative(value)
     if relative is None:
         return False
-    for part in PurePosixPath(relative).parts:
-        folded = part.casefold()
-        if folded in FORBIDDEN_PATH_PARTS:
+    forbidden_tokens = {"evaluator", "gold", "judgments", "comparison", "evaluation", "task6", "task7"}
+    for part in relative.split("/"):
+        tokens = [token for token in re.split(r"[^a-z0-9]+", part.casefold()) if token]
+        token_set = set(tokens)
+        if token_set & forbidden_tokens:
             return True
-        tokens = frozenset(token for token in re.split(r"[^a-z0-9]+", folded) if token)
-        if "task6" in tokens or "task7" in tokens:
+        pairs = set(zip(tokens, tokens[1:]))
+        if ("human", "review") in pairs or ("post", "generation") in pairs:
             return True
     return False
 
 
-def _schema_is_valid(schema, value, root_schema=None):
-    """Evaluate the checked-in schema subset used by this immutable contract."""
-    root_schema = schema if root_schema is None else root_schema
-    if "$ref" in schema:
-        target = root_schema
-        reference = schema["$ref"]
-        if not isinstance(reference, str) or not reference.startswith("#/"):
-            return False
-        try:
-            for token in reference[2:].split("/"):
-                target = target[token.replace("~1", "/").replace("~0", "~")]
-        except (KeyError, TypeError):
-            return False
-        return _schema_is_valid(target, value, root_schema)
-    expected_type = schema.get("type")
-    type_matches = {
-        "object": isinstance(value, dict),
-        "array": isinstance(value, list),
-        "string": isinstance(value, str),
-        "number": isinstance(value, (int, float)) and not isinstance(value, bool),
-    }
-    if expected_type in type_matches and not type_matches[expected_type]:
-        return False
-    if "const" in schema and value != schema["const"]:
-        return False
-    if "enum" in schema and value not in schema["enum"]:
-        return False
-    if isinstance(value, str):
-        if len(value) < schema.get("minLength", 0):
-            return False
-        if "pattern" in schema and re.search(schema["pattern"], value) is None:
-            return False
-    if isinstance(value, (int, float)) and not isinstance(value, bool):
-        if value < schema.get("minimum", value) or value > schema.get("maximum", value):
-            return False
-    if isinstance(value, dict):
-        required = schema.get("required", [])
-        if any(key not in value for key in required):
-            return False
-        properties = schema.get("properties", {})
-        if schema.get("additionalProperties") is False and any(key not in properties for key in value):
-            return False
-        if any(key in properties and not _schema_is_valid(properties[key], child, root_schema)
-               for key, child in value.items()):
-            return False
-    if isinstance(value, list):
-        if len(value) < schema.get("minItems", 0) or len(value) > schema.get("maxItems", len(value)):
-            return False
-        if "items" in schema and any(not _schema_is_valid(schema["items"], item, root_schema) for item in value):
-            return False
-        if "contains" in schema:
-            matches = sum(_schema_is_valid(schema["contains"], item, root_schema) for item in value)
-            if matches < schema.get("minContains", 1):
-                return False
-    if any(not _schema_is_valid(part, value, root_schema) for part in schema.get("allOf", [])):
-        return False
-    if "if" in schema:
-        branch = "then" if _schema_is_valid(schema["if"], value, root_schema) else "else"
-        if branch in schema and not _schema_is_valid(schema[branch], value, root_schema):
-            return False
-    return True
-
-
-def _load_schema(root):
+def _load_validator(root):
+    if Draft202012Validator is None:
+        return None
     try:
         schema = json.loads((root / SCHEMA_PATH).read_text(encoding="utf-8"))
-    except (OSError, UnicodeError, json.JSONDecodeError):
+        Draft202012Validator.check_schema(schema)
+        return Draft202012Validator(schema)
+    except Exception:
         return None
-    valid = (
-        isinstance(schema, dict)
-        and schema.get("$schema") == "https://json-schema.org/draft/2020-12/schema"
-        and schema.get("$id") == "realization-proposal-v0.2.schema.json"
-        and schema.get("additionalProperties") is False
-        and schema.get("required") == ["schema_version", "run_id", "authority", "source_revision", "graph_sha256", "capability_results"]
-        and isinstance(schema.get("$defs"), dict)
-        and {"result", "component", "evidence_ref"}.issubset(schema["$defs"])
-    )
-    return schema if valid else None
 
 
 def _committed_pkb001_run_ids(root, reasons):
     try:
         result = subprocess.run(
-            ["git", "ls-files", "validation/pkb001"], cwd=root, check=True,
-            capture_output=True, text=True, timeout=15,
+            ["git", "ls-tree", "-r", "-z", "--name-only", "HEAD", "--", "validation/pkb001"],
+            cwd=root, check=True, capture_output=True, timeout=15,
         )
     except (OSError, subprocess.SubprocessError):
         reasons.add("RUN_ID_REGISTRY_UNAVAILABLE")
         return set()
     found = set()
-    for relative in result.stdout.splitlines():
+    for raw_relative in result.stdout.split(b"\0"):
+        if not raw_relative:
+            continue
+        relative = os.fsdecode(raw_relative)
         if not relative.endswith(".json"):
             continue
         try:
-            value = json.loads((root / relative).read_text(encoding="utf-8"))
-        except (OSError, UnicodeError, json.JSONDecodeError):
-            continue
-        _collect_run_ids(value, found)
+            blob = subprocess.run(
+                ["git", "show", "HEAD:" + relative], cwd=root, check=True,
+                capture_output=True, timeout=15,
+            ).stdout
+            value = json.loads(blob)
+            _collect_run_ids(value, found)
+        except Exception:
+            reasons.add("RUN_ID_REGISTRY_INVALID")
+            return set()
     return found
 
 
@@ -223,6 +164,52 @@ def _collect_run_ids(value, found):
             _collect_run_ids(child, found)
 
 
+def _component_identity_valid(component):
+    if not isinstance(component, dict):
+        return False
+    granularity = component.get("granularity")
+    path = component.get("source_path")
+    if path == ".":
+        path_valid = granularity == "REPOSITORY"
+    else:
+        path_valid = _canonical_relative(path) is not None
+    symbol = component.get("qualified_symbol")
+    if granularity in {"TYPE", "METHOD", "TEMPLATE", "CONFIGURATION"}:
+        symbol_valid = _plain_nonempty(symbol)
+    elif granularity in {"REPOSITORY", "FILE"}:
+        symbol_valid = symbol == ""
+    else:
+        symbol_valid = False
+    return path_valid and symbol_valid
+
+
+def _proposal_structure(proposal, reasons):
+    if not isinstance(proposal, dict):
+        return None, []
+    revision = proposal.get("source_revision")
+    results_value = proposal.get("capability_results")
+    results = results_value if isinstance(results_value, list) else []
+    if not isinstance(results_value, list):
+        reasons.add("SCHEMA_INVALID")
+    for result in results:
+        if not isinstance(result, dict):
+            continue
+        components_value = result.get("components")
+        components = components_value if isinstance(components_value, list) else []
+        if not isinstance(components_value, list):
+            reasons.add("SCHEMA_INVALID")
+        if any(not _component_identity_valid(component) for component in components):
+            reasons.add("COMPONENT_IDENTITY_INVALID")
+        refs_value = result.get("evidence_refs")
+        refs = refs_value if isinstance(refs_value, list) else []
+        if not isinstance(refs_value, list):
+            reasons.add("SCHEMA_INVALID")
+        if any(not isinstance(ref, dict) or _canonical_relative(ref.get("source_path")) is None
+               for ref in refs):
+            reasons.add("COMPONENT_IDENTITY_INVALID")
+    return revision, results
+
+
 def validate_next_run(root, request):
     root = Path(root).resolve()
     reasons = set()
@@ -233,48 +220,61 @@ def validate_next_run(root, request):
     if not isinstance(inputs, list):
         inputs = []
         reasons.add("REQUIRED_INPUT_SET_INVALID")
-    counts = Counter(item.get("kind") for item in inputs if isinstance(item, dict))
-    if set(counts) != ALLOWED_INPUT_KINDS or any(counts[kind] != 1 for kind in REQUIRED_INPUT_KINDS):
-        reasons.add("REQUIRED_INPUT_SET_INVALID")
-    if any(not isinstance(item, dict) or item.get("kind") not in ALLOWED_INPUT_KINDS for item in inputs):
-        reasons.add("GENERATION_INPUT_NOT_ALLOWLISTED")
+    safe_items = []
     for item in inputs:
         if not isinstance(item, dict):
             reasons.add("INPUT_INVALID")
+            reasons.add("GENERATION_INPUT_NOT_ALLOWLISTED")
             continue
+        kind = item.get("kind")
+        if not isinstance(kind, str) or kind not in ALLOWED_INPUT_KINDS:
+            reasons.add("GENERATION_INPUT_NOT_ALLOWLISTED")
+            continue
+        safe_items.append(item)
+    counts = Counter(item["kind"] for item in safe_items)
+    if set(counts) != ALLOWED_INPUT_KINDS or any(counts[kind] != 1 for kind in REQUIRED_INPUT_KINDS):
+        reasons.add("REQUIRED_INPUT_SET_INVALID")
+    input_bytes = {}
+    for item in safe_items:
         if _forbidden_path(item.get("path")):
             reasons.add("FORBIDDEN_GENERATION_INPUT")
-        _digest_matches(root, item, reasons)
-    by_kind = {item["kind"]: item for item in inputs
-               if isinstance(item, dict) and counts[item.get("kind")] == 1 and item.get("kind") in ALLOWED_INPUT_KINDS}
+        data = _read_verified(root, item, reasons)
+        if counts[item["kind"]] == 1:
+            input_bytes[item["kind"]] = data
+    by_kind = {item["kind"]: item for item in safe_items if counts[item["kind"]] == 1}
     skill = by_kind.get("PKS1_SKILL", {})
     if skill.get("path") != SKILL_PATH:
         reasons.add("SKILL_VERSION_NOT_SELECTED")
-    elif not _digest_matches(root, skill, reasons, "SKILL_DIGEST_MISMATCH"):
+    elif input_bytes.get("PKS1_SKILL") is None:
         reasons.add("SKILL_DIGEST_MISMATCH")
-    semantics = _load_json_input(root, by_kind.get("PRODUCT_SEMANTICS", {}), reasons)
-    binding = _load_json_input(root, by_kind.get("GRAPHIFY_BINDING_EVIDENCE", {}), reasons)
+    semantics = _load_json_bytes(input_bytes.get("PRODUCT_SEMANTICS"), reasons)
+    binding = _load_json_bytes(input_bytes.get("GRAPHIFY_BINDING_EVIDENCE"), reasons)
     graph = by_kind.get("FROZEN_GRAPH", {})
     if semantics.get("status") != "FROZEN": reasons.add("PRODUCT_SEMANTICS_NOT_FROZEN")
     if semantics.get("owner") != "PRODUCT_TEAM": reasons.add("PRODUCT_SEMANTICS_OWNER_INVALID")
     if binding.get("result") != "EXACTLY_BOUND": reasons.add("GRAPHIFY_BINDING_INVALID")
-    if not binding.get("query_bounds"): reasons.add("GRAPHIFY_QUERY_BOUNDS_MISSING")
+    query_bounds = binding.get("query_bounds")
+    if not isinstance(query_bounds, dict) or not query_bounds:
+        reasons.add("GRAPHIFY_QUERY_BOUNDS_MISSING")
     proposal = request.get("proposal", {})
-    schema = _load_schema(root)
-    if schema is None:
+    validator = _load_validator(root)
+    if validator is None:
         reasons.add("SCHEMA_DEFINITION_INVALID")
-    elif not _schema_is_valid(schema, proposal):
-        reasons.add("SCHEMA_INVALID")
-    revision = proposal.get("source_revision") if isinstance(proposal, dict) else None
+    else:
+        try:
+            validator.validate(proposal)
+        except Exception:  # jsonschema can surface referencing and regex failures from extension points.
+            reasons.add("SCHEMA_INVALID")
+    revision, results = _proposal_structure(proposal, reasons)
     if any(value != revision for value in (semantics.get("applicable_source_commit_sha"), binding.get("requested_revision"), binding.get("indexed_revision"))):
         reasons.add("REVISION_BINDING_MISMATCH")
-    results = proposal.get("capability_results", []) if isinstance(proposal, dict) else []
-    if any(isinstance(component, dict) and component.get("source_revision") != revision
+    if any(component.get("source_revision") != revision
            for result in results if isinstance(result, dict)
-           for component in result.get("components", []) if isinstance(result.get("components", []), list)):
+           for component in (result.get("components") if isinstance(result.get("components"), list) else [])
+           if isinstance(component, dict)):
         reasons.add("COMPONENT_REVISION_MISMATCH")
-    graph_path = _resolved_file(root, graph, reasons)
-    verified_graph = _actual_digest(graph_path) if graph_path else None
+    graph_data = input_bytes.get("FROZEN_GRAPH")
+    verified_graph = hashlib.sha256(graph_data).hexdigest() if graph_data is not None else None
     if not verified_graph or graph.get("sha256") != verified_graph:
         reasons.add("FROZEN_GRAPH_DIGEST_MISMATCH")
     if binding.get("graph_sha256") != verified_graph or (isinstance(proposal, dict) and proposal.get("graph_sha256") != verified_graph):
@@ -305,20 +305,26 @@ def main(argv=None):
     if output_relative is None:
         print("report path must be canonical and repository-relative", file=sys.stderr)
         return 1
-    output = root / output_relative
+    output_parts = output_relative.split("/")
     try:
-        output.parent.mkdir(parents=True, exist_ok=True)
-        output.parent.resolve(strict=True).relative_to(root)
-    except (OSError, RuntimeError, ValueError):
-        print("report path must remain inside repository root", file=sys.stderr)
-        return 1
-    data = (json.dumps(report, indent=2, sort_keys=True) + "\n").encode()
-    try:
-        fd = os.open(output, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o644)
-        with os.fdopen(fd, "wb") as handle:
-            handle.write(data)
-    except FileExistsError:
-        print("report already exists", file=sys.stderr)
+        directory_fd = os.open(root, os.O_RDONLY | os.O_DIRECTORY)
+        try:
+            for part in output_parts[:-1]:
+                try:
+                    os.mkdir(part, 0o755, dir_fd=directory_fd)
+                except FileExistsError:
+                    pass
+                next_fd = os.open(part, os.O_RDONLY | os.O_DIRECTORY | getattr(os, "O_NOFOLLOW", 0), dir_fd=directory_fd)
+                os.close(directory_fd)
+                directory_fd = next_fd
+            flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
+            report_fd = os.open(output_parts[-1], flags, 0o644, dir_fd=directory_fd)
+            with os.fdopen(report_fd, "wb") as handle:
+                handle.write((json.dumps(report, indent=2, sort_keys=True) + "\n").encode())
+        finally:
+            os.close(directory_fd)
+    except OSError as error:
+        print("cannot exclusively create report: " + str(error), file=sys.stderr)
         return 1
     return 0 if report["status"] == "READY" else 1
 
