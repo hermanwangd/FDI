@@ -36,7 +36,8 @@ def test_five_active_truth_entries_exist_and_resolve():
     if status['active_implementation_plan'] is not None:
         plan, anchor = status['active_implementation_plan'].split('#')
         assert (ROOT/plan).is_file()
-        assert anchor == 'selected-work-generated-scenarios-and-individual-review'
+        assert anchor == 'selected-work-scenario-aware-forward-contract'
+        assert '## Selected work: scenario-aware Forward contract' in (ROOT/plan).read_text()
 
 
 def test_every_normative_requirement_has_one_bound_backlog_record():
@@ -57,7 +58,8 @@ def test_every_normative_requirement_has_one_bound_backlog_record():
     assert len(requirement_ids) == len(set(requirement_ids)) == 22
     assert len(records) == len({backlog_id for backlog_id, _ in records}) == 22
     assert {requirement_id for _, requirement_id in records} == set(requirement_ids)
-    assert 'eff92e0f7c2e41cd9880c33655ff23df796a5830' in backlog
+    status = json.loads((ROOT/'STATUS.json').read_text())
+    assert status['spec_maturity']['spec_revision'] in backlog
 
 
 def test_legacy_truth_surfaces_are_archived():

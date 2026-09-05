@@ -67,7 +67,8 @@ the BL-007 section below; its execution remains separate from experiment runs.
 001 and Scenarios 001/002, without generating mappings in this plan.
 **Spec binding:** `06861c4575c4791f3aa6c262f5f0f4c45c2c2d75`.
 **Selected backlog:** `PKB-BL-007`, bounded contract construction only.
-**State:** PLAN_READY; implementation has not started. Full BL-006 and experiment
+**State:** Task A Java contract implemented and tested. Tasks B–D remain
+pending; no Forward generation is running. Full BL-006 and experiment
 gates remain incomplete; their status is not cleared by first-slice acceptance.
 **Architecture:** Java owns trace and component validation. PK-S1 v0.3 supplies
 proposal-only semantic selection instructions. Python verifies frozen inputs,
@@ -82,20 +83,34 @@ reference, scenario trace and chain step. Reuse `RealizationComponent` and
 `StructuralComponentIdentity`; do not change their historical constructors.
 Test: matching `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/ScenarioRealizationProposalTests.java`.
 
-- [ ] Write failing tests for ordered variable-length chains, both accepted
+- [x] Write failing tests for ordered variable-length chains, both accepted
   scenario IDs, dangling/duplicate component refs, unused components, cross-parent
   scenarios, revision mismatch, nulls and defensive copying.
-- [ ] Run `MAVEN_OPTS='-Xmx2g' ./mvnw -Dtest=ScenarioRealizationProposalTests test -q`;
+- [x] Run `MAVEN_OPTS='-Xmx2g' ./mvnw -Dtest=ScenarioRealizationProposalTests test -q`;
   first expect missing-contract failure, then implement the contract and rerun.
-- [ ] Define `outcome` independently from `evidence_status`; step states are
+- [x] Define `outcome` independently from `evidence_status`; step states are
   `EVIDENCED`, `EVIDENCE_GAP`, `NOT_APPLICABLE`. Require evidence refs for evidenced
   steps, explicit gap text for gaps and a reason for not-applicable steps.
   Not-applicable assertions remain proposal-only. Mapping requires a PRIMARY;
   unresolved results contain no proposed components. Every proposed component
   must have a local ref, selection reason and actual chain use. Replacing direct
-  method evidence with its containing class requires an explicit reason.
-- [ ] Add negative tests for each rule and parity fixtures; commit only the new
-  Java contract and tests after the focused suite passes.
+  method evidence with its containing class or file requires an explicit reason.
+- [x] Add negative Java tests for each rule. Cross-language parity fixtures remain
+  Task B work; no Java/Python parity claim is made yet.
+
+Task A verification (2026-09-05): 16 focused tests and 58 full Java tests pass.
+RED was observed for the absent contract, COMPLETE-with-gap inconsistency and
+missing FILE replacement guard before implementation. Verification used a clean
+git-archive copy at `/tmp/fdi-task-a.afqEac` with exact candidate Java files and
+`MAVEN_OPTS='-Xmx2g'`, avoiding workspace report-file stalls.
+Java compilation targets release 17; the test JVM was the installed JDK 23.0.2,
+so this is not a claim of a separate JDK 17 runtime test. The contract exposes
+`BoundScenario`, `ComponentReference`, `ScenarioTrace` and `ChainStep`; it validates
+declared membership and references, not actual graph evidence or reviewer approval.
+The later frozen-input gate must authenticate those caller-supplied assertions.
+Python regression: 306 passed; legacy public validation: 9/9. Two stale tests
+from the preceding approved document update were aligned to the active plan and
+version-selection wording; no runtime or historical artifact was changed.
 
 ### Task B: Versioned schema and skill
 

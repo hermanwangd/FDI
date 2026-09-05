@@ -159,9 +159,12 @@ def test_pk_s1_retains_product_team_proposal_only_boundary():
 def test_active_spec_discovers_and_selects_versioned_pk_s1_for_next_run():
     text = (ROOT/'FRAMEWORK-SPEC.md').read_text()
     placement = text.split('### Planned project placement and verification', 1)[1]
-    assert '`skills/pkb001/pk-s1-product-realization/` remains immutable' in placement
+    assert 'historical PK-S1 directory' in placement
+    assert 'remain immutable for their existing experiments and contracts' in placement
     assert '`skills/pkb001/pk-s1-product-realization-v0.2/`' in placement
-    assert 'Next-run readiness MUST explicitly select PK-S1 v0.2' in placement
+    assert 'separately versioned PK-S1 skill and proposal contract' in placement
+    assert 'readiness gate MUST explicitly select and verify that version and its schema digest' in placement
+    assert 'does not authorize experiment execution or bypass its remaining gates' in placement
 
 
 def test_pk_s1_proposal_artifact_authority_is_immutable_and_review_is_separate():

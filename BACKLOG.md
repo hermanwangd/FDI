@@ -200,7 +200,7 @@ retained here for history and are excluded from active requirement counts.
   gaps, and separate `outcome`/`evidence_status` are enforced; v0.2 remains
   immutable; evaluator gold remains forbidden
 - Active plan: `IMPLEMENTATION-PLAN.md#selected-work-scenario-aware-forward-contract`
-- Progress: Bounded contract construction plan prepared for accepted Capability 001 / Scenarios 001/002. Implementation has not started; full BL-006 and experiment execution remain gated.
+- Progress: Task A Java scenario-chain contract implemented with 16 focused tests and 58 full Java tests passing. Versioned skill/schema, cross-language parity and frozen-input gate remain pending; full BL-006 and experiment execution remain gated. See active plan for verification details; this is not full-item completion.
 - Completion evidence: pending for the complete item scope
 
 ### PKB-BL-008 — Real Graphify UI/template capability verification
