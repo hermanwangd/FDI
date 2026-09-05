@@ -36,10 +36,10 @@ def test_five_active_truth_entries_exist_and_resolve():
         'backlog_id': 'PKB-BL-026',
         'plan_anchor': None,
         'owner_role': 'HUMAN_REVIEWER',
-        'issue_ref': 'HERM-266',
-        'base_commit': 'c123f24141972b53de66997f7782fcce1fd8cb05',
-        'candidate_commit': '248066754da2210b81504138d974c69711524dd8',
-        'state': 'COMPLETED_AWAITING_NEXT_SELECTION',
+        'issue_ref': 'HERM-269',
+        'base_commit': '32a9b4b6840f6970ee2b0a5690c5788a533316e4',
+        'candidate_commit': None,
+        'state': 'CONTEXT_REVIEW',
     }
     if status['review_packet'] is not None:
         assert (ROOT/status['review_packet']).is_file()

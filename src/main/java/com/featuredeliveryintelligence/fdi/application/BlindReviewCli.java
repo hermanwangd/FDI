@@ -44,7 +44,7 @@ public final class BlindReviewCli {
                     + "\", \"packet_sha256\": \"" + manifest.get("packet_sha256").asText() + "\"}");
             return 0;
         } catch (BlindReviewBindingException failure) {
-            stderr.println(COMMAND + ": " + failure.getMessage());
+            stderr.println(failure.getMessage());
             return 2;
         } catch (IOException | RuntimeException failure) {
             failure.printStackTrace(stderr);
