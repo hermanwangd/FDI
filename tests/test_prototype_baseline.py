@@ -11,15 +11,16 @@ from tooling.validation.graphify_runtime_probe import inspect_runtime
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_four_active_truth_entries_exist_and_resolve():
+def test_five_active_truth_entries_exist_and_resolve():
     expected = {'PROJECT-OVERVIEW.md', 'FRAMEWORK-SPEC.md',
-                'IMPLEMENTATION-PLAN.md', 'STATUS.json'}
+                'BACKLOG.md', 'IMPLEMENTATION-PLAN.md', 'STATUS.json'}
     assert all((ROOT/name).is_file() for name in expected)
     status = json.loads((ROOT/'STATUS.json').read_text())
     assert status == {
         'current_focus': 'PKB-001',
         'phase': 'prototype_evaluation',
         'framework_spec': 'FRAMEWORK-SPEC.md',
+        'backlog': 'BACKLOG.md',
         'implementation_plan': 'IMPLEMENTATION-PLAN.md',
         'decision': 'REVISE',
         'phase0_readiness': 'READY',
@@ -54,7 +55,7 @@ def test_every_normative_requirement_has_one_bound_backlog_record():
     import re
 
     framework = (ROOT/'FRAMEWORK-SPEC.md').read_text()
-    plan = (ROOT/'IMPLEMENTATION-PLAN.md').read_text()
+    backlog = (ROOT/'BACKLOG.md').read_text()
     requirement_ids = re.findall(
         r'^\| `(PKB-[A-Z]+(?:-[A-Z]+)*-\d{3})` \|', framework, re.MULTILINE,
     )
@@ -62,13 +63,13 @@ def test_every_normative_requirement_has_one_bound_backlog_record():
         r'^\| `(PKB-BL-\d{3})` \| `(?:FEATURE|BUG|SECURITY|TECH_DEBT|'
         r'VALIDATION|DOCUMENTATION|OPERATION|RESEARCH)` \| '
         r'`(PKB-[A-Z]+(?:-[A-Z]+)*-\d{3})` \|',
-        plan, re.MULTILINE,
+        backlog, re.MULTILINE,
     )
 
     assert len(requirement_ids) == len(set(requirement_ids)) == 22
     assert len(records) == len({backlog_id for backlog_id, _ in records}) == 22
     assert {requirement_id for _, requirement_id in records} == set(requirement_ids)
-    assert '4f8e903181bf79178af37672e1cb57699c4c93f7' in plan
+    assert '4f8e903181bf79178af37672e1cb57699c4c93f7' in backlog
 
 
 def test_legacy_truth_surfaces_are_archived():
@@ -127,7 +128,8 @@ def test_phase0_is_ready_after_calibration_freeze_and_petclinic_evaluator_seal()
 def test_active_truth_discloses_blinding_and_publication_boundaries():
     status = json.loads((ROOT/'STATUS.json').read_text())
     active_text = '\n'.join((ROOT/name).read_text() for name in (
-        'PROJECT-OVERVIEW.md', 'FRAMEWORK-SPEC.md', 'IMPLEMENTATION-PLAN.md',
+        'PROJECT-OVERVIEW.md', 'FRAMEWORK-SPEC.md', 'BACKLOG.md',
+        'IMPLEMENTATION-PLAN.md',
     ))
 
     assert status['blinding_scope'] == 'DETERMINISTIC_LABEL_AND_ORDER_BLINDING'

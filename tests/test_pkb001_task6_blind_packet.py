@@ -140,8 +140,8 @@ def test_task6_claims_only_deterministic_label_and_order_blinding():
     instructions = INSTRUCTIONS_PATH.read_text()
     validator_report = load(PACKET_DIR / 'public-validation-report.json')
     active_truth = '\n'.join((ROOT / name).read_text() for name in (
-        'PROJECT-OVERVIEW.md', 'FRAMEWORK-SPEC.md', 'IMPLEMENTATION-PLAN.md',
-        'STATUS.json',
+        'PROJECT-OVERVIEW.md', 'FRAMEWORK-SPEC.md', 'BACKLOG.md',
+        'IMPLEMENTATION-PLAN.md', 'STATUS.json',
     ))
 
     assert manifest['packet_sha256'] == digest(PACKET_PATH)

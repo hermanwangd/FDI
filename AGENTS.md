@@ -6,14 +6,13 @@ Before doing any project work, read these files in order:
 
 1. `PROJECT-OVERVIEW.md`
 2. `FRAMEWORK-SPEC.md`
-3. `IMPLEMENTATION-PLAN.md`
-4. `STATUS.json`
+3. `BACKLOG.md`
+4. `IMPLEMENTATION-PLAN.md`
+5. `STATUS.json`
 
-These four files are the only project-level active control documents.
-
-The active backlog is currently the `PKB-001 backlog` section inside
-`IMPLEMENTATION-PLAN.md`. Do not create a separate project-level backlog or
-another active control document unless the user explicitly changes this rule.
+These five files are the only project-level active control documents. The
+active backlog is `BACKLOG.md`; `IMPLEMENTATION-PLAN.md` may reference selected
+Backlog items but must not duplicate the backlog inventory.
 
 ## Document Authority Rule
 
@@ -29,7 +28,7 @@ Do not determine current project truth from:
 
 Files under `archive/` are historical reference only.
 
-Supporting files under `contracts/`, `skills/`, `validation/`, `src/`, `config/`, and `tests/` provide implementation detail or evidence, but must not override the four active control documents.
+Supporting files under `contracts/`, `skills/`, `validation/`, `src/`, `config/`, and `tests/` provide implementation detail or evidence, but must not override the five active control documents.
 
 If a supporting artifact conflicts with an active control document, stop and report the conflict.
 
@@ -51,7 +50,8 @@ When project-level truth changes, update the appropriate active document:
 
 - Project purpose / architecture / scope → `PROJECT-OVERVIEW.md`
 - Framework capability / contract / authority boundary → `FRAMEWORK-SPEC.md`
-- Development sequence / milestones / next work → `IMPLEMENTATION-PLAN.md`
+- Work inventory / priority / dependency / maturity → `BACKLOG.md`
+- Selected-work construction steps / commands / verification → `IMPLEMENTATION-PLAN.md`
 - Current execution state / gate / blocker / next action → `STATUS.json`
 
 Do not create version-suffixed replacements such as:
@@ -179,7 +179,7 @@ For PKB-001:
 
 Before implementation:
 
-1. Read the four active control documents.
+1. Read the five active control documents.
 2. Confirm the current task against `STATUS.json`.
 3. Read only the supporting artifacts needed for that task.
 4. Do not reopen archived design/version debates unless explicitly requested.
@@ -196,4 +196,4 @@ Keep command memory use below 8 GB. Use bounded inputs and concurrency, and use
 `MAVEN_OPTS='-Xmx2g'` for Maven verification unless a stricter active control
 requires a lower limit.
 
-If the current task cannot be reconciled with the four active control documents, report `CONTEXT_CONFLICT` rather than guessing.
+If the current task cannot be reconciled with the five active control documents, report `CONTEXT_CONFLICT` rather than guessing.
