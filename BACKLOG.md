@@ -200,7 +200,7 @@ retained here for history and are excluded from active requirement counts.
   gaps, and separate `outcome`/`evidence_status` are enforced; v0.2 remains
   immutable; evaluator gold remains forbidden
 - Active plan: `IMPLEMENTATION-PLAN.md#selected-work-scenario-aware-forward-contract`
-- Progress: Task A Java scenario-chain contract implemented with 16 focused tests and 58 full Java tests passing. Versioned skill/schema, cross-language parity and frozen-input gate remain pending; full BL-006 and experiment execution remain gated. See active plan for verification details; this is not full-item completion.
+- Progress: Bounded Tasks A–D implemented and verified: Java scenario-chain contract, v0.3 skill/schema, 36 cross-language parity fixtures and frozen-input gate. Evidence: `7ee1395`, `c12e2f7`; 109 focused/415 full Python tests, 94 Java tests, public validation 9/9. Actual first-slice contract validation passes without generation. Full BL-006 and experiment execution remain gated; this is not full-item completion.
 - Completion evidence: pending for the complete item scope
 
 ### PKB-BL-008 — Real Graphify UI/template capability verification

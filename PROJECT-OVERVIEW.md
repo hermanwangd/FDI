@@ -40,7 +40,9 @@ with 48 resolving evidence references. The user accepted Capability 001 and
 Scenarios 001/002; those exact definitions are frozen as a first-slice experiment
 input. The other 13 decisions remain pending. The bounded BL-007 plan is ready
 for a separately versioned v0.3 scenario-aware contract and input gate. The Java
-scenario-chain contract is implemented and tested; the v0.3 skill, schema and
-frozen-input gate remain pending. This new Forward run has not executed. Existing v0.2 stays unchanged.
+scenario-chain contract, v0.3 skill/schema and frozen-input gate are implemented
+and tested. The accepted first slice passes contract-only validation; this is not
+mapping generation or experiment readiness. This new Forward run has not executed.
+Existing v0.2 stays unchanged.
 
 The verified component-contract foundation and the next scenario-grounded experiment have separate maturity. Eight requirements are `M3_VERIFIED` (five foundation plus scenario contract, proposal generation/review surface and active pointer); 14 remaining requirements are `M1_BACKLOGGED`. The completed Petclinic Phase 0 remains `READY`, while the new scenario-grounded experiment is `NOT_READY` until its mandatory review, scenario, evaluation, threshold, holdout, and protocol gates pass.

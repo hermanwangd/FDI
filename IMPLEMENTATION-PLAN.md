@@ -67,8 +67,8 @@ the BL-007 section below; its execution remains separate from experiment runs.
 001 and Scenarios 001/002, without generating mappings in this plan.
 **Spec binding:** `06861c4575c4791f3aa6c262f5f0f4c45c2c2d75`.
 **Selected backlog:** `PKB-BL-007`, bounded contract construction only.
-**State:** Task A Java contract implemented and tested. Tasks B–D remain
-pending; no Forward generation is running. Full BL-006 and experiment
+**State:** Bounded Tasks A–D implementation and verification complete. No Forward
+generation has executed. Full BL-006 and experiment
 gates remain incomplete; their status is not cleared by first-slice acceptance.
 **Architecture:** Java owns trace and component validation. PK-S1 v0.3 supplies
 proposal-only semantic selection instructions. Python verifies frozen inputs,
@@ -95,8 +95,8 @@ Test: matching `src/test/java/com/featuredeliveryintelligence/fdi/product/realiz
   unresolved results contain no proposed components. Every proposed component
   must have a local ref, selection reason and actual chain use. Replacing direct
   method evidence with its containing class or file requires an explicit reason.
-- [x] Add negative Java tests for each rule. Cross-language parity fixtures remain
-  Task B work; no Java/Python parity claim is made yet.
+- [x] Add negative Java tests for each rule. Cross-language parity fixtures were
+  subsequently verified in Task B below.
 
 Task A verification (2026-09-05): 16 focused tests and 58 full Java tests pass.
 RED was observed for the absent contract, COMPLETE-with-gap inconsistency and
@@ -118,9 +118,9 @@ Create `validation/pkb001/schemas/realization-proposal-v0.3.schema.json`,
 `skills/pkb001/pk-s1-product-realization-v0.3/SKILL.md`, and
 `tests/test_pkb001_scenario_forward.py`. Preserve v0.2 bytes.
 
-- [ ] Write schema fixtures before implementation: a two-scenario mapping,
+- [x] Write schema fixtures before implementation: a two-scenario mapping,
   an unresolved result and a partial result with a UI evidence gap.
-- [ ] Use this envelope shape (fixture values are not an experiment result):
+- [x] Use this envelope shape (fixture values are not an experiment result):
 
 ```json
 {"schema_version":"pkb001.realization-proposal.v0.3",
@@ -129,15 +129,15 @@ Create `validation/pkb001/schemas/realization-proposal-v0.3.schema.json`,
  "semantics_sha256":"<SHA-256>", "capability_results":[]}
 ```
 
-- [ ] Require nonempty capability results; each result contains capability ID,
+- [x] Require nonempty capability results; each result contains capability ID,
   outcome, evidence status, components, scenario traces and limitations. Schema
   uses Draft 2020-12, rejects unknown fields, and mirrors Task A. Cross-reference
   checks remain executable, not falsely claimed as JSON Schema guarantees.
-- [ ] Skill inputs are only frozen accepted semantics and exactly bound graph
+- [x] Skill inputs are only frozen accepted semantics and exactly bound graph
   evidence. Prohibit evaluator truth, review evidence envelopes, delivery history
   and judgments from the Forward generation context. Do not invent UI edges;
   unsupported observations produce gaps. Confidence is not a calibrated probability.
-- [ ] Run `python3 -m pytest -q tests/test_pkb001_scenario_forward.py`; require
+- [x] Run `python3 -m pytest -q tests/test_pkb001_scenario_forward.py`; require
   matching Java/Python acceptance for all parity fixtures before committing.
 
 ### Task C: Frozen-input gate without generation
@@ -145,7 +145,7 @@ Create `validation/pkb001/schemas/realization-proposal-v0.3.schema.json`,
 Create `tooling/validation/pkb001_scenario_forward_gate.py`; extend the new test
 file. Keep `pkb001_next_run_gate.py` and its v0.2 input contract unchanged.
 
-- [ ] Test the public entry point before implementation:
+- [x] Test the public entry point before implementation:
 
 ```python
 def test_unreviewed_input_blocks(valid_request, root):
@@ -155,36 +155,64 @@ def test_unreviewed_input_blocks(valid_request, root):
     assert result["mappings"] == []
 ```
 
-- [ ] Implement `validate_scenario_forward(root, request)` with deterministic
+- [x] Implement `validate_scenario_forward(root, request)` with deterministic
   sorted reasons. Request supplies digest-bound paths for semantics, acceptance
   manifest, decisions, original proposal, graph binding, graph, schema and skill.
   Verification may inspect review provenance; generation receives only a separate
   semantics/graph/skill allowlist, never those review artifacts.
-- [ ] Verify exact accepted text against decisions and proposal digests, parent
+- [x] Verify exact accepted text against decisions and proposal digests, parent
   linkage, frozen status, HUMAN_REVIEWER ownership, snapshot/manifest binding,
   source revision and actual graph bytes. Require exact v0.3 skill/schema digests.
   Reuse safe read/snapshot principles of the existing gate; reject symlink escapes,
   absolute/traversal paths, malformed JSON, hostile shapes and oversized inputs.
-- [ ] Test tampered text/digest, rejected/unconfirmed edit, pending scenario,
+- [x] Test tampered text/digest, rejected/unconfirmed edit, pending scenario,
   wrong owner/parent/revision, missing provider binding, duplicate/unknown inputs,
   forbidden paths, unsupported schema validator and existing run ID. Every failure
   returns BLOCKED and no mappings. Contract success is `CONTRACT_VALID`, not
   experiment READY; the gate never executes a skill or writes a proposal.
-- [ ] Run the focused tests and commit gate/tests only after all mutations pass.
+- [x] Run the focused tests and commit gate/tests only after all mutations pass.
 
 ### Task D: Verification and handoff
 
-- [ ] Run `python3 -m pytest -q`,
+- [x] Run `python3 -m pytest -q`,
   `MAVEN_OPTS='-Xmx2g' ./mvnw test -q`,
   `python3 validation/pkb001/task7-evaluation/public_validate.py .`, and
   `git diff --check`. Keep total memory below 8 GB and run suites sequentially.
-- [ ] Verify no diff to existing skills, frozen graph, accepted semantics,
+- [x] Verify no diff to existing skills, frozen graph, accepted semantics,
   decisions or prior experiment artifacts. If workspace Maven files stall, use
   a clean temporary source checkout with the same candidate changes and record
   that verification location; do not delete workspace files to unblock it.
-- [ ] Record implementation commits and actual test counts in this plan. Update
+- [x] Record implementation commits and actual test counts in this plan. Update
   BL-007 progress only for delivered scope; do not mark full experiment ready.
   Keep REVISE and the other 13 review decisions unchanged.
+
+Tasks B–D verification (2026-09-05), implementation commit
+`c12e2f7cf03d23cf5869fb418d7e40f9e6bd7368`:
+
+- 109 focused Python tests; 415 complete Python tests; 94 Java tests including
+  36 shared Java/Python parity fixtures; legacy public validation 9/9.
+- Actual repository accepted-slice verification returns `CONTRACT_VALID` with
+  empty mappings using a synthetic unresolved candidate, not a generated mapping.
+- Independent spec and code-quality reviews passed after fixing missing and
+  contradictory captured-query evidence, malformed-symbol parity and boolean
+  revision confusion. All fixes have regression tests.
+- Skill format validation passed. A synthetic boundary exercise refused generation
+  with evaluator/history input and without experiment authorization.
+- Maven ran sequentially with `MAVEN_OPTS='-Xmx2g'` in
+  `/tmp/fdi-task-a.afqEac`, synchronized to the candidate Java test/fixture bytes.
+  Compilation targets Java 17; the actual test JVM is JDK 23.0.2.
+- No completed skill, frozen evidence, accepted semantics or review decision was
+  changed. Next-experiment readiness remains `NOT_READY`; BL-007's full dependency
+  scope is not promoted merely because its bounded implementation passed.
+
+The public API is `validate_scenario_forward(root, request)`, with
+`request = {"inputs": [...], "proposal": {...}}`. Eight exact input kinds are
+declared in `KINDS` in the gate. Contract fixtures and
+`test_actual_repository_accepted_slice_is_contract_valid` demonstrate the complete
+request. The result exposes only `PRODUCT_SEMANTICS`, `FROZEN_GRAPH`, and
+`PKS1_SKILL` to a fresh generation context. It validates trusted review-artifact
+consistency, not the authenticity of a human identity string or semantic correctness
+of a selected component. It provides no generation writer or experiment permission.
 
 Out of scope: actual mapping generation, evaluator execution, threshold setting,
 holdout selection, provider installation, template extraction and semantic publication.
