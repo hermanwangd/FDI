@@ -353,6 +353,15 @@ def test_proposal_rejects_blank_java_required_text(valid_request, root, field):
     assert report["mappings"] == []
 
 
+def test_evidence_source_location_rejects_whitespace_only(valid_request, root):
+    evidence = valid_request["proposal"]["capability_results"][0]["evidence_refs"][0]
+    evidence["source_location"] = " \t"
+    report = validate_next_run(root, valid_request)
+    assert report["status"] == "BLOCKED"
+    assert "SCHEMA_INVALID" in report["reasons"]
+    assert report["mappings"] == []
+
+
 class _HostileDict(dict):
     def get(self, *_args, **_kwargs):
         raise RuntimeError("hostile get executed")

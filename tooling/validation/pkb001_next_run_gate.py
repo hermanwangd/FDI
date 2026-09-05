@@ -245,6 +245,7 @@ def _proposal_structure(proposal, reasons):
         if any(not isinstance(ref, dict)
                or _canonical_relative(ref.get("source_path")) is None
                or not _plain_nonempty(ref.get("provider_node_id"))
+               or not _plain_nonempty(ref.get("source_location"))
                for ref in refs):
             reasons.add("COMPONENT_IDENTITY_INVALID")
     return revision, results

@@ -19,7 +19,7 @@
       "properties": {
         "provider_node_id": {"type": "string", "minLength": 1, "pattern": ".*\\S.*"},
         "source_path": {"type": "string", "minLength": 1, "pattern": "^(?!\\s*$)(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?!.*\/$).+$"},
-        "source_location": {"type": "string", "minLength": 1}
+        "source_location": {"type": "string", "minLength": 1, "pattern": ".*\\S.*"}
       }
     },
     "component": {
