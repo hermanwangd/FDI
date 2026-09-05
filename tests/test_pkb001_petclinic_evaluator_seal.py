@@ -351,7 +351,10 @@ def test_public_registry_and_status_announce_readiness_without_exposing_gold():
     assert registry['phase0_readiness'] == 'READY'
     assert status['phase0_readiness'] == 'READY'
     assert status['evaluation_status'] == 'COMPLETE_BOUNDED_REVISE'
-    assert status['next_action'].startswith('Pre-register thresholds')
+    assert status['next_action'] == 'Complete Product Team human review decision packet'
+    assert status['human_review_packet'] == (
+        'validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.md'
+    )
     assert status['human_review_status'] == 'PENDING_PRODUCT_TEAM_REVIEW'
     assert status['semantic_publication_allowed'] is False
     assert 'gold' not in json.dumps(registry).lower()

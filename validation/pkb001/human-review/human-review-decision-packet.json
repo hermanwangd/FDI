@@ -1,0 +1,781 @@
+{
+  "schema_version": "pkb001.human-review-decision-packet.v1",
+  "status": "PENDING_PRODUCT_TEAM_REVIEW",
+  "current_prototype_decision": "REVISE",
+  "semantic_publication_allowed": false,
+  "authority_statement": "Evaluator judgments are advisory. Only the Product Team may decide Product meaning; completing this packet does not publish semantics.",
+  "allowed_product_team_actions": [
+    "ACCEPT",
+    "RENAME",
+    "MERGE",
+    "SPLIT",
+    "REJECT",
+    "ADD_MISSING"
+  ],
+  "source_digests": {
+    "validation/pkb001/task6-blind-review/blind-review-packet.json": "13451c06a6b635f6d6ea58e7cb3faa8fdfd8f9cc6c011d8fdc3dbebac395c89a",
+    "validation/pkb001/task6-blind-review/judgment-workspaces/reviewer-01/judgment-template.json": "7858befe88bd30c7f1de537b31cb51a455478acb7a1532d8e9f94c1ce2a59084",
+    "validation/pkb001/task6-blind-review/judgment-workspaces/reviewer-02/judgment-template.json": "5a29738eb8821a21b62e77d7f34f2ecff46af4ee554277d07025a1c154b25f73",
+    "validation/pkb001/task7-evaluation/third-review-pending.json": "4a5ec4f585021fed2049aa501a211429f236649e1beeaa5b214289e45129abc9",
+    "validation/pkb001/task7-evaluation/evaluation-report.json": "a7ab710cb7953071d2f5d97570a3ae34df8519e7f8d3629385ce132e78d5d79b"
+  },
+  "items": [
+    {
+      "blind_id": "BR-001",
+      "candidate_capability": "Companion record identity and update safeguards",
+      "candidate_basis": "Bound create and update handlers call duplicate-name and update paths, while owner association and validator nodes are present; four linked delivery episodes exercise duplicate-name behavior, persisted association, name validation, and update regression coverage.",
+      "confidence_score": 0.93,
+      "component_references": [
+        "owner_owner_addpet",
+        "owner_owner_getpet",
+        "petcontroller_petcontroller_processcreationform",
+        "petcontroller_petcontroller_processupdateform",
+        "petcontroller_petcontroller_updatepetdetails",
+        "petcontroller_petcontroller_isduplicatepetnameviolation",
+        "petvalidator_petvalidator_validate"
+      ],
+      "needs_resolution": false,
+      "resolution_reasons": [],
+      "evaluator_judgments": [
+        {
+          "reviewer": "reviewer-01",
+          "action": "SPLIT",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": "Pet identity validation and update safeguards",
+          "notes": "The cited handlers and validator support duplicate-name and update safeguards, but the proposed boundary combines several behaviors and overlaps broader pet registration and maintenance candidates. Human Product Team authority remains required for the final boundary.",
+          "limitations": [
+            "Cross-file convergence depends on delivery co-change rather than graph edges.",
+            "The supplied evidence does not establish that creation, update, identity, and validation form one Product capability."
+          ],
+          "unsupported_claims": [
+            "That all cited creation, ownership, validation, and update behavior is one complete realization."
+          ]
+        },
+        {
+          "reviewer": "reviewer-02",
+          "action": "SPLIT",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": "Pet registration safeguards; Pet update safeguards",
+          "notes": "The create and update handlers directly support duplicate-name and update safeguards, and owner and validator references add relevant corroboration. The proposed capability is nevertheless composite: registration identity checks and maintenance safeguards have distinct flows, while the packet explicitly leaves their Product boundary unresolved. Evaluator-only recommendation; human Product Team authority remains pending.",
+          "limitations": [
+            "Cross-file cohesion relies on shared delivery episodes rather than graph edges.",
+            "Database uniqueness behavior and tests are not represented as graph nodes.",
+            "The evidence does not settle a single Product capability boundary."
+          ],
+          "unsupported_claims": [
+            "A single complete capability spanning creation, update, ownership association, and validation is not established by the supplied evidence."
+          ]
+        }
+      ],
+      "product_team_decision": {
+        "action": null,
+        "approved_name": null,
+        "notes": null
+      }
+    },
+    {
+      "blind_id": "BR-002",
+      "candidate_capability": "Register Pet",
+      "candidate_basis": "Pet creation methods, owner aggregation, pet attribute mutators, and pet-type lookup form a coherent structural candidate for adding a typed, named, dated pet to an owner.",
+      "confidence_score": 0.93,
+      "component_references": [
+        "petcontroller",
+        "owner",
+        "pet",
+        "pettyperepository"
+      ],
+      "needs_resolution": true,
+      "resolution_reasons": [
+        "OUTCOME_DISAGREEMENT"
+      ],
+      "evaluator_judgments": [
+        {
+          "reviewer": "reviewer-01",
+          "action": "ACCEPT",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": null,
+          "notes": "The creation methods, owner aggregation, pet attributes, and type lookup are coherent evidence for registration. Acceptance is evaluator-only because successful end-to-end registration is not demonstrated.",
+          "limitations": [
+            "The graph does not prove persistence, transaction completion, or UI binding."
+          ],
+          "unsupported_claims": [
+            "That the supplied structure alone proves a complete successful registration realization."
+          ]
+        },
+        {
+          "reviewer": "reviewer-02",
+          "action": "ACCEPT",
+          "outcome": "SUPPORTED",
+          "suggested_name": "Register Pet",
+          "notes": "Creation-form handlers, owner aggregation, pet attribute mutators, and type lookup align closely with registering a pet. The capability label is concise and the referenced structure is appropriately scoped, subject to the stated runtime and UI gaps. Evaluator-only recommendation; human Product Team authority remains pending.",
+          "limitations": [
+            "No graph edge proves the transaction joining controller, owner, pet, and type repository.",
+            "UI binding and persistence success are outside the supplied evidence."
+          ],
+          "unsupported_claims": [
+            "Successful persistence and end-to-end form binding are not proven by the supplied graph evidence."
+          ]
+        }
+      ],
+      "product_team_decision": {
+        "action": null,
+        "approved_name": null,
+        "notes": null
+      }
+    },
+    {
+      "blind_id": "BR-003",
+      "candidate_capability": "Practitioner directory and specialty presentation",
+      "candidate_basis": "The graph connects list display to pagination and exposes resource-list, repository-list, collection, and specialty-access nodes; delivery history co-changed the directory components for pagination and later refined specialty ordering and controller representation handling.",
+      "confidence_score": 0.74,
+      "component_references": [
+        "vet_vet_getspecialties",
+        "vetcontroller_vetcontroller_showvetlist",
+        "vetcontroller_vetcontroller_addpaginationmodel",
+        "vetcontroller_vetcontroller_findpaginated",
+        "vetcontroller_vetcontroller_showresourcesvetlist",
+        "vetrepository_vetrepository_findall",
+        "vets_vets_getvetlist"
+      ],
+      "needs_resolution": false,
+      "resolution_reasons": [],
+      "evaluator_judgments": [
+        {
+          "reviewer": "reviewer-01",
+          "action": "SPLIT",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": "Veterinarian directory browsing and specialty review",
+          "notes": "Directory browsing and specialty presentation have related evidence but are independently describable behaviors. The combined capability is less precise than separate browse-directory and specialty-review candidates.",
+          "limitations": [
+            "The broad pagination delivery episode weakens boundary precision.",
+            "Neither HTML nor serialized presentation is represented in the graph."
+          ],
+          "unsupported_claims": [
+            "That pagination, serialized listing, and specialty presentation constitute one complete realization.",
+            "That specialty names are visibly presented."
+          ]
+        },
+        {
+          "reviewer": "reviewer-02",
+          "action": "SPLIT",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": "Browse Veterinarians; Review Veterinarian Specialties",
+          "notes": "The packet supports veterinarian listing, pagination, repository retrieval, collection access, and specialty access. Combining directory browsing, specialty presentation, and resource representation into one capability reduces boundary precision; the evidence is clearer as two candidate capabilities. Evaluator-only recommendation; human Product Team authority remains pending.",
+          "limitations": [
+            "The broad pagination delivery episode weakens attribution to this boundary.",
+            "HTML and serialized representations are not graph nodes.",
+            "Maintenance and refactoring episodes do not independently prove user-facing behavior."
+          ],
+          "unsupported_claims": [
+            "A single complete user-facing presentation boundary across paginated HTML and resource-list representations is not proven."
+          ]
+        }
+      ],
+      "product_team_decision": {
+        "action": null,
+        "approved_name": null,
+        "notes": null
+      }
+    },
+    {
+      "blind_id": "BR-004",
+      "candidate_capability": "Find Owners",
+      "candidate_basis": "The controller exposes find-form, find-processing, and paginated last-name search methods, while the repository exposes a matching last-name-prefix query. Together these are direct structural candidates for search and result navigation.",
+      "confidence_score": 0.95,
+      "component_references": [
+        "ownercontroller",
+        "ownerrepository"
+      ],
+      "needs_resolution": true,
+      "resolution_reasons": [
+        "OUTCOME_DISAGREEMENT"
+      ],
+      "evaluator_judgments": [
+        {
+          "reviewer": "reviewer-01",
+          "action": "ACCEPT",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": null,
+          "notes": "The find-form, processing, pagination, and repository prefix query provide a direct and precise structural candidate for finding owners. The complete user-visible result flow remains unproven.",
+          "limitations": [
+            "Rendered result links and request mappings are not present in the graph."
+          ],
+          "unsupported_claims": [
+            "That the complete rendered search and navigation experience is realized."
+          ]
+        },
+        {
+          "reviewer": "reviewer-02",
+          "action": "ACCEPT",
+          "outcome": "SUPPORTED",
+          "suggested_name": "Find Owners",
+          "notes": "Find-form initialization and processing, paginated last-name search, and the matching repository query directly support an owner-search capability. The scope and domain terminology are precise despite missing presentation evidence. Evaluator-only recommendation; human Product Team authority remains pending.",
+          "limitations": [
+            "Rendered result links and request mappings are not exposed by the graph.",
+            "The packet does not prove end-to-end result navigation."
+          ],
+          "unsupported_claims": [
+            "Visible pagination controls and successful navigation through rendered results are not proven."
+          ]
+        }
+      ],
+      "product_team_decision": {
+        "action": null,
+        "approved_name": null,
+        "notes": null
+      }
+    },
+    {
+      "blind_id": "BR-005",
+      "candidate_capability": "Record Pet Visit",
+      "candidate_basis": "Visit creation and processing methods explicitly load a pet with a visit, while the Visit model exposes date and description mutation and Owner exposes visit aggregation.",
+      "confidence_score": 0.96,
+      "component_references": [
+        "visitcontroller",
+        "visit",
+        "owner"
+      ],
+      "needs_resolution": true,
+      "resolution_reasons": [
+        "OUTCOME_DISAGREEMENT"
+      ],
+      "evaluator_judgments": [
+        {
+          "reviewer": "reviewer-01",
+          "action": "ACCEPT",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": null,
+          "notes": "The controller flow, pet loading, visit fields, and owner aggregation form strong structural evidence for recording a pet visit. Completeness is limited by absent persistence and validation evidence.",
+          "limitations": [
+            "Persistence success and validation behavior are not demonstrated."
+          ],
+          "unsupported_claims": [
+            "That visit submission is successfully persisted and validated end to end."
+          ]
+        },
+        {
+          "reviewer": "reviewer-02",
+          "action": "ACCEPT",
+          "outcome": "SUPPORTED",
+          "suggested_name": "Record Pet Visit",
+          "notes": "The controller's explicit new-visit flow, Visit date and description mutators, and owner visit aggregation converge tightly on recording a pet visit. The candidate is well named and bounded. Evaluator-only recommendation; human Product Team authority remains pending.",
+          "limitations": [
+            "Persistence success and validation behavior are not demonstrated.",
+            "The supplied evidence does not show the rendered visit form."
+          ],
+          "unsupported_claims": [
+            "Successful persistence, validation, and user-visible confirmation are not proven."
+          ]
+        }
+      ],
+      "product_team_decision": {
+        "action": null,
+        "approved_name": null,
+        "notes": null
+      }
+    },
+    {
+      "blind_id": "BR-006",
+      "candidate_capability": "Browse Veterinarians",
+      "candidate_basis": "VetController exposes list and pagination methods, VetRepository exposes collection retrieval, and Vets exposes a list accessor, providing convergent structure for veterinarian browsing.",
+      "confidence_score": 0.95,
+      "component_references": [
+        "vetcontroller",
+        "vetrepository",
+        "vets"
+      ],
+      "needs_resolution": true,
+      "resolution_reasons": [
+        "OUTCOME_DISAGREEMENT"
+      ],
+      "evaluator_judgments": [
+        {
+          "reviewer": "reviewer-01",
+          "action": "ACCEPT",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": null,
+          "notes": "Controller list and pagination methods, repository retrieval, and the list accessor converge on veterinarian browsing. The user-visible browsing experience is not directly evidenced.",
+          "limitations": [
+            "List presentation and navigation controls are outside the graph."
+          ],
+          "unsupported_claims": [
+            "That the complete rendered browsing experience is realized."
+          ]
+        },
+        {
+          "reviewer": "reviewer-02",
+          "action": "ACCEPT",
+          "outcome": "SUPPORTED",
+          "suggested_name": "Browse Veterinarians",
+          "notes": "List, pagination, repository retrieval, and collection-access references form a coherent and narrowly scoped veterinarian-browsing candidate. Presentation details remain unverified but do not undermine the structural realization. Evaluator-only recommendation; human Product Team authority remains pending.",
+          "limitations": [
+            "List presentation and navigation controls are outside the Java-only graph.",
+            "No runtime evidence confirms pagination behavior."
+          ],
+          "unsupported_claims": [
+            "The exact visible list and pagination experience are not proven."
+          ]
+        }
+      ],
+      "product_team_decision": {
+        "action": null,
+        "approved_name": null,
+        "notes": null
+      }
+    },
+    {
+      "blind_id": "BR-007",
+      "candidate_capability": "Review Pet Visit History",
+      "candidate_basis": "The owner detail entry point, owner-to-pets accessor, pet-to-visits accessor, and visit display fields form a structural chain for reviewing visit history in owner and pet context.",
+      "confidence_score": 0.84,
+      "component_references": [
+        "ownercontroller",
+        "owner",
+        "pet",
+        "visit"
+      ],
+      "needs_resolution": true,
+      "resolution_reasons": [
+        "ACTION_DISAGREEMENT"
+      ],
+      "evaluator_judgments": [
+        {
+          "reviewer": "reviewer-01",
+          "action": "ACCEPT",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": null,
+          "notes": "The owner-to-pet-to-visit accessor chain supports retrieval of visit data in context. Calling it reviewable history exceeds the evidence unless presentation and ordering are verified.",
+          "limitations": [
+            "No view evidence confirms that visits are rendered or ordered as history."
+          ],
+          "unsupported_claims": [
+            "That visit entries are visibly rendered and ordered as a history."
+          ]
+        },
+        {
+          "reviewer": "reviewer-02",
+          "action": "RENAME",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": "Access Pet Visit Records",
+          "notes": "Owner detail access, owner-to-pet traversal, pet-to-visit traversal, and visit fields support access to visit records. The stronger wording 'Review ... History' implies a presentation and ordering behavior that the supplied graph does not establish, so a narrower name is warranted. Evaluator-only recommendation; human Product Team authority remains pending.",
+          "limitations": [
+            "No view-template evidence confirms rendering or ordering as history.",
+            "The structural chain does not prove a dedicated review interaction."
+          ],
+          "unsupported_claims": [
+            "A rendered, ordered visit-history experience is not proven."
+          ]
+        }
+      ],
+      "product_team_decision": {
+        "action": null,
+        "approved_name": null,
+        "notes": null
+      }
+    },
+    {
+      "blind_id": "BR-008",
+      "candidate_capability": "Visit date intake safeguards",
+      "candidate_basis": "The bound graph contains visit date accessors and controller nodes for minimum-date calculation and new-visit processing; one focused pull request changed both Java components together to validate future dates.",
+      "confidence_score": 0.88,
+      "component_references": [
+        "visit_visit_getdate",
+        "visit_visit_setdate",
+        "visitcontroller_visitcontroller_minvisitdate",
+        "visitcontroller_visitcontroller_processnewvisitform"
+      ],
+      "needs_resolution": true,
+      "resolution_reasons": [
+        "OUTCOME_DISAGREEMENT"
+      ],
+      "evaluator_judgments": [
+        {
+          "reviewer": "reviewer-01",
+          "action": "RENAME",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": "Validate Visit Dates",
+          "notes": "The date accessors, minimum-date calculation, submission handler, and focused co-change support date validation. The proposed safeguards label is broader than the evidenced future-date check.",
+          "limitations": [
+            "Only one delivery episode is supplied.",
+            "The extraction contains no cross-file entity-to-controller edge.",
+            "The exact exception policy and user wording are not evidenced."
+          ],
+          "unsupported_claims": [
+            "That the evidence establishes a broader set of visit-date intake safeguards beyond the cited future-date behavior.",
+            "That the exact user-facing policy is established."
+          ]
+        },
+        {
+          "reviewer": "reviewer-02",
+          "action": "RENAME",
+          "outcome": "SUPPORTED",
+          "suggested_name": "Prevent Future-Dated Pet Visits",
+          "notes": "Date accessors, minimum-date calculation, visit processing, and a focused co-change provide good evidence for guarding visit-date intake. A more concrete label better reflects the evidenced future-date constraint without implying broader date-quality safeguards. Evaluator-only recommendation; human Product Team authority remains pending.",
+          "limitations": [
+            "Only one delivery episode supplies behavioral corroboration.",
+            "No cross-file graph edge joins Visit and VisitController.",
+            "The precise exception policy and user-facing wording are absent."
+          ],
+          "unsupported_claims": [
+            "Broader visit-date validation rules beyond the future-date constraint are not established."
+          ]
+        }
+      ],
+      "product_team_decision": {
+        "action": null,
+        "approved_name": null,
+        "notes": null
+      }
+    },
+    {
+      "blind_id": "BR-009",
+      "candidate_capability": "Access Clinic Home",
+      "candidate_basis": "WelcomeController.welcome is evidence for only the landing-page portion. Because the frozen capability also requires primary navigation and the Java-only graph contains no view or navigation nodes, the full capability cannot be mapped without exceeding the evidence boundary.",
+      "confidence_score": 0.96,
+      "component_references": [
+        "welcomecontroller_welcomecontroller_welcome"
+      ],
+      "needs_resolution": false,
+      "resolution_reasons": [],
+      "evaluator_judgments": [
+        {
+          "reviewer": "reviewer-01",
+          "action": "ADD_MISSING",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": null,
+          "notes": "The packet correctly limits the controller evidence to the landing-page portion. Completing the proposed capability requires missing navigation and presentation evidence; no complete realization should be inferred.",
+          "limitations": [
+            "The Java-only graph has no home template or primary-navigation links."
+          ],
+          "unsupported_claims": []
+        },
+        {
+          "reviewer": "reviewer-02",
+          "action": "ADD_MISSING",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": "Access Clinic Home and Primary Navigation",
+          "notes": "The welcome controller validly supports the landing-page portion and the proposal correctly declines to claim a complete realization. Completing the stated capability requires evidence for the home view and primary navigation. Evaluator-only recommendation; human Product Team authority remains pending.",
+          "limitations": [
+            "Only the landing-page controller is evidenced.",
+            "Home-template and primary-navigation nodes are absent from the Java-only graph."
+          ],
+          "unsupported_claims": [
+            "Primary navigation availability and destinations are not supported by the supplied evidence."
+          ]
+        }
+      ],
+      "product_team_decision": {
+        "action": null,
+        "approved_name": null,
+        "notes": null
+      }
+    },
+    {
+      "blind_id": "BR-010",
+      "candidate_capability": "Client record search and result browsing",
+      "candidate_basis": "The graph exposes a find-form path into paginated owner lookup and a repository prefix-search operation; delivery episodes added owner-list pagination and later corrected whitespace handling on the same controller path.",
+      "confidence_score": 0.86,
+      "component_references": [
+        "ownercontroller_ownercontroller_processfindform",
+        "ownercontroller_ownercontroller_findpaginatedforownerslastname",
+        "ownerrepository_ownerrepository_findbylastnamestartingwith"
+      ],
+      "needs_resolution": false,
+      "resolution_reasons": [],
+      "evaluator_judgments": [
+        {
+          "reviewer": "reviewer-01",
+          "action": "MERGE",
+          "outcome": "DUPLICATE",
+          "suggested_name": "Find Owners",
+          "notes": "This candidate substantially duplicates BR-004: both cover owner record search plus paginated result browsing through the same controller and repository path. The owner terminology is closer to the supplied structural identifiers; final terminology remains a human Product Team decision.",
+          "limitations": [
+            "The controller-to-repository association is not a direct graph edge.",
+            "Visible pagination is inferred rather than directly evidenced."
+          ],
+          "unsupported_claims": [
+            "That visible pagination behavior is proven by the supplied Java graph.",
+            "That client record is the accepted Product term."
+          ]
+        },
+        {
+          "reviewer": "reviewer-02",
+          "action": "MERGE",
+          "outcome": "DUPLICATE",
+          "suggested_name": "Find Owners and Browse Results",
+          "notes": "The structural and delivery evidence strongly supports owner search with paginated results, but this candidate overlaps the separately supplied Find Owners candidate. The delivery evidence is useful corroboration and should be retained in a merged realization under the more evidence-aligned owner terminology. Evaluator-only recommendation; human Product Team authority remains pending.",
+          "limitations": [
+            "The controller-to-repository association lacks a direct graph edge.",
+            "Visible pagination is inferred from delivery evidence rather than indexed templates.",
+            "The term 'Client record' is not the terminology evidenced by the references."
+          ],
+          "unsupported_claims": [
+            "A broader client-record concept beyond owners is not established.",
+            "The rendered result-browsing experience is not directly proven."
+          ]
+        }
+      ],
+      "product_team_decision": {
+        "action": null,
+        "approved_name": null,
+        "notes": null
+      }
+    },
+    {
+      "blind_id": "BR-011",
+      "candidate_capability": "Locale-selectable presentation",
+      "candidate_basis": "The graph exposes locale resolution and locale-change interception registered in web configuration; one linked delivery episode changed that same configuration alongside multiple translation bundles and presentation templates.",
+      "confidence_score": 0.79,
+      "component_references": [
+        "webconfiguration_webconfiguration_localeresolver",
+        "webconfiguration_webconfiguration_localechangeinterceptor",
+        "webconfiguration_webconfiguration_addinterceptors"
+      ],
+      "needs_resolution": true,
+      "resolution_reasons": [
+        "ACTION_DISAGREEMENT"
+      ],
+      "evaluator_judgments": [
+        {
+          "reviewer": "reviewer-01",
+          "action": "RENAME",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": "Select Presentation Locale",
+          "notes": "Locale resolution, locale-change interception, registration, and localized-resource co-change support selectable locale behavior. Presentation completeness is broader than the evidence.",
+          "limitations": [
+            "Translation completeness and runtime rendering are not proven.",
+            "Only one overlapping delivery episode is supplied."
+          ],
+          "unsupported_claims": [
+            "That translated presentation is complete across the application.",
+            "That runtime rendering in each locale is verified."
+          ]
+        },
+        {
+          "reviewer": "reviewer-02",
+          "action": "ACCEPT",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": "Locale-Selectable Presentation",
+          "notes": "Locale resolution, a locale-change interceptor, interceptor registration, and co-change with a translation bundle and layout provide coherent evidence for locale selection. The evidence does not establish complete translations or runtime presentation, so support is partial. Evaluator-only recommendation; human Product Team authority remains pending.",
+          "limitations": [
+            "Runtime rendering and translation completeness are not proven.",
+            "Only one delivery episode overlaps configuration and localized resources.",
+            "Language coverage and accepted terminology require Product Team review."
+          ],
+          "unsupported_claims": [
+            "Complete language coverage and correct localized rendering are not proven."
+          ]
+        }
+      ],
+      "product_team_decision": {
+        "action": null,
+        "approved_name": null,
+        "notes": null
+      }
+    },
+    {
+      "blind_id": "BR-012",
+      "candidate_capability": "Register Owner",
+      "candidate_basis": "Creation-form controller methods align with record registration, and person/owner mutators structurally cover name, address, and telephone contact fields.",
+      "confidence_score": 0.93,
+      "component_references": [
+        "ownercontroller",
+        "owner"
+      ],
+      "needs_resolution": true,
+      "resolution_reasons": [
+        "OUTCOME_DISAGREEMENT"
+      ],
+      "evaluator_judgments": [
+        {
+          "reviewer": "reviewer-01",
+          "action": "ACCEPT",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": null,
+          "notes": "The creation handlers and owner/person field mutators provide strong structural evidence for owner registration. Successful validated persistence remains outside the supplied evidence.",
+          "limitations": [
+            "Persistence calls and field validation are not proven across components."
+          ],
+          "unsupported_claims": [
+            "That owner registration is persisted and validated end to end."
+          ]
+        },
+        {
+          "reviewer": "reviewer-02",
+          "action": "ACCEPT",
+          "outcome": "SUPPORTED",
+          "suggested_name": "Register Owner",
+          "notes": "Owner creation-form methods and name, address, and telephone mutators align directly with owner registration. The candidate is concise and appropriately bounded, with persistence and validation reserved as limitations. Evaluator-only recommendation; human Product Team authority remains pending.",
+          "limitations": [
+            "Persistence calls and field validation are not proven by the extracted graph.",
+            "End-to-end form binding is outside the supplied evidence."
+          ],
+          "unsupported_claims": [
+            "Successful persistence and validation of the owner record are not proven."
+          ]
+        }
+      ],
+      "product_team_decision": {
+        "action": null,
+        "approved_name": null,
+        "notes": null
+      }
+    },
+    {
+      "blind_id": "BR-013",
+      "candidate_capability": "Maintain Pet Details",
+      "candidate_basis": "The PetController has explicit update initialization, processing, and detail-update methods, paired with Pet mutators for identifying classification data.",
+      "confidence_score": 0.95,
+      "component_references": [
+        "petcontroller",
+        "pet"
+      ],
+      "needs_resolution": true,
+      "resolution_reasons": [
+        "OUTCOME_DISAGREEMENT"
+      ],
+      "evaluator_judgments": [
+        {
+          "reviewer": "reviewer-01",
+          "action": "ACCEPT",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": null,
+          "notes": "Explicit update initialization, processing, detail update, and pet classification mutators strongly support pet-detail maintenance. The complete editable field set and successful persistence are not demonstrated.",
+          "limitations": [
+            "Inherited name handling and actual form field coverage are not established."
+          ],
+          "unsupported_claims": [
+            "That all identifying pet details are exposed and successfully persisted by the update form."
+          ]
+        },
+        {
+          "reviewer": "reviewer-02",
+          "action": "ACCEPT",
+          "outcome": "SUPPORTED",
+          "suggested_name": "Maintain Pet Details",
+          "notes": "Explicit update initialization, processing, detail-copying, and pet classification mutators provide strong structural support for maintaining pet details. The supplied limitations appropriately constrain field coverage and runtime claims. Evaluator-only recommendation; human Product Team authority remains pending.",
+          "limitations": [
+            "Form-field coverage is not established.",
+            "Name handling is only indirectly represented through inheritance.",
+            "Successful persistence is not shown."
+          ],
+          "unsupported_claims": [
+            "Complete editable-field coverage and successful persistence are not proven."
+          ]
+        }
+      ],
+      "product_team_decision": {
+        "action": null,
+        "approved_name": null,
+        "notes": null
+      }
+    },
+    {
+      "blind_id": "BR-014",
+      "candidate_capability": "Maintain Owner Details",
+      "candidate_basis": "Explicit owner update-form and show-owner methods support profile maintenance, while the Owner node exposes profile mutation and associated-pet access structure.",
+      "confidence_score": 0.94,
+      "component_references": [
+        "ownercontroller",
+        "owner"
+      ],
+      "needs_resolution": true,
+      "resolution_reasons": [
+        "OUTCOME_DISAGREEMENT"
+      ],
+      "evaluator_judgments": [
+        {
+          "reviewer": "reviewer-01",
+          "action": "ACCEPT",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": null,
+          "notes": "The owner update handlers and profile mutation evidence support maintenance of owner details. Associated-pet review is contextual evidence and should not expand the maintenance boundary without presentation evidence.",
+          "limitations": [
+            "Associated activity rendering is inferred from accessors rather than view evidence.",
+            "Only one explicit profile mutator is included in the evidence references."
+          ],
+          "unsupported_claims": [
+            "That associated activity is rendered as part of owner-detail maintenance.",
+            "That the complete owner profile field set is evidenced."
+          ]
+        },
+        {
+          "reviewer": "reviewer-02",
+          "action": "ACCEPT",
+          "outcome": "SUPPORTED",
+          "suggested_name": "Maintain Owner Details",
+          "notes": "Explicit owner update-form and display methods provide direct evidence for maintaining an owner record. The owner accessor and city mutator are relevant but insufficient for claims about all profile fields or associated-activity presentation. Evaluator-only recommendation; human Product Team authority remains pending.",
+          "limitations": [
+            "Associated activity rendering is inferred from accessors rather than view evidence.",
+            "Only a subset of profile-field mutators is directly referenced.",
+            "Successful persistence and validation are not shown."
+          ],
+          "unsupported_claims": [
+            "Complete profile-field coverage, associated-activity rendering, and successful persistence are not proven."
+          ]
+        }
+      ],
+      "product_team_decision": {
+        "action": null,
+        "approved_name": null,
+        "notes": null
+      }
+    },
+    {
+      "blind_id": "BR-015",
+      "candidate_capability": "Review Veterinarian Specialties",
+      "candidate_basis": "The veterinarian list entry point and Vet specialty accessors, together with the Specialty type, directly support a candidate realization for associating specialties with each listed veterinarian.",
+      "confidence_score": 0.87,
+      "component_references": [
+        "vetcontroller",
+        "vet",
+        "specialty"
+      ],
+      "needs_resolution": true,
+      "resolution_reasons": [
+        "ACTION_DISAGREEMENT"
+      ],
+      "evaluator_judgments": [
+        {
+          "reviewer": "reviewer-01",
+          "action": "ACCEPT",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": null,
+          "notes": "The list entry point and veterinarian specialty accessors support associating specialties with listed veterinarians. Visible review of specialty names is not directly proven.",
+          "limitations": [
+            "The graph omits the view responsible for displaying specialty names."
+          ],
+          "unsupported_claims": [
+            "That specialty names are visibly displayed for each veterinarian."
+          ]
+        },
+        {
+          "reviewer": "reviewer-02",
+          "action": "RENAME",
+          "outcome": "PARTIALLY_SUPPORTED",
+          "suggested_name": "Access Veterinarian Specialty Data",
+          "notes": "The veterinarian list entry point, specialty accessors, specialty count, and Specialty type support access to specialty data in listing context. The verb 'Review' implies a visible presentation that is not directly evidenced, so a narrower name is more precise. Evaluator-only recommendation; human Product Team authority remains pending.",
+          "limitations": [
+            "The view that displays specialty names is absent from the graph.",
+            "No direct graph edge demonstrates that list presentation consumes the specialty accessors."
+          ],
+          "unsupported_claims": [
+            "Visible display of specialty names for each veterinarian is not proven."
+          ]
+        }
+      ],
+      "product_team_decision": {
+        "action": null,
+        "approved_name": null,
+        "notes": null
+      }
+    }
+  ],
+  "final_product_team_decision": {
+    "reviewer_name": null,
+    "reviewed_at": null,
+    "prototype_decision": null,
+    "decision_rationale": null,
+    "semantic_publication_approval": false
+  }
+}
