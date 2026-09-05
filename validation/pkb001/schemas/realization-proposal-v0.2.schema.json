@@ -17,8 +17,8 @@
       "type": "object", "additionalProperties": false,
       "required": ["provider_node_id", "source_path", "source_location"],
       "properties": {
-        "provider_node_id": {"type": "string", "minLength": 1},
-        "source_path": {"type": "string", "minLength": 1, "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?!.*\/$).+$"},
+        "provider_node_id": {"type": "string", "minLength": 1, "pattern": ".*\\S.*"},
+        "source_path": {"type": "string", "minLength": 1, "pattern": "^(?!\\s*$)(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?!.*\/$).+$"},
         "source_location": {"type": "string", "minLength": 1}
       }
     },
@@ -29,10 +29,10 @@
         "role": {"enum": ["PRIMARY", "SUPPORTING"]},
         "granularity": {"enum": ["REPOSITORY", "FILE", "TYPE", "METHOD", "TEMPLATE", "CONFIGURATION"]},
         "source_revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-        "source_path": {"type": "string", "minLength": 1, "pattern": "^(?:\\.|(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?!.*\/$).+)$"},
+        "source_path": {"type": "string", "minLength": 1, "pattern": "^(?!\\s*$)(?:\\.|(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?!.*\/$).+)$"},
         "qualified_symbol": {"type": "string"},
-        "provider_node_id": {"type": "string", "minLength": 1},
-        "selection_reason": {"type": "string", "minLength": 1}
+        "provider_node_id": {"type": "string", "minLength": 1, "pattern": ".*\\S.*"},
+        "selection_reason": {"type": "string", "minLength": 1, "pattern": ".*\\S.*"}
       },
       "allOf": [
         {
@@ -40,9 +40,8 @@
           "then": {"properties": {"granularity": {"const": "REPOSITORY"}}}
         },
         {
-          "if": {"properties": {"granularity": {"enum": ["REPOSITORY", "FILE"]}}, "required": ["granularity"]},
-          "then": {"properties": {"qualified_symbol": {"const": ""}}},
-          "else": {"properties": {"qualified_symbol": {"minLength": 1, "pattern": ".*\\S.*"}}}
+          "if": {"properties": {"granularity": {"enum": ["TYPE", "METHOD", "TEMPLATE", "CONFIGURATION"]}}, "required": ["granularity"]},
+          "then": {"properties": {"qualified_symbol": {"minLength": 1, "pattern": ".*\\S.*"}}}
         }
       ]
     },

@@ -280,18 +280,35 @@ def test_symbol_granularity_requires_qualified_symbol(valid_request, root, granu
     assert "COMPONENT_IDENTITY_INVALID" in validate_next_run(root, valid_request)["reasons"]
 
 
-@pytest.mark.parametrize("granularity", ["REPOSITORY", "FILE"])
-def test_non_symbol_granularity_requires_empty_qualified_symbol(valid_request, root, granularity):
+@pytest.mark.parametrize(("granularity", "qualified_symbol"), [
+    ("REPOSITORY", ""), ("REPOSITORY", " "), ("REPOSITORY", "example.Repository"),
+    ("FILE", ""), ("FILE", " "), ("FILE", "example.App"),
+])
+def test_non_symbol_granularity_accepts_any_string_symbol(valid_request, root, granularity, qualified_symbol):
     component = valid_request["proposal"]["capability_results"][0]["components"][0]
-    component.update(granularity=granularity, qualified_symbol="example.App",
+    component.update(granularity=granularity, qualified_symbol=qualified_symbol,
                      source_path="." if granularity == "REPOSITORY" else "src/App.java")
-    assert "COMPONENT_IDENTITY_INVALID" in validate_next_run(root, valid_request)["reasons"]
+    assert validate_next_run(root, valid_request)["status"] == "READY"
 
 
 def test_repository_dot_path_with_empty_symbol_is_valid(valid_request, root):
     component = valid_request["proposal"]["capability_results"][0]["components"][0]
     component.update(granularity="REPOSITORY", qualified_symbol="", source_path=".")
     assert validate_next_run(root, valid_request)["status"] == "READY"
+
+
+@pytest.mark.parametrize("field", ["source_path", "provider_node_id", "selection_reason"])
+def test_component_identity_rejects_blank_required_strings(valid_request, root, field):
+    component = valid_request["proposal"]["capability_results"][0]["components"][0]
+    component[field] = " \t"
+    assert "COMPONENT_IDENTITY_INVALID" in validate_next_run(root, valid_request)["reasons"]
+
+
+@pytest.mark.parametrize("field", ["source_path", "provider_node_id"])
+def test_evidence_identity_rejects_blank_required_strings(valid_request, root, field):
+    evidence = valid_request["proposal"]["capability_results"][0]["evidence_refs"][0]
+    evidence[field] = " \t"
+    assert "COMPONENT_IDENTITY_INVALID" in validate_next_run(root, valid_request)["reasons"]
 
 
 @pytest.mark.parametrize("worktree_action", ["delete", "mutate"])

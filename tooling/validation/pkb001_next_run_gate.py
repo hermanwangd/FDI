@@ -27,7 +27,7 @@ SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
 
 def _canonical_relative(value):
-    if not isinstance(value, str) or not value or "\\" in value or "\x00" in value:
+    if not isinstance(value, str) or not value or value.isspace() or "\\" in value or "\x00" in value:
         return None
     if value.startswith("/") or re.match(r"^[A-Za-z]:", value):
         return None
@@ -177,10 +177,12 @@ def _component_identity_valid(component):
     if granularity in {"TYPE", "METHOD", "TEMPLATE", "CONFIGURATION"}:
         symbol_valid = _plain_nonempty(symbol)
     elif granularity in {"REPOSITORY", "FILE"}:
-        symbol_valid = symbol == ""
+        symbol_valid = isinstance(symbol, str)
     else:
         symbol_valid = False
-    return path_valid and symbol_valid
+    return (path_valid and symbol_valid
+            and _plain_nonempty(component.get("provider_node_id"))
+            and _plain_nonempty(component.get("selection_reason")))
 
 
 def _proposal_structure(proposal, reasons):
@@ -204,7 +206,9 @@ def _proposal_structure(proposal, reasons):
         refs = refs_value if isinstance(refs_value, list) else []
         if not isinstance(refs_value, list):
             reasons.add("SCHEMA_INVALID")
-        if any(not isinstance(ref, dict) or _canonical_relative(ref.get("source_path")) is None
+        if any(not isinstance(ref, dict)
+               or _canonical_relative(ref.get("source_path")) is None
+               or not _plain_nonempty(ref.get("provider_node_id"))
                for ref in refs):
             reasons.add("COMPONENT_IDENTITY_INVALID")
     return revision, results
