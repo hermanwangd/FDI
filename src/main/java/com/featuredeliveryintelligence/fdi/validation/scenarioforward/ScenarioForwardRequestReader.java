@@ -20,6 +20,7 @@ import java.nio.file.SecureDirectoryStream;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.BasicFileAttributeView;
+import java.nio.file.attribute.FileTime;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
@@ -27,6 +28,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Bounded input reader for a caller-controlled trusted root. Callers must exclude concurrent writers
+ * for the duration of each read; metadata snapshots detect ordinary violations but are not a substitute
+ * for that ownership boundary against a malicious same-privilege process that can mutate and restore it.
+ */
 public final class ScenarioForwardRequestReader {
     public static final long MAX_BYTES = 8L * 1024 * 1024;
     private static final Set<String> REQUEST_KEYS = Set.of("inputs", "proposal");
@@ -35,7 +41,21 @@ public final class ScenarioForwardRequestReader {
             .enable(StreamReadFeature.STRICT_DUPLICATE_DETECTION)
             .streamReadConstraints(StreamReadConstraints.builder().maxNestingDepth(64).build())
             .build());
+    private final Runnable afterReadCheck;
 
+    public ScenarioForwardRequestReader() {
+        this(() -> { });
+    }
+
+    ScenarioForwardRequestReader(Runnable afterReadCheck) {
+        this.afterReadCheck = Objects.requireNonNull(afterReadCheck, "afterReadCheck");
+    }
+
+    /**
+     * Reads from a caller-designated trusted root. The caller must prevent concurrent writers from
+     * mutating that root for the duration of this call. This reader additionally snapshots the root,
+     * every ancestor and the file before and after reading, and fails closed on observed changes.
+     */
     public ScenarioForwardRequest read(Path trustedRoot, Path requestPath) {
         if (requestPath == null) {
             throw new RuntimeContractException("request path must not be null");
@@ -104,7 +124,8 @@ public final class ScenarioForwardRequestReader {
     }
 
     public static boolean canonicalRelative(String value) {
-        if (value == null || value.isBlank() || value.startsWith("/") || value.contains("\\")
+        if (value == null || value.isBlank() || value.indexOf('\0') >= 0
+                || value.startsWith("/") || value.contains("\\")
                 || value.endsWith("/") || value.matches("^[A-Za-z]:.*")) {
             return false;
         }
@@ -134,7 +155,7 @@ public final class ScenarioForwardRequestReader {
         }
     }
 
-    private static byte[] readChecked(Path root, Path target) {
+    private byte[] readChecked(Path root, Path target) {
         Path normalized = target.toAbsolutePath().normalize();
         if (!normalized.startsWith(root)) {
             throw new RuntimeContractException("input path must remain under trusted root");
@@ -144,15 +165,31 @@ public final class ScenarioForwardRequestReader {
         if (components.isEmpty()) {
             throw new RuntimeContractException("input must name a file under trusted root");
         }
+        List<PathState> beforePath = snapshotPath(root, normalized);
         try (DirectoryStream<Path> openedRoot = Files.newDirectoryStream(root)) {
+            byte[] bytes;
             if (openedRoot instanceof SecureDirectoryStream<Path> secureRoot) {
-                return readFromDirectory(secureRoot, components, 0);
+                bytes = readFromDirectory(secureRoot, components, 0);
+            } else {
+                bytes = readWithCheckedPaths(root, normalized);
             }
-            return readWithCheckedPaths(root, normalized);
+            runAfterReadCheck();
+            if (!beforePath.equals(snapshotPath(root, normalized))) {
+                throw new RuntimeContractException("trusted input path changed while reading");
+            }
+            return bytes;
         } catch (RuntimeContractException failure) {
             throw failure;
         } catch (IOException failure) {
             throw new RuntimeContractException("cannot safely read input file");
+        }
+    }
+
+    private void runAfterReadCheck() {
+        try {
+            afterReadCheck.run();
+        } catch (RuntimeException failure) {
+            throw new RuntimeContractException("input changed while reading", failure);
         }
     }
 
@@ -249,6 +286,39 @@ public final class ScenarioForwardRequestReader {
             return Files.readAttributes(path, BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
         } catch (IOException failure) {
             throw new RuntimeContractException("input path is missing or unreadable");
+        }
+    }
+
+    private static List<PathState> snapshotPath(Path root, Path target) {
+        var states = new java.util.ArrayList<PathState>();
+        Path current = root;
+        states.add(PathState.capture(current));
+        for (Path component : root.relativize(target)) {
+            current = current.resolve(component);
+            states.add(PathState.capture(current));
+        }
+        return List.copyOf(states);
+    }
+
+    private record PathState(
+            Object fileKey, long size, FileTime modified, FileTime created, FileTime unixCtime,
+            boolean directory, boolean regularFile, boolean symbolicLink) {
+        private static PathState capture(Path path) {
+            BasicFileAttributes attributes = ScenarioForwardRequestReader.attributes(path);
+            return new PathState(attributes.fileKey(), attributes.size(), attributes.lastModifiedTime(),
+                    attributes.creationTime(), unixCtime(path), attributes.isDirectory(),
+                    attributes.isRegularFile(), attributes.isSymbolicLink());
+        }
+
+        private static FileTime unixCtime(Path path) {
+            try {
+                Object value = Files.getAttribute(path, "unix:ctime", LinkOption.NOFOLLOW_LINKS);
+                return value instanceof FileTime time ? time : null;
+            } catch (UnsupportedOperationException | IllegalArgumentException unsupported) {
+                return null;
+            } catch (IOException failure) {
+                throw new RuntimeContractException("cannot inspect trusted input path");
+            }
         }
     }
 

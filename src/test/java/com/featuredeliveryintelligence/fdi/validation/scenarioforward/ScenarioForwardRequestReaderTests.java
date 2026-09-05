@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -108,6 +110,41 @@ class ScenarioForwardRequestReaderTests {
     }
 
     @Test
+    void rejectsSameSizeInPlaceMutationAfterTheRead() throws Exception {
+        Path input = Files.writeString(root.resolve("mutable.txt"), "aaaa");
+        FileTime originalModified = Files.getLastModifiedTime(input, LinkOption.NOFOLLOW_LINKS);
+        var mutatingReader = new ScenarioForwardRequestReader(() -> {
+            try {
+                Files.writeString(input, "bbbb");
+                Files.setLastModifiedTime(input, originalModified);
+            } catch (IOException failure) {
+                throw new IllegalStateException(failure);
+            }
+        });
+
+        assertThrows(RuntimeContractException.class,
+                () -> mutatingReader.readBoundFile(root, "mutable.txt"));
+    }
+
+    @Test
+    void rejectsAncestorMutationAcrossFallbackTraversal() throws Exception {
+        Path nested = Files.createDirectory(root.resolve("nested"));
+        Files.writeString(nested.resolve("input.txt"), "safe");
+        FileTime originalModified = Files.getLastModifiedTime(nested, LinkOption.NOFOLLOW_LINKS);
+        var mutatingReader = new ScenarioForwardRequestReader(() -> {
+            try {
+                Files.writeString(nested.resolve("marker"), "changed");
+                Files.setLastModifiedTime(nested, originalModified);
+            } catch (IOException failure) {
+                throw new IllegalStateException(failure);
+            }
+        });
+
+        assertThrows(RuntimeContractException.class,
+                () -> mutatingReader.readBoundFile(root, "nested/input.txt"));
+    }
+
+    @Test
     void rejectsMalformedDuplicateNonObjectAndWrongTopLevelKeys() throws Exception {
         assertInvalidJson("malformed.json", "{");
         assertInvalidJson("duplicate.json", "{\"inputs\":[],\"proposal\":{},\"proposal\":{}}");
@@ -134,6 +171,14 @@ class ScenarioForwardRequestReaderTests {
         assertEquals("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
                 ScenarioForwardRequestReader.sha256("abc".getBytes(StandardCharsets.UTF_8)));
         assertThrows(IllegalArgumentException.class, () -> ScenarioForwardRequestReader.sha256(null));
+    }
+
+    @Test
+    void rejectsNulPathsAsStableContractErrors() {
+        assertFalse(ScenarioForwardRequestReader.canonicalRelative("bad\0path"));
+        RuntimeContractException failure = assertThrows(RuntimeContractException.class,
+                () -> reader.readBoundFile(root, "bad\0path"));
+        assertEquals("bound input path must be canonical and relative", failure.getMessage());
     }
 
     @Test
