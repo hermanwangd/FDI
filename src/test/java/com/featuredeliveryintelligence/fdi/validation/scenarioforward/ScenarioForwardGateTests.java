@@ -119,6 +119,7 @@ class ScenarioForwardGateTests {
             Fixture fixture = fixture();
             fixture.mutate("PRODUCT_SEMANTICS", value -> mutateSnapshot(value, change));
             fixture.mutate("ACCEPTANCE_MANIFEST", value -> mutateSnapshot(value, change));
+            fixture.rebindReview();
             assertBlockedExactly(fixture, "ACCEPTANCE_BINDING_MISMATCH");
         }
     }
