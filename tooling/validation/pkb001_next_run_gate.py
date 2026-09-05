@@ -23,9 +23,6 @@ FORBIDDEN_PATH_PARTS = frozenset({
     "post-generation", "comparison", "evaluation",
 })
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
-GIT_SHA = re.compile(r"^[0-9a-f]{40}$")
-ROLES = frozenset({"PRIMARY", "SUPPORTING"})
-GRANULARITIES = frozenset({"REPOSITORY", "FILE", "TYPE", "METHOD", "TEMPLATE", "CONFIGURATION"})
 
 
 def _canonical_relative(value):
@@ -99,12 +96,6 @@ def _plain_nonempty(value):
     return isinstance(value, str) and bool(value.strip())
 
 
-def _canonical_source_path(value):
-    if value == ".":
-        return True
-    return _canonical_relative(value) is not None
-
-
 def _forbidden_path(value):
     relative = _canonical_relative(value)
     if relative is None:
@@ -119,66 +110,75 @@ def _forbidden_path(value):
     return False
 
 
-def _schema_is_valid(proposal):
-    """Validate the fixed v0.2 contract without adding a runtime dependency."""
-    if not isinstance(proposal, dict):
-        return False
-    required = {"schema_version", "run_id", "authority", "source_revision", "graph_sha256", "capability_results"}
-    if set(proposal) != required:
-        return False
-    if proposal.get("schema_version") != "pkb001.realization-proposal.v0.2" or proposal.get("authority") != "PROPOSAL_ONLY":
-        return False
-    if not _plain_nonempty(proposal.get("run_id")) or not GIT_SHA.fullmatch(proposal.get("source_revision", "")):
-        return False
-    if not SHA256.fullmatch(proposal.get("graph_sha256", "")):
-        return False
-    results = proposal.get("capability_results")
-    if not isinstance(results, list) or not results:
-        return False
-    for result in results:
-        expected = {"capability_id", "outcome", "components", "evidence_refs", "confidence", "limitations"}
-        if not isinstance(result, dict) or set(result) != expected or not _plain_nonempty(result.get("capability_id")):
+def _schema_is_valid(schema, value, root_schema=None):
+    """Evaluate the checked-in schema subset used by this immutable contract."""
+    root_schema = schema if root_schema is None else root_schema
+    if "$ref" in schema:
+        target = root_schema
+        reference = schema["$ref"]
+        if not isinstance(reference, str) or not reference.startswith("#/"):
             return False
-        outcome, components = result.get("outcome"), result.get("components")
-        if outcome not in ("MAPPING_PROPOSAL", "UNRESOLVED") or not isinstance(components, list):
+        try:
+            for token in reference[2:].split("/"):
+                target = target[token.replace("~1", "/").replace("~0", "~")]
+        except (KeyError, TypeError):
             return False
-        if outcome == "MAPPING_PROPOSAL" and (not components or not any(isinstance(c, dict) and c.get("role") == "PRIMARY" for c in components)):
+        return _schema_is_valid(target, value, root_schema)
+    expected_type = schema.get("type")
+    type_matches = {
+        "object": isinstance(value, dict),
+        "array": isinstance(value, list),
+        "string": isinstance(value, str),
+        "number": isinstance(value, (int, float)) and not isinstance(value, bool),
+    }
+    if expected_type in type_matches and not type_matches[expected_type]:
+        return False
+    if "const" in schema and value != schema["const"]:
+        return False
+    if "enum" in schema and value not in schema["enum"]:
+        return False
+    if isinstance(value, str):
+        if len(value) < schema.get("minLength", 0):
             return False
-        if outcome == "UNRESOLVED" and components:
+        if "pattern" in schema and re.search(schema["pattern"], value) is None:
             return False
-        for component in components:
-            fields = {"role", "granularity", "source_revision", "source_path", "qualified_symbol", "provider_node_id", "selection_reason"}
-            if not isinstance(component, dict) or set(component) != fields:
-                return False
-            if component["role"] not in ROLES or component["granularity"] not in GRANULARITIES:
-                return False
-            if not GIT_SHA.fullmatch(component["source_revision"]) or not _canonical_source_path(component["source_path"]):
-                return False
-            if not isinstance(component["qualified_symbol"], str) or not _plain_nonempty(component["provider_node_id"]) or not _plain_nonempty(component["selection_reason"]):
-                return False
-        refs = result.get("evidence_refs")
-        if not isinstance(refs, list) or not refs:
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        if value < schema.get("minimum", value) or value > schema.get("maximum", value):
             return False
-        for ref in refs:
-            if not isinstance(ref, dict) or set(ref) != {"provider_node_id", "source_path", "source_location"}:
-                return False
-            if not _plain_nonempty(ref["provider_node_id"]) or not _canonical_source_path(ref["source_path"]) or not _plain_nonempty(ref["source_location"]):
-                return False
-        confidence = result.get("confidence")
-        if isinstance(confidence, bool) or not isinstance(confidence, (int, float)) or not 0 <= confidence <= 1:
+    if isinstance(value, dict):
+        required = schema.get("required", [])
+        if any(key not in value for key in required):
             return False
-        limitations = result.get("limitations")
-        if not isinstance(limitations, list) or not limitations or not all(_plain_nonempty(x) for x in limitations):
+        properties = schema.get("properties", {})
+        if schema.get("additionalProperties") is False and any(key not in properties for key in value):
+            return False
+        if any(key in properties and not _schema_is_valid(properties[key], child, root_schema)
+               for key, child in value.items()):
+            return False
+    if isinstance(value, list):
+        if len(value) < schema.get("minItems", 0) or len(value) > schema.get("maxItems", len(value)):
+            return False
+        if "items" in schema and any(not _schema_is_valid(schema["items"], item, root_schema) for item in value):
+            return False
+        if "contains" in schema:
+            matches = sum(_schema_is_valid(schema["contains"], item, root_schema) for item in value)
+            if matches < schema.get("minContains", 1):
+                return False
+    if any(not _schema_is_valid(part, value, root_schema) for part in schema.get("allOf", [])):
+        return False
+    if "if" in schema:
+        branch = "then" if _schema_is_valid(schema["if"], value, root_schema) else "else"
+        if branch in schema and not _schema_is_valid(schema[branch], value, root_schema):
             return False
     return True
 
 
-def _schema_definition_is_valid(root):
+def _load_schema(root):
     try:
         schema = json.loads((root / SCHEMA_PATH).read_text(encoding="utf-8"))
     except (OSError, UnicodeError, json.JSONDecodeError):
-        return False
-    return (
+        return None
+    valid = (
         isinstance(schema, dict)
         and schema.get("$schema") == "https://json-schema.org/draft/2020-12/schema"
         and schema.get("$id") == "realization-proposal-v0.2.schema.json"
@@ -187,6 +187,7 @@ def _schema_definition_is_valid(root):
         and isinstance(schema.get("$defs"), dict)
         and {"result", "component", "evidence_ref"}.issubset(schema["$defs"])
     )
+    return schema if valid else None
 
 
 def _committed_pkb001_run_ids(root, reasons):
@@ -259,8 +260,11 @@ def validate_next_run(root, request):
     if binding.get("result") != "EXACTLY_BOUND": reasons.add("GRAPHIFY_BINDING_INVALID")
     if not binding.get("query_bounds"): reasons.add("GRAPHIFY_QUERY_BOUNDS_MISSING")
     proposal = request.get("proposal", {})
-    if not _schema_definition_is_valid(root): reasons.add("SCHEMA_DEFINITION_INVALID")
-    if not _schema_is_valid(proposal): reasons.add("SCHEMA_INVALID")
+    schema = _load_schema(root)
+    if schema is None:
+        reasons.add("SCHEMA_DEFINITION_INVALID")
+    elif not _schema_is_valid(schema, proposal):
+        reasons.add("SCHEMA_INVALID")
     revision = proposal.get("source_revision") if isinstance(proposal, dict) else None
     if any(value != revision for value in (semantics.get("applicable_source_commit_sha"), binding.get("requested_revision"), binding.get("indexed_revision"))):
         reasons.add("REVISION_BINDING_MISMATCH")
