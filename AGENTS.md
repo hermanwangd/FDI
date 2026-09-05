@@ -141,8 +141,8 @@ plans against the new Spec revision before further implementation or before
 retaining `VERIFIED`.
 
 The current 23-active-item PKB-001 backlog is reconciled to the exact Framework Spec
-revision recorded in `BACKLOG.md`. Eight entries are verified (including five
-foundation delivery records); 15 remain for human review, Java migration, and the next experiment. If the bound
+revision recorded in `BACKLOG.md`. Delivery counts and requirement maturity
+are read from the active controls rather than duplicated here. If the bound
 Spec changes, apply `NEEDS_RECONCILIATION` before using the affected entries.
 
 ### Implementation Plan

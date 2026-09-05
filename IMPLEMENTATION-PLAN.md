@@ -8,8 +8,8 @@ and executable continuation constraints. `FRAMEWORK-SPEC.md` defines what;
 
 No implementation slice is selected. `PKB-BL-026` has no remaining
 pre-authorized consumer: all five pre-authorized bounded consumers are
-migrated and recorded below. Whether BL-026 moves to a completed delivery
-state is decided by the Human Reviewer from the five-slice closure evidence.
+migrated and recorded below. BL-026 is closed with Human approval and
+independent closure review at `28b5089773659b2b9e3abb7b742d679ea9e043f5`.
 Any further repository-owned Python framework consumer must be selected and
 bounded before code changes begin. External Graphify Python runtime is
 excluded.
