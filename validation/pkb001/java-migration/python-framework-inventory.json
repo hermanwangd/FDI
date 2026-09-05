@@ -31,9 +31,16 @@
     {
       "path": "tooling/validation/pkb001_blind_review.py",
       "responsibility": "Build deterministic label- and order-blinded PKB-001 review material.",
-      "active_callers": ["tests/test_pkb001_blind_review.py", "tests/test_pkb001_task6_blind_packet.py"],
-      "migration_state": "TRANSITIONAL",
-      "external_runtime": false
+      "active_callers": [],
+      "migration_state": "MIGRATED_TO_JAVA",
+      "external_runtime": false,
+      "java_api": "com.featuredeliveryintelligence.fdi.validation.blindreview.BlindReview",
+      "java_cli": "java -jar target/fdi-0.4.8.3.jar blind-review-generate --root <dir> --output-dir <dir>",
+      "verification_evidence": {
+        "replacement_commit": "a3c6b322053e41208d8fa904496b863e927fd8a7",
+        "characterization_test_count": 14,
+        "java_test_count_at_cutover": 226
+      }
     },
     {
       "path": "tooling/validation/pkb001_code_baseline.py",
