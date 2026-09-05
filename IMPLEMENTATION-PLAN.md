@@ -358,6 +358,8 @@ git commit -m "feat(pkb001): add hierarchical component comparison"
 
 ### Task 5: Next-run schema and readiness gate
 
+Task 5 MUST enforce the component contract and input/authority boundaries structurally through schema, readiness, and execution-isolation validation, not only with prose sentinel tests.
+
 **Files:**
 
 - Create: `validation/pkb001/schemas/realization-proposal-v0.2.schema.json`

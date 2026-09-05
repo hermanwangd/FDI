@@ -42,7 +42,7 @@ Every component MUST retain the full 40-character source revision and exact Grap
 
 ## Output boundary
 
-Every result must contain `source_commit_sha`, `graph_sha256`, evidence references, confidence, and `limitations`. Mapping status is always `PROPOSAL_ONLY` until evaluator review.
+Every result must contain `source_commit_sha`, `graph_sha256`, evidence references, confidence, and `limitations`. Mapping status is always `PROPOSAL_ONLY`: the generated proposal artifact remains permanently `PROPOSAL_ONLY`. Evaluator and Product Team review produce separate decision artifacts; only a separate explicit Product Team publication action can change Product Semantics. PK-S1 never marks a proposal accepted.
 
 PK-S1 **MUST NOT publish Product truth**, modify the frozen Product Semantics file, invent capabilities, or mark a mapping accepted. Time pressure never relaxes these rules.
 

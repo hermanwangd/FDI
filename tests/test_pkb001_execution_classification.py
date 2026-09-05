@@ -154,3 +154,19 @@ def test_pk_s1_retains_product_team_proposal_only_boundary():
     assert 'Product Semantics remains owned by `PRODUCT_TEAM`' in text
     assert 'Mapping status is always `PROPOSAL_ONLY`' in text
     assert 'MUST NOT publish Product truth' in text
+
+
+def test_active_spec_discovers_and_selects_versioned_pk_s1_for_next_run():
+    text = (ROOT/'FRAMEWORK-SPEC.md').read_text()
+    placement = text.split('### Planned project placement and verification', 1)[1]
+    assert '`skills/pkb001/pk-s1-product-realization/` remains immutable' in placement
+    assert '`skills/pkb001/pk-s1-product-realization-v0.2/`' in placement
+    assert 'Next-run readiness MUST explicitly select PK-S1 v0.2' in placement
+
+
+def test_pk_s1_proposal_artifact_authority_is_immutable_and_review_is_separate():
+    text = _pk_s1_text()
+    assert 'generated proposal artifact remains permanently `PROPOSAL_ONLY`' in text
+    assert 'Evaluator and Product Team review produce separate decision artifacts' in text
+    assert 'only a separate explicit Product Team publication action can change Product Semantics' in text
+    assert 'PK-S1 never marks a proposal accepted' in text

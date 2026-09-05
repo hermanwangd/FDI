@@ -143,7 +143,8 @@ Before adding template extraction, the installed Graphify runtime must be querie
 - Java component contract: `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/`
 - Java contract tests: `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/`
 - Provider integration remains under `structural/api/` and `structural/graphify/`.
-- PK-S1 behavioral instructions remain in `skills/pkb001/pk-s1-product-realization/`.
+- The historical PK-S1 directory `skills/pkb001/pk-s1-product-realization/` remains immutable for completed runs; next-run instructions are in `skills/pkb001/pk-s1-product-realization-v0.2/`.
+- Next-run readiness MUST explicitly select PK-S1 v0.2 before generation.
 - Python comparison logic remains in `tooling/validation/`; immutable outputs remain under `validation/pkb001/`.
 
 Implementation uses Java records/enums with constructor validation and immutable collections. Python uses deterministic standard-library transformations; no new dependency is introduced.
