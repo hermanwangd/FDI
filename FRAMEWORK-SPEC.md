@@ -34,6 +34,94 @@ Reverse results are proposals. They cannot establish Product semantics or publis
 - Git, pull requests, and feature history supply delivery evidence, not Product truth.
 - Human/evaluator review accepts, renames, merges, splits, rejects, or identifies missing proposals.
 
+## Product Capability behavior scenarios
+
+A Product Capability MAY contain Product Team-owned behavior scenarios that
+describe concrete, externally observable examples of the capability. Scenarios
+clarify Product meaning; they do not define technical realization.
+
+Each scenario has a stable `scenario_id`, parent `capability_id`, title,
+`given` preconditions, a `when` action or event, observable `then` outcomes,
+scope, status, and Product Team approval provenance. Scenario scope is either
+`REQUIRED_ACCEPTANCE` or `ILLUSTRATIVE`; status is either `DRAFT` or `FROZEN`.
+Capability-level `includes`, `excludes`, and `non_goals` define the shared
+semantic boundary. A frozen scenario is immutable; changing its meaning
+requires a new Product Semantics revision, and its identifier must never be
+reused for different behavior.
+
+Scenarios describe product behavior, not implementation. They MUST NOT contain
+source paths, packages, classes, methods, fields, Graphify node identifiers,
+provider-native identifiers, evaluator expected mappings, or technical
+selection instructions. A scenario is an explicit acceptance example, not a
+claim that every valid behavior of the Capability has been enumerated.
+
+Product Team may define required UI or template behavior even when the current
+structural provider cannot observe it. Missing provider evidence never
+authorizes an agent to weaken or rewrite Product Semantics. The realization
+proposal must instead record the evidence gap or return `UNRESOLVED` when the
+core behavior cannot be supported.
+
+### Scenario authority and isolation
+
+Only `FROZEN`, Product Team-owned scenarios may enter Forward generation.
+Reverse generation cannot access them. Reverse may propose scenario hypotheses,
+but each uses an independent `HYP-SCENARIO-*` namespace and remains
+`authority: PROPOSAL_ONLY` and `scenario_status: UNREVIEWED`. It cannot enter
+Forward input or Product Semantics without a separate Product Team approval and
+publication action.
+
+Product Team review has two ordered stages:
+
+1. Stage A decides Capability names, intent, boundaries, scenarios, merges,
+   splits, renames, and rejections without evaluator expected components,
+   proposed technical components, gold identifiers, or technical scores.
+   Reverse evidence summaries may be shown only when they exclude that material.
+2. Stage B occurs after Stage A is recorded and compares immutable realization
+   proposals with evaluator-only technical mappings. Stage B cannot silently
+   revise the frozen Stage A semantics.
+
+### Scenario-grounded realization
+
+Forward generation follows:
+
+```text
+Frozen Capability + frozen behavior scenarios + exact-revision evidence
+→ scenario traces → realization chain → component proposal
+```
+
+A scenario trace links a scenario to an ordered, variable-length realization
+chain. Each chain step describes a behavioral function, references zero or more
+proposed components, and records `EVIDENCED`, `EVIDENCE_GAP`, or
+`NOT_APPLICABLE`. Chains are not forced into a fixed controller, domain,
+persistence, or UI layering model. `NOT_APPLICABLE` requires a reason and
+remains proposal-only unless Product Team confirms the semantic assertion.
+Given, When, and Then clauses do not require one-to-one component mappings.
+
+Component role remains behavioral:
+
+- `PRIMARY`: without this component, the scenario's core behavior cannot be
+  realized.
+- `SUPPORTING`: the component supplies data, validation, configuration,
+  orchestration, or surrounding structure without independently performing the
+  core behavior.
+
+Direct method evidence must not be replaced by a containing class without an
+explicit reason, but no universal method-first hierarchy is allowed. A type,
+method, template, or configuration may be primary when the evidence supports
+that role. Every proposed component has a stable proposal-local reference,
+selection reason, structural identity, and traceable scenario-chain use.
+
+Mapping outcome and evidence completeness are separate dimensions:
+
+```text
+outcome: MAPPING_PROPOSAL | UNRESOLVED
+evidence_status: COMPLETE | PARTIAL | INSUFFICIENT
+```
+
+Evidence gaps are explicit. They do not authorize fabricated links, automatic
+semantic changes, or promotion of supporting evidence to formal component
+credit.
+
 ## Architecture
 
 ```text
@@ -77,7 +165,7 @@ Every component has one explicit granularity:
 
 - `REPOSITORY`, `FILE`, `TYPE`, `METHOD`, `TEMPLATE`, or `CONFIGURATION`.
 
-A mapping proposal must contain at least one `PRIMARY` component unless its outcome is `UNRESOLVED`. A containing class or file must not replace a more precise method node when direct method evidence is available. Supporting evidence remains separate from formally proposed components.
+A mapping proposal must contain at least one `PRIMARY` component unless its outcome is `UNRESOLVED`. A containing class or file must not replace a more precise method node when direct method evidence is available unless the proposal records an explicit, evidence-backed reason that the broader component is the behavioral realization. Supporting evidence remains separate from formally proposed components.
 
 ### Normalized structural identity
 
@@ -86,12 +174,12 @@ The stable comparison identity contains:
 ```text
 source_revision
 source_path
-symbol_type
+granularity
 qualified_symbol
 provider_node_id
 ```
 
-`source_revision`, repository-relative `source_path`, and `symbol_type` are mandatory. `qualified_symbol` is mandatory for symbol-level components. `provider_node_id` preserves Graphify provenance but is not, by itself, a provider-neutral identity. Normalization must never use evaluator gold or post-generation judgments.
+`source_revision`, repository-relative `source_path`, and `granularity` are mandatory. `qualified_symbol` is mandatory for symbol-level components. `provider_node_id` preserves Graphify provenance but is not, by itself, a provider-neutral identity. Normalization must never use evaluator gold or post-generation judgments.
 
 ### Hierarchical evaluation
 
@@ -106,22 +194,40 @@ Evaluation reports separate these levels rather than treating them as interchang
 
 Path, type, or symbol-name overlap and supporting-evidence citation do not count as exact component matches. Supporting citations report symbol-name and exact-component overlap separately, but neither grants proposal credit. Rows in the proposed channel may explicitly declare only `PRIMARY`; rows in the supporting channel may explicitly declare only `SUPPORTING`; evaluator-expected roles do not grant proposal credit. Comparison inputs are snapshotted once with a 10,000-component-per-channel safety bound. The existing Petclinic metrics remain descriptive regression evidence. New acceptance thresholds must be registered before the next blind/holdout execution and must not be selected from the observed Petclinic result.
 
+Next-run evaluation separates Product semantic quality from technical
+realization quality. Semantic measures include Product Team acceptance,
+rename/merge/split/reject decisions, duplicate or composite hypotheses, and
+unsupported behavior claims. Technical measures include scenario evidence
+coverage, complete-chain coverage, provider-neutral exact-component precision,
+recall and F1, missing and extra components, unresolved rate, and UI/template
+evidence gaps. Macro per-Capability results are reported so large mappings do
+not dominate the aggregate.
+
+The formal provider-neutral exact-component identity is
+`(source_revision, source_path, granularity, qualified_symbol)`. Graphify node-ID
+exact match remains a provider-native provenance diagnostic. Path, containing
+type, bare-symbol overlap, and supporting citations remain separate diagnostics.
+These metrics must not be given the same name or substituted for one another.
+Next-run evaluator truth therefore records normalized component identity rather
+than relying only on provider node IDs.
+
 ### Data flow and isolation
 
 ```text
-Frozen Product Semantics + exact-revision Graphify evidence
-→ Skill/agent proposal generation without evaluator gold
+Frozen Product Semantics + frozen Product Team behavior scenarios
++ exact-revision Graphify evidence
+→ scenario-grounded Skill/agent proposal generation without evaluator gold
 → Java contract validation
 → immutable proposal artifact
 → Python blinded evaluation against sealed evaluator truth
-→ Product Team review
+→ Product Team Stage B realization review
 ```
 
 Generation must fail closed when identity, granularity, role, source revision, or provider binding is absent or inconsistent. The Product Team decides capability meaning and boundaries; evaluator comparison measures realization quality but cannot publish Product Semantics.
 
 ### Template and UI evidence
 
-Before adding template extraction, the installed Graphify runtime must be queried to prove that it supports the required source type and relationships. If it does not, the prototype must either introduce a separately identified structural-evidence capability behind `CodeIntelligenceProvider` or narrow the capability claim to what the bound evidence can prove. It must not fabricate UI realization from Java-only structure.
+Before adding template extraction, the installed Graphify runtime must be queried to prove that it supports the required source type and relationships. If it does not, the prototype must either introduce a separately identified structural-evidence capability behind `CodeIntelligenceProvider` or report an explicit evidence gap. It must not fabricate UI realization from Java-only structure. Only Product Team may decide that the Capability itself should be narrowed or renamed.
 
 ### Calibration strategy
 
@@ -129,6 +235,19 @@ Before adding template extraction, the installed Graphify runtime must be querie
 - A second exact-revision repository, unseen while selection rules are designed, is required as the blind holdout.
 - Product Team semantic review, evaluator truth preparation, proposal generation, and final evaluation remain role-separated.
 - Rules may be debugged with Petclinic, but a `GO` decision requires pre-registered thresholds and holdout evidence; improving Petclinic exact-match numbers alone is insufficient.
+- An independent role proposes the holdout repository and exact revision; the
+  user must approve them before the holdout is sealed. The holdout remains
+  inaccessible while selection rules and thresholds are completed.
+- Stage A semantics, scenarios, metrics, thresholds, skill digest, schema
+  digest, comparator digest, and Graphify query bounds are frozen before blind
+  holdout generation.
+- If a Petclinic regression causes any frozen scenario, rule, threshold, skill,
+  schema, comparator, or query bound to change, a new protocol revision and new
+  digest set are required. Petclinic regression restarts while the holdout
+  remains sealed.
+- The current Petclinic semantics, artifacts, and `REVISE` decision remain
+  immutable. Scenario-grounded execution uses a new semantics revision and a
+  new run identifier.
 
 ### Success criteria for the implementation
 
@@ -138,6 +257,14 @@ Before adding template extraction, the installed Graphify runtime must be querie
 - Python evaluation reports path, type, exact-symbol, realization-chain, and precision metrics independently.
 - Existing `REVISE`, proposal-only, human-authority, and no-publication boundaries remain intact.
 - The current Petclinic artifacts are not silently rewritten; a new run uses a new immutable run identifier and manifest.
+- Frozen Forward scenarios are Product Team-owned and contain no implementation
+  identifiers.
+- Every proposed component is traceable through a scenario realization chain.
+- Missing UI/template evidence produces an explicit evidence gap or
+  `UNRESOLVED`, not modified Product Semantics.
+- Reverse-generated scenarios remain `UNREVIEWED` and `PROPOSAL_ONLY`.
+- Stage A semantic decisions are recorded before Stage B exposes evaluator
+  expected-component mappings.
 
 ### Planned project placement and verification
 
@@ -148,7 +275,7 @@ Before adding template extraction, the installed Graphify runtime must be querie
 - Next-run readiness MUST explicitly select PK-S1 v0.2 before generation.
 - Python comparison logic remains in `tooling/validation/`; immutable outputs remain under `validation/pkb001/`.
 
-Implementation uses Java records/enums with constructor validation and immutable collections. Python uses deterministic standard-library transformations; no new dependency is introduced.
+Implementation uses Java records/enums with constructor validation and immutable collections. Python uses deterministic transformations. Checked-in JSON Schema validation requires a Draft 2020-12-compatible `jsonschema` runtime and fails closed when that validator is unavailable.
 
 Required verification commands are:
 

@@ -727,6 +727,87 @@ git add validation/pkb001/schemas/realization-proposal-v0.2.schema.json tooling/
 git commit -m "feat(pkb001): gate typed realization proposal runs"
 ```
 
+## Next experiment improvement phase
+
+This phase is specified but not authorized for execution by the completion of
+Tasks 1–5. It applies only to a new Product Semantics revision, new skill
+version, and new immutable run. The completed Petclinic artifacts, PK-S1 v0.2,
+and bounded `REVISE` decision remain unchanged.
+
+### Task 6: Product-owned behavior-scenario contract
+
+- [ ] Define a provider-neutral scenario schema with stable scenario and
+  Capability identifiers, Given/When/Then behavior, scope, boundaries, status,
+  Product Team ownership, approval provenance, and immutable revision binding.
+- [ ] Reject implementation identifiers, Graphify nodes, evaluator mappings,
+  and technical selection instructions from Product Semantics scenarios.
+- [ ] Keep reverse-generated `HYP-SCENARIO-*` proposals isolated as
+  `PROPOSAL_ONLY / UNREVIEWED`.
+- [ ] Add validation proving only frozen Product Team scenarios can enter
+  Forward generation.
+
+### Task 7: Two-stage Product Team review
+
+- [ ] Produce a Stage A packet containing Capability intent, boundaries,
+  scenarios, and permitted reverse evidence summaries without evaluator gold,
+  expected components, proposed components, or technical scores.
+- [ ] Record and freeze Stage A decisions before technical unblinding.
+- [ ] Produce a separate Stage B packet for immutable realization proposals,
+  evaluator-only mappings, evidence gaps, and technical comparisons.
+- [ ] Prove Stage B cannot mutate or silently replace Stage A semantics.
+
+### Task 8: Scenario-grounded proposal contract
+
+- [ ] Create a new versioned PK-S1 contract; do not modify the completed v0.2
+  skill or reuse its run identifier.
+- [ ] Add proposal-local component references and scenario traces containing
+  variable-length behavioral chain steps.
+- [ ] Keep `outcome: MAPPING_PROPOSAL | UNRESOLVED` separate from
+  `evidence_status: COMPLETE | PARTIAL | INSUFFICIENT`.
+- [ ] Require explicit evidence gaps and justified `NOT_APPLICABLE` steps.
+- [ ] Apply behavioral PRIMARY/SUPPORTING rules without a universal
+  method-first hierarchy; require an explicit reason when direct method
+  evidence is replaced by a containing class.
+
+### Task 9: Evidence and Reverse quality controls
+
+- [ ] Verify the actual installed Graphify runtime for template, view,
+  navigation, form-binding, and relationship support before adding any provider
+  operation.
+- [ ] If required evidence is unsupported, add a separately identified
+  capability behind `CodeIntelligenceProvider` or report an evidence gap; never
+  weaken Product Semantics automatically.
+- [ ] Add proposal-only duplicate, composite, rename, merge/split, claim-to-
+  evidence, confidence, and limitation checks for Reverse output.
+- [ ] Prevent these checks from publishing or mutating Product Semantics.
+
+### Task 10: Provider-neutral metrics and preregistration
+
+- [ ] Add scenario evidence and complete-chain coverage plus provider-neutral
+  exact-component precision, recall, F1, missing/extra counts, unresolved rate,
+  and UI/template evidence-gap rate.
+- [ ] Report provider-native Graphify node-ID match, path, type, bare-symbol,
+  and supporting-citation measures only as separately named diagnostics.
+- [ ] Extend evaluator truth with normalized component identity
+  `(source_revision, source_path, granularity, qualified_symbol)`.
+- [ ] Derive acceptance thresholds from declared error costs and independent
+  calibration evidence. Until Product Team approval, every numeric proposal is
+  `PROPOSED_NOT_FROZEN`; do not reuse observed Petclinic values as a gate.
+
+### Task 11: User-approved sealed holdout and execution
+
+- [ ] Have an independent role propose a repository and exact revision, obtain
+  explicit user approval, then seal the holdout before rule completion.
+- [ ] Freeze Stage A semantics, scenarios, metrics, thresholds, skill, schema,
+  comparator, provider version, and Graphify query-bound digests before blind
+  generation.
+- [ ] Run Petclinic regression without overwriting existing artifacts.
+- [ ] If any frozen input changes after regression, create a new protocol
+  revision, re-freeze all digests, and restart regression while the holdout
+  remains sealed.
+- [ ] Execute the blind holdout once, conduct Stage B review, and issue a bounded
+  `GO / REVISE / STOP` decision without automatic semantic publication.
+
 ## Explicitly deferred
 
 - Do not change or reinstall the Graphify runtime in this plan.
