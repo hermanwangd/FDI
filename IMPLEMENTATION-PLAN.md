@@ -12,12 +12,164 @@
 plans and future implementation outlines; backlog status, priority, dependency,
 and maturity are authoritative only in `BACKLOG.md`.
 
-**Current selection:** none. The first BL-026 migration slice is complete and
-retained below as its construction and verification record. The Human Reviewer
-must select the next bounded Python consumer before this plan is revised or
-another implementation is dispatched. Existing Python plan sections below are
+**Current selection:** `tooling/validation/pkb001_component_compare.py`, selected
+by the Human Reviewer on HERM-265 (2026-09-05) as the second bounded BL-026
+consumer; constructed under "Selected work: BL-026 Java component-compare
+migration" below. The first BL-026 migration slice is complete and retained
+below as its construction and verification record. The Human Reviewer must
+select each further bounded Python consumer before this plan is revised again
+or another implementation is dispatched. Existing Python plan sections below are
 completed or transitional delivery records and do not authorize new Python
 framework behavior.
+
+---
+
+## Selected work: BL-026 Java component-compare migration
+
+**Goal:** Replace `tooling/validation/pkb001_component_compare.py` with a
+Java 17 API that preserves its complete observable comparison behavior, then
+remove the replaced Python module and its direct Python tests.
+
+**Spec binding:** `FRAMEWORK-SPEC.md` at
+`891e497968000c32984f26437eab811c063ec4cf`; requirements `PKB-JAVA-001` and
+`PKB-COMPARISON-001`.
+
+**Selected backlog:** `PKB-BL-026`, second bounded consumer only. Completing
+this plan advances but does not close BL-026; remaining Python consumers stay
+in the same backlog item for later implementation-plan revisions.
+
+**Architecture:** Java owns input snapshotting, hostile/non-plain shape
+rejection, canonical repository-relative path checks, fail-closed channel role
+rules, hierarchical set metrics, deterministic sorted diagnostics, and the
+supporting-citation separation. The comparator is a pure function over
+caller-supplied rows: no file, network, provider, or evaluator-gold access.
+The Python consumer exposes no CLI, so the Java replacement exposes no CLI.
+Supporting citations remain diagnostics only and never grant exact-component
+or realization-chain credit.
+
+**Tech stack:** Java 17, Spring Boot 3.4.1, Jackson annotations for stable
+snake_case JSON names, JUnit 5 and Maven. Python/pytest is used only to
+characterize the old consumer before cutover.
+
+### Task 1: Characterize observable behavior
+
+**Files:**
+
+- Read: `tooling/validation/pkb001_component_compare.py`
+- Read: `tests/test_pkb001_component_compare.py`
+- Read: `validation/pkb001/java-migration/python-framework-inventory.json`
+
+- [x] Run `python3 -m pytest -q tests/test_pkb001_component_compare.py` before
+  replacement. Record the passing count: 40 collected characterization cases.
+  Never weaken a rejected case for Java parity.
+- [x] Confirm the inventory already records the consumer as `TRANSITIONAL`
+  with the single active caller `tests/test_pkb001_component_compare.py`; the
+  plan section itself records the Human Reviewer selection, so no `SELECTED`
+  inventory state is introduced.
+- [x] Record the observable contract to port: metric levels `path`, `type`,
+  `symbol_name`, `exact_component` each with `matched`/`expected`/`proposed`/
+  `recall`/`precision`; `expected_realization_chain_coverage` as
+  `matched / expected` float division with empty-expected yielding `1.0`;
+  `extra_proposed_components` and `missing_expected_components` sorted by the
+  `(source_path, containing_type, qualified_symbol)` tuple;
+  `supporting_expected_citations` with independent `symbol_name` and
+  `exact_component` sorted diagnostics. The comparator always requires a
+  nonblank `qualified_symbol`; it does not adopt the
+  `StructuralComponentIdentity` blank-symbol leniency for `FILE`/`REPOSITORY`
+  granularity. Error vocabulary: `<channel> must be an iterable of component
+  dicts`, `<channel> must be a finite iterable of component dicts`,
+  `<channel> cannot contain more than 10000 components`,
+  `<channel>[<index>] must be a plain dict`, `.role must be a plain string
+  when present`, `.role must be PRIMARY|SUPPORTING when present`, `.<field>
+  must be a nonblank string`, `.source_path must be canonical and
+  repository-relative`, `duplicate component in <channel>`.
+
+### Task 2: Implement the Java comparator API
+
+**Files:**
+
+- Create: `src/main/java/com/featuredeliveryintelligence/fdi/validation/componentcompare/ComponentCompare.java`
+- Create: `src/main/java/com/featuredeliveryintelligence/fdi/validation/componentcompare/ComponentComparisonReport.java`
+- Create: `src/test/java/com/featuredeliveryintelligence/fdi/validation/componentcompare/ComponentCompareTests.java`
+
+- [ ] Write failing tests porting every decision of the 40 Python
+  characterization cases: hierarchical level separation; supporting citations
+  never granting exact or chain credit; final-segment bare symbol names;
+  independent recall/precision; the 17 invalid/missing/noncanonical input
+  shapes; duplicate composite identity per channel; proposed-channel
+  `SUPPORTING` and supporting-channel `PRIMARY` rejection; expected roles
+  granting no credit; hostile map rows failing closed with the plain-dict
+  error instead of leaking hostile exceptions; non-plain string field/role
+  values failing closed; single-snapshot consumption of one-shot iterables;
+  the 10,000-component-per-channel bound; and deterministic, input-order-
+  independent, non-mutating results. Pin the exact JSON key names of the
+  report with one serialization test.
+- [ ] Run `MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=ComponentCompareTests test`;
+  expect compilation failure because the comparator is absent (RED).
+- [ ] Implement this public boundary. Parameters are `Object` so hostile and
+  non-plain shapes are rejected at runtime exactly like the duck-typed Python
+  function; snapshots consume at most 10,001 entries per channel. Java map
+  access is wrapped so a hostile `Map` override fails closed with the
+  plain-dict error rather than leaking its own exception, and `String` is
+  final in Java, so the Python string-subclass hostility cases port as
+  non-`String` value rejection.
+
+```java
+public final class ComponentCompare {
+    public static final int MAX_COMPONENTS = 10_000;
+    public static ComponentComparisonReport compare(Object proposed, Object expected);
+    public static ComponentComparisonReport compare(Object proposed, Object expected,
+                                                    Object supporting);
+}
+```
+
+- [ ] Rerun the focused tests; expect zero failures (GREEN). Commit as
+  `feat(fdi): add Java component comparison`.
+
+### Task 3: Cut over and remove only the replaced Python consumer
+
+**Files:**
+
+- Modify: `validation/pkb001/java-migration/python-framework-inventory.json`
+- Modify: `tests/test_pkb001_python_framework_inventory.py`
+- Delete: `tooling/validation/pkb001_component_compare.py`
+- Delete: `tests/test_pkb001_component_compare.py`
+
+- [ ] Verify `tests/test_pkb001_component_compare.py` is the only active
+  caller; search may retain only explicitly historical plan text.
+- [ ] Mark the inventory entry `MIGRATED_TO_JAVA`, record the Java API and
+  verification evidence, extend the inventory test's migrated-list assertion,
+  and add the comparator cutover assertion. Delete only the replaced module
+  and its direct test. Do not delete other Python consumers or modify external
+  Graphify.
+- [ ] Run the complete verification set:
+
+```bash
+MAVEN_OPTS='-Xmx2g' ./mvnw test -q
+python3 -m pytest -q
+python3 validation/pkb001/task7-evaluation/public_validate.py .
+git diff --check
+```
+
+Expected: the Java suite grows beyond the 162-test first-slice baseline and
+never shrinks; remaining transitional Python regression passes at 272 tests
+with 3 skips (312 minus the 40 removed characterization cases); public
+validation stays 9/9; no active caller imports the deleted module.
+- [ ] Update BL-026 progress and `STATUS.json` with test counts and commit
+  IDs. Keep BL-026 active and `PKB-JAVA-001` below M3 because other Python
+  consumers remain. Commit the cutover as
+  `refactor(fdi): cut component comparison over to Java` and the control
+  reconciliation as `docs(fdi): record component compare Java cutover`.
+
+### Plan acceptance boundary
+
+- Java preserves every one of the 40 characterization decisions, the metric
+  float semantics, deterministic sorted output, the 10,000-per-channel bound,
+  and the fail-closed role and path rules.
+- The replaced Python comparator and its direct test are gone; no other
+  Python consumer is touched; external Graphify remains unchanged.
+- Historical evidence artifacts remain byte-identical.
+- BL-026 remains open for later consumers; no child Backlog Items are created.
 
 ---
 
