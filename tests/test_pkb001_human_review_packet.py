@@ -7,6 +7,9 @@ ROOT = Path(__file__).resolve().parents[1]
 MODULE_PATH = ROOT / "tooling/validation/build_pkb001_human_review_packet.py"
 PACKET_PATH = ROOT / "validation/pkb001/human-review/human-review-decision-packet.json"
 MARKDOWN_PATH = ROOT / "validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.md"
+CHINESE_MARKDOWN_PATH = (
+    ROOT / "validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.zh-TW.md"
+)
 
 
 def load_builder():
@@ -51,6 +54,18 @@ def test_status_routes_next_action_to_the_human_review_packet():
     assert status["human_review_status"] == "PENDING_PRODUCT_TEAM_REVIEW"
     assert status["semantic_publication_allowed"] is False
     assert status["human_review_packet"] == (
-        "validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.md"
+        "validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.zh-TW.md"
     )
     assert status["next_action"] == "Complete Product Team human review decision packet"
+
+
+def test_chinese_review_packet_preserves_all_pending_decisions_and_boundaries():
+    packet = json.loads(PACKET_PATH.read_text())
+    translated = CHINESE_MARKDOWN_PATH.read_text()
+
+    assert "等待產品團隊審核" in translated
+    assert "不允許發布產品語意" in translated
+    assert "目前原型決策：**REVISE**" in translated
+    for item in packet["items"]:
+        assert f"### {item['blind_id']}" in translated
+    assert translated.count("產品團隊決策：**待填寫**") == 15

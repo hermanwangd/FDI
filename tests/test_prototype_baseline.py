@@ -26,7 +26,7 @@ def test_four_active_truth_entries_exist_and_resolve():
         'evaluation_status': 'COMPLETE_BOUNDED_REVISE',
         'human_review_status': 'PENDING_PRODUCT_TEAM_REVIEW',
         'human_review_packet': (
-            'validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.md'
+            'validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.zh-TW.md'
         ),
         'third_review_status': 'PENDING_11_DISAGREED_ITEMS',
         'semantic_publication_allowed': False,
