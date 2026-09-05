@@ -45,9 +45,15 @@
     {
       "path": "tooling/validation/pkb001_component_compare.py",
       "responsibility": "Compare normalized components deterministically and without provider-specific behavior.",
-      "active_callers": ["tests/test_pkb001_component_compare.py"],
-      "migration_state": "TRANSITIONAL",
-      "external_runtime": false
+      "active_callers": [],
+      "migration_state": "MIGRATED_TO_JAVA",
+      "external_runtime": false,
+      "java_api": "com.featuredeliveryintelligence.fdi.validation.componentcompare.ComponentCompare",
+      "verification_evidence": {
+        "replacement_commit": "6af2b233aaebc72f20a4a03b9ab56b65c614dfef",
+        "characterization_test_count": 40,
+        "java_test_count_at_cutover": 205
+      }
     },
     {
       "path": "tooling/validation/pkb001_evaluate.py",

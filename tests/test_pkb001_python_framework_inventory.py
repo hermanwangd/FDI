@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 INVENTORY = ROOT / "validation/pkb001/java-migration/python-framework-inventory.json"
 FIXTURES = ROOT / "validation/pkb001/fixtures/scenario-forward-parity.json"
 SELECTED = "tooling/validation/pkb001_scenario_forward_gate.py"
+COMPARE = "tooling/validation/pkb001_component_compare.py"
 JAVA_CLI = (
     "java -jar target/fdi-0.4.8.3.jar scenario-forward-validate "
     "--root . --request <request.json>"
@@ -333,7 +334,7 @@ def test_python_framework_inventory_characterizes_the_migration_boundary():
         consumer["path"]
         for consumer in consumers
         if consumer["migration_state"] == "MIGRATED_TO_JAVA"
-    ] == [SELECTED]
+    ] == [COMPARE, SELECTED]
     assert all(
         consumer["migration_state"] == "TRANSITIONAL"
         for consumer in consumers
@@ -388,3 +389,23 @@ def test_scenario_forward_consumer_is_cut_over_to_java():
     assert migrated["java_cli"] == JAVA_CLI
     assert migrated["verification_evidence"]["shared_fixture_cases"] == 36
     assert JAVA_CLI in skill
+
+
+def test_component_compare_consumer_is_cut_over_to_java():
+    inventory = json.loads(INVENTORY.read_text())
+    migrated = next(
+        consumer
+        for consumer in inventory["repository_consumers"]
+        if consumer["path"] == COMPARE
+    )
+
+    assert not (ROOT / COMPARE).exists()
+    assert not (ROOT / "tests/test_pkb001_component_compare.py").exists()
+    assert migrated["migration_state"] == "MIGRATED_TO_JAVA"
+    assert migrated["active_callers"] == []
+    assert migrated["java_api"] == (
+        "com.featuredeliveryintelligence.fdi.validation.componentcompare."
+        "ComponentCompare"
+    )
+    assert "java_cli" not in migrated
+    assert migrated["verification_evidence"]["characterization_test_count"] == 40
