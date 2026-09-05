@@ -36,8 +36,8 @@ def test_five_active_truth_entries_exist_and_resolve():
         'backlog_id': 'PKB-BL-026',
         'plan_anchor': None,
         'owner_role': 'HUMAN_REVIEWER',
-        'issue_ref': 'HERM-265',
-        'base_commit': '2f3af234d7803443e1b19a1068c9a3df79b664dd',
+        'issue_ref': 'HERM-266',
+        'base_commit': 'c123f24141972b53de66997f7782fcce1fd8cb05',
         'candidate_commit': None,
         'state': 'CONTEXT_REVIEW',
     }

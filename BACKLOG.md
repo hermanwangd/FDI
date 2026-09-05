@@ -220,16 +220,23 @@ retained here for history and are excluded from active requirement counts.
   each Java replacement preserves valid/invalid contract behavior and fail-closed
   errors; all active callers are cut over before removal; immutable historical
   artifacts remain unchanged
-- Active plan: `null`; the first bounded migration plan is complete and retained
-  in `IMPLEMENTATION-PLAN.md` as its construction and verification record.
+- Active plan: `null`; the first and second bounded migration plans are
+  complete and retained in `IMPLEMENTATION-PLAN.md` as their construction and
+  verification records.
 - Progress: Java-only framework boundary recorded in `FRAMEWORK-SPEC.md` at
   `891e497968000c32984f26437eab811c063ec4cf`. The first bounded consumer,
   `tooling/validation/pkb001_scenario_forward_gate.py`, was replaced by the
   Java API and packaged CLI, all active callers were cut over, and the Python
   source plus its direct Python-only test were removed in `f5ebd3a`. Verification
   passed 162 Java tests, 312 remaining Python tests with 3 skips, all 36 shared
-  parity fixtures, and public validation 9/9. Other repository-owned Python
-  consumers remain transitional; external Graphify Python is unchanged.
+  parity fixtures, and public validation 9/9. The second bounded consumer,
+  `tooling/validation/pkb001_component_compare.py`, was replaced by the Java
+  `ComponentCompare` API preserving all 40 Python characterization decisions,
+  its only active caller was superseded by the 43 Java comparator tests, and
+  the Python source plus its direct test were removed in `d81deaa` (HERM-266).
+  Verification passed 205 Java tests, 273 remaining Python tests with 3 skips,
+  and public validation 9/9. Other repository-owned Python consumers remain
+  transitional; external Graphify Python is unchanged.
 - Completion evidence: pending
 
 ### PKB-BL-008 — Real Graphify UI/template capability verification
@@ -366,9 +373,9 @@ retained here for history and are excluded from active requirement counts.
 
 ## Backlog execution order
 
-BL-026 remains the active migration backlog after completing its first bounded
-Python-consumer replacement. No next consumer or active implementation plan is
-selected. The Human Reviewer must select the next bounded consumer before the
+BL-026 remains the active migration backlog after completing its first two
+bounded Python-consumer replacements. No next consumer or active implementation
+plan is selected. The Human Reviewer must select the next bounded consumer before the
 plan is revised or another implementation is dispatched. The selected
 construction plan completed `PKB-BL-005` and `PKB-BL-023`.
 BL-024 now points to the current review progress. BL-025 has three accepted

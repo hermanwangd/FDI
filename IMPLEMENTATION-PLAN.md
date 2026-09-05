@@ -12,15 +12,16 @@
 plans and future implementation outlines; backlog status, priority, dependency,
 and maturity are authoritative only in `BACKLOG.md`.
 
-**Current selection:** `tooling/validation/pkb001_component_compare.py`, selected
-by the Human Reviewer on HERM-265 (2026-09-05) as the second bounded BL-026
-consumer; constructed under "Selected work: BL-026 Java component-compare
-migration" below. The first BL-026 migration slice is complete and retained
-below as its construction and verification record. The Human Reviewer must
-select each further bounded Python consumer before this plan is revised again
-or another implementation is dispatched. Existing Python plan sections below are
-completed or transitional delivery records and do not authorize new Python
-framework behavior.
+**Current selection:** BL-026 second migration slice, selected by the Human
+Reviewer on HERM-265 (2026-09-05). Replace the repository-owned
+component-compare Python consumer with a Java API, cut over its active caller,
+then remove that Python consumer; constructed under "Selected work: BL-026 Java
+component-compare migration" below. The first BL-026 migration slice is complete
+and retained below as its construction and verification record. The Human
+Reviewer must select each further bounded Python consumer before this plan is
+revised again or another implementation is dispatched. Existing Python plan
+sections below are completed or transitional delivery records and do not
+authorize new Python framework behavior.
 
 ---
 
@@ -92,7 +93,7 @@ characterize the old consumer before cutover.
 - Create: `src/main/java/com/featuredeliveryintelligence/fdi/validation/componentcompare/ComponentComparisonReport.java`
 - Create: `src/test/java/com/featuredeliveryintelligence/fdi/validation/componentcompare/ComponentCompareTests.java`
 
-- [ ] Write failing tests porting every decision of the 40 Python
+- [x] Write failing tests porting every decision of the 40 Python
   characterization cases: hierarchical level separation; supporting citations
   never granting exact or chain credit; final-segment bare symbol names;
   independent recall/precision; the 17 invalid/missing/noncanonical input
@@ -104,9 +105,9 @@ characterize the old consumer before cutover.
   the 10,000-component-per-channel bound; and deterministic, input-order-
   independent, non-mutating results. Pin the exact JSON key names of the
   report with one serialization test.
-- [ ] Run `MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=ComponentCompareTests test`;
+- [x] Run `MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=ComponentCompareTests test`;
   expect compilation failure because the comparator is absent (RED).
-- [ ] Implement this public boundary. Parameters are `Object` so hostile and
+- [x] Implement this public boundary. Parameters are `Object` so hostile and
   non-plain shapes are rejected at runtime exactly like the duck-typed Python
   function; snapshots consume at most 10,001 entries per channel. Java map
   access is wrapped so a hostile `Map` override fails closed with the
@@ -123,7 +124,7 @@ public final class ComponentCompare {
 }
 ```
 
-- [ ] Rerun the focused tests; expect zero failures (GREEN). Commit as
+- [x] Rerun the focused tests; expect zero failures (GREEN). Commit as
   `feat(fdi): add Java component comparison`.
 
 ### Task 3: Cut over and remove only the replaced Python consumer
@@ -135,14 +136,14 @@ public final class ComponentCompare {
 - Delete: `tooling/validation/pkb001_component_compare.py`
 - Delete: `tests/test_pkb001_component_compare.py`
 
-- [ ] Verify `tests/test_pkb001_component_compare.py` is the only active
+- [x] Verify `tests/test_pkb001_component_compare.py` is the only active
   caller; search may retain only explicitly historical plan text.
-- [ ] Mark the inventory entry `MIGRATED_TO_JAVA`, record the Java API and
+- [x] Mark the inventory entry `MIGRATED_TO_JAVA`, record the Java API and
   verification evidence, extend the inventory test's migrated-list assertion,
   and add the comparator cutover assertion. Delete only the replaced module
   and its direct test. Do not delete other Python consumers or modify external
   Graphify.
-- [ ] Run the complete verification set:
+- [x] Run the complete verification set:
 
 ```bash
 MAVEN_OPTS='-Xmx2g' ./mvnw test -q
@@ -152,14 +153,33 @@ git diff --check
 ```
 
 Expected: the Java suite grows beyond the 162-test first-slice baseline and
-never shrinks; remaining transitional Python regression passes at 272 tests
-with 3 skips (312 minus the 40 removed characterization cases); public
+never shrinks; remaining transitional Python regression passes at 273 tests
+with 3 skips (312 minus the 40 removed characterization cases plus the new
+comparator cutover inventory test); public
 validation stays 9/9; no active caller imports the deleted module.
-- [ ] Update BL-026 progress and `STATUS.json` with test counts and commit
+- [x] Update BL-026 progress and `STATUS.json` with test counts and commit
   IDs. Keep BL-026 active and `PKB-JAVA-001` below M3 because other Python
   consumers remain. Commit the cutover as
   `refactor(fdi): cut component comparison over to Java` and the control
   reconciliation as `docs(fdi): record component compare Java cutover`.
+
+Task 3 completion record (2026-09-05): `d81deaa` records the migrated
+comparator and Java replacement in the inventory, extends the inventory test's
+migrated-list and cutover assertions, and removes only the replaced Python
+comparator and its direct test; every other Python consumer plus external
+Graphify stays unchanged. Verification passed
+`MAVEN_OPTS='-Xmx2g' ./mvnw test` with 205 Java tests,
+`python3 -m pytest -q` with 273 passed and 3 skipped, public validation 9/9,
+and `git diff --check`. All 40 Python characterization decisions remain
+enforced by the 43 Java comparator tests.
+
+Second-slice completion ledger:
+
+- Plan revision: `8545d05`
+- Task 2 Java comparator API and ported characterization tests: `6af2b23`
+- Task 3 caller cutover, inventory reconciliation, and removal: `d81deaa`
+- Control reconciliation: recorded in the docs commit that records this
+  cutover
 
 ### Plan acceptance boundary
 
