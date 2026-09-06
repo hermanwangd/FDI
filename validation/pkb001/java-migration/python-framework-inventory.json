@@ -3,16 +3,38 @@
     {
       "path": "tooling/validation/build_pkb001_human_review_packet.py",
       "responsibility": "Build the PKB-001 Product Team human-review packet from sealed evaluation inputs.",
-      "active_callers": ["tests/test_pkb001_human_review_packet.py"],
-      "migration_state": "TRANSITIONAL",
-      "external_runtime": false
+      "active_callers": [],
+      "migration_state": "MIGRATED_TO_JAVA",
+      "external_runtime": false,
+      "java_api": "com.featuredeliveryintelligence.fdi.validation.humanreviewpacket.HumanReviewPacket",
+      "java_cli": "java -jar target/fdi-0.4.8.3.jar human-review-packet-build [--root <dir>]",
+      "verification_evidence": {
+        "replacement_commit": "869f1f75bb2c3dee5b43d4511b80eda7dc77b311",
+        "parity_report": "validation/pkb001/java-migration/bl026-six-consumer-parity.md",
+        "parity_verdict": "PASS",
+        "java_test_count_at_cutover": 688,
+        "characterization_test_count": 6
+      }
     },
     {
       "path": "tooling/validation/graphify_live_verifier.py",
       "responsibility": "Verify the live Graphify MCP stdio interface against the frozen PKB-001 graph.",
-      "active_callers": ["tests/test_pkb001_phase0.py"],
-      "migration_state": "TRANSITIONAL",
-      "external_runtime": false
+      "active_callers": [],
+      "migration_state": "MIGRATED_TO_JAVA",
+      "external_runtime": false,
+      "java_api": "com.featuredeliveryintelligence.fdi.validation.liveverifier.GraphifyLiveVerifier",
+      "java_cli": "java -jar target/fdi-0.4.8.3.jar graphify-live-verify [--root <dir>] --output <path>",
+      "verification_evidence": {
+        "replacement_commit": "3c7704c43b2e81d8453dda585a2bd8100752a298",
+        "parity_report": "validation/pkb001/java-migration/bl026-six-consumer-parity.md",
+        "parity_verdict": "PASS",
+        "java_test_count_at_cutover": 688,
+        "characterization_evidence": "tests/test_pkb001_phase0.py characterization (21 cases, shared across gate/evaluate/live-verifier)",
+        "disclosed_parity_limits": [
+          "live stdio-MCP exercise not run at integration: no reachable Graphify MCP server; failure-behavior parity verified instead",
+          "dangling-symlink --output: Python reports \"output path must remain inside repository root\", Java reports \"output path must not be a symlink\"; both fail-closed exit 1"
+        ]
+      }
     },
     {
       "path": "tooling/validation/graphify_runtime_probe.py",
@@ -88,16 +110,37 @@
     {
       "path": "tooling/validation/pkb001_evaluate.py",
       "responsibility": "Perform deterministic blinded evaluation of PKB-001 calibration arms.",
-      "active_callers": ["tests/test_pkb001_phase0.py"],
-      "migration_state": "TRANSITIONAL",
-      "external_runtime": false
+      "active_callers": [],
+      "migration_state": "MIGRATED_TO_JAVA",
+      "external_runtime": false,
+      "java_api": "com.featuredeliveryintelligence.fdi.validation.blindevaluation.BlindEvaluation",
+      "java_cli": "java -jar target/fdi-0.4.8.3.jar blinded-evaluate --proposals <path> --judgments <path> [--minimum-proposals N] [--minimum-gold N] [--hard-failures a,b,c] [--report-id ID --ground-truth-sha256 SHA] [--output PATH]",
+      "verification_evidence": {
+        "replacement_commit": "3c7704c43b2e81d8453dda585a2bd8100752a298",
+        "parity_report": "validation/pkb001/java-migration/bl026-six-consumer-parity.md",
+        "parity_verdict": "PASS",
+        "java_test_count_at_cutover": 688,
+        "characterization_evidence": "tests/test_pkb001_phase0.py characterization (21 cases, shared across gate/evaluate/live-verifier)"
+      }
     },
     {
       "path": "tooling/validation/pkb001_gate.py",
       "responsibility": "Enforce the fail-closed PKB-001 Phase 0 readiness gate.",
-      "active_callers": ["tests/test_pkb001_petclinic_evaluator_seal.py", "tests/test_pkb001_phase0.py"],
-      "migration_state": "TRANSITIONAL",
-      "external_runtime": false
+      "active_callers": [],
+      "migration_state": "MIGRATED_TO_JAVA",
+      "external_runtime": false,
+      "java_api": "com.featuredeliveryintelligence.fdi.validation.readiness.Phase0Readiness",
+      "java_cli": "java -jar target/fdi-0.4.8.3.jar phase0-readiness-validate [--root <dir>] [--evidence <path>] [--output <path>]",
+      "verification_evidence": {
+        "replacement_commit": "3c7704c43b2e81d8453dda585a2bd8100752a298",
+        "parity_report": "validation/pkb001/java-migration/bl026-six-consumer-parity.md",
+        "parity_verdict": "PASS",
+        "java_test_count_at_cutover": 688,
+        "characterization_evidence": "tests/test_pkb001_phase0.py characterization (21 cases, shared across gate/evaluate/live-verifier)",
+        "disclosed_parity_limits": [
+          "dangling-symlink --output: Python reports \"output path must remain inside repository root\", Java reports \"output path must not be a symlink\"; both fail-closed exit 1"
+        ]
+      }
     },
     {
       "path": "tooling/validation/pkb001_history.py",
@@ -159,16 +202,41 @@
     {
       "path": "tooling/validation/pkb001_scenario_review.py",
       "responsibility": "Validate PKB-001 scenario proposals and render immutable review surfaces.",
-      "active_callers": ["skills/pkb001/pk-scenario-proposal/SKILL.md", "tests/test_pkb001_human_review_packet.py", "tests/test_pkb001_scenario_review.py"],
-      "migration_state": "TRANSITIONAL",
-      "external_runtime": false
+      "active_callers": [],
+      "migration_state": "MIGRATED_TO_JAVA",
+      "external_runtime": false,
+      "java_api": "com.featuredeliveryintelligence.fdi.validation.scenarioreview.ScenarioReview",
+      "java_cli": "java -jar target/fdi-0.4.8.3.jar scenario-review-render --root ROOT --proposal PROPOSAL --json-output JSON_OUTPUT --markdown-output MARKDOWN_OUTPUT",
+      "verification_evidence": {
+        "replacement_commit": "869f1f75bb2c3dee5b43d4511b80eda7dc77b311",
+        "parity_report": "validation/pkb001/java-migration/bl026-six-consumer-parity.md",
+        "parity_verdict": "PASS",
+        "java_test_count_at_cutover": 688,
+        "characterization_test_count": 23,
+        "disclosed_parity_limits": [
+          "FormatChecker date-time format is a no-op in the Java port",
+          "micros-domain datetime parsing uses the fromisoformat port",
+          "JSON numbers with more than 10,000 digits are rejected by the Java port",
+          "create-then-chmod window on output files",
+          "--root CLI default behavior"
+        ]
+      }
     },
     {
       "path": "tooling/validation/pkb001_task7_evaluate.py",
       "responsibility": "Perform deterministic Task 7 evaluation for the completed PKB-001 comparison.",
-      "active_callers": ["tests/test_pkb001_task7_evaluation.py", "validation/pkb001/task7-evaluation/public_validate.py"],
-      "migration_state": "TRANSITIONAL",
-      "external_runtime": false
+      "active_callers": [],
+      "migration_state": "MIGRATED_TO_JAVA",
+      "external_runtime": false,
+      "java_api": "com.featuredeliveryintelligence.fdi.validation.task7.Task7Evaluation",
+      "java_cli": "java -jar target/fdi-0.4.8.3.jar task7-evaluate [--root <dir>] [--report <path>] [--pending <path>]",
+      "verification_evidence": {
+        "replacement_commit": "fba1312f5d47b4922e0494b88b6a7246e2cf2e11",
+        "parity_report": "validation/pkb001/java-migration/bl026-six-consumer-parity.md",
+        "parity_verdict": "PASS",
+        "java_test_count_at_cutover": 688,
+        "characterization_test_count": 12
+      }
     }
   ],
   "external_runtimes": [
@@ -182,47 +250,165 @@
   "characterization_target": {
     "fixture": "validation/pkb001/fixtures/scenario-forward-parity.json",
     "cases": [
-      {"name": "two_scenario_mapping", "valid": true},
-      {"name": "unresolved", "valid": true},
-      {"name": "partial_ui_gap", "valid": true},
-      {"name": "dangling_ref", "valid": false},
-      {"name": "duplicate_component", "valid": false},
-      {"name": "unused_component", "valid": false},
-      {"name": "cross_parent", "valid": false},
-      {"name": "trace_parent", "valid": false},
-      {"name": "unknown_scenario", "valid": false},
-      {"name": "missing_trace", "valid": false},
-      {"name": "duplicate_trace", "valid": false},
-      {"name": "duplicate_bound", "valid": false},
-      {"name": "revision", "valid": false},
-      {"name": "missing_primary", "valid": false},
-      {"name": "unresolved_components", "valid": false},
-      {"name": "empty_evidence", "valid": false},
-      {"name": "extraneous_gap", "valid": false},
-      {"name": "not_applicable_missing_reason", "valid": false},
-      {"name": "extraneous_na_reason", "valid": false},
-      {"name": "duplicate_step_ref", "valid": false},
-      {"name": "duplicate_evidence_ref", "valid": false},
-      {"name": "blank_limit", "valid": false},
-      {"name": "invalid_path", "valid": false},
-      {"name": "symbol_missing", "valid": false},
-      {"name": "type_replaces_method", "valid": false},
-      {"name": "file_replaces_method", "valid": false},
-      {"name": "direct_not_method", "valid": false},
-      {"name": "direct_wrong_revision", "valid": false},
-      {"name": "duplicate_direct", "valid": false},
-      {"name": "missing_gap", "valid": false},
-      {"name": "complete_gap", "valid": false},
-      {"name": "nullable_file_symbol", "valid": true},
-      {"name": "blank_file_symbol", "valid": true},
-      {"name": "nullable_repository_symbol", "valid": true},
-      {"name": "blank_repository_symbol", "valid": true},
-      {"name": "empty_method_name_parity", "valid": true}
+      {
+        "name": "two_scenario_mapping",
+        "valid": true
+      },
+      {
+        "name": "unresolved",
+        "valid": true
+      },
+      {
+        "name": "partial_ui_gap",
+        "valid": true
+      },
+      {
+        "name": "dangling_ref",
+        "valid": false
+      },
+      {
+        "name": "duplicate_component",
+        "valid": false
+      },
+      {
+        "name": "unused_component",
+        "valid": false
+      },
+      {
+        "name": "cross_parent",
+        "valid": false
+      },
+      {
+        "name": "trace_parent",
+        "valid": false
+      },
+      {
+        "name": "unknown_scenario",
+        "valid": false
+      },
+      {
+        "name": "missing_trace",
+        "valid": false
+      },
+      {
+        "name": "duplicate_trace",
+        "valid": false
+      },
+      {
+        "name": "duplicate_bound",
+        "valid": false
+      },
+      {
+        "name": "revision",
+        "valid": false
+      },
+      {
+        "name": "missing_primary",
+        "valid": false
+      },
+      {
+        "name": "unresolved_components",
+        "valid": false
+      },
+      {
+        "name": "empty_evidence",
+        "valid": false
+      },
+      {
+        "name": "extraneous_gap",
+        "valid": false
+      },
+      {
+        "name": "not_applicable_missing_reason",
+        "valid": false
+      },
+      {
+        "name": "extraneous_na_reason",
+        "valid": false
+      },
+      {
+        "name": "duplicate_step_ref",
+        "valid": false
+      },
+      {
+        "name": "duplicate_evidence_ref",
+        "valid": false
+      },
+      {
+        "name": "blank_limit",
+        "valid": false
+      },
+      {
+        "name": "invalid_path",
+        "valid": false
+      },
+      {
+        "name": "symbol_missing",
+        "valid": false
+      },
+      {
+        "name": "type_replaces_method",
+        "valid": false
+      },
+      {
+        "name": "file_replaces_method",
+        "valid": false
+      },
+      {
+        "name": "direct_not_method",
+        "valid": false
+      },
+      {
+        "name": "direct_wrong_revision",
+        "valid": false
+      },
+      {
+        "name": "duplicate_direct",
+        "valid": false
+      },
+      {
+        "name": "missing_gap",
+        "valid": false
+      },
+      {
+        "name": "complete_gap",
+        "valid": false
+      },
+      {
+        "name": "nullable_file_symbol",
+        "valid": true
+      },
+      {
+        "name": "blank_file_symbol",
+        "valid": true
+      },
+      {
+        "name": "nullable_repository_symbol",
+        "valid": true
+      },
+      {
+        "name": "blank_repository_symbol",
+        "valid": true
+      },
+      {
+        "name": "empty_method_name_parity",
+        "valid": true
+      }
     ],
-    "stable_public_report_keys": ["status", "reasons", "mappings", "run_id", "generation_inputs"],
+    "stable_public_report_keys": [
+      "status",
+      "reasons",
+      "mappings",
+      "run_id",
+      "generation_inputs"
+    ],
     "invariants": {
-      "CONTRACT_VALID": {"mappings": []},
-      "BLOCKED": {"generation_inputs": []}
+      "CONTRACT_VALID": {
+        "mappings": []
+      },
+      "BLOCKED": {
+        "generation_inputs": []
+      }
     }
   },
   "characterization_evidence": {

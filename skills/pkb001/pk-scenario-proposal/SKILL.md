@@ -87,14 +87,15 @@ replacement and exact proposal revision/digest.
 After writing the proposal, invoke the deterministic validator/renderer:
 
 ```bash
-python3 tooling/validation/pkb001_scenario_review.py \
+java -jar target/fdi-0.4.8.3.jar scenario-review-render \
   --root . \
   --proposal <proposal.json> \
   --json-output <review-surface.json> \
   --markdown-output <review-surface.md>
 ```
 
-The Python renderer validates and displays semantic conclusions; it must not invent
+The packaged Java renderer (migrated from the Python consumer) validates and
+displays semantic conclusions; it must not invent
 or rewrite them. It exclusively creates both immutable outputs, refuses reused
 run IDs, and leaves all decisions empty.
 
