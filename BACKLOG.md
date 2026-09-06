@@ -147,14 +147,14 @@ verdict PASS):
 
 1. Phase-0 readiness gate: `pkb001_gate.py` → `phase0-readiness-validate`
    (HERM-284); 5 parity cases.
-2. Blinded evaluation: `pkb001_evaluate.py` → `blinded-evaluate` (HERM-285);
+2. Blinded evaluation: `pkb001_evaluate.py` → `blinded-evaluate` (HERM-284);
    5 parity cases.
 3. Graphify live verifier: `graphify_live_verifier.py` → `graphify-live-verify`
-   (HERM-286); failure-behavior parity, 3 cases; the live stdio-MCP exercise
+   (HERM-284); failure-behavior parity, 3 cases; the live stdio-MCP exercise
    was not run (no reachable Graphify MCP server) and remains a disclosed
    coverage gap.
 4. Scenario review render: `pkb001_scenario_review.py` →
-   `scenario-review-render` (HERM-284); 4 parity cases.
+   `scenario-review-render` (HERM-285); 4 parity cases.
 5. Human-review packet build: `build_pkb001_human_review_packet.py` →
    `human-review-packet-build` (HERM-285); 2 parity cases.
 6. Task-7 evaluation: `pkb001_task7_evaluate.py` → `task7-evaluate`

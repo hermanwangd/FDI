@@ -25,12 +25,11 @@ remains outside the migration.
 - Combined candidate: `fb729012f5f5ff9ee17a844d200b47ffdf15a65a`; combined
   independent exact-revision review PASS (HERM-291).
 - Slices (reviewed candidates, each replayed unchanged): HERM-284
-  (`pkb001_gate.py` → `phase0-readiness-validate`;
-  `pkb001_scenario_review.py` → `scenario-review-render`), HERM-285
-  (`pkb001_evaluate.py` → `blinded-evaluate`;
+  (`pkb001_gate.py` → `phase0-readiness-validate`; `pkb001_evaluate.py` →
+  `blinded-evaluate`; `graphify_live_verifier.py` → `graphify-live-verify`),
+  HERM-285 (`pkb001_scenario_review.py` → `scenario-review-render`;
   `build_pkb001_human_review_packet.py` → `human-review-packet-build`),
-  HERM-286 (`graphify_live_verifier.py` → `graphify-live-verify`;
-  `pkb001_task7_evaluate.py` → `task7-evaluate`).
+  HERM-286 (`pkb001_task7_evaluate.py` → `task7-evaluate`).
 - Verification at the combined candidate: 688 Java tests; parity verdict PASS
   for all six consumers (report
   `validation/pkb001/java-migration/bl026-six-consumer-parity.md`; the
