@@ -23,7 +23,7 @@ an explicit selection and a new bounded construction plan before execution.
 | `PKB-BL-022` | Fail-closed next-run readiness gate | Gate and clean-copy tests |
 | `PKB-BL-023` | Evidence-backed scenario proposal generation | Review artifacts and validator tests |
 | `PKB-BL-024` | Active review pointers | Control-file tests |
-| `PKB-BL-026` | 15/15 repository-owned Python consumers migrated to Java | `validation/pkb001/java-migration/python-framework-inventory.json` |
+| `PKB-BL-026` | 15/15 repository-owned Python consumers migrated to Java | `validation/pkb001/java-migration/python-framework-inventory.json`; parity report `validation/pkb001/java-migration/bl026-six-consumer-parity.md` (PASS, 688 Java tests); combined candidate `fb729012f5f5ff9ee17a844d200b47ffdf15a65a`; reconciliation `63fffab9e0fa6d55c435444c39125108a579cc32` (independent review PASS, HERM-293); terminal closure at Human authorization (HERM-309) |
 | `PKB-BL-027` | Portable Graphify runtime and bounded Java stdio-MCP lifecycle | `validation/pkb001/runtime/pkb-bl027-portable-runtime-evidence.json` |
 
 Commit-level history, slice handoffs, test counts, and superseded plans remain in

@@ -15,7 +15,7 @@ exactly one backlog record. Status means:
 
 | Backlog ID | Type | Requirement | Outcome | Status | Dependency / evidence |
 |---|---|---|---|---|---|
-| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java; exclude external Graphify. | `VERIFIED` | 15/15 consumers migrated. Evidence: `validation/pkb001/java-migration/python-framework-inventory.json`. |
+| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java; exclude external Graphify. | `VERIFIED` | 15/15 consumers `MIGRATED_TO_JAVA`; parity PASS (688 Java tests). Evidence: `validation/pkb001/java-migration/python-framework-inventory.json`; combined candidate `fb729012f5f5ff9ee17a844d200b47ffdf15a65a`; reconciliation `63fffab9e0fa6d55c435444c39125108a579cc32` (independent exact-revision review PASS, HERM-293); terminal closure authorized by the Human Reviewer (HERM-283 comment `01a0775e-edf7-7a19-b941-5a4d895bba80`, applied in HERM-309). External Graphify Python MCP runtime remains outside the migration. |
 | `PKB-BL-023` | `FEATURE` | `PKB-REVIEW-003` | Generate evidence-backed Capability/scenario proposals and one review surface. | `VERIFIED` | Generator and review artifacts exercised. |
 | `PKB-BL-024` | `DOCUMENTATION` | `PKB-STATUS-002` | Point status to the actual generated review material and review state. | `VERIFIED` | Active pointers validated. |
 | `PKB-BL-025` | `FEATURE` | `PKB-REVIEW-004` | Record version-bound human ACCEPT / EDIT / REJECT decisions. | `BLOCKED_USER_APPROVAL` | 9 accepted; 8 pending, including one supplemental proposal. Latest snapshot: `acceptance-manifest-003.json`. |
