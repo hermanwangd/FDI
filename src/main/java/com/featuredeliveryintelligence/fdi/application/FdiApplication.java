@@ -33,6 +33,9 @@ public class FdiApplication {
         if (ExperimentRunnerExecuteCli.handles(args)) {
             System.exit(ExperimentRunnerExecuteCli.run(args, System.out, System.err));
         }
+        if (Task7EvaluateCli.handles(args)) {
+            System.exit(Task7EvaluateCli.run(args, System.out, System.err));
+        }
         if (Dev204Cli.handles(args)) return;
         SpringApplication.run(FdiApplication.class, args);
     }
