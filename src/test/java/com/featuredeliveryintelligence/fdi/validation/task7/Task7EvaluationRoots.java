@@ -68,6 +68,24 @@ public final class Task7EvaluationRoots {
         }
     }
 
+    /**
+     * Removes the committed reviewer-03 workspace from a copied root so a
+     * fixture models the two-reviewer state. The combined candidate commits
+     * reviewer-03 into the repository, so every copied root contains it;
+     * tests exercising the "reviewer-03 absent" contract must delete it.
+     */
+    public static void removeReviewer03Workspace(Path root) throws IOException {
+        Path workspace = root.resolve(TASK6).resolve("judgment-workspaces/reviewer-03");
+        if (!Files.exists(workspace)) {
+            return;
+        }
+        try (var stream = Files.walk(workspace)) {
+            for (Path path : stream.sorted((a, b) -> b.compareTo(a)).toList()) {
+                Files.delete(path);
+            }
+        }
+    }
+
     /** Drops the last judgment of reviewer-01, like the pre-unblinding pytest case. */
     public static void removeLastJudgment(Path root) throws IOException {
         Path judgment = root.resolve(TASK6)

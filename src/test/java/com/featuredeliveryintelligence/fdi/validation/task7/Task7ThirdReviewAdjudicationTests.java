@@ -84,8 +84,11 @@ class Task7ThirdReviewAdjudicationTests {
         assertEquals("UNSUPPORTED", br007.get("final_outcome").asText());
 
         // Descriptive two-reviewer agreement stays auditable and unchanged.
-        JsonNode baseReport = new Task7Evaluation().evaluateRepository(
-                Task7EvaluationRoots.copyEvaluationRoot(temp.resolve("base")));
+        // The combined candidate commits the reviewer-03 workspace, so the
+        // base fixture removes it to model the two-reviewer state.
+        Path baseRoot = Task7EvaluationRoots.copyEvaluationRoot(temp.resolve("base"));
+        Task7EvaluationRoots.removeReviewer03Workspace(baseRoot);
+        JsonNode baseReport = new Task7Evaluation().evaluateRepository(baseRoot);
         assertArrayEquals(Task7Json.toReportBytes(baseReport.get("reviewer_agreement")),
                 Task7Json.toReportBytes(report.get("reviewer_agreement")));
         assertArrayEquals(Task7Json.toReportBytes(baseReport.get("metrics")),
@@ -148,7 +151,10 @@ class Task7ThirdReviewAdjudicationTests {
         assertEquals(11, packet.get("item_count").asLong());
 
         // Without a reviewer-03 workspace the --result contract fails closed.
+        // The combined candidate commits the workspace, so the plain fixture
+        // removes it to model the unadjudicated state.
         Path plainRoot = Task7EvaluationRoots.copyEvaluationRoot(temp.resolve("cli-plain"));
+        Task7EvaluationRoots.removeReviewer03Workspace(plainRoot);
         Path mustNotExist = temp.resolve("cli-no-result.json");
         CliResult missing = runCli("task7-evaluate",
                 "--root", plainRoot.toString(), "--result", mustNotExist.toString());
