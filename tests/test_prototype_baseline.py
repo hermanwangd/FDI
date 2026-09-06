@@ -30,17 +30,18 @@ def test_five_active_truth_entries_exist_and_resolve():
     assert maturity['next_experiment_readiness'] == 'NOT_READY'
     backlog = (ROOT/status['backlog']).read_text()
     assert status['active_backlog_item'] == 'PKB-BL-026'
-    assert status['selected_backlog_items'] == []
+    assert status['selected_backlog_items'] == ['PKB-BL-026']
     assert maturity['spec_revision'] in backlog
     execution = status['active_execution']
-    assert execution is None
+    assert execution['mode'] == 'MULTICA_PARALLEL_SLICES'
+    assert len(execution['slices']) == 4
     if status['review_packet'] is not None:
         assert (ROOT/status['review_packet']).is_file()
     if status['active_implementation_plan'] is not None:
         plan, anchor = status['active_implementation_plan'].split('#')
         assert (ROOT/plan).is_file()
-        assert anchor == 'selected-work-bl-026-java-scenario-forward-gate-migration'
-        assert '## Selected work: BL-026 Java scenario-forward gate migration' in (ROOT/plan).read_text()
+        assert anchor == 'selected-work-bl-026-four-consumer-parallel-java-migration'
+        assert '## Selected work: BL-026 four-consumer parallel Java migration' in (ROOT/plan).read_text()
 
 
 def test_every_normative_requirement_has_one_bound_backlog_record():

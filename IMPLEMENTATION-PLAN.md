@@ -4,14 +4,38 @@ This file contains only the current selection state, verified delivery ledger,
 and executable continuation constraints. `FRAMEWORK-SPEC.md` defines what;
 `BACKLOG.md` records maturity; this plan defines how selected work is delivered.
 
-## Current selection
+## Selected work: BL-026 four-consumer parallel Java migration
 
-No implementation slice is selected. The completed five-consumer tranche is
-recorded below, but `PKB-BL-026` remains `IN_PROGRESS`: 10 inventoried framework
-consumers are still `TRANSITIONAL`. Select and bound the next tranche before
-code changes begin. Independent child slices may run in parallel when they do
-not overlap; Human approval is required only before closing the parent backlog
-item. External Graphify Python runtime is excluded.
+- Backlog / requirement: `PKB-BL-026` / `PKB-JAVA-001`.
+- Parent state: `PKB-BL-026` remains `IN_PROGRESS` until all repository-owned
+  framework consumers are migrated and final Human closure is approved.
+- Bound spec revision: `891e497968000c32984f26437eab811c063ec4cf`.
+- Base commit: `9dda47b2f94b6c45b208266b704a2747a20c8c7a`.
+- Runtime target: Java 17 / Spring Boot 3.4.1; external Graphify Python MCP
+  runtime remains unchanged and outside migration.
+- Selected consumers: `graphify_runtime_probe.py`, `pkb001_history.py`,
+  `pkb001_acquisition.py`, and `pkb001_runner.py`.
+
+The four slices run independently. Each owns a distinct Java package and new
+Java tests. Slice agents must not edit the five active control files, the shared
+Python inventory, or another slice's files. The integration owner alone updates
+existing shared Python callers, inventory, controls, and removes replaced Python
+consumers after all exact-behavior parity gates pass.
+
+| Slice | Owned implementation | Acceptance boundary |
+|---|---|---|
+| Runtime probe | Java Graphify runtime discovery package, CLI, and tests | Preserve descriptor validation, command discovery, JSON/stdout, and exit behavior without changing Graphify. |
+| Delivery history | Java delivery-history package, CLI, and tests | Preserve exact-revision/cutoff Git reconstruction, PR filtering, deterministic output, and failures. |
+| Acquisition | Java acquisition-validation package, CLI, and tests | Preserve bounded paths, digest/tree validation, timestamps, deterministic output, and failures. |
+| Runner | Java experiment-runner package, CLI, and tests | Preserve arm input allowlists, subprocess isolation, deterministic reports, and failures. |
+
+Every slice follows test-first characterization: add a failing Java test,
+confirm RED, implement minimally, confirm focused GREEN, then self-review. A
+slice is not cut over merely because Java tests pass. Integration additionally
+requires byte/field and exit-code parity against the frozen Python behavior,
+full Java/Python regression, public validation 9/9, and independent exact-tip
+review. No per-slice Human approval is required; Human approval remains required
+before final `PKB-BL-026` closure.
 
 ## Completed BL-026 slices
 

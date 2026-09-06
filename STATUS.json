@@ -20,9 +20,18 @@
     "next_experiment_readiness": "NOT_READY"
   },
   "active_backlog_item": "PKB-BL-026",
-  "active_implementation_plan": null,
-  "next_action": "Select the next bounded BL-026 tranche from the 10 remaining TRANSITIONAL repository-owned Python framework consumers. Independent non-overlapping child slices may run in parallel without per-slice Human approval; Human approval is required before final parent closure. External Graphify remains excluded.",
-  "active_execution": null,
+  "active_implementation_plan": "IMPLEMENTATION-PLAN.md#selected-work-bl-026-four-consumer-parallel-java-migration",
+  "next_action": "Execute and independently verify four parallel BL-026 Java slices: Graphify runtime probe, delivery history, acquisition validation, and experiment runner. Integrate shared callers, inventory, controls, and Python removals only after all slice parity gates pass.",
+  "active_execution": {
+    "base_commit": "9dda47b2f94b6c45b208266b704a2747a20c8c7a",
+    "mode": "MULTICA_PARALLEL_SLICES",
+    "slices": [
+      "graphify_runtime_probe.py",
+      "pkb001_history.py",
+      "pkb001_acquisition.py",
+      "pkb001_runner.py"
+    ]
+  },
   "framework_language_target": "JAVA_17_SPRING_BOOT_3_4_1",
   "external_graphify_runtime": "PYTHON_MCP_PROVIDER_OUTSIDE_FRAMEWORK_MIGRATION",
   "python_framework_status": "TRANSITIONAL_MIGRATION_INPUT",
@@ -32,7 +41,9 @@
   "review_mode": "INDIVIDUAL_EXPERIMENT_OWNER",
   "scenario_generation": "GRAPHIFY_AND_DELIVERY_HISTORY_PROPOSALS",
   "scenario_generator_status": "IMPLEMENTED_AND_EXERCISED",
-  "selected_backlog_items": [],
+  "selected_backlog_items": [
+    "PKB-BL-026"
+  ],
   "review_json": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-decisions-001.json",
   "original_review_packet": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review.md",
   "original_review_json": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review.json",
