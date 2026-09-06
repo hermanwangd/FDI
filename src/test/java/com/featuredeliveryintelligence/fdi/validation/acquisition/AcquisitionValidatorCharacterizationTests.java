@@ -297,6 +297,36 @@ class AcquisitionValidatorCharacterizationTests {
         assertEquals("VALIDATED", result.get("status").asText());
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {
+            // fractional seconds, 1-9 digits
+            "2026-09-04T00:00:00.5+00:00",
+            "2026-09-04T00:00:00.12+00:00",
+            "2026-09-04T00:00:00.123456+00:00",
+            "2026-09-04T00:00:00.123456789+00:00",
+            // fractional minutes without seconds, 1-9 digits
+            "2026-09-04T00:00.5+00:00",
+            "2026-09-04T00:00.123456789+00:00"})
+    void acceptsFractionalTimestamps(String acquiredAt) {
+        ObjectNode manifest = validManifest(root, RETAINED);
+        manifest.put("acquired_at", acquiredAt);
+        ObjectNode result = validator().validateAcquisition(root, manifest);
+        assertEquals("VALIDATED", result.get("status").asText());
+    }
+
+    @Test
+    void acceptsBareFractionSeparatorLikePython() {
+        // Python's datetime.fromisoformat accepts a trailing '.' with no
+        // digits; the Java port must accept it too for parity.
+        ObjectNode manifest = validManifest(root, RETAINED);
+        manifest.put("acquired_at", "2026-09-04T00:00:00.+00:00");
+        assertEquals("VALIDATED", validator().validateAcquisition(root, manifest)
+                .get("status").asText());
+        manifest.put("acquired_at", "2026-09-04T00:00.+00:00");
+        assertEquals("VALIDATED", validator().validateAcquisition(root, manifest)
+                .get("status").asText());
+    }
+
     @Test
     void requiresTimezoneBoundHistoryCutoff() {
         ObjectNode manifest = validManifest(root, RETAINED);

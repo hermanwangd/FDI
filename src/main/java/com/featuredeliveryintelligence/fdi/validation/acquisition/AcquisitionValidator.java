@@ -47,11 +47,17 @@ public final class AcquisitionValidator {
             List.of("max_repository_bytes", "max_file_count", "max_file_bytes");
     private static final DateTimeFormatter LOCAL_TIMESTAMP = new DateTimeFormatterBuilder()
             .append(DateTimeFormatter.ISO_LOCAL_DATE)
-            .appendPattern("['T'][' ']HH:mm[:ss]")
+            .appendPattern("['T'][' ']HH:mm")
             .optionalStart()
-            .appendLiteral('.')
-            .appendFraction(java.time.temporal.ChronoField.NANO_OF_SECOND, 1, 9, true)
+            .appendPattern(":ss")
             .optionalEnd()
+            // Decimal fraction (1-9 digits) with an optional '.' separator is
+            // NOT wrapped in optionalStart/optionalEnd: a second optional
+            // section directly after the [:ss] one is skipped when the first
+            // matched, so fractional seconds never engaged. With
+            // decimalPoint=true and minWidth 0 the fraction is optional and
+            // engages whether or not the optional seconds were present.
+            .appendFraction(java.time.temporal.ChronoField.NANO_OF_SECOND, 0, 9, true)
             .toFormatter();
 
     private record Entry(String relative, Path path) { }
