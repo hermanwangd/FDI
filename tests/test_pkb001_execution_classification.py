@@ -179,4 +179,4 @@ def test_plan_does_not_point_to_removed_next_run_python_consumer():
     plan = (ROOT / 'IMPLEMENTATION-PLAN.md').read_text()
     assert 'tooling/validation/pkb001_next_run_gate.py' not in plan
     assert 'tests/test_pkb001_next_run_gate.py' not in plan
-    assert '`PKB-BL-026` is `VERIFIED`' in plan
+    assert '| `PKB-BL-026` |' in plan

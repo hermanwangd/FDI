@@ -109,20 +109,41 @@ def test_phase0_is_ready_after_calibration_freeze_and_petclinic_evaluator_seal()
 
 def test_active_truth_discloses_blinding_and_publication_boundaries():
     status = json.loads((ROOT/'STATUS.json').read_text())
-    active_text = '\n'.join((ROOT/name).read_text() for name in (
-        'PROJECT-OVERVIEW.md', 'FRAMEWORK-SPEC.md', 'BACKLOG.md',
-        'IMPLEMENTATION-PLAN.md',
-    ))
-
     assert status['blinding_scope'] == 'DETERMINISTIC_LABEL_AND_ORDER_BLINDING'
     assert status['blinding_limitation'] == (
         'ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT'
     )
-    assert 'ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT' in active_text
-    assert 'completed Human Reviewer human review' in (ROOT/'IMPLEMENTATION-PLAN.md').read_text()
-    assert 'formal semantic publication is outside this prototype' in (
-        ROOT/'IMPLEMENTATION-PLAN.md'
-    ).read_text()
+    spec = (ROOT/'FRAMEWORK-SPEC.md').read_text()
+    assert 'Deterministic label/order blinding does not establish' in spec
+    assert 'without\npublishing Product semantics' in spec
+
+
+def test_control_files_keep_mutable_state_in_one_place():
+    import re
+
+    spec = (ROOT/'FRAMEWORK-SPEC.md').read_text()
+    backlog = (ROOT/'BACKLOG.md').read_text()
+    plan = (ROOT/'IMPLEMENTATION-PLAN.md').read_text()
+    status = json.loads((ROOT/'STATUS.json').read_text())
+
+    assert '**Status:**' not in spec
+    assert '## Current bounded decision' not in spec
+    assert 'human review remains pending' not in spec
+    assert '## Completed five-consumer tranche' not in backlog
+    assert '## Execution order and maturity' not in backlog
+    assert set(re.findall(r'^## .+$', backlog, re.MULTILINE)) == {
+        '## Canonical backlog ledger', '## Maturity',
+    }
+    assert len(plan.encode()) < 10_000
+    assert 'HERM-' not in plan
+    assert 'tests pass' not in plan
+
+    verified = len(re.findall(
+        r'^\| `PKB-BL-\d{3}` .* \| `VERIFIED` \|', backlog, re.MULTILINE,
+    ))
+    maturity = status['spec_maturity']
+    assert maturity['m3_verified'] == verified
+    assert maturity['m1_backlogged'] == maturity['normative_requirements'] - verified
 
 
 def test_agents_define_compact_implementation_plan_lifecycle():

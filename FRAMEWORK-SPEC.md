@@ -1,6 +1,6 @@
 # PKB-001 Framework Specification
 
-**Status:** Prototype evaluated — `REVISE`
+**Contract status:** Active prototype specification
 
 ## Objective
 
@@ -369,7 +369,7 @@ Before adding template extraction, the installed Graphify runtime must be querie
   schema, comparator, or query bound to change, a new protocol revision and new
   digest set are required. Petclinic regression restarts while the holdout
   remains sealed.
-- The current Petclinic semantics, artifacts, and `REVISE` decision remain
+- Completed experiment semantics, artifacts, and bounded decisions remain
   immutable. Scenario-grounded execution uses a new semantics revision and a
   new run identifier.
 
@@ -382,7 +382,7 @@ Before adding template extraction, the installed Graphify runtime must be querie
 - No active FDI framework behavior depends on a Python interpreter after its
   bounded Java migration is verified; the external Graphify provider remains
   independently executable through MCP stdio.
-- Existing `REVISE`, proposal-only, human-authority, and no-publication boundaries remain intact.
+- Existing bounded decisions, proposal-only authority, human authority, and no-publication boundaries remain intact.
 - The current Petclinic artifacts are not silently rewritten; a new run uses a new immutable run identifier and manifest.
 - Frozen Forward scenarios are Human Reviewer-owned and contain no implementation
   identifiers.
@@ -429,8 +429,13 @@ In scope: Product Semantics input, exact-revision Graphify evidence, Delivery Hi
 
 Out of scope: full T1–T4, DEV-204, F001, full Product Knowledge governance, automatic semantic publication, a maintenance engine, a knowledge graph database, and a new governance framework.
 
-## Current bounded decision
+## Decision and blinding boundary
 
-PKB-001 input binding, isolation contracts, and evidence integrity passed. The current Petclinic run remains `REVISE`, not `GO`, because numeric acceptance thresholds were not frozen before generation and judgment. Its metrics are descriptive only. Non-human evaluator review cannot finalize Product meaning; human review remains pending; formal semantic publication is outside this prototype.
+The framework records bounded `GO`, `REVISE`, or `STOP` decisions without
+publishing Product semantics. Current outcomes, review progress, blockers, and
+next actions belong in `STATUS.json` and immutable evaluation evidence, not in
+this specification.
 
-Task 6 provides deterministic label/order blinding only. `ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT`; no content-level arm-anonymity claim is made.
+Deterministic label/order blinding does not establish content-level arm
+anonymity. Every experiment report must disclose the applicable blinding scope
+and limitations.
