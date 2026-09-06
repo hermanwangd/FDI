@@ -268,6 +268,26 @@ Before implementation:
 For MultiCA dispatch and post-slice KPI analysis, follow
 `validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md` (supporting guidance).
 
+### MultiCA parallel handoff gate
+
+For two or more concurrently selected slices, Codex or a Human creates or wakes
+one Delivery Coordinator controller; it must not dispatch the specialist slices
+directly. The Coordinator records the expected child issue IDs, owns their
+routing, and assigns each non-overlapping child exactly once.
+
+A specialist leaves its child active and publishes one complete handoff naming
+the exact candidate, changed scope, tests and results, limitations, blockers,
+and required next reviewer. Its final write must mention `@Delivery Coordinator`.
+The specialist must not move its own child to `in_review`; only the Coordinator
+does so after validating handoff completeness and assigning the reviewer. On
+each wake, the Coordinator reconciles all expected children in the controller,
+so one missed mention cannot strand another completed sibling. Parent/child
+tracking is the primary safeguard; the final mention is the secondary trigger.
+
+For recovery of already-completed unparented slices, trigger the Coordinator
+once with the explicit issue set. Do not rerun producers and do not emit one
+Coordinator trigger per slice.
+
 Keep command memory use below 8 GB. Use bounded inputs and concurrency, and use
 `MAVEN_OPTS='-Xmx2g'` for Maven verification unless a stricter active control
 requires a lower limit.

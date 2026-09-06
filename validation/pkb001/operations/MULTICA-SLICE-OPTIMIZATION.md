@@ -6,6 +6,10 @@ compact evidence. Read this file for dispatch or post-slice analysis only.
 
 ## Execution rules
 
+- For two or more parallel slices, dispatch only one Coordinator-owned
+  controller. The Coordinator creates and assigns the child slices, records the
+  expected child set and integration order, and owns transitions into review.
+  Codex and Humans do not bypass it by assigning the workers directly.
 - Before dispatch, check scope, dependencies, pinned candidate and equivalent
   active/queued/retrying runs. Use exactly one trigger: assignment, mention or
   rerun. After an ambiguous response, query existing runs before retrying.
@@ -13,6 +17,13 @@ compact evidence. Read this file for dispatch or post-slice analysis only.
 - Independent slices may run concurrently with separate worktrees and explicit
   non-overlapping ownership. Integrate shared controls serially and verify the
   combined candidate. Stay within the aggregate 8 GB resource limit.
+- A worker's final handoff names the exact candidate, changed paths, actual test
+  results, limitations, blockers, and required reviewer, then mentions
+  `@Delivery Coordinator` as its final write. The worker leaves the issue active;
+  it does not move itself to `in_review`. The Coordinator validates the handoff,
+  transitions the issue, and assigns review exactly once. On every wake it also
+  checks the controller's full expected child set for a completed-but-unrouted
+  sibling.
 - Preserve the managed worktree's starting commit ancestry and assigned branch.
   Replay/cherry-pick recovery changes onto it; bind verification to the new SHA.
 - Review exact candidates in a separate export for Git-independent tests, or an
