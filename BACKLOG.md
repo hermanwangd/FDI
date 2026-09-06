@@ -15,7 +15,7 @@ exactly one backlog record. Status means:
 
 | Backlog ID | Type | Requirement | Outcome | Status | Dependency / evidence |
 |---|---|---|---|---|---|
-| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java, one bounded consumer at a time; exclude external Graphify. | `IN_PROGRESS` | Nine consumers migrated across two tranches with independent exact-revision PASS; 6 inventoried consumers remain `TRANSITIONAL`. |
+| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java, one bounded consumer at a time; exclude external Graphify. | `IN_PROGRESS` | All 15 inventoried repository consumers migrated across three tranches with independent exact-revision PASS (15/15 `MIGRATED_TO_JAVA` at combined candidate `fb729012f5f5ff9ee17a844d200b47ffdf15a65a`; six newest with parity PASS). Terminal closure awaits Human confirmation. |
 | `PKB-BL-023` | `FEATURE` | `PKB-REVIEW-003` | Generate evidence-backed Capability/scenario proposals and one review surface. | `VERIFIED` | Generator and review artifacts exercised. |
 | `PKB-BL-024` | `DOCUMENTATION` | `PKB-STATUS-002` | Point status to the actual generated review material and review state. | `VERIFIED` | Active pointers validated. |
 | `PKB-BL-025` | `FEATURE` | `PKB-REVIEW-004` | Record version-bound human ACCEPT / EDIT / REJECT decisions. | `BLOCKED_USER_APPROVAL` | 3 accepted; 13 pending. |
@@ -46,10 +46,10 @@ The five-consumer tranche was accepted by the Human Reviewer on 2026-09-05
 Independent Adjudicator's fresh exact-revision review of candidate
 `9d57c5153d6f9e28e7d7b0f7c4ba9bc8a9c815d7` reproduced all five completion
 checks (PASS, HERM-271). This closes the tranche, not the parent requirement.
-`PKB-JAVA-001` remains below M3 while 10 inventory consumers are
-`TRANSITIONAL`; their migration remains within BL-026 and proceeds through
-bounded selections. (Subsequent tranche: see "Completed four-consumer
-tranche" below; 6 consumers remain `TRANSITIONAL` at current truth.)
+`PKB-JAVA-001` was below M3 while 10 inventory consumers were
+`TRANSITIONAL`; their migration remained within BL-026 and proceeded through
+bounded selections. (Subsequent tranches: see below; at current truth all 15
+inventoried consumers are `MIGRATED_TO_JAVA`.)
 
 All five pre-authorized consumers are migrated, each with independent
 exact-candidate PASS:
@@ -125,9 +125,46 @@ coverage were removed.
    (arm allowlists and prohibited-input errors).
 
 Combined verification at the integration candidate: 517 Java tests pass; the
-Python suite passes; public validation 9/9; the inventory records 6 remaining
-`TRANSITIONAL` consumers. This closes the tranche, not the parent requirement;
-final `PKB-BL-026` closure still requires Human approval.
+Python suite passes; public validation 9/9; at that candidate the inventory
+records 6 remaining `TRANSITIONAL` consumers (all six migrated in the
+six-consumer tranche below). This closes the tranche, not the parent
+requirement; final `PKB-BL-026` closure still requires Human approval.
+
+## Completed six-consumer tranche — PKB-BL-026
+
+Human-authorized combined integration (parent HERM-290) of three independently
+reviewed slices (HERM-284, HERM-285, HERM-286), each with an exact-candidate
+PASS, replayed onto integration base
+`2ede764b470aa70909f851f1c08fbe3532ebbfd0` (replayed slice commits `3c7704c`,
+`6e010f0`, `869f1f7`, `fba1312`; integration commits `691f3b8`, `6594765`,
+`fb72901`). Combined candidate
+`fb729012f5f5ff9ee17a844d200b47ffdf15a65a`; combined independent
+exact-revision review PASS (HERM-291).
+
+The six consumers, each replaced by a Java API and packaged CLI with focused
+byte/JSON parity (`validation/pkb001/java-migration/bl026-six-consumer-parity.md`,
+verdict PASS):
+
+1. Phase-0 readiness gate: `pkb001_gate.py` → `phase0-readiness-validate`
+   (HERM-284); 5 parity cases.
+2. Blinded evaluation: `pkb001_evaluate.py` → `blinded-evaluate` (HERM-285);
+   5 parity cases.
+3. Graphify live verifier: `graphify_live_verifier.py` → `graphify-live-verify`
+   (HERM-286); failure-behavior parity, 3 cases; the live stdio-MCP exercise
+   was not run (no reachable Graphify MCP server) and remains a disclosed
+   coverage gap.
+4. Scenario review render: `pkb001_scenario_review.py` →
+   `scenario-review-render` (HERM-284); 4 parity cases.
+5. Human-review packet build: `build_pkb001_human_review_packet.py` →
+   `human-review-packet-build` (HERM-285); 2 parity cases.
+6. Task-7 evaluation: `pkb001_task7_evaluate.py` → `task7-evaluate`
+   (HERM-286); 2 parity cases.
+
+Combined verification at `fb729012f5f5ff9ee17a844d200b47ffdf15a65a`: 688 Java
+tests pass; parity verdict PASS for all six consumers; the inventory records
+15/15 repository consumers `MIGRATED_TO_JAVA` (the external Graphify Python
+MCP runtime remains outside the migration). This closes the tranche, not the
+parent requirement; final `PKB-BL-026` closure still requires Human approval.
 
 ## Execution order and maturity
 

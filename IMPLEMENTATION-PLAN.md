@@ -6,12 +6,38 @@ and executable continuation constraints. `FRAMEWORK-SPEC.md` defines what;
 
 ## No selected work
 
-No BL-026 slice is currently selected. `PKB-BL-026` remains `IN_PROGRESS`
-with 6 inventoried consumers still `TRANSITIONAL`; each further consumer
-requires a new explicit bounded selection with its own base, owned files,
-acceptance boundary, and independent review. Human approval is required before
-final `PKB-BL-026` closure; no slice may start merely because the backlog item
-is active. External Graphify remains outside the migration.
+No BL-026 slice is currently selected. `PKB-BL-026` remains `IN_PROGRESS`:
+all 15 inventoried repository consumers are migrated (three completed
+tranches, latest combined candidate
+`fb729012f5f5ff9ee17a844d200b47ffdf15a65a`), so no consumer migration
+remains. Human approval is required before final `PKB-BL-026` closure; no
+slice may start merely because the backlog item is active. External Graphify
+remains outside the migration.
+
+## Completed BL-026 six-consumer tranche (HERM-290)
+
+- Authorization: Human-authorized combined integration on parent HERM-290;
+  no per-slice Human approval required.
+- Integration base: `2ede764b470aa70909f851f1c08fbe3532ebbfd0`; replayed
+  slice commits `3c7704c`, `6e010f0`, `869f1f7`, `fba1312`; integration
+  commits `691f3b8`, `6594765`, `fb72901`.
+- Bound spec revision: `891e497968000c32984f26437eab811c063ec4cf`.
+- Combined candidate: `fb729012f5f5ff9ee17a844d200b47ffdf15a65a`; combined
+  independent exact-revision review PASS (HERM-291).
+- Slices (reviewed candidates, each replayed unchanged): HERM-284
+  (`pkb001_gate.py` → `phase0-readiness-validate`;
+  `pkb001_scenario_review.py` → `scenario-review-render`), HERM-285
+  (`pkb001_evaluate.py` → `blinded-evaluate`;
+  `build_pkb001_human_review_packet.py` → `human-review-packet-build`),
+  HERM-286 (`graphify_live_verifier.py` → `graphify-live-verify`;
+  `pkb001_task7_evaluate.py` → `task7-evaluate`).
+- Verification at the combined candidate: 688 Java tests; parity verdict PASS
+  for all six consumers (report
+  `validation/pkb001/java-migration/bl026-six-consumer-parity.md`; the
+  graphify-live-verify live stdio-MCP exercise was not run and remains a
+  disclosed coverage gap); inventory records 15/15 repository consumers
+  `MIGRATED_TO_JAVA`.
+- Final `PKB-BL-026` closure still requires Human approval.
 
 ## Completed BL-026 four-consumer tranche (HERM-281)
 
@@ -19,56 +45,23 @@ is active. External Graphify remains outside the migration.
   no per-slice Human approval required.
 - Integration base: `49ea9992a7cced2598f33071a8eefba53ff4e747`; approved
   ancestor base for slice deltas: `62b5f75522ce01e2a7ae8da3c5e4e3bf3199408d`.
-- Bound spec revision: `891e497968000c32984f26437eab811c063ec4cf`.
 - Replay: slice commits cherry-picked unchanged; the shared `FdiApplication`
-  dispatch was resolved once (runtime probe, delivery history, acquisition,
-  experiment-runner-validate, experiment-runner-execute); slice-owned file
-  content is byte-identical to each reviewed candidate.
-- Active callers switched to the packaged Java CLIs; only the four replaced
-  Python consumers and their Python-only test coverage removed; shared tests
-  for remaining `TRANSITIONAL` consumers preserved.
-
-### Runtime probe slice (HERM-277)
-
-- Reviewed candidate: `21f92f4f42b6b449130efc416ab022709afeceec` (replayed as
-  `e525ca3`).
-- `GraphifyRuntimeProbe` API + packaged `graphify-runtime-probe` CLI; 23
-  characterization tests and 12 CLI tests; focused integration parity
-  byte-identical (discovered stub, described descriptor).
-
-### Delivery history slice (HERM-278)
-
-- Reviewed candidate: `de1d861987199c0d3ec3a64a32d02badbd0d99be` (replayed as
-  `271ac73`).
-- `DeliveryHistory` API + packaged `delivery-history-generate` CLI; 10
-  characterization tests and 14 CLI tests; focused integration parity
-  JSON-identical (cutoff-bounded reconstruction, late-updated PR excluded).
-
-### Acquisition slice (HERM-279, round 2)
-
-- Reviewed candidate: `80c8c3aa159abbfed8a0ec1fe4c1d67e3b3b7890` (feature
-  `a2ba4817` plus round-2 remediation, replayed as `3a9e94e` + `f178d5e`;
-  supersedes the failed round-1 candidate).
-- `AcquisitionValidator` API + packaged `acquisition-validate` CLI; 28
-  characterization tests and 9 CLI tests; focused integration parity
-  byte-identical (valid tree, mutable revision, digest mismatch, unsafe
-  retained path). Disclosed non-generated parity limits: more-than-9
-  fractional-digit timestamps and the lowercase `t` ISO-8601 separator are
-  rejected by the Java port; no new interpreter-version contract.
-
-### Experiment runner slice (HERM-280)
-
-- Reviewed candidate: `7247a1dc6f91396356d4d9e64f9ee036f2fcb210` (replayed as
-  `5cb87e5` + `5e21963`).
-- `ExperimentRunner` API + packaged `experiment-runner-validate` and
-  `experiment-runner-execute` CLIs; 15 characterization tests and 12 CLI
-  tests; focused integration parity JSON-identical (arm allowlists,
-  prohibited inputs).
-
-Combined verification at the integration candidate: 517 Java tests; Python
-suite green; public validation 9/9; inventory records 6 `TRANSITIONAL`
-consumers. This is a completion record, not authority to select the next
-consumer.
+  dispatch was resolved once; slice-owned file content is byte-identical to
+  each reviewed candidate.
+- Slices (reviewed candidates): HERM-277 runtime probe
+  (`21f92f4f42b6b449130efc416ab022709afeceec`; 23 characterization + 12 CLI
+  tests; byte-identical parity), HERM-278 delivery history
+  (`de1d861987199c0d3ec3a64a32d02badbd0d99be`; 10 + 14; JSON-identical
+  parity), HERM-279 acquisition round 2
+  (`80c8c3aa159abbfed8a0ec1fe4c1d67e3b3b7890`; 28 + 9; byte-identical parity
+  with disclosed non-generated limits), HERM-280 experiment runner
+  (`7247a1dc6f91396356d4d9e64f9ee036f2fcb210`; 15 + 12; JSON-identical
+  parity).
+- Combined verification at the integration candidate: 517 Java tests; Python
+  suite green; public validation 9/9; at that candidate the inventory records
+  6 `TRANSITIONAL` consumers (since migrated — see the six-consumer tranche
+  above).
+- This is a completion record, not authority to select the next consumer.
 
 ## Completed BL-026 slices
 
