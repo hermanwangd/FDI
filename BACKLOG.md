@@ -15,7 +15,7 @@ exactly one backlog record. Status means:
 
 | Backlog ID | Type | Requirement | Outcome | Status | Dependency / evidence |
 |---|---|---|---|---|---|
-| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java, one bounded consumer at a time; exclude external Graphify. | `IN_PROGRESS` | All 15 inventoried repository consumers migrated across three tranches with independent exact-revision PASS (15/15 `MIGRATED_TO_JAVA` at combined candidate `fb729012f5f5ff9ee17a844d200b47ffdf15a65a`; six newest with parity PASS). Terminal closure awaits Human confirmation. |
+| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java, one bounded consumer at a time; exclude external Graphify. | `VERIFIED` | All 15 inventoried repository consumers migrated across three tranches with independent exact-revision PASS (15/15 `MIGRATED_TO_JAVA` at combined candidate `fb729012f5f5ff9ee17a844d200b47ffdf15a65a`; six newest with parity PASS). Terminal closure authorized by the Human Reviewer (HERM-294) at reconciliation candidate `63fffab9e0fa6d55c435444c39125108a579cc32` (docs-only delta on the combined candidate; independent exact-revision review PASS, HERM-293; 688 Java tests / 0 errors / 0 failures). Disclosed gap preserved: the `graphify-live-verify` live stdio-MCP exercise was not run (no reachable Graphify MCP server). |
 | `PKB-BL-023` | `FEATURE` | `PKB-REVIEW-003` | Generate evidence-backed Capability/scenario proposals and one review surface. | `VERIFIED` | Generator and review artifacts exercised. |
 | `PKB-BL-024` | `DOCUMENTATION` | `PKB-STATUS-002` | Point status to the actual generated review material and review state. | `VERIFIED` | Active pointers validated. |
 | `PKB-BL-025` | `FEATURE` | `PKB-REVIEW-004` | Record version-bound human ACCEPT / EDIT / REJECT decisions. | `BLOCKED_USER_APPROVAL` | 3 accepted; 13 pending. |
@@ -128,7 +128,8 @@ Combined verification at the integration candidate: 517 Java tests pass; the
 Python suite passes; public validation 9/9; at that candidate the inventory
 records 6 remaining `TRANSITIONAL` consumers (all six migrated in the
 six-consumer tranche below). This closes the tranche, not the parent
-requirement; final `PKB-BL-026` closure still requires Human approval.
+requirement; the parent was later closed as `VERIFIED` by the Human Reviewer
+(HERM-294).
 
 ## Completed six-consumer tranche — PKB-BL-026
 
@@ -164,7 +165,8 @@ Combined verification at `fb729012f5f5ff9ee17a844d200b47ffdf15a65a`: 688 Java
 tests pass; parity verdict PASS for all six consumers; the inventory records
 15/15 repository consumers `MIGRATED_TO_JAVA` (the external Graphify Python
 MCP runtime remains outside the migration). This closes the tranche, not the
-parent requirement; final `PKB-BL-026` closure still requires Human approval.
+parent requirement; the parent was later closed as `VERIFIED` by the Human
+Reviewer (HERM-294).
 
 ## Execution order and maturity
 
@@ -176,6 +178,6 @@ The next experiment remains `NOT_READY`. Construction order is:
 4. Preregister thresholds and seal a holdout (BL-012, BL-013).
 5. Freeze protocol, regress Petclinic, execute holdout, decide (BL-014–BL-017).
 
-Maturity for the bound spec revision: 23 normative requirements, 8 `VERIFIED`,
-15 not yet M3. Superseded BL-001 through BL-003 are historical and are not active
+Maturity for the bound spec revision: 23 normative requirements, 9 `VERIFIED`,
+14 not yet M3. Superseded BL-001 through BL-003 are historical and are not active
 records.

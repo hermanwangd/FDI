@@ -6,12 +6,13 @@ and executable continuation constraints. `FRAMEWORK-SPEC.md` defines what;
 
 ## No selected work
 
-No BL-026 slice is currently selected. `PKB-BL-026` remains `IN_PROGRESS`:
-all 15 inventoried repository consumers are migrated (three completed
-tranches, latest combined candidate
-`fb729012f5f5ff9ee17a844d200b47ffdf15a65a`), so no consumer migration
-remains. Human approval is required before final `PKB-BL-026` closure; no
-slice may start merely because the backlog item is active. External Graphify
+No BL-026 slice is currently selected. `PKB-BL-026` is `VERIFIED`: all 15
+inventoried repository consumers are migrated (three completed tranches,
+latest combined candidate
+`fb729012f5f5ff9ee17a844d200b47ffdf15a65a`), and terminal closure was
+authorized by the Human Reviewer on HERM-294 at reconciliation candidate
+`63fffab9e0fa6d55c435444c39125108a579cc32`. No consumer migration remains;
+no slice may start merely because a backlog item is active. External Graphify
 remains outside the migration.
 
 ## Completed BL-026 six-consumer tranche (HERM-290)
@@ -36,7 +37,8 @@ remains outside the migration.
   graphify-live-verify live stdio-MCP exercise was not run and remains a
   disclosed coverage gap); inventory records 15/15 repository consumers
   `MIGRATED_TO_JAVA`.
-- Final `PKB-BL-026` closure still requires Human approval.
+- Final `PKB-BL-026` closure was authorized by the Human Reviewer (HERM-294)
+  and applied at the reconciliation candidate; see `BACKLOG.md`.
 
 ## Completed BL-026 four-consumer tranche (HERM-281)
 
