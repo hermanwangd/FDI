@@ -160,6 +160,62 @@ def test_agents_define_compact_implementation_plan_lifecycle():
         assert rule in instructions
 
 
+def test_agents_define_one_generic_active_control_writer():
+    instructions = (ROOT/'AGENTS.md').read_text()
+    multica = (
+        ROOT/'validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md'
+    ).read_text()
+
+    for rule in (
+        '## Active Control Writer',
+        'exactly one agent holds the active-control writer role',
+        'Implementation Workers and Reviewers must not edit active control files',
+        'Only the active-control writer may edit `IMPLEMENTATION-PLAN.md`',
+        '`control_writer_role`',
+        '`control_writer_id`',
+        'Handoff to Codex is not required',
+    ):
+        assert rule in instructions
+    assert '23-active-item' not in instructions
+    assert 'mention://agent/' not in instructions
+    assert 'explicit reassignment' not in instructions
+    assert 'mention://agent/' in multica
+    assert 'explicitly reassigns' in multica
+
+
+def test_active_execution_and_control_writer_lease_are_atomic():
+    status = json.loads((ROOT/'STATUS.json').read_text())
+    execution = status['active_execution']
+    if execution is None:
+        assert status['active_backlog_item'] is None
+        assert status['active_implementation_plan'] is None
+        assert status['selected_backlog_items'] == []
+        return
+
+    assert status['active_backlog_item'] in status['selected_backlog_items']
+    assert status['active_implementation_plan']
+    assert {
+        'execution_id', 'base_commit', 'control_writer_role', 'control_writer_id',
+    }.issubset(execution)
+    assert len(execution['base_commit']) == 40
+    assert execution['control_writer_role'] == 'DELIVERY_COORDINATOR'
+    assert execution['control_writer_id'].strip()
+
+
+def test_agent_backlog_contract_matches_compact_ledger():
+    instructions = (ROOT/'AGENTS.md').read_text()
+    backlog = (ROOT/'BACKLOG.md').read_text()
+    assert '| Backlog ID | Type | Requirement | Outcome | Status | Dependency / evidence |' in backlog
+    for field in (
+        'stable Backlog ID', 'work type', 'controlling requirement ID',
+        'intended outcome', 'current delivery status',
+        'dependency, blocker, or completion-evidence pointer',
+    ):
+        assert field in instructions
+    assert 'priority, status, dependencies, and blockers' not in instructions
+    assert 'decision and implementation owners' not in instructions
+
+
 def test_default_python_suite_passes_in_clean_tracked_copy(tmp_path):
     assert 'norecursedirs = .fdi-work' in (ROOT/'pytest.ini').read_text()
     if (

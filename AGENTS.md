@@ -51,6 +51,36 @@ document, do not guess which version is newer and do not continue partially.
 Stop before changing files, report `CONTEXT_CONFLICT`, and identify the exact
 conflicting statements for Human Reviewer resolution.
 
+## Active Control Writer
+
+The five active control files are shared project truth. During one selected
+execution, exactly one agent holds the active-control writer role.
+
+- For coordinated or parallel work, the Delivery Coordinator is the writer.
+- For simple single-agent work, the executing agent may also act as Delivery
+  Coordinator when the selected plan explicitly records that role.
+- Implementation Workers and Reviewers must not edit active control files. They
+  modify only assigned code, tests, schemas, or evidence and return a complete
+  handoff.
+- The writer reconciles accepted evidence and updates `BACKLOG.md`,
+  `IMPLEMENTATION-PLAN.md`, and `STATUS.json` as one integration transaction.
+- `PROJECT-OVERVIEW.md` or `FRAMEWORK-SPEC.md` may be edited only when the
+  selected scope includes that change. Material purpose, scope, architecture,
+  contract, or authority changes require Human Reviewer approval.
+- Human terminal confirmation is required before moving a parent Backlog item
+  to `VERIFIED`. After confirmation, the active writer applies the closure.
+- Handoff to Codex is not required unless explicitly requested or the current
+  writer reports `CONTEXT_CONFLICT`, integration failure, or unavailable
+  capability.
+
+When selected work is active, `STATUS.json.active_execution` records a stable
+`execution_id`, exact `base_commit`, `control_writer_role`, and
+orchestrator-visible `control_writer_id`. These are generic coordination
+fields, not MultiCA-specific fields. They are cleared with the active selection
+at completion. If zero or multiple agents claim active-control ownership, or
+the writer does not match the selected execution, stop with
+`CONTEXT_CONFLICT`.
+
 ## Current Work
 
 Read `STATUS.json` to determine:
@@ -69,7 +99,7 @@ When project-level truth changes, update the appropriate active document:
 
 - Project purpose / architecture / scope → `PROJECT-OVERVIEW.md`
 - Framework capability / contract / authority boundary → `FRAMEWORK-SPEC.md`
-- Work inventory / priority / dependency / maturity → `BACKLOG.md`
+- Work inventory / dependency / maturity → `BACKLOG.md`
 - Selected-work construction steps / commands / verification → `IMPLEMENTATION-PLAN.md`
 - Current execution state / gate / blocker / next action → `STATUS.json`
 
@@ -114,15 +144,16 @@ revision instead.
 Backlog records the gap between the bound Spec revision and current verified
 implementation. Every item must include:
 
-- stable `backlog_id` and `work_type`;
-- source and bound Spec path/revision/requirement IDs when applicable;
-- current gap and intended outcome;
-- priority, status, dependencies, and blockers;
-- in-scope and out-of-scope boundaries;
-- deliverables and required verification;
-- decision and implementation owners;
-- active Implementation Plan link, or `null` when not selected;
-- completion evidence, empty until verified.
+- stable Backlog ID;
+- work type;
+- controlling requirement ID or documented non-Spec source;
+- intended outcome;
+- current delivery status;
+- dependency, blocker, or completion-evidence pointer.
+
+Ownership, exact base commit, files/modules, scope boundaries, deliverables,
+acceptance criteria, verification commands, and active-control writer are added
+to `IMPLEMENTATION-PLAN.md` only after an item is selected.
 
 Allowed `work_type` values are `FEATURE`, `BUG`, `SECURITY`, `TECH_DEBT`,
 `VALIDATION`, `DOCUMENTATION`, `OPERATION`, and `RESEARCH`. Bug, review,
@@ -140,10 +171,10 @@ When a bound Spec requirement changes, mark affected Backlog items
 plans against the new Spec revision before further implementation or before
 retaining `VERIFIED`.
 
-The current 23-active-item PKB-001 backlog is reconciled to the exact Framework Spec
-revision recorded in `BACKLOG.md`. Delivery counts and requirement maturity
-are read from the active controls rather than duplicated here. If the bound
-Spec changes, apply `NEEDS_RECONCILIATION` before using the affected entries.
+Backlog item counts and maturity are derived from `BACKLOG.md` and
+`STATUS.json`. `AGENTS.md` must not contain current item counts, completion
+percentages, selected Backlog IDs, or current execution status. If the bound
+Spec changes, apply `NEEDS_RECONCILIATION` before using affected entries.
 
 ### Implementation Plan
 
@@ -183,9 +214,10 @@ currently selected work.
   Clear the active-plan link and anchor; update Backlog status/maturity and
   `STATUS.json` together. Git history preserves removed planning detail.
 
-If multiple agents work concurrently, only the owner of the explicitly selected
-slice may edit its current-plan section. Other agents must report a conflict or
-work in non-overlapping supporting files; they must not append competing plans.
+Only the active-control writer may edit `IMPLEMENTATION-PLAN.md`. Slice owners
+report progress and evidence through their handoff; they must not update the
+plan directly. Parallel slices may modify only their explicitly assigned,
+non-overlapping implementation and evidence files.
 
 ### Evidence and maturity
 
@@ -268,64 +300,19 @@ Before implementation:
 For MultiCA dispatch and post-slice KPI analysis, follow
 `validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md` (supporting guidance).
 
-### MultiCA parallel handoff gate
+### Coordinated delivery boundary
 
-For two or more concurrently selected slices, Codex or a Human creates or wakes
-one Delivery Coordinator controller; it must not dispatch the specialist slices
-directly. The Coordinator records the expected child issue IDs, owns their
-routing, and assigns each non-overlapping child exactly once.
-
-An implementation specialist leaves its child active and publishes one complete
-handoff naming the exact candidate, changed scope, tests and results,
-limitations, blockers, and required next reviewer. The handoff comment must not
-contain a plain-text or structured agent mention (`mention://agent/...`). After
-publishing that comment, its only handoff trigger is one explicit reassignment of the child to Delivery
-Coordinator. Never combine a mention trigger with reassignment. The specialist
-must not move its own child to `in_review`; only the Coordinator does so after
-validating handoff completeness and assigning the reviewer. On
-each wake, the Coordinator reconciles all expected children in the controller,
-so one missed mention cannot strand another completed sibling. Parent/child
-tracking is the primary safeguard; explicit reassignment is the routing trigger.
-
-An independent reviewer uses a different single-trigger path to avoid the
-assignment/task-completion race: publish the exact-candidate verdict with one
-structured Delivery Coordinator mention and do not reassign the issue from the
-still-running reviewer task. The Coordinator claims the issue with a non-starting
-assignment only after the mention-triggered run begins. Never combine the verdict
-mention with reassignment.
-
-For recovery of already-completed unparented slices, trigger the Coordinator
-once with the explicit issue set. Do not rerun producers and do not emit one
-Coordinator trigger per slice.
-
-Before dispatching combined integration, the Coordinator must derive an
-idempotency key from canonical Backlog, stage, integration base, and the sorted
-accepted candidate SHAs. It first resolves the controller's recorded integration
-issue, then searches all issue statuses with pagination or exact lookup. A match
-in any status, including `done` or `in_review`, is existing work and must be
-reused. A default issue-list page or an open-issue count is never sufficient
-evidence that no equivalent integration exists.
-
-For a migration tranche, characterize shared legacy behavior once during plan
-selection and pin the resulting fixture or contract matrix by path and digest.
-Implementation, review, and integration reuse that matrix; they do not rediscover
-unchanged behavior. A concrete mismatch may extend the matrix with new evidence.
-When the last required slice reaches PASS, the same Coordinator reconciliation
-transaction dispatches combined integration; parent and sibling completion
-comments must not emit additional Coordinator mentions.
-
-A closure candidate that changes only active-control documents may use the
-docs-only verification profile when source, tests, tooling, build configuration,
-and dependency tree identities equal the independently reviewed implementation
-candidate. Verify those identities, JSON and pointer integrity, control-state
-consistency, size budgets, public control validators, and `git diff --check`.
-Reuse the pinned full-suite result instead of rerunning the unchanged suite.
-Any executable or test-tree drift requires the full verification profile.
+For parallel work, one Delivery Coordinator owns routing, reconciliation,
+combined integration, and active-control updates. Workers and Reviewers return
+evidence without directly editing active control files. Tool-specific routing,
+single-trigger handoff, deduplication, worktree recovery, review intake, and KPI
+rules are defined only in
+`validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md`.
 
 ### Human gate matrix and automatic progression
 
 When the active Backlog and Implementation Plan select an authorized scope, the
-Coordinator must advance every
+active Delivery Coordinator / control writer must advance every
 dependency-ready non-Human step in order: implementation, independent review,
 bounded remediation, fresh review, combined integration, combined review, then
 the next approved tranche. It must not ask for confirmation between these steps

@@ -1,8 +1,12 @@
 # MultiCA slice optimization
 
 Supporting operational guidance, not a sixth active control or Product authority.
-Owner: Codex analyzes each dispatched slice after completion; Coordinator supplies
-compact evidence. Read this file for dispatch or post-slice analysis only.
+This file is the sole home for MultiCA-specific issue, mention, reassignment,
+handoff, deduplication, worktree, and KPI mechanics. Generic project authority,
+the active-control writer lease, and Human gates remain in `AGENTS.md`.
+Owner: Codex analyzes each dispatched slice after completion; Coordinator
+supplies compact evidence. Read this file for dispatch or post-slice analysis
+only.
 
 ## Execution rules
 
