@@ -43,9 +43,9 @@ exactly one backlog record. Status means:
 
 The five-consumer tranche was accepted by the Human Reviewer on 2026-09-05
 (「approved closure」) after the
-Independent Adjudicator's fresh exact-revision review of candidate
+An independent fresh exact-revision review of candidate
 `9d57c5153d6f9e28e7d7b0f7c4ba9bc8a9c815d7` reproduced all five completion
-checks (PASS, HERM-271). This closes the tranche, not the parent requirement.
+checks (PASS). This closes the tranche, not the parent requirement.
 `PKB-JAVA-001` remains below M3 while 10 inventory consumers are
 `TRANSITIONAL`; their migration remains within BL-026 and proceeds through
 bounded selections.
@@ -66,7 +66,7 @@ exact-candidate PASS:
    passed 226 Java tests, 260 Python passed and 3 skipped, and public
    validation 9/9.
 4. Next-run readiness gate migrated to Java (`NextRunGate` API and packaged
-   `next-run-validate` CLI; HERM-270) and its Python consumer plus its direct
+   `next-run-validate` CLI) and its Python consumer plus its direct
    Python-only test file removed. All 82 collected characterization cases are
    preserved by 81 Java characterization tests and 6 CLI tests, with
    byte-identical report bytes, exit codes, and stdout against the original
@@ -76,7 +76,7 @@ exact-candidate PASS:
    `8b4d0570921eb830513bba8f18cbeac2b60712f7`; the review tip adds only the
    completion-record commit on top.
 5. Code baseline migrated to Java (`CodeBaseline` API and packaged
-   `code-baseline-generate` CLI; HERM-271) and its Python consumer plus its
+   `code-baseline-generate` CLI) and its Python consumer plus its
    direct Python-only test file removed. All 6 collected characterization cases
    are preserved by Java characterization and CLI tests, with byte-identical
    output artifacts, exit codes, and stdout against the original Python

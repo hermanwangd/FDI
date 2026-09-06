@@ -21,13 +21,10 @@
   },
   "active_backlog_item": "PKB-BL-026",
   "active_implementation_plan": "IMPLEMENTATION-PLAN.md#selected-work-bl-026-four-consumer-parallel-java-migration",
-  "next_action": "Complete HERM-281 combined integration and independent combined-candidate review, then automatically select the next dependency-safe BL-026 tranche. Do not request Human confirmation before terminal PKB-BL-026 closure unless the authorization boundary is crossed.",
+  "next_action": "Complete combined integration and independent combined-candidate review for the selected four-consumer tranche, then select the next dependency-safe PKB-BL-026 tranche.",
   "active_execution": {
-    "authorization_scope": "PKB-BL-026",
-    "auto_progress": true,
-    "human_gate": "FINAL_PARENT_CLOSURE_ONLY",
     "base_commit": "49ea9992a7cced2598f33071a8eefba53ff4e747",
-    "mode": "MULTICA_COMBINED_INTEGRATION",
+    "mode": "COMBINED_INTEGRATION",
     "slices": [
       "graphify_runtime_probe.py",
       "pkb001_history.py",

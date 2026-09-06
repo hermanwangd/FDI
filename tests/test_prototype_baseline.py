@@ -33,10 +33,7 @@ def test_five_active_truth_entries_exist_and_resolve():
     assert status['selected_backlog_items'] == ['PKB-BL-026']
     assert maturity['spec_revision'] in backlog
     execution = status['active_execution']
-    assert execution['mode'] == 'MULTICA_COMBINED_INTEGRATION'
-    assert execution['authorization_scope'] == 'PKB-BL-026'
-    assert execution['auto_progress'] is True
-    assert execution['human_gate'] == 'FINAL_PARENT_CLOSURE_ONLY'
+    assert execution['mode'] == 'COMBINED_INTEGRATION'
     assert len(execution['slices']) == 4
     if status['review_packet'] is not None:
         assert (ROOT/status['review_packet']).is_file()

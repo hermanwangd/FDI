@@ -292,8 +292,8 @@ Coordinator trigger per slice.
 
 ### Human gate matrix and automatic progression
 
-When `STATUS.json.active_execution.authorization_scope` selects a canonical
-Backlog item and `auto_progress` is true, the Coordinator must advance every
+When the active Backlog and Implementation Plan select an authorized scope, the
+Coordinator must advance every
 dependency-ready non-Human step in order: implementation, independent review,
 bounded remediation, fresh review, combined integration, combined review, then
 the next approved tranche. It must not ask for confirmation between these steps
