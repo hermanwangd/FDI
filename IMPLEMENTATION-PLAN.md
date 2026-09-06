@@ -34,14 +34,22 @@ the current execution state and next action.
    or post-generation judgments.
 3. **Immutable regression run.** Generate a new Petclinic run under
    `validation/pkb001/reverse-pkb-bl009-petclinic-001/`, bind all inputs and
-   digests, validate it through Java, and only then compare it with
-   `validation/pkb001/reverse-quality/evaluator-defect-ledger-001.json`.
-   Report descriptive signal/claim changes; do not claim holdout or general
-   quality improvement.
+   digests, and validate it through Java. Freeze the proposal bytes before any
+   evaluator input becomes visible.
+4. **Post-generation evaluation.** After step 3 is frozen, an evaluator may
+   read the defect ledger and the exact accepted Product test cases in
+   `validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-003.json`
+   plus its adjacent `acceptance-manifest-003.json`. Record an
+   evaluator-only proposal-to-Capability/scenario mapping inside the new run.
+   Java validates that mapping and deterministically reports Capability recall,
+   scenario coverage/recall, proposal precision, and unmapped/unsupported
+   proposals. Semantic matches are evaluator judgments, not Java text matching.
+   Also report descriptive signal/claim changes against the defect ledger; do
+   not claim holdout or general quality improvement.
 
 These stages are dependency-ordered and must not run in parallel. Execution
 Plane actors may edit only the paths named above plus minimal Java CLI wiring
-and the new run's tests/evidence. The five active controls, the existing v0.1
+and the new run's evaluator mapping, metrics, tests, and evidence. The five active controls, the existing v0.1
 schema, completed run artifacts, public provenance validator, external
 Graphify runtime, and evaluator ledger are read-only.
 
@@ -57,13 +65,21 @@ Graphify runtime, and evaluator ledger are read-only.
 - Missing/unknown references, digest or revision mismatch, unsupported signal,
   semantic-action fields, evaluator-ledger exposure during generation, or
   overwrite of an existing run fails closed.
+- Product test cases and their digests are evaluator-only and become readable
+  only after proposal-byte freeze. A missing scenario decision, duplicate
+  mapping, unknown Capability/scenario/proposal ID, denominator mismatch, or
+  attempted evaluator mapping before freeze fails closed.
+- Recall and precision are reported from explicit evaluator mappings. Java must
+  not infer semantic equivalence from labels, embeddings, structural proximity,
+  or shared evidence.
 - Existing v0.1 artifacts and the public validator remain byte-compatible and
   provenance-only.
 
 #### Verification and handoff
 
-Use TDD for invalid authority, binding, reference, signal, isolation, and
-immutability cases. Run within the 8 GB limit:
+Use TDD for invalid authority, binding, reference, signal, isolation,
+scenario-evaluation ordering, metric denominators, and immutability cases. Run
+within the 8 GB limit:
 
 ```bash
 MAVEN_OPTS='-Xmx2g' ./mvnw clean package -q
@@ -73,10 +89,12 @@ python3 validation/pkb001/task7-evaluation/public_validate.py .
 git diff --check
 ```
 
-Return one integrated exact candidate with contract/skill/run digests,
-independent exact-candidate review, changed paths, negative-test evidence,
-limitations, and token/cycle-time/first-pass KPIs. Human Authority confirms
-terminal parent closure only; no confirmation is needed between stages.
+Return one integrated exact candidate with contract/skill/run/Product-test-case
+digests, proposal-freeze proof, evaluator mappings, descriptive recall and
+precision metrics, independent exact-candidate review, changed paths,
+negative-test evidence, limitations, and token/cycle-time/first-pass KPIs.
+Human Authority confirms terminal parent closure only; no confirmation is
+needed between stages.
 
 ## Verified delivery ledger
 
