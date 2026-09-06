@@ -364,11 +364,24 @@ and infrastructure tests are technical evidence and MUST NOT become Product
 Capabilities solely because they exist.
 
 Graphify test indexing and test-to-production relationships must be verified
-against the actual provider before they are relied upon. If Graphify cannot
-produce the required observations, a Java-owned test-behavior extractor may
-supply a separately identified evidence capability behind the
-`CodeIntelligenceProvider` boundary. The framework must record which provider
-produced every relationship and must not fabricate a call or realization edge.
+against the actual provider before they are relied upon. Test-behavior evidence
+uses a distinct provider-neutral `TestBehaviorEvidenceProvider` capability; it
+must not be forced through `CodeIntelligenceProvider` unless that structural API
+is explicitly extended by a later approved requirement. A Graphify-backed
+adapter may implement the test-behavior capability only for observations proven
+against the installed runtime. If Graphify has a verified gap, a later bounded
+plan may add a Java-owned extractor adapter without modifying Graphify. Every
+adapter binds the exact source revision, frozen input identity, provider
+provenance, and relationship basis, and must not fabricate a call or realization
+edge.
+
+Providers report mechanical evidence such as test identity and location,
+fixture/action/assertion observations, and production references. A generation
+agent may propose whether that evidence expresses Product behavior, with an
+explicit rationale and uncertainty. Only the Human Reviewer decides Product
+meaning and whether evidence is product-facing or technical. Java validates
+contracts, references, provenance, and authority; it must not make that semantic
+eligibility decision.
 
 Each generated Capability or scenario cites the exact test evidence that
 supports it and separates observed assertions from semantic interpretation.
