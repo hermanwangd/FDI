@@ -37,6 +37,11 @@ full Java/Python regression, public validation 9/9, and independent exact-tip
 review. No per-slice Human approval is required; Human approval remains required
 before final `PKB-BL-026` closure.
 
+This selection authorizes automatic progression through slice review,
+remediation, combined integration and review, and subsequent BL-026 migration
+tranches. These steps do not wait for Human confirmation. Human confirmation is
+reserved for material scope/Spec change or terminal BL-026 closure.
+
 ## Completed BL-026 slices
 
 ### Java scenario-forward gate migration

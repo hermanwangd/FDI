@@ -21,10 +21,13 @@
   },
   "active_backlog_item": "PKB-BL-026",
   "active_implementation_plan": "IMPLEMENTATION-PLAN.md#selected-work-bl-026-four-consumer-parallel-java-migration",
-  "next_action": "Execute and independently verify four parallel BL-026 Java slices: Graphify runtime probe, delivery history, acquisition validation, and experiment runner. Integrate shared callers, inventory, controls, and Python removals only after all slice parity gates pass.",
+  "next_action": "Complete HERM-281 combined integration and independent combined-candidate review, then automatically select the next dependency-safe BL-026 tranche. Do not request Human confirmation before terminal PKB-BL-026 closure unless the authorization boundary is crossed.",
   "active_execution": {
-    "base_commit": "9dda47b2f94b6c45b208266b704a2747a20c8c7a",
-    "mode": "MULTICA_PARALLEL_SLICES",
+    "authorization_scope": "PKB-BL-026",
+    "auto_progress": true,
+    "human_gate": "FINAL_PARENT_CLOSURE_ONLY",
+    "base_commit": "49ea9992a7cced2598f33071a8eefba53ff4e747",
+    "mode": "MULTICA_COMBINED_INTEGRATION",
     "slices": [
       "graphify_runtime_probe.py",
       "pkb001_history.py",

@@ -290,6 +290,22 @@ For recovery of already-completed unparented slices, trigger the Coordinator
 once with the explicit issue set. Do not rerun producers and do not emit one
 Coordinator trigger per slice.
 
+### Human gate matrix and automatic progression
+
+When `STATUS.json.active_execution.authorization_scope` selects a canonical
+Backlog item and `auto_progress` is true, the Coordinator must advance every
+dependency-ready non-Human step in order: implementation, independent review,
+bounded remediation, fresh review, combined integration, combined review, then
+the next approved tranche. It must not ask for confirmation between these steps
+or start a later stage before the current stage passes.
+
+Creating and executing in-scope slices, review, remediation, integration, and
+selecting the next in-scope tranche do not require Human confirmation. Human
+confirmation is required only for material scope or Spec change, permissions,
+secrets, spending, deployment, destructive or external actions, an unresolved
+`CONTEXT_CONFLICT`, and terminal closure of the canonical Backlog item. A Human
+decision issue must not be created for an automatic step.
+
 Keep command memory use below 8 GB. Use bounded inputs and concurrency, and use
 `MAVEN_OPTS='-Xmx2g'` for Maven verification unless a stricter active control
 requires a lower limit.

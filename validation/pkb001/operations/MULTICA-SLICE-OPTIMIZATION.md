@@ -45,6 +45,13 @@ compact evidence. Read this file for dispatch or post-slice analysis only.
 - Within approved parent scope, slices close automatically after required review,
   verification and successful delivery. Only final canonical Backlog closure
   requires the user's confirmation; scope expansion still needs authorization.
+- Treat `STATUS.json.active_execution.authorization_scope`, `auto_progress`, and
+  `human_gate` as the executable authorization envelope. Progress sequentially
+  through implementation, review, remediation/fresh review, combined
+  integration/review, and the next approved tranche. Do not create a Human
+  decision issue for those automatic steps. Stop for Human input only on scope
+  or Spec change, permissions/secrets/spending/deployment/destructive/external
+  actions, unresolved `CONTEXT_CONFLICT`, or canonical Backlog terminal closure.
 
 ## Five KPIs
 
