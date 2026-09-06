@@ -56,47 +56,27 @@ compact evidence. Read this file for dispatch or post-slice analysis only.
   or Spec change, permissions/secrets/spending/deployment/destructive/external
   actions, unresolved `CONTEXT_CONFLICT`, or canonical Backlog terminal closure.
 
-## Five KPIs
+## Three core KPIs
 
 Count all attempts, including cancelled and failed attempts, exactly once by full
 run ID. Record source, collection time and completeness. Missing usage is unknown,
-not zero; reconcile issue totals against run coverage before claiming savings.
+not zero. Compare the same role and similar scope, and never trade away required
+tests or independent review to improve a metric.
 
-| KPI | Definition | First optimization action when abnormal |
-|---|---|---|
-| total input/output tokens | Record input and output separately across every attempt; use their sum for the reduction target. | Reduce repeated context reads and unnecessary output. |
-| cache-read tokens | Sum reported cache reads separately from input/output; document provider accounting to avoid double counting. | Inspect long sessions and repeatedly loaded history. |
-| tool calls | Count actual tool invocations, not streamed message fragments. | Batch related reads and reduce polling. |
-| rework ratio | Rework input plus output divided by all input plus output, multiplied by 100. | Address the largest evidenced rework cause. |
-| first-pass verdict | Workflow success on the first implementation/review path, with successful delivery and no repair or recovery; also record the independent review verdict. | Separate code defects from runtime/handoff failures. |
-
-Tag rework as code defect, runtime/recovery, duplicate dispatch, or repeated
-verification. Ordinary first independent review is not rework. Attribute mixed
-runs only with measured usage boundaries; otherwise report rework ratio as N/A.
-Never estimate token share from task counts. Unstarted cancellations with confirmed
-zero usage are recorded but not counted as failed first-pass executions.
+| KPI | Definition | Current baseline (HERM-273 through HERM-282) | Next target | First optimization action when abnormal |
+|---|---|---|---|---|
+| token cost | Sum input and output across every run; report cache-read separately because its provider cost differs. | 32 runs; 2,333,118 input+output and 60,464,384 cache-read tokens, collected 2026-09-06. | Coordinator share at or below 20%, with zero duplicate-trigger runs. | Remove duplicate triggers and repeated context loading before reducing verification. |
+| cycle time | Wall-clock time from the first authorized implementation start until the combined candidate receives an independent verdict. Also report implementation-complete to review-start waiting time. | 2h31m50s end to end; 38m26s from all initial implementations complete to first review start. | Under 2h end to end and under 5m review-routing wait. | Route completed handoffs immediately through the single controller trigger. |
+| first-pass rate | Eligible implementation slices that pass their first independent exact-candidate review, divided by all eligible slices. A remediation means the original slice is not first-pass. Zero-usage cancellations are excluded. | 3/4 slices = 75%; combined integration separately passed 1/1. | At least 80% after ten comparable slices; until then report the fraction and sample size. | Classify the first failed finding and improve its acceptance examples or implementation checks. |
 
 ## Comparison and decision
 
-Compare the same role and similar scope/complexity, with criteria recorded before
-looking at outcomes. Keep documentation closure separate from code migration.
-Use at least three comparable slices in each before/after cohort for medians;
-report sample count, range, runtime/model/instruction versions and missing data.
-These are descriptive comparisons, not proof that context changes caused savings.
-
-Provisional targets: input+output and cache-read each decrease 30%; tool calls
-decrease 25%; rework below 25%. First-pass is reported as successes/eligible slices;
-evaluate the 80% target only after ten comparable slices. Preserve required tests,
-independent review and zero scope drift regardless of the cost result.
-
-Select one highest-priority improvement per cycle. Current priority: reduce
-duplicate dispatch and finalize-related recovery. Retain compact context and
-verification while assessing this change. Parallelism may reduce elapsed time;
-it does not establish token savings.
-
-Earlier HERM-269/270/271 issue totals are provisional observations. Cancelled and
-failed usage coverage is unverified; prior task-count rework percentages are
-withdrawn. HERM-272 is documentation closure and is not a third migration sample.
+Use at least three comparable slices in each before/after cohort and report sample
+count, range, runtime/model/instruction revisions and missing data. Evaluate all
+three KPIs together: a token reduction is not an improvement when cycle time or
+first-pass quality regresses. Select one evidenced optimization per cycle. The
+current priority is single-trigger routing and elimination of child-completion
+fan-out; parallelism is credited only when it reduces measured wall-clock time.
 
 ## Per-slice record
 
@@ -105,12 +85,12 @@ Slice / canonical Backlog / scope / complexity rationale:
 Base / candidate / integration candidate:
 Model / runtime / instruction revision:
 Run IDs and roles / source / collected at / completeness:
-Input / output / cache-read / actual tool calls:
-Rework tokens / total tokens / ratio or N/A / cause:
-Review verdict / final run status / first-pass yes-no-unknown:
+Input / output / cache-read / duplicate-trigger runs:
+Start / implementation complete / review start / verdict / combined verdict:
+Cycle time / review-routing wait / first-pass yes-no-unknown:
 Required tests / independent review / scope drift / reconciliation:
 Comparable cohort / sample count / changes or N/A:
-Largest evidenced waste / ONE next action / next measurement:
+Largest evidenced problem / one next action / next measurement:
 ```
 
 Append compact completed-slice records here; link raw evidence instead of copying
