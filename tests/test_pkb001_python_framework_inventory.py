@@ -423,7 +423,11 @@ def test_python_framework_inventory_characterizes_the_migration_boundary():
         assert "| `VERIFIED` |" in backlog_row
     status = json.loads((ROOT / "STATUS.json").read_text())
     assert status["active_backlog_item"] != "PKB-BL-026"
-    assert status["spec_maturity"]["m3_verified"] == 11
+    verified_backlog_count = sum(
+        line.startswith("| `PKB-BL-") and "| `VERIFIED` |" in line
+        for line in backlog_lines
+    )
+    assert status["spec_maturity"]["m3_verified"] == verified_backlog_count
 
     external = inventory["external_runtimes"]
     assert len(external) == 1

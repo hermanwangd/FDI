@@ -19,13 +19,13 @@ exactly one backlog record. Status means:
 | `PKB-BL-023` | `FEATURE` | `PKB-REVIEW-003` | Generate evidence-backed Capability/scenario proposals and one review surface. | `VERIFIED` | Generator and review artifacts exercised. |
 | `PKB-BL-024` | `DOCUMENTATION` | `PKB-STATUS-002` | Point status to the actual generated review material and review state. | `VERIFIED` | Active pointers validated. |
 | `PKB-BL-025` | `FEATURE` | `PKB-REVIEW-004` | Record version-bound human ACCEPT / EDIT / REJECT decisions. | `BLOCKED_USER_APPROVAL` | 9 accepted; 8 pending, including one supplemental proposal. Latest snapshot: `acceptance-manifest-003.json`. |
-| `PKB-BL-004` | `VALIDATION` | `PKB-EVAL-LEGACY-001` | Adjudicate only the eleven existing evaluator disagreements. | `IN_PROGRESS` | Selected by `IMPLEMENTATION-PLAN.md#pkb-bl-004-independent-third-review`; independent adjudication pending. |
+| `PKB-BL-004` | `VALIDATION` | `PKB-EVAL-LEGACY-001` | Adjudicate only the eleven existing evaluator disagreements. | `VERIFIED` | Candidate `45b4ba3def00d7b8adfd55153a497788b531a38a`; independent combined review PASS; evidence: `validation/pkb001/task7-evaluation/third-review-adjudication-evidence.json`. |
 | `PKB-BL-005` | `FEATURE` | `PKB-SCENARIO-003` | Make generated-scenario and review lifecycles machine-verifiable. | `VERIFIED` | Contract, validator, and tests delivered. |
 | `PKB-BL-006` | `FEATURE` | `PKB-SCENARIO-004` | Create an approved frozen scenario-bearing semantics revision without overwriting Petclinic. | `BLOCKED_DEPENDENCY` | Depends on BL-025. |
 | `PKB-BL-007` | `FEATURE` | `PKB-MAPPING-001` | Add scenario traces to the PK-S1 mapping contract under the Java-only target. | `NEEDS_RECONCILIATION` | Preserve PK-S1 v0.2; select a new contract version after BL-006. |
 | `PKB-BL-008` | `RESEARCH` | `PKB-PROVIDER-001` | Verify actual Graphify UI/template capability or record the gap. | `VERIFIED` | Frozen provider contract and live MCP handshake verified. Evidence: `validation/pkb001/runtime/bl008-stage1-integration-evidence.json`. |
 | `PKB-BL-027` | `BUG` | `PKB-RUNTIME-001` | Make the external Graphify runtime workspace-portable and bound the Java stdio-MCP lifecycle. | `VERIFIED` | Candidate `a022b894ff2080390da87eeb017fa243f5afc1b7`. Evidence: `validation/pkb001/runtime/pkb-bl027-portable-runtime-evidence.json`. |
-| `PKB-BL-009` | `FEATURE` | `PKB-REVERSE-001` | Reduce duplicate, over-combined, and overclaimed reverse proposals. | `BLOCKED_DEPENDENCY` | Depends on BL-005 review evidence. |
+| `PKB-BL-009` | `FEATURE` | `PKB-REVERSE-001` | Reduce duplicate, over-combined, and overclaimed reverse proposals. | `READY` | Exact proposal-to-finding inputs frozen in `validation/pkb001/reverse-quality/evaluator-defect-ledger-001.json`; selection must use advisory signals only. |
 | `PKB-BL-010` | `VALIDATION` | `PKB-EVAL-001` | Add sealed provider-neutral component identity to evaluator truth. | `BLOCKED_DEPENDENCY` | Depends on BL-007. |
 | `PKB-BL-011` | `VALIDATION` | `PKB-EVAL-002` | Separate scenario, chain, component, and diagnostic measures. | `BLOCKED_DEPENDENCY` | Depends on BL-007 and BL-010. |
 | `PKB-BL-012` | `VALIDATION` | `PKB-CALIBRATION-001` | Freeze justified numeric acceptance thresholds before the next run. | `BLOCKED_DEPENDENCY` | Depends on BL-011 and human review. |
@@ -43,6 +43,6 @@ exactly one backlog record. Status means:
 
 ## Maturity
 
-24 normative requirements: 11 `VERIFIED`, 13 below M3. Dependencies and approval
+24 normative requirements: 12 `VERIFIED`, 12 below M3. Dependencies and approval
 blocks are authoritative in the ledger above. Selection and next action belong
 only in `IMPLEMENTATION-PLAN.md` and `STATUS.json`.

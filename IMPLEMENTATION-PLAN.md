@@ -4,74 +4,16 @@ This file defines how currently selected work is delivered. `FRAMEWORK-SPEC.md`
 defines what; `BACKLOG.md` records requirement maturity; `STATUS.json` records
 the current execution state and next action.
 
-## PKB-BL-004 independent third review
+## Current selection
 
-### Binding and outcome
-
-- Backlog / requirement: `PKB-BL-004` / `PKB-EVAL-LEGACY-001`
-- Spec revision: `48924076261302156faf0011edb554fc19bbb2c0`
-- Base commit: `ac5d8c4882d0cf1a787138033744a74e0e354176`
-- Execution ID: `PKB-BL-004-ADJUDICATION-001`
-- Outcome: independently adjudicate exactly the 11 IDs in
-  `validation/pkb001/task7-evaluation/third-review-pending.json` and produce a
-  deterministic evaluator-only result without establishing Product truth.
-
-### Execution envelope
-
-The Execution Plane may run these two dependency-independent slices in
-parallel, then integrate them on the bound base.
-
-1. `ADJUDICATION-CONTRACT` owns Task 7 Java implementation and tests under
-   `src/main/java/.../validation/task7/`,
-   `src/test/java/.../validation/task7/`, and, only if required, the existing
-   Task 7 schema. Add optional reviewer-03 validation and deterministic
-   disagreement resolution. Fail closed for missing, extra, duplicate,
-   non-pending, malformed, or non-independent judgments.
-2. `INDEPENDENT-JUDGMENT` owns only
-   `validation/pkb001/task6-blind-review/judgment-workspaces/reviewer-03/`.
-   Its evaluator may read only the blind packet, reviewer instructions, and
-   third-review pending packet. It must not read reviewer-01/02 judgments, the
-   sealed key, evaluator gold, unblinded reports, Product review decisions, or
-   the other slice's output. Record an independence and authority attestation.
-
-The integration owner may regenerate the existing Task 7 evaluation report and
-pending/result artifact and add one concise immutable evidence JSON under
-`validation/pkb001/task7-evaluation/`. No Execution Plane actor may edit the
-five active control files.
-
-### Acceptance and negative cases
-
-- Exactly the frozen 11 disagreement IDs receive one reviewer-03 judgment.
-- Reviewer-03 decides only disagreements; the four agreed items remain intact.
-- Final action/outcome for a disagreement follows the independent third
-  judgment, while descriptive reviewer-agreement metrics remain auditable.
-- Output remains `EVALUATOR_ONLY`; Product meaning/publication stays false and
-  the bounded prototype decision cannot become `GO` from this work alone.
-- Altered packet binding, forbidden/duplicate IDs, incomplete judgments, or a
-  false independence attestation fails closed without overwriting valid output.
-- Existing two-reviewer behavior and committed artifact compatibility remain
-  covered where reviewer-03 is absent.
-
-### Verification and handoff
-
-Use TDD for negative cases before implementation. Run within the 8 GB limit:
-
-```bash
-MAVEN_OPTS='-Xmx2g' ./mvnw clean package -q
-python3 -m pytest -q
-python3 validation/pkb001/task7-evaluation/public_validate.py .
-git diff --check
-```
-
-The Execution Plane returns one integrated commit, changed-file list, test
-counts, review/remediation evidence, output digests, independence attestation,
-and KPI summary. The Feature Delivery Plane reconciles the evidence; only Human
-Authority may confirm terminal closure of `PKB-BL-004`.
+No implementation work is currently selected. A `READY` Backlog item requires
+an explicit selection and a new bounded construction plan before execution.
 
 ## Verified delivery ledger
 
 | Backlog | Delivered behavior | Evidence |
 |---|---|---|
+| `PKB-BL-004` | Deterministic evaluator-only third review of exactly 11 frozen disagreements | Candidate `45b4ba3def00d7b8adfd55153a497788b531a38a`; `validation/pkb001/task7-evaluation/third-review-adjudication-evidence.json`; independent review PASS; Java 731, Python 62, public validation 9/9 |
 | `PKB-BL-005` | Machine-verifiable scenario proposal and review lifecycle | Contract and validator tests |
 | `PKB-BL-008` | Frozen Graphify capability and live MCP contract | `validation/pkb001/runtime/bl008-stage1-integration-evidence.json` |
 | `PKB-BL-018` | Durable structural component identity | Java identity tests |
