@@ -40,12 +40,11 @@ Human review has accepted 3 of 16 generated scenario proposals; 13 remain
 pending. Blinding is deterministic label/order blinding only, with
 `ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT` recorded as a limitation.
 
-Specification maturity is 8 of 23 requirements verified and 15 backlogged.
-Phase 0 evidence is ready, but the next experiment is `NOT_READY`. Three
-completed `PKB-BL-026` tranches have migrated all 15 repository-owned Python
-framework consumers to Java with independent exact-revision PASS each
-(15/15 `MIGRATED_TO_JAVA` at combined candidate
-`fb729012f5f5ff9ee17a844d200b47ffdf15a65a`; the six newest with parity
-PASS). The parent requirement remains `IN_PROGRESS`: terminal Backlog closure
-and the `PKB-JAVA-001` maturity update await Human confirmation. External
-Graphify is explicitly excluded from that migration.
+Specification maturity is 10 of 23 requirements verified and 13 backlogged.
+Phase 0 evidence is ready, but the next experiment is `NOT_READY`.
+`PKB-BL-026` is closed: all 15 repository-owned Python framework consumers are
+migrated to Java with independent exact-revision PASS. `PKB-BL-008` is also
+closed after an independently reviewed live Graphify MCP handshake proved the
+frozen provider contract. Runtime portability and three Java MCP lifecycle
+defects remain explicit follow-up work. External Graphify is excluded from the
+Java migration.

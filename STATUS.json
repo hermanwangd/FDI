@@ -15,13 +15,13 @@
   "spec_maturity": {
     "spec_revision": "891e497968000c32984f26437eab811c063ec4cf",
     "normative_requirements": 23,
-    "m3_verified": 9,
-    "m1_backlogged": 14,
+    "m3_verified": 10,
+    "m1_backlogged": 13,
     "next_experiment_readiness": "NOT_READY"
   },
-  "active_backlog_item": "PKB-BL-026",
+  "active_backlog_item": "PKB-BL-008",
   "active_implementation_plan": null,
-  "next_action": "PKB-BL-008 stage-1 combined integration is complete at candidate 9fba3d7 on agent/delivery-engineer/herm-299 (reviewed slice-3 candidate b86b210 landed byte-identical; base bafa53fab5e166e1c14c4f825cfff89c3fb3716c). One live handshake PASS against the frozen Graphify runtime (graphifyy 0.1.14 + mcp 1.29.1, graph b416bded at revision 510a397) reconciled with the runtime and contract discovery slices; evidence record validation/pkb001/runtime/bl008-stage1-integration-evidence.json, transcript bl008-stage1-integration-handshake-20260906T074831Z.jsonl. StdioMcpClient defects D1-D3 recorded as findings only. The graphify-live-verify preflight coverage gap remains disclosed and unsealed. Next: independent exact-candidate combined review, then Human decision on PKB-BL-008 terminal closure. Separately, PKB-JAVA-001 is M3_VERIFIED (15/15 repository consumers MIGRATED_TO_JAVA); next experiment readiness stays NOT_READY pending BL-025 human review, BL-004 adjudication, and the BL-006 through BL-017 chain.",
+  "next_action": "PKB-BL-008 is VERIFIED after independent exact-candidate review PASS at 5743274 and Human terminal closure on 2026-09-06. Live Graphify MCP verification passed against frozen graph b416bded at revision 510a397. Define one new normative runtime-hardening requirement and one matching Backlog item before fixing StdioMcpClient D1-D3 or making the external Graphify runtime portable in the Software-Factory workdir. Next experiment readiness remains NOT_READY pending BL-025 human review, BL-004 adjudication, and the BL-006 through BL-017 chain.",
   "active_execution": null,
   "framework_language_target": "JAVA_17_SPRING_BOOT_3_4_1",
   "external_graphify_runtime": "PYTHON_MCP_PROVIDER_OUTSIDE_FRAMEWORK_MIGRATION",
@@ -33,7 +33,7 @@
   "scenario_generation": "GRAPHIFY_AND_DELIVERY_HISTORY_PROPOSALS",
   "scenario_generator_status": "IMPLEMENTED_AND_EXERCISED",
   "selected_backlog_items": [
-    "PKB-BL-026"
+    "PKB-BL-008"
   ],
   "review_json": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-decisions-001.json",
   "original_review_packet": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review.md",

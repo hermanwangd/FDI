@@ -23,7 +23,7 @@ exactly one backlog record. Status means:
 | `PKB-BL-005` | `FEATURE` | `PKB-SCENARIO-003` | Make generated-scenario and review lifecycles machine-verifiable. | `VERIFIED` | Contract, validator, and tests delivered. |
 | `PKB-BL-006` | `FEATURE` | `PKB-SCENARIO-004` | Create an approved frozen scenario-bearing semantics revision without overwriting Petclinic. | `BLOCKED_DEPENDENCY` | Depends on BL-025. |
 | `PKB-BL-007` | `FEATURE` | `PKB-MAPPING-001` | Add scenario traces to the PK-S1 mapping contract under the Java-only target. | `NEEDS_RECONCILIATION` | Preserve PK-S1 v0.2; select a new contract version after BL-006. |
-| `PKB-BL-008` | `RESEARCH` | `PKB-PROVIDER-001` | Verify actual Graphify UI/template capability or record the gap. | `READY` | Stage-1 discovery/verification delivered (HERM-295 → HERM-296/297/298 + combined integration HERM-299): frozen runtime identity (graphifyy 0.1.14 + mcp 1.29.1), MCP contract parity (7 operations, wire MCP 2025-11-25, JSONL framing), and Java fail-closed boundary (24 tests, candidate `9fba3d7` byte-identical to reviewed `b86b210`) proven; one live handshake PASS at graph `b416bded…` (transcript `validation/pkb001/runtime/bl008-stage1-integration-handshake-20260906T074831Z.jsonl`; record `validation/pkb001/runtime/bl008-stage1-integration-evidence.json`). Disclosed gap: `graphify-live-verify` preflight cannot reach the other checkout's `.fdi-work`. Defects D1–D3 in `StdioMcpClient` recorded, not fixed. Terminal closure pending combined review and Human decision. |
+| `PKB-BL-008` | `RESEARCH` | `PKB-PROVIDER-001` | Verify actual Graphify UI/template capability or record the gap. | `VERIFIED` | HERM-295 → HERM-296/297/298 + HERM-299 proved frozen runtime identity (graphifyy 0.1.14 + mcp 1.29.1), MCP contract parity (7 operations, wire MCP 2025-11-25, JSONL framing), and one live handshake PASS at graph `b416bded…`; independent exact-candidate review PASS at `5743274` reproduced 712 Java tests, 57 Python tests, and public validation 9/9. Evidence: `validation/pkb001/runtime/bl008-stage1-integration-evidence.json`. Human terminal closure authorized on 2026-09-06. Remaining runtime portability and `StdioMcpClient` D1–D3 defects are explicit follow-up work. |
 | `PKB-BL-009` | `FEATURE` | `PKB-REVERSE-001` | Reduce duplicate, over-combined, and overclaimed reverse proposals. | `BLOCKED_DEPENDENCY` | Depends on BL-005 review evidence. |
 | `PKB-BL-010` | `VALIDATION` | `PKB-EVAL-001` | Add sealed provider-neutral component identity to evaluator truth. | `BLOCKED_DEPENDENCY` | Depends on BL-007. |
 | `PKB-BL-011` | `VALIDATION` | `PKB-EVAL-002` | Separate scenario, chain, component, and diagnostic measures. | `BLOCKED_DEPENDENCY` | Depends on BL-007 and BL-010. |
@@ -178,6 +178,6 @@ The next experiment remains `NOT_READY`. Construction order is:
 4. Preregister thresholds and seal a holdout (BL-012, BL-013).
 5. Freeze protocol, regress Petclinic, execute holdout, decide (BL-014–BL-017).
 
-Maturity for the bound spec revision: 23 normative requirements, 9 `VERIFIED`,
-14 not yet M3. Superseded BL-001 through BL-003 are historical and are not active
+Maturity for the bound spec revision: 23 normative requirements, 10 `VERIFIED`,
+13 not yet M3. Superseded BL-001 through BL-003 are historical and are not active
 records.

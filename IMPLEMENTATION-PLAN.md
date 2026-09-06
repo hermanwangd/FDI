@@ -42,6 +42,10 @@ remains outside the migration.
   breaks the `direct_url.json` absolute-path binding.
 - Verification at integration candidate `9fba3d7`: see STATUS.json next_action
   and the HERM-299 handoff.
+- Independent exact-candidate review of `5743274` passed and reproduced 712
+  Java tests, 57 Python tests, public validation 9/9, JSON validation, and
+  `git diff --check`. The Human Reviewer authorized terminal closure on
+  2026-09-06; `PKB-BL-008` is `VERIFIED`.
 
 ## Completed BL-026 six-consumer tranche (HERM-290)
 

@@ -26,8 +26,8 @@ def test_five_active_truth_entries_exist_and_resolve():
     )
     assert maturity['next_experiment_readiness'] == 'NOT_READY'
     backlog = (ROOT/status['backlog']).read_text()
-    assert status['active_backlog_item'] == 'PKB-BL-026'
-    assert status['selected_backlog_items'] == ['PKB-BL-026']
+    assert status['active_backlog_item'] == 'PKB-BL-008'
+    assert status['selected_backlog_items'] == ['PKB-BL-008']
     assert maturity['spec_revision'] in backlog
     assert status['active_execution'] is None
     assert status['active_implementation_plan'] is None
