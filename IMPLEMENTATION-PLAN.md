@@ -6,80 +6,74 @@ the current execution state and next action.
 
 ## Current selection
 
-### PKB-BL-009 Reverse advisory quality
+### PKB-BL-009 Test-informed Reverse discovery
 
-- Backlog / requirement: `PKB-BL-009` / `PKB-REVERSE-001`
-- Spec revision: `48924076261302156faf0011edb554fc19bbb2c0`
-- Base commit: `611f3346febcb812023ba5c665476f1f1d86c0f8`
-- Execution ID: `PKB-BL-009-REVERSE-QUALITY-001`
-- Outcome: emit more reviewable Reverse proposals with explicit uncertainty and
-  advisory quality signals, without automated semantic decisions.
+- Backlog / requirement: `PKB-BL-009` / `PKB-REVERSE-002`
+- Spec revision: `8972bca6522ecba98b4a11cbbd5af9addb6648b1`
+- Base commit: `8972bca6522ecba98b4a11cbbd5af9addb6648b1`
+- Execution ID: `PKB-BL-009-TEST-BEHAVIOR-001`
+- Outcome: derive proposal-only Capabilities and Behavior Scenarios from
+  exact-revision production structure, repository test behavior, and frozen
+  delivery history.
 
 #### Sequential construction
 
-1. **Contract and Java validator.** Add
-   `validation/pkb001/schemas/capability-hypothesis-set-v0.2.schema.json` matching
-   the actual Reverse artifact shape. Add a Java validator and CLI under
-   `src/main/java/com/featuredeliveryintelligence/fdi/validation/reversequality/`
-   and `src/main/java/com/featuredeliveryintelligence/fdi/application/`, with
-   focused tests under the matching test packages. The contract adds
-   `claim_evidence`, `suspected_quality_signals`, `related_hypothesis_ids`, and
-   `uncertainty`; proposal IDs, bindings, evidence references, and authority
-   fail closed. The only signal values are `POSSIBLE_DUPLICATE`,
-   `POSSIBLE_COMPOSITE`, and `POSSIBLE_OVERCLAIM`.
-2. **Generation guidance.** Only after step 1 passes, update
-   `skills/pkb001/pk-s2-capability-hypothesis/SKILL.md` to emit the v0.2 shape,
-   preserve ambiguous clusters, and explain every advisory signal. Generation
-   cannot read the evaluator defect ledger, Product Semantics, evaluator gold,
-   or post-generation judgments.
-3. **Immutable regression run.** Generate a new Petclinic run under
-   `validation/pkb001/reverse-pkb-bl009-petclinic-001/`, bind all inputs and
-   digests, and validate it through Java. Freeze the proposal bytes before any
-   evaluator input becomes visible.
-4. **Post-generation evaluation.** After step 3 is frozen, an evaluator may
-   read the defect ledger and the exact accepted Product test cases in
-   `validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-003.json`
-   plus its adjacent `acceptance-manifest-003.json`. Record an
-   evaluator-only proposal-to-Capability/scenario mapping inside the new run.
-   Java validates that mapping and deterministically reports Capability recall,
-   scenario coverage/recall, proposal precision, and unmapped/unsupported
-   proposals. Semantic matches are evaluator judgments, not Java text matching.
-   Also report descriptive signal/claim changes against the defect ledger; do
-   not claim holdout or general quality improvement.
+1. **Provider verification.** Against Petclinic commit `818c4136...`, query the
+   real Graphify runtime for `src/test/java` indexing and test-to-production
+   relationships. Freeze the read-only result under
+   `validation/pkb001/reverse-pkb-bl009-petclinic-001/provider-discovery/`.
+   Do not assume, reinstall, or modify Graphify. If required observations are
+   absent, record the gap before using the Spec-authorized Java fallback.
+2. **Test-behavior evidence.** Add a schema plus Java extractor/validator/CLI in
+   `validation/pkb001/schemas/`,
+   `src/main/java/com/featuredeliveryintelligence/fdi/validation/testbehavior/`,
+   and the matching application/test packages. Freeze test identity/location,
+   fixtures, action, assertions, negative cases, production references,
+   provider basis, strength, limitations, revision, and digest. Technical-only
+   tests remain evidence but are marked ineligible to create a Product proposal
+   by themselves.
+3. **Reverse v0.2 contract.** Add
+   `capability-hypothesis-set-v0.2.schema.json` and Java validation under
+   `validation/reversequality/`. Each Capability contains proposal-only Behavior
+   Scenarios with separate test/structure/history references,
+   `claim_evidence`, `suspected_quality_signals`, related proposals, and
+   uncertainty. Java validates shape, references, bindings, and authority only.
+4. **Generation guidance and immutable run.** Update only the active PK-S2 skill,
+   then generate `validation/pkb001/reverse-pkb-bl009-petclinic-001/` without
+   Product Semantics, evaluator gold, the defect ledger, or post-generation
+   judgments. Freeze proposal bytes before evaluation.
+5. **Post-generation evaluation.** Map the frozen proposals to the accepted
+   Capability/scenario snapshot in an evaluator-only artifact. Java reports
+   descriptive Capability recall, scenario recall, proposal precision, and
+   defect-ledger signals from explicit evaluator mappings; it never infers
+   semantic equivalence or edits a proposal.
 
-These stages are dependency-ordered and must not run in parallel. Execution
-Plane actors may edit only the paths named above plus minimal Java CLI wiring
-and the new run's evaluator mapping, metrics, tests, and evidence. The five active controls, the existing v0.1
-schema, completed run artifacts, public provenance validator, external
-Graphify runtime, and evaluator ledger are read-only.
+Stages are dependency-ordered and must not run in parallel. Owned paths are the
+new schemas, Java packages/CLI/tests, active PK-S2 skill, and new immutable run.
+The five controls, existing v0.1 schema/run, accepted semantics, evaluator gold,
+defect ledger, public validators, and external Graphify runtime are read-only.
 
 #### Acceptance and negative cases
 
-- The v0.2 schema matches its committed run; Java validates schema shape,
-  unique/cross references, exact source/graph/history bindings, resolvable
-  evidence, and `PROPOSAL_ONLY` authority.
-- Quality signals are advisory observations. No Java or skill path may
-  automatically merge, split, drop, accept, rename, or publish a hypothesis.
-- Claims identify supporting and missing evidence separately; uncertainty and
-  related proposals remain visible to the reviewer.
-- Missing/unknown references, digest or revision mismatch, unsupported signal,
-  semantic-action fields, evaluator-ledger exposure during generation, or
-  overwrite of an existing run fails closed.
-- Product test cases and their digests are evaluator-only and become readable
-  only after proposal-byte freeze. A missing scenario decision, duplicate
-  mapping, unknown Capability/scenario/proposal ID, denominator mismatch, or
-  attempted evaluator mapping before freeze fails closed.
-- Recall and precision are reported from explicit evaluator mappings. Java must
-  not infer semantic equivalence from labels, embeddings, structural proximity,
-  or shared evidence.
-- Existing v0.1 artifacts and the public validator remain byte-compatible and
-  provenance-only.
+- The frozen test artifact covers the exact 76 Petclinic `@Test` methods across
+  18 test files, or reports every justified exclusion; current production-only
+  Graphify evidence is not misreported as test coverage.
+- Every scenario has observable Given/When/Then-style evidence or explicit
+  uncertainty and cites resolvable test plus structural/delivery evidence where
+  available. Technical-only tests cannot independently create a Capability.
+- Missing/duplicate test IDs, unknown production references, revision/digest
+  mismatch, invented relationships, unsupported quality signal, forbidden-input
+  access, or overwrite of an immutable run fails closed.
+- No Java or skill path automatically merges, splits, drops, accepts, renames,
+  or publishes a proposal. Existing v0.1 artifacts remain byte-compatible.
+- Evaluation occurs only after proposal freeze and reports Petclinic descriptive
+  results, not holdout or general-quality claims.
 
 #### Verification and handoff
 
-Use TDD for invalid authority, binding, reference, signal, isolation,
-scenario-evaluation ordering, metric denominators, and immutability cases. Run
-within the 8 GB limit:
+Use TDD for provider gaps, extraction classes, bindings, references, technical
+test filtering, isolation, proposal authority, and immutability. Run within the
+8 GB limit:
 
 ```bash
 MAVEN_OPTS='-Xmx2g' ./mvnw clean package -q
@@ -89,12 +83,10 @@ python3 validation/pkb001/task7-evaluation/public_validate.py .
 git diff --check
 ```
 
-Return one integrated exact candidate with contract/skill/run/Product-test-case
-digests, proposal-freeze proof, evaluator mappings, descriptive recall and
-precision metrics, independent exact-candidate review, changed paths,
-negative-test evidence, limitations, and token/cycle-time/first-pass KPIs.
-Human Authority confirms terminal parent closure only; no confirmation is
-needed between stages.
+Return one integrated exact candidate with provider/test/contract/skill/run
+digests, proposal-freeze proof, evaluator mappings and descriptive metrics,
+independent exact-candidate review, limitations, and token/cycle-time/first-pass
+KPIs. Human Authority confirms terminal parent closure only.
 
 ## Verified delivery ledger
 
