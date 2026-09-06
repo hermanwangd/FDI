@@ -15,7 +15,7 @@ exactly one backlog record. Status means:
 
 | Backlog ID | Type | Requirement | Outcome | Status | Dependency / evidence |
 |---|---|---|---|---|---|
-| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java, one bounded consumer at a time; exclude external Graphify. | `IN_PROGRESS` | Five-consumer tranche migrated with independent exact-revision PASS; 10 inventoried consumers remain `TRANSITIONAL`. |
+| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java, one bounded consumer at a time; exclude external Graphify. | `IN_PROGRESS` | Nine consumers migrated across two tranches with independent exact-revision PASS; 6 inventoried consumers remain `TRANSITIONAL`. |
 | `PKB-BL-023` | `FEATURE` | `PKB-REVIEW-003` | Generate evidence-backed Capability/scenario proposals and one review surface. | `VERIFIED` | Generator and review artifacts exercised. |
 | `PKB-BL-024` | `DOCUMENTATION` | `PKB-STATUS-002` | Point status to the actual generated review material and review state. | `VERIFIED` | Active pointers validated. |
 | `PKB-BL-025` | `FEATURE` | `PKB-REVIEW-004` | Record version-bound human ACCEPT / EDIT / REJECT decisions. | `BLOCKED_USER_APPROVAL` | 3 accepted; 13 pending. |
@@ -48,7 +48,8 @@ Independent Adjudicator's fresh exact-revision review of candidate
 checks (PASS, HERM-271). This closes the tranche, not the parent requirement.
 `PKB-JAVA-001` remains below M3 while 10 inventory consumers are
 `TRANSITIONAL`; their migration remains within BL-026 and proceeds through
-bounded selections.
+bounded selections. (Subsequent tranche: see "Completed four-consumer
+tranche" below; 6 consumers remain `TRANSITIONAL` at current truth.)
 
 All five pre-authorized consumers are migrated, each with independent
 exact-candidate PASS:
@@ -86,6 +87,47 @@ exact-candidate PASS:
 
 External Graphify Python runtime, immutable historical evidence, and unrelated
 Python tooling are outside BL-026.
+
+## Completed four-consumer tranche — PKB-BL-026
+
+Human-authorized combined integration (parent HERM-273) of four independently
+reviewed slices, each with an exact-candidate PASS, replayed onto integration
+base `49ea9992a7cced2598f33071a8eefba53ff4e747` (approved ancestor base
+`62b5f75522ce01e2a7ae8da3c5e4e3bf3199408d`). The shared `FdiApplication`
+dispatch was resolved once; active callers were switched to the packaged Java
+CLIs; only the four replaced Python consumers and their Python-only test
+coverage were removed.
+
+1. Graphify runtime probe migrated to Java (`GraphifyRuntimeProbe` API and
+   packaged `graphify-runtime-probe` CLI; HERM-277). Reviewed candidate
+   `21f92f4f42b6b449130efc416ab022709afeceec`; 23 Java characterization tests
+   and 12 CLI tests; focused parity byte-identical against the frozen Python
+   consumer (discovered stub and described descriptor cases).
+2. Delivery history migrated to Java (`DeliveryHistory` API and packaged
+   `delivery-history-generate` CLI; HERM-278). Reviewed candidate
+   `de1d861987199c0d3ec3a64a32d02badbd0d99be`; 10 Java characterization tests
+   and 14 CLI tests; focused parity JSON-identical (cutoff-bounded
+   reconstruction with and without post-cutoff-updated PRs).
+3. Acquisition validation migrated to Java (`AcquisitionValidator` API and
+   packaged `acquisition-validate` CLI; HERM-279). Reviewed candidate
+   `80c8c3aa159abbfed8a0ec1fe4c1d67e3b3b7890` (feature commit `a2ba4817` plus
+   the round-2 remediation; supersedes the failed round-1 candidate, HERM-279
+   round 2 PASS); 28 Java characterization tests
+   and 9 CLI tests; focused parity byte-identical (valid tree, mutable
+   revision, tree digest mismatch, unsafe retained path). Disclosed
+   non-generated parity limits: timestamps with more than 9 fractional digits
+   and the lowercase `t` ISO-8601 separator are rejected by the Java port; no
+   new interpreter-version contract is introduced.
+4. Experiment runner migrated to Java (`ExperimentRunner` API and packaged
+   `experiment-runner-validate` / `experiment-runner-execute` CLIs; HERM-280).
+   Reviewed candidate `7247a1dc6f91396356d4d9e64f9ee036f2fcb210`; 15 Java
+   characterization tests and 12 CLI tests; focused parity JSON-identical
+   (arm allowlists and prohibited-input errors).
+
+Combined verification at the integration candidate: 517 Java tests pass; the
+Python suite passes; public validation 9/9; the inventory records 6 remaining
+`TRANSITIONAL` consumers. This closes the tranche, not the parent requirement;
+final `PKB-BL-026` closure still requires Human approval.
 
 ## Execution order and maturity
 

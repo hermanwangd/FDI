@@ -4,38 +4,71 @@ This file contains only the current selection state, verified delivery ledger,
 and executable continuation constraints. `FRAMEWORK-SPEC.md` defines what;
 `BACKLOG.md` records maturity; this plan defines how selected work is delivered.
 
-## Selected work: BL-026 four-consumer parallel Java migration
+## No selected work
 
-- Backlog / requirement: `PKB-BL-026` / `PKB-JAVA-001`.
-- Parent state: `PKB-BL-026` remains `IN_PROGRESS` until all repository-owned
-  framework consumers are migrated and final Human closure is approved.
+No BL-026 slice is currently selected. `PKB-BL-026` remains `IN_PROGRESS`
+with 6 inventoried consumers still `TRANSITIONAL`; each further consumer
+requires a new explicit bounded selection with its own base, owned files,
+acceptance boundary, and independent review. Human approval is required before
+final `PKB-BL-026` closure; no slice may start merely because the backlog item
+is active. External Graphify remains outside the migration.
+
+## Completed BL-026 four-consumer tranche (HERM-281)
+
+- Authorization: Human-authorized combined integration on parent HERM-273;
+  no per-slice Human approval required.
+- Integration base: `49ea9992a7cced2598f33071a8eefba53ff4e747`; approved
+  ancestor base for slice deltas: `62b5f75522ce01e2a7ae8da3c5e4e3bf3199408d`.
 - Bound spec revision: `891e497968000c32984f26437eab811c063ec4cf`.
-- Base commit: `9dda47b2f94b6c45b208266b704a2747a20c8c7a`.
-- Runtime target: Java 17 / Spring Boot 3.4.1; external Graphify Python MCP
-  runtime remains unchanged and outside migration.
-- Selected consumers: `graphify_runtime_probe.py`, `pkb001_history.py`,
-  `pkb001_acquisition.py`, and `pkb001_runner.py`.
+- Replay: slice commits cherry-picked unchanged; the shared `FdiApplication`
+  dispatch was resolved once (runtime probe, delivery history, acquisition,
+  experiment-runner-validate, experiment-runner-execute); slice-owned file
+  content is byte-identical to each reviewed candidate.
+- Active callers switched to the packaged Java CLIs; only the four replaced
+  Python consumers and their Python-only test coverage removed; shared tests
+  for remaining `TRANSITIONAL` consumers preserved.
 
-The four slices run independently. Each owns a distinct Java package and new
-Java tests. Slice agents must not edit the five active control files, the shared
-Python inventory, or another slice's files. The integration owner alone updates
-existing shared Python callers, inventory, controls, and removes replaced Python
-consumers after all exact-behavior parity gates pass.
+### Runtime probe slice (HERM-277)
 
-| Slice | Owned implementation | Acceptance boundary |
-|---|---|---|
-| Runtime probe | Java Graphify runtime discovery package, CLI, and tests | Preserve descriptor validation, command discovery, JSON/stdout, and exit behavior without changing Graphify. |
-| Delivery history | Java delivery-history package, CLI, and tests | Preserve exact-revision/cutoff Git reconstruction, PR filtering, deterministic output, and failures. |
-| Acquisition | Java acquisition-validation package, CLI, and tests | Preserve bounded paths, digest/tree validation, timestamps, deterministic output, and failures. |
-| Runner | Java experiment-runner package, CLI, and tests | Preserve arm input allowlists, subprocess isolation, deterministic reports, and failures. |
+- Reviewed candidate: `21f92f4f42b6b449130efc416ab022709afeceec` (replayed as
+  `e525ca3`).
+- `GraphifyRuntimeProbe` API + packaged `graphify-runtime-probe` CLI; 23
+  characterization tests and 12 CLI tests; focused integration parity
+  byte-identical (discovered stub, described descriptor).
 
-Every slice follows test-first characterization: add a failing Java test,
-confirm RED, implement minimally, confirm focused GREEN, then self-review. A
-slice is not cut over merely because Java tests pass. Integration additionally
-requires byte/field and exit-code parity against the frozen Python behavior,
-full Java/Python regression, public validation 9/9, and independent exact-tip
-review. No per-slice Human approval is required; Human approval remains required
-before final `PKB-BL-026` closure.
+### Delivery history slice (HERM-278)
+
+- Reviewed candidate: `de1d861987199c0d3ec3a64a32d02badbd0d99be` (replayed as
+  `271ac73`).
+- `DeliveryHistory` API + packaged `delivery-history-generate` CLI; 10
+  characterization tests and 14 CLI tests; focused integration parity
+  JSON-identical (cutoff-bounded reconstruction, late-updated PR excluded).
+
+### Acquisition slice (HERM-279, round 2)
+
+- Reviewed candidate: `80c8c3aa159abbfed8a0ec1fe4c1d67e3b3b7890` (feature
+  `a2ba4817` plus round-2 remediation, replayed as `3a9e94e` + `f178d5e`;
+  supersedes the failed round-1 candidate).
+- `AcquisitionValidator` API + packaged `acquisition-validate` CLI; 28
+  characterization tests and 9 CLI tests; focused integration parity
+  byte-identical (valid tree, mutable revision, digest mismatch, unsafe
+  retained path). Disclosed non-generated parity limits: more-than-9
+  fractional-digit timestamps and the lowercase `t` ISO-8601 separator are
+  rejected by the Java port; no new interpreter-version contract.
+
+### Experiment runner slice (HERM-280)
+
+- Reviewed candidate: `7247a1dc6f91396356d4d9e64f9ee036f2fcb210` (replayed as
+  `5cb87e5` + `5e21963`).
+- `ExperimentRunner` API + packaged `experiment-runner-validate` and
+  `experiment-runner-execute` CLIs; 15 characterization tests and 12 CLI
+  tests; focused integration parity JSON-identical (arm allowlists,
+  prohibited inputs).
+
+Combined verification at the integration candidate: 517 Java tests; Python
+suite green; public validation 9/9; inventory records 6 `TRANSITIONAL`
+consumers. This is a completion record, not authority to select the next
+consumer.
 
 ## Completed BL-026 slices
 

@@ -5,9 +5,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-from tooling.validation.graphify_runtime_probe import inspect_runtime
-
-
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -32,16 +29,10 @@ def test_five_active_truth_entries_exist_and_resolve():
     assert status['active_backlog_item'] == 'PKB-BL-026'
     assert status['selected_backlog_items'] == ['PKB-BL-026']
     assert maturity['spec_revision'] in backlog
-    execution = status['active_execution']
-    assert execution['mode'] == 'MULTICA_PARALLEL_SLICES'
-    assert len(execution['slices']) == 4
+    assert status['active_execution'] is None
+    assert status['active_implementation_plan'] is None
     if status['review_packet'] is not None:
         assert (ROOT/status['review_packet']).is_file()
-    if status['active_implementation_plan'] is not None:
-        plan, anchor = status['active_implementation_plan'].split('#')
-        assert (ROOT/plan).is_file()
-        assert anchor == 'selected-work-bl-026-four-consumer-parallel-java-migration'
-        assert '## Selected work: BL-026 four-consumer parallel Java migration' in (ROOT/plan).read_text()
 
 
 def test_every_normative_requirement_has_one_bound_backlog_record():
@@ -92,17 +83,6 @@ def test_graphify_discovery_does_not_assume_operations():
     graph = ROOT/discovery['snapshot_binding']['graph_path']
     import hashlib
     assert hashlib.sha256(graph.read_bytes()).hexdigest() == discovery['snapshot_binding']['graph_sha256']
-
-
-def test_runtime_probe_without_descriptor_makes_no_api_claim(tmp_path):
-    executable = tmp_path/'graphify'
-    executable.write_text('#!/bin/sh\n')
-    executable.chmod(0o755)
-    result = inspect_runtime(executable, None)
-    assert result['runtime_found'] is True
-    assert result['verification_status'] == 'DISCOVERED_NOT_VERIFIED'
-    assert result['supported_operations'] == []
-    assert result['api_assumptions'] == []
 
 
 def test_phase0_is_ready_after_calibration_freeze_and_petclinic_evaluator_seal():

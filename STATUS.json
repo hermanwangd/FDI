@@ -20,18 +20,9 @@
     "next_experiment_readiness": "NOT_READY"
   },
   "active_backlog_item": "PKB-BL-026",
-  "active_implementation_plan": "IMPLEMENTATION-PLAN.md#selected-work-bl-026-four-consumer-parallel-java-migration",
-  "next_action": "Execute and independently verify four parallel BL-026 Java slices: Graphify runtime probe, delivery history, acquisition validation, and experiment runner. Integrate shared callers, inventory, controls, and Python removals only after all slice parity gates pass.",
-  "active_execution": {
-    "base_commit": "9dda47b2f94b6c45b208266b704a2747a20c8c7a",
-    "mode": "MULTICA_PARALLEL_SLICES",
-    "slices": [
-      "graphify_runtime_probe.py",
-      "pkb001_history.py",
-      "pkb001_acquisition.py",
-      "pkb001_runner.py"
-    ]
-  },
+  "active_implementation_plan": null,
+  "next_action": "BL-026 four-consumer tranche is integrated and verified: runtime probe, acquisition validation, delivery history, and experiment runner now run as Java packages and packaged CLIs; six inventoried consumers remain TRANSITIONAL. Select and migrate the remaining consumers only through new bounded, explicitly selected BL-026 slices; PKB-JAVA-001 stays below M3 until all repository-owned consumers are migrated and final Human closure is approved.",
+  "active_execution": null,
   "framework_language_target": "JAVA_17_SPRING_BOOT_3_4_1",
   "external_graphify_runtime": "PYTHON_MCP_PROVIDER_OUTSIDE_FRAMEWORK_MIGRATION",
   "python_framework_status": "TRANSITIONAL_MIGRATION_INPUT",

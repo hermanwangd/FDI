@@ -17,16 +17,34 @@
     {
       "path": "tooling/validation/graphify_runtime_probe.py",
       "responsibility": "Discover a Graphify executable or validate an exported interface descriptor.",
-      "active_callers": ["tests/test_prototype_baseline.py"],
-      "migration_state": "TRANSITIONAL",
-      "external_runtime": false
+      "active_callers": [],
+      "migration_state": "MIGRATED_TO_JAVA",
+      "external_runtime": false,
+      "java_api": "com.featuredeliveryintelligence.fdi.validation.runtimeprobe.GraphifyRuntimeProbe",
+      "java_cli": "java -jar target/fdi-0.4.8.3.jar graphify-runtime-probe [--command PATH] [--descriptor PATH] [--output PATH]",
+      "verification_evidence": {
+        "replacement_commit": "21f92f4f42b6b449130efc416ab022709afeceec",
+        "characterization_test_count": 23,
+        "java_test_count_at_cutover": 517
+      }
     },
     {
       "path": "tooling/validation/pkb001_acquisition.py",
       "responsibility": "Validate an immutable PKB-001 calibration tree and its digests without modifying it.",
-      "active_callers": ["tests/test_pkb001_phase0.py"],
-      "migration_state": "TRANSITIONAL",
-      "external_runtime": false
+      "active_callers": [],
+      "migration_state": "MIGRATED_TO_JAVA",
+      "external_runtime": false,
+      "java_api": "com.featuredeliveryintelligence.fdi.validation.acquisition.AcquisitionValidator",
+      "java_cli": "java -jar target/fdi-0.4.8.3.jar acquisition-validate --root <dir> --manifest <path>",
+      "verification_evidence": {
+        "replacement_commit": "80c8c3aa159abbfed8a0ec1fe4c1d67e3b3b7890",
+        "characterization_test_count": 28,
+        "java_test_count_at_cutover": 517,
+        "disclosed_parity_limits": [
+          "acquired_at/history_cutoff with more than 9 fractional digits are rejected by the Java port",
+          "lowercase 't' ISO-8601 date-time separator is rejected by the Java port"
+        ]
+      }
     },
     {
       "path": "tooling/validation/pkb001_blind_review.py",
@@ -84,9 +102,16 @@
     {
       "path": "tooling/validation/pkb001_history.py",
       "responsibility": "Reconstruct immutable, cutoff-bounded PKB-001 delivery history.",
-      "active_callers": ["tests/test_pkb_history.py"],
-      "migration_state": "TRANSITIONAL",
-      "external_runtime": false
+      "active_callers": [],
+      "migration_state": "MIGRATED_TO_JAVA",
+      "external_runtime": false,
+      "java_api": "com.featuredeliveryintelligence.fdi.validation.deliveryhistory.DeliveryHistory",
+      "java_cli": "java -jar target/fdi-0.4.8.3.jar delivery-history-generate --repo <path> --source-sha <sha> --cutoff <iso> --prs <path> --output <path>",
+      "verification_evidence": {
+        "replacement_commit": "de1d861987199c0d3ec3a64a32d02badbd0d99be",
+        "characterization_test_count": 10,
+        "java_test_count_at_cutover": 517
+      }
     },
     {
       "path": "tooling/validation/pkb001_next_run_gate.py",
@@ -105,9 +130,16 @@
     {
       "path": "tooling/validation/pkb001_runner.py",
       "responsibility": "Enforce PKB-001 arm input allowlists and subprocess isolation boundaries.",
-      "active_callers": ["tests/test_pkb001_phase0.py"],
-      "migration_state": "TRANSITIONAL",
-      "external_runtime": false
+      "active_callers": [],
+      "migration_state": "MIGRATED_TO_JAVA",
+      "external_runtime": false,
+      "java_api": "com.featuredeliveryintelligence.fdi.validation.experimentrunner.ExperimentRunner",
+      "java_cli": "java -jar target/fdi-0.4.8.3.jar experiment-runner-validate --workspace <dir> --arm {F1,R1,R2,R3} --input <relative> [--input <relative> ...] [--report <path>]",
+      "verification_evidence": {
+        "replacement_commit": "7247a1dc6f91396356d4d9e64f9ee036f2fcb210",
+        "characterization_test_count": 15,
+        "java_test_count_at_cutover": 517
+      }
     },
     {
       "path": "tooling/validation/pkb001_scenario_forward_gate.py",
