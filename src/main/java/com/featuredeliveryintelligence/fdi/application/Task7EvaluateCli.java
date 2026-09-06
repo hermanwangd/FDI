@@ -15,16 +15,20 @@ import java.util.Map;
  * Packaged CLI for the PKB-001 Task 7 deterministic evaluation. Ports the
  * observable contract of the transitional Python CLI
  * {@code pkb001_task7_evaluate.py}: {@code [--root <dir>] [--report <path>]
- * [--pending <path>]}; the deterministic report is written (like the Python
- * {@code Path.write_text}) with parent directories created; a STOP decision
- * prints the report and exits with the documented code 2 without writing the
- * pending packet; a completed evaluation optionally writes the third-review
- * pending packet, prints the report, and exits 0; usage errors exit 2.
+ * [--pending <path>] [--result <path>]}; the deterministic report is written
+ * (like the Python {@code Path.write_text}) with parent directories created;
+ * a STOP decision prints the report and exits with the documented code 2
+ * without writing the pending packet; a completed evaluation optionally
+ * writes the third-review pending packet, prints the report, and exits 0.
+ * When the optional reviewer-03 workspace adjudicates the pending
+ * disagreements, {@code --result} additionally writes the immutable
+ * third-review result packet and fails closed (exit 2, no result file) when
+ * the report is not adjudicated; usage errors exit 2.
  */
 public final class Task7EvaluateCli {
     private static final String COMMAND = "task7-evaluate";
     private static final String USAGE =
-            "usage: task7-evaluate [--root <dir>] [--report <path>] [--pending <path>]";
+            "usage: task7-evaluate [--root <dir>] [--report <path>] [--pending <path>] [--result <path>]";
 
     private Task7EvaluateCli() { }
 
@@ -54,6 +58,15 @@ public final class Task7EvaluateCli {
         if (options.pending() != null) {
             writeReport(Path.of(options.pending()),
                     evaluation.toReportBytes(evaluation.buildThirdReviewPacket(report)));
+        }
+        if (options.result() != null) {
+            if (report.get("third_review_adjudication") == null) {
+                stderr.println(COMMAND + ": error: --result requires an adjudicated report"
+                        + " (reviewer-03 workspace is absent or failed closed)");
+                return 2;
+            }
+            writeReport(Path.of(options.result()),
+                    evaluation.toReportBytes(evaluation.buildThirdReviewResult(report)));
         }
         writeAll(stdout, reportBytes);
         return 0;
@@ -98,7 +111,8 @@ public final class Task7EvaluateCli {
             } else {
                 throw new CliArgumentsException("argument " + printable(option) + ": expected one argument");
             }
-            if (!"--root".equals(option) && !"--report".equals(option) && !"--pending".equals(option)) {
+            if (!"--root".equals(option) && !"--report".equals(option)
+                    && !"--pending".equals(option) && !"--result".equals(option)) {
                 throw new CliArgumentsException("unrecognized arguments: " + printable(option));
             }
             if (values.containsKey(option)) {
@@ -110,14 +124,15 @@ public final class Task7EvaluateCli {
             values.put(option, value);
         }
         Path root = Path.of(values.getOrDefault("--root", "."));
-        return new Options(root, values.get("--report"), values.get("--pending"));
+        return new Options(root, values.get("--report"), values.get("--pending"),
+                values.get("--result"));
     }
 
     private static String printable(String value) {
         return value == null || value.isBlank() ? "<blank>" : value;
     }
 
-    private record Options(Path root, String report, String pending) { }
+    private record Options(Path root, String report, String pending, String result) { }
 
     private static final class CliArgumentsException extends IllegalArgumentException {
         private CliArgumentsException(String message) {

@@ -49,6 +49,13 @@ public final class Task7Evaluation {
     static final String JUDGMENT_REVIEWER_02 =
             TASK6 + "/judgment-workspaces/reviewer-02/judgment-template.json";
     static final List<String> JUDGMENTS = List.of(JUDGMENT_REVIEWER_01, JUDGMENT_REVIEWER_02);
+    static final String JUDGMENT_REVIEWER_03 =
+            TASK6 + "/judgment-workspaces/reviewer-03/judgment-template.json";
+    static final String REVIEWER_03_PACKET_INPUT =
+            TASK6 + "/judgment-workspaces/reviewer-03/packet-input.json";
+    static final String THIRD_REVIEW_WORKSPACE_ID = "reviewer-03";
+    static final String THIRD_REVIEW_WORKSPACE_SCHEMA = "pkb001.task6.blind-judgment-workspace.v1";
+    static final String THIRD_REVIEW_FAILURE_STAGE = "THIRD_REVIEW_ADJUDICATION";
     static final String FORWARD_RUN =
             "validation/pkb001/artifacts/petclinic-pk-s1-forward-run-818c413.json";
     static final String FORWARD_MANIFEST =
@@ -134,6 +141,146 @@ public final class Task7Evaluation {
         return report.get("pre_unblinding_validation").get("packet_sha256");
     }
 
+    /**
+     * Builds the immutable third-review result packet from an adjudicated
+     * report. Ports the pending-packet derivation contract to the result
+     * surface: evaluator-only, no semantic publication, digest-bound to the
+     * sealed blind packet and the reviewer-03 workspace.
+     */
+    public JsonNode buildThirdReviewResult(JsonNode report) {
+        JsonNode adjudication = report.get("third_review_adjudication");
+        require(adjudication != null && adjudication.isObject(),
+                "report has no third_review_adjudication; reviewer-03 judgments are absent or invalid");
+        ObjectNode result = NODE.objectNode();
+        result.put("schema_version", "pkb001.task7.third-review-result.v1");
+        result.put("status", "ADJUDICATED");
+        result.set("packet_sha256", pendingReportPacketSha256(report));
+        result.put("authority", "EVALUATOR_ONLY");
+        result.put("semantic_publication_allowed", false);
+        result.put("decision", report.get("decision").asText());
+        result.put("decision_scope", report.get("decision_scope").asText());
+        result.set("reviewer_workspace_id", adjudication.get("reviewer_workspace_id"));
+        result.set("reviewer_workspace_sha256", adjudication.get("reviewer_workspace_sha256"));
+        result.set("item_count", adjudication.get("item_count"));
+        result.set("resolutions", adjudication.get("resolutions"));
+        return result;
+    }
+
+    // ------------------------------------------------------------------
+    // Third-review adjudication (reviewer-03)
+    // ------------------------------------------------------------------
+
+    /**
+     * Validates the optional reviewer-03 workspace and resolves exactly the
+     * frozen disagreement set. Reviewer-03 binds to the same sealed blind
+     * packet as reviewers 01/02, judges only the pending disagreement IDs,
+     * and attests evaluator-only authority and independence; every violation
+     * raises {@link EvaluationException} so the caller fails closed with a
+     * STOP report instead of overwriting valid two-reviewer output.
+     */
+    private ObjectNode adjudicateThirdReview(Path root, JsonNode report) {
+        List<String> pendingIds = pendingDisagreementIds(report);
+        Path workspacePath = root.resolve(JUDGMENT_REVIEWER_03);
+        JsonNode workspace = loadJson(workspacePath);
+        require(THIRD_REVIEW_WORKSPACE_SCHEMA.equals(textOrNull(workspace.get("schema_version"))),
+                JUDGMENT_REVIEWER_03 + " has unsupported schema_version");
+        require(THIRD_REVIEW_WORKSPACE_ID.equals(textOrNull(workspace.get("workspace_id"))),
+                JUDGMENT_REVIEWER_03 + " workspace_id must be reviewer-03, distinct from reviewer-01"
+                        + " and reviewer-02");
+        String packetDigest = pendingReportPacketSha256(report).asText();
+        require(packetDigest.equals(textOrNull(workspace.get("packet_sha256"))),
+                JUDGMENT_REVIEWER_03 + " packet digest mismatch");
+        Path packetInput = root.resolve(REVIEWER_03_PACKET_INPUT);
+        require(sha256(packetInput).equals(packetDigest),
+                REVIEWER_03_PACKET_INPUT + " digest does not match the sealed packet");
+        JsonNode context = workspace.get("reviewer_context");
+        require(context != null && context.isObject()
+                        && ("NON_HUMAN".equals(textOrNull(context.get("actor_type")))
+                                || "HUMAN".equals(textOrNull(context.get("actor_type"))))
+                        && "EVALUATOR_ONLY".equals(textOrNull(context.get("authority")))
+                        && isFalse(context.get("can_complete_product_team_review"))
+                        && context.has("independent_from_reviewer_01_and_reviewer_02")
+                        && context.get("independent_from_reviewer_01_and_reviewer_02").isBoolean()
+                        && context.get("independent_from_reviewer_01_and_reviewer_02").asBoolean(),
+                JUDGMENT_REVIEWER_03 + " claims invalid reviewer authority");
+        JsonNode isolation = workspace.get("reviewer_isolation");
+        require(isolation != null && isolation.isObject()
+                        && isFalse(isolation.get("ground_truth_accessible_from_packet_workspace"))
+                        && isFalse(isolation.get("other_workspace_future_judgments_accessible"))
+                        && isFalse(isolation.get("sealed_key_accessible")),
+                JUDGMENT_REVIEWER_03 + " does not preserve reviewer isolation");
+
+        JsonNode rows = workspace.get("judgments");
+        require(rows != null && rows.isArray() && rows.size() == pendingIds.size(),
+                JUDGMENT_REVIEWER_03 + " must contain exactly " + pendingIds.size()
+                        + " judgments, one per pending disagreement");
+        Set<String> seen = new LinkedHashSet<>();
+        List<String> rowIds = new ArrayList<>();
+        for (JsonNode row : rows) {
+            String blindId = row != null && row.get("blind_id") != null
+                    && row.get("blind_id").isTextual() ? row.get("blind_id").asText() : null;
+            require(blindId != null, JUDGMENT_REVIEWER_03 + " judgment is missing a textual blind_id");
+            require(seen.add(blindId), JUDGMENT_REVIEWER_03 + " contains duplicate judgment for " + blindId);
+            rowIds.add(blindId);
+        }
+        require(rowIds.equals(pendingIds),
+                JUDGMENT_REVIEWER_03 + " judgment IDs do not match the pending disagreement set");
+        for (JsonNode row : rows) {
+            String blindId = row.get("blind_id").asText();
+            require(completeJudgment(row),
+                    JUDGMENT_REVIEWER_03 + " has an incomplete or malformed judgment for " + blindId);
+            require(row.get("limitations").size() > 0,
+                    JUDGMENT_REVIEWER_03 + " must record non-empty limitations for " + blindId);
+            require(row.get("active_review_seconds").longValue() >= 1,
+                    JUDGMENT_REVIEWER_03 + " must record positive active_review_seconds for " + blindId);
+        }
+
+        ArrayNode resolutions = NODE.arrayNode();
+        for (JsonNode row : rows) {
+            String blindId = row.get("blind_id").asText();
+            ObjectNode resolution = resolutions.addObject();
+            resolution.put("blind_id", blindId);
+            resolution.set("reasons", pendingItemReasons(report, blindId));
+            resolution.put("final_review_action", row.get("review_action").asText());
+            resolution.put("final_outcome", row.get("outcome").asText());
+            resolution.set("third_judgment", row);
+        }
+
+        ObjectNode adjudication = NODE.objectNode();
+        adjudication.put("status", "ADJUDICATED");
+        adjudication.put("authority", "EVALUATOR_ONLY");
+        adjudication.put("basis", "INDEPENDENT_REVIEWER_03_JUDGMENT_DECIDES_EACH_DISAGREEMENT");
+        adjudication.put("resolution_rule",
+                "FINAL_ACTION_AND_OUTCOME_FOLLOW_REVIEWER_03_FOR_DISAGREEMENT_ITEMS_ONLY");
+        adjudication.put("reviewer_workspace_id", THIRD_REVIEW_WORKSPACE_ID);
+        adjudication.put("reviewer_workspace_path", JUDGMENT_REVIEWER_03);
+        adjudication.put("reviewer_workspace_sha256", sha256(workspacePath));
+        adjudication.put("reviewer_packet_input_sha256", sha256(packetInput));
+        adjudication.put("independent_from_reviewer_01_and_reviewer_02", true);
+        adjudication.put("item_count", resolutions.size());
+        adjudication.set("resolutions", resolutions);
+        return adjudication;
+    }
+
+    private static List<String> pendingDisagreementIds(JsonNode report) {
+        List<String> ids = new ArrayList<>();
+        for (JsonNode item : requiredArray(
+                report.get("pending_third_review").get("items"), "pending items")) {
+            ids.add(item.get("blind_id").asText());
+        }
+        return ids;
+    }
+
+    private static JsonNode pendingItemReasons(JsonNode report, String blindId) {
+        for (JsonNode item : requiredArray(
+                report.get("pending_third_review").get("items"), "pending items")) {
+            if (blindId.equals(item.get("blind_id").asText())) {
+                return item.get("reasons");
+            }
+        }
+        throw new EvaluationException("pending disagreement not found for " + blindId);
+    }
+
     private JsonNode evaluateResolved(Path root) {
         final ObjectNode pre;
         try {
@@ -147,7 +294,21 @@ public final class Task7Evaluation {
         } catch (EvaluationException error) {
             return stopReport("BOUND_INPUT_VALIDATION", error);
         }
-        return evaluateBound(root, pre, bound);
+        final JsonNode report;
+        try {
+            report = evaluateBound(root, pre, bound);
+        } catch (EvaluationException error) {
+            return stopReport("POST_BINDING_INTEGRITY_VALIDATION", error);
+        }
+        if (!Files.exists(root.resolve(JUDGMENT_REVIEWER_03))) {
+            return report;
+        }
+        try {
+            ((ObjectNode) report).set("third_review_adjudication", adjudicateThirdReview(root, report));
+            return report;
+        } catch (EvaluationException error) {
+            return stopReport(THIRD_REVIEW_FAILURE_STAGE, error);
+        }
     }
 
     // ------------------------------------------------------------------
