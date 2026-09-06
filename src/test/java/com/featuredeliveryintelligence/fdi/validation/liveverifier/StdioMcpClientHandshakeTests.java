@@ -10,12 +10,14 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 
 /**
  * Handshake-contract and remaining fail-closed-path tests for the minimal MCP
@@ -74,15 +76,65 @@ class StdioMcpClientHandshakeTests {
         Path script = writeResponder(MALFORMED_RESPONDER);
         try (StdioMcpClient client = new StdioMcpClient(
                 List.of("python3", "-u", script.toString()), temp)) {
-            // A malformed line surfaces as Jackson's JsonParseException (an
-            // IOException), not VerificationFailure — the client's
-            // catch (RuntimeException) does not cover parser errors. The CLI
-            // handles IOException identically, so the session still fails
-            // closed; this pins the actual boundary behavior.
-            com.fasterxml.jackson.core.JsonParseException failure = assertThrows(
-                    com.fasterxml.jackson.core.JsonParseException.class, client::initialize);
-            assertTrue(failure.getMessage().contains("Unrecognized token"),
-                    failure.getMessage());
+            VerificationFailure failure = assertThrows(
+                    VerificationFailure.class, client::initialize);
+            assertEquals("MCP server sent a malformed message", failure.getMessage());
+        }
+    }
+
+    @Test
+    void silentServerTimesOutWithNormalizedFailure() throws Exception {
+        Path script = writeResponder(SILENT_RESPONDER);
+        try (StdioMcpClient client = new StdioMcpClient(
+                List.of("python3", "-u", script.toString()), temp,
+                Duration.ofMillis(75), Duration.ofMillis(75))) {
+            VerificationFailure failure = assertTimeoutPreemptively(Duration.ofSeconds(1),
+                    () -> assertThrows(VerificationFailure.class, client::initialize));
+            assertEquals("MCP server response timed out after 75 ms", failure.getMessage());
+        }
+    }
+
+    @Test
+    void closeForciblyTerminatesServerThatIgnoresTerminate() throws Exception {
+        Path script = writeResponder(STUBBORN_RESPONDER);
+        StdioMcpClient client = new StdioMcpClient(
+                List.of("python3", "-u", script.toString()), temp,
+                Duration.ofSeconds(1), Duration.ofMillis(75));
+        Path pidFile = temp.resolve("stubborn.pid");
+        assertTimeoutPreemptively(Duration.ofSeconds(1), () -> {
+            while (!Files.exists(pidFile)) {
+                Thread.sleep(5);
+            }
+        });
+        long pid = Long.parseLong(Files.readString(pidFile).trim());
+
+        assertTimeoutPreemptively(Duration.ofSeconds(1), client::close);
+        assertFalse(ProcessHandle.of(pid).map(ProcessHandle::isAlive).orElse(false));
+    }
+
+    @Test
+    void interruptedResponseWaitPreservesFlagAndTerminatesChild() throws Exception {
+        Path script = writeResponder(SILENT_RESPONDER);
+        try (StdioMcpClient client = new StdioMcpClient(
+                List.of("python3", "-u", script.toString()), temp,
+                Duration.ofSeconds(5), Duration.ofMillis(75))) {
+            Path pidFile = temp.resolve("silent.pid");
+            assertTimeoutPreemptively(Duration.ofSeconds(1), () -> {
+                while (!Files.exists(pidFile)) {
+                    Thread.sleep(5);
+                }
+            });
+            long pid = Long.parseLong(Files.readString(pidFile).trim());
+            Thread.currentThread().interrupt();
+            try {
+                VerificationFailure failure = assertThrows(
+                        VerificationFailure.class, client::initialize);
+                assertEquals("MCP server response wait was interrupted", failure.getMessage());
+                assertTrue(Thread.currentThread().isInterrupted());
+                assertFalse(ProcessHandle.of(pid).map(ProcessHandle::isAlive).orElse(false));
+            } finally {
+                Thread.interrupted();
+            }
         }
     }
 
@@ -186,6 +238,23 @@ class StdioMcpClientHandshakeTests {
                 print("this is not json", flush=True)
                 print(json.dumps({"jsonrpc": "2.0", "id": msg.get('id'),
                                   "result": {"protocolVersion": "2025-11-25"}}), flush=True)
+            """;
+
+    /** Reads requests but deliberately never answers them. */
+    private static final String SILENT_RESPONDER = """
+            import os, sys
+            open('silent.pid', 'w').write(str(os.getpid()))
+            for line in sys.stdin:
+                pass
+            """;
+
+    /** Ignores SIGTERM so close() must escalate to forced termination. */
+    private static final String STUBBORN_RESPONDER = """
+            import os, signal, time
+            signal.signal(signal.SIGTERM, signal.SIG_IGN)
+            open('stubborn.pid', 'w').write(str(os.getpid()))
+            while True:
+                time.sleep(1)
             """;
 
     /** Answers tools/call with JSON-RPC -32601 like a server lacking that method. */

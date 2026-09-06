@@ -10,7 +10,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,15 +30,31 @@ import java.util.concurrent.TimeUnit;
  */
 final class StdioMcpClient implements McpClient {
     private static final ObjectMapper JSON = new ObjectMapper();
+    private static final Duration DEFAULT_RESPONSE_TIMEOUT = Duration.ofSeconds(30);
+    private static final Duration DEFAULT_CLOSE_TIMEOUT = Duration.ofSeconds(2);
 
     private final Process process;
     private final BufferedReader reader;
     private final BufferedWriter writer;
     private final Thread stderrDrain;
+    private final ExecutorService responseReader;
+    private final Duration responseTimeout;
+    private final Duration closeTimeout;
     private int nextId = 0;
 
     StdioMcpClient(List<String> command, java.nio.file.Path directory) throws IOException {
+        this(command, directory, DEFAULT_RESPONSE_TIMEOUT, DEFAULT_CLOSE_TIMEOUT);
+    }
+
+    StdioMcpClient(List<String> command, java.nio.file.Path directory,
+            Duration responseTimeout, Duration closeTimeout) throws IOException {
+        if (responseTimeout == null || responseTimeout.isZero() || responseTimeout.isNegative()
+                || closeTimeout == null || closeTimeout.isZero() || closeTimeout.isNegative()) {
+            throw new IllegalArgumentException("MCP timeouts must be positive");
+        }
         this.process = new ProcessBuilder(command).directory(directory.toFile()).start();
+        this.responseTimeout = responseTimeout;
+        this.closeTimeout = closeTimeout;
         this.reader = new BufferedReader(
                 new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
         this.writer = new BufferedWriter(
@@ -50,6 +72,11 @@ final class StdioMcpClient implements McpClient {
         });
         this.stderrDrain.setDaemon(true);
         this.stderrDrain.start();
+        this.responseReader = Executors.newSingleThreadExecutor(task -> {
+            Thread thread = new Thread(task, "fdi-mcp-stdout-reader");
+            thread.setDaemon(true);
+            return thread;
+        });
     }
 
     @Override
@@ -88,11 +115,19 @@ final class StdioMcpClient implements McpClient {
 
     @Override
     public void close() {
+        closeQuietly(writer);
         process.destroy();
         try {
-            process.waitFor(10, TimeUnit.SECONDS);
+            if (!process.waitFor(closeTimeout.toMillis(), TimeUnit.MILLISECONDS)) {
+                process.destroyForcibly();
+                process.waitFor(closeTimeout.toMillis(), TimeUnit.MILLISECONDS);
+            }
         } catch (InterruptedException interrupted) {
+            process.destroyForcibly();
             Thread.currentThread().interrupt();
+        } finally {
+            closeQuietly(reader);
+            responseReader.shutdownNow();
         }
     }
 
@@ -105,14 +140,14 @@ final class StdioMcpClient implements McpClient {
         message.set("params", params);
         writeLine(message);
         while (true) {
-            String line = reader.readLine();
+            String line = readLineWithTimeout();
             if (line == null) {
                 throw new VerificationFailure("MCP server closed the stdio session");
             }
             JsonNode response;
             try {
                 response = JSON.readTree(line);
-            } catch (RuntimeException malformed) {
+            } catch (IOException | RuntimeException malformed) {
                 throw new VerificationFailure("MCP server sent a malformed message");
             }
             if (response == null || !response.isObject() || !response.has("id")
@@ -132,9 +167,48 @@ final class StdioMcpClient implements McpClient {
         }
     }
 
+    private String readLineWithTimeout() throws IOException {
+        Future<String> pending = responseReader.submit(reader::readLine);
+        try {
+            return pending.get(responseTimeout.toMillis(), TimeUnit.MILLISECONDS);
+        } catch (TimeoutException timedOut) {
+            pending.cancel(true);
+            throw new VerificationFailure("MCP server response timed out after "
+                    + responseTimeout.toMillis() + " ms");
+        } catch (InterruptedException interrupted) {
+            pending.cancel(true);
+            process.destroyForcibly();
+            try {
+                process.waitFor(closeTimeout.toMillis(), TimeUnit.MILLISECONDS);
+            } catch (InterruptedException interruptedAgain) {
+                // The interrupt is restored below after the bounded cleanup attempt.
+            } finally {
+                Thread.currentThread().interrupt();
+            }
+            throw new VerificationFailure("MCP server response wait was interrupted");
+        } catch (ExecutionException failed) {
+            Throwable cause = failed.getCause();
+            if (cause instanceof IOException ioFailure) {
+                throw ioFailure;
+            }
+            if (cause instanceof RuntimeException runtimeFailure) {
+                throw runtimeFailure;
+            }
+            throw new IOException("MCP server response read failed", cause);
+        }
+    }
+
     private void writeLine(ObjectNode message) throws IOException {
         writer.write(JSON.writeValueAsString(message));
         writer.write('\n');
         writer.flush();
+    }
+
+    private static void closeQuietly(java.io.Closeable stream) {
+        try {
+            stream.close();
+        } catch (IOException ignored) {
+            // Process termination is the authoritative close outcome.
+        }
     }
 }
