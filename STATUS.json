@@ -19,10 +19,18 @@
     "m1_backlogged": 12,
     "next_experiment_readiness": "NOT_READY"
   },
-  "active_backlog_item": null,
-  "active_implementation_plan": null,
-  "next_action": "Select PKB-BL-009 and write a bounded v0.2 advisory-quality contract plan from the frozen evaluator defect ledger.",
-  "active_execution": null,
+  "active_backlog_item": "PKB-BL-009",
+  "active_implementation_plan": "IMPLEMENTATION-PLAN.md#pkb-bl-009-reverse-advisory-quality",
+  "next_action": "Dispatch PKB-BL-009-REVERSE-QUALITY-001 to the Execution Plane for sequential contract, generator, and immutable regression-run delivery.",
+  "active_execution": {
+    "execution_id": "PKB-BL-009-REVERSE-QUALITY-001",
+    "base_commit": "611f3346febcb812023ba5c665476f1f1d86c0f8",
+    "selected_backlog_items": [
+      "PKB-BL-009"
+    ],
+    "execution_state": "PLANNED_AWAITING_DISPATCH",
+    "integration_candidate": null
+  },
   "framework_language_target": "JAVA_17_SPRING_BOOT_3_4_1",
   "external_graphify_runtime": "PYTHON_MCP_PROVIDER_OUTSIDE_FRAMEWORK_MIGRATION",
   "python_framework_status": "ALL_REPOSITORY_CONSUMERS_MIGRATED_TO_JAVA_REMAINING_PYTHON_IS_TRANSITIONAL_TESTS_AND_VALIDATORS",
@@ -32,7 +40,9 @@
   "review_mode": "INDIVIDUAL_EXPERIMENT_OWNER",
   "scenario_generation": "GRAPHIFY_AND_DELIVERY_HISTORY_PROPOSALS",
   "scenario_generator_status": "IMPLEMENTED_AND_EXERCISED",
-  "selected_backlog_items": [],
+  "selected_backlog_items": [
+    "PKB-BL-009"
+  ],
   "review_json": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-decisions-003.json",
   "original_review_packet": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review.md",
   "original_review_json": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review.json",

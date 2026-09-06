@@ -6,8 +6,77 @@ the current execution state and next action.
 
 ## Current selection
 
-No implementation work is currently selected. A `READY` Backlog item requires
-an explicit selection and a new bounded construction plan before execution.
+### PKB-BL-009 Reverse advisory quality
+
+- Backlog / requirement: `PKB-BL-009` / `PKB-REVERSE-001`
+- Spec revision: `48924076261302156faf0011edb554fc19bbb2c0`
+- Base commit: `611f3346febcb812023ba5c665476f1f1d86c0f8`
+- Execution ID: `PKB-BL-009-REVERSE-QUALITY-001`
+- Outcome: emit more reviewable Reverse proposals with explicit uncertainty and
+  advisory quality signals, without automated semantic decisions.
+
+#### Sequential construction
+
+1. **Contract and Java validator.** Add
+   `validation/pkb001/schemas/capability-hypothesis-set-v0.2.schema.json` matching
+   the actual Reverse artifact shape. Add a Java validator and CLI under
+   `src/main/java/com/featuredeliveryintelligence/fdi/validation/reversequality/`
+   and `src/main/java/com/featuredeliveryintelligence/fdi/application/`, with
+   focused tests under the matching test packages. The contract adds
+   `claim_evidence`, `suspected_quality_signals`, `related_hypothesis_ids`, and
+   `uncertainty`; proposal IDs, bindings, evidence references, and authority
+   fail closed. The only signal values are `POSSIBLE_DUPLICATE`,
+   `POSSIBLE_COMPOSITE`, and `POSSIBLE_OVERCLAIM`.
+2. **Generation guidance.** Only after step 1 passes, update
+   `skills/pkb001/pk-s2-capability-hypothesis/SKILL.md` to emit the v0.2 shape,
+   preserve ambiguous clusters, and explain every advisory signal. Generation
+   cannot read the evaluator defect ledger, Product Semantics, evaluator gold,
+   or post-generation judgments.
+3. **Immutable regression run.** Generate a new Petclinic run under
+   `validation/pkb001/reverse-pkb-bl009-petclinic-001/`, bind all inputs and
+   digests, validate it through Java, and only then compare it with
+   `validation/pkb001/reverse-quality/evaluator-defect-ledger-001.json`.
+   Report descriptive signal/claim changes; do not claim holdout or general
+   quality improvement.
+
+These stages are dependency-ordered and must not run in parallel. Execution
+Plane actors may edit only the paths named above plus minimal Java CLI wiring
+and the new run's tests/evidence. The five active controls, the existing v0.1
+schema, completed run artifacts, public provenance validator, external
+Graphify runtime, and evaluator ledger are read-only.
+
+#### Acceptance and negative cases
+
+- The v0.2 schema matches its committed run; Java validates schema shape,
+  unique/cross references, exact source/graph/history bindings, resolvable
+  evidence, and `PROPOSAL_ONLY` authority.
+- Quality signals are advisory observations. No Java or skill path may
+  automatically merge, split, drop, accept, rename, or publish a hypothesis.
+- Claims identify supporting and missing evidence separately; uncertainty and
+  related proposals remain visible to the reviewer.
+- Missing/unknown references, digest or revision mismatch, unsupported signal,
+  semantic-action fields, evaluator-ledger exposure during generation, or
+  overwrite of an existing run fails closed.
+- Existing v0.1 artifacts and the public validator remain byte-compatible and
+  provenance-only.
+
+#### Verification and handoff
+
+Use TDD for invalid authority, binding, reference, signal, isolation, and
+immutability cases. Run within the 8 GB limit:
+
+```bash
+MAVEN_OPTS='-Xmx2g' ./mvnw clean package -q
+python3 -m pytest -q
+python3 validation/pkb001/reverse-task5-pkb001_reverse_run/public_validate.py .
+python3 validation/pkb001/task7-evaluation/public_validate.py .
+git diff --check
+```
+
+Return one integrated exact candidate with contract/skill/run digests,
+independent exact-candidate review, changed paths, negative-test evidence,
+limitations, and token/cycle-time/first-pass KPIs. Human Authority confirms
+terminal parent closure only; no confirmation is needed between stages.
 
 ## Verified delivery ledger
 
