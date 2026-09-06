@@ -170,12 +170,21 @@ class ExperimentRunnerCharacterizationTests {
     }
 
     @Test
-    void inputsRequireThreePartsUnderTheArmCategory() {
-        ExperimentRunner runner = new ExperimentRunner();
-        assertEquals("prohibited input for R1: inputs/structure",
+    void inputsRequireThreePartsUnderTheArmCategory() throws IOException {
+        // a directory fails the file check before the parts check, like Python
+        assertEquals("prohibited input: inputs/structure",
                 assertThrows(IllegalArgumentException.class,
-                        () -> runner.validateArmInputs(root, "R1",
+                        () -> new ExperimentRunner().validateArmInputs(root, "R1",
                                 List.of("inputs/structure"))).getMessage());
+        Files.write(root.resolve("inputs/ab"), "{}".getBytes(StandardCharsets.UTF_8));
+        Files.createDirectories(root.resolve("wrong/structure"));
+        Files.write(root.resolve("wrong/structure/input.json"),
+                "{}".getBytes(StandardCharsets.UTF_8));
+        ExperimentRunner runner = new ExperimentRunner();
+        assertEquals("prohibited input for R1: inputs/ab",
+                assertThrows(IllegalArgumentException.class,
+                        () -> runner.validateArmInputs(root, "R1", List.of("inputs/ab")))
+                        .getMessage());
         assertEquals("prohibited input for R1: wrong/structure/input.json",
                 assertThrows(IllegalArgumentException.class,
                         () -> runner.validateArmInputs(root, "R1",
@@ -241,7 +250,7 @@ class ExperimentRunnerCharacterizationTests {
         writeReadiness("{\"status\": \"READY\"}");
         LaunchCapture capture = new LaunchCapture();
         new ExperimentRunner().executeArm(List.of("/usr/bin/true"), root, enforcedEnv(), List.of(), capture);
-        assertEquals("(version 1) (allow default) (deny network*) ", capture.argv.get(4));
+        assertEquals("(version 1) (allow default) (deny network*) ", capture.argv.get(2));
     }
 
     @Test
@@ -330,7 +339,8 @@ class ExperimentRunnerCharacterizationTests {
         LaunchCapture capture = new LaunchCapture();
         new ExperimentRunner().executeArm(List.of("python3", "safe_runner.py"), root,
                 enforcedEnv(), List.of(), capture);
-        assertEquals("python3", capture.argv.get(5));
+        assertEquals("python3", capture.argv.get(3));
+        assertEquals("safe_runner.py", capture.argv.get(4));
     }
 
     @Test
