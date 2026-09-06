@@ -35,6 +35,7 @@ a new Spec revision and reconciliation of every bound Backlog item.
 | `PKB-SCENARIO-004` | Scenario authority and isolation | Only frozen approved scenarios enter Forward generation; Reverse hypotheses remain isolated. |
 | `PKB-MAPPING-001` | Scenario-grounded realization | Proposals trace scenarios through variable realization chains to justified component roles. |
 | `PKB-PROVIDER-001` | Template and UI evidence | UI/template claims use verified provider capability or declare an evidence gap. |
+| `PKB-RUNTIME-001` | External provider runtime portability and lifecycle | Java resolves an exact-provenance external Graphify runtime from the active workspace and bounds every stdio-MCP request and shutdown without changing Graphify. |
 | `PKB-REVERSE-001` | Reverse experiment / Scenario authority and isolation | Reverse quality controls improve proposals without publishing Product truth. |
 | `PKB-EVAL-001` | Hierarchical evaluation | Evaluator truth uses provider-neutral normalized component identity and remains isolated. |
 | `PKB-EVAL-002` | Hierarchical evaluation | Semantic, scenario, chain, component, and provider-native diagnostic metrics remain distinct. |
@@ -259,6 +260,23 @@ Historical immutable outputs are never regenerated merely to remove Python.
 Different behavior requires an explicit Spec change rather than being hidden as a
 port. Until a consumer completes these steps, its Python implementation is labeled
 `TRANSITIONAL`, and the associated Java-only maturity gate remains incomplete.
+
+### External provider runtime portability and lifecycle
+
+The external Graphify runtime remains outside the Java framework, but an active
+workspace MUST resolve a frozen runtime without relying on another checkout's
+absolute path. Runtime evidence binds the Graphify and MCP package versions,
+frozen source digest, interpreter identity, graph digest, launch working
+directory, and command. Runtime files remain ignored operational state; they
+are not committed as framework source.
+
+The Java stdio-MCP client MUST apply a finite configurable response timeout to
+every request, translate malformed or non-JSON protocol responses into the
+framework's fail-closed `VerificationFailure`, and terminate a provider process
+within a bounded close interval, escalating to forced termination when graceful
+shutdown does not finish. Timeout and shutdown paths MUST preserve interruption,
+close streams, and leave no provider child process running. Tests use local stub
+providers and MUST NOT require Graphify or network access.
 
 ### Component roles and granularity
 
