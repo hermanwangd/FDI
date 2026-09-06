@@ -24,6 +24,9 @@ public class FdiApplication {
         if (DeliveryHistoryCli.handles(args)) {
             System.exit(DeliveryHistoryCli.run(args, System.out, System.err));
         }
+        if (AcquisitionCli.handles(args)) {
+            System.exit(AcquisitionCli.run(args, System.out, System.err));
+        }
         if (Dev204Cli.handles(args)) return;
         SpringApplication.run(FdiApplication.class, args);
     }
