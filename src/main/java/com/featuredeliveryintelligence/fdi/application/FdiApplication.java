@@ -36,6 +36,21 @@ public class FdiApplication {
         if (Task7EvaluateCli.handles(args)) {
             System.exit(Task7EvaluateCli.run(args, System.out, System.err));
         }
+        if (Phase0ReadinessCli.handles(args)) {
+            System.exit(Phase0ReadinessCli.run(args, System.out, System.err));
+        }
+        if (BlindEvaluationCli.handles(args)) {
+            System.exit(BlindEvaluationCli.run(args, System.out, System.err));
+        }
+        if (GraphifyLiveVerifierCli.handles(args)) {
+            System.exit(GraphifyLiveVerifierCli.run(args, System.out, System.err));
+        }
+        if (ScenarioReviewCli.handles(args)) {
+            System.exit(ScenarioReviewCli.run(args, System.out, System.err));
+        }
+        if (HumanReviewPacketCli.handles(args)) {
+            System.exit(HumanReviewPacketCli.run(args, System.out, System.err));
+        }
         if (Dev204Cli.handles(args)) return;
         SpringApplication.run(FdiApplication.class, args);
     }
