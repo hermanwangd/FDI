@@ -152,7 +152,8 @@ Do not infer project status from old documents.
 
 ## Change Discipline
 
-When project-level truth changes, update the appropriate active document:
+When project-level truth changes, the Feature Delivery Plane updates the
+appropriate active document:
 
 - Project purpose / architecture / scope → `PROJECT-OVERVIEW.md`
 - Framework capability / contract / authority boundary → `FRAMEWORK-SPEC.md`
@@ -215,8 +216,8 @@ are added to `IMPLEMENTATION-PLAN.md` only after an item is selected.
 Allowed `work_type` values are `FEATURE`, `BUG`, `SECURITY`, `TECH_DEBT`,
 `VALIDATION`, `DOCUMENTATION`, `OPERATION`, and `RESEARCH`. Bug, review,
 security, and operational work may originate outside a Spec requirement, but
-must record its source. If that work changes normative behavior, update and
-approve the Spec first.
+must record its source. If that work changes normative behavior, the Feature
+Delivery Plane proposes the Spec update and Human Authority approves it first.
 
 Allowed delivery states are `READY`, `IN_PROGRESS`, `BLOCKED_DEPENDENCY`,
 `BLOCKED_USER_APPROVAL`, `NEEDS_RECONCILIATION`,
@@ -247,26 +248,27 @@ plan. Bind every plan to the selected Backlog IDs and the same Spec revision.
 
 #### Compact plan maintenance lifecycle
 
-Maintain **One active plan file**: `IMPLEMENTATION-PLAN.md`. It must not duplicate the Backlog ledger,
+The Feature Delivery Plane maintains **One active plan file**:
+`IMPLEMENTATION-PLAN.md`. It must not duplicate the Backlog ledger,
 the Framework Spec, source code, schemas, test fixtures, terminal logs, or full
 historical reports. Link to those artifacts and retain only the constraints an
 agent needs to execute or verify the selected work. Keep the file at or below
 10 KB by default; exceeding that budget requires a concrete reason tied to the
 currently selected work.
 
-- **No selected work:** state that no implementation slice is selected, retain
+- **No selected work:** the Feature Delivery Plane states that no implementation slice is selected and retains
   only a compact verified-delivery ledger and continuation constraints, and set
   `STATUS.json.active_implementation_plan` plus its plan anchor to `null`.
-- **Selection:** replace the current-selection section with one bounded plan
+- **Selection:** the Feature Delivery Plane replaces the current-selection section with one bounded plan
   bound to its Backlog ID, requirement ID, exact Spec revision, base commit,
   owned files, exclusions, acceptance criteria, TDD sequence, verification
   commands, and commit/removal boundaries. Update the Backlog active-plan link
   and `STATUS.json` in the same change.
-- **Execution:** update only material plan state, blockers, changed decisions,
+- **Execution:** the Feature Delivery Plane updates only material plan state, blockers, changed decisions,
   and evidence references. Do not paste command output or repeat requirement and
   backlog prose. Test results belong in concise evidence summaries or supporting
   artifacts.
-- **Completion:** replace construction detail with a short ledger entry containing
+- **Completion:** after Human Authority confirms terminal closure, the Feature Delivery Plane replaces construction detail with a short ledger entry containing
   the delivered behavior, exact commit, verification summary, and evidence path.
   Clear the active-plan link and anchor; update Backlog status/maturity and
   `STATUS.json` together. Git history preserves removed planning detail.
@@ -345,8 +347,11 @@ Before implementation:
 2. Confirm the current task against `STATUS.json`.
 3. Read only the supporting artifacts needed for that task.
 4. Do not reopen archived design/version debates unless explicitly requested.
-5. Do not create new governance, specification, or planning documents when an existing active control document should be updated.
-6. Prefer updating existing project truth over creating another competing document.
+5. The Execution Plane must not create governance, specification, planning, or
+   competing project-truth documents; it reports `PLAN_CHANGE_REQUIRED` when an
+   active control needs revision.
+6. The Feature Delivery Plane updates existing project truth instead of creating
+   a competing document.
 7. Resolve the requested work through Spec requirement → Backlog item →
    selected Implementation Plan → evidence before claiming completion.
 8. Never start work solely because a Backlog item is `READY`; verify that the
