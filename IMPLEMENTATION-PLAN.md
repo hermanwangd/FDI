@@ -15,6 +15,34 @@ authorized by the Human Reviewer on HERM-294 at reconciliation candidate
 no slice may start merely because a backlog item is active. External Graphify
 remains outside the migration.
 
+## Completed BL-008 stage-1 integration (HERM-299)
+
+- Authorization: Coordinator-created combined-integration issue for stage 1
+  of `PKB-BL-008` (`PKB-PROVIDER-001`, Spec `891e4979…`); no per-slice or
+  integration Human approval required (terminal Backlog closure still does).
+- Integration base: `bafa53fab5e166e1c14c4f825cfff89c3fb3716c`; reviewed
+  slice-3 candidate `b86b2106b7cadf07e3587ebb3d8dd534def3b3a6`
+  cherry-picked unchanged as `9fba3d7` (3 test files, +569 lines;
+  `git diff b86b210 9fba3d7 -- src/` empty).
+- Reconciled evidence record:
+  `validation/pkb001/runtime/bl008-stage1-integration-evidence.json`.
+- One live handshake PASS by direct invocation against the frozen runtime
+  (graphifyy 0.1.14 / mcp 1.29.1, graph `b416bded…` at revision 510a397):
+  initialize (MCP 2025-11-25), tools/list parity with the 7 expected
+  operations, `graph_stats` (127/235/22), `get_node GraphifyAdapter.java`
+  resolved to its exact Java source path, clean server exit 0. Raw
+  transcript:
+  `validation/pkb001/runtime/bl008-stage1-integration-handshake-20260906T074831Z.jsonl`.
+- Recorded findings (fixes explicitly out of scope): D1 no response timeout
+  (`StdioMcpClient.java:108`), D2 malformed-line `JsonParseException` escapes
+  the `RuntimeException` contract (`:113-117`), D3 `close()` never escalates
+  to `destroyForcibly()` (`:90-97`).
+- Disclosed unsealed gap preserved: `graphify-live-verify --root <worktree>`
+  preflight cannot reach the other checkout's `.fdi-work`; a copied venv
+  breaks the `direct_url.json` absolute-path binding.
+- Verification at integration candidate `9fba3d7`: see STATUS.json next_action
+  and the HERM-299 handoff.
+
 ## Completed BL-026 six-consumer tranche (HERM-290)
 
 - Authorization: Human-authorized combined integration on parent HERM-290;

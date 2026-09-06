@@ -1,0 +1,117 @@
+{
+  "integration_id": "pkb-bl008-stage1-integration",
+  "backlog_id": "PKB-BL-008",
+  "requirement_id": "PKB-PROVIDER-001",
+  "bound_spec_revision": "891e497968000c32984f26437eab811c063ec4cf",
+  "integration_base": "bafa53fab5e166e1c14c4f825cfff89c3fb3716c",
+  "integration_candidate": "9fba3d7",
+  "integration_branch": "agent/delivery-engineer/herm-299",
+  "recorded_at": "2026-09-06T07:48:54Z",
+  "mother_issue": "HERM-295",
+  "integration_issue": "HERM-299",
+  "reconciled_inputs": {
+    "slice_1_runtime_discovery": {
+      "issue": "HERM-296",
+      "handoff_comment": "01a07595-cc5c-73fb-bae7-badb8b7179df",
+      "verdict_routing": "01a07597-7786-76f2-a0d2-f41c8cd3c1ab",
+      "evidence": "validation/pkb001/runtime/graphify-discovery.json"
+    },
+    "slice_2_contract_discovery": {
+      "issue": "HERM-297",
+      "handoff_comment": "01a07597-28c7-7c05-83a9-4397044c2c57",
+      "pass_verdict": "01a075a1-7b3b-7435-bfa9-cec27df24f22",
+      "evidence": "validation/pkb001/runtime/graphify-petclinic-live-evidence.json"
+    },
+    "slice_3_java_boundary": {
+      "issue": "HERM-298",
+      "handoff_comment": "01a0759c-4f1e-709a-97a9-47a15b25fdb4",
+      "pass_verdict": "01a075a5-adf2-78c4-8a23-a38e9a92afe4",
+      "reviewed_candidate": "b86b2106b7cadf07e3587ebb3d8dd534def3b3a6",
+      "landed_commit": "9fba3d7",
+      "content_check": "git diff b86b210 9fba3d7 -- src/ is empty; landed test tree byte-identical to reviewed candidate"
+    }
+  },
+  "proven": {
+    "frozen_runtime_identity": {
+      "runtime_identity": "graphifyy",
+      "runtime_version": "0.1.14",
+      "mcp_version": "1.29.1",
+      "python_version": "3.12.11",
+      "venv_python": "/Users/herman_mbp2023/Documents/Feature-Delivery-Intelligence/.worktrees/project-folder-reorg/.fdi-work/graphify-venv312/bin/python",
+      "direct_url": "file:///Users/herman_mbp2023/Documents/Feature-Delivery-Intelligence/.worktrees/project-folder-reorg/.fdi-work/graphify-source/graphify-main",
+      "source_archive_sha256": "8d806aa861e0ffa2136eda227d79d290dfdbdb89bf0c63fd00a4e2b4ea59d445",
+      "verified_live_at_integration": true
+    },
+    "mcp_contract_parity": {
+      "wire_version": "MCP 2025-11-25",
+      "framing": "newline-delimited JSON-RPC (not Content-Length)",
+      "supported_operations": [
+        "query_graph",
+        "get_node",
+        "get_neighbors",
+        "get_community",
+        "god_nodes",
+        "graph_stats",
+        "shortest_path"
+      ],
+      "live_matches_frozen_expected_operations": true
+    },
+    "java_fail_closed_behavior": "24 new boundary tests (StdioMcpClientHandshakeTests, GraphifyAdapterFailClosedTests, GraphifyBindingAttestorFailClosedTests) pin the handshake contract and fail-closed paths against test-local stubs; full suite 712 tests green at reviewed candidate"
+  },
+  "live_handshake": {
+    "outcome": "PASS",
+    "performed_at": "2026-09-06T07:48:31Z",
+    "method": "direct invocation (framework preflight cannot reach the other checkout's .fdi-work; explicitly allowed by HERM-299 scope item 2)",
+    "server_command": [
+      "/Users/herman_mbp2023/Documents/Feature-Delivery-Intelligence/.worktrees/project-folder-reorg/.fdi-work/graphify-venv312/bin/python",
+      "-m",
+      "graphify.serve",
+      "graphify-out/graph.json"
+    ],
+    "server_cwd": "/Users/herman_mbp2023/Documents/Feature-Delivery-Intelligence/.worktrees/project-folder-reorg/.fdi-work/calibration-510a397",
+    "snapshot_binding": {
+      "requested_revision": "510a397c134324026fe6b20333dfbfa645ab67b4",
+      "indexed_revision": "510a397c134324026fe6b20333dfbfa645ab67b4",
+      "graph_sha256": "b416bded2b325e01bbecb97f5c07cd0a65225a27b890a5f4972f15f893808509",
+      "graph_matches_frozen_artifact": "validation/pkb001/artifacts/graph-510a397.json"
+    },
+    "observed": {
+      "protocol_version": "2025-11-25",
+      "server_info": {"name": "graphify", "version": "1.29.1"},
+      "graph_stats": "127 nodes, 235 edges, 22 communities",
+      "node_query": "GraphifyAdapter.java resolved to src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyAdapter.java L1",
+      "server_exit": "clean session close, returncode 0"
+    },
+    "transcript": "validation/pkb001/runtime/bl008-stage1-integration-handshake-20260906T074831Z.jsonl",
+    "transcript_result": "validation/pkb001/runtime/bl008-stage1-integration-handshake-20260906T074831Z.jsonl.result.json"
+  },
+  "recorded_defects_not_in_scope": [
+    {
+      "id": "BL008-D1",
+      "summary": "StdioMcpClient.request() has no response timeout; blocking readLine() can hang indefinitely",
+      "location": "src/main/java/com/featuredeliveryintelligence/fdi/validation/liveverifier/StdioMcpClient.java:108",
+      "status": "RECORDED_FINDING_ONLY"
+    },
+    {
+      "id": "BL008-D2",
+      "summary": "Malformed line escapes catch (RuntimeException) as Jackson JsonParseException (IOException), diverging from class javadoc contract",
+      "location": "src/main/java/com/featuredeliveryintelligence/fdi/validation/liveverifier/StdioMcpClient.java:113-117",
+      "status": "RECORDED_FINDING_ONLY"
+    },
+    {
+      "id": "BL008-D3",
+      "summary": "close() waits up to 10s and never escalates to destroyForcibly()",
+      "location": "src/main/java/com/featuredeliveryintelligence/fdi/validation/liveverifier/StdioMcpClient.java:90-97",
+      "status": "RECORDED_FINDING_ONLY"
+    }
+  ],
+  "disclosed_coverage_gap": {
+    "summary": "graphify-live-verify --root <this worktree> still fails preflight because .fdi-work/ exists only under the other checkout's root; a copied venv fails the direct_url.json absolute-path binding. The Java live-verifier CLI itself has therefore not been exercised end-to-end against the real runtime; runtime reachability and contract parity are instead proven by direct invocation in this record.",
+    "status": "DISCLOSED_UNSEALED"
+  },
+  "limitations": [
+    "Graphify graph.json does not embed Git revision metadata; binding is established by digest match against the frozen artifact (b416bded...).",
+    "Only deterministic Java AST extraction was used; no semantic LLM extraction was executed.",
+    "The live handshake used one frozen snapshot (510a397) served from the calibration checkout; no second graph was exercised at integration time."
+  ]
+}
