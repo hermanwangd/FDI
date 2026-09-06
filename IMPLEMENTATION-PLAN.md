@@ -4,38 +4,21 @@ This file contains only the current selection state, verified delivery ledger,
 and executable continuation constraints. `FRAMEWORK-SPEC.md` defines what;
 `BACKLOG.md` records maturity; this plan defines how selected work is delivered.
 
-## BL-027 completion candidate awaiting terminal confirmation
+## No selected work
 
-- Backlog / requirement: `PKB-BL-027` / `PKB-RUNTIME-001`.
-- Bound Spec revision: `af076d9d4d90ab9d9a53cd2b60f349f571e98caf`.
-- Base commit: `af076d9d4d90ab9d9a53cd2b60f349f571e98caf`.
-- Runtime placement: ignored `.fdi-work/graphify-source/graphify-main` plus a
-  newly created `.fdi-work/graphify-venv312`; the old Documents checkout is a
-  read-only recovery source and is not deleted or modified.
-- Runtime acceptance: Graphify 0.1.14 and MCP 1.29.1 provenance binds to the new
-  workspace, frozen graph digest remains `b416bded…`, and packaged
-  `graphify-live-verify --root <workspace>` completes a real handshake.
-- Java acceptance: test-first coverage proves a finite configurable response
-  timeout, malformed response normalization to `VerificationFailure`, bounded
-  graceful close followed by forced termination, preserved interruption, and no
-  surviving child process.
-- Verification: focused RED/GREEN evidence, full Java package, remaining Python
-  suite, public validator 9/9, live Graphify verification, JSON validation, and
-  `git diff --check`, all under the 8 GB aggregate limit.
-- Excluded: Graphify source changes, external-runtime Java rewrite, semantic
-  publication, holdout execution, and unrelated provider refactoring.
-- Delivered candidate: `a022b894ff2080390da87eeb017fa243f5afc1b7`. The active
-  workspace runtime is rebuilt and exactly bound without changing or deleting
-  the old recovery runtime. Java lifecycle behavior and all acceptance paths
-  are implemented.
-- Verification: 715 Java tests, 57 Python tests, Task 7 public validation 9/9,
-  reverse public validation 24/24, live Graphify `EXACTLY_BOUND` with seven
-  operations and `CLEAN_SESSION_CLOSE`, JSON validation, and clean diff.
+No Backlog item or implementation slice is currently selected.
+
+## Completed BL-027 Graphify runtime hardening
+
+- Delivered behavior: workspace-portable frozen Graphify runtime plus bounded,
+  fail-closed Java stdio-MCP response and shutdown lifecycle.
+- Implementation candidate: `a022b894ff2080390da87eeb017fa243f5afc1b7`.
+- Verification: 715 Java tests, 57 Python tests, public checks 9/9 and 24/24,
+  and live Graphify `EXACTLY_BOUND` with `CLEAN_SESSION_CLOSE`.
 - Evidence: `validation/pkb001/runtime/pkb-bl027-portable-runtime-evidence.json`.
-  No implementation work remains; only Human Reviewer terminal closure is
-  pending.
+- Human Reviewer authorized terminal closure on 2026-09-06.
 
-## No other selected work
+## Completed BL-026 migration
 
 No BL-026 slice is currently selected. `PKB-BL-026` is `VERIFIED`: all 15
 inventoried repository consumers are migrated (three completed tranches,

@@ -26,22 +26,11 @@ def test_five_active_truth_entries_exist_and_resolve():
     )
     assert maturity['next_experiment_readiness'] == 'NOT_READY'
     backlog = (ROOT/status['backlog']).read_text()
-    assert status['active_backlog_item'] == 'PKB-BL-027'
-    assert status['selected_backlog_items'] == ['PKB-BL-027']
+    assert status['active_backlog_item'] is None
+    assert status['selected_backlog_items'] == []
     assert maturity['spec_revision'] in backlog
-    execution = status['active_execution']
-    assert execution['mode'] == (
-        'COMPLETION_CANDIDATE_AWAITING_HUMAN_TERMINAL_CONFIRMATION'
-    )
-    assert execution['candidate_commit'] == (
-        'a022b894ff2080390da87eeb017fa243f5afc1b7'
-    )
-    assert execution['slices'] == [
-        'portable_graphify_runtime', 'stdio_mcp_lifecycle',
-    ]
-    assert status['active_implementation_plan'] == (
-        'IMPLEMENTATION-PLAN.md#bl-027-completion-candidate-awaiting-terminal-confirmation'
-    )
+    assert status['active_execution'] is None
+    assert status['active_implementation_plan'] is None
     if status['review_packet'] is not None:
         assert (ROOT/status['review_packet']).is_file()
 
