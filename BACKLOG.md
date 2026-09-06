@@ -1,7 +1,7 @@
 # PKB-001 Backlog
 
 This is the canonical requirement-to-work ledger for Framework Spec revision
-`af076d9d4d90ab9d9a53cd2b60f349f571e98caf`. Each normative requirement has
+`48924076261302156faf0011edb554fc19bbb2c0`. Each normative requirement has
 exactly one backlog record. Status means:
 
 - `VERIFIED`: implementation and verification evidence exist.
