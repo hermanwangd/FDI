@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
-"""Public-seam validator for the deterministic PKB-001 Task 7 evaluation."""
+"""Public-seam validator for the deterministic PKB-001 Task 7 evaluation.
+
+The fresh evaluation is produced by the packaged Java CLI
+(``java -jar target/fdi-0.4.8.3.jar task7-evaluate``), the migrated
+replacement for the transitional Python consumer. This validator only reads
+the committed artifacts and asserts the public contract; it contains no
+evaluator logic beyond the fixed third-review packet derivation.
+"""
 
 import json
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 
@@ -15,16 +24,52 @@ def load(path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def validate(root):
-    sys.path.insert(0, str(root))
-    from tooling.validation.pkb001_task7_evaluate import (
-        build_third_review_packet,
-        evaluate_repository,
-    )
+def run_packaged_evaluation(root):
+    """Runs the packaged CLI once, returning (report, pending) from its outputs."""
+    jar = root / "target" / "fdi-0.4.8.3.jar"
+    if not jar.is_file():
+        raise SystemExit(f"packaged Task 7 CLI jar is missing: {jar}")
+    with tempfile.TemporaryDirectory() as tmp:
+        pending_path = Path(tmp) / "third-review-pending.json"
+        completed = subprocess.run(
+            ["java", "-jar", str(jar), "task7-evaluate", "--root", str(root),
+             "--pending", str(pending_path)],
+            check=False,
+            text=True,
+            capture_output=True,
+        )
+        if completed.returncode != 0:
+            raise SystemExit(
+                f"packaged Task 7 CLI exited {completed.returncode}: {completed.stderr}"
+            )
+        fresh = json.loads(completed.stdout)
+        pending = load(pending_path)
+    return fresh, pending
 
+
+def build_third_review_packet(report):
+    """Fixed derivation of the pending packet from a report (reference contract)."""
+    pending = report["pending_third_review"]
+    return {
+        "schema_version": "pkb001.task7.third-review-pending.v1",
+        "status": pending["status"],
+        "packet_sha256": report["pre_unblinding_validation"]["packet_sha256"],
+        "reviewer_context_required": {
+            "actor_type": "NON_HUMAN_OR_HUMAN_EVALUATOR",
+            "authority": "EVALUATOR_ONLY",
+            "independent_from_reviewer_01_and_reviewer_02": True,
+            "can_complete_product_team_review": False,
+        },
+        "item_count": pending["item_count"],
+        "items": pending["items"],
+        "instruction": "Record an independent third judgment; do not infer or publish Product truth.",
+    }
+
+
+def validate(root):
     persisted = load(root / REPORT)
     pending = load(root / PENDING)
-    fresh = evaluate_repository(root)
+    fresh, cli_pending = run_packaged_evaluation(root)
     checks = []
 
     def check(name, condition, detail):
@@ -61,6 +106,7 @@ def validate(root):
         and persisted["reviewer_agreement"]["outcome_disagreement_ids"]
         == ["BR-002", "BR-004", "BR-005", "BR-006", "BR-008", "BR-012", "BR-013", "BR-014"]
         and pending == build_third_review_packet(persisted)
+        and cli_pending == pending
         and all("third_judgment" not in row for row in pending["items"]),
         "All action/outcome disagreements are listed without a fabricated third judgment",
     )

@@ -15,26 +15,17 @@
   "spec_maturity": {
     "spec_revision": "891e497968000c32984f26437eab811c063ec4cf",
     "normative_requirements": 23,
-    "m3_verified": 8,
-    "m1_backlogged": 15,
+    "m3_verified": 9,
+    "m1_backlogged": 14,
     "next_experiment_readiness": "NOT_READY"
   },
   "active_backlog_item": "PKB-BL-026",
-  "active_implementation_plan": "IMPLEMENTATION-PLAN.md#selected-work-bl-026-four-consumer-parallel-java-migration",
-  "next_action": "Complete combined integration and independent combined-candidate review for the selected four-consumer tranche, then select the next dependency-safe PKB-BL-026 tranche.",
-  "active_execution": {
-    "base_commit": "49ea9992a7cced2598f33071a8eefba53ff4e747",
-    "mode": "COMBINED_INTEGRATION",
-    "slices": [
-      "graphify_runtime_probe.py",
-      "pkb001_history.py",
-      "pkb001_acquisition.py",
-      "pkb001_runner.py"
-    ]
-  },
+  "active_implementation_plan": null,
+  "next_action": "PKB-BL-026 terminal closure is complete: BACKLOG.md records VERIFIED at reconciliation candidate 63fffab9e0fa6d55c435444c39125108a579cc32 (combined candidate fb729012f5f5ff9ee17a844d200b47ffdf15a65a), authorized by the Human Reviewer on HERM-294. PKB-JAVA-001 is M3_VERIFIED (15/15 repository consumers MIGRATED_TO_JAVA). Next experiment readiness stays NOT_READY pending BL-025 human review, BL-004 adjudication, and the BL-006 through BL-017 chain. The graphify-live-verify live stdio-MCP coverage gap remains disclosed and unsealed.",
+  "active_execution": null,
   "framework_language_target": "JAVA_17_SPRING_BOOT_3_4_1",
   "external_graphify_runtime": "PYTHON_MCP_PROVIDER_OUTSIDE_FRAMEWORK_MIGRATION",
-  "python_framework_status": "TRANSITIONAL_MIGRATION_INPUT",
+  "python_framework_status": "ALL_REPOSITORY_CONSUMERS_MIGRATED_TO_JAVA_REMAINING_PYTHON_IS_TRANSITIONAL_TESTS_AND_VALIDATORS",
   "archived_documents_are_authority": false,
   "review_packet": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-progress-001.md",
   "evaluation_reference_packet": "validation/pkb001/human-review/HUMAN-REVIEW-DECISION-PACKET.zh-TW.md",

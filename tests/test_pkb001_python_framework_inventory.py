@@ -12,6 +12,35 @@ COMPARE = "tooling/validation/pkb001_component_compare.py"
 BLIND = "tooling/validation/pkb001_blind_review.py"
 NEXT_RUN = "tooling/validation/pkb001_next_run_gate.py"
 CODE_BASELINE = "tooling/validation/pkb001_code_baseline.py"
+RUNTIME_PROBE = "tooling/validation/graphify_runtime_probe.py"
+ACQUISITION = "tooling/validation/pkb001_acquisition.py"
+HISTORY = "tooling/validation/pkb001_history.py"
+RUNNER = "tooling/validation/pkb001_runner.py"
+GATE = "tooling/validation/pkb001_gate.py"
+EVALUATE = "tooling/validation/pkb001_evaluate.py"
+LIVE_VERIFIER = "tooling/validation/graphify_live_verifier.py"
+SCENARIO_REVIEW = "tooling/validation/pkb001_scenario_review.py"
+HUMAN_REVIEW_PACKET = "tooling/validation/build_pkb001_human_review_packet.py"
+TASK7 = "tooling/validation/pkb001_task7_evaluate.py"
+PARITY_REPORT = "validation/pkb001/java-migration/bl026-six-consumer-parity.md"
+SKILL = "skills/pkb001/pk-scenario-proposal/SKILL.md"
+RUNTIME_PROBE_JAVA_CLI = (
+    "java -jar target/fdi-0.4.8.3.jar graphify-runtime-probe "
+    "[--command PATH] [--descriptor PATH] [--output PATH]"
+)
+ACQUISITION_JAVA_CLI = (
+    "java -jar target/fdi-0.4.8.3.jar acquisition-validate "
+    "--root <dir> --manifest <path>"
+)
+HISTORY_JAVA_CLI = (
+    "java -jar target/fdi-0.4.8.3.jar delivery-history-generate "
+    "--repo <path> --source-sha <sha> --cutoff <iso> --prs <path> --output <path>"
+)
+RUNNER_JAVA_CLI = (
+    "java -jar target/fdi-0.4.8.3.jar experiment-runner-validate "
+    "--workspace <dir> --arm {F1,R1,R2,R3} --input <relative> "
+    "[--input <relative> ...] [--report <path>]"
+)
 CODE_BASELINE_JAVA_CLI = (
     "java -jar target/fdi-0.4.8.3.jar code-baseline-generate "
     "--arm <arm> --input <category=path> --output <path>"
@@ -27,6 +56,32 @@ BLIND_JAVA_CLI = (
 NEXT_RUN_JAVA_CLI = (
     "java -jar target/fdi-0.4.8.3.jar next-run-validate "
     "--root <dir> --request <path> --report <path>"
+)
+GATE_JAVA_CLI = (
+    "java -jar target/fdi-0.4.8.3.jar phase0-readiness-validate "
+    "[--root <dir>] [--evidence <path>] [--output <path>]"
+)
+EVALUATE_JAVA_CLI = (
+    "java -jar target/fdi-0.4.8.3.jar blinded-evaluate "
+    "--proposals <path> --judgments <path> [--minimum-proposals N] "
+    "[--minimum-gold N] [--hard-failures a,b,c] "
+    "[--report-id ID --ground-truth-sha256 SHA] [--output PATH]"
+)
+LIVE_VERIFIER_JAVA_CLI = (
+    "java -jar target/fdi-0.4.8.3.jar graphify-live-verify "
+    "[--root <dir>] --output <path>"
+)
+SCENARIO_REVIEW_JAVA_CLI = (
+    "java -jar target/fdi-0.4.8.3.jar scenario-review-render "
+    "--root ROOT --proposal PROPOSAL --json-output JSON_OUTPUT "
+    "--markdown-output MARKDOWN_OUTPUT"
+)
+HUMAN_REVIEW_PACKET_JAVA_CLI = (
+    "java -jar target/fdi-0.4.8.3.jar human-review-packet-build [--root <dir>]"
+)
+TASK7_JAVA_CLI = (
+    "java -jar target/fdi-0.4.8.3.jar task7-evaluate "
+    "[--root <dir>] [--report <path>] [--pending <path>]"
 )
 
 
@@ -349,7 +404,11 @@ def test_python_framework_inventory_characterizes_the_migration_boundary():
         consumer["path"]
         for consumer in consumers
         if consumer["migration_state"] == "MIGRATED_TO_JAVA"
-    ] == [BLIND, CODE_BASELINE, COMPARE, NEXT_RUN, SELECTED]
+    ] == [
+        HUMAN_REVIEW_PACKET, LIVE_VERIFIER, RUNTIME_PROBE, ACQUISITION, BLIND,
+        CODE_BASELINE, COMPARE, EVALUATE, GATE, HISTORY, NEXT_RUN, RUNNER,
+        SELECTED, SCENARIO_REVIEW, TASK7,
+    ]
     assert all(
         consumer["migration_state"] == "TRANSITIONAL"
         for consumer in consumers
@@ -359,10 +418,10 @@ def test_python_framework_inventory_characterizes_the_migration_boundary():
         line for line in (ROOT / "BACKLOG.md").read_text().splitlines()
         if line.startswith("| `PKB-BL-026`")
     )
-    assert "| `IN_PROGRESS` |" in backlog_row
+    assert "| `VERIFIED` |" in backlog_row
     status = json.loads((ROOT / "STATUS.json").read_text())
     assert status["active_backlog_item"] == "PKB-BL-026"
-    assert status["spec_maturity"]["m3_verified"] == 8
+    assert status["spec_maturity"]["m3_verified"] == 9
 
     external = inventory["external_runtimes"]
     assert len(external) == 1
@@ -493,3 +552,223 @@ def test_code_baseline_consumer_is_cut_over_to_java():
     )
     assert migrated["java_cli"] == CODE_BASELINE_JAVA_CLI
     assert migrated["verification_evidence"]["characterization_test_count"] == 6
+
+
+def test_runtime_probe_consumer_is_cut_over_to_java():
+    inventory = json.loads(INVENTORY.read_text())
+    migrated = next(
+        consumer
+        for consumer in inventory["repository_consumers"]
+        if consumer["path"] == RUNTIME_PROBE
+    )
+
+    assert not (ROOT / RUNTIME_PROBE).exists()
+    assert migrated["migration_state"] == "MIGRATED_TO_JAVA"
+    assert migrated["active_callers"] == []
+    assert migrated["java_api"] == (
+        "com.featuredeliveryintelligence.fdi.validation.runtimeprobe."
+        "GraphifyRuntimeProbe"
+    )
+    assert migrated["java_cli"] == RUNTIME_PROBE_JAVA_CLI
+    assert migrated["verification_evidence"]["characterization_test_count"] == 23
+
+
+def test_acquisition_consumer_is_cut_over_to_java():
+    inventory = json.loads(INVENTORY.read_text())
+    migrated = next(
+        consumer
+        for consumer in inventory["repository_consumers"]
+        if consumer["path"] == ACQUISITION
+    )
+
+    assert not (ROOT / ACQUISITION).exists()
+    assert migrated["migration_state"] == "MIGRATED_TO_JAVA"
+    assert migrated["active_callers"] == []
+    assert migrated["java_api"] == (
+        "com.featuredeliveryintelligence.fdi.validation.acquisition."
+        "AcquisitionValidator"
+    )
+    assert migrated["java_cli"] == ACQUISITION_JAVA_CLI
+    assert migrated["verification_evidence"]["characterization_test_count"] == 28
+    assert migrated["verification_evidence"]["disclosed_parity_limits"] == [
+        "acquired_at/history_cutoff with more than 9 fractional digits"
+        " are rejected by the Java port",
+        "lowercase 't' ISO-8601 date-time separator is rejected by the"
+        " Java port",
+    ]
+
+
+def test_history_consumer_is_cut_over_to_java():
+    inventory = json.loads(INVENTORY.read_text())
+    migrated = next(
+        consumer
+        for consumer in inventory["repository_consumers"]
+        if consumer["path"] == HISTORY
+    )
+
+    assert not (ROOT / HISTORY).exists()
+    assert not (ROOT / "tests/test_pkb_history.py").exists()
+    assert migrated["migration_state"] == "MIGRATED_TO_JAVA"
+    assert migrated["active_callers"] == []
+    assert migrated["java_api"] == (
+        "com.featuredeliveryintelligence.fdi.validation.deliveryhistory."
+        "DeliveryHistory"
+    )
+    assert migrated["java_cli"] == HISTORY_JAVA_CLI
+    assert migrated["verification_evidence"]["characterization_test_count"] == 10
+
+
+def test_runner_consumer_is_cut_over_to_java():
+    inventory = json.loads(INVENTORY.read_text())
+    migrated = next(
+        consumer
+        for consumer in inventory["repository_consumers"]
+        if consumer["path"] == RUNNER
+    )
+
+    assert not (ROOT / RUNNER).exists()
+    assert migrated["migration_state"] == "MIGRATED_TO_JAVA"
+    assert migrated["active_callers"] == []
+    assert migrated["java_api"] == (
+        "com.featuredeliveryintelligence.fdi.validation.experimentrunner."
+        "ExperimentRunner"
+    )
+    assert migrated["java_cli"] == RUNNER_JAVA_CLI
+    assert migrated["verification_evidence"]["characterization_test_count"] == 15
+
+
+def test_gate_consumer_is_cut_over_to_java():
+    inventory = json.loads(INVENTORY.read_text())
+    migrated = next(
+        consumer
+        for consumer in inventory["repository_consumers"]
+        if consumer["path"] == GATE
+    )
+
+    assert not (ROOT / GATE).exists()
+    assert not (ROOT / "tests/test_pkb001_phase0.py").exists()
+    assert not (ROOT / "tests/test_pkb001_petclinic_evaluator_seal.py").exists()
+    assert migrated["migration_state"] == "MIGRATED_TO_JAVA"
+    assert migrated["active_callers"] == []
+    assert migrated["java_api"] == (
+        "com.featuredeliveryintelligence.fdi.validation.readiness."
+        "Phase0Readiness"
+    )
+    assert migrated["java_cli"] == GATE_JAVA_CLI
+    assert (ROOT / PARITY_REPORT).is_file()
+    assert migrated["verification_evidence"]["parity_verdict"] == "PASS"
+    assert migrated["verification_evidence"]["characterization_evidence"].startswith(
+        "tests/test_pkb001_phase0.py characterization (21 cases"
+    )
+    assert migrated["verification_evidence"]["disclosed_parity_limits"] == [
+        'dangling-symlink --output: Python reports "output path must remain '
+        'inside repository root", Java reports "output path must not be a '
+        "symlink\"; both fail-closed exit 1"
+    ]
+
+
+def test_evaluate_consumer_is_cut_over_to_java():
+    inventory = json.loads(INVENTORY.read_text())
+    migrated = next(
+        consumer
+        for consumer in inventory["repository_consumers"]
+        if consumer["path"] == EVALUATE
+    )
+
+    assert not (ROOT / EVALUATE).exists()
+    assert not (ROOT / "tests/test_pkb001_phase0.py").exists()
+    assert migrated["migration_state"] == "MIGRATED_TO_JAVA"
+    assert migrated["active_callers"] == []
+    assert migrated["java_api"] == (
+        "com.featuredeliveryintelligence.fdi.validation.blindevaluation."
+        "BlindEvaluation"
+    )
+    assert migrated["java_cli"] == EVALUATE_JAVA_CLI
+    assert migrated["verification_evidence"]["parity_verdict"] == "PASS"
+
+
+def test_live_verifier_consumer_is_cut_over_to_java():
+    inventory = json.loads(INVENTORY.read_text())
+    migrated = next(
+        consumer
+        for consumer in inventory["repository_consumers"]
+        if consumer["path"] == LIVE_VERIFIER
+    )
+
+    assert not (ROOT / LIVE_VERIFIER).exists()
+    assert not (ROOT / "tests/test_pkb001_phase0.py").exists()
+    assert migrated["migration_state"] == "MIGRATED_TO_JAVA"
+    assert migrated["active_callers"] == []
+    assert migrated["java_api"] == (
+        "com.featuredeliveryintelligence.fdi.validation.liveverifier."
+        "GraphifyLiveVerifier"
+    )
+    assert migrated["java_cli"] == LIVE_VERIFIER_JAVA_CLI
+    assert migrated["verification_evidence"]["parity_verdict"] == "PASS"
+    assert any(
+        "no reachable Graphify MCP server" in limit
+        for limit in migrated["verification_evidence"]["disclosed_parity_limits"]
+    )
+
+
+def test_scenario_review_consumer_is_cut_over_to_java():
+    inventory = json.loads(INVENTORY.read_text())
+    migrated = next(
+        consumer
+        for consumer in inventory["repository_consumers"]
+        if consumer["path"] == SCENARIO_REVIEW
+    )
+    skill = (ROOT / SKILL).read_text()
+
+    assert not (ROOT / SCENARIO_REVIEW).exists()
+    assert not (ROOT / "tests/test_pkb001_scenario_review.py").exists()
+    assert migrated["migration_state"] == "MIGRATED_TO_JAVA"
+    assert migrated["active_callers"] == []
+    assert migrated["java_api"] == (
+        "com.featuredeliveryintelligence.fdi.validation.scenarioreview."
+        "ScenarioReview"
+    )
+    assert migrated["java_cli"] == SCENARIO_REVIEW_JAVA_CLI
+    assert migrated["verification_evidence"]["characterization_test_count"] == 23
+    assert "java -jar target/fdi-0.4.8.3.jar scenario-review-render" in skill
+    assert "python3 tooling/validation/pkb001_scenario_review.py" not in skill
+
+
+def test_human_review_packet_consumer_is_cut_over_to_java():
+    inventory = json.loads(INVENTORY.read_text())
+    migrated = next(
+        consumer
+        for consumer in inventory["repository_consumers"]
+        if consumer["path"] == HUMAN_REVIEW_PACKET
+    )
+
+    assert not (ROOT / HUMAN_REVIEW_PACKET).exists()
+    assert not (ROOT / "tests/test_pkb001_human_review_packet.py").exists()
+    assert migrated["migration_state"] == "MIGRATED_TO_JAVA"
+    assert migrated["active_callers"] == []
+    assert migrated["java_api"] == (
+        "com.featuredeliveryintelligence.fdi.validation.humanreviewpacket."
+        "HumanReviewPacket"
+    )
+    assert migrated["java_cli"] == HUMAN_REVIEW_PACKET_JAVA_CLI
+    assert migrated["verification_evidence"]["characterization_test_count"] == 6
+
+
+def test_task7_consumer_is_cut_over_to_java():
+    inventory = json.loads(INVENTORY.read_text())
+    migrated = next(
+        consumer
+        for consumer in inventory["repository_consumers"]
+        if consumer["path"] == TASK7
+    )
+
+    assert not (ROOT / TASK7).exists()
+    assert not (ROOT / "tests/test_pkb001_task7_evaluation.py").exists()
+    assert migrated["migration_state"] == "MIGRATED_TO_JAVA"
+    assert migrated["active_callers"] == []
+    assert migrated["java_api"] == (
+        "com.featuredeliveryintelligence.fdi.validation.task7."
+        "Task7Evaluation"
+    )
+    assert migrated["java_cli"] == TASK7_JAVA_CLI
+    assert migrated["verification_evidence"]["characterization_test_count"] == 12

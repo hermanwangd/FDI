@@ -4,38 +4,65 @@ This file contains only the current selection state, verified delivery ledger,
 and executable continuation constraints. `FRAMEWORK-SPEC.md` defines what;
 `BACKLOG.md` records maturity; this plan defines how selected work is delivered.
 
-## Selected work: BL-026 four-consumer parallel Java migration
+## No selected work
 
-- Backlog / requirement: `PKB-BL-026` / `PKB-JAVA-001`.
-- Parent state: `PKB-BL-026` remains `IN_PROGRESS` until all repository-owned
-  framework consumers are migrated and final Human closure is approved.
+No BL-026 slice is currently selected. `PKB-BL-026` is `VERIFIED`: all 15
+inventoried repository consumers are migrated (three completed tranches,
+latest combined candidate
+`fb729012f5f5ff9ee17a844d200b47ffdf15a65a`), and terminal closure was
+authorized by the Human Reviewer on HERM-294 at reconciliation candidate
+`63fffab9e0fa6d55c435444c39125108a579cc32`. No consumer migration remains;
+no slice may start merely because a backlog item is active. External Graphify
+remains outside the migration.
+
+## Completed BL-026 six-consumer tranche (HERM-290)
+
+- Authorization: Human-authorized combined integration on parent HERM-290;
+  no per-slice Human approval required.
+- Integration base: `2ede764b470aa70909f851f1c08fbe3532ebbfd0`; replayed
+  slice commits `3c7704c`, `6e010f0`, `869f1f7`, `fba1312`; integration
+  commits `691f3b8`, `6594765`, `fb72901`.
 - Bound spec revision: `891e497968000c32984f26437eab811c063ec4cf`.
-- Base commit: `9dda47b2f94b6c45b208266b704a2747a20c8c7a`.
-- Runtime target: Java 17 / Spring Boot 3.4.1; external Graphify Python MCP
-  runtime remains unchanged and outside migration.
-- Selected consumers: `graphify_runtime_probe.py`, `pkb001_history.py`,
-  `pkb001_acquisition.py`, and `pkb001_runner.py`.
+- Combined candidate: `fb729012f5f5ff9ee17a844d200b47ffdf15a65a`; combined
+  independent exact-revision review PASS (HERM-291).
+- Slices (reviewed candidates, each replayed unchanged): HERM-284
+  (`pkb001_gate.py` → `phase0-readiness-validate`; `pkb001_evaluate.py` →
+  `blinded-evaluate`; `graphify_live_verifier.py` → `graphify-live-verify`),
+  HERM-285 (`pkb001_scenario_review.py` → `scenario-review-render`;
+  `build_pkb001_human_review_packet.py` → `human-review-packet-build`),
+  HERM-286 (`pkb001_task7_evaluate.py` → `task7-evaluate`).
+- Verification at the combined candidate: 688 Java tests; parity verdict PASS
+  for all six consumers (report
+  `validation/pkb001/java-migration/bl026-six-consumer-parity.md`; the
+  graphify-live-verify live stdio-MCP exercise was not run and remains a
+  disclosed coverage gap); inventory records 15/15 repository consumers
+  `MIGRATED_TO_JAVA`.
+- Final `PKB-BL-026` closure was authorized by the Human Reviewer (HERM-294)
+  and applied at the reconciliation candidate; see `BACKLOG.md`.
 
-The four slices run independently. Each owns a distinct Java package and new
-Java tests. Slice agents must not edit the five active control files, the shared
-Python inventory, or another slice's files. The integration owner alone updates
-existing shared Python callers, inventory, controls, and removes replaced Python
-consumers after all exact-behavior parity gates pass.
+## Completed BL-026 four-consumer tranche (HERM-281)
 
-| Slice | Owned implementation | Acceptance boundary |
-|---|---|---|
-| Runtime probe | Java Graphify runtime discovery package, CLI, and tests | Preserve descriptor validation, command discovery, JSON/stdout, and exit behavior without changing Graphify. |
-| Delivery history | Java delivery-history package, CLI, and tests | Preserve exact-revision/cutoff Git reconstruction, PR filtering, deterministic output, and failures. |
-| Acquisition | Java acquisition-validation package, CLI, and tests | Preserve bounded paths, digest/tree validation, timestamps, deterministic output, and failures. |
-| Runner | Java experiment-runner package, CLI, and tests | Preserve arm input allowlists, subprocess isolation, deterministic reports, and failures. |
-
-Every slice follows test-first characterization: add a failing Java test,
-confirm RED, implement minimally, confirm focused GREEN, then self-review. A
-slice is not cut over merely because Java tests pass. Integration additionally
-requires byte/field and exit-code parity against the frozen Python behavior,
-full Java/Python regression, public validation 9/9, and independent exact-tip
-review. No per-slice Human approval is required; Human approval remains required
-before final `PKB-BL-026` closure.
+- Authorization: Human-authorized combined integration on parent HERM-273;
+  no per-slice Human approval required.
+- Integration base: `49ea9992a7cced2598f33071a8eefba53ff4e747`; approved
+  ancestor base for slice deltas: `62b5f75522ce01e2a7ae8da3c5e4e3bf3199408d`.
+- Replay: slice commits cherry-picked unchanged; the shared `FdiApplication`
+  dispatch was resolved once; slice-owned file content is byte-identical to
+  each reviewed candidate.
+- Slices (reviewed candidates): HERM-277 runtime probe
+  (`21f92f4f42b6b449130efc416ab022709afeceec`; 23 characterization + 12 CLI
+  tests; byte-identical parity), HERM-278 delivery history
+  (`de1d861987199c0d3ec3a64a32d02badbd0d99be`; 10 + 14; JSON-identical
+  parity), HERM-279 acquisition round 2
+  (`80c8c3aa159abbfed8a0ec1fe4c1d67e3b3b7890`; 28 + 9; byte-identical parity
+  with disclosed non-generated limits), HERM-280 experiment runner
+  (`7247a1dc6f91396356d4d9e64f9ee036f2fcb210`; 15 + 12; JSON-identical
+  parity).
+- Combined verification at the integration candidate: 517 Java tests; Python
+  suite green; public validation 9/9; at that candidate the inventory records
+  6 `TRANSITIONAL` consumers (since migrated — see the six-consumer tranche
+  above).
+- This is a completion record, not authority to select the next consumer.
 
 After combined verification, record this tranche and select the next
 dependency-safe BL-026 migration work without changing the requirement scope.
