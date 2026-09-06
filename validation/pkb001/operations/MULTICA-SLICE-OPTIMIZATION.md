@@ -18,9 +18,10 @@ compact evidence. Read this file for dispatch or post-slice analysis only.
   non-overlapping ownership. Integrate shared controls serially and verify the
   combined candidate. Stay within the aggregate 8 GB resource limit.
 - A worker's final handoff names the exact candidate, changed paths, actual test
-  results, limitations, blockers, and required reviewer, then mentions
-  `@Delivery Coordinator` as its final write. The worker leaves the issue active;
-  it does not move itself to `in_review`. The Coordinator validates the handoff,
+  results, limitations, blockers, and required reviewer. It then explicitly
+  reassigns the child to Delivery Coordinator as the one handoff trigger.
+  Plain-text `@Delivery Coordinator` does not count as routing. The worker
+  leaves the issue active and does not move itself to `in_review`. The Coordinator validates the handoff,
   transitions the issue, and assigns review exactly once. On every wake it also
   checks the controller's full expected child set for a completed-but-unrouted
   sibling.

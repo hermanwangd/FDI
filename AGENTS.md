@@ -277,12 +277,14 @@ routing, and assigns each non-overlapping child exactly once.
 
 A specialist leaves its child active and publishes one complete handoff naming
 the exact candidate, changed scope, tests and results, limitations, blockers,
-and required next reviewer. Its final write must mention `@Delivery Coordinator`.
-The specialist must not move its own child to `in_review`; only the Coordinator
-does so after validating handoff completeness and assigning the reviewer. On
+and required next reviewer. After that comment, its single handoff trigger is
+an explicit reassignment of the child to Delivery Coordinator; plain-text
+`@Delivery Coordinator` is not a reliable mention trigger and must not be used
+for routing. The specialist must not move its own child to `in_review`; only the
+Coordinator does so after validating handoff completeness and assigning the reviewer. On
 each wake, the Coordinator reconciles all expected children in the controller,
 so one missed mention cannot strand another completed sibling. Parent/child
-tracking is the primary safeguard; the final mention is the secondary trigger.
+tracking is the primary safeguard; explicit reassignment is the routing trigger.
 
 For recovery of already-completed unparented slices, trigger the Coordinator
 once with the explicit issue set. Do not rerun producers and do not emit one
