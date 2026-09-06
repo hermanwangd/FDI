@@ -18,6 +18,9 @@ public class FdiApplication {
         if (CodeBaselineCli.handles(args)) {
             System.exit(CodeBaselineCli.run(args, System.out, System.err));
         }
+        if (GraphifyRuntimeProbeCli.handles(args)) {
+            System.exit(GraphifyRuntimeProbeCli.run(args, System.out, System.err));
+        }
         if (Dev204Cli.handles(args)) return;
         SpringApplication.run(FdiApplication.class, args);
     }
