@@ -1,7 +1,7 @@
 # PKB-001 Backlog
 
 This is the canonical requirement-to-work ledger for Framework Spec revision
-`8972bca6522ecba98b4a11cbbd5af9addb6648b1`. Each normative requirement has
+`c396b3cf6e3a32d55c1fb57827f2022e4409df8d`. Each normative requirement has
 exactly one backlog record. Status means:
 
 - `VERIFIED`: implementation and verification evidence exist.
@@ -25,7 +25,7 @@ exactly one backlog record. Status means:
 | `PKB-BL-007` | `FEATURE` | `PKB-MAPPING-001` | Add scenario traces to the PK-S1 mapping contract under the Java-only target. | `NEEDS_RECONCILIATION` | Preserve PK-S1 v0.2; select a new contract version after BL-006. |
 | `PKB-BL-008` | `RESEARCH` | `PKB-PROVIDER-001` | Verify actual Graphify UI/template capability or record the gap. | `VERIFIED` | Frozen provider contract and live MCP handshake verified. Evidence: `validation/pkb001/runtime/bl008-stage1-integration-evidence.json`. |
 | `PKB-BL-027` | `BUG` | `PKB-RUNTIME-001` | Make the external Graphify runtime workspace-portable and bound the Java stdio-MCP lifecycle. | `VERIFIED` | Candidate `a022b894ff2080390da87eeb017fa243f5afc1b7`. Evidence: `validation/pkb001/runtime/pkb-bl027-portable-runtime-evidence.json`. |
-| `PKB-BL-009` | `FEATURE` | `PKB-REVERSE-002` | Derive reviewable Capability and Behavior Scenario proposals from structural, repository-test, and delivery evidence. | `IN_PROGRESS` | Reconciled to `IMPLEMENTATION-PLAN.md#pkb-bl-009-test-informed-reverse-discovery`; existing defect ledger remains evaluator-only. |
+| `PKB-BL-009` | `FEATURE` | `PKB-REVERSE-002` | Derive reviewable Capability and Behavior Scenario proposals from structural, repository-test, and delivery evidence. | `IN_PROGRESS` | Current bounded discovery: `IMPLEMENTATION-PLAN.md#pkb-bl-009-graphify-test-capability-discovery`; existing defect ledger remains evaluator-only. |
 | `PKB-BL-010` | `VALIDATION` | `PKB-EVAL-001` | Add sealed provider-neutral component identity to evaluator truth. | `BLOCKED_DEPENDENCY` | Depends on BL-007. |
 | `PKB-BL-011` | `VALIDATION` | `PKB-EVAL-002` | Separate scenario, chain, component, and diagnostic measures. | `BLOCKED_DEPENDENCY` | Depends on BL-007 and BL-010. |
 | `PKB-BL-012` | `VALIDATION` | `PKB-CALIBRATION-001` | Freeze justified numeric acceptance thresholds before the next run. | `BLOCKED_DEPENDENCY` | Depends on BL-011 and human review. |

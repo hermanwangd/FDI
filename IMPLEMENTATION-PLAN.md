@@ -6,87 +6,78 @@ the current execution state and next action.
 
 ## Current selection
 
-### PKB-BL-009 Test-informed Reverse discovery
+### PKB-BL-009 Graphify test capability discovery
 
 - Backlog / requirement: `PKB-BL-009` / `PKB-REVERSE-002`
-- Spec revision: `8972bca6522ecba98b4a11cbbd5af9addb6648b1`
-- Base commit: `8972bca6522ecba98b4a11cbbd5af9addb6648b1`
-- Execution ID: `PKB-BL-009-TEST-BEHAVIOR-001`
-- Outcome: derive proposal-only Capabilities and Behavior Scenarios from
-  exact-revision production structure, repository test behavior, and frozen
-  delivery history.
+- Spec revision: `c396b3cf6e3a32d55c1fb57827f2022e4409df8d`
+- Base commit: `c396b3cf6e3a32d55c1fb57827f2022e4409df8d`
+- Execution ID: `PKB-BL-009-GRAPHIFY-TEST-DISCOVERY-001`
+- Outcome: determine, without assumed APIs, whether the installed Graphify
+  runtime can index Petclinic tests and expose evidence that relates tests to
+  production structure.
 
-#### Sequential construction
+#### Discovery procedure
 
-1. **Provider verification.** Against Petclinic commit `818c4136...`, query the
-   real Graphify runtime for `src/test/java` indexing and test-to-production
-   relationships. Freeze the read-only result under
+1. Use the actual installed Graphify runtime and discover its supported
+   operations before issuing a test query. Do not assume, reinstall, patch, or
+   modify Graphify.
+2. Bind all observations to Petclinic exact revision
+   `818c4136ea971c21674525f9053de0d9c7ad8cfe` and its frozen source identity.
+3. Query whether `src/test/java` is indexed, which test nodes and source
+   locations are observable, and whether provider-native evidence can resolve
+   test-to-production relationships.
+4. Freeze only the discovery evidence under
    `validation/pkb001/reverse-pkb-bl009-petclinic-001/provider-discovery/`.
-   Do not assume, reinstall, or modify Graphify. If required observations are
-   absent, record the gap before using the Spec-authorized Java fallback.
-2. **Test-behavior evidence.** Add a schema plus Java extractor/validator/CLI in
-   `validation/pkb001/schemas/`,
-   `src/main/java/com/featuredeliveryintelligence/fdi/validation/testbehavior/`,
-   and the matching application/test packages. Freeze test identity/location,
-   fixtures, action, assertions, negative cases, production references,
-   provider basis, strength, limitations, revision, and digest. Technical-only
-   tests remain evidence but are marked ineligible to create a Product proposal
-   by themselves.
-3. **Reverse v0.2 contract.** Add
-   `capability-hypothesis-set-v0.2.schema.json` and Java validation under
-   `validation/reversequality/`. Each Capability contains proposal-only Behavior
-   Scenarios with separate test/structure/history references,
-   `claim_evidence`, `suspected_quality_signals`, related proposals, and
-   uncertainty. Java validates shape, references, bindings, and authority only.
-4. **Generation guidance and immutable run.** Update only the active PK-S2 skill,
-   then generate `validation/pkb001/reverse-pkb-bl009-petclinic-001/` without
-   Product Semantics, evaluator gold, the defect ledger, or post-generation
-   judgments. Freeze proposal bytes before evaluation.
-5. **Post-generation evaluation.** Map the frozen proposals to the accepted
-   Capability/scenario snapshot in an evaluator-only artifact. Java reports
-   descriptive Capability recall, scenario recall, proposal precision, and
-   defect-ledger signals from explicit evaluator mappings; it never infers
-   semantic equivalence or edits a proposal.
+   Record runtime/package/source provenance, operations and parameters, exact
+   source revision, input path and tree digest, observed node/edge types,
+   inventory coverage against 18 test files and 76 `@Test` methods,
+   relationship examples and basis, limitations, and artifact digests.
+5. Return exactly one outcome:
+   - `SUPPORTED`: exact revision is bound, test methods and locations are
+     observable, and resolvable test-to-production relationship evidence is
+     sufficient for a downstream extraction plan;
+   - `GAP`: the test root cannot be indexed, test nodes are absent, or required
+     test-to-production relationships are unavailable; or
+   - `INCONCLUSIVE`: runtime or environment failure prevents a determination.
 
-Stages are dependency-ordered and must not run in parallel. Owned paths are the
-new schemas, Java packages/CLI/tests, active PK-S2 skill, and new immutable run.
-The five controls, existing v0.1 schema/run, accepted semantics, evaluator gold,
-defect ledger, public validators, and external Graphify runtime are read-only.
+Owned paths are limited to the new provider-discovery evidence directory and
+any non-control execution evidence needed to verify its bytes. The five active
+controls, source implementation, schemas, skills, existing runs, accepted
+semantics, evaluator material, and external Graphify runtime are read-only.
+This execution does not implement a Java fallback or provider API, change a
+contract or skill, generate proposals/scenarios, or evaluate semantic quality.
 
 #### Acceptance and negative cases
 
-- The frozen test artifact covers the exact 76 Petclinic `@Test` methods across
-  18 test files, or reports every justified exclusion; current production-only
-  Graphify evidence is not misreported as test coverage.
-- Every scenario has observable Given/When/Then-style evidence or explicit
-  uncertainty and cites resolvable test plus structural/delivery evidence where
-  available. Technical-only tests cannot independently create a Capability.
-- Missing/duplicate test IDs, unknown production references, revision/digest
-  mismatch, invented relationships, unsupported quality signal, forbidden-input
-  access, or overwrite of an immutable run fails closed.
-- No Java or skill path automatically merges, splits, drops, accepts, renames,
-  or publishes a proposal. Existing v0.1 artifacts remain byte-compatible.
-- Evaluation occurs only after proposal freeze and reports Petclinic descriptive
-  results, not holdout or general-quality claims.
+- The result states `SUPPORTED`, `GAP`, or `INCONCLUSIVE` using the objective
+  criteria above and provides reproducible evidence for that classification.
+- Inventory numbers are measured against the exact 18-file/76-method baseline;
+  omissions are listed rather than silently treated as coverage.
+- A production-only graph is not described as test coverage, and inferred or
+  invented relationships are not reported as provider observations.
+- Revision, input identity, provider provenance, or artifact digest mismatch
+  fails closed. Existing immutable artifacts are not overwritten.
+- No outcome authorizes fallback construction, Reverse generation, Product
+  interpretation, evaluator comparison, or semantic publication.
 
 #### Verification and handoff
 
-Use TDD for provider gaps, extraction classes, bindings, references, technical
-test filtering, isolation, proposal authority, and immutability. Run within the
-8 GB limit:
+Run within the 8 GB limit:
 
 ```bash
 MAVEN_OPTS='-Xmx2g' ./mvnw clean package -q
 python3 -m pytest -q
-python3 validation/pkb001/reverse-task5-pkb001_reverse_run/public_validate.py .
-python3 validation/pkb001/task7-evaluation/public_validate.py .
+python3 -m json.tool STATUS.json
 git diff --check
 ```
 
-Return one integrated exact candidate with provider/test/contract/skill/run
-digests, proposal-freeze proof, evaluator mappings and descriptive metrics,
-independent exact-candidate review, limitations, and token/cycle-time/first-pass
-KPIs. Human Authority confirms terminal parent closure only.
+Return one exact candidate containing discovery evidence, digests, limitations,
+the outcome rationale, verification results, and token/cycle-time/first-pass
+KPIs. The Feature Delivery Plane will select the next BL009 execution only after
+reconciling that evidence. A later evaluation plan must bind the exact accepted
+semantics snapshot and manifest digests and disclose that the current review
+denominator is partial (9 accepted, 8 pending). Human Authority confirms
+terminal parent closure only.
 
 ## Verified delivery ledger
 
