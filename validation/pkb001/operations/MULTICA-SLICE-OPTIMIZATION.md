@@ -1,19 +1,21 @@
 # MultiCA slice optimization
 
 Supporting operational guidance, not a sixth active control or Product authority.
-This file is the sole home for MultiCA-specific issue, mention, reassignment,
-handoff, deduplication, worktree, and KPI mechanics. Generic project authority,
-the active-control writer lease, and Human gates remain in `AGENTS.md`.
-Owner: Codex analyzes each dispatched slice after completion; Coordinator
-supplies compact evidence. Read this file for dispatch or post-slice analysis
-only.
+This document configures one current implementation of the Execution Plane. It
+does not define project authority. It is the sole home for tool-specific issue,
+mention, reassignment, handoff, deduplication, worktree, and KPI mechanics.
+Responsibility-plane authority and Human gates remain in `AGENTS.md`.
+The Feature Delivery Plane analyzes each completed delivery; the Execution
+Plane supplies compact evidence. Read this file for dispatch or post-slice
+analysis only.
 
 ## Execution rules
 
 - For two or more parallel slices, dispatch only one Coordinator-owned
   controller. The Coordinator creates and assigns the child slices, records the
   expected child set and integration order, and owns transitions into review.
-  Codex and Humans do not bypass it by assigning the workers directly.
+  The Feature Delivery Plane and Human Authority do not bypass its internal
+  routing by assigning workers directly.
 - Before dispatch, check scope, dependencies, pinned candidate and equivalent
   active/queued/retrying runs. Use exactly one trigger: assignment, mention or
   rerun. After an ambiguous response, query existing runs before retrying.
@@ -65,24 +67,24 @@ only.
   steps, then repeat only affected checks. Changed reviewed content or uncertain
   evidence requires fresh review. Do not close while reconciliation is pending.
 - Within approved parent scope, slices close automatically after required review,
-  verification and successful delivery. Only final canonical Backlog closure
-  requires the user's confirmation; scope expansion still needs authorization.
+  verification and successful delivery. Only Human Authority confirms final
+  canonical Backlog closure; scope expansion still needs authorization.
 - Derive the authorization envelope from the selected Backlog item,
-  Implementation Plan scope, and project Human-boundary rules; do not add
-  MultiCA-specific workflow fields to the five active control files. Progress
-  sequentially through implementation, review, remediation/fresh review, combined
-  integration/review, and the next approved tranche. Do not create a Human
+  Implementation Plan scope, and project Human-boundary rules. All five active
+  control files are read-only to every Execution Plane role. Do not create
+  modified copies, version-suffixed replacements, or patches targeting them.
+  Progress sequentially through implementation, review, remediation/fresh
+  review, combined integration/review, and the next approved tranche. Do not create a Human
   decision issue for those automatic steps. Stop for Human input only on scope
   or Spec change, permissions/secrets/spending/deployment/destructive/external
   actions, unresolved `CONTEXT_CONFLICT`, or canonical Backlog terminal closure.
 - The final slice PASS is handled in the same Coordinator transaction that
   dispatches combined integration. Only the controller emits that transition;
   parent and sibling completion comments contain no Coordinator mentions.
-- For a docs-only closure delta, first prove that source, tests, tooling, build
-  configuration and dependency tree identities match the reviewed implementation
-  candidate. Then run targeted control consistency, JSON/pointer, size-budget,
-  public-validator and diff checks and reuse the pinned full-suite evidence. Any
-  executable or test-tree change falls back to full verification.
+- For a docs-only closure delta, the Execution Plane returns the pinned
+  implementation identities and verification evidence. The Feature Delivery
+  Plane alone applies and validates active-control changes. Any executable or
+  test-tree drift requires the full verification profile.
 
 ## Three core KPIs
 

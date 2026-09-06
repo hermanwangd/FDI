@@ -34,8 +34,8 @@ If a supporting artifact conflicts with an active control document, stop and rep
 
 ## Cross-Agent Authority
 
-These instructions apply equally to Codex, MultiCA, and every other local or
-remote agent working on this repository. Before acting, an agent must use the
+These instructions apply equally to every actor and software implementation
+working on this repository. Before acting, an actor must use the
 `AGENTS.md` and five active control documents from the exact checkout and Git
 revision it was assigned.
 
@@ -51,35 +51,92 @@ document, do not guess which version is newer and do not continue partially.
 Stop before changing files, report `CONTEXT_CONFLICT`, and identify the exact
 conflicting statements for Human Reviewer resolution.
 
-## Active Control Writer
+## Delivery Authority Planes
 
-The five active control files are shared project truth. During one selected
-execution, exactly one agent holds the active-control writer role.
+Project authority is defined by responsibility plane, not by software, model,
+agent vendor, or orchestration tool.
 
-- For coordinated or parallel work, the Delivery Coordinator is the writer.
-- For simple single-agent work, the executing agent may also act as Delivery
-  Coordinator when the selected plan explicitly records that role.
-- Implementation Workers and Reviewers must not edit active control files. They
-  modify only assigned code, tests, schemas, or evidence and return a complete
-  handoff.
-- The writer reconciles accepted evidence and updates `BACKLOG.md`,
-  `IMPLEMENTATION-PLAN.md`, and `STATUS.json` as one integration transaction.
-- `PROJECT-OVERVIEW.md` or `FRAMEWORK-SPEC.md` may be edited only when the
-  selected scope includes that change. Material purpose, scope, architecture,
-  contract, or authority changes require Human Reviewer approval.
-- Human terminal confirmation is required before moving a parent Backlog item
-  to `VERIFIED`. After confirmation, the active writer applies the closure.
-- Handoff to Codex is not required unless explicitly requested or the current
-  writer reports `CONTEXT_CONFLICT`, integration failure, or unavailable
-  capability.
+### Human Authority
 
-When selected work is active, `STATUS.json.active_execution` records a stable
-`execution_id`, exact `base_commit`, `control_writer_role`, and
-orchestrator-visible `control_writer_id`. These are generic coordination
-fields, not MultiCA-specific fields. They are cleared with the active selection
-at completion. If zero or multiple agents claim active-control ownership, or
-the writer does not match the selected execution, stop with
-`CONTEXT_CONFLICT`.
+Human Authority owns Product meaning, material Spec/scope/architecture/authority
+changes, parent Backlog authorization, terminal parent closure, holdout
+selection, and semantic-publication decisions. Human confirmation is not
+required for implementation slices, review, remediation, or combined integration
+inside an approved execution envelope.
+
+### Feature Delivery Plane
+
+The Feature Delivery Plane owns project truth and delivery control. It alone:
+
+- maintains the five active control files;
+- translates Spec requirements into Backlog records;
+- writes the selected `IMPLEMENTATION-PLAN.md`;
+- issues an exact execution envelope;
+- validates returned delivery evidence;
+- reconciles Backlog, Plan, and Status;
+- prepares a parent closure candidate; and
+- applies terminal closure after Human authorization.
+
+### Execution Plane
+
+The Execution Plane receives the Implementation Plan and execution envelope as
+read-only inputs. It decomposes approved work, implements code/tests/schemas,
+coordinates review and remediation, performs combined code integration, runs
+verification, collects delivery KPIs, and returns delivery evidence.
+
+The Execution Plane must not modify, replace, rename, regenerate, or create
+versioned copies of any active control file. If the Plan cannot be executed as
+written, it reports exactly one of:
+
+- `PLAN_BLOCKED`: a dependency, environment, permission, or resource is absent;
+- `PLAN_CONFLICT`: the Plan contradicts an active control or the exact codebase;
+- `PLAN_CHANGE_REQUIRED`: API, scope, acceptance, or construction instructions
+  must change.
+
+The Execution Plane must not resolve these conditions by editing the Plan. The
+Feature Delivery Plane investigates, updates project truth when authorized, and
+issues a revised execution envelope.
+
+A software product may implement either plane, but software identity never
+grants authority.
+
+## Active Control Maintenance
+
+Only the Feature Delivery Plane may modify:
+
+1. `PROJECT-OVERVIEW.md`
+2. `FRAMEWORK-SPEC.md`
+3. `BACKLOG.md`
+4. `IMPLEMENTATION-PLAN.md`
+5. `STATUS.json`
+
+If more than one Feature Delivery Plane actor attempts to update project truth
+for the same execution, stop with `CONTEXT_CONFLICT`.
+
+When work is selected, `STATUS.json.active_execution` records project execution
+state only: stable `execution_id`, exact `base_commit`,
+`selected_backlog_items`, `execution_state`, and
+`integration_candidate`. It must not store software, model, worker,
+coordinator, issue, mention, or orchestration identity. With no selected work,
+`active_execution` is `null`.
+
+### Execution envelope
+
+Before implementation, the Feature Delivery Plane writes the Plan and issues a
+read-only envelope containing the execution ID, Backlog and requirement IDs,
+exact Spec revision and base commit, owned and excluded paths, scope, acceptance
+and negative cases, required verification/review/integration, resource limits,
+and Human-only boundaries.
+
+### Delivery evidence package
+
+After combined integration, the Execution Plane returns one package containing
+the execution/base/candidate identities, accepted slices, changed paths, review
+and remediation results, verification evidence and digests, limitations,
+blockers, recommended completion state, and token/cycle-time/first-pass KPIs.
+The package is supporting evidence, not project truth, and cannot mark a Backlog
+item `VERIFIED`. The Feature Delivery Plane independently reconciles it against
+the active controls and exact candidate.
 
 ## Current Work
 
@@ -152,8 +209,8 @@ implementation. Every item must include:
 - dependency, blocker, or completion-evidence pointer.
 
 Ownership, exact base commit, files/modules, scope boundaries, deliverables,
-acceptance criteria, verification commands, and active-control writer are added
-to `IMPLEMENTATION-PLAN.md` only after an item is selected.
+acceptance criteria, verification commands, and execution-envelope constraints
+are added to `IMPLEMENTATION-PLAN.md` only after an item is selected.
 
 Allowed `work_type` values are `FEATURE`, `BUG`, `SECURITY`, `TECH_DEBT`,
 `VALIDATION`, `DOCUMENTATION`, `OPERATION`, and `RESEARCH`. Bug, review,
@@ -214,10 +271,10 @@ currently selected work.
   Clear the active-plan link and anchor; update Backlog status/maturity and
   `STATUS.json` together. Git history preserves removed planning detail.
 
-Only the active-control writer may edit `IMPLEMENTATION-PLAN.md`. Slice owners
-report progress and evidence through their handoff; they must not update the
-plan directly. Parallel slices may modify only their explicitly assigned,
-non-overlapping implementation and evidence files.
+Only the Feature Delivery Plane may edit `IMPLEMENTATION-PLAN.md`. The
+Execution Plane reports slice progress, integration state, and review evidence
+without editing the Plan. Parallel slices may modify only their explicitly
+assigned, non-overlapping implementation and evidence files.
 
 ### Evidence and maturity
 
@@ -297,33 +354,39 @@ Before implementation:
 
 ## Resource Safety
 
-For MultiCA dispatch and post-slice KPI analysis, follow
+For the current Execution Plane implementation's tool-specific dispatch and
+post-slice KPI analysis, follow
 `validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md` (supporting guidance).
 
 ### Coordinated delivery boundary
 
-For parallel work, one Delivery Coordinator owns routing, reconciliation,
-combined integration, and active-control updates. Workers and Reviewers return
-evidence without directly editing active control files. Tool-specific routing,
+For parallel work, the Execution Plane owns routing, implementation review,
+remediation, combined code integration, verification, and KPI collection. It
+returns evidence to the Feature Delivery Plane and never updates active control
+files. Tool-specific routing,
 single-trigger handoff, deduplication, worktree recovery, review intake, and KPI
 rules are defined only in
 `validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md`.
 
 ### Human gate matrix and automatic progression
 
-When the active Backlog and Implementation Plan select an authorized scope, the
-active Delivery Coordinator / control writer must advance every
-dependency-ready non-Human step in order: implementation, independent review,
-bounded remediation, fresh review, combined integration, combined review, then
-the next approved tranche. It must not ask for confirmation between these steps
-or start a later stage before the current stage passes.
+When the active Backlog and Implementation Plan define an authorized execution
+envelope, the Execution Plane advances every dependency-ready non-Human step in
+order: implementation, independent review, bounded remediation, fresh review,
+combined integration, combined review, and verification. It must not ask for
+confirmation between these steps or start a later stage before the current
+stage passes. It then returns one delivery evidence package to the Feature
+Delivery Plane.
 
-Creating and executing in-scope slices, review, remediation, integration, and
-selecting the next in-scope tranche do not require Human confirmation. Human
+Creating and executing in-scope slices, review, remediation, and integration do
+not require Human confirmation. Human
 confirmation is required only for material scope or Spec change, permissions,
 secrets, spending, deployment, destructive or external actions, an unresolved
-`CONTEXT_CONFLICT`, and terminal closure of the canonical Backlog item. A Human
-decision issue must not be created for an automatic step.
+`CONTEXT_CONFLICT`, and terminal closure of the canonical Backlog item. The
+Feature Delivery Plane prepares the closure candidate; Human Authority
+confirms terminal closure; the Feature Delivery Plane then records `VERIFIED`
+and clears active execution. A Human decision issue must not be created for an
+automatic step.
 
 Keep command memory use below 8 GB. Use bounded inputs and concurrency, and use
 `MAVEN_OPTS='-Xmx2g'` for Maven verification unless a stricter active control

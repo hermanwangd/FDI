@@ -160,30 +160,41 @@ def test_agents_define_compact_implementation_plan_lifecycle():
         assert rule in instructions
 
 
-def test_agents_define_one_generic_active_control_writer():
+def test_agents_define_responsibility_planes_without_software_authority():
     instructions = (ROOT/'AGENTS.md').read_text()
     multica = (
         ROOT/'validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md'
     ).read_text()
 
     for rule in (
-        '## Active Control Writer',
-        'exactly one agent holds the active-control writer role',
-        'Implementation Workers and Reviewers must not edit active control files',
-        'Only the active-control writer may edit `IMPLEMENTATION-PLAN.md`',
-        '`control_writer_role`',
-        '`control_writer_id`',
-        'Handoff to Codex is not required',
+        '## Delivery Authority Planes',
+        '### Human Authority',
+        '### Feature Delivery Plane',
+        '### Execution Plane',
+        'Project authority is defined by responsibility plane',
+        'Only the Feature Delivery Plane may edit `IMPLEMENTATION-PLAN.md`',
+        'The Execution Plane must not modify, replace, rename, regenerate',
+        '`PLAN_BLOCKED`',
+        '`PLAN_CONFLICT`',
+        '`PLAN_CHANGE_REQUIRED`',
     ):
         assert rule in instructions
+    for name in (
+        'PROJECT-OVERVIEW.md', 'FRAMEWORK-SPEC.md', 'BACKLOG.md',
+        'IMPLEMENTATION-PLAN.md', 'STATUS.json',
+    ):
+        assert f'{name}`' in instructions
     assert '23-active-item' not in instructions
+    assert 'control_writer_role' not in instructions
+    assert 'control_writer_id' not in instructions
     assert 'mention://agent/' not in instructions
     assert 'explicit reassignment' not in instructions
     assert 'mention://agent/' in multica
     assert 'explicitly reassigns' in multica
+    assert 'read-only to every Execution Plane role' in multica
 
 
-def test_active_execution_and_control_writer_lease_are_atomic():
+def test_active_execution_contains_project_state_not_actor_identity():
     status = json.loads((ROOT/'STATUS.json').read_text())
     execution = status['active_execution']
     if execution is None:
@@ -195,11 +206,16 @@ def test_active_execution_and_control_writer_lease_are_atomic():
     assert status['active_backlog_item'] in status['selected_backlog_items']
     assert status['active_implementation_plan']
     assert {
-        'execution_id', 'base_commit', 'control_writer_role', 'control_writer_id',
+        'execution_id', 'base_commit', 'selected_backlog_items',
+        'execution_state', 'integration_candidate',
     }.issubset(execution)
     assert len(execution['base_commit']) == 40
-    assert execution['control_writer_role'] == 'DELIVERY_COORDINATOR'
-    assert execution['control_writer_id'].strip()
+    assert execution['selected_backlog_items'] == status['selected_backlog_items']
+    forbidden = {
+        'software', 'model', 'agent', 'worker', 'coordinator', 'issue',
+        'mention', 'control_writer_role', 'control_writer_id',
+    }
+    assert forbidden.isdisjoint(execution)
 
 
 def test_agent_backlog_contract_matches_compact_ledger():
