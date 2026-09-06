@@ -27,6 +27,12 @@ compact evidence. Read this file for dispatch or post-slice analysis only.
   transitions the issue, and assigns review exactly once. On every wake it also
   checks the controller's full expected child set for a completed-but-unrouted
   sibling.
+- A reviewer publishes one exact-candidate verdict containing one structured
+  Delivery Coordinator mention and does not reassign the issue while its review
+  task is still running. That mention is the sole verdict-handoff trigger. The
+  Coordinator claims the issue with a non-starting assignment after its run
+  begins. This avoids both duplicate triggers and the assignment/task-completion
+  race.
 - Preserve the managed worktree's starting commit ancestry and assigned branch.
   Replay/cherry-pick recovery changes onto it; bind verification to the new SHA.
 - Review exact candidates in a separate export for Git-independent tests, or an

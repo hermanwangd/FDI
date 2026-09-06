@@ -275,17 +275,24 @@ one Delivery Coordinator controller; it must not dispatch the specialist slices
 directly. The Coordinator records the expected child issue IDs, owns their
 routing, and assigns each non-overlapping child exactly once.
 
-A specialist leaves its child active and publishes one complete handoff naming
-the exact candidate, changed scope, tests and results, limitations, blockers,
-and required next reviewer. The handoff comment must not contain a plain-text or
-structured agent mention (`mention://agent/...`). After publishing that comment,
-its only handoff trigger is one explicit reassignment of the child to Delivery
+An implementation specialist leaves its child active and publishes one complete
+handoff naming the exact candidate, changed scope, tests and results,
+limitations, blockers, and required next reviewer. The handoff comment must not
+contain a plain-text or structured agent mention (`mention://agent/...`). After
+publishing that comment, its only handoff trigger is one explicit reassignment of the child to Delivery
 Coordinator. Never combine a mention trigger with reassignment. The specialist
 must not move its own child to `in_review`; only the Coordinator does so after
 validating handoff completeness and assigning the reviewer. On
 each wake, the Coordinator reconciles all expected children in the controller,
 so one missed mention cannot strand another completed sibling. Parent/child
 tracking is the primary safeguard; explicit reassignment is the routing trigger.
+
+An independent reviewer uses a different single-trigger path to avoid the
+assignment/task-completion race: publish the exact-candidate verdict with one
+structured Delivery Coordinator mention and do not reassign the issue from the
+still-running reviewer task. The Coordinator claims the issue with a non-starting
+assignment only after the mention-triggered run begins. Never combine the verdict
+mention with reassignment.
 
 For recovery of already-completed unparented slices, trigger the Coordinator
 once with the explicit issue set. Do not rerun producers and do not emit one
