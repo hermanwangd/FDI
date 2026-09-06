@@ -30,12 +30,17 @@ def test_five_active_truth_entries_exist_and_resolve():
     assert status['selected_backlog_items'] == ['PKB-BL-027']
     assert maturity['spec_revision'] in backlog
     execution = status['active_execution']
-    assert execution['mode'] == 'BOUNDED_RUNTIME_HARDENING'
+    assert execution['mode'] == (
+        'COMPLETION_CANDIDATE_AWAITING_HUMAN_TERMINAL_CONFIRMATION'
+    )
+    assert execution['candidate_commit'] == (
+        'a022b894ff2080390da87eeb017fa243f5afc1b7'
+    )
     assert execution['slices'] == [
         'portable_graphify_runtime', 'stdio_mcp_lifecycle',
     ]
     assert status['active_implementation_plan'] == (
-        'IMPLEMENTATION-PLAN.md#selected-work-bl-027-graphify-runtime-hardening'
+        'IMPLEMENTATION-PLAN.md#bl-027-completion-candidate-awaiting-terminal-confirmation'
     )
     if status['review_packet'] is not None:
         assert (ROOT/status['review_packet']).is_file()

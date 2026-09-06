@@ -20,11 +20,12 @@
     "next_experiment_readiness": "NOT_READY"
   },
   "active_backlog_item": "PKB-BL-027",
-  "active_implementation_plan": "IMPLEMENTATION-PLAN.md#selected-work-bl-027-graphify-runtime-hardening",
-  "next_action": "Execute PKB-BL-027: rebuild the frozen external Graphify runtime under the active Software-Factory .fdi-work, then use RED/GREEN Java tests to fix StdioMcpClient response timeout, malformed-response normalization, and bounded forced shutdown. Preserve the old runtime as a read-only recovery source and keep next experiment readiness NOT_READY.",
+  "active_implementation_plan": "IMPLEMENTATION-PLAN.md#bl-027-completion-candidate-awaiting-terminal-confirmation",
+  "next_action": "Human Reviewer terminal confirmation for PKB-BL-027. Candidate a022b89 passes 715 Java tests, 57 Python tests, public validation 9/9 and 24/24, plus live Graphify EXACTLY_BOUND. Keep next experiment readiness NOT_READY.",
   "active_execution": {
     "base_commit": "af076d9d4d90ab9d9a53cd2b60f349f571e98caf",
-    "mode": "BOUNDED_RUNTIME_HARDENING",
+    "mode": "COMPLETION_CANDIDATE_AWAITING_HUMAN_TERMINAL_CONFIRMATION",
+    "candidate_commit": "a022b894ff2080390da87eeb017fa243f5afc1b7",
     "slices": [
       "portable_graphify_runtime",
       "stdio_mcp_lifecycle"

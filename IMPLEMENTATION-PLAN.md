@@ -4,7 +4,7 @@ This file contains only the current selection state, verified delivery ledger,
 and executable continuation constraints. `FRAMEWORK-SPEC.md` defines what;
 `BACKLOG.md` records maturity; this plan defines how selected work is delivered.
 
-## Selected work: BL-027 Graphify runtime hardening
+## BL-027 completion candidate awaiting terminal confirmation
 
 - Backlog / requirement: `PKB-BL-027` / `PKB-RUNTIME-001`.
 - Bound Spec revision: `af076d9d4d90ab9d9a53cd2b60f349f571e98caf`.
@@ -24,6 +24,16 @@ and executable continuation constraints. `FRAMEWORK-SPEC.md` defines what;
   `git diff --check`, all under the 8 GB aggregate limit.
 - Excluded: Graphify source changes, external-runtime Java rewrite, semantic
   publication, holdout execution, and unrelated provider refactoring.
+- Delivered candidate: `a022b894ff2080390da87eeb017fa243f5afc1b7`. The active
+  workspace runtime is rebuilt and exactly bound without changing or deleting
+  the old recovery runtime. Java lifecycle behavior and all acceptance paths
+  are implemented.
+- Verification: 715 Java tests, 57 Python tests, Task 7 public validation 9/9,
+  reverse public validation 24/24, live Graphify `EXACTLY_BOUND` with seven
+  operations and `CLEAN_SESSION_CLOSE`, JSON validation, and clean diff.
+- Evidence: `validation/pkb001/runtime/pkb-bl027-portable-runtime-evidence.json`.
+  No implementation work remains; only Human Reviewer terminal closure is
+  pending.
 
 ## No other selected work
 
