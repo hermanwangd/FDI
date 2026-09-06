@@ -13,16 +13,23 @@
   "blinding_scope": "DETERMINISTIC_LABEL_AND_ORDER_BLINDING",
   "blinding_limitation": "ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT",
   "spec_maturity": {
-    "spec_revision": "891e497968000c32984f26437eab811c063ec4cf",
-    "normative_requirements": 23,
+    "spec_revision": "af076d9d4d90ab9d9a53cd2b60f349f571e98caf",
+    "normative_requirements": 24,
     "m3_verified": 10,
-    "m1_backlogged": 13,
+    "m1_backlogged": 14,
     "next_experiment_readiness": "NOT_READY"
   },
-  "active_backlog_item": "PKB-BL-008",
-  "active_implementation_plan": null,
-  "next_action": "PKB-BL-008 is VERIFIED after independent exact-candidate review PASS at 5743274 and Human terminal closure on 2026-09-06. Live Graphify MCP verification passed against frozen graph b416bded at revision 510a397. Define one new normative runtime-hardening requirement and one matching Backlog item before fixing StdioMcpClient D1-D3 or making the external Graphify runtime portable in the Software-Factory workdir. Next experiment readiness remains NOT_READY pending BL-025 human review, BL-004 adjudication, and the BL-006 through BL-017 chain.",
-  "active_execution": null,
+  "active_backlog_item": "PKB-BL-027",
+  "active_implementation_plan": "IMPLEMENTATION-PLAN.md#selected-work-bl-027-graphify-runtime-hardening",
+  "next_action": "Execute PKB-BL-027: rebuild the frozen external Graphify runtime under the active Software-Factory .fdi-work, then use RED/GREEN Java tests to fix StdioMcpClient response timeout, malformed-response normalization, and bounded forced shutdown. Preserve the old runtime as a read-only recovery source and keep next experiment readiness NOT_READY.",
+  "active_execution": {
+    "base_commit": "af076d9d4d90ab9d9a53cd2b60f349f571e98caf",
+    "mode": "BOUNDED_RUNTIME_HARDENING",
+    "slices": [
+      "portable_graphify_runtime",
+      "stdio_mcp_lifecycle"
+    ]
+  },
   "framework_language_target": "JAVA_17_SPRING_BOOT_3_4_1",
   "external_graphify_runtime": "PYTHON_MCP_PROVIDER_OUTSIDE_FRAMEWORK_MIGRATION",
   "python_framework_status": "ALL_REPOSITORY_CONSUMERS_MIGRATED_TO_JAVA_REMAINING_PYTHON_IS_TRANSITIONAL_TESTS_AND_VALIDATORS",
@@ -33,7 +40,7 @@
   "scenario_generation": "GRAPHIFY_AND_DELIVERY_HISTORY_PROPOSALS",
   "scenario_generator_status": "IMPLEMENTED_AND_EXERCISED",
   "selected_backlog_items": [
-    "PKB-BL-008"
+    "PKB-BL-027"
   ],
   "review_json": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-decisions-001.json",
   "original_review_packet": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review.md",

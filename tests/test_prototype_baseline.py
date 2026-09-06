@@ -26,11 +26,17 @@ def test_five_active_truth_entries_exist_and_resolve():
     )
     assert maturity['next_experiment_readiness'] == 'NOT_READY'
     backlog = (ROOT/status['backlog']).read_text()
-    assert status['active_backlog_item'] == 'PKB-BL-008'
-    assert status['selected_backlog_items'] == ['PKB-BL-008']
+    assert status['active_backlog_item'] == 'PKB-BL-027'
+    assert status['selected_backlog_items'] == ['PKB-BL-027']
     assert maturity['spec_revision'] in backlog
-    assert status['active_execution'] is None
-    assert status['active_implementation_plan'] is None
+    execution = status['active_execution']
+    assert execution['mode'] == 'BOUNDED_RUNTIME_HARDENING'
+    assert execution['slices'] == [
+        'portable_graphify_runtime', 'stdio_mcp_lifecycle',
+    ]
+    assert status['active_implementation_plan'] == (
+        'IMPLEMENTATION-PLAN.md#selected-work-bl-027-graphify-runtime-hardening'
+    )
     if status['review_packet'] is not None:
         assert (ROOT/status['review_packet']).is_file()
 
@@ -50,8 +56,8 @@ def test_every_normative_requirement_has_one_bound_backlog_record():
         backlog, re.MULTILINE,
     )
 
-    assert len(requirement_ids) == len(set(requirement_ids)) == 23
-    assert len(records) == len({backlog_id for backlog_id, _ in records}) == 23
+    assert len(requirement_ids) == len(set(requirement_ids)) == 24
+    assert len(records) == len({backlog_id for backlog_id, _ in records}) == 24
     assert {requirement_id for _, requirement_id in records} == set(requirement_ids)
     status = json.loads((ROOT/'STATUS.json').read_text())
     assert status['spec_maturity']['spec_revision'] in backlog

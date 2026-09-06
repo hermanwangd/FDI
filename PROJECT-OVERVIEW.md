@@ -40,7 +40,7 @@ Human review has accepted 3 of 16 generated scenario proposals; 13 remain
 pending. Blinding is deterministic label/order blinding only, with
 `ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT` recorded as a limitation.
 
-Specification maturity is 10 of 23 requirements verified and 13 backlogged.
+Specification maturity is 10 of 24 requirements verified and 14 backlogged.
 Phase 0 evidence is ready, but the next experiment is `NOT_READY`.
 `PKB-BL-026` is closed: all 15 repository-owned Python framework consumers are
 migrated to Java with independent exact-revision PASS. `PKB-BL-008` is also

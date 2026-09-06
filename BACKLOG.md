@@ -1,7 +1,7 @@
 # PKB-001 Backlog
 
 This is the canonical requirement-to-work ledger for Framework Spec revision
-`891e497968000c32984f26437eab811c063ec4cf`. Each normative requirement has
+`af076d9d4d90ab9d9a53cd2b60f349f571e98caf`. Each normative requirement has
 exactly one backlog record. Status means:
 
 - `VERIFIED`: implementation and verification evidence exist.
@@ -24,6 +24,7 @@ exactly one backlog record. Status means:
 | `PKB-BL-006` | `FEATURE` | `PKB-SCENARIO-004` | Create an approved frozen scenario-bearing semantics revision without overwriting Petclinic. | `BLOCKED_DEPENDENCY` | Depends on BL-025. |
 | `PKB-BL-007` | `FEATURE` | `PKB-MAPPING-001` | Add scenario traces to the PK-S1 mapping contract under the Java-only target. | `NEEDS_RECONCILIATION` | Preserve PK-S1 v0.2; select a new contract version after BL-006. |
 | `PKB-BL-008` | `RESEARCH` | `PKB-PROVIDER-001` | Verify actual Graphify UI/template capability or record the gap. | `VERIFIED` | HERM-295 → HERM-296/297/298 + HERM-299 proved frozen runtime identity (graphifyy 0.1.14 + mcp 1.29.1), MCP contract parity (7 operations, wire MCP 2025-11-25, JSONL framing), and one live handshake PASS at graph `b416bded…`; independent exact-candidate review PASS at `5743274` reproduced 712 Java tests, 57 Python tests, and public validation 9/9. Evidence: `validation/pkb001/runtime/bl008-stage1-integration-evidence.json`. Human terminal closure authorized on 2026-09-06. Remaining runtime portability and `StdioMcpClient` D1–D3 defects are explicit follow-up work. |
+| `PKB-BL-027` | `BUG` | `PKB-RUNTIME-001` | Make the frozen external Graphify runtime portable in the active workspace and harden Java stdio-MCP response and shutdown lifecycle. | `IN_PROGRESS` | Selected at Spec `af076d9`: rebuild ignored `.fdi-work` from frozen source without deleting the old runtime; add RED tests then fix finite response timeout, malformed-response normalization, and forced shutdown. |
 | `PKB-BL-009` | `FEATURE` | `PKB-REVERSE-001` | Reduce duplicate, over-combined, and overclaimed reverse proposals. | `BLOCKED_DEPENDENCY` | Depends on BL-005 review evidence. |
 | `PKB-BL-010` | `VALIDATION` | `PKB-EVAL-001` | Add sealed provider-neutral component identity to evaluator truth. | `BLOCKED_DEPENDENCY` | Depends on BL-007. |
 | `PKB-BL-011` | `VALIDATION` | `PKB-EVAL-002` | Separate scenario, chain, component, and diagnostic measures. | `BLOCKED_DEPENDENCY` | Depends on BL-007 and BL-010. |
@@ -178,6 +179,6 @@ The next experiment remains `NOT_READY`. Construction order is:
 4. Preregister thresholds and seal a holdout (BL-012, BL-013).
 5. Freeze protocol, regress Petclinic, execute holdout, decide (BL-014–BL-017).
 
-Maturity for the bound spec revision: 23 normative requirements, 10 `VERIFIED`,
-13 not yet M3. Superseded BL-001 through BL-003 are historical and are not active
+Maturity for the bound spec revision: 24 normative requirements, 10 `VERIFIED`,
+14 not yet M3. Superseded BL-001 through BL-003 are historical and are not active
 records.

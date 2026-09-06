@@ -4,7 +4,28 @@ This file contains only the current selection state, verified delivery ledger,
 and executable continuation constraints. `FRAMEWORK-SPEC.md` defines what;
 `BACKLOG.md` records maturity; this plan defines how selected work is delivered.
 
-## No selected work
+## Selected work: BL-027 Graphify runtime hardening
+
+- Backlog / requirement: `PKB-BL-027` / `PKB-RUNTIME-001`.
+- Bound Spec revision: `af076d9d4d90ab9d9a53cd2b60f349f571e98caf`.
+- Base commit: `af076d9d4d90ab9d9a53cd2b60f349f571e98caf`.
+- Runtime placement: ignored `.fdi-work/graphify-source/graphify-main` plus a
+  newly created `.fdi-work/graphify-venv312`; the old Documents checkout is a
+  read-only recovery source and is not deleted or modified.
+- Runtime acceptance: Graphify 0.1.14 and MCP 1.29.1 provenance binds to the new
+  workspace, frozen graph digest remains `b416bded…`, and packaged
+  `graphify-live-verify --root <workspace>` completes a real handshake.
+- Java acceptance: test-first coverage proves a finite configurable response
+  timeout, malformed response normalization to `VerificationFailure`, bounded
+  graceful close followed by forced termination, preserved interruption, and no
+  surviving child process.
+- Verification: focused RED/GREEN evidence, full Java package, remaining Python
+  suite, public validator 9/9, live Graphify verification, JSON validation, and
+  `git diff --check`, all under the 8 GB aggregate limit.
+- Excluded: Graphify source changes, external-runtime Java rewrite, semantic
+  publication, holdout execution, and unrelated provider refactoring.
+
+## No other selected work
 
 No BL-026 slice is currently selected. `PKB-BL-026` is `VERIFIED`: all 15
 inventoried repository consumers are migrated (three completed tranches,
