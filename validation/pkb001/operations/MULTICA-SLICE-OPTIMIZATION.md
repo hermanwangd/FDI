@@ -20,6 +20,10 @@ compact evidence. Read this file for dispatch or post-slice analysis only.
   issues or exact references. Any matching issue or candidate, even `done`,
   `in_review` or `cancelled`, blocks a new dispatch until reconciled. Never infer
   absence from the default issue-list page or an open-issue count.
+- Build one shared characterization/parity matrix during tranche selection and
+  pin its path, digest and interpreter/runtime boundary in every slice brief.
+  Reuse it for implementation, review and integration. Extend it only for a
+  newly evidenced mismatch; do not repeat open-ended legacy-behavior discovery.
 - Independent slices may run concurrently with separate worktrees and explicit
   non-overlapping ownership. Integrate shared controls serially and verify the
   combined candidate. Stay within the aggregate 8 GB resource limit.
@@ -67,6 +71,14 @@ compact evidence. Read this file for dispatch or post-slice analysis only.
   decision issue for those automatic steps. Stop for Human input only on scope
   or Spec change, permissions/secrets/spending/deployment/destructive/external
   actions, unresolved `CONTEXT_CONFLICT`, or canonical Backlog terminal closure.
+- The final slice PASS is handled in the same Coordinator transaction that
+  dispatches combined integration. Only the controller emits that transition;
+  parent and sibling completion comments contain no Coordinator mentions.
+- For a docs-only closure delta, first prove that source, tests, tooling, build
+  configuration and dependency tree identities match the reviewed implementation
+  candidate. Then run targeted control consistency, JSON/pointer, size-budget,
+  public-validator and diff checks and reuse the pinned full-suite evidence. Any
+  executable or test-tree change falls back to full verification.
 
 ## Three core KPIs
 

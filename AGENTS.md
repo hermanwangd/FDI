@@ -306,6 +306,22 @@ in any status, including `done` or `in_review`, is existing work and must be
 reused. A default issue-list page or an open-issue count is never sufficient
 evidence that no equivalent integration exists.
 
+For a migration tranche, characterize shared legacy behavior once during plan
+selection and pin the resulting fixture or contract matrix by path and digest.
+Implementation, review, and integration reuse that matrix; they do not rediscover
+unchanged behavior. A concrete mismatch may extend the matrix with new evidence.
+When the last required slice reaches PASS, the same Coordinator reconciliation
+transaction dispatches combined integration; parent and sibling completion
+comments must not emit additional Coordinator mentions.
+
+A closure candidate that changes only active-control documents may use the
+docs-only verification profile when source, tests, tooling, build configuration,
+and dependency tree identities equal the independently reviewed implementation
+candidate. Verify those identities, JSON and pointer integrity, control-state
+consistency, size budgets, public control validators, and `git diff --check`.
+Reuse the pinned full-suite result instead of rerunning the unchanged suite.
+Any executable or test-tree drift requires the full verification profile.
+
 ### Human gate matrix and automatic progression
 
 When the active Backlog and Implementation Plan select an authorized scope, the
