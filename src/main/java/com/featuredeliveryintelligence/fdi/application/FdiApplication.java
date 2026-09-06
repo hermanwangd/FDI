@@ -21,6 +21,9 @@ public class FdiApplication {
         if (GraphifyRuntimeProbeCli.handles(args)) {
             System.exit(GraphifyRuntimeProbeCli.run(args, System.out, System.err));
         }
+        if (DeliveryHistoryCli.handles(args)) {
+            System.exit(DeliveryHistoryCli.run(args, System.out, System.err));
+        }
         if (Dev204Cli.handles(args)) return;
         SpringApplication.run(FdiApplication.class, args);
     }
