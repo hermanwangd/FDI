@@ -10,8 +10,10 @@ PKB-001 validates whether product meaning, source structure, and delivery eviden
 
 This revision supersedes the Stage A/B requirements `PKB-REVIEW-001`,
 `PKB-REVIEW-002`, `PKB-STATUS-001`, `PKB-SCENARIO-001`, and
-`PKB-SCENARIO-002`. Their replacement IDs below are new because their
-semantics changed. Retired IDs must not be reused.
+`PKB-SCENARIO-002`. It also supersedes `PKB-REVERSE-001` with
+`PKB-REVERSE-002`, which adds exact-revision repository test behavior as a
+Reverse generation input. Replacement IDs are new because their semantics
+changed. Retired IDs must not be reused.
 
 
 These identifiers are stable traceability anchors. The controlling requirement
@@ -36,7 +38,7 @@ a new Spec revision and reconciliation of every bound Backlog item.
 | `PKB-MAPPING-001` | Scenario-grounded realization | Proposals trace scenarios through variable realization chains to justified component roles. |
 | `PKB-PROVIDER-001` | Template and UI evidence | UI/template claims use verified provider capability or declare an evidence gap. |
 | `PKB-RUNTIME-001` | External provider runtime portability and lifecycle | Java resolves an exact-provenance external Graphify runtime from the active workspace and bounds every stdio-MCP request and shutdown without changing Graphify. |
-| `PKB-REVERSE-001` | Reverse experiment / Scenario authority and isolation | Reverse quality controls improve proposals without publishing Product truth. |
+| `PKB-REVERSE-002` | Reverse experiment / Test behavior intelligence / Scenario authority and isolation | Reverse derives Capability and Behavior Scenario proposals from structural, test-behavior, and delivery evidence without publishing Product truth. |
 | `PKB-EVAL-001` | Hierarchical evaluation | Evaluator truth uses provider-neutral normalized component identity and remains isolated. |
 | `PKB-EVAL-002` | Hierarchical evaluation | Semantic, scenario, chain, component, and provider-native diagnostic metrics remain distinct. |
 | `PKB-CALIBRATION-001` | Calibration strategy | Acceptance thresholds derive from declared error costs and are frozen before generation. |
@@ -60,17 +62,21 @@ Given a Product Capability, the experiment measures whether exact-revision struc
 
 ```text
 Graphify Structural Intelligence
++ Repository Test Behavior Intelligence
 + Git / PR / Feature Delivery History
-→ Capability Hypotheses
+→ Capability Hypotheses + Behavior Scenario Proposals
 → Human Review
 ```
 
-Reverse results are proposals. They cannot establish Product semantics or publish Product truth without Human Reviewer review.
+Reverse results are proposals. Repository tests provide executable behavior
+evidence, not Product semantics. The generated Capabilities and scenarios cannot
+establish or publish Product truth without Human Reviewer review.
 
 ## Ownership boundaries
 
 - Human Reviewer owns Product meaning and accepted Capability definitions.
 - Graphify supplies structural observations, not Product semantics.
+- Repository test cases supply exact-revision behavior evidence, not Product truth.
 - Git, pull requests, and feature history supply delivery evidence, not Product truth.
 - Human/evaluator review accepts, renames, merges, splits, rejects, or identifies missing proposals.
 
@@ -108,13 +114,14 @@ No Product Team organization, Stage A/Stage B packet split, or formal semantic
 publication workflow is required.
 
 Skills/agents generate Capability hypotheses and behavior scenario proposals
-from exact-revision Graphify structural evidence plus cutoff-bounded Git/PR/
-feature delivery history. Each proposal records its source revision, graph
-digest, history cutoff and evidence references, inference rationale, limitations,
-and confidence (0–1, a ranking hint rather than a calibrated probability).
+from exact-revision Graphify structural evidence, exact-revision repository test
+behavior, and cutoff-bounded Git/PR/feature delivery history. Each proposal
+records its source revision, graph and test-evidence digests, history cutoff and
+evidence references, inference rationale, limitations, and confidence (0–1, a
+ranking hint rather than a calibrated probability).
 Unavailable evidence is explicitly marked; an empty evidence claim or invented
-reference is invalid. Both evidence channels are inspected where available,
-but a scenario need not have supporting evidence from both. Unsupported
+reference is invalid. All three evidence channels are inspected where available,
+but a scenario need not have supporting evidence from every channel. Unsupported
 behavior is identified as a hypothesis, not reported as an observed fact.
 
 Scenario text (title, Given/When/Then and semantic boundaries) remains free of
@@ -135,8 +142,9 @@ and proposal-only; the accepted snapshot links back to proposals and decisions.
 The user can approve the accepted set and freeze in one review action.
 An agent must never manufacture that approval. Existing snapshots are unchanged.
 
-Forward generation consumes only that reviewed snapshot. Reverse generation
-cannot read the accepted snapshot, evaluator gold, or post-generation judgments.
+Forward generation consumes only that reviewed snapshot. Reverse generation may
+read exact-revision repository tests but cannot read the accepted Product
+Semantics snapshot, evaluator gold, or post-generation judgments.
 Technical evidence may be visible to the human reviewer; generation must still
 remain isolated from evaluator truth. Evaluation cannot silently edit semantics.
 
@@ -197,8 +205,8 @@ CodeIntelligenceProvider → Graphify adapter → Graphify runtime
 Graphify → Structural Intelligence
 Git / PR / Feature History → Delivery Intelligence
 
-Structural Intelligence + Delivery Intelligence
-→ Capability Hypothesis → Human Reviewer Review
+Test Behavior Intelligence + Structural Intelligence + Delivery Intelligence
+→ Capability and Behavior Scenario Hypotheses → Human Reviewer Review
 ```
 
 Graphify operations must be discovered from the installed runtime. Structural evidence must bind the indexed source to an exact Git revision and frozen source snapshot.
@@ -335,6 +343,39 @@ These metrics must not be given the same name or substituted for one another.
 Next-run evaluator truth therefore records normalized component identity rather
 than relying only on provider node IDs.
 
+### Test behavior intelligence
+
+Reverse generation treats repository-owned tests at the same exact source
+revision as a distinct evidence channel. The frozen test-behavior artifact
+records, where observable:
+
+- test identity and repository-relative source location;
+- fixture or precondition evidence;
+- exercised request, command, event, or method;
+- asserted result, error, state change, or invariant;
+- referenced production components and the basis of each test-to-production
+  relationship; and
+- evidence strength and extraction limitations.
+
+Controller and integration tests with observable inputs and outputs are strong
+scenario evidence. Service or repository tests may support persistence and
+business constraints. Formatter, serialization, configuration-sync, framework,
+and infrastructure tests are technical evidence and MUST NOT become Product
+Capabilities solely because they exist.
+
+Graphify test indexing and test-to-production relationships must be verified
+against the actual provider before they are relied upon. If Graphify cannot
+produce the required observations, a Java-owned test-behavior extractor may
+supply a separately identified evidence capability behind the
+`CodeIntelligenceProvider` boundary. The framework must record which provider
+produced every relationship and must not fabricate a call or realization edge.
+
+Each generated Capability or scenario cites the exact test evidence that
+supports it and separates observed assertions from semantic interpretation.
+Tests can be incomplete, implementation-biased, stale, or purely technical;
+therefore their output remains `PROPOSAL_ONLY`, confidence is not authority, and
+uncertainty or contradictory tests remain visible for review.
+
 ### Data flow and isolation
 
 ```text
@@ -345,6 +386,17 @@ Frozen Product Semantics + frozen Human Reviewer behavior scenarios
 → immutable proposal artifact
 → Java blinded evaluation against sealed evaluator truth
 → Human Reviewer experiment result realization review
+```
+
+Reverse generation follows an isolated path:
+
+```text
+Exact-revision production structure + exact-revision repository test behavior
++ cutoff-bounded delivery history
+→ Capability and Behavior Scenario proposals without Product Semantics or evaluator truth
+→ Java contract and provenance validation
+→ immutable PROPOSAL_ONLY artifact
+→ Human Reviewer review
 ```
 
 Generation must fail closed when identity, granularity, role, source revision, or provider binding is absent or inconsistent. The Human Reviewer decides capability meaning and boundaries; evaluator comparison measures realization quality but cannot publish Product Semantics.
@@ -390,6 +442,8 @@ Before adding template extraction, the installed Graphify runtime must be querie
 - Missing UI/template evidence produces an explicit evidence gap or
   `UNRESOLVED`, not modified Product Semantics.
 - Reverse-generated scenarios remain `UNREVIEWED` and `PROPOSAL_ONLY`.
+- Reverse proposals cite frozen test behavior and distinguish product-facing
+  scenario evidence from technical-only tests.
 - Human decisions bind exact proposal versions; rejected and unreviewed scenarios
   cannot enter frozen Forward inputs.
 

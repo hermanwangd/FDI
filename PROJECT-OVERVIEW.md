@@ -5,10 +5,12 @@
 PKB-001 tests two exact-revision hypotheses:
 
 - **Forward:** Product Semantics + Graphify structural evidence → Capability-to-Component proposals.
-- **Reverse:** Graphify structural evidence + delivery history → Capability hypotheses → human review.
+- **Reverse:** Graphify structural evidence + repository test behavior + delivery
+  history → Capability and Behavior Scenario hypotheses → human review.
 
 Reverse output is always proposal-only. The Human Reviewer owns Product meaning;
-Graphify owns structural observations; delivery history is evidence, not Product truth.
+Graphify owns structural observations; repository tests and delivery history are
+evidence, not Product truth.
 
 The FDI framework target is Java 17 with Spring Boot 3.4.1. The external
 Graphify Python MCP runtime remains outside the framework migration and is
