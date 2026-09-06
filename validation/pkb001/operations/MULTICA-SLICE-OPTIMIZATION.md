@@ -14,6 +14,12 @@ compact evidence. Read this file for dispatch or post-slice analysis only.
   active/queued/retrying runs. Use exactly one trigger: assignment, mention or
   rerun. After an ambiguous response, query existing runs before retrying.
   These are instruction-level safeguards, not atomic programmatic deduplication.
+- Before combined-integration dispatch, build an idempotency key from Backlog,
+  stage, integration base and sorted accepted candidate SHAs. Resolve the
+  controller's recorded integration issue first, then search paginated/all-status
+  issues or exact references. Any matching issue or candidate, even `done`,
+  `in_review` or `cancelled`, blocks a new dispatch until reconciled. Never infer
+  absence from the default issue-list page or an open-issue count.
 - Independent slices may run concurrently with separate worktrees and explicit
   non-overlapping ownership. Integrate shared controls serially and verify the
   combined candidate. Stay within the aggregate 8 GB resource limit.

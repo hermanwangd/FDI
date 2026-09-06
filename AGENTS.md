@@ -298,6 +298,14 @@ For recovery of already-completed unparented slices, trigger the Coordinator
 once with the explicit issue set. Do not rerun producers and do not emit one
 Coordinator trigger per slice.
 
+Before dispatching combined integration, the Coordinator must derive an
+idempotency key from canonical Backlog, stage, integration base, and the sorted
+accepted candidate SHAs. It first resolves the controller's recorded integration
+issue, then searches all issue statuses with pagination or exact lookup. A match
+in any status, including `done` or `in_review`, is existing work and must be
+reused. A default issue-list page or an open-issue count is never sufficient
+evidence that no equivalent integration exists.
+
 ### Human gate matrix and automatic progression
 
 When the active Backlog and Implementation Plan select an authorized scope, the
