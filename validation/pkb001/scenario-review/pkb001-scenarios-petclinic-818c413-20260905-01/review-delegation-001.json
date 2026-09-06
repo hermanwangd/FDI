@@ -1,0 +1,32 @@
+{
+  "schema_version": "pkb001.review-delegation.v0.1",
+  "artifact_kind": "EXPERIMENT_OWNER_REVIEW_DELEGATION",
+  "status": "ACTIVE",
+  "recorded_at": "2026-09-06T14:40:50Z",
+  "delegated_by": "current_user",
+  "delegate_role": "FEATURE_DELIVERY_PLANE_AI_REVIEWER",
+  "authority_source": "EXPLICIT_EXPERIMENT_OWNER_DELEGATION",
+  "authorization": {
+    "source": "Current conversation",
+    "user_statement": "我也不是產品團隊，你幫我直接審核判斷就好; go; 採用這個最小修正",
+    "allowed_actions": [
+      "ACCEPT",
+      "EDIT",
+      "REJECT"
+    ]
+  },
+  "scope": {
+    "project": "PKB-001",
+    "phase": "prototype",
+    "subject": "Capability and Behavior Scenario proposals",
+    "standing_delegation": true,
+    "revocable_by_experiment_owner": true
+  },
+  "boundaries": {
+    "product_authority_transferred_to_agent": false,
+    "product_truth_established_by_agent": false,
+    "semantic_publication_allowed": false,
+    "formal_product_team_approval_replaced": false,
+    "material_scope_or_spec_change_allowed": false
+  }
+}
