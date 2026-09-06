@@ -35,6 +35,14 @@ def test_five_active_truth_entries_exist_and_resolve():
         assert (ROOT/status['review_packet']).is_file()
 
 
+def test_project_overview_does_not_duplicate_mutable_delivery_status():
+    overview = (ROOT/'PROJECT-OVERVIEW.md').read_text()
+    assert '## Current result' not in overview
+    assert 'Specification maturity is' not in overview
+    assert 'PKB-BL-' not in overview
+    assert 'active_backlog_item' not in overview
+
+
 def test_every_normative_requirement_has_one_bound_backlog_record():
     import re
 

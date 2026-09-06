@@ -29,22 +29,15 @@ artifacts are supporting evidence. Everything under `archive/` is historical
 reference and MUST NOT determine current truth. Conflicts stop as
 `CONTEXT_CONFLICT`; agents must not infer authority from filenames or versions.
 
-## Current result
+## Prototype boundaries
 
-The frozen Petclinic prototype result is `REVISE`, not a Product-semantics
-publication decision. It achieved broad graph-node coverage but no exact
-proposed-component node matches, so component naming and granularity require
-calibration. No preregistered acceptance thresholds existed for that run.
+PKB-001 produces bounded experiment evidence and `GO`, `REVISE`, or `STOP`
+decisions. Those decisions do not publish Product semantics. Reverse hypotheses
+and generated behavior scenarios remain proposals until the Human Reviewer
+accepts an exact version.
 
-Human review has accepted 3 of 16 generated scenario proposals; 13 remain
-pending. Blinding is deterministic label/order blinding only, with
-`ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT` recorded as a limitation.
-
-Specification maturity is 10 of 24 requirements verified and 14 backlogged.
-Phase 0 evidence is ready, but the next experiment is `NOT_READY`.
-`PKB-BL-026` is closed: all 15 repository-owned Python framework consumers are
-migrated to Java with independent exact-revision PASS. `PKB-BL-008` is also
-closed after an independently reviewed live Graphify MCP handshake proved the
-frozen provider contract. Runtime portability and three Java MCP lifecycle
-defects remain explicit follow-up work. External Graphify is excluded from the
-Java migration.
+This overview intentionally contains no progress counts, selected Backlog item,
+current blocker, or next action. Requirement maturity belongs only in
+`BACKLOG.md`; current execution state belongs only in `STATUS.json`; completed
+delivery detail belongs in the compact ledger in `IMPLEMENTATION-PLAN.md` and
+Git history. This prevents duplicated status from drifting across active files.
