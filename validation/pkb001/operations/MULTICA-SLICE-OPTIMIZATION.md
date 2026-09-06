@@ -30,6 +30,13 @@ compact evidence. Read this file for dispatch or post-slice analysis only.
 - Review exact candidates in a separate export for Git-independent tests, or an
   independent clone/review worktree when tests require Git metadata or history.
   Keep the daemon-managed HEAD unchanged during review.
+- At review intake, verify the five active-control paths and bound Spec revision,
+  but read only the selected Implementation Plan section and directly applicable
+  requirement text after the binding is confirmed. Then load only the producer
+  handoff, candidate diff, owned implementation/tests, and named evidence. Do
+  not reread complete controls, unrelated tests, completed slice history, or raw
+  logs unless a concrete inconsistency requires it. Full regression execution
+  remains required; context reduction must not reduce verification coverage.
 - Record review verdict separately from final run status. Finalize failure blocks
   delivery closure pending reconciliation; it does not automatically invalidate
   a verdict. Check candidate identity, evidence integrity and missing delivery
