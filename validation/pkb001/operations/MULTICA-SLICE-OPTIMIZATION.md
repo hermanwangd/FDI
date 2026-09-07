@@ -20,6 +20,11 @@ analysis only.
   active/queued/retrying runs. Use exactly one trigger: assignment, mention or
   rerun. After an ambiguous response, query existing runs before retrying.
   These are instruction-level safeguards, not atomic programmatic deduplication.
+- Resolve every envelope revision with `git rev-parse --verify '<sha>^{commit}'`
+  before issue creation and record the resulting full 40-character SHA. The
+  assigned checkout repeats the check and verifies required ancestry before
+  work. Invalid or unreachable identity is `PLAN_CONFLICT`; prefix similarity,
+  branch position, or a later commit is not a substitute.
 - Before combined-integration dispatch, build an idempotency key from Backlog,
   stage, integration base and sorted accepted candidate SHAs. Resolve the
   controller's recorded integration issue first, then search paginated/all-status
@@ -54,6 +59,19 @@ analysis only.
 - Review exact candidates in a separate export for Git-independent tests, or an
   independent clone/review worktree when tests require Git metadata or history.
   Keep the daemon-managed HEAD unchanged during review.
+- Independent review must have a distinct Multica run ID and an actor ID that
+  did not produce or integrate the candidate. A Coordinator or producer may
+  perform verification, but must not label its own in-run check independent.
+  Before accepting a verdict, resolve the named reviewer run and confirm its
+  actor, candidate SHA, and completion status from task history.
+- The reviewer recomputes countable claims from the frozen candidate. If its
+  result differs from the candidate evidence or handoff, the verdict is
+  `REMEDIATION_REQUIRED` until one canonical value and its derivation are fixed;
+  the reviewer must not report PASS while preserving both numbers.
+- Run candidate verification from a clean export or independent review
+  worktree. Runtime-injected instructions or dirty workspace state may be
+  diagnosed separately, but a stash-based self-check does not replace the clean
+  candidate result required for delivery.
 - At review intake, verify the five active-control paths and bound Spec revision,
   but read only the selected Implementation Plan section and directly applicable
   requirement text after the binding is confirmed. Then load only the producer
@@ -118,6 +136,7 @@ Run IDs and roles / source / collected at / completeness:
 Input / output / cache-read / duplicate-trigger runs:
 Start / implementation complete / review start / verdict / combined verdict:
 Cycle time / review-routing wait / first-pass yes-no-unknown:
+Independent reviewer run / actor / candidate / clean-export result:
 Required tests / independent review / scope drift / reconciliation:
 Comparable cohort / sample count / changes or N/A:
 Largest evidenced problem / one next action / next measurement:

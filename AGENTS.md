@@ -128,6 +128,12 @@ exact Spec revision and base commit, owned and excluded paths, scope, acceptance
 and negative cases, required verification/review/integration, resource limits,
 and Human-only boundaries.
 
+Before dispatch, the Feature Delivery Plane resolves every revision named in the
+envelope to a full 40-character commit and verifies required ancestry. The
+Execution Plane repeats that preflight in its assigned checkout. An invalid or
+unreachable revision is `PLAN_CONFLICT`; neither plane may silently substitute a
+similarly prefixed or newer commit.
+
 ### Delivery evidence package
 
 After combined integration, the Execution Plane returns one package containing
@@ -137,6 +143,12 @@ blockers, recommended completion state, and token/cycle-time/first-pass KPIs.
 The package is supporting evidence, not project truth, and cannot mark a Backlog
 item `VERIFIED`. The Feature Delivery Plane independently reconciles it against
 the active controls and exact candidate.
+
+An independent review requires a separately attributable run by an actor other
+than every actor that produced or integrated the reviewed candidate. A
+producer's or Coordinator's self-check is verification, never independent
+review. Delivery evidence must name the reviewer run and exact candidate; an
+unverifiable independence claim fails closed.
 
 ## Current Work
 
