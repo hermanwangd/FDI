@@ -333,10 +333,16 @@ public final class JavaParserTestBehaviorExtractor implements TestBehaviorEviden
         }
 
         private TestMethodObservation extractMethod(CompilationUnit unit, MethodDeclaration method) {
+            // The declaration location binds the method-name identifier (the
+            // pinned discovery matrix and the Slice D golden identities use
+            // that convention); an annotated method's node begin would point
+            // at the annotation instead.
             SourceLocation declaration = new SourceLocation(
                     currentPath,
-                    method.getBegin().map(p -> p.line).orElse(1),
-                    method.getBegin().map(p -> p.column).orElse(1));
+                    method.getName().getBegin().map(p -> p.line)
+                            .or(() -> method.getBegin().map(p -> p.line)).orElse(1),
+                    method.getName().getBegin().map(p -> p.column)
+                            .or(() -> method.getBegin().map(p -> p.column)).orElse(1));
 
             List<BehaviorObservation> fixtures = new ArrayList<>();
             List<BehaviorObservation> actions = new ArrayList<>();
