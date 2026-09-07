@@ -6,92 +6,94 @@ the current execution state and next action.
 
 ## Current selection
 
-### PKB-BL-009 Java test behavior extractor
+### PKB-BL-009 deterministic Reverse proposal generation
 
 - Backlog / requirement: `PKB-BL-009` / `PKB-REVERSE-002`
 - Spec revision: `c396b3cf6e3a32d55c1fb57827f2022e4409df8d`
-- Base commit: `1423192773fce7c4f6d1efb8dd3d2abbbebbb3e3`
-- Execution ID: `PKB-BL-009-JAVA-TEST-BEHAVIOR-001`
-- Accepted discovery evidence: candidate
-  `4c1a2bae3850028de25b3fd84cc07ea67640dbb6`, independently reviewed PASS;
-  integrated as commits `16bac6d` and `1423192`.
-- Discovery result: Graphify indexed 20/20 test files and exposed 76/76 `@Test`
-  methods, but only 5/18 `@Test`-bearing files had provider-native production
-  links. The verified outcome is `GAP`, so this execution adds a Java-owned,
-  provider-neutral mechanical test-behavior extractor without changing
-  Graphify or assigning Product meaning.
+- Base commit: `c867acd98b9c4546f9173cbeffb86c05d566ee7e`
+- Execution ID: `PKB-BL-009-REVERSE-PROPOSAL-001`
+- Accepted prerequisite evidence:
+  - Graphify discovery candidate
+    `4c1a2bae3850028de25b3fd84cc07ea67640dbb6`, independently reviewed PASS.
+  - Java test-behavior combined candidate
+    `cfe885986ac80f8fac7eb125c2f6ec856f0f6a51`, independently reviewed PASS by
+    a separately attributable reviewer and replayed on the control branch as
+    `7462f59`, `6765ca0`, and `c867acd`.
+  - Java delivery-history reconstruction in
+    `validation/pkb001/datasets/petclinic-delivery-history.json`.
 
-#### Architecture and fixed dependency
+#### Architecture and authority boundary
 
-- Add Maven dependency
-  `com.github.javaparser:javaparser-symbol-solver-core:3.28.2`; do not use a
-  floating version. JavaParser and its symbol-solver artifacts target Java 8
-  bytecode and are compatible with the framework's Java 17 runtime.
-- Create a separate `TestBehaviorEvidenceProvider` implementation. It emits
-  mechanical observations only and does not replace `CodeIntelligenceProvider`
-  or the Graphify adapter.
-- Configure `CombinedTypeSolver` with `ReflectionTypeSolver`, then
-  `JavaParserTypeSolver` for `src/main/java` and `src/test/java`. Restrict
-  resolution to those source roots: do not build the target repository, run
-  annotation processors, download its dependencies, or infer missing types.
-- Run extraction deterministically in a single thread because
-  `JavaParserFacade` is not thread-safe. Preserve unresolved symbols and their
-  source locations as explicit evidence gaps; external API calls may remain
-  syntactic observations.
-- Bind every result to Petclinic revision
-  `818c4136ea971c21674525f9053de0d9c7ad8cfe` and frozen source digests.
+- Implement all new framework behavior in Java 17. External Graphify remains
+  behind `CodeIntelligenceProvider`; do not change or extend Graphify.
+- Introduce one provider-neutral `ReverseEvidenceBundle` that binds the exact
+  repository revision and digests of structural, test-behavior, and delivery
+  inputs. Identity disagreement, missing required evidence, malformed paths,
+  or authority leakage fails closed.
+- Implement a deterministic `ReverseProposalProvider`. It groups corroborated
+  structural, test, and delivery observations into Capability and Behavior
+  Scenario proposals using stable Java rules. Every statement must cite its
+  contributing evidence; unresolved observations remain explicit gaps.
+- Generation cannot read accepted semantics, evaluator gold, review decisions,
+  comparison output, or previous proposal outcomes. Evaluator comparison runs
+  only after the immutable proposal package is sealed.
+- Output remains proposal-only. It cannot publish Product semantics or mark a
+  Capability or scenario accepted.
 
 #### Delivery DAG
 
-1. **Slice A — contract foundation (sequential):** add the pinned Maven
-   dependency, provider-neutral Java records/interfaces, stable error vocabulary,
-   and focused contract tests. Review and accept A before parallel work.
-2. **Slice B — Java AST extractor (after A):** own the JavaParser adapter package;
-   extract test methods, annotations, source locations, fixtures/setup calls,
-   assertions, referenced production types/methods, and unresolved references.
-3. **Slice C — schema and validation (after A, parallel with B/D):** own the
-   evidence schema and Java validator; enforce revision, path, identity,
-   determinism, authority, and unresolved-evidence rules.
-4. **Slice D — Petclinic fixtures and golden evidence (after A, parallel with
-   B/C):** own test resources and exact-revision expected mechanical cases,
-   including same-package references, overloaded calls, helpers, unresolved
-   external symbols, nested tests, and negative paths. Do not encode Capability
-   or scenario truth in fixtures.
-5. **Slice E — combined integration (after B/C/D):** connect the provider and
-   Java CLI, generate one immutable Petclinic evidence package, replay twice for
-   byte determinism, and run focused plus full regression verification.
-6. **Slice F — independent review (after E):** a distinct reviewer who did not
-   produce or integrate the candidate checks the exact candidate, source
-   identity, countable claims, negative cases, clean-export tests, and scope.
-   Remediation returns to the owning slice and requires a fresh exact-candidate
-   review.
+1. **Slice A — contract foundation (sequential):** define the Java evidence
+   bundle, proposal-provider API, schemas, stable failure vocabulary, authority
+   flags, deterministic ordering, and focused fail-closed tests. Review A before
+   parallel work.
+2. **Slice B — structural input adapter (after A):** normalize only the accepted
+   Graphify snapshot through `CodeIntelligenceProvider`, preserving provider
+   identifiers as diagnostics rather than Product semantics.
+3. **Slice C — test-behavior input adapter (after A, parallel with B/D):** import
+   the accepted Java extractor evidence, preserving resolved and unresolved
+   observations and exact source locations.
+4. **Slice D — delivery-history input adapter (after A, parallel with B/C):**
+   import the Java delivery-history reconstruction and bind commits, changed
+   paths, and delivery episodes without treating commit text as Product truth.
+5. **Slice E — deterministic Java proposal generator (after B/C/D):** combine
+   the three channels, require evidence corroboration, and emit traceable
+   Capability and Behavior Scenario proposals plus explicit evidence gaps.
+6. **Slice F — evaluator-only comparison (after E):** seal the proposal package,
+   then compare it with the frozen evaluator surface. Report capability
+   precision/recall, scenario presentation coverage, evidence-channel coverage,
+   unsupported-proposal rate, and exact-component diagnostics separately.
+7. **Slice G — combined integration and independent review (after F):** wire the
+   Java CLI, replay twice for byte determinism, run full verification, generate
+   one immutable delivery package, and obtain a fresh exact-candidate review.
 
-The Delivery Coordinator receives the entire DAG and may run B, C, and D in
-parallel after A is accepted. It performs combined integration and returns one
-delivery evidence package. No per-slice Human confirmation is required; Human
-Authority is reserved for terminal parent closure or a material Plan/Spec change.
+The Delivery Coordinator receives the full DAG. B, C, and D may run in parallel
+after A passes; E, F, and G are sequential. No per-slice Human confirmation is
+required. Terminal Backlog closure remains Human-only after Feature Delivery
+Plane reconciliation.
 
-Owned paths are limited to `pom.xml`, the new Java test-behavior contract,
-extractor, validator and CLI packages, their JUnit tests/resources, the new
-provider-neutral schema, and a new immutable BL009 Java-extractor evidence
-directory. The five active controls, existing immutable runs, accepted
-semantics, evaluator material, skills, and external Graphify runtime are
-read-only to the Execution Plane.
+Owned paths are limited to new Java reverse-evidence/proposal/evaluation packages
+and CLI wiring, their JUnit tests/resources, provider-neutral schemas, and one
+new immutable BL009 proposal run directory. Existing evidence, accepted
+semantics, evaluator truth, five active controls, skills, and external Graphify
+runtime are read-only to the Execution Plane.
 
 #### Acceptance and negative cases
 
-- The Java extractor accounts for all 18 `@Test`-bearing Petclinic files and all
-  76 `@Test` methods; each item has a repository-relative source location.
-- Same-package production references and method/type evidence are recovered
-  where source-root resolution permits. Unresolved or ambiguous references are
-  retained and never converted into invented links.
-- Output is provider-neutral, deterministic across two clean runs, and bound to
-  the exact source revision and input digests.
-- Malformed paths, revision/digest mismatch, duplicate identities, unsupported
-  schema versions, and escaped source roots fail closed.
-- Extraction produces behavior evidence only. It must not generate Capability
-  names, scenario wording, Product truth, evaluator labels, or semantic
-  publication decisions.
+- One immutable proposal package is bound to Petclinic revision
+  `818c4136ea971c21674525f9053de0d9c7ad8cfe` and exact input digests.
+- Every Capability and scenario proposal cites at least two evidence channels;
+  single-channel observations remain evidence gaps and cannot become proposals.
+- Scenario text is derived only from observable test actions/outcomes and avoids
+  source paths, class names, method names, Graphify IDs, and evaluator labels.
+- Identical inputs reproduce byte-identical proposal and comparison artifacts.
+- Missing inputs, revision/digest mismatch, escaped paths, duplicate identities,
+  unsupported schema versions, evaluator leakage, and untraceable proposal text
+  fail closed.
+- Evaluation reports capability precision/recall, scenario presentation
+  coverage, evidence-channel coverage, unsupported-proposal rate, and exact
+  component diagnostics as separate values; no aggregate score hides a failed
+  dimension.
+- Generated output remains proposal-only and semantic publication remains false.
 
 #### Verification and handoff
 
@@ -107,9 +109,8 @@ git diff --check
 Return one exact combined candidate containing accepted slice identities,
 changed paths, generated evidence and digests, limitations, review/remediation
 history, verification results, and token/cycle-time/first-pass KPIs. The Feature
-Delivery Plane reconciles it before changing Backlog maturity. This execution
-does not generate or evaluate Reverse Capability/scenario proposals and cannot
-close `PKB-BL-009`.
+Delivery Plane reconciles it against the Spec and frozen evaluator boundary
+before proposing terminal `PKB-BL-009` closure.
 
 ## Verified delivery ledger
 
@@ -119,6 +120,7 @@ close `PKB-BL-009`.
 | `PKB-BL-005` | Machine-verifiable scenario proposal and review lifecycle | Contract and validator tests |
 | `PKB-BL-008` | Frozen Graphify capability and live MCP contract | `validation/pkb001/runtime/bl008-stage1-integration-evidence.json` |
 | `PKB-BL-009` discovery | Graphify test indexing supported; test-to-production relationship coverage classified `GAP` | Candidate `4c1a2bae3850028de25b3fd84cc07ea67640dbb6`; `validation/pkb001/reverse-pkb-bl009-petclinic-001/provider-discovery/discovery-evidence.json`; fresh independent review PASS |
+| `PKB-BL-009` Java test behavior | Provider-neutral Java extraction of 18 test files and 76 test methods with unresolved evidence preserved | Reviewed candidate `cfe885986ac80f8fac7eb125c2f6ec856f0f6a51`; control-branch evidence commit `c867acd`; `validation/pkb001/reverse-pkb-bl009-petclinic-001/java-test-behavior/evidence-package.json`; independent review PASS |
 | `PKB-BL-018` | Durable structural component identity | Java identity tests |
 | `PKB-BL-019` | Immutable realization proposal contract | Java authority and revision tests |
 | `PKB-BL-020` | Proposal-only generation and evaluator-gold isolation | Isolation tests |
