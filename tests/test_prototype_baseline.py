@@ -204,6 +204,10 @@ def test_agents_define_responsibility_planes_without_software_authority():
     assert 'sole handoff trigger' in multica
     assert 'worker does not reassign' in multica
     assert 'non-starting assignment' in multica
+    assert 'Coordinator routing concurrency is fixed at one' in multica
+    assert 'immediately before creating a review issue' in multica
+    assert 'all-status matching review issues' in multica
+    assert 'record the exact review issue ID' in multica
     assert 'read-only to every Execution Plane role' in multica
 
 

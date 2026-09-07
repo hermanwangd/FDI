@@ -11,6 +11,11 @@ analysis only.
 
 ## Execution rules
 
+- Coordinator routing concurrency is fixed at one. This serializes controller
+  reconciliation transactions, not specialist execution: independently owned
+  implementation and review slices may still run in parallel. Increasing
+  Coordinator concurrency is prohibited unless the orchestration backend
+  provides an atomic compare-and-set claim for routing keys.
 - For two or more parallel slices, dispatch only one Coordinator-owned
   controller. The Coordinator creates and assigns the child slices, records the
   expected child set and integration order, and owns transitions into review.
@@ -31,6 +36,14 @@ analysis only.
   issues or exact references. Any matching issue or candidate, even `done`,
   `in_review` or `cancelled`, blocks a new dispatch until reconciled. Never infer
   absence from the default issue-list page or an open-issue count.
+- For implementation-review dispatch, derive a stable review key from execution,
+  slice, exact candidate, replay/integration base, and reviewer role. Record the
+  pending key on the parent controller; immediately before creating a review issue,
+  reread the controller metadata and search all-status matching review issues
+  across the full project. An existing pending key or matching issue is reused or
+  reconciled; it never permits another create. After a successful create, record the exact review issue ID
+  on the controller before any other routing mutation.
+  Child-only metadata is evidence, not a concurrency claim.
 - Build one shared characterization/parity matrix during tranche selection and
   pin its path, digest and interpreter/runtime boundary in every slice brief.
   Reuse it for implementation, review and integration. Extend it only for a
