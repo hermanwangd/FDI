@@ -157,3 +157,31 @@ Largest evidenced problem / one next action / next measurement:
 
 Append compact completed-slice records here; link raw evidence instead of copying
 logs. Do not dispatch extra LLM runs solely to populate the record.
+
+## Completed execution record — HERM-314
+
+- Scope: `PKB-BL-009-JAVA-TEST-BEHAVIOR-001`; four eligible implementation
+  slices plus combined integration; collected 2026-09-07 22:06 +08 from issue
+  usage, runs, children, and timelines. All 30 nonzero runs are included.
+- Token cost: 1,803,824 input + 445,940 output = 2,249,764; cache-read
+  52,591,104. Against the 2026-09-06 baseline this is -3.6% input/output,
+  -13.0% cache-read, and 30 versus 32 runs.
+- Duplicate cost: HERM-320, HERM-321, and HERM-325 account for seven runs,
+  536,946 input/output tokens (23.9%) and 11,827,456 cache-read tokens (22.5%).
+  Excluding those duplicate attempts for sensitivity only gives 1,712,818
+  input/output tokens, 26.6% below the baseline. Official accounting retains
+  them. Per-role Coordinator share is `UNKNOWN` because the available usage API
+  aggregates mixed-role runs by issue.
+- Cycle time: approximately 1h26m from the first implementation start at 12:09
+  to the combined independent verdict at 13:35, 43% below the 2h31m50s
+  baseline and below the 2h target. Combined implementation completion at 13:28
+  to review start at 13:30 was approximately 2m, below the 5m target.
+- First-pass rate: canonical eligible slices A/B/C/D passed 4/4 = 100%; combined
+  integration passed 1/1. As an operational sensitivity, counting the two
+  nonzero duplicate implementation attempts as failed workflow attempts gives
+  4/6 = 66.7%; this does not replace the canonical KPI.
+- Decision: cycle time and canonical first-pass quality improved, but token
+  reduction was obscured by duplicate implementation and review dispatch.
+  Apply the already-installed single-trigger, serialized Coordinator routing to
+  the next comparable execution. Its success criterion is zero duplicate runs;
+  then compare the same three KPIs without reducing verification or review.
