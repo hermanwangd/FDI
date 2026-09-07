@@ -338,6 +338,34 @@ Backlog. User-facing final responses remain English.
 - Record exact rendered bytes/digests and read-back results only after rendering.
   No release digest or successful deployment is claimed by this document.
 
+#### Handoff-target runtime probe gate
+
+This gate applies before publishing role instructions that resolve their
+Coordinator dynamically from Project context. It does not block or retarget an
+execution already running under the previous instruction release.
+
+1. In an isolated, non-production probe issue, deploy distinct Project/release
+   markers and the expected Coordinator ID. Have the probe role report the exact
+   values it can read without posting a mention or modifying a repository.
+2. PASS requires exact Project identity, workflow release and Coordinator ID,
+   with no value taken from another Project, historical comment or role default.
+   Missing, conflicting or ambiguous values fail closed and keep the new release
+   unpublished.
+3. After the read-only stage passes, run one disposable routing probe. The role
+   posts exactly one structured mention using the resolved ID and performs no
+   reassignment, status transition, repository mutation or second trigger.
+4. PASS requires exactly one new Coordinator run attributable to that mention,
+   the intended Project/issue/candidate tuple, and no duplicate or wrong-agent
+   run. Query task state after an ambiguous response instead of retrying.
+5. Record probe issue/run IDs, rendered/read-back digests, observed injected
+   `AGENTS.md` markers, expected versus actual target, trigger count and cleanup
+   result in the release evidence. Remove or deactivate probe-only settings after
+   observation and verify the previous state is restored.
+
+Only this probe gate authorizes calling the dynamic handoff-target behavior
+runtime-verified. It does not itself authorize general release publication;
+the remaining rollout checks and explicit live-settings authorization still apply.
+
 ## Dispatch and worktree timing
 
 Separate two checks to avoid requiring a worktree before the platform can
