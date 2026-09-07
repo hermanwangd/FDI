@@ -11,6 +11,22 @@ analysis only.
 
 ## Execution rules
 
+- Coordinator is routing-only. It MUST NOT use internal subagents to implement or review
+  repository changes, and it must not edit executable code or substitute an
+  in-process task tree for tracked Execution Plane work. Every implementation,
+  review, remediation, and integration slice is a MultiCA child issue with its
+  own attributable run and managed worktree where applicable.
+- For an approved multi-slice DAG, create the complete child issue skeleton before implementation:
+  record every expected child, stage barrier, ownership boundary, integration
+  order, and stable routing key on the parent controller. Verify that parallel
+  peers have non-overlapping ownership and distinct managed worktrees before
+  starting any implementation child.
+- The pre-implementation gate is
+  `IMPLEMENTATION_ALLOWED = expected_children_exist AND stages_recorded AND
+  ownership_non_overlapping AND parallel_worktrees_distinct`. A false term
+  blocks implementation. Sequential execution is not an allowed fallback when
+  the envelope requires parallel peers; inability to create child issues or
+  managed worktrees is `PLAN_BLOCKED`, not permission to continue internally.
 - Coordinator routing concurrency is fixed at one. This serializes controller
   reconciliation transactions, not specialist execution: independently owned
   implementation and review slices may still run in parallel. Increasing

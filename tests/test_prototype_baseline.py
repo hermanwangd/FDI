@@ -209,6 +209,11 @@ def test_agents_define_responsibility_planes_without_software_authority():
     assert 'all-status matching review issues' in multica
     assert 'record the exact review issue ID' in multica
     assert 'read-only to every Execution Plane role' in multica
+    assert 'Coordinator is routing-only' in multica
+    assert 'MUST NOT use internal subagents to implement or review' in multica
+    assert 'complete child issue skeleton before implementation' in multica
+    assert 'IMPLEMENTATION_ALLOWED' in multica
+    assert 'Sequential execution is not an allowed fallback' in multica
 
 
 def test_active_execution_contains_project_state_not_actor_identity():
