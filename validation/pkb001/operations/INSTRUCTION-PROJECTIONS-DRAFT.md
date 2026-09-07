@@ -28,15 +28,22 @@ conflicts are reported, not resolved by assuming the newest text wins.
 
 ## Pending deployment instructions
 
-Keep common boundaries in Workspace, target identity in Project, and operational
+Keep target identity and shared delivery boundaries in Project, and operational
 duties in each role. Avoid copying the complete workflow into every field.
 
-The five blocks below form one pending deployment set, not optional standalone
-snippets. Deployment must verify that every assigned role receives Workspace,
-Project, and its role block. They remain UNPUBLISHED. Fill the deployment values
-listed below before hashing or publishing; do not deploy unresolved placeholders.
+The initial pending deployment set consists of Project plus the three role
+blocks. Workspace context remains unchanged until the isolated probe below
+confirms how a non-empty value is injected and scoped. Deployment must verify
+that every assigned role receives Project and its own role block. All blocks
+remain UNPUBLISHED. Fill deployment values before hashing or publishing; do not
+deploy unresolved placeholders.
 
-### Workspace
+### Workspace — deferred candidate
+
+Do not publish this block in the initial rollout. It is retained as a candidate
+for a later, separately reviewed Workspace-safe projection after the injection
+probe passes. Until then, host-wide safety must remain enforced by existing
+runtime/repository controls and each released Project/role projection as needed.
 
 ```text
 Apply this workflow only to tasks explicitly bound to its deployed release by
@@ -330,6 +337,39 @@ evidence. It must not receive accepted Product semantics or evaluator truth.
 Evaluator-only truth is supplied to the evaluator after the proposal package is
 sealed. Evaluation and code review do not authorize semantic publication.
 
+## Observed runtime projection behavior
+
+The following is read-only evidence observed on 2026-09-07 from Multica CLI and
+an active Delivery Engineer task using local runtime version `0.4.41`. It is a
+point-in-time observation, not a stable platform contract or successful rollout.
+
+- The task worktree's repository `AGENTS.md` contained an auto-managed
+  `MULTICA-RUNTIME` block in addition to the repository-owned instructions.
+- That block contained platform safety rules, agent identity and role
+  instructions, available repository information, and the active Project name
+  and description. Therefore repository instructions and runtime-projected
+  settings can coexist in the file actually read by an agent.
+- The configured Engineer and Reviewer instruction text included literal
+  backslash-n sequences, and those sequences remained literal in the injected
+  block. A future publisher must render real newlines and verify the read-back
+  bytes rather than assume escaping is normalized.
+- The observed Workspace `context` value was `null`. This observation cannot
+  establish where, in what order, or with what precedence a non-empty Workspace
+  context would be injected.
+- The runtime log recorded a generated inline system prompt and task worktree,
+  but a matching content dump was not available from the inspected settings.
+  Presence in `AGENTS.md` confirms projection, not every effective-prompt layer
+  or precedence rule.
+- The active task used the current `multica_workspaces/.../worktree` location.
+  Absence at an older `multica_workspaces_desktop-api.multica.ai/...` path is not
+  evidence that provisioning failed; use the task/run record or daemon log to
+  resolve the actual path before diagnosing a missing worktree.
+
+Before deployment, verify a bounded probe with non-empty Workspace context and
+distinct marker strings in Workspace, Project and each role. Inspect the actual
+task worktree and permitted runtime evidence to determine presence, ordering,
+escaping and conflicts. Do not infer semantic precedence merely from text order.
+
 ## Maintenance and publication
 
 Feature Delivery Plane owns template changes and publication. Execution Plane
@@ -338,7 +378,8 @@ policy or active controls. Keep supporting maintenance artifacts here; use Git
 history rather than version-suffixed copies.
 
 After adoption, a release record should identify the exact source commit and
-each rendered Workspace, Project, and role projection's content SHA-256. A
+each rendered Project and role projection's content SHA-256. Include Workspace
+only in a later release that has passed the isolated Workspace probe. A
 sync record should identify destination settings, publication time, publisher,
 read-back digests, and verification outcome. These records do not yet exist as
 an implemented synchronization mechanism.
@@ -347,14 +388,22 @@ Proposed rollout:
 
 1. Review the draft against existing adopted guidance and active boundaries;
    reconcile conflicts and preserve required operational details.
-2. Prepare exact rendered settings and their digests, including deployment
-   values and the concrete single-trigger handoff contract.
+2. Prepare exact rendered Project and three role settings and their digests,
+   including deployment values and the concrete single-trigger handoff contract.
+   Leave Workspace context unchanged.
 3. Obtain explicit authorization for the live settings change; preserve the
    previous settings for scoped rollback.
-4. Publish and read settings back. Compare actual content, not only a release
-   label. Account explicitly for line endings or platform transformations.
-5. Verify effective loading and a bounded dispatch/handoff before calling the
-   deployment operational. A content digest proves identity, not agent behavior.
+4. Publish Project and role settings, then read them back. Compare actual content,
+   not only a release label. Account explicitly for line endings or platform
+   transformations.
+5. Verify effective loading and a bounded dispatch/handoff before calling that
+   release operational. A content digest proves identity, not agent behavior.
+6. Separately test non-empty Workspace context using distinct, non-operative
+   marker text in an isolated probe scope. Confirm target coverage, placement,
+   escaping, ordering and removal without relying on production delivery tasks.
+7. Only after probe review, decide whether any genuinely host-wide rule belongs
+   in Workspace. Publish it as a separate release; do not copy the full workflow
+   or Product-specific authority into Workspace.
 
 Do not silently retarget in-flight executions to a new release. Keep them bound
 to the original envelope or stop and reconcile an explicitly authorized update.
