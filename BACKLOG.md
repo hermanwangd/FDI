@@ -25,7 +25,7 @@ exactly one backlog record. Status means:
 | `PKB-BL-007` | `FEATURE` | `PKB-MAPPING-001` | Add scenario traces to the PK-S1 mapping contract under the Java-only target. | `NEEDS_RECONCILIATION` | Preserve PK-S1 v0.2; select a new contract version after BL-006. |
 | `PKB-BL-008` | `RESEARCH` | `PKB-PROVIDER-001` | Verify actual Graphify UI/template capability or record the gap. | `VERIFIED` | Frozen provider contract and live MCP handshake verified. Evidence: `validation/pkb001/runtime/bl008-stage1-integration-evidence.json`. |
 | `PKB-BL-027` | `BUG` | `PKB-RUNTIME-001` | Make the external Graphify runtime workspace-portable and bound the Java stdio-MCP lifecycle. | `VERIFIED` | Candidate `a022b894ff2080390da87eeb017fa243f5afc1b7`. Evidence: `validation/pkb001/runtime/pkb-bl027-portable-runtime-evidence.json`. |
-| `PKB-BL-009` | `FEATURE` | `PKB-REVERSE-002` | Derive reviewable Capability and Behavior Scenario proposals from structural, repository-test, and delivery evidence. | `IN_PROGRESS` | Graphify discovery and the Java test-behavior extractor are independently verified. Current construction is `IMPLEMENTATION-PLAN.md#pkb-bl-009-deterministic-reverse-proposal-generation`; evaluator truth and review decisions remain generation-inaccessible. |
+| `PKB-BL-009` | `FEATURE` | `PKB-REVERSE-002` | Derive reviewable Capability and Behavior Scenario proposals from structural, repository-test, and delivery evidence. | `VERIFIED` | Exact candidate `472b0427725002492fb226e85b684355d2fdc012`; HERM-342 independent PASS; sealed proposal and comparison artifacts reproduced byte-identically; evaluator truth remained generation-inaccessible. |
 | `PKB-BL-010` | `VALIDATION` | `PKB-EVAL-001` | Add sealed provider-neutral component identity to evaluator truth. | `BLOCKED_DEPENDENCY` | Depends on BL-007. |
 | `PKB-BL-011` | `VALIDATION` | `PKB-EVAL-002` | Separate scenario, chain, component, and diagnostic measures. | `BLOCKED_DEPENDENCY` | Depends on BL-007 and BL-010. |
 | `PKB-BL-012` | `VALIDATION` | `PKB-CALIBRATION-001` | Freeze justified numeric acceptance thresholds before the next run. | `BLOCKED_DEPENDENCY` | Depends on BL-011 and human review. |
@@ -43,6 +43,6 @@ exactly one backlog record. Status means:
 
 ## Maturity
 
-24 normative requirements: 12 `VERIFIED`, 12 below M3. Dependencies and approval
+24 normative requirements: 13 `VERIFIED`, 11 below M3. Dependencies and approval
 blocks are authoritative in the ledger above. Selection and next action belong
 only in `IMPLEMENTATION-PLAN.md` and `STATUS.json`.
