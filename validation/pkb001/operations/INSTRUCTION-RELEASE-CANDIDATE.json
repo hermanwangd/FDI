@@ -1,0 +1,73 @@
+{
+  "schema_version": "instruction-release-candidate/v1",
+  "status": "CANDIDATE_UNPUBLISHED",
+  "workflow_release": "sf-execution-workflow/0.1.0-rc1",
+  "publication_authorized": false,
+  "published": false,
+  "source": {
+    "commit": "22a1b71888784bce4ca43350802da752dc7a6131",
+    "path": "validation/pkb001/operations/INSTRUCTION-PROJECTIONS-DRAFT.md",
+    "byte_length": 28665,
+    "sha256": "a22442e986fd5ab1c9989c33698925c6f73359d85a8478e3b6a3a46dad4cc71e"
+  },
+  "extraction_contract": {
+    "encoding": "UTF-8",
+    "line_endings": "LF",
+    "rule": "For each exact level-three heading, use the bytes after its opening ```text LF through the line before the closing ```, including one final LF.",
+    "unresolved_placeholders_allowed": false
+  },
+  "destination": {
+    "workspace_id": "8bc556c7-4b57-4b16-8d9e-74d8e0781f12",
+    "project_id": "1c9ff13a-657d-41c2-a592-e6378e138736",
+    "product_id": "PKB-001",
+    "target_repository": "https://github.com/hermanwangd/FDI.git",
+    "workspace_context_change": false,
+    "workspace_context_observed_before_release": null
+  },
+  "projections": [
+    {
+      "name": "project",
+      "source_heading": "Project",
+      "target_type": "project",
+      "target_id": "1c9ff13a-657d-41c2-a592-e6378e138736",
+      "target_field": "description",
+      "byte_length": 1460,
+      "sha256": "d52c055744636c9f3ef970e9c5810df6b9881a41c5240cc13d2a3120489ad733"
+    },
+    {
+      "name": "delivery_coordinator",
+      "source_heading": "Delivery Coordinator",
+      "target_type": "agent",
+      "target_id": "4305a761-e7d4-46d8-be4e-464dce67d1d9",
+      "target_field": "instructions",
+      "byte_length": 4721,
+      "sha256": "aa58356e7b93c6b5dcdbdbd26428117077a78e5af58e30ba5bf1c4481ce41e04"
+    },
+    {
+      "name": "delivery_engineer",
+      "source_heading": "Delivery Engineer",
+      "target_type": "agent",
+      "target_id": "72747183-d22b-4266-b4a3-d7343da64945",
+      "target_field": "instructions",
+      "byte_length": 3914,
+      "sha256": "3afd860085250e695ba96fc5d7fba0e95cf007c70f0b1621f24c17947ca81da1"
+    },
+    {
+      "name": "independent_reviewer",
+      "source_heading": "Independent Reviewer",
+      "target_type": "agent",
+      "target_id": "bae95d27-dc8e-4491-9766-37320b8ecc11",
+      "target_field": "instructions",
+      "byte_length": 2249,
+      "sha256": "80bf623a5369cbe4aa09c0684b6bbdf4e8c486ee61256f4f9a3d39a5f6ef7e77"
+    }
+  ],
+  "gates": {
+    "source_digests_verified": true,
+    "live_readback_verified": false,
+    "effective_runtime_loading_verified": false,
+    "handoff_target_probe": "NOT_RUN",
+    "in_flight_execution_impact_reconciled": false
+  },
+  "release_rule": "Do not publish until explicit live-settings authorization, in-flight impact reconciliation, exact read-back comparison, and the handoff-target runtime probe pass."
+}
