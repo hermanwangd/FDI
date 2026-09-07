@@ -21,6 +21,9 @@ public class FdiApplication {
         if (com.featuredeliveryintelligence.fdi.testbehavior.cli.TestBehaviorExtractCli.handles(args)) {
             System.exit(com.featuredeliveryintelligence.fdi.testbehavior.cli.TestBehaviorExtractCli.run(args, System.out, System.err));
         }
+        if (com.featuredeliveryintelligence.fdi.reverse.cli.ReverseProposalCli.handles(args)) {
+            System.exit(com.featuredeliveryintelligence.fdi.reverse.cli.ReverseProposalCli.run(args, System.out, System.err));
+        }
         if (GraphifyRuntimeProbeCli.handles(args)) {
             System.exit(GraphifyRuntimeProbeCli.run(args, System.out, System.err));
         }
