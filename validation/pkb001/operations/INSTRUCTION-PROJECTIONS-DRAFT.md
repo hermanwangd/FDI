@@ -223,6 +223,14 @@ Resolve full commit identities and required ancestry in the actual checkout.
 Before any mutation record daemon starting commit/branch and verify worktree
 identity, assigned ownership and isolation from other active writable runs.
 
+Consume the pinned execution input manifest before open-ended discovery. For a
+dependent integration/generator slice it must name every accepted full candidate
+SHA, replay order and required ancestry, input paths/digests, fixed dataset counts
+and invariants, owned/excluded paths, and exact focused/full verification commands.
+Verify the manifest against actual inputs, then reuse it. A missing or conflicting
+required field is PLAN_BLOCKED or PLAN_CONFLICT; do not reconstruct it repeatedly
+from whole issue history. Extend discovery only for a concrete new mismatch.
+
 Follow target-repository development instructions.
 Use TDD for executable changes and incremental commits. Implement only the assigned
 slice, including combined integration when explicitly assigned. Preserve unrelated
@@ -232,9 +240,26 @@ to another candidate. Recovery replays/cherry-picks onto its starting commit;
 publish the resulting new SHA and require fresh review. Before handoff verify
 starting-commit ancestry and the daemon-assigned branch; failure blocks handoff.
 
-Run focused checks during implementation and required full regression at the final
-candidate; rerun affected checks when relevant identities change. For migration,
-use the pinned shared parity matrix/digest rather than rediscovering unchanged
+Batch related searches, reads, edits and focused checks. Prefer bounded summaries,
+manifests and exact paths over raw datasets/logs. Consolidate progress narration
+and avoid explaining every routine tool call. Target at most 70 tool calls for a
+bounded slice; this is a context-cost signal, not permission to skip work. At 40
+calls compact the state. Before exceeding 70, record the concrete remaining gate
+and batch plan; above 80, explain why completion cannot be verified otherwise.
+
+Run focused checks during implementation. Run required full regression after the
+last change to the final exact candidate. Any later change to candidate content,
+source/tests, build or dependency identity, replay inputs, or a controlling
+manifest/digest invalidates that result and requires full regression again on the
+new exact candidate. Rerun only affected focused checks when a change is proven
+not to alter final-candidate or full-suite identity. If runtime-injected
+tracked-file changes would predictably fail repository
+cleanliness/baseline tests, run final regression directly in a collision-resistant
+clean export of the candidate, or an independent clone/worktree when Git metadata
+is required. Do not first spend a full run rediscovering that known environmental
+failure; still report the injected-tree difference and clean-candidate result.
+For migration, use the pinned shared parity matrix/digest rather than
+rediscovering unchanged
 behavior. For an authorized docs-only profile, prove source, tests, tooling,
 build and dependency identities match reviewed full-suite evidence before reusing
 it; otherwise run full verification. Report actual commands/results, not guesses.
