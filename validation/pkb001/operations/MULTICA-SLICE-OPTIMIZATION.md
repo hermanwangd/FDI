@@ -39,21 +39,21 @@ analysis only.
   non-overlapping ownership. Integrate shared controls serially and verify the
   combined candidate. Stay within the aggregate 8 GB resource limit.
 - A worker's final handoff names the exact candidate, changed paths, actual test
-  results, limitations, blockers, and required reviewer. The comment contains no
-  plain-text or structured agent mention (`mention://agent/...`). After the
-  comment is published, the worker explicitly reassigns the child to Delivery
-  Coordinator once; that reassignment is the only handoff trigger. Never combine
-  a mention trigger with reassignment. The worker leaves the issue active and
-  does not move itself to `in_review`. The Coordinator validates the handoff,
-  transitions the issue, and assigns review exactly once. On every wake it also
-  checks the controller's full expected child set for a completed-but-unrouted
-  sibling.
-- A reviewer publishes one exact-candidate verdict containing one structured
-  Delivery Coordinator mention and does not reassign the issue while its review
-  task is still running. That mention is the sole verdict-handoff trigger. The
-  Coordinator claims the issue with a non-starting assignment after its run
+  results, limitations, blockers, and required reviewer. Its one structured
+  Delivery Coordinator mention (`mention://agent/...`) is the sole handoff trigger.
+  The worker does not reassign the issue or move it to `in_review`.
+  Reassignment from inside the still-running worker task is prohibited: Multica
+  may retain the new assignee while suppressing its run, leaving an apparently
+  routed issue with no Coordinator execution. After the mention-triggered
+  Coordinator run has actually started, the Coordinator claims the issue using
+  a non-starting assignment, validates the handoff, transitions the issue, and
+  assigns review exactly once. On every wake it also checks the controller's
+  full expected child set for a completed-but-unrouted sibling.
+- A reviewer follows the same trigger protocol: one structured Delivery
+  Coordinator mention in the exact-candidate verdict and no reassignment. The
+  Coordinator claims the issue with a non-starting assignment only after its run
   begins. This avoids both duplicate triggers and the assignment/task-completion
-  race.
+  race for implementation and review handoffs.
 - Preserve the managed worktree's starting commit ancestry and assigned branch.
   Replay/cherry-pick recovery changes onto it; bind verification to the new SHA.
 - Review exact candidates in a separate export for Git-independent tests, or an

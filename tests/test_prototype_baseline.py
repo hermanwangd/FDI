@@ -201,7 +201,9 @@ def test_agents_define_responsibility_planes_without_software_authority():
     assert 'mention://agent/' not in instructions
     assert 'explicit reassignment' not in instructions
     assert 'mention://agent/' in multica
-    assert 'explicitly reassigns' in multica
+    assert 'sole handoff trigger' in multica
+    assert 'worker does not reassign' in multica
+    assert 'non-starting assignment' in multica
     assert 'read-only to every Execution Plane role' in multica
 
 
