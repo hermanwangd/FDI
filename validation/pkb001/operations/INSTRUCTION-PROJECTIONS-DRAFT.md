@@ -101,10 +101,10 @@ workloads, cycle time and first-pass rate without an extra reporting agent run.
 
 ```text
 This project is bound to the target code repository.
-Product ID: {{PRODUCT_ID}}
-Target repository: {{TARGET_REPOSITORY}}
-Workflow release: {{WORKFLOW_RELEASE}}
-Delivery Coordinator handoff target: {{COORDINATOR_AGENT_ID}}
+Product ID: PKB-001
+Target repository: https://github.com/hermanwangd/FDI.git
+Workflow release: sf-execution-workflow/0.1.0-rc1
+Delivery Coordinator handoff target: 4305a761-e7d4-46d8-be4e-464dce67d1d9
 
 Read its repository development instructions.
 Use the issue envelope for the selected work, exact code revision,
@@ -128,8 +128,10 @@ judgments. Evaluator truth is available only to the authorized evaluator after
 proposals are sealed. Ordinary code review does not grant evaluator access.
 ```
 
-Each deployment fills the product identifier, target repository identity, and
-workflow release. These are configuration values, not copies of project truth.
+Each future deployment renders and verifies its product identifier, target
+repository identity, workflow release, and Coordinator handoff target. These
+are one deployment identity bundle, not copies of project truth; publish and
+verify them together rather than applying a partial update.
 
 ### Delivery Coordinator
 
@@ -241,7 +243,8 @@ Access Product Knowledge only when explicitly included in the task inputs.
 Return the exact candidate, changes, test results, evidence, and limitations.
 Include execution/slice IDs, worktree checks, unresolved risks, required reviewer
 and KPI evidence in one compact handoff. Keep the issue active; post exactly one
-structured mention (mention://agent/{{COORDINATOR_AGENT_ID}}) in that comment.
+structured mention to the Delivery Coordinator handoff target stated in the
+active Project description, using `mention://agent/<that exact agent ID>`.
 Do not reassign, move to in_review, rerun, or add another routing trigger.
 After uncertain delivery, inspect for the existing handoff/run before retrying.
 Do not self-approve closure. User-facing final responses remain English.
@@ -279,19 +282,23 @@ completion. Finalize failure blocks closure pending integrity reconciliation;
 repeat affected checks, with fresh review for changed content or uncertain evidence.
 
 Keep the issue active and post exactly one structured Coordinator mention
-(mention://agent/{{COORDINATOR_AGENT_ID}}) in the verdict comment. Do not reassign
-or add another trigger. After ambiguous delivery inspect existing state first.
+to the Delivery Coordinator handoff target stated in the active Project
+description, using `mention://agent/<that exact agent ID>`. Do not reassign or
+add another trigger. After ambiguous delivery inspect existing state first.
 Do not curate restricted truth, grant semantic acceptance or close the canonical
 Backlog. User-facing final responses remain English.
 ```
 
 ### Rendering and adoption checklist
 
-- Fill `PRODUCT_ID`, `TARGET_REPOSITORY`, `WORKFLOW_RELEASE` and the destination
-  `COORDINATOR_AGENT_ID` from verified deployment inputs, not inferred names.
-- Render the same Coordinator ID in Project, Engineer and Reviewer blocks.
-  Shared roles must not be rendered with a fixed ID for incompatible projects;
-  use a verified project-specific binding or isolate deployments before release.
+- Verify the rendered `Product ID`, `Target repository`, `Workflow release` and
+  `Delivery Coordinator handoff target` against the destination Project before
+  publication. The values above prepare the Software-Factory/PKB-001 candidate.
+- Keep the concrete Coordinator ID in Project context. Shared Engineer and
+  Reviewer roles resolve the handoff target from the active Project description;
+  do not hard-code a project-specific ID in reusable role instructions. The
+  runtime probe must confirm that roles can read this exact Project value before
+  the release is called operational.
 - Preserve Coordinator concurrency one. Worker concurrency must fit the shared
   resource budget; a configured concurrency ceiling is not a memory reservation.
 - Preserve existing language preferences as shown. Use real newlines, not literal
