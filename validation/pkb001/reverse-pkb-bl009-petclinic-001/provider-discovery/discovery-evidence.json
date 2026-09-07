@@ -1,0 +1,192 @@
+{
+  "evidence_id": "pkb-bl009-graphify-test-discovery-001",
+  "execution_id": "PKB-BL-009-GRAPHIFY-TEST-DISCOVERY-001",
+  "backlog_item": "PKB-BL-009",
+  "requirement": "PKB-REVERSE-002",
+  "spec_revision": "c396b3cf6e3a32d55c1fb57827f2022e4409df8d",
+  "captured_at": "2026-09-06T23:29:41Z",
+  "outcome": "GAP",
+  "outcome_rationale": "Test indexing is SUPPORTED: the installed Graphify 0.1.14 runtime indexed all 20 src/test/java files and all 76 @Test methods (18-file/76-method baseline) are observable as provider method nodes with exact source locations. Test-to-production relationship evidence is INSUFFICIENT: the only provider-native cross-file relationship is the 'imports' edge (file-node granularity, basis = import declaration). Only 5 of 18 @Test-bearing test files (13 edges total) resolve any import edge to a production file node; the other 13 test files expose zero provider-native production linkage because same-package references produce no import declaration and cross-file 'calls' edges do not exist (0 observed; call resolution is same-file label matching only). No @Test annotation or test-specific node/edge type is modeled, so test methods are indistinguishable from helper methods in the graph. Under the plan criteria, required test-to-production relationships are unavailable at the granularity a downstream extraction plan needs, so the single outcome is GAP. This classification does not authorize a Java fallback; per FRAMEWORK-SPEC PKB-REVERSE-002 a later bounded plan may add a Java-owned extractor adapter only after this verified gap.",
+  "classification_axes": {
+    "test_indexing": "SUPPORTED",
+    "test_node_observability": "SUPPORTED",
+    "test_to_production_relationships": "GAP"
+  },
+  "runtime_provenance": {
+    "runtime_identity": "graphifyy",
+    "runtime_version": "0.1.14",
+    "runtime_python": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/graphify-venv312/bin/python",
+    "python_version": "3.12.11",
+    "mcp_package_version": "1.29.1",
+    "transport": "MCP stdio",
+    "source_archive_sha256": "8d806aa861e0ffa2136eda227d79d290dfdbdb89bf0c63fd00a4e2b4ea59d445",
+    "source_revision_comment": "91f4d120b630ee35c79bf3c75ccd186870a808f9",
+    "installed_direct_url": "file:///Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/graphify-source/graphify-main",
+    "server_command": [
+      "python -m graphify.serve graphify-out/graph.json"
+    ],
+    "launch_working_directory": ".fdi-work/bl009-discovery (gitignored operational staging; graph bytes frozen into this evidence directory)",
+    "graphify_modified": false,
+    "extraction_mode": "deterministic tree-sitter Java AST via graphify.extract; no semantic/LLM extraction; no Graphify code change"
+  },
+  "source_identity": {
+    "repository": "spring-petclinic (FDI regression dataset)",
+    "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "verified_via": "git rev-parse HEAD in the validated immutable checkout .fdi-work/petclinic-818c413",
+    "working_tree_clean": true,
+    "whole_tree_archive_sha256": "033d8d17a6be34ac478c57d20dbce3e12e88a6924623765620a7495ccef75c5c",
+    "src_main_java_archive_sha256": "52242013ca5682e9d495f2222018193007a53ce76c2c55de6a6d3721832528d1",
+    "src_test_java_archive_sha256": "ef21a102152914a6bb129ad9e08f864abfa34191cf3fe71d2a959efab6383233",
+    "baseline": {
+      "test_files_total_under_src_test_java": 20,
+      "test_files_with_at_test": 18,
+      "at_test_methods": 76
+    },
+    "copy_verified_identical_to_source": true
+  },
+  "discovered_operations": [
+    {
+      "name": "query_graph",
+      "parameters": {
+        "question": "string (required)",
+        "mode": "bfs|dfs",
+        "depth": "1-6",
+        "token_budget": "int"
+      }
+    },
+    {
+      "name": "get_node",
+      "parameters": {
+        "label": "string (required)"
+      }
+    },
+    {
+      "name": "get_neighbors",
+      "parameters": {
+        "label": "string (required)",
+        "relation_filter": "string (optional)"
+      }
+    },
+    {
+      "name": "get_community",
+      "parameters": {
+        "community_id": "int (required)"
+      }
+    },
+    {
+      "name": "god_nodes",
+      "parameters": {
+        "top_n": "int"
+      }
+    },
+    {
+      "name": "graph_stats",
+      "parameters": {}
+    },
+    {
+      "name": "shortest_path",
+      "parameters": {
+        "source": "string",
+        "target": "string",
+        "max_hops": "int"
+      }
+    }
+  ],
+  "graph_summary": {
+    "nodes": 282,
+    "edges": 297,
+    "communities": 33,
+    "confidence_breakdown_pct": {
+      "EXTRACTED": 88,
+      "INFERRED": 12,
+      "AMBIGUOUS": 0
+    },
+    "indexed_main_files": 25,
+    "indexed_test_files": 20,
+    "node_types_observed": [
+      "file (label <Name>.java)",
+      "class/interface (label <Name>)",
+      "method (label .<name>())"
+    ],
+    "edge_types_observed": {
+      "contains": 50,
+      "method": 187,
+      "imports": 24,
+      "calls": 36
+    },
+    "test_specific_node_or_edge_types": null
+  },
+  "coverage_measurement": {
+    "test_files_indexed": "20/20",
+    "at_test_files_observable": "18/18",
+    "at_test_methods_observable_as_method_nodes": "76/76",
+    "at_test_annotation_modeled": false,
+    "test_methods_distinguishable_from_helpers": false,
+    "per_file_detail_artifact": "per-file-inventory.json"
+  },
+  "relationship_evidence": {
+    "provider_native_edge_types_between_test_and_production": [
+      "imports"
+    ],
+    "directed_import_edges_test_file_to_production_file_node": 13,
+    "test_files_with_at_test_having_any_production_edge": "5/18",
+    "cross_file_calls_edges": 0,
+    "basis": "extract.py creates one 'imports' edge per import_declaration whose imported simple type name matches the node id of an indexed file (stem-derived); edges are directed file-node to file-node and survive graph build only when both endpoints are indexed. Cross-file 'calls' edges are never produced for Java: call resolution matches method labels within the same file only (label_to_nid is per-file).",
+    "verified_examples": [
+      {
+        "test_file": "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java",
+        "line": 34,
+        "import": "org.springframework.samples.petclinic.owner.Owner",
+        "edge": "clinicservicetests --imports[EXTRACTED]--> owner (Owner.java file node)"
+      },
+      {
+        "test_file": "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java",
+        "line": 41,
+        "import": "org.springframework.samples.petclinic.vet.VetRepository",
+        "edge": "clinicservicetests --imports[EXTRACTED]--> vetrepository"
+      },
+      {
+        "test_file": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+        "line": null,
+        "import": "org.springframework.samples.petclinic.owner.OwnerRepository",
+        "edge": "petclinicconcurrencytests --imports[EXTRACTED]--> ownerrepository"
+      },
+      {
+        "test_file": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+        "line": null,
+        "import": "org.springframework.samples.petclinic.vet.VetRepository",
+        "edge": "mysqlintegrationtests --imports[EXTRACTED]--> vetrepository"
+      }
+    ],
+    "mcp_query_verification": {
+      "get_neighbors_clinicservicetests": "8 production file nodes returned via imports edges",
+      "get_neighbors_ownercontrollertests": "no production neighbor (references OwnerController from the same package; no import declaration exists)",
+      "shortest_path_clinicservicetests_to_owner": "1 hop via imports edge",
+      "query_at_test_methods": "query '@Test methods in OwnerControllerTests' returns all methods including non-@Test helpers (setup); annotation not modeled"
+    }
+  },
+  "limitations": [
+    "imports edges are file-node granularity only; no class- or method-level target and no distinction of which test method uses the import.",
+    "Same-package references (e.g. OwnerControllerTests -> OwnerController, ValidatorTests -> Validator) produce no import declaration and therefore no provider-native edge; 13 of 18 @Test-bearing test files show zero production linkage.",
+    "@Test, @BeforeEach and other annotations are not extracted; fixture/precondition and assertion evidence is absent from the graph.",
+    "Cross-file call resolution is Python-only in Graphify 0.1.14; Java call edges exist only within a single file (0 cross-file calls observed).",
+    "Node ids are stem-derived and checkout-specific absolute paths may appear in runtime provenance; the frozen graph bytes in this directory use repository-relative source_file paths captured from the staged copy.",
+    "5 of 30 production files were dropped as degree-0 isolated code nodes by graphify.build; dropped files can never be import-edge targets.",
+    "Graphify graph.json embeds no Git revision metadata; revision binding was established by controlled extraction from the validated immutable checkout (whole-tree archive digest recorded above)."
+  ],
+  "excluded_scope_confirmations": {
+    "graphify_reinstalled_or_modified": false,
+    "java_fallback_or_provider_api_implemented": false,
+    "source_schema_skill_contract_changes": false,
+    "capability_or_scenario_generation": false,
+    "evaluator_comparison": false,
+    "semantic_publication": false,
+    "immutable_evidence_overwritten": false,
+    "active_control_files_modified": false
+  },
+  "artifacts": {
+    "graph-petclinic-818c413-main-and-test.json": "5ff8454ae758c8b8ffb1e755ff7c2124efd233388f4f901d8d964b04977c27ca",
+    "mcp-probe-transcript.jsonl": "44ab00179747563bfc107784b5416c5c0645f199c547a34ba96c3b8cfeaddb43",
+    "per-file-inventory.json": "216a0bb06fa0ad2adde6139b2d4a800b4ab7cd6d57b9cd209f5fdfadb852bb01"
+  }
+}
