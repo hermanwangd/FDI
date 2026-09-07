@@ -1,0 +1,87 @@
+{
+ "evidence_id": "pkb-bl009-java-test-behavior-001",
+ "execution_id": "PKB-BL-009-JAVA-TEST-BEHAVIOR-001",
+ "backlog_item": "PKB-BL-009",
+ "requirement": "PKB-REVERSE-002",
+ "spec_revision": "c396b3cf6e3a32d55c1fb57827f2022e4409df8d",
+ "integration_base_commit": "1423192773fce7c4f6d1efb8dd3d2abbbebbb3e3",
+ "combined_candidate": "ef8ca80b293d086fbec28f346b6293f492c4b0cd",
+ "accepted_slices": {
+  "A_contract_foundation": "6325e2953a171d847e3f66ddbfd46890e5bbb7b6",
+  "B_javaparser_extractor": "dd5dd6bc0db5754ec3be30650f46e146f6ed10df",
+  "C_evidence_schema_validator": "3061b21c8b3d99800d2f49ba33ee05d349a16eb9",
+  "D_petclinic_fixtures_goldens": "b26557ab1bb0d0fb8d4125a190b503dc81d4ba0a"
+ },
+ "source_binding": {
+  "repository_id": "spring-petclinic",
+  "canonical_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "fixtures_path": "src/test/resources/testbehavior/petclinic-818c4136/fixtures",
+  "source_roots": [
+   "src/main/java",
+   "src/test/java"
+  ],
+  "pinned_matrix": {
+   "path": "validation/pkb001/reverse-pkb-bl009-petclinic-001/provider-discovery/per-file-inventory.json",
+   "sha256": "216a0bb06fa0ad2adde6139b2d4a800b4ab7cd6d57b9cd209f5fdfadb852bb01"
+  },
+  "pinned_matrix_baseline": {
+   "test_files": 20,
+   "test_files_with_at_test": 18,
+   "at_test_methods": 76,
+   "import_edges_to_production": 14,
+   "same_file_calls": 19
+  }
+ },
+ "evidence": {
+  "file": "validation/pkb001/reverse-pkb-bl009-petclinic-001/java-test-behavior/evidence.json",
+  "sha256": "4db3b4fcac22c704f321e2a3bef20091741147984815addf3ebf77d88643e66d",
+  "bytes": 1023097,
+  "schema_version": "1",
+  "provider_id": "fdi-testbehavior-javaparser",
+  "extractor_name": "javaparser-test-behavior-extractor",
+  "extractor_version": "1.0.0",
+  "test_files": 18,
+  "test_methods": 76,
+  "incomplete": true,
+  "unresolved_gap_volume": {
+   "EXTERNAL_DEPENDENCY_NOT_RESOLVED": 849,
+   "MISSING_SOURCE": 42
+  },
+  "resolved_production_symbol_observations": {
+   "total": 144,
+   "by_kind_and_basis": {
+    "METHOD/IMPORTED_SOURCE_ROOT": 60,
+    "METHOD/SAME_PACKAGE_SOURCE_ROOT": 83,
+    "CONSTRUCTOR/IMPORTED_SOURCE_ROOT": 1
+   }
+  }
+ },
+ "golden_identity_alignment": {
+  "golden_file": "src/test/resources/testbehavior/petclinic-818c4136/golden-test-files.json",
+  "declaration_location_convention": "1-based line/column of the method-name identifier (pinned discovery matrix convention); combined integration aligned the extractor from node-begin to name-identifier",
+  "result": "all 18 @Test-bearing files and all 76 method identities, names, and declaration locations match the golden file"
+ },
+ "determinism": {
+  "runs": 2,
+  "run1_sha256": "4db3b4fcac22c704f321e2a3bef20091741147984815addf3ebf77d88643e66d",
+  "run2_sha256": "4db3b4fcac22c704f321e2a3bef20091741147984815addf3ebf77d88643e66d",
+  "byte_identical": true,
+  "method": "two clean CLI runs over identical frozen fixtures; no wall-clock data in the evidence document"
+ },
+ "validation": {
+  "schema_path": "contracts/test-behavior-evidence.schema.json",
+  "validator": "com.featuredeliveryintelligence.fdi.testbehavior.validation.TestBehaviorEvidenceValidator",
+  "schema_report": {
+   "schema_version": "1",
+   "test_file_count": 18,
+   "test_method_count": 76,
+   "incomplete": true
+  },
+  "status": "PASS"
+ },
+ "limitations": [
+  "Extraction is restricted to the configured source roots plus JDK reflection types; the target repository is never built and its dependencies are never downloaded.",
+  "Unresolved references are preserved as explicit evidence gaps (849 EXTERNAL_DEPENDENCY_NOT_RESOLVED + 42 MISSING_SOURCE); incomplete stays true and no relationship edge is inferred from syntactic observations.",
+  "Evidence is mechanical test-behavior observation only; it contains no Capability names, scenario wording, Product truth, or evaluator labels."
+ ]
+}
