@@ -122,6 +122,20 @@ negative cases, verification profile, allowed inputs/digests, dependencies,
 resource allocation and Human boundaries. Missing required fields block work.
 An issue's done status does not close the canonical Backlog or publish semantics.
 
+Before posting a structured handoff mention, copy the handoff target only from
+this active Project description. Resolve that exact ID with `multica agent get`
+and verify exact returned ID, intended role, same workspace and non-archived
+state. Construct the mention from the verified returned ID; compare the final
+comment target byte-for-byte with the Project value and check that no equivalent
+Coordinator run is active, queued or already attributable to this handoff.
+Do not hand-type or shorten the UUID.
+
+If posting returns `target_unavailable`, compare the outcome target ID with the
+Project value before retrying. A malformed/mismatched ID must never be resent
+unchanged. After correcting it, post at most once and only after proving no run
+was created. If the exact verified target remains unavailable, report a routing
+blocker; do not substitute reassignment, status change, rerun or repeated mentions.
+
 Reverse generation may consume only authorized structural, test-behavior and
 delivery evidence, never accepted Product semantics, evaluator truth or previous
 judgments. Evaluator truth is available only to the authorized evaluator after
