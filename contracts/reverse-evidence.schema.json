@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "reverse-evidence.schema.json",
+  "title": "PKB-001 provider-neutral reverse evidence bundle",
+  "description": "Reverse-experiment evidence binding for one exact repository revision (PKB-BL-009 / PKB-REVERSE-002). Binds the analyzed repository identity and canonical revision to all three required evidence channels (STRUCTURAL, TEST_BEHAVIOR, DELIVERY_HISTORY), each pinned by repository-relative input path, frozen SHA-256 digest, schema version, and provider provenance, plus its parsed observation payload. Observations are mechanical evidence, never Product semantics. Mirrors com.featuredeliveryintelligence.fdi.reverse.evidence.ReverseEvidenceBundle; the Java validator remains the fail-closed authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "repository_id", "canonical_revision", "channels"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1"},
+    "repository_id": {"type": "string", "minLength": 1, "pattern": ".*\\S.*"},
+    "canonical_revision": {"type": "string", "pattern": "^([0-9a-fA-F]{40}|[0-9a-fA-F]{64})$"},
+    "channels": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "description": "Exactly one record per required channel. The Java bundle validator enforces presence, uniqueness, and cross-channel identity agreement fail-closed.",
+      "items": {"$ref": "#/$defs/channel"}
+    }
+  },
+  "$defs": {
+    "channel_id": {"enum": ["STRUCTURAL", "TEST_BEHAVIOR", "DELIVERY_HISTORY"]},
+    "repository_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!\\s*$)(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?!.*\/$).+$"
+    },
+    "sha256_hex": {"type": "string", "pattern": "^[0-9a-fA-F]{64}$"},
+    "channel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["channel", "repository_id", "canonical_revision", "input_path", "input_sha256", "schema_version", "provider_id", "provenance", "observations"],
+      "properties": {
+        "channel": {"$ref": "#/$defs/channel_id"},
+        "repository_id": {"type": "string", "minLength": 1, "pattern": ".*\\S.*"},
+        "canonical_revision": {"type": "string", "pattern": "^([0-9a-fA-F]{40}|[0-9a-fA-F]{64})$"},
+        "input_path": {"$ref": "#/$defs/repository_path"},
+        "input_sha256": {"$ref": "#/$defs/sha256_hex"},
+        "schema_version": {"type": "string", "const": "1"},
+        "provider_id": {"type": "string", "minLength": 1, "pattern": ".*\\S.*"},
+        "provenance": {"type": "string", "minLength": 1, "pattern": ".*\\S.*"},
+        "observations": {
+          "type": ["object", "array"],
+          "description": "Parsed, channel-specific normalized observation payload. Opaque to this contract: STRUCTURAL, TEST_BEHAVIOR, and DELIVERY_HISTORY adapters place their own normalized trees here without changing the bundle shape."
+        }
+      }
+    }
+  }
+}

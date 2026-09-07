@@ -1,0 +1,587 @@
+{
+  "authority" : "EVALUATOR_COMPARISON_ONLY",
+  "canonical_revision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "capability_match" : {
+    "evaluator_capabilities" : 10,
+    "matched" : 4,
+    "matches" : [
+      {
+        "gold_id" : "PET-CAP-01",
+        "gold_name" : "Find Owners",
+        "proposed_id" : "HYP-CAPABILITY-0007",
+        "proposed_title" : "Owner",
+        "score" : 1.0
+      },
+      {
+        "gold_id" : "PET-CAP-04",
+        "gold_name" : "Register Pet",
+        "proposed_id" : "HYP-CAPABILITY-0002",
+        "proposed_title" : "Pet clinic concurrency",
+        "score" : 0.5
+      },
+      {
+        "gold_id" : "PET-CAP-06",
+        "gold_name" : "Record Pet Visit",
+        "proposed_id" : "HYP-CAPABILITY-0011",
+        "proposed_title" : "Visit controller",
+        "score" : 0.5
+      },
+      {
+        "gold_id" : "PET-CAP-10",
+        "gold_name" : "Access Clinic Home",
+        "proposed_id" : "HYP-CAPABILITY-0012",
+        "proposed_title" : "Clinic service",
+        "score" : 0.5
+      }
+    ],
+    "precision" : 0.2222222222222222,
+    "proposed_capabilities" : 18,
+    "recall" : 0.4,
+    "rule" : "normalized wording tokens (lowercase, alphanumeric split, plural folding); pair score is token-set intersection over the smaller set; pairs need score >= 0.5; greedy one-to-one matching ordered by descending score, then proposed id, then evaluator capability id"
+  },
+  "comparison_set_id" : "PKB-BL-009-REVERSE-PROPOSAL-001-sliceF",
+  "evaluator_surface" : {
+    "mapping_set_id" : "pkb001-petclinic-818c413-evaluator-v1",
+    "seal_id" : "pkb001-petclinic-818c413-ground-truth-v1"
+  },
+  "evidence_channel_coverage" : {
+    "all_three_channels" : {
+      "capabilities" : 18,
+      "capability_ratio" : 1.0,
+      "scenario_ratio" : 1.0,
+      "scenarios" : 76
+    },
+    "per_channel" : [
+      {
+        "capabilities_citing" : 18,
+        "capability_ratio" : 1.0,
+        "channel" : "STRUCTURAL",
+        "scenario_ratio" : 1.0,
+        "scenarios_citing" : 76
+      },
+      {
+        "capabilities_citing" : 18,
+        "capability_ratio" : 1.0,
+        "channel" : "TEST_BEHAVIOR",
+        "scenario_ratio" : 1.0,
+        "scenarios_citing" : 76
+      },
+      {
+        "capabilities_citing" : 18,
+        "capability_ratio" : 1.0,
+        "channel" : "DELIVERY_HISTORY",
+        "scenario_ratio" : 1.0,
+        "scenarios_citing" : 76
+      }
+    ],
+    "rule" : "distinct citation channels per sealed proposal, compared against the three bundled evidence channels"
+  },
+  "exact_component_diagnostics" : {
+    "overall" : {
+      "exact_component_level" : {
+        "expected" : 20,
+        "matched" : 0,
+        "precision" : 0.0,
+        "proposed" : 135,
+        "recall" : 0.0
+      },
+      "expected_realization_chain_coverage" : 0.0,
+      "extra_proposed_components" : [
+        "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java#MySqlIntegrationTests#mysqlintegrationtests",
+        "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java#MySqlIntegrationTests#mysqlintegrationtests_mysqlintegrationtests",
+        "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java#MySqlIntegrationTests#mysqlintegrationtests_mysqlintegrationtests_findall",
+        "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java#MySqlIntegrationTests#mysqlintegrationtests_mysqlintegrationtests_ownerdetails",
+        "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java#PetClinicConcurrencyTests#petclinicconcurrencytests",
+        "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java#PetClinicConcurrencyTests#petclinicconcurrencytests_petclinicconcurrencytests",
+        "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java#PetClinicConcurrencyTests#petclinicconcurrencytests_petclinicconcurrencytests_testduplicatepetnameraceconditionisblocked",
+        "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java#PetClinicIntegrationTests#petclinicintegrationtests",
+        "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java#PetClinicIntegrationTests#petclinicintegrationtests_petclinicintegrationtests",
+        "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java#PetClinicIntegrationTests#petclinicintegrationtests_petclinicintegrationtests_findall",
+        "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java#PetClinicIntegrationTests#petclinicintegrationtests_petclinicintegrationtests_main",
+        "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java#PetClinicIntegrationTests#petclinicintegrationtests_petclinicintegrationtests_ownerdetails",
+        "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java#PetClinicIntegrationTests#petclinicintegrationtests_petclinicintegrationtests_ownerlist",
+        "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java#PostgresIntegrationTests#postgresintegrationtests",
+        "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java#PostgresIntegrationTests#postgresintegrationtests_postgresintegrationtests",
+        "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java#PostgresIntegrationTests#postgresintegrationtests_postgresintegrationtests_available",
+        "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java#PostgresIntegrationTests#postgresintegrationtests_postgresintegrationtests_findall",
+        "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java#PostgresIntegrationTests#postgresintegrationtests_postgresintegrationtests_main",
+        "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java#PostgresIntegrationTests#postgresintegrationtests_postgresintegrationtests_ownerdetails",
+        "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java#PostgresIntegrationTests#postgresintegrationtests_propertieslogger",
+        "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java#PostgresIntegrationTests#postgresintegrationtests_propertieslogger_findpropertiespropertysources",
+        "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java#PostgresIntegrationTests#postgresintegrationtests_propertieslogger_onapplicationevent",
+        "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java#PostgresIntegrationTests#postgresintegrationtests_propertieslogger_printproperties",
+        "src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java#ValidatorTests#validatortests",
+        "src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java#ValidatorTests#validatortests_validatortests",
+        "src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java#ValidatorTests#validatortests_validatortests_createvalidator",
+        "src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java#ValidatorTests#validatortests_validatortests_getonlyviolation",
+        "src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java#ValidatorTests#validatortests_validatortests_shouldnotvalidatewhenfirstnameempty",
+        "src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java#ValidatorTests#validatortests_validatortests_shouldnotvalidatewhenlastnameempty",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_george",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_initcreationform",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_initfindform",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_initupdateownerform",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_processcreationformhaserrors",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_processcreationformsuccess",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_processfindformbylastname",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_processfindformignoressurroundingwhitespace",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_processfindformnoownersfound",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_processfindformsuccess",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_processfindformwithwhitespaceonlylastnamereturnsallowners",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_processupdateownerformhaserrors",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_processupdateownerformsuccess",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_processupdateownerformunchangedsuccess",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_processupdateownerformwithidmismatch",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_setup",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java#OwnerControllerTests#ownercontrollertests_ownercontrollertests_showowner",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerTests.java#OwnerTests#ownertests",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerTests.java#OwnerTests#ownertests_ownertests",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerTests.java#OwnerTests#ownertests_ownertests_addpetaddspersistedpet",
+        "src/test/java/org/springframework/samples/petclinic/owner/OwnerTests.java#OwnerTests#ownertests_ownertests_addpetdoesnotaddduplicatepet",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_petcontrollertests",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_petcontrollertests_initcreationform",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_petcontrollertests_processcreationformsuccess",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_petcontrollertests_processupdateformsuccess",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_petcontrollertests_processupdateformwithsamename",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_petcontrollertests_setup",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_processcreationformhaserrors",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_processcreationformhaserrors_initupdateform",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_processcreationformhaserrors_processcreationformwithblankname",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_processcreationformhaserrors_processcreationformwithdataintegrityviolation",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_processcreationformhaserrors_processcreationformwithduplicatename",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_processcreationformhaserrors_processcreationformwithinvalidbirthdate",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_processcreationformhaserrors_processcreationformwithmissingpettype",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_processupdateformhaserrors",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_processupdateformhaserrors_processupdateformwithblankname",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_processupdateformhaserrors_processupdateformwithdataintegrityviolation",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_processupdateformhaserrors_processupdateformwithduplicatename",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java#PetControllerTests#petcontrollertests_processupdateformhaserrors_processupdateformwithinvalidbirthdate",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java#PetTypeFormatterTests#pettypeformattertests",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java#PetTypeFormatterTests#pettypeformattertests_pettypeformattertests",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java#PetTypeFormatterTests#pettypeformattertests_pettypeformattertests_makepettypes",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java#PetTypeFormatterTests#pettypeformattertests_pettypeformattertests_setup",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java#PetTypeFormatterTests#pettypeformattertests_pettypeformattertests_shouldparse",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java#PetTypeFormatterTests#pettypeformattertests_pettypeformattertests_shouldthrowparseexception",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java#PetTypeFormatterTests#pettypeformattertests_pettypeformattertests_testprint",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java#PetValidatorTests#petvalidatortests",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java#PetValidatorTests#petvalidatortests_petvalidatortests",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java#PetValidatorTests#petvalidatortests_petvalidatortests_doesnotsupportnonpetclass",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java#PetValidatorTests#petvalidatortests_petvalidatortests_setup",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java#PetValidatorTests#petvalidatortests_petvalidatortests_supportspetclass",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java#PetValidatorTests#petvalidatortests_petvalidatortests_validate",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java#PetValidatorTests#petvalidatortests_validatehaserrors",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java#PetValidatorTests#petvalidatortests_validatehaserrors_validatewithinvalidbirthdate",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java#PetValidatorTests#petvalidatortests_validatehaserrors_validatewithinvalidpetname",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java#PetValidatorTests#petvalidatortests_validatehaserrors_validatewithinvalidpettype",
+        "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java#PetValidatorTests#petvalidatortests_validatehaserrors_validatewithlongpetname",
+        "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java#VisitControllerTests#visitcontrollertests",
+        "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java#VisitControllerTests#visitcontrollertests_visitcontrollertests",
+        "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java#VisitControllerTests#visitcontrollertests_visitcontrollertests_init",
+        "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java#VisitControllerTests#visitcontrollertests_visitcontrollertests_initnewvisitform",
+        "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java#VisitControllerTests#visitcontrollertests_visitcontrollertests_processnewvisitformhaserrors",
+        "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java#VisitControllerTests#visitcontrollertests_visitcontrollertests_processnewvisitformhaserrorswhenvisitdateisnotinfuture",
+        "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java#VisitControllerTests#visitcontrollertests_visitcontrollertests_processnewvisitformsuccess",
+        "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests",
+        "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests",
+        "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldaddnewvisitforpet",
+        "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldallowsamepetnamefordifferentowners",
+        "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldfailtoinsertduplicatepetnameforsameowner",
+        "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldfindallpettypes",
+        "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldfindownersbylastname",
+        "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldfindsingleownerwithpet",
+        "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldfindvets",
+        "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldfindvisitsbypetid",
+        "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldinsertowner",
+        "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldinsertpetintodatabaseandgenerateid",
+        "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldupdateowner",
+        "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldupdatepetname",
+        "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java#CrashControllerIntegrationTests#crashcontrollerintegrationtests",
+        "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java#CrashControllerIntegrationTests#crashcontrollerintegrationtests_crashcontrollerintegrationtests",
+        "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java#CrashControllerIntegrationTests#crashcontrollerintegrationtests_crashcontrollerintegrationtests_triggerexceptionhtml",
+        "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java#CrashControllerIntegrationTests#crashcontrollerintegrationtests_crashcontrollerintegrationtests_triggerexceptionjson",
+        "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java#CrashControllerIntegrationTests#crashcontrollerintegrationtests_testconfiguration",
+        "src/test/java/org/springframework/samples/petclinic/system/CrashControllerTests.java#CrashControllerTests#crashcontrollertests",
+        "src/test/java/org/springframework/samples/petclinic/system/CrashControllerTests.java#CrashControllerTests#crashcontrollertests_crashcontrollertests",
+        "src/test/java/org/springframework/samples/petclinic/system/CrashControllerTests.java#CrashControllerTests#crashcontrollertests_crashcontrollertests_triggerexception",
+        "src/test/java/org/springframework/samples/petclinic/system/I18nPropertiesSyncTest.java#I18nPropertiesSyncTest#i18npropertiessynctest",
+        "src/test/java/org/springframework/samples/petclinic/system/I18nPropertiesSyncTest.java#I18nPropertiesSyncTest#i18npropertiessynctest_i18npropertiessynctest",
+        "src/test/java/org/springframework/samples/petclinic/system/I18nPropertiesSyncTest.java#I18nPropertiesSyncTest#i18npropertiessynctest_i18npropertiessynctest_checki18npropertyfilesareinsync",
+        "src/test/java/org/springframework/samples/petclinic/system/I18nPropertiesSyncTest.java#I18nPropertiesSyncTest#i18npropertiessynctest_i18npropertiessynctest_checknoninternationalizedstrings",
+        "src/test/java/org/springframework/samples/petclinic/system/WelcomeControllerTests.java#WelcomeControllerTests#welcomecontrollertests",
+        "src/test/java/org/springframework/samples/petclinic/system/WelcomeControllerTests.java#WelcomeControllerTests#welcomecontrollertests_welcomecontrollertests",
+        "src/test/java/org/springframework/samples/petclinic/system/WelcomeControllerTests.java#WelcomeControllerTests#welcomecontrollertests_welcomecontrollertests_welcome",
+        "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java#VetControllerTests#vetcontrollertests",
+        "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java#VetControllerTests#vetcontrollertests_vetcontrollertests",
+        "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java#VetControllerTests#vetcontrollertests_vetcontrollertests_helen",
+        "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java#VetControllerTests#vetcontrollertests_vetcontrollertests_james",
+        "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java#VetControllerTests#vetcontrollertests_vetcontrollertests_setup",
+        "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java#VetControllerTests#vetcontrollertests_vetcontrollertests_showresourcesvetlist",
+        "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java#VetControllerTests#vetcontrollertests_vetcontrollertests_showvetlisthtml",
+        "src/test/java/org/springframework/samples/petclinic/vet/VetTests.java#VetTests#vettests",
+        "src/test/java/org/springframework/samples/petclinic/vet/VetTests.java#VetTests#vettests_vettests",
+        "src/test/java/org/springframework/samples/petclinic/vet/VetTests.java#VetTests#vettests_vettests_serialization"
+      ],
+      "missing_expected_components" : [
+        "src/main/java/org/springframework/samples/petclinic/owner/Owner.java#Owner#owner_owner",
+        "src/main/java/org/springframework/samples/petclinic/owner/Owner.java#Owner#owner_owner_addvisit",
+        "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java#OwnerController#ownercontroller_ownercontroller_processcreationform",
+        "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java#OwnerController#ownercontroller_ownercontroller_processfindform",
+        "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java#OwnerController#ownercontroller_ownercontroller_processupdateownerform",
+        "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java#OwnerController#ownercontroller_ownercontroller_showowner",
+        "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java#OwnerRepository#ownerrepository_ownerrepository_findbylastnamestartingwith",
+        "src/main/java/org/springframework/samples/petclinic/owner/Pet.java#Pet#pet_pet",
+        "src/main/java/org/springframework/samples/petclinic/owner/Pet.java#Pet#pet_pet_getvisits",
+        "src/main/java/org/springframework/samples/petclinic/owner/PetController.java#PetController#petcontroller_petcontroller_processcreationform",
+        "src/main/java/org/springframework/samples/petclinic/owner/PetController.java#PetController#petcontroller_petcontroller_processupdateform",
+        "src/main/java/org/springframework/samples/petclinic/owner/PetController.java#PetController#petcontroller_petcontroller_updatepetdetails",
+        "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java#PetTypeRepository#pettyperepository_pettyperepository_findpettypes",
+        "src/main/java/org/springframework/samples/petclinic/owner/Visit.java#Visit#visit_visit",
+        "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java#VisitController#visitcontroller_visitcontroller_processnewvisitform",
+        "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java#WelcomeController#welcomecontroller_welcomecontroller_welcome",
+        "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java#Specialty#specialty_specialty",
+        "src/main/java/org/springframework/samples/petclinic/vet/Vet.java#Vet#vet_vet_getspecialties",
+        "src/main/java/org/springframework/samples/petclinic/vet/VetController.java#VetController#vetcontroller_vetcontroller_showvetlist",
+        "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java#VetRepository#vetrepository_vetrepository_findall"
+      ],
+      "path_level" : {
+        "expected" : 13,
+        "matched" : 0,
+        "precision" : 0.0,
+        "proposed" : 18,
+        "recall" : 0.0
+      },
+      "symbol_name_level" : {
+        "expected" : 20,
+        "matched" : 0,
+        "precision" : 0.0,
+        "proposed" : 135,
+        "recall" : 0.0
+      },
+      "type_level" : {
+        "expected" : 13,
+        "matched" : 0,
+        "precision" : 0.0,
+        "proposed" : 18,
+        "recall" : 0.0
+      }
+    },
+    "per_capability" : [
+      {
+        "diagnostics" : {
+          "exact_component_level" : {
+            "expected" : 2,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 4,
+            "recall" : 0.0
+          },
+          "expected_realization_chain_coverage" : 0.0,
+          "extra_proposed_components" : [
+            "src/test/java/org/springframework/samples/petclinic/owner/OwnerTests.java#OwnerTests#ownertests",
+            "src/test/java/org/springframework/samples/petclinic/owner/OwnerTests.java#OwnerTests#ownertests_ownertests",
+            "src/test/java/org/springframework/samples/petclinic/owner/OwnerTests.java#OwnerTests#ownertests_ownertests_addpetaddspersistedpet",
+            "src/test/java/org/springframework/samples/petclinic/owner/OwnerTests.java#OwnerTests#ownertests_ownertests_addpetdoesnotaddduplicatepet"
+          ],
+          "missing_expected_components" : [
+            "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java#OwnerController#ownercontroller_ownercontroller_processfindform",
+            "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java#OwnerRepository#ownerrepository_ownerrepository_findbylastnamestartingwith"
+          ],
+          "path_level" : {
+            "expected" : 2,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 1,
+            "recall" : 0.0
+          },
+          "symbol_name_level" : {
+            "expected" : 2,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 4,
+            "recall" : 0.0
+          },
+          "type_level" : {
+            "expected" : 2,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 1,
+            "recall" : 0.0
+          }
+        },
+        "gold_id" : "PET-CAP-01",
+        "gold_name" : "Find Owners",
+        "proposed_id" : "HYP-CAPABILITY-0007"
+      },
+      {
+        "diagnostics" : {
+          "exact_component_level" : {
+            "expected" : 3,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 3,
+            "recall" : 0.0
+          },
+          "expected_realization_chain_coverage" : 0.0,
+          "extra_proposed_components" : [
+            "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java#PetClinicConcurrencyTests#petclinicconcurrencytests",
+            "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java#PetClinicConcurrencyTests#petclinicconcurrencytests_petclinicconcurrencytests",
+            "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java#PetClinicConcurrencyTests#petclinicconcurrencytests_petclinicconcurrencytests_testduplicatepetnameraceconditionisblocked"
+          ],
+          "missing_expected_components" : [
+            "src/main/java/org/springframework/samples/petclinic/owner/Pet.java#Pet#pet_pet",
+            "src/main/java/org/springframework/samples/petclinic/owner/PetController.java#PetController#petcontroller_petcontroller_processcreationform",
+            "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java#PetTypeRepository#pettyperepository_pettyperepository_findpettypes"
+          ],
+          "path_level" : {
+            "expected" : 3,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 1,
+            "recall" : 0.0
+          },
+          "symbol_name_level" : {
+            "expected" : 3,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 3,
+            "recall" : 0.0
+          },
+          "type_level" : {
+            "expected" : 3,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 1,
+            "recall" : 0.0
+          }
+        },
+        "gold_id" : "PET-CAP-04",
+        "gold_name" : "Register Pet",
+        "proposed_id" : "HYP-CAPABILITY-0002"
+      },
+      {
+        "diagnostics" : {
+          "exact_component_level" : {
+            "expected" : 3,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 7,
+            "recall" : 0.0
+          },
+          "expected_realization_chain_coverage" : 0.0,
+          "extra_proposed_components" : [
+            "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java#VisitControllerTests#visitcontrollertests",
+            "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java#VisitControllerTests#visitcontrollertests_visitcontrollertests",
+            "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java#VisitControllerTests#visitcontrollertests_visitcontrollertests_init",
+            "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java#VisitControllerTests#visitcontrollertests_visitcontrollertests_initnewvisitform",
+            "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java#VisitControllerTests#visitcontrollertests_visitcontrollertests_processnewvisitformhaserrors",
+            "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java#VisitControllerTests#visitcontrollertests_visitcontrollertests_processnewvisitformhaserrorswhenvisitdateisnotinfuture",
+            "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java#VisitControllerTests#visitcontrollertests_visitcontrollertests_processnewvisitformsuccess"
+          ],
+          "missing_expected_components" : [
+            "src/main/java/org/springframework/samples/petclinic/owner/Owner.java#Owner#owner_owner_addvisit",
+            "src/main/java/org/springframework/samples/petclinic/owner/Visit.java#Visit#visit_visit",
+            "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java#VisitController#visitcontroller_visitcontroller_processnewvisitform"
+          ],
+          "path_level" : {
+            "expected" : 3,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 1,
+            "recall" : 0.0
+          },
+          "symbol_name_level" : {
+            "expected" : 3,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 7,
+            "recall" : 0.0
+          },
+          "type_level" : {
+            "expected" : 3,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 1,
+            "recall" : 0.0
+          }
+        },
+        "gold_id" : "PET-CAP-06",
+        "gold_name" : "Record Pet Visit",
+        "proposed_id" : "HYP-CAPABILITY-0011"
+      },
+      {
+        "diagnostics" : {
+          "exact_component_level" : {
+            "expected" : 1,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 14,
+            "recall" : 0.0
+          },
+          "expected_realization_chain_coverage" : 0.0,
+          "extra_proposed_components" : [
+            "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests",
+            "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests",
+            "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldaddnewvisitforpet",
+            "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldallowsamepetnamefordifferentowners",
+            "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldfailtoinsertduplicatepetnameforsameowner",
+            "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldfindallpettypes",
+            "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldfindownersbylastname",
+            "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldfindsingleownerwithpet",
+            "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldfindvets",
+            "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldfindvisitsbypetid",
+            "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldinsertowner",
+            "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldinsertpetintodatabaseandgenerateid",
+            "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldupdateowner",
+            "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java#ClinicServiceTests#clinicservicetests_clinicservicetests_shouldupdatepetname"
+          ],
+          "missing_expected_components" : [
+            "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java#WelcomeController#welcomecontroller_welcomecontroller_welcome"
+          ],
+          "path_level" : {
+            "expected" : 1,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 1,
+            "recall" : 0.0
+          },
+          "symbol_name_level" : {
+            "expected" : 1,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 14,
+            "recall" : 0.0
+          },
+          "type_level" : {
+            "expected" : 1,
+            "matched" : 0,
+            "precision" : 0.0,
+            "proposed" : 1,
+            "recall" : 0.0
+          }
+        },
+        "gold_id" : "PET-CAP-10",
+        "gold_name" : "Access Clinic Home",
+        "proposed_id" : "HYP-CAPABILITY-0012"
+      }
+    ],
+    "rule" : "proposed rows are the structural citations of each sealed Capability resolved through the bundled structural observations (source_path, containing type, provider symbol); expected rows are the frozen evaluator expected components; rows repeated across capabilities collapse to one identity per comparison scope; hierarchical path/type/symbol/exact levels compared separately via the provider-neutral comparator"
+  },
+  "limitations" : [
+    "descriptive metrics only; no acceptance threshold is registered for this run and none may be selected from this observed Petclinic result",
+    "reverse reconstruction consistency, not independent product-requirements validation",
+    "evaluator truth and this comparison output are evaluator-only and must not feed proposal generation",
+    "human reviewer accepted semantics are a separate zh-TW human-owned surface that this mechanical comparison does not match"
+  ],
+  "proposal_package_sha256" : "ddc8c444a7bd9b77da08c768e101309980b0cbc0b2efa76dcc8c72d10dfabe4c",
+  "repository_id" : "spring-petclinic",
+  "scenario_presentation_coverage" : {
+    "coverage" : 0.2,
+    "covered_evaluator_capabilities" : 2,
+    "evaluator_capabilities" : 10,
+    "per_capability" : [
+      {
+        "gold_id" : "PET-CAP-01",
+        "gold_name" : "Find Owners",
+        "matched_proposal_id" : "HYP-CAPABILITY-0007",
+        "presenting_scenario_ids" : [ ],
+        "presenting_scenarios" : 0
+      },
+      {
+        "gold_id" : "PET-CAP-02",
+        "gold_name" : "Register Owner",
+        "matched_proposal_id" : null,
+        "presenting_scenario_ids" : [ ],
+        "presenting_scenarios" : 0
+      },
+      {
+        "gold_id" : "PET-CAP-03",
+        "gold_name" : "Maintain Owner Details",
+        "matched_proposal_id" : null,
+        "presenting_scenario_ids" : [ ],
+        "presenting_scenarios" : 0
+      },
+      {
+        "gold_id" : "PET-CAP-04",
+        "gold_name" : "Register Pet",
+        "matched_proposal_id" : "HYP-CAPABILITY-0002",
+        "presenting_scenario_ids" : [
+          "HYP-SCENARIO-0003"
+        ],
+        "presenting_scenarios" : 1
+      },
+      {
+        "gold_id" : "PET-CAP-05",
+        "gold_name" : "Maintain Pet Details",
+        "matched_proposal_id" : null,
+        "presenting_scenario_ids" : [ ],
+        "presenting_scenarios" : 0
+      },
+      {
+        "gold_id" : "PET-CAP-06",
+        "gold_name" : "Record Pet Visit",
+        "matched_proposal_id" : "HYP-CAPABILITY-0011",
+        "presenting_scenario_ids" : [
+          "HYP-SCENARIO-0052",
+          "HYP-SCENARIO-0053",
+          "HYP-SCENARIO-0054",
+          "HYP-SCENARIO-0055"
+        ],
+        "presenting_scenarios" : 4
+      },
+      {
+        "gold_id" : "PET-CAP-07",
+        "gold_name" : "Review Pet Visit History",
+        "matched_proposal_id" : null,
+        "presenting_scenario_ids" : [ ],
+        "presenting_scenarios" : 0
+      },
+      {
+        "gold_id" : "PET-CAP-08",
+        "gold_name" : "Browse Veterinarians",
+        "matched_proposal_id" : null,
+        "presenting_scenario_ids" : [ ],
+        "presenting_scenarios" : 0
+      },
+      {
+        "gold_id" : "PET-CAP-09",
+        "gold_name" : "Review Veterinarian Specialties",
+        "matched_proposal_id" : null,
+        "presenting_scenario_ids" : [ ],
+        "presenting_scenarios" : 0
+      },
+      {
+        "gold_id" : "PET-CAP-10",
+        "gold_name" : "Access Clinic Home",
+        "matched_proposal_id" : "HYP-CAPABILITY-0012",
+        "presenting_scenario_ids" : [ ],
+        "presenting_scenarios" : 0
+      }
+    ],
+    "rule" : "a sealed scenario presents the evaluator capability matched to its parent Capability when their normalized wording token sets intersect"
+  },
+  "schema_version" : "1",
+  "semantic_publication_allowed" : false,
+  "unsupported_proposal_rate" : {
+    "proposed_capabilities" : 18,
+    "rate" : 0.7777777777777778,
+    "unsupported_proposal_ids" : [
+      "HYP-CAPABILITY-0001",
+      "HYP-CAPABILITY-0003",
+      "HYP-CAPABILITY-0004",
+      "HYP-CAPABILITY-0005",
+      "HYP-CAPABILITY-0006",
+      "HYP-CAPABILITY-0008",
+      "HYP-CAPABILITY-0009",
+      "HYP-CAPABILITY-0010",
+      "HYP-CAPABILITY-0013",
+      "HYP-CAPABILITY-0014",
+      "HYP-CAPABILITY-0015",
+      "HYP-CAPABILITY-0016",
+      "HYP-CAPABILITY-0017",
+      "HYP-CAPABILITY-0018"
+    ],
+    "unsupported_proposals" : 14
+  }
+}
