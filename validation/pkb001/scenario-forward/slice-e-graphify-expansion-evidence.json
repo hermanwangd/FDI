@@ -1,0 +1,69 @@
+{
+  "evidence_type": "PKB_BL_007_SLICE_E_GRAPHIFY_PRODUCTION_EXPANSION",
+  "execution_id": "PKB-BL-007-SCENARIO-TRACE-001",
+  "slice": "E",
+  "base_commit": "58d7a75cd1ba29e42291949a766243d8afd5aafe",
+  "requirement": "PKB-MAPPING-001",
+  "implementation": {
+    "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/graphexpansion/GraphifyProductionExpansion.java",
+    "sha256": "9328dc0e21a11fdcf015f383787d5e36a7f9fadf0b8fcc85e6298c0ca16e3c4a"
+  },
+  "tests": {
+    "path": "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/graphexpansion/GraphifyProductionExpansionTests.java",
+    "sha256": "b14e1a3429d4293a47750e6773643db2cc4c1c4260cfc3e83105bdff86b75947",
+    "focused_and_boundary_tests": 22,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "provider_boundary": {
+    "java_interface": "CodeIntelligenceProvider.expand",
+    "verified_runtime_operations_inspected": [
+      "get_neighbors",
+      "shortest_path"
+    ],
+    "hard_coded_graphify_runtime_api": false,
+    "live_runtime_required_by_tests": false,
+    "network_required_by_tests": false
+  },
+  "query_contract": {
+    "bounds": [
+      "max_depth",
+      "max_nodes",
+      "max_edges",
+      "max_paths",
+      "max_result_bytes"
+    ],
+    "binding": [
+      "snapshot_id",
+      "source_revision",
+      "graph_sha256",
+      "seed_provider_node_id"
+    ],
+    "timeout_boundary": "Existing Graphify adapter and bounded MCP lifecycle; Slice E adds no direct runtime transport"
+  },
+  "enforced_behavior": [
+    "EXPANSION_STARTS_ONLY_FROM_SUPPLIED_PRODUCTION_SEEDS",
+    "EXACT_SOURCE_REVISION_AND_GRAPH_DIGEST_BINDING",
+    "DIRECT_SEED_AND_INFERRED_NEIGHBOURS_REMAIN_SEPARATE",
+    "PROVIDER_NODE_IDS_ARE_DIAGNOSTICS_ONLY",
+    "ORDERED_CONTIGUOUS_TYPED_RELATIONSHIP_TRACES",
+    "TRACE_ENDPOINTS_BIND_SEED_AND_INFERRED_COMPONENT",
+    "DETERMINISTIC_CYCLE_AND_DUPLICATE_HANDLING",
+    "MISSING_OR_MISMATCHED_SEED_REVISION_OR_DIGEST_FAILS_CLOSED",
+    "PRODUCTION_COMPONENT_PATHS_ONLY",
+    "NO_PRODUCT_MEANING_OR_TEST_TO_PRODUCTION_INFERENCE",
+    "NO_EVALUATOR_OR_GOLD_INPUT"
+  ],
+  "verification": {
+    "command": "MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=GraphifyProductionExpansionTests,ScenarioMappingContractV04Tests,ScenarioMappingSchemaV04Tests,GraphifyAdapterFailClosedTests test",
+    "result": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "limitations": [
+    "This slice normalizes a provider response but does not execute a live Graphify runtime.",
+    "The existing provider adapter owns concrete Graphify tool mapping, result-byte enforcement, and runtime transport timeout.",
+    "Scenario semantics and direct Java test-to-production resolution remain outside Slice E and are joined only in the later authorized Slice F."
+  ],
+  "semantic_publication_allowed": false
+}
