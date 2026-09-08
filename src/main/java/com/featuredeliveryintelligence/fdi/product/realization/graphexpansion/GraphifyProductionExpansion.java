@@ -106,6 +106,7 @@ public final class GraphifyProductionExpansion {
             }
         }
         if (!reachableEdges.containsAll(edges)) fail("untraceable inferred link");
+        if (!visited.equals(nodes.keySet())) fail("orphan provider node");
         if (paths.size() > request.bounds().maxPaths()) fail("max_paths exceeded");
 
         List<InferredNeighbour> neighbours = paths.entrySet().stream()

@@ -146,6 +146,20 @@ class GraphifyProductionExpansionTests {
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
+    @Test
+    void rejectsIsolatedReturnedNodeButAllowsASeedWithNoNeighbours() {
+        RecordingProvider isolated = providerWith(response(
+                List.of(seedNode(), node("n9", "src/main/java/pet/Isolated.java", "pet.Isolated")),
+                List.of(), List.of()));
+        assertThatThrownBy(() -> new GraphifyProductionExpansion(isolated).expand(request()))
+                .isInstanceOf(RuntimeContractException.class).hasMessageContaining("orphan provider node");
+
+        RecordingProvider seedOnly = providerWith(response(List.of(seedNode()), List.of(), List.of()));
+        GraphifyProductionExpansion.Result result = new GraphifyProductionExpansion(seedOnly).expand(request());
+        assertThat(result.traces()).singleElement().satisfies(trace ->
+                assertThat(trace.inferredNeighbours()).isEmpty());
+    }
+
     private static GraphifyProductionExpansion.Request request() {
         return new GraphifyProductionExpansion.Request(REVISION, GRAPH, snapshot(), List.of(seed()),
                 bounds(2, 10, 10, 5, 100_000, 2_000));
