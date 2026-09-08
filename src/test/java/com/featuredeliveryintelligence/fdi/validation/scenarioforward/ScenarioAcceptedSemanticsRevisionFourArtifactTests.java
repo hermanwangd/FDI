@@ -31,8 +31,10 @@ class ScenarioAcceptedSemanticsRevisionFourArtifactTests {
         assertEquals("FROZEN", manifest.path("status").asText());
         assertEquals("HUMAN_REVIEWER", manifest.path("contract_owner_role").asText());
         assertEquals(0, manifest.path("remaining_pending_decisions").asInt());
-        assertFalse(manifest.path("semantic_publication_allowed").asBoolean());
-        assertFalse(manifest.path("product_truth_established").asBoolean());
+        assertEquals(true, manifest.path("semantic_publication_allowed").isBoolean());
+        assertFalse(manifest.path("semantic_publication_allowed").booleanValue());
+        assertEquals(true, manifest.path("product_truth_established").isBoolean());
+        assertFalse(manifest.path("product_truth_established").booleanValue());
 
         assertEquals(Set.of("HYP-CAPABILITY-001", "HYP-CAPABILITY-002", "HYP-CAPABILITY-003",
                 "HYP-CAPABILITY-004", "HYP-CAPABILITY-005"), ids(semantics.path("capabilities"), "capability_id"));
@@ -60,8 +62,10 @@ class ScenarioAcceptedSemanticsRevisionFourArtifactTests {
         assertArtifact(evidence.path("manifest"), "acceptance-manifest-004.json");
         assertArtifact(evidence.path("semantics"), "accepted-semantics-004.json");
         assertEquals("CONTRACT_VALID", evidence.path("forward_gate").path("result").asText());
-        assertFalse(evidence.path("authority").path("product_truth_established").asBoolean());
-        assertFalse(evidence.path("authority").path("semantic_publication_allowed").asBoolean());
+        assertEquals(true, evidence.path("authority").path("product_truth_established").isBoolean());
+        assertFalse(evidence.path("authority").path("product_truth_established").booleanValue());
+        assertEquals(true, evidence.path("authority").path("semantic_publication_allowed").isBoolean());
+        assertFalse(evidence.path("authority").path("semantic_publication_allowed").booleanValue());
     }
 
     private static void assertArtifact(JsonNode binding, String name) throws Exception {

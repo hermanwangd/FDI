@@ -219,8 +219,12 @@ public final class ScenarioForwardGate {
                 || !"pkb001.acceptance-manifest.v0.1".equals(text(manifest,"schema_version"))
                 || !"PROPOSAL_ONLY".equals(text(original,"authority")) || !"SCENARIO_PROPOSAL".equals(text(original,"artifact_kind"))
                 || !"SCENARIO_REVIEW_SURFACE".equals(text(review,"artifact_kind"))) fail("AUTHORITY_INVALID");
-        if (trueOrNonBoolean(manifest, "product_truth_established")
-                || trueOrNonBoolean(manifest, "semantic_publication_allowed")) fail("AUTHORITY_INVALID");
+        boolean delegatedReview=manifest.has("reviewer_identities");
+        if(delegatedReview&&!"COMPLETE_REVIEWED_EXPERIMENT_SLICE".equals(text(manifest,"scope")))fail("DECISION_PROVENANCE_INVALID");
+        if(delegatedReview?(!explicitFalse(manifest,"product_truth_established")
+                ||!explicitFalse(manifest,"semantic_publication_allowed"))
+                :(trueOrNonBoolean(manifest,"product_truth_established")
+                ||trueOrNonBoolean(manifest,"semantic_publication_allowed")))fail("AUTHORITY_INVALID");
         boolean completeReview="COMPLETE_REVIEWED_EXPERIMENT_SLICE".equals(text(manifest,"scope"));
         if(completeReview){int pending=0;for(JsonNode cap:review.withArray("capability_proposals")){if(pending(cap.get("decision")))pending++;for(JsonNode scenario:cap.withArray("scenarios"))if(pending(scenario.get("decision")))pending++;}if(pending!=0||!manifest.path("remaining_pending_decisions").isIntegralNumber()||manifest.path("remaining_pending_decisions").asInt()!=0)fail("PENDING_DECISIONS_REMAIN");}
         String digest=items.get("ORIGINAL_PROPOSAL").sha256();
@@ -322,6 +326,7 @@ public final class ScenarioForwardGate {
     private static Set<String> actionSet(JsonNode actions){if(!actions.isArray())fail("DECISION_PROVENANCE_INVALID");Set<String> result=new HashSet<>();for(JsonNode action:actions){String key=actionKey(text(action,"item_id"),text(action,"action"));if(blank(text(action,"item_id"))||!Set.of("ACCEPT","EDIT","REJECT").contains(text(action,"action"))||!result.add(key))fail("DECISION_PROVENANCE_INVALID");}return Set.copyOf(result);}
     private static String actionKey(String id,String action){return id+"\u0000"+action;}
     private static boolean pending(JsonNode decision){return decision==null||decision.isNull()||("EDIT".equals(text(decision,"action"))&&!decision.path("edit_confirmed").asBoolean(false));}
+    private static boolean explicitFalse(JsonNode object,String field){JsonNode value=object.get(field);return value!=null&&value.isBoolean()&&!value.asBoolean();}
     private static boolean trueOrNonBoolean(JsonNode object,String field){JsonNode value=object.get(field);return value!=null&&(!value.isBoolean()||value.asBoolean());}
     private static Set<String> manifestIds(JsonNode manifest,String field){JsonNode array=manifest.get(field);if(array==null||!array.isArray())fail("REVIEW_DECISION_SET_MISMATCH");Set<String> result=new HashSet<>();for(JsonNode value:array){if(!value.isTextual()||blank(value.asText())||!result.add(value.asText()))fail("REVIEW_DECISION_SET_MISMATCH");}return Set.copyOf(result);}
     private record ReviewerAuthorization(String primaryReviewer,Set<String> reviewers,Set<String> authorizedActions){}

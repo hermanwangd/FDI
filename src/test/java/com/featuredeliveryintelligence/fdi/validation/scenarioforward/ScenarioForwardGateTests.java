@@ -117,6 +117,29 @@ class ScenarioForwardGateTests {
         assertBlocked(fixture, "AUTHORITY_INVALID");
     }
 
+    @Test void delegatedReviewCannotBypassCompleteScopeAccounting() throws Exception {
+        Fixture fixture = revisionTwoFixture();
+        fixture.mutate("ACCEPTANCE_MANIFEST", manifest -> manifest.remove("scope"));
+        assertBlocked(fixture, "DECISION_PROVENANCE_INVALID");
+
+        fixture = revisionTwoFixture();
+        fixture.mutate("ACCEPTANCE_MANIFEST", manifest ->
+                manifest.put("scope", "PARTIAL_REVIEWED_EXPERIMENT_SLICE"));
+        assertBlocked(fixture, "DECISION_PROVENANCE_INVALID");
+    }
+
+    @Test void completeReviewRequiresExplicitFalseAuthorityFlags() throws Exception {
+        for (String field : List.of("product_truth_established", "semantic_publication_allowed")) {
+            Fixture fixture = revisionTwoFixture();
+            fixture.mutate("ACCEPTANCE_MANIFEST", manifest -> manifest.remove(field));
+            assertBlocked(fixture, "AUTHORITY_INVALID");
+
+            fixture = revisionTwoFixture();
+            fixture.mutate("ACCEPTANCE_MANIFEST", manifest -> manifest.put(field, "false"));
+            assertBlocked(fixture, "AUTHORITY_INVALID");
+        }
+    }
+
     @Test void requestAndInputShapeDigestVersionAndForbiddenFamiliesFailClosed() throws Exception {
         Fixture fixture = fixture();
         fixture.inputs.remove(fixture.inputs.size() - 1);
