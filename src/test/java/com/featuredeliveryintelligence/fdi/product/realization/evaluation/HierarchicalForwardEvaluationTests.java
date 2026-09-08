@@ -97,6 +97,17 @@ class HierarchicalForwardEvaluationTests {
         assertEquals("PET-CAP-02",report.component().missing().get(0).evaluatorCapabilityId());
     }
 
+    @Test void supportingExactDiagnosticMatchesAcrossRealNamespacesButGrantsNoFormalCredit() {
+        var a=id("A.java","TYPE","p.A");ObjectNode p=proposal(List.of(scenario("S","UNRESOLVED","INSUFFICIENT",List.of(),List.of(role(a,"SUPPORTING")))));
+        ((ObjectNode)p.path("capabilities").get(0)).put("capabilityId","HYP-CAPABILITY-001");
+        var truth=new HierarchicalForwardEvaluation.EvaluatorTruth("gold",List.of(
+                new HierarchicalForwardEvaluation.Expected("PET-CAP-01","r1","n1",HierarchicalForwardEvaluation.Identity.from(a)),
+                new HierarchicalForwardEvaluation.Expected("PET-CAP-02","r2","n2",HierarchicalForwardEvaluation.Identity.from(a))));
+        var report=HierarchicalForwardEvaluation.evaluate(p,truth,"p","g");
+        assertEquals(1,report.diagnostics().supportingExactOverlap());
+        assertEquals(0,report.diagnostics().supportingFormalCredit());assertEquals(0,report.component().exact().matched());assertEquals(0,report.chain().exactExpectedCovered());
+    }
+
     @Test void tenThousandOneIdenticalRawEntriesAreRejectedBeforeDeduplication() {
         ObjectNode a=id("A.java","TYPE","p.A");ArrayNode roles=JSON.createArrayNode();for(int i=0;i<10001;i++)roles.add(role(a,"PRIMARY"));
         assertThrows(RuntimeContractException.class,()->HierarchicalForwardEvaluation.evaluate(proposalWithRoles(roles),truth(a),"p","g"));

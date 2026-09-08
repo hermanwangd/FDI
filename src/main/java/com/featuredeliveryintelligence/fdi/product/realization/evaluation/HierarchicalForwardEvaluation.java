@@ -84,7 +84,7 @@ public final class HierarchicalForwardEvaluation {
         DiagnosticMetric path=diagnostic(primary,expected,Identity::sourcePath);
         DiagnosticMetric type=diagnostic(primary,expected,Identity::containingType);
         DiagnosticMetric bare=diagnostic(primary,expected,Identity::bareSymbol);
-        int supportingExact=(int)truth.expected().stream().filter(e->supportingByCapability.getOrDefault(e.capabilityId(),Set.of()).contains(e.identity())).count();
+        int supportingExact=allocate(truth.expected(),scoped(supportingByCapability)).matched().size();
         Set<String> expectedNodes=new HashSet<>(); truth.expected().forEach(e->expectedNodes.add(e.providerNodeId()));
         int providerOverlap=(int)providerNodeIds.stream().filter(expectedNodes::contains).count();
 
