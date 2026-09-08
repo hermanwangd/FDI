@@ -24,6 +24,7 @@ class ScenarioAcceptedSemanticsRevisionFourArtifactTests {
         JsonNode semantics = read("accepted-semantics-004.json");
         JsonNode manifest = read("acceptance-manifest-004.json");
         JsonNode evidence = read("accepted-semantics-004-evidence.json");
+        JsonNode authorization = read("freeze-authorization-binding-001.json");
 
         assertEquals("FROZEN", semantics.path("status").asText());
         assertEquals("HUMAN_REVIEWER", semantics.path("owner").asText());
@@ -46,7 +47,14 @@ class ScenarioAcceptedSemanticsRevisionFourArtifactTests {
         assertEquals(sha256("proposal-revision-002.json"), manifest.path("proposal_sha256").asText());
         assertArtifact(manifest.path("decision_artifact"), "review-decisions-004.json");
         assertArtifact(manifest.path("semantics_artifact"), "accepted-semantics-004.json");
-        assertArtifact(manifest.path("authorization_artifact"), "ai-provisional-review-acceptance-001.json");
+        assertArtifact(manifest.path("authorization_artifact"), "freeze-authorization-binding-001.json");
+        assertArtifact(authorization.path("source_authorization_artifact"),
+                "ai-provisional-review-acceptance-001.json");
+        assertArtifact(authorization.path("review_artifact"), "ai-provisional-review-001.json");
+        assertArtifact(authorization.path("decision_artifact"), "review-decisions-004.json");
+        assertEquals(2, authorization.path("proposal").path("revision").asInt());
+        assertArtifact(authorization.path("proposal"), "proposal-revision-002.json");
+        assertEquals(8, authorization.path("authorized_actions").size());
         assertArtifact(evidence.path("proposal"), "proposal-revision-002.json");
         assertArtifact(evidence.path("review"), "review-decisions-004.json");
         assertArtifact(evidence.path("manifest"), "acceptance-manifest-004.json");

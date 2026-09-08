@@ -78,6 +78,45 @@ class ScenarioForwardGateTests {
         assertBlocked(fixture, "DECISION_PROVENANCE_INVALID");
     }
 
+    @Test void arbitraryReviewerAliasCannotSelfAuthorize() throws Exception {
+        Fixture fixture = revisionTwoFixture();
+        fixture.mutate("ACCEPTANCE_MANIFEST", manifest ->
+                manifest.withArray("reviewer_identities").add("arbitrary_alias"));
+        fixture.mutate("REVIEW_DECISIONS", review -> ((ObjectNode) review.withArray("capability_proposals")
+                .get(3).path("decision")).put("reviewer_identity", "arbitrary_alias"));
+        fixture.rebindReview();
+        assertBlocked(fixture, "DECISION_PROVENANCE_INVALID");
+    }
+
+    @Test void unrelatedAuthorizationReviewDigestFailsClosed() throws Exception {
+        Fixture fixture = revisionTwoFixture();
+        String path = fixture.document("ACCEPTANCE_MANIFEST").path("authorization_artifact")
+                .path("path").asText();
+        fixture.mutateFile(path, authorization ->
+                authorization.with("review_artifact").put("sha256", "0".repeat(64)));
+        assertBlocked(fixture, "DECISION_PROVENANCE_INVALID");
+    }
+
+    @Test void nullDecisionCannotBeHiddenByDeclaredZeroPending() throws Exception {
+        Fixture fixture = revisionTwoFixture();
+        fixture.mutate("REVIEW_DECISIONS", review -> ((ObjectNode) review.withArray("capability_proposals")
+                .get(5)).putNull("decision"));
+        fixture.rebindReview();
+        assertBlocked(fixture, "PENDING_DECISIONS_REMAIN");
+    }
+
+    @Test void rejectedDecisionSetsAndAuthorityBooleansAreExact() throws Exception {
+        Fixture fixture = revisionTwoFixture();
+        fixture.mutate("ACCEPTANCE_MANIFEST", manifest ->
+                manifest.withArray("rejected_scenario_ids").removeAll());
+        assertBlocked(fixture, "REVIEW_DECISION_SET_MISMATCH");
+
+        fixture = revisionTwoFixture();
+        fixture.mutate("ACCEPTANCE_MANIFEST", manifest ->
+                manifest.put("semantic_publication_allowed", true));
+        assertBlocked(fixture, "AUTHORITY_INVALID");
+    }
+
     @Test void requestAndInputShapeDigestVersionAndForbiddenFamiliesFailClosed() throws Exception {
         Fixture fixture = fixture();
         fixture.inputs.remove(fixture.inputs.size() - 1);
@@ -260,6 +299,12 @@ class ScenarioForwardGateTests {
                 folder + "review-decisions-001.json", folder + "proposal.json");
     }
 
+    private Fixture revisionTwoFixture() throws Exception {
+        String folder = "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/";
+        return fixture(folder + "accepted-semantics-004.json", folder + "acceptance-manifest-004.json",
+                folder + "review-decisions-004.json", folder + "proposal-revision-002.json");
+    }
+
     private Fixture fixture(String semanticsPath, String manifestPath, String reviewPath,
             String proposalPath) throws Exception {
         Map<String, String> paths = new LinkedHashMap<>();
@@ -285,6 +330,15 @@ class ScenarioForwardGateTests {
             Path target = root.resolve(authorizationPath);
             Files.createDirectories(target.getParent());
             Files.copy(REPOSITORY.resolve(authorizationPath), target, StandardCopyOption.REPLACE_EXISTING);
+            JsonNode authorization = JSON.readTree(target.toFile());
+            for (String field : List.of("source_authorization_artifact", "review_artifact")) {
+                String nestedPath = authorization.path(field).path("path").asText();
+                if (!nestedPath.isBlank()) {
+                    Path nestedTarget = root.resolve(nestedPath);
+                    Files.createDirectories(nestedTarget.getParent());
+                    Files.copy(REPOSITORY.resolve(nestedPath), nestedTarget, StandardCopyOption.REPLACE_EXISTING);
+                }
+            }
         }
         git("init", "-q");
         git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.test", "commit", "--allow-empty", "-qm", "fixture");
@@ -334,6 +388,15 @@ class ScenarioForwardGateTests {
             int index = index(kind); var input = inputs.get(index); Path path = root.resolve(input.path());
             ObjectNode value = (ObjectNode) JSON.readTree(path.toFile()); mutation.accept(value); Files.write(path, JSON.writeValueAsBytes(value));
             inputs.set(index, new ScenarioForwardRequest.BoundInput(kind, input.path(), ScenarioForwardRequestReader.sha256(Files.readAllBytes(path))));
+        }
+        ObjectNode document(String kind) throws IOException {
+            return (ObjectNode) JSON.readTree(root.resolve(inputs.get(index(kind)).path()).toFile());
+        }
+        void mutateFile(String relativePath, Consumer<ObjectNode> mutation) throws IOException {
+            Path path = root.resolve(relativePath);
+            ObjectNode value = (ObjectNode) JSON.readTree(path.toFile());
+            mutation.accept(value);
+            Files.write(path, JSON.writeValueAsBytes(value));
         }
         void rebindReview() throws IOException {
             Map<String, ScenarioForwardRequest.BoundInput> byKind = new LinkedHashMap<>(); inputs.forEach(i -> byKind.put(i.kind(), i));

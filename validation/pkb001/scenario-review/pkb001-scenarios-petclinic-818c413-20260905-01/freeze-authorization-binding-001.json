@@ -1,0 +1,44 @@
+{
+  "schema_version": "pkb001.freeze-authorization-binding.v0.1",
+  "artifact_kind": "FROZEN_SEMANTICS_AUTHORIZATION_BINDING",
+  "status": "AUTHORIZED_FOR_PROTOTYPE_FREEZE",
+  "authority": "INDIVIDUAL_EXPERIMENT_OWNER",
+  "authorized_reviewer_identity": "individual_experiment_owner",
+  "source_authorization_artifact": {
+    "path": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/ai-provisional-review-acceptance-001.json",
+    "sha256": "d216701258790a479e95e896581fbc717999a1ca70996cc51b1fe3c164339a77"
+  },
+  "review_artifact": {
+    "path": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/ai-provisional-review-001.json",
+    "sha256": "09b0f023c42f1520e9559dd78c5dd86c7b16bd18a75dace1d980744a7246cbe8"
+  },
+  "decision_artifact": {
+    "path": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-decisions-004.json",
+    "sha256": "98c46df1ffdf6ce57d37d6d320b644ac25778797b1ad786831f76d94e0d34f4f"
+  },
+  "proposal": {
+    "path": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/proposal-revision-002.json",
+    "revision": 2,
+    "sha256": "7f3e1cc546bf56c9e1f8883825bb27271561e3147b28389d3e4bfdd3d86f5be5"
+  },
+  "authorized_actions": [
+    {"item_id": "HYP-SCENARIO-011", "action": "ACCEPT"},
+    {"item_id": "HYP-CAPABILITY-004", "action": "ACCEPT"},
+    {"item_id": "HYP-SCENARIO-007", "action": "ACCEPT"},
+    {"item_id": "HYP-SCENARIO-008", "action": "ACCEPT"},
+    {"item_id": "HYP-CAPABILITY-005", "action": "ACCEPT"},
+    {"item_id": "HYP-SCENARIO-009", "action": "ACCEPT"},
+    {"item_id": "HYP-CAPABILITY-006", "action": "REJECT"},
+    {"item_id": "HYP-SCENARIO-010", "action": "REJECT"}
+  ],
+  "authorized_action_counts": {
+    "accept": 6,
+    "edit": 0,
+    "reject": 2
+  },
+  "constraints": {
+    "prototype_use_only": true,
+    "product_truth_established": false,
+    "semantic_publication_allowed": false
+  }
+}
