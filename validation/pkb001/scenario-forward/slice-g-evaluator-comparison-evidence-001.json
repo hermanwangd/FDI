@@ -1,0 +1,98 @@
+{
+  "evidence_type" : "PKB_BL_007_SLICE_G_EVALUATOR_ONLY_COMPARISON",
+  "execution_id" : "PKB-BL-007-SCENARIO-TRACE-001",
+  "slice" : "G",
+  "dispatch_commit" : "a07b4e82b3322378f68f1a1d2b1adea7d54a5e05",
+  "requirement" : "PKB-MAPPING-001",
+  "enforced_order" : [ "1_EXACT_BYTE_SEAL_GENERATION_INPUTS", "2_LOAD_AND_VALIDATE_EVALUATOR_ONLY_TRUTH", "3_COMPUTE_DETERMINISTIC_COMPARISON", "4_EMIT_IMMUTABLE_REPORT_AND_EVIDENCE" ],
+  "isolation_proof" : {
+    "pre_evaluator_mutation_test" : "PASS_EVALUATOR_ACCESS_COUNT_ZERO",
+    "proposal_sha256" : "8c940fb94d3c86c80ff2c9555eb5d77b130f6d0d944593424fb7f2ae563535f2",
+    "evaluator_gold_sha256" : "4d22799e4d7597e0bbc302c9db3cd0510f70cc946cb5de5909ded9c4b1b112d1",
+    "generation_does_not_read_evaluator_truth" : true,
+    "comparison_is_evaluator_only" : true
+  },
+  "sealed_generation_inputs" : {
+    "validation/pkb001/scenario-forward/slice-f-scenario-mapping-proposal-001.json" : "8c940fb94d3c86c80ff2c9555eb5d77b130f6d0d944593424fb7f2ae563535f2",
+    "validation/pkb001/scenario-forward/slice-f-scenario-mapping-evidence-001.json" : "91daf7e121c8f0834d5c2353f6ce9e884a4c13d7615ceea26aa97ab306ded81b",
+    "validation/pkb001/scenario-forward/slice-d-direct-test-trace-evidence.json" : "61f0c923d9fc8c5597a0d57d1106d6a055c51b9f8b06c597f47d9d7748f8d667",
+    "validation/pkb001/scenario-forward/slice-e-graphify-expansion-evidence.json" : "ac9f8ad48b2f4d919aa88f99827cd087aa506109b204b1bd2e22056c84520ed1",
+    "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004.json" : "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+    "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/acceptance-manifest-004.json" : "1b3fbbfd210c2c0d82d74a2579c1980d5de6b047fff56a08cc2b43097c76e2a9",
+    "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-decisions-004.json" : "98c46df1ffdf6ce57d37d6d320b644ac25778797b1ad786831f76d94e0d34f4f",
+    "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/proposal-revision-002.json" : "7f3e1cc546bf56c9e1f8883825bb27271561e3147b28389d3e4bfdd3d86f5be5",
+    "validation/pkb001/runtime/graphify-petclinic-live-evidence.json" : "fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8",
+    "validation/pkb001/artifacts/petclinic-graph-818c413.json" : "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+    "validation/pkb001/schemas/realization-proposal-v0.3.schema.json" : "c2e9be62fb6be4d98d3f492abf6bdbdbe80e0fe1a4ea1c9c8afb9339bfbf13c7",
+    "skills/pkb001/pk-s1-product-realization-v0.3/SKILL.md" : "e03fc502e5cfcb35f70a35102bd9094cc7aa4021171a74ff2c95e411f9982530",
+    "validation/pkb001/reverse-pkb-bl009-petclinic-001/java-test-behavior/evidence.json" : "4db3b4fcac22c704f321e2a3bef20091741147984815addf3ebf77d88643e66d"
+  },
+  "artifact" : {
+    "path" : "validation/pkb001/scenario-forward/slice-g-evaluator-comparison-001.json",
+    "sha256" : "485db9822611f086b6d903788c8b4b8a77be018545e48dee50f0c268a965dfaa"
+  },
+  "result" : {
+    "mapping_proposals" : 0,
+    "unresolved_scenarios" : 10,
+    "proposed_components" : 0,
+    "exact_component_matched" : 0,
+    "exact_component_expected" : 24,
+    "exact_component_precision_defined" : false,
+    "exact_component_recall" : 0.0,
+    "direct_symbol_recall" : {
+      "matched" : 0,
+      "expected" : 24,
+      "proposed" : 0,
+      "recall" : 0.0,
+      "precision" : null,
+      "recallDefined" : true,
+      "precisionDefined" : false
+    },
+    "expanded_chain_coverage" : {
+      "matched" : 0,
+      "expected" : 24,
+      "proposed" : 0,
+      "recall" : 0.0,
+      "precision" : null,
+      "recallDefined" : true,
+      "precisionDefined" : false
+    },
+    "per_scenario_trace_coverage" : {
+      "matched" : 0,
+      "expected" : 10,
+      "proposed" : 10,
+      "recall" : 0.0,
+      "precision" : 0.0,
+      "recallDefined" : true,
+      "precisionDefined" : true
+    },
+    "unresolved_reference_rate" : {
+      "unresolved" : 891,
+      "total" : 1035,
+      "rate" : 0.8608695652173913
+    },
+    "direct_vs_inferred_trace_counts" : {
+      "direct" : 0,
+      "inferred" : 0
+    },
+    "previous_baseline" : {
+      "graphNodeCovered" : 17,
+      "graphNodeExpected" : 24,
+      "graphNodeCoverage" : 0.7083333333333334,
+      "exactComponentMatched" : 0,
+      "exactComponentExpected" : 24
+    },
+    "provider_native_diagnostics" : {
+      "formalComponentCredit" : 0,
+      "separationRule" : "Provider-native node identifiers receive no formal component credit unless selected in the sealed proposal"
+    },
+    "semantic_publication_allowed" : false
+  },
+  "focused_verification" : {
+    "command" : "MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=SliceGEvaluatorComparisonTests,SliceFInputVerifierTests,SliceFScenarioMappingArtifactTests,ScenarioGroundedForwardMapperTests,ScenarioMappingContractV04Tests,ScenarioMappingSchemaV04Tests,DirectTestTraceAdapterTests,GraphifyProductionExpansionTests test",
+    "tests" : 34,
+    "result" : "PASS",
+    "git_diff_check" : "PASS"
+  },
+  "limitations" : [ "Scenario-bound Graphify expansion is absent for this run", "This is reconstruction consistency and evaluator reviewers may have repository exposure", "Build targets Java 17; the local verification JDK may be newer", "No threshold was selected from observed results; Product truth and publication remain false" ]
+}
