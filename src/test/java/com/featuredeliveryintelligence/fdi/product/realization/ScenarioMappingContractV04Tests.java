@@ -44,6 +44,9 @@ class ScenarioMappingContractV04Tests {
     }
 
     @Test void canonicalPathsAndProviderNeutralDuplicateAliasesFailClosed() {
+        assertDoesNotThrow(() -> new ScenarioMappingContractV04.ComponentIdentity(REV,
+                ".github/workflows/build.yml", ScenarioMappingContractV04.Granularity.CONFIGURATION,
+                "github.workflow.build"));
         for (String path : badPaths()) assertThrows(RuntimeContractException.class,
                 () -> identity(path, "example.A.find"), path);
         var m = mapping();
@@ -51,6 +54,20 @@ class ScenarioMappingContractV04Tests {
                 m.directProductionSymbols().get(0).productionSymbol());
         assertThrows(RuntimeContractException.class, () -> copy(m, m.outcome(), m.evidenceStatus(),
                 List.of(m.directProductionSymbols().get(0), duplicate), m.seeds(), m.relationshipTraces(), m.realizationChain(), List.of()));
+    }
+
+    @Test void directStepMustUseTheNamedSeedsIdentityAndEvidence() {
+        var m = mapping();
+        var other = identity("src/main/java/example/VetController.java", "example.VetController.find");
+        var directB = new ScenarioMappingContractV04.DirectProductionSymbolEvidence("direct-2", "observation-2", other);
+        var seedB = new ScenarioMappingContractV04.SeedProvenance("seed-2", "direct-2", other);
+        var bypass = new ScenarioMappingContractV04.RealizationChainStep(1,
+                m.directProductionSymbols().get(0).productionSymbol(),
+                ScenarioMappingContractV04.RelationshipBasis.DIRECT_TEST_REFERENCE,
+                "seed-2", List.of("direct-1"), null);
+        assertThrows(RuntimeContractException.class, () -> copy(m, m.outcome(), m.evidenceStatus(),
+                List.of(m.directProductionSymbols().get(0), directB), List.of(m.seeds().get(0), seedB),
+                m.relationshipTraces(), List.of(bypass, m.realizationChain().get(1)), List.of()));
     }
 
     @Test void evaluatorLeakageUsesOnePolicyAcrossRelevantStrings() {
@@ -64,7 +81,8 @@ class ScenarioMappingContractV04Tests {
 
     static List<String> badPaths() { return List.of("./src/main/A.java", "src//main/A.java", " src/main/A.java",
             "src/main/A.java ", "/src/main/A.java", "src\\main\\A.java", "src/./main/A.java",
-            "src/main/../A.java", "src/test/java/A.java", "tests/A.java"); }
+            "src/main/../A.java", "src/test/java/A.java", "SRC/TEST/java/A.java", "Src/Test/A.java",
+            "test/A.java", "TEST/A.java", "tests/A.java", "Tests/A.java"); }
     static List<String> forbiddenRefs() { return List.of("evaluator_gold", "evaluator-gold", "evaluator gold",
             "gold_mapping", "gold-mapping", "gold mapping", "ground_truth", "expected mapping"); }
 

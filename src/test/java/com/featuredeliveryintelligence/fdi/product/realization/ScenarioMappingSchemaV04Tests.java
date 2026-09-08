@@ -26,6 +26,25 @@ class ScenarioMappingSchemaV04Tests {
         assertEquals(ScenarioMappingContractV04Tests.SHA, tree.path("frozen_semantics_sha256").asText());
     }
 
+    @Test void dotPrefixedRepositoryPathIsAcceptedByBothLayers() throws Exception {
+        var id = new ScenarioMappingContractV04.ComponentIdentity(ScenarioMappingContractV04Tests.REV,
+                ".github/workflows/build.yml", ScenarioMappingContractV04.Granularity.CONFIGURATION,
+                "github.workflow.build");
+        var direct = new ScenarioMappingContractV04.DirectProductionSymbolEvidence("direct-1", "observation-1", id);
+        var seed = new ScenarioMappingContractV04.SeedProvenance("seed-1", "direct-1", id);
+        var step = new ScenarioMappingContractV04.RealizationChainStep(1, id,
+                ScenarioMappingContractV04.RelationshipBasis.DIRECT_TEST_REFERENCE, "seed-1", List.of("direct-1"), null);
+        var mapping = new ScenarioMappingContractV04(ScenarioMappingContractV04.SCHEMA_VERSION,
+                ScenarioMappingContractV04.AUTHORITY, "HYP-CAPABILITY-001", "HYP-SCENARIO-001",
+                ScenarioMappingContractV04Tests.REV, ScenarioMappingContractV04Tests.SHA,
+                ScenarioMappingContractV04Tests.SHA, ScenarioMappingContractV04.Outcome.MAPPING_PROPOSAL,
+                ScenarioMappingContractV04.EvidenceStatus.COMPLETE, List.of(direct), List.of(seed), List.of(),
+                List.of(step), List.of(), List.of("bounded"));
+        ObjectNode value = JSON.valueToTree(mapping);
+        assertTrue(SCHEMA.validate(value).isEmpty(), SCHEMA.validate(value).toString());
+        assertTrue(acceptsJava(value));
+    }
+
     @Test void sharedPathAndLeakageMutationsAreRejectedByBothLayers() {
         for (String path : ScenarioMappingContractV04Tests.badPaths()) {
             ObjectNode value = tree(); identity(value).put("source_path", path); assertBothReject(value, path);

@@ -26,6 +26,13 @@ unbound trace is a gap, never permission to invent a link. Direct references do
 not require or cite Graphify traces. Graphify supplies structural observations and
 cannot infer Capability meaning.
 
+A `DIRECT_TEST_REFERENCE` step must name a seed whose production identity exactly
+equals the step component and must cite that seed's own direct-evidence reference.
+Evidence from another seed cannot be substituted even when both are otherwise
+valid. Canonical production paths accept repository names such as `.github/`, but
+reject absolute paths, `./`, repeated separators, dot segments, backslashes, and
+case-insensitive `src/test`, `test`, or `tests` directories.
+
 Emit explicit `schema_version: pkb001.realization-mapping.v0.4` and
 `authority: PROPOSAL_ONLY`, plus exact graph and frozen-semantics digests. A
 `MAPPING_PROPOSAL` uses `COMPLETE` or `PARTIAL` evidence and requires direct

@@ -78,9 +78,10 @@ public record ScenarioMappingContractV04(
             var seed = seedByRef.get(step.seedRef()); if (seed == null) fail("unbound chain seed");
             if (step.relationshipBasis() == RelationshipBasis.DIRECT_TEST_REFERENCE) {
                 if (step.relationshipTraceRef() != null) fail("direct relationship cannot cite a Graphify trace");
-                boolean matched = step.evidenceRefs().stream().map(evidenceByRef::get).filter(Objects::nonNull)
-                        .anyMatch(e -> e.productionSymbol().equals(step.component()));
-                if (!matched) fail("direct relationship requires matching direct-production-symbol evidence");
+                if (!seed.productionSeed().equals(step.component()))
+                    fail("direct relationship component must equal the named production seed");
+                if (!step.evidenceRefs().contains(seed.directEvidenceRef()))
+                    fail("direct relationship must cite the named seed's direct evidence");
             } else {
                 if (!step.evidenceRefs().isEmpty()) fail("Graphify inferred relationship uses typed trace, not direct refs");
                 var trace = traceByRef.get(step.relationshipTraceRef()); if (trace == null) fail("unbound relationship trace");

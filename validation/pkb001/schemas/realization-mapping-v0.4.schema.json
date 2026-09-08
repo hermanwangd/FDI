@@ -24,7 +24,7 @@
     "text":{"type":"string","minLength":1,"pattern":".*\\S.*"},
     "safe":{"allOf":[{"$ref":"#/$defs/text"},{"not":{"pattern":"(?i)(evaluator(?:[ _-]+gold)?|gold[ _-]+mapping|ground[ _-]+truth|expected[ _-]+mapping)"}}]},
     "revision":{"type":"string","pattern":"^[0-9a-f]{40}$"},"digest":{"type":"string","pattern":"^[0-9a-f]{64}$"},
-    "path":{"allOf":[{"$ref":"#/$defs/safe"},{"pattern":"^(?!\\s)(?![./])(?!.*//)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*(?:^|/)(?:src/test|tests?|test)(?:/|$))(?!.*Tests?\\.java$)[^\\\\]*(?<![\\s/])$"}]},
+    "path":{"allOf":[{"$ref":"#/$defs/safe"},{"pattern":"^(?!\\s)(?!/)(?!\\./)(?!.*//)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*(?:^|/)(?i:(?:src/test|tests?|test))(?:/|$))(?!.*(?i:Tests?\\.java)$)[^\\\\]*(?<![\\s/])$"}]},
     "identity":{"type":"object","additionalProperties":false,"required":["source_revision","source_path","granularity","qualified_symbol"],"properties":{"source_revision":{"$ref":"#/$defs/revision"},"source_path":{"$ref":"#/$defs/path"},"granularity":{"enum":["REPOSITORY","FILE","TYPE","METHOD","TEMPLATE","CONFIGURATION"]},"qualified_symbol":{"$ref":"#/$defs/safe"}}},
     "direct":{"type":"object","additionalProperties":false,"required":["evidence_ref","observation_ref","production_symbol"],"properties":{"evidence_ref":{"$ref":"#/$defs/safe"},"observation_ref":{"$ref":"#/$defs/safe"},"production_symbol":{"$ref":"#/$defs/identity"}}},
     "seed":{"type":"object","additionalProperties":false,"required":["seed_ref","direct_evidence_ref","production_seed"],"properties":{"seed_ref":{"$ref":"#/$defs/safe"},"direct_evidence_ref":{"$ref":"#/$defs/safe"},"production_seed":{"$ref":"#/$defs/identity"}}},

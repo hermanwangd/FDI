@@ -9,15 +9,15 @@
   "artifacts": {
     "java_contract": {
       "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/ScenarioMappingContractV04.java",
-      "sha256": "95feaad6bd66f08d7e294bd040cb16fc92c589d4164061f10c6a8619de136baf"
+      "sha256": "379b6207ae8803be46546c565ed6f826b218eed87195335eed0cbda0416729cf"
     },
     "json_schema": {
       "path": "validation/pkb001/schemas/realization-mapping-v0.4.schema.json",
-      "sha256": "f3b81615e7266046b6476b235f4b4694e725f5d9ed50ef149643029119fddb0b"
+      "sha256": "e56c646ff6bfff1ed4ed6d718122777331633434e7566d84a212d9d37f87af96"
     },
     "skill": {
       "path": "skills/pkb001/pk-s1-product-realization-v0.4/SKILL.md",
-      "sha256": "6f7c1ae092a1867760fc133d42ef1d2ecd11520e2e7e1433a21689610cf5607a"
+      "sha256": "a7eb1c31c68073835609dc68b1a45f1cc3de4933a469dae690f44d01ade37c61"
     }
   },
   "enforced_boundaries": [
@@ -32,10 +32,12 @@
     "JAVA_JSON_SCHEMA_JAVA_ROUND_TRIP",
     "EVALUATOR_ISOLATION",
     "PRODUCTION_PATH_ONLY"
+    ,"DOT_PREFIXED_REPOSITORY_PATH_PARITY"
+    ,"DIRECT_STEP_EXACT_SEED_IDENTITY_AND_EVIDENCE_BINDING"
   ],
   "tdd": {
     "red": "ScenarioMappingContractV04Tests failed compilation before the Java contract existed",
-    "focused_green": "Eight ScenarioMappingContractV04Tests and ScenarioMappingSchemaV04Tests passed, including shared Java/schema mutations"
+    "focused_green": "Ten ScenarioMappingContractV04Tests and ScenarioMappingSchemaV04Tests passed, including shared Java/schema path parity and two-seed provenance mutations"
   },
   "semantic_publication_allowed": false,
   "graphify_runtime_boundary": "EXTERNAL_PYTHON_MCP_PROVIDER_OUTSIDE_JAVA_FRAMEWORK",
