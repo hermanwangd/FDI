@@ -41,6 +41,7 @@ class HierarchicalForwardEvaluationGeneratorTests {
         assertThrows(RuntimeContractException.class,()->HierarchicalForwardEvaluationGenerator.generate(Path.of("."),first));
         Path reproduced=generateSecond();
         assertArrayEquals(Files.readAllBytes(Path.of(HierarchicalForwardEvaluationGenerator.REPORT_PATH)),Files.readAllBytes(reproduced));
+        assertArrayEquals(Files.readAllBytes(Path.of(HierarchicalForwardEvaluationGenerator.EVIDENCE_PATH)),Files.readAllBytes(second.resolve(HierarchicalForwardEvaluationGenerator.EVIDENCE_PATH)));
     }
     private Path generateSecond(){HierarchicalForwardEvaluationGenerator.generate(Path.of("."),second);return second.resolve(HierarchicalForwardEvaluationGenerator.REPORT_PATH);}
 }

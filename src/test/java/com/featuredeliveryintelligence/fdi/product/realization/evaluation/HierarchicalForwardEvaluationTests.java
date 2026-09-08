@@ -39,7 +39,7 @@ class HierarchicalForwardEvaluationTests {
         assertEquals(1, report.diagnostics().supportingExactOverlap());
         assertTrue(report.diagnostics().providerNativeOverlap() > 0);
         assertEquals(0, report.diagnostics().providerNativeFormalCredit());
-        assertTrue(report.component().missing().contains(new HierarchicalForwardEvaluation.ScopedIdentity("C",HierarchicalForwardEvaluation.Identity.from(expectedB))));
+        assertTrue(report.component().missing().stream().anyMatch(x->x.identity().equals(HierarchicalForwardEvaluation.Identity.from(expectedB))));
         assertTrue(report.component().extra().contains(new HierarchicalForwardEvaluation.ScopedIdentity("C",HierarchicalForwardEvaluation.Identity.from(extra))));
     }
 
@@ -82,6 +82,19 @@ class HierarchicalForwardEvaluationTests {
         assertEquals(1,report.component().exact().matched());assertEquals(2,report.component().exact().expected());
         assertEquals(1.0,report.component().exact().precision().value());
         assertEquals(1,report.chain().exactExpectedCovered());assertEquals(1,report.chain().gapSteps());
+        assertEquals("NOT_COMPARABLE_NO_SEALED_CROSSWALK",report.semantic().capabilityAlignment().status());
+    }
+
+    @Test void realNamespaceMismatchStillAllowsOnlyOneGlobalExactIdentityOccurrence() {
+        var a=id("A.java","TYPE","p.A");ObjectNode p=proposal(List.of(scenario("S","MAPPING_PROPOSAL","COMPLETE",List.of(step(a,"DIRECT_TEST_REFERENCE")),List.of(role(a,"PRIMARY")))));
+        ((ObjectNode)p.path("capabilities").get(0)).put("capabilityId","HYP-CAPABILITY-001");
+        var truth=new HierarchicalForwardEvaluation.EvaluatorTruth("gold",List.of(
+                new HierarchicalForwardEvaluation.Expected("PET-CAP-01","r1","n1",HierarchicalForwardEvaluation.Identity.from(a)),
+                new HierarchicalForwardEvaluation.Expected("PET-CAP-02","r2","n2",HierarchicalForwardEvaluation.Identity.from(a))));
+        var report=HierarchicalForwardEvaluation.evaluate(p,truth,"p","g");
+        assertEquals(1,report.component().exact().matched());assertEquals(0.5,report.component().exact().recall().value());assertEquals(1.0,report.component().exact().precision().value());
+        assertEquals("PET-CAP-01",report.component().matchedExpected().get(0).evaluatorCapabilityId());
+        assertEquals("PET-CAP-02",report.component().missing().get(0).evaluatorCapabilityId());
     }
 
     @Test void tenThousandOneIdenticalRawEntriesAreRejectedBeforeDeduplication() {

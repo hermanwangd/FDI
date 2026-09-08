@@ -72,12 +72,15 @@ public final class HierarchicalForwardEvaluation {
         List<ScopedIdentity> scopedPrimary=scoped(primaryByCapability);
         Set<Identity> expected = new TreeSet<>(expectedOccurrences);
         require(expectedOccurrences.stream().allMatch(x->x.sourceRevision().equals(source)),"evaluator source mismatch");
-        int exactOccurrenceMatches=(int)truth.expected().stream().filter(e->primaryByCapability.getOrDefault(e.capabilityId(),Set.of()).contains(e.identity())).count();
-        int chainOccurrenceMatches=(int)truth.expected().stream().filter(e->chainByCapability.getOrDefault(e.capabilityId(),Set.of()).contains(e.identity())).count();
+        MatchAllocation exactAllocation=allocate(truth.expected(),scopedPrimary);
+        MatchAllocation chainAllocation=allocate(truth.expected(),scoped(chainByCapability));
+        int exactOccurrenceMatches=exactAllocation.matched().size();
+        int chainOccurrenceMatches=chainAllocation.matched().size();
         Set<Identity> primary=new TreeSet<>(primaryOccurrences),supporting=new TreeSet<>(supportingOccurrences),chain=new TreeSet<>(chainByCapability.values().stream().flatMap(Set::stream).toList());
-        List<ScopedIdentity> missing=truth.expected().stream().filter(e->!primaryByCapability.getOrDefault(e.capabilityId(),Set.of()).contains(e.identity())).map(e->new ScopedIdentity(e.capabilityId(),e.identity())).distinct().sorted().toList();
-        List<ScopedIdentity> extra=scopedPrimary.stream().filter(s->truth.expected().stream().noneMatch(x->x.capabilityId().equals(s.capabilityId())&&x.identity().equals(s.identity()))).sorted().toList();
-        List<ScopedIdentity> chainMissing=truth.expected().stream().filter(e->!chainByCapability.getOrDefault(e.capabilityId(),Set.of()).contains(e.identity())).map(e->new ScopedIdentity(e.capabilityId(),e.identity())).distinct().sorted().toList();
+        List<ExpectedOccurrence> missing=exactAllocation.missing();
+        List<ExpectedOccurrence> matched=exactAllocation.matched();
+        List<ScopedIdentity> extra=exactAllocation.extra();
+        List<ExpectedOccurrence> chainMissing=chainAllocation.missing(),chainMatched=chainAllocation.matched();
         DiagnosticMetric path=diagnostic(primary,expected,Identity::sourcePath);
         DiagnosticMetric type=diagnostic(primary,expected,Identity::containingType);
         DiagnosticMetric bare=diagnostic(primary,expected,Identity::bareSymbol);
@@ -86,12 +89,12 @@ public final class HierarchicalForwardEvaluation {
         int providerOverlap=(int)providerNodeIds.stream().filter(expectedNodes::contains).count();
 
         return new Report("pkb001.hierarchical-forward-evaluation.v1","EVALUATOR_ONLY",source,proposalSha256,truth.goldSha256(),goldSealSha256,
-                new Semantic(capabilities,scenarioIds.size(),"FROZEN_HUMAN_REVIEWER_INPUT","DESCRIPTIVE_ONLY_NOT_PRODUCT_TRUTH_SCORING",false),
+                new Semantic(capabilities,scenarioIds.size(),"FROZEN_HUMAN_REVIEWER_INPUT","DESCRIPTIVE_ONLY_NOT_PRODUCT_TRUTH_SCORING",false,new CapabilityAlignment("NOT_COMPARABLE_NO_SEALED_CROSSWALK",false)),
                 new Scenario(scenarioIds.size(),outcomes,evidence,traced.size(),scenarioIds.size()),
-                new Chain(expectedOccurrences.size(),chainOccurrenceMatches,scopedIdentityCounts(scopedExpected),chainMissing,direct,inferred,gaps),
-                new Component(path,type,bare,metric(exactOccurrenceMatches,expectedOccurrences.size(),primaryOccurrences.size()),scopedIdentityCounts(scopedExpected),scopedPrimary,missing,extra),
+                new Chain(expectedOccurrences.size(),chainOccurrenceMatches,scopedIdentityCounts(scopedExpected),chainMatched,chainMissing,direct,inferred,gaps),
+                new Component(path,type,bare,metric(exactOccurrenceMatches,expectedOccurrences.size(),primaryOccurrences.size()),scopedIdentityCounts(scopedExpected),scopedPrimary,matched,missing,extra),
                 new Diagnostics(providerOverlap,0,supportingOccurrences.size(),supportingExact,0,"provider-native and supporting evidence grant zero formal credit"),
-                List.of("No acceptance threshold is defined or inferred","Prior Slice G is provenance only and cannot affect scoring"));
+                List.of("Capability alignment is not comparable because no sealed HYP-to-PET crosswalk exists; none is inferred","No acceptance threshold is defined or inferred","Prior Slice G is provenance only and cannot affect scoring"));
     }
 
     private interface Attribute { String get(Identity i); }
@@ -105,6 +108,7 @@ public final class HierarchicalForwardEvaluation {
     private static List<IdentityCount> identityCounts(List<Identity> values){Map<Identity,Integer> counts=new TreeMap<>();values.forEach(v->counts.merge(v,1,Integer::sum));return counts.entrySet().stream().map(e->new IdentityCount(e.getKey(),e.getValue())).toList();}
     private static List<ScopedIdentity> scoped(Map<String,Set<Identity>> values){return values.entrySet().stream().flatMap(e->e.getValue().stream().map(i->new ScopedIdentity(e.getKey(),i))).sorted().toList();}
     private static List<ScopedIdentityCount> scopedIdentityCounts(List<ScopedIdentity> values){Map<ScopedIdentity,Integer> counts=new TreeMap<>();values.forEach(v->counts.merge(v,1,Integer::sum));return counts.entrySet().stream().map(e->new ScopedIdentityCount(e.getKey(),e.getValue())).toList();}
+    private static MatchAllocation allocate(List<Expected> expected,List<ScopedIdentity> proposed){Map<Identity,Deque<ScopedIdentity>> available=new TreeMap<>();for(ScopedIdentity s:proposed)available.computeIfAbsent(s.identity(),k->new ArrayDeque<>()).add(s);List<ExpectedOccurrence> matched=new ArrayList<>(),missing=new ArrayList<>();int ordinal=0;for(Expected e:expected){ExpectedOccurrence occurrence=new ExpectedOccurrence(++ordinal,e.capabilityId(),e.componentRef(),e.identity());Deque<ScopedIdentity> candidates=available.get(e.identity());if(candidates!=null&&!candidates.isEmpty()){candidates.removeFirst();matched.add(occurrence);}else missing.add(occurrence);}List<ScopedIdentity> extra=available.values().stream().flatMap(Collection::stream).sorted().toList();return new MatchAllocation(List.copyOf(matched),List.copyOf(missing),extra);}
     private static Metric metric(int matched,int expected,int proposed){return new Metric(matched,expected,proposed,new Ratio(expected!=0,expected==0?null:(double)matched/expected),new Ratio(proposed!=0,proposed==0?null:(double)matched/proposed));}
     private static String required(JsonNode n,String field){String v=n.path(field).asText();require(!v.isBlank(),field+" required");return v;}
     private static void require(boolean c,String m){if(!c)throw fail(m);}
@@ -125,11 +129,14 @@ public final class HierarchicalForwardEvaluation {
     public record IdentityCount(Identity identity,int occurrences){ }
     public record ScopedIdentity(String capabilityId,Identity identity) implements Comparable<ScopedIdentity>{@Override public int compareTo(ScopedIdentity o){int c=capabilityId.compareTo(o.capabilityId);return c!=0?c:identity.compareTo(o.identity);}}
     public record ScopedIdentityCount(ScopedIdentity scopedIdentity,int occurrences){ }
+    public record ExpectedOccurrence(int ordinal,String evaluatorCapabilityId,String componentRef,Identity identity){ }
+    private record MatchAllocation(List<ExpectedOccurrence> matched,List<ExpectedOccurrence> missing,List<ScopedIdentity> extra){ }
     public record DiagnosticMetric(int matched,int expected,int proposed,Ratio recall,Ratio precision,List<String> matchedValues,List<String> missingValues,List<String> extraValues){ }
-    public record Semantic(int capabilities,int scenarios,String authorityState,String interpretation,boolean productTruthScored){ }
+    public record CapabilityAlignment(String status,boolean scored){ }
+    public record Semantic(int capabilities,int scenarios,String authorityState,String interpretation,boolean productTruthScored,CapabilityAlignment capabilityAlignment){ }
     public record Scenario(int total,Map<String,Integer> mappingOutcomes,Map<String,Integer> evidenceCompleteness,int traced,int traceDenominator){public Scenario{mappingOutcomes=Collections.unmodifiableMap(new LinkedHashMap<>(mappingOutcomes));evidenceCompleteness=Collections.unmodifiableMap(new LinkedHashMap<>(evidenceCompleteness));}}
-    public record Chain(int exactExpectedDenominator,int exactExpectedCovered,List<ScopedIdentityCount> expectedIdentityOccurrences,List<ScopedIdentity> exactMissing,int directSteps,int inferredSteps,int gapSteps){ }
-    public record Component(DiagnosticMetric sourcePath,DiagnosticMetric containingType,DiagnosticMetric bareSymbol,Metric exact,List<ScopedIdentityCount> expectedIdentityOccurrences,List<ScopedIdentity> proposedIdentities,List<ScopedIdentity> missing,List<ScopedIdentity> extra){ }
+    public record Chain(int exactExpectedDenominator,int exactExpectedCovered,List<ScopedIdentityCount> expectedIdentityOccurrences,List<ExpectedOccurrence> exactMatchedExpected,List<ExpectedOccurrence> exactMissing,int directSteps,int inferredSteps,int gapSteps){ }
+    public record Component(DiagnosticMetric sourcePath,DiagnosticMetric containingType,DiagnosticMetric bareSymbol,Metric exact,List<ScopedIdentityCount> expectedIdentityOccurrences,List<ScopedIdentity> proposedIdentities,List<ExpectedOccurrence> matchedExpected,List<ExpectedOccurrence> missing,List<ScopedIdentity> extra){ }
     public record Diagnostics(int providerNativeOverlap,int providerNativeFormalCredit,int supportingCount,int supportingExactOverlap,int supportingFormalCredit,String rule){ }
     public record Report(String schemaVersion,String authority,String sourceRevision,String proposalSha256,String evaluatorGoldSha256,String evaluatorSealSha256,Semantic semantic,Scenario scenario,Chain chain,Component component,Diagnostics diagnostics,List<String> limitations){ }
 }
