@@ -25,12 +25,13 @@
   },
   "artifact": {
     "path": "validation/pkb001/scenario-forward/slice-f-scenario-mapping-proposal-001.json",
-    "sha256": "3c0e4de7439e9d02749854ff5fbe3014de5b0084840effb0112fc8267da3b372"
+    "sha256": "8c940fb94d3c86c80ff2c9555eb5d77b130f6d0d944593424fb7f2ae563535f2"
   },
   "limitations": [
     "Slice E established and independently verified the bounded Graphify expansion contract but did not freeze a scenario-bound expansion result for this exact run.",
     "No inferred component is fabricated from the raw graph. All scenarios are UNRESOLVED because no scenario-bound evidence demonstrates a component that performs the core behavior.",
     "Getter, setter, ID, and repository lookup observations remain supporting evidence and cannot satisfy the mandatory PRIMARY role.",
+    "The current API deliberately exposes no PRIMARY or caller-confirmation field; a future mapping requires a separately specified authority-bound confirmation contract.",
     "The output measures reconstruction consistency against the same repository and remains PROPOSAL_ONLY."
   ],
   "isolation": {
