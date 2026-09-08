@@ -1,0 +1,43 @@
+{
+  "evidence_type": "PKB_BL_007_SLICE_C_MAPPING_CONTRACT",
+  "execution_id": "PKB-BL-007-SCENARIO-TRACE-001",
+  "slice": "C",
+  "dispatch_commit": "cf2ac3d764ba6dccf37b4830567ce4335fc1eb54",
+  "verified_ab_ancestor": "221c504340852a12b761e27fe996c41f34b7ec89",
+  "contract_version": "pkb001.realization-mapping.v0.4",
+  "authority": "PROPOSAL_ONLY",
+  "artifacts": {
+    "java_contract": {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/ScenarioMappingContractV04.java",
+      "sha256": "328ff79ca50fd986eac653aa96f5999d246fdb51f4227039c0c5b5db44455fd4"
+    },
+    "json_schema": {
+      "path": "validation/pkb001/schemas/realization-mapping-v0.4.schema.json",
+      "sha256": "d9293c4483574e7441aafe69020ee6ec67a2cf1b2a8ce201fd9bc4112fea4b67"
+    },
+    "skill": {
+      "path": "skills/pkb001/pk-s1-product-realization-v0.4/SKILL.md",
+      "sha256": "0e4f15ab3fe936146a68e021f572095e386bab22d4ad05cbb9c3613d6e9511e1"
+    }
+  },
+  "enforced_boundaries": [
+    "DIRECT_PRODUCTION_SYMBOL_EVIDENCE",
+    "PROVIDER_NEUTRAL_COMPONENT_IDENTITY",
+    "DIRECT_TEST_REFERENCE_OR_GRAPHIFY_INFERRED_ONLY",
+    "BOUND_SEED_PROVENANCE",
+    "ORDERED_VARIABLE_LENGTH_REALIZATION_CHAIN",
+    "EVALUATOR_ISOLATION",
+    "PRODUCTION_PATH_ONLY"
+  ],
+  "tdd": {
+    "red": "ScenarioMappingContractV04Tests failed compilation before the Java contract existed",
+    "focused_green": "ScenarioMappingContractV04Tests and ScenarioMappingSchemaV04Tests passed"
+  },
+  "semantic_publication_allowed": false,
+  "graphify_runtime_boundary": "EXTERNAL_PYTHON_MCP_PROVIDER_OUTSIDE_JAVA_FRAMEWORK",
+  "limitations": [
+    "Slice C defines and validates the mapping data contract only.",
+    "Direct Java extraction and Graphify expansion are deferred to Slices D and E.",
+    "Schema validation provides local shape checks; Java enforces cross-reference and ordering invariants."
+  ]
+}
