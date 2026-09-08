@@ -82,7 +82,8 @@ class ScenarioMappingContractV04Tests {
     static List<String> badPaths() { return List.of("./src/main/A.java", "src//main/A.java", " src/main/A.java",
             "src/main/A.java ", "/src/main/A.java", "src\\main\\A.java", "src/./main/A.java",
             "src/main/../A.java", "src/test/java/A.java", "SRC/TEST/java/A.java", "Src/Test/A.java",
-            "test/A.java", "TEST/A.java", "tests/A.java", "Tests/A.java"); }
+            "test/A.java", "TEST/A.java", "tests/A.java", "Tests/A.java", "src/main/java/OwnerTEST.java",
+            "src/main/java/OwnerTeSt.java", "src/main/java/OwnerTESTS.java"); }
     static List<String> forbiddenRefs() { return List.of("evaluator_gold", "evaluator-gold", "evaluator gold",
             "gold_mapping", "gold-mapping", "gold mapping", "ground_truth", "expected mapping"); }
 

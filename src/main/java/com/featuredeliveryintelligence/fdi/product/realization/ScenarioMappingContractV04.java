@@ -159,7 +159,7 @@ public record ScenarioMappingContractV04(
                 || path.contains("\\") || path.contains("//") || path.matches("^[A-Za-z]:.*")) return false;
         String[] parts = path.split("/", -1); for (String part : parts) if (part.isEmpty() || part.equals(".") || part.equals("..")) return false;
         String lower = path.toLowerCase(Locale.ROOT);
-        return !lower.matches("(^|.*/)(src/test|tests?|test)(/.*|$)") && !path.matches(".*Tests?\\.java$");
+        return !lower.matches("(^|.*/)(src/test|tests?|test)(/.*|$)") && !lower.matches(".*tests?\\.java$");
     }
     private static void revision(String value) { if (value == null || !value.matches("[0-9a-f]{40}")) fail("full lowercase source revision required"); }
     private static void digest(String value, String field) { if (value == null || !value.matches("[0-9a-f]{64}")) fail(field + " must be lowercase SHA-256"); }
