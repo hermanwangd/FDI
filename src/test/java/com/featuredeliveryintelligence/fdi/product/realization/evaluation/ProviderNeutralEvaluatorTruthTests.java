@@ -97,7 +97,19 @@ class ProviderNeutralEvaluatorTruthTests {
         var seal = (com.fasterxml.jackson.databind.node.ObjectNode) JSON.readTree(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH).toFile());
         ((com.fasterxml.jackson.databind.node.ObjectNode) seal.path("isolation_controls")).put("generation_access", "ALLOWED");
         writeJson(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH), seal);
-        assertThrows(RuntimeContractException.class, () -> ProviderNeutralEvaluatorTruth.loadWithSealSha(root, sha(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH))));
+        Path accessRoot = root;
+        assertThrows(RuntimeContractException.class, () -> ProviderNeutralEvaluatorTruth.loadWithSealSha(accessRoot, sha(accessRoot.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH))));
+
+        for (String field : List.of("product_knowledge_input", "generation_artifact_input")) {
+            root = temp.resolve(field); copyInputs(root);
+            seal = (com.fasterxml.jackson.databind.node.ObjectNode) JSON.readTree(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH).toFile());
+            ((com.fasterxml.jackson.databind.node.ObjectNode) seal.path("isolation_controls")).put(field, true);
+            writeJson(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH), seal);
+            String sealSha = sha(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH));
+            Path mutationRoot = root;
+            assertThrows(RuntimeContractException.class,
+                    () -> ProviderNeutralEvaluatorTruth.loadWithSealSha(mutationRoot, sealSha), field);
+        }
     }
 
     private static void rewriteGoldAndSeal(Path root, JsonNode gold) throws Exception {

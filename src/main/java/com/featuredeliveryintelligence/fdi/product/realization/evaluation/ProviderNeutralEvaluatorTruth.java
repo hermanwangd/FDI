@@ -50,7 +50,10 @@ public record ProviderNeutralEvaluatorTruth(String goldSha256, List<Mapping> map
             require(LEGACY_GOLD_SHA256.equals(text(seal, "legacy_gold_sha256")), "legacy gold digest mismatch");
             require(LEGACY_SEAL_SHA256.equals(text(seal, "legacy_seal_sha256")), "legacy seal digest mismatch");
             require(ProviderNeutralEvaluatorTruthGenerator.GENERATOR_ID.equals(text(seal, "generator_identity")), "generator identity mismatch");
-            require("DENIED".equals(seal.path("isolation_controls").path("generation_access").asText()), "generation isolation mismatch");
+            JsonNode isolation = seal.path("isolation_controls");
+            require("DENIED".equals(isolation.path("generation_access").asText()), "generation isolation mismatch");
+            require(explicitFalse(isolation, "product_knowledge_input"), "product knowledge isolation mismatch");
+            require(explicitFalse(isolation, "generation_artifact_input"), "generation artifact isolation mismatch");
             String goldSha = sha(root.resolve(GOLD_PATH));
             require(goldSha.equals(text(seal, "gold_sha256")), "v2 gold digest mismatch");
 
@@ -84,6 +87,10 @@ public record ProviderNeutralEvaluatorTruth(String goldSha256, List<Mapping> map
     }
     static String sha(Path path) throws Exception { return ScenarioForwardRequestReader.sha256(Files.readAllBytes(path)); }
     private static String text(JsonNode node, String field) { String value = node.path(field).asText(); require(!value.isBlank(), field + " is required"); return value; }
+    private static boolean explicitFalse(JsonNode node, String field) {
+        JsonNode value = node.get(field);
+        return value != null && value.isBoolean() && !value.booleanValue();
+    }
     private static void require(boolean condition, String message) { if (!condition) throw new RuntimeContractException(message); }
 
     public record Mapping(String capabilityId, List<ExpectedComponent> expectedComponents) {
