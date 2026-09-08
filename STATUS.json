@@ -7,7 +7,7 @@
   "decision": "REVISE",
   "phase0_readiness": "READY",
   "evaluation_status": "COMPLETE_BOUNDED_REVISE",
-  "human_review_status": "PARTIALLY_REVIEWED",
+  "human_review_status": "COMPLETE_FOR_PROPOSAL_REVISION_002",
   "third_review_status": "COMPLETE_11_DISAGREEMENTS_ADJUDICATED",
   "semantic_publication_allowed": false,
   "blinding_scope": "DETERMINISTIC_LABEL_AND_ORDER_BLINDING",
@@ -15,21 +15,21 @@
   "spec_maturity": {
     "spec_revision": "c396b3cf6e3a32d55c1fb57827f2022e4409df8d",
     "normative_requirements": 24,
-    "m3_verified": 13,
-    "m1_backlogged": 11,
+    "m3_verified": 15,
+    "m1_backlogged": 9,
     "next_experiment_readiness": "NOT_READY"
   },
-  "active_backlog_item": "PKB-BL-025",
-  "active_implementation_plan": "IMPLEMENTATION-PLAN.md#delivery-dag",
-  "next_action": "Dispatch PKB-BL-007-SCENARIO-TRACE-001 as one coordinator-owned DAG; complete review revision 2 and frozen semantics before test-to-production mapping.",
+  "active_backlog_item": "PKB-BL-007",
+  "active_implementation_plan": "IMPLEMENTATION-PLAN.md#remaining-delivery-dag",
+  "next_action": "Execute Slice C from exact revision 221c504340852a12b761e27fe996c41f34b7ec89, then run Slices D and E in parallel after the mapping contract passes review.",
   "active_execution": {
     "execution_id": "PKB-BL-007-SCENARIO-TRACE-001",
     "base_commit": "e72bbbe2866b52aad6e7a2a165d5d2b70cb9a651",
     "selected_backlog_items": [
-      "PKB-BL-025"
+      "PKB-BL-007"
     ],
-    "execution_state": "PLANNED_AWAITING_DISPATCH",
-    "integration_candidate": null
+    "execution_state": "SLICES_A_B_VERIFIED_READY_FOR_SLICE_C",
+    "integration_candidate": "221c504340852a12b761e27fe996c41f34b7ec89"
   },
   "framework_language_target": "JAVA_17_SPRING_BOOT_3_4_1",
   "external_graphify_runtime": "PYTHON_MCP_PROVIDER_OUTSIDE_FRAMEWORK_MIGRATION",
@@ -41,14 +41,15 @@
   "scenario_generation": "GRAPHIFY_TEST_BEHAVIOR_AND_DELIVERY_HISTORY_PROPOSALS",
   "scenario_generator_status": "DETERMINISTIC_JAVA_MULTI_EVIDENCE_PROPOSAL_GENERATION_VERIFIED",
   "selected_backlog_items": [
-    "PKB-BL-025"
+    "PKB-BL-007"
   ],
-  "review_json": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-decisions-003.json",
+  "review_json": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-decisions-004.json",
   "original_review_packet": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review.md",
   "original_review_json": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review.json",
   "review_progress": {
-    "accepted_decisions": 9,
-    "pending_decisions": 8
+    "accepted_decisions": 15,
+    "rejected_decisions": 2,
+    "pending_decisions": 0
   },
   "supplemental_review_proposal": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/supplemental-scenario-proposal-001.json",
   "ai_provisional_review": {
@@ -59,6 +60,6 @@
     "rejected_recommendations": 2,
     "product_truth_established": false
   },
-  "accepted_experiment_input": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-003.json",
-  "acceptance_manifest": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/acceptance-manifest-003.json"
+  "accepted_experiment_input": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004.json",
+  "acceptance_manifest": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/acceptance-manifest-004.json"
 }
