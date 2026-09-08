@@ -1,0 +1,669 @@
+{
+  "schemaVersion" : "pkb001.hierarchical-forward-evaluation.v1",
+  "authority" : "EVALUATOR_ONLY",
+  "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "proposalSha256" : "8c940fb94d3c86c80ff2c9555eb5d77b130f6d0d944593424fb7f2ae563535f2",
+  "evaluatorGoldSha256" : "22292caf3b8f55ff418b0716dce32da19e93974555ef597da1705674b467c385",
+  "evaluatorSealSha256" : "2b343bc780b1f7a785bd5595ff932cb4dd447a859d3db955958b0215e7342ce0",
+  "semantic" : {
+    "capabilities" : 5,
+    "scenarios" : 10,
+    "authorityState" : "FROZEN_HUMAN_REVIEWER_INPUT",
+    "interpretation" : "DESCRIPTIVE_ONLY_NOT_PRODUCT_TRUTH_SCORING",
+    "productTruthScored" : false
+  },
+  "scenario" : {
+    "total" : 10,
+    "mappingOutcomes" : {
+      "MAPPING_PROPOSAL" : 0,
+      "UNRESOLVED" : 10
+    },
+    "evidenceCompleteness" : {
+      "COMPLETE" : 0,
+      "PARTIAL" : 0,
+      "INSUFFICIENT" : 10
+    },
+    "traced" : 0,
+    "traceDenominator" : 10
+  },
+  "chain" : {
+    "exactExpectedDenominator" : 24,
+    "exactExpectedCovered" : 0,
+    "expectedIdentityOccurrences" : [ {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Owner.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.Owner",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Owner#addVisit"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Owner.java",
+        "granularity" : "TYPE",
+        "containingType" : "org.springframework.samples.petclinic.owner.Owner",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Owner"
+      },
+      "occurrences" : 2
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#processCreationForm"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#processFindForm"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner"
+      },
+      "occurrences" : 2
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.OwnerRepository",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerRepository#findByLastNameStartingWith"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Pet.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.Pet",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Pet#getVisits"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Pet.java",
+        "granularity" : "TYPE",
+        "containingType" : "org.springframework.samples.petclinic.owner.Pet",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Pet"
+      },
+      "occurrences" : 2
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.PetController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetController#processCreationForm"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.PetController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetController#processUpdateForm"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.PetController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetController#updatePetDetails"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.PetTypeRepository",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetTypeRepository#findPetTypes"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Visit.java",
+        "granularity" : "TYPE",
+        "containingType" : "org.springframework.samples.petclinic.owner.Visit",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Visit"
+      },
+      "occurrences" : 2
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.VisitController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.VisitController#processNewVisitForm"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.system.WelcomeController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.system.WelcomeController#welcome"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java",
+        "granularity" : "TYPE",
+        "containingType" : "org.springframework.samples.petclinic.vet.Specialty",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.Specialty"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/Vet.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.vet.Vet",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.Vet#getSpecialties"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.vet.VetController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.VetController#showVetList"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.vet.VetRepository",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.VetRepository#findAll"
+      },
+      "occurrences" : 1
+    } ],
+    "exactMissing" : [ {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Owner.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.Owner",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Owner#addVisit"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Owner.java",
+      "granularity" : "TYPE",
+      "containingType" : "org.springframework.samples.petclinic.owner.Owner",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Owner"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#processCreationForm"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#processFindForm"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.OwnerRepository",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerRepository#findByLastNameStartingWith"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Pet.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.Pet",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Pet#getVisits"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Pet.java",
+      "granularity" : "TYPE",
+      "containingType" : "org.springframework.samples.petclinic.owner.Pet",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Pet"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.PetController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetController#processCreationForm"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.PetController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetController#processUpdateForm"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.PetController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetController#updatePetDetails"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.PetTypeRepository",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetTypeRepository#findPetTypes"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Visit.java",
+      "granularity" : "TYPE",
+      "containingType" : "org.springframework.samples.petclinic.owner.Visit",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Visit"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.VisitController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.VisitController#processNewVisitForm"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.system.WelcomeController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.system.WelcomeController#welcome"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java",
+      "granularity" : "TYPE",
+      "containingType" : "org.springframework.samples.petclinic.vet.Specialty",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.Specialty"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/Vet.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.vet.Vet",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.Vet#getSpecialties"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.vet.VetController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.VetController#showVetList"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.vet.VetRepository",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.VetRepository#findAll"
+    } ],
+    "directSteps" : 0,
+    "inferredSteps" : 0,
+    "gapSteps" : 0
+  },
+  "component" : {
+    "sourcePathMatched" : 0,
+    "containingTypeMatched" : 0,
+    "bareSymbolOverlap" : 0,
+    "exact" : {
+      "matched" : 0,
+      "expected" : 24,
+      "proposed" : 0,
+      "recall" : {
+        "defined" : true,
+        "value" : 0.0
+      },
+      "precision" : {
+        "defined" : false,
+        "value" : null
+      }
+    },
+    "expectedIdentityOccurrences" : [ {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Owner.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.Owner",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Owner#addVisit"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Owner.java",
+        "granularity" : "TYPE",
+        "containingType" : "org.springframework.samples.petclinic.owner.Owner",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Owner"
+      },
+      "occurrences" : 2
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#processCreationForm"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#processFindForm"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner"
+      },
+      "occurrences" : 2
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.OwnerRepository",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerRepository#findByLastNameStartingWith"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Pet.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.Pet",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Pet#getVisits"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Pet.java",
+        "granularity" : "TYPE",
+        "containingType" : "org.springframework.samples.petclinic.owner.Pet",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Pet"
+      },
+      "occurrences" : 2
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.PetController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetController#processCreationForm"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.PetController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetController#processUpdateForm"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.PetController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetController#updatePetDetails"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.PetTypeRepository",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetTypeRepository#findPetTypes"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Visit.java",
+        "granularity" : "TYPE",
+        "containingType" : "org.springframework.samples.petclinic.owner.Visit",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Visit"
+      },
+      "occurrences" : 2
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.owner.VisitController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.VisitController#processNewVisitForm"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.system.WelcomeController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.system.WelcomeController#welcome"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java",
+        "granularity" : "TYPE",
+        "containingType" : "org.springframework.samples.petclinic.vet.Specialty",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.Specialty"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/Vet.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.vet.Vet",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.Vet#getSpecialties"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.vet.VetController",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.VetController#showVetList"
+      },
+      "occurrences" : 1
+    }, {
+      "identity" : {
+        "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java",
+        "granularity" : "METHOD",
+        "containingType" : "org.springframework.samples.petclinic.vet.VetRepository",
+        "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.VetRepository#findAll"
+      },
+      "occurrences" : 1
+    } ],
+    "proposedIdentities" : [ ],
+    "missing" : [ {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Owner.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.Owner",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Owner#addVisit"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Owner.java",
+      "granularity" : "TYPE",
+      "containingType" : "org.springframework.samples.petclinic.owner.Owner",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Owner"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#processCreationForm"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#processFindForm"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.OwnerController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.OwnerRepository",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.OwnerRepository#findByLastNameStartingWith"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Pet.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.Pet",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Pet#getVisits"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Pet.java",
+      "granularity" : "TYPE",
+      "containingType" : "org.springframework.samples.petclinic.owner.Pet",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Pet"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.PetController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetController#processCreationForm"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.PetController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetController#processUpdateForm"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.PetController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetController#updatePetDetails"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.PetTypeRepository",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.PetTypeRepository#findPetTypes"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/Visit.java",
+      "granularity" : "TYPE",
+      "containingType" : "org.springframework.samples.petclinic.owner.Visit",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.Visit"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.owner.VisitController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.owner.VisitController#processNewVisitForm"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.system.WelcomeController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.system.WelcomeController#welcome"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java",
+      "granularity" : "TYPE",
+      "containingType" : "org.springframework.samples.petclinic.vet.Specialty",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.Specialty"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/Vet.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.vet.Vet",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.Vet#getSpecialties"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.vet.VetController",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.VetController#showVetList"
+    }, {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourcePath" : "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java",
+      "granularity" : "METHOD",
+      "containingType" : "org.springframework.samples.petclinic.vet.VetRepository",
+      "qualifiedSymbol" : "org.springframework.samples.petclinic.vet.VetRepository#findAll"
+    } ],
+    "extra" : [ ]
+  },
+  "diagnostics" : {
+    "providerNativeOverlap" : 0,
+    "providerNativeFormalCredit" : 0,
+    "supportingCount" : 0,
+    "supportingExactOverlap" : 0,
+    "supportingFormalCredit" : 0,
+    "rule" : "provider-native and supporting evidence grant zero formal credit"
+  },
+  "limitations" : [ "No acceptance threshold is defined or inferred", "Prior Slice G is provenance only and cannot affect scoring" ]
+}
