@@ -26,44 +26,18 @@ weaker level, supporting evidence, or provider-native identifiers.
   infer acceptance thresholds.
 - Existing completed reports and evaluator truth are immutable.
 
-## Delivery slice
+## Closure gate
 
-### Task 1 — typed hierarchical metrics and immutable report
-
-**Files:**
-
-- Create `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/evaluation/HierarchicalForwardEvaluation.java`
-- Create `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/evaluation/HierarchicalForwardEvaluationGenerator.java`
-- Create matching JUnit tests under `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/evaluation/`
-- Create `validation/pkb001/evaluator/petclinic-818c413/hierarchical-forward-evaluation-001.json`
-- Create `validation/pkb001/evaluator/petclinic-818c413/hierarchical-forward-evaluation-evidence-001.json`
-
-Required behavior:
-
-1. Seal all non-evaluator inputs before opening evaluator truth v2; bind every
-   input and output digest in evidence.
-2. Snapshot each proposal channel once with a hard maximum of 10,000 components
-   per channel; reject duplicates, invalid identities, mixed revisions, invalid
-   roles, or mismatched source bindings.
-3. Report separate typed sections:
-   - semantic input coverage and authority state, without scoring Product truth;
-   - scenario counts, mapping outcomes, evidence completeness, and trace coverage;
-   - realization-chain expected coverage using exact component identity only,
-     plus direct/inferred/gap step counts;
-   - component source-path, containing-type, bare-symbol diagnostic, exact
-     component precision/recall, and exact missing/extra identities;
-   - provider-native and supporting-evidence diagnostics with zero formal credit.
-4. Exact component identity uses provider-neutral revision, repository-relative
-   path, granularity/containing type, and qualified symbol. Path, type, bare
-   symbol, supporting citation, or Graphify node overlap MUST NOT grant exact or
-   chain credit.
-5. Preserve undefined precision/recall as explicit `defined: false`, rather
-   than zero; keep denominators and identity lists inspectable.
-6. Add positive, mixed, zero-proposal, duplicate, 10,001-bound, mutation, and
-   weaker-match-only tests proving metric separation and fail-closed behavior.
-7. Generate current Petclinic artifacts byte-identically and record the prior
-   Slice G report as comparison provenance, not as an input that can change the
-   new score.
+The hierarchical evaluator is integrated at
+`17b8357e360f6d49dcfda4c80211b88e00b82d00`, independently reviewed with no
+P0/P1/P2 findings, and fully regressed. Report SHA-256 is
+`73f82a30572b967c50fdcdd5122a1be05eb73a33a358584bbebd6f00d32fbfdc`;
+evidence SHA-256 is
+`be68aba8960ef3afb7ad68c1f91ee0fcdcab1ce351f25f154a45a4dbc3e38747`.
+Capability alignment is explicitly `NOT_COMPARABLE_NO_SEALED_CROSSWALK` and
+unscored. The Feature Delivery Plane MUST NOT mark `PKB-BL-011` `VERIFIED`
+until Human Authority confirms terminal closure. After confirmation,
+`PKB-BL-012` threshold preregistration becomes eligible.
 
 ## Review and integration gates
 
@@ -90,6 +64,7 @@ this slice cannot be used to choose a convenient threshold.
 |---|---|---|
 | `PKB-BL-007` | Scenario-grounded Forward Slices C–G | Integrated `587efeeea0ed638f5328fb3f746177455ee9bfcf`; Human closure confirmed |
 | `PKB-BL-010` | Immutable provider-neutral evaluator truth v2 | Integrated `0293f5bde0236710b17bacd1703dbb7797425388`; v2 gold `22292caf3b8f55ff418b0716dce32da19e93974555ef597da1705674b467c385`; independent PASS; Human closure confirmed |
+| `PKB-BL-011` | Separated hierarchical Forward metrics | Integrated `17b8357e360f6d49dcfda4c80211b88e00b82d00`; report `73f82a30572b967c50fdcdd5122a1be05eb73a33a358584bbebd6f00d32fbfdc`; independent PASS; Maven 1028, pytest 62, public 9/9 |
 | `PKB-BL-009` | Deterministic Java Reverse proposal generation | Candidate `472b0427725002492fb226e85b684355d2fdc012`; independent PASS |
 | `PKB-BL-026` | Repository-owned framework consumers migrated to Java | `validation/pkb001/java-migration/python-framework-inventory.json` |
 | `PKB-BL-027` | Portable Graphify runtime and bounded Java MCP lifecycle | `validation/pkb001/runtime/pkb-bl027-portable-runtime-evidence.json` |
