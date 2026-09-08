@@ -14,10 +14,10 @@
 - Requirement: `PKB-MAPPING-001`
 - Spec revision: `c396b3cf6e3a32d55c1fb57827f2022e4409df8d`
 - Base commit: `e72bbbe2866b52aad6e7a2a165d5d2b70cb9a651`
-- Verified C/D/E integration baseline: `213c3b9d99314a41aba644a5b85e223888893443`
-- Slice F starts from the exact dispatch commit issued by the Feature Delivery
+- Verified C/D/E/F integration baseline: `91bddd86f61d7ce48895d7ba73e4d4d95ec930eb`
+- Slice G starts from the exact dispatch commit issued by the Feature Delivery
   Plane. That commit MUST contain this Plan revision and MUST descend from the
-  verified C/D/E integration baseline; the Execution Plane verifies both conditions
+  verified C/D/E/F integration baseline; the Execution Plane verifies both conditions
   before changing files.
 - Execution ID: `PKB-BL-007-SCENARIO-TRACE-001`
 - Product semantics remain prototype-only; `semantic_publication_allowed` stays false.
@@ -25,15 +25,9 @@
 
 ## Remaining Delivery DAG
 
-Slices A through E are integrated and verified prerequisites. Their compact delivery
+Slices A through F are integrated and verified prerequisites. Their compact delivery
 records are retained in the ledger below; their removed construction detail
 remains available in Git history.
-
-### Slice F — scenario-grounded Forward mapping (after D and E)
-
-Join each frozen behavior scenario to direct test evidence, production seeds, and bounded Graphify expansion. Emit one proposal-only realization chain per Capability, with explicit evidence gaps where no supported route exists.
-
-Acceptance: every component is production-only and cited; every scenario has ordered trace steps; unsupported scenarios remain unresolved instead of borrowing evidence from another Capability.
 
 ### Slice G — evaluator-only comparison and independent review (after F)
 
@@ -62,6 +56,7 @@ The combined handoff must include exact candidate SHA, changed paths, artifact d
 | `PKB-BL-025` | Exact revision-2 proposal review with 15 ACCEPT, 2 REJECT, and zero pending decisions | Integrated candidate `221c504340852a12b761e27fe996c41f34b7ec89`; `review-decisions-004.json`; independent reviews PASS |
 | `PKB-BL-006` | Immutable frozen scenario semantics with exact authorization and false publication authority | Integrated candidate `221c504340852a12b761e27fe996c41f34b7ec89`; `accepted-semantics-004.json`; Maven 973, pytest 62, public validation 9/9 |
 | `PKB-BL-007` (Slices C–E) | v0.4 mapping contract, exact direct Java trace, and bounded Graphify production expansion | Integrated baseline `213c3b9d99314a41aba644a5b85e223888893443`; independent D/E review PASS; Maven 996, pytest 62, public validation 9/9 |
+| `PKB-BL-007` (Slice F) | Exact-input scenario mapping without fabricated core-behavior claims | Integrated baseline `91bddd86f61d7ce48895d7ba73e4d4d95ec930eb`; all 10 scenarios `UNRESOLVED/INSUFFICIENT`; proposal digest `8c940fb94d3c86c80ff2c9555eb5d77b130f6d0d944593424fb7f2ae563535f2`; independent review PASS |
 | `PKB-BL-009` | Deterministic Java Reverse proposal generation | Candidate `472b0427725002492fb226e85b684355d2fdc012`; independent PASS; Maven 961/961, pytest 62/62 |
 | `PKB-BL-026` | Repository-owned framework consumers migrated to Java | `validation/pkb001/java-migration/python-framework-inventory.json` |
 | `PKB-BL-027` | Portable Graphify runtime and bounded Java MCP lifecycle | `validation/pkb001/runtime/pkb-bl027-portable-runtime-evidence.json` |
