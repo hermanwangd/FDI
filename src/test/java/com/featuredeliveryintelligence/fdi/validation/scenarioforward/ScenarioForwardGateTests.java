@@ -140,6 +140,37 @@ class ScenarioForwardGateTests {
         }
     }
 
+    @Test void singleReviewerCompleteScopeAlsoRequiresExplicitFalseAuthorityFlags() throws Exception {
+        for (String field : List.of("product_truth_established", "semantic_publication_allowed")) {
+            Fixture fixture = fixture();
+            fixture.mutate("ACCEPTANCE_MANIFEST", manifest -> {
+                manifest.put("scope", "COMPLETE_REVIEWED_EXPERIMENT_SLICE");
+                manifest.put("product_truth_established", false);
+                manifest.put("semantic_publication_allowed", false);
+                manifest.remove(field);
+            });
+            assertBlocked(fixture, "AUTHORITY_INVALID");
+
+            fixture = fixture();
+            fixture.mutate("ACCEPTANCE_MANIFEST", manifest -> {
+                manifest.put("scope", "COMPLETE_REVIEWED_EXPERIMENT_SLICE");
+                manifest.put("product_truth_established", false);
+                manifest.put("semantic_publication_allowed", false);
+                manifest.put(field, "false");
+            });
+            assertBlocked(fixture, "AUTHORITY_INVALID");
+
+            fixture = fixture();
+            fixture.mutate("ACCEPTANCE_MANIFEST", manifest -> {
+                manifest.put("scope", "COMPLETE_REVIEWED_EXPERIMENT_SLICE");
+                manifest.put("product_truth_established", false);
+                manifest.put("semantic_publication_allowed", false);
+                manifest.put(field, true);
+            });
+            assertBlocked(fixture, "AUTHORITY_INVALID");
+        }
+    }
+
     @Test void requestAndInputShapeDigestVersionAndForbiddenFamiliesFailClosed() throws Exception {
         Fixture fixture = fixture();
         fixture.inputs.remove(fixture.inputs.size() - 1);

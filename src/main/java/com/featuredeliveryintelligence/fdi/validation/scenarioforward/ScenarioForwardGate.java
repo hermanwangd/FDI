@@ -220,12 +220,12 @@ public final class ScenarioForwardGate {
                 || !"PROPOSAL_ONLY".equals(text(original,"authority")) || !"SCENARIO_PROPOSAL".equals(text(original,"artifact_kind"))
                 || !"SCENARIO_REVIEW_SURFACE".equals(text(review,"artifact_kind"))) fail("AUTHORITY_INVALID");
         boolean delegatedReview=manifest.has("reviewer_identities");
-        if(delegatedReview&&!"COMPLETE_REVIEWED_EXPERIMENT_SLICE".equals(text(manifest,"scope")))fail("DECISION_PROVENANCE_INVALID");
-        if(delegatedReview?(!explicitFalse(manifest,"product_truth_established")
+        boolean completeReview="COMPLETE_REVIEWED_EXPERIMENT_SLICE".equals(text(manifest,"scope"));
+        if(delegatedReview&&!completeReview)fail("DECISION_PROVENANCE_INVALID");
+        if((completeReview||delegatedReview)?(!explicitFalse(manifest,"product_truth_established")
                 ||!explicitFalse(manifest,"semantic_publication_allowed"))
                 :(trueOrNonBoolean(manifest,"product_truth_established")
                 ||trueOrNonBoolean(manifest,"semantic_publication_allowed")))fail("AUTHORITY_INVALID");
-        boolean completeReview="COMPLETE_REVIEWED_EXPERIMENT_SLICE".equals(text(manifest,"scope"));
         if(completeReview){int pending=0;for(JsonNode cap:review.withArray("capability_proposals")){if(pending(cap.get("decision")))pending++;for(JsonNode scenario:cap.withArray("scenarios"))if(pending(scenario.get("decision")))pending++;}if(pending!=0||!manifest.path("remaining_pending_decisions").isIntegralNumber()||manifest.path("remaining_pending_decisions").asInt()!=0)fail("PENDING_DECISIONS_REMAIN");}
         String digest=items.get("ORIGINAL_PROPOSAL").sha256();
         ReviewerAuthorization authorization = reviewerAuthorization(root, manifest, items, revision);
