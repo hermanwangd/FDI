@@ -66,7 +66,7 @@ public final class SliceGEvaluatorComparisonGenerator {
         result.put("semantic_publication_allowed", false);
         ObjectNode verification = evidence.putObject("focused_verification");
         verification.put("command", "MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=SliceGEvaluatorComparisonTests,SliceFInputVerifierTests,SliceFScenarioMappingArtifactTests,ScenarioGroundedForwardMapperTests,ScenarioMappingContractV04Tests,ScenarioMappingSchemaV04Tests,DirectTestTraceAdapterTests,GraphifyProductionExpansionTests test");
-        verification.put("tests", 34);
+        verification.put("tests", 36);
         verification.put("result", "PASS");
         verification.put("git_diff_check", "PASS");
         ArrayNode limitations = evidence.putArray("limitations");

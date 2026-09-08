@@ -48,35 +48,48 @@ public final class SliceGEvaluatorComparison {
             validateProposalBindings(proposal);
 
             EvaluatorTruth truth = Objects.requireNonNull(evaluatorAccess.load(root), "evaluator truth");
-            int scenarios = 0, unresolved = 0, mappings = 0, components = 0, direct = 0, inferred = 0;
-            Set<String> proposedIds = new TreeSet<>(), directIds = new TreeSet<>(), chainIds = new TreeSet<>();
+            return compute(proposal, truth, sealed.get(PROPOSAL_PATH));
+        } catch (RuntimeContractException e) { throw e; }
+        catch (Exception e) { throw new RuntimeContractException("Slice G comparison failed", e); }
+    }
+
+    static Report compute(JsonNode proposal, EvaluatorTruth truth, String proposalSha256) {
+            int unresolved = 0, mappings = 0, direct = 0, inferred = 0;
+            Set<String> scenarioIds = new TreeSet<>(), coveredScenarioIds = new TreeSet<>();
+            Set<Identity> proposed = new TreeSet<>(), directSymbols = new TreeSet<>(), chainComponents = new TreeSet<>();
             for (JsonNode capability : proposal.path("capabilities")) for (JsonNode scenario : capability.path("scenarios")) {
-                scenarios++;
                 JsonNode mapping = scenario.path("mapping");
-                if ("UNRESOLVED".equals(mapping.path("outcome").asText())) unresolved++; else mappings++;
-                components += scenario.path("componentRoles").size();
+                String scenarioId = mapping.path("scenarioId").asText();
+                if (scenarioId.isBlank() || !scenarioIds.add(scenarioId)) throw fail("duplicate or missing scenario identity");
+                String outcome = mapping.path("outcome").asText();
+                if ("UNRESOLVED".equals(outcome)) unresolved++;
+                else if ("MAPPING_PROPOSAL".equals(outcome)) mappings++;
+                else throw fail("unknown mapping outcome");
                 for (JsonNode symbol : mapping.path("directProductionSymbols")) {
-                    direct++;
-                    addIdentity(directIds, symbol);
+                    directSymbols.add(identity(symbol.path("productionSymbol")));
                 }
                 for (JsonNode step : mapping.path("realizationChain")) {
-                    String origin = step.path("evidenceKind").asText();
-                    if (origin.contains("INFERRED") || origin.contains("GRAPHIFY")) inferred++; else direct++;
-                    addIdentity(chainIds, step);
+                    String basis = step.path("relationshipBasis").asText();
+                    if ("GRAPHIFY_INFERRED".equals(basis)) inferred++;
+                    else if ("DIRECT_TEST_REFERENCE".equals(basis)) direct++;
+                    else throw fail("unknown realization chain relationshipBasis");
+                    chainComponents.add(identity(step.path("component")));
                 }
-                for (JsonNode role : scenario.path("componentRoles")) addIdentity(proposedIds, role);
+                if (!mapping.path("realizationChain").isEmpty()) coveredScenarioIds.add(scenarioId);
+                for (JsonNode role : scenario.path("componentRoles")) {
+                    String roleName = role.path("role").asText();
+                    if ("PRIMARY".equals(roleName)) proposed.add(identity(role.path("component")));
+                    else if (!"SUPPORTING".equals(roleName)) throw fail("unknown component role");
+                }
             }
-            List<String> expected = truth.expectedNodeIds();
-            Metric exact = metric(matches(proposedIds, expected), expected.size(), proposedIds.size());
-            Metric directRecall = metric(matches(directIds, expected), expected.size(), directIds.size());
-            Metric expanded = metric(matches(chainIds, expected), expected.size(), chainIds.size());
-            int coveredScenarios = 0;
-            for (JsonNode capability : proposal.path("capabilities")) for (JsonNode scenario : capability.path("scenarios"))
-                if (!scenario.path("mapping").path("realizationChain").isEmpty()) coveredScenarios++;
+            List<Identity> expected = truth.expectedComponents();
+            Metric exact = metric(matches(proposed, expected), expected.size(), proposed.size());
+            Metric directRecall = metric(matches(directSymbols, expected), expected.size(), directSymbols.size());
+            Metric expanded = metric(matches(chainComponents, expected), expected.size(), chainComponents.size());
             return new Report("pkb001.forward.slice-g-comparison.v1", "EVALUATOR_ONLY", false,
-                    SOURCE, sealed.get(PROPOSAL_PATH), truth.goldSha256(),
-                    new Counts(scenarios, mappings, unresolved, components),
-                    directRecall, expanded, exact, metric(coveredScenarios, scenarios, scenarios),
+                    SOURCE, proposalSha256, truth.goldSha256(),
+                    new Counts(scenarioIds.size(), mappings, unresolved, proposed.size()),
+                    directRecall, expanded, exact, metric(coveredScenarioIds.size(), scenarioIds.size(), scenarioIds.size()),
                     new UnresolvedReferences(891, 1035, 891.0 / 1035.0), new TraceCounts(direct, inferred),
                     new PreviousBaseline(17, 24, 17.0 / 24.0, 0, 24),
                     new ProviderDiagnostics(0, "Provider-native node identifiers receive no formal component credit unless selected in the sealed proposal"),
@@ -84,8 +97,6 @@ public final class SliceGEvaluatorComparison {
                             "This is reconstruction consistency and evaluator reviewers may have repository exposure",
                             "Build targets Java 17; the local verification JDK may be newer",
                             "No threshold was selected from observed results; Product truth and publication remain false"));
-        } catch (RuntimeContractException e) { throw e; }
-        catch (Exception e) { throw new RuntimeContractException("Slice G comparison failed", e); }
     }
 
     private static Map<String,String> sealGenerationInputs(Path root) throws Exception {
@@ -111,31 +122,51 @@ public final class SliceGEvaluatorComparison {
             JsonNode seal = JSON.readTree(root.resolve(GOLD_SEAL_PATH).toFile());
             if (!"SEALED".equals(seal.path("status").asText()) || !GOLD_PATH.equals(seal.path("gold_path").asText()))
                 throw fail("evaluator seal invariant mismatch");
+            if (!SOURCE.equals(seal.path("source_commit_sha").asText())) throw fail("evaluator seal source binding mismatch");
             String goldSha = sha(root.resolve(GOLD_PATH));
             if (!goldSha.equals(seal.path("gold_sha256").asText())) throw fail("evaluator gold digest mismatch");
             JsonNode gold = JSON.readTree(root.resolve(GOLD_PATH).toFile());
+            if (!"EVALUATOR_ONLY_FROZEN".equals(gold.path("status").asText())) throw fail("evaluator gold status mismatch");
             if (!SOURCE.equals(gold.path("source_commit_sha").asText())) throw fail("evaluator source binding mismatch");
             if (!seal.path("graph_sha256").asText().equals(gold.path("graph_sha256").asText())) throw fail("evaluator graph binding mismatch");
-            List<String> ids = new ArrayList<>();
-            for (JsonNode mapping : gold.path("mappings")) for (JsonNode component : mapping.path("expected_components"))
-                ids.add(component.path("graph_node_id").asText());
-            if (ids.size() != 24) throw fail("expected evaluator denominator mismatch");
-            return new EvaluatorTruth(goldSha, List.copyOf(ids));
+            JsonNode graph = JSON.readTree(root.resolve("validation/pkb001/artifacts/petclinic-graph-818c413.json").toFile());
+            Map<String,JsonNode> graphNodes = new HashMap<>();
+            graph.path("nodes").forEach(node -> graphNodes.put(node.path("id").asText(), node));
+            List<Identity> identities = new ArrayList<>();
+            for (JsonNode mapping : gold.path("mappings")) for (JsonNode component : mapping.path("expected_components")) {
+                JsonNode node = graphNodes.get(component.path("graph_node_id").asText());
+                if (node == null) throw fail("evaluator component missing from bound graph");
+                if (!component.path("source_path").asText().equals(node.path("source_file").asText()))
+                    throw fail("evaluator component path does not match graph");
+                identities.add(graphIdentity(node));
+            }
+            if (identities.size() != 24) throw fail("expected evaluator denominator mismatch");
+            return new EvaluatorTruth(goldSha, List.copyOf(identities));
         } catch (RuntimeContractException e) { throw e; }
         catch (Exception e) { throw new RuntimeContractException("cannot validate evaluator truth", e); }
     }
 
-    private static void addIdentity(Set<String> result, JsonNode node) {
-        for (String key : List.of("graphNodeId", "providerNodeId", "componentRef")) {
-            String value = node.path(key).asText("");
-            if (!value.isBlank()) result.add(value.replace("graph-node:", ""));
-        }
-        JsonNode identity = node.path("component").path("identity");
-        if (!identity.isMissingNode()) addIdentity(result, identity);
+    private static Identity identity(JsonNode node) {
+        String path = node.path("sourcePath").asText();
+        String symbol = node.path("qualifiedSymbol").asText();
+        String granularity = node.path("granularity").asText();
+        if (path.isBlank() || symbol.isBlank() || granularity.isBlank()) throw fail("provider-neutral component identity is incomplete");
+        return new Identity(path, granularity, symbol);
     }
-    private static int matches(Set<String> proposed, List<String> expected) {
+    private static Identity graphIdentity(JsonNode node) {
+        String path = node.path("source_file").asText();
+        String file = path.substring(path.lastIndexOf('/') + 1).replaceFirst("\\.java$", "");
+        String pkg = path.substring("src/main/java/".length(), path.lastIndexOf('/')).replace('/', '.');
+        String label = node.path("label").asText();
+        if (label.startsWith(".")) {
+            String method = label.substring(1).replaceFirst("\\(.*$", "");
+            return new Identity(path, "METHOD", pkg + "." + file + "." + method);
+        }
+        return new Identity(path, "TYPE", pkg + "." + label);
+    }
+    private static int matches(Set<Identity> proposed, List<Identity> expected) {
         int matched = 0;
-        for (String value : expected) if (proposed.contains(value)) matched++;
+        for (Identity value : expected) if (proposed.contains(value)) matched++;
         return matched;
     }
     private static Metric metric(int matched, int expected, int proposed) {
@@ -148,7 +179,15 @@ public final class SliceGEvaluatorComparison {
     static Map<String,String> expectedGenerationInputDigests() { return Collections.unmodifiableMap(PRE_EVALUATOR); }
     public static byte[] toJson(Report report) throws Exception { return JSON.writeValueAsBytes(report); }
 
-    public record EvaluatorTruth(String goldSha256, List<String> expectedNodeIds) { }
+    public record Identity(String sourcePath, String granularity, String qualifiedSymbol) implements Comparable<Identity> {
+        @Override public int compareTo(Identity other) {
+            int path = sourcePath.compareTo(other.sourcePath);
+            if (path != 0) return path;
+            int kind = granularity.compareTo(other.granularity);
+            return kind != 0 ? kind : qualifiedSymbol.compareTo(other.qualifiedSymbol);
+        }
+    }
+    public record EvaluatorTruth(String goldSha256, List<Identity> expectedComponents) { }
     public record Metric(int matched, int expected, int proposed, Double recall, Double precision,
                          boolean recallDefined, boolean precisionDefined) { }
     public record Counts(int scenarios, int mappingProposals, int unresolvedScenarios, int proposedComponents) { }
