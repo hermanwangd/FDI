@@ -122,8 +122,7 @@ public final class SliceGEvaluatorComparison {
             var identity = component.identity();
             return new Identity(identity.canonicalRevision(), identity.sourcePath(), identity.granularity(), identity.qualifiedSymbol());
         }).toList();
-        // Preserve the completed Slice G report contract while the sealed v2 truth is the validated source.
-        return new EvaluatorTruth(ProviderNeutralEvaluatorTruth.LEGACY_GOLD_SHA256, identities);
+        return new EvaluatorTruth(truth.goldSha256(), identities);
     }
 
     private static Identity identity(JsonNode node) {

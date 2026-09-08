@@ -64,9 +64,50 @@ class ProviderNeutralEvaluatorTruthTests {
         Path root = temp.resolve("invariants"); copyInputs(root);
         JsonNode gold = JSON.readTree(root.resolve(ProviderNeutralEvaluatorTruth.GOLD_PATH).toFile());
         ((com.fasterxml.jackson.databind.node.ObjectNode) gold).put("status", "DRAFT");
-        Files.write(root.resolve(ProviderNeutralEvaluatorTruth.GOLD_PATH), JSON.writerWithDefaultPrettyPrinter().writeValueAsBytes(gold));
-        assertThrows(RuntimeContractException.class, () -> ProviderNeutralEvaluatorTruth.load(root));
+        rewriteGoldAndSeal(root, gold);
+        assertThrows(RuntimeContractException.class,
+                () -> ProviderNeutralEvaluatorTruth.loadWithSealSha(root, sha(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH))));
     }
+
+    @Test void retainedDiagnosticSourcePathMustEqualProviderNeutralIdentityPath() throws Exception {
+        Path root = temp.resolve("path-mismatch"); copyInputs(root);
+        var gold = (com.fasterxml.jackson.databind.node.ObjectNode) JSON.readTree(root.resolve(ProviderNeutralEvaluatorTruth.GOLD_PATH).toFile());
+        ((com.fasterxml.jackson.databind.node.ObjectNode) gold.path("mappings").get(0).path("expected_components").get(0))
+                .put("source_path", "src/main/java/wrong/OwnerController.java");
+        rewriteGoldAndSeal(root, gold);
+        assertThrows(RuntimeContractException.class, () -> ProviderNeutralEvaluatorTruth.loadWithSealSha(root, sha(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH))));
+    }
+
+    @Test void everySemanticSealBindingFailsClosedIndependently() throws Exception {
+        Map<String,String> mutations = new LinkedHashMap<>();
+        mutations.put("status", "DRAFT"); mutations.put("source_commit_sha", "0".repeat(40));
+        mutations.put("graph_path", "wrong-graph.json"); mutations.put("graph_sha256", "0".repeat(64));
+        mutations.put("legacy_gold_path", "wrong-legacy-gold.json"); mutations.put("legacy_gold_sha256", "1".repeat(64));
+        mutations.put("legacy_seal_path", "wrong-legacy-seal.json"); mutations.put("legacy_seal_sha256", "2".repeat(64));
+        mutations.put("gold_path", "wrong-v2-gold.json"); mutations.put("gold_sha256", "3".repeat(64));
+        mutations.put("generator_identity", "wrong-generator");
+        for (var mutation : mutations.entrySet()) {
+            Path root = temp.resolve(mutation.getKey()); copyInputs(root);
+            var seal = (com.fasterxml.jackson.databind.node.ObjectNode) JSON.readTree(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH).toFile());
+            seal.put(mutation.getKey(), mutation.getValue()); writeJson(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH), seal);
+            String sealSha = sha(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH));
+            assertThrows(RuntimeContractException.class, () -> ProviderNeutralEvaluatorTruth.loadWithSealSha(root, sealSha), mutation.getKey());
+        }
+        Path root = temp.resolve("generation_access"); copyInputs(root);
+        var seal = (com.fasterxml.jackson.databind.node.ObjectNode) JSON.readTree(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH).toFile());
+        ((com.fasterxml.jackson.databind.node.ObjectNode) seal.path("isolation_controls")).put("generation_access", "ALLOWED");
+        writeJson(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH), seal);
+        assertThrows(RuntimeContractException.class, () -> ProviderNeutralEvaluatorTruth.loadWithSealSha(root, sha(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH))));
+    }
+
+    private static void rewriteGoldAndSeal(Path root, JsonNode gold) throws Exception {
+        writeJson(root.resolve(ProviderNeutralEvaluatorTruth.GOLD_PATH), gold);
+        var seal = (com.fasterxml.jackson.databind.node.ObjectNode) JSON.readTree(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH).toFile());
+        seal.put("gold_sha256", sha(root.resolve(ProviderNeutralEvaluatorTruth.GOLD_PATH)));
+        writeJson(root.resolve(ProviderNeutralEvaluatorTruth.SEAL_PATH), seal);
+    }
+    private static void writeJson(Path path, JsonNode node) throws Exception { Files.write(path, JSON.writerWithDefaultPrettyPrinter().writeValueAsBytes(node)); }
+    private static String sha(Path path) throws Exception { return com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioForwardRequestReader.sha256(Files.readAllBytes(path)); }
 
     private static void copyInputs(Path root) throws Exception {
         for (String path : List.of(ProviderNeutralEvaluatorTruth.GOLD_PATH, ProviderNeutralEvaluatorTruth.SEAL_PATH,

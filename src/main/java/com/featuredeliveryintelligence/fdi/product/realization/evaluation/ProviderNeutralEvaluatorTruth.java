@@ -30,11 +30,15 @@ public record ProviderNeutralEvaluatorTruth(String goldSha256, List<Mapping> map
     }
 
     public static ProviderNeutralEvaluatorTruth load(Path root) {
+        return loadWithSealSha(root, SEAL_SHA256);
+    }
+
+    static ProviderNeutralEvaluatorTruth loadWithSealSha(Path root, String expectedSealSha) {
         try {
             requireSha(root, GRAPH_PATH, GRAPH_SHA256, "graph");
             requireSha(root, LEGACY_GOLD_PATH, LEGACY_GOLD_SHA256, "legacy gold");
             requireSha(root, LEGACY_SEAL_PATH, LEGACY_SEAL_SHA256, "legacy seal");
-            requireSha(root, SEAL_PATH, SEAL_SHA256, "v2 seal");
+            requireSha(root, SEAL_PATH, expectedSealSha, "v2 seal");
             JsonNode seal = JSON.readTree(root.resolve(SEAL_PATH).toFile());
             require("SEALED".equals(text(seal, "status")), "v2 seal status mismatch");
             require(GOLD_PATH.equals(text(seal, "gold_path")), "v2 gold path mismatch");
@@ -59,10 +63,12 @@ public record ProviderNeutralEvaluatorTruth(String goldSha256, List<Mapping> map
                 List<ExpectedComponent> components = new ArrayList<>();
                 for (JsonNode component : mappingNode.path("expected_components")) {
                     JsonNode identity = component.path("identity");
+                    String diagnosticPath = text(component, "source_path");
+                    Identity normalized = new Identity(text(identity, "canonicalRevision"), text(identity, "sourcePath"),
+                            text(identity, "granularity"), text(identity, "qualifiedSymbol"));
+                    require(diagnosticPath.equals(normalized.sourcePath()), "diagnostic source path does not match provider-neutral identity");
                     components.add(new ExpectedComponent(text(component, "component_ref"), text(component, "graph_node_id"),
-                            text(component, "source_path"), text(component, "source_location"),
-                            new Identity(text(identity, "canonicalRevision"), text(identity, "sourcePath"),
-                                    text(identity, "granularity"), text(identity, "qualifiedSymbol"))));
+                            diagnosticPath, text(component, "source_location"), normalized));
                 }
                 mappings.add(new Mapping(text(mappingNode, "capability_id"), List.copyOf(components)));
             }

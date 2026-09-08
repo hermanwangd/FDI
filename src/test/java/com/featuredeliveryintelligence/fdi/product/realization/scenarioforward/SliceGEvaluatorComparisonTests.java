@@ -38,6 +38,7 @@ class SliceGEvaluatorComparisonTests {
                 SliceGEvaluatorComparison::loadEvaluatorTruth);
 
         assertEquals("EVALUATOR_ONLY", report.authority());
+        assertEquals("22292caf3b8f55ff418b0716dce32da19e93974555ef597da1705674b467c385", report.evaluatorGoldSha256());
         assertFalse(report.semanticPublicationAllowed());
         assertEquals(10, report.counts().scenarios());
         assertEquals(0, report.counts().mappingProposals());
