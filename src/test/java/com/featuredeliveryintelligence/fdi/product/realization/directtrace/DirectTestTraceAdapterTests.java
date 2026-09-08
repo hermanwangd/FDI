@@ -6,7 +6,9 @@ import com.featuredeliveryintelligence.fdi.reverse.input.testbehavior.TestBehavi
 import com.featuredeliveryintelligence.fdi.shared.RuntimeContractException;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,8 +21,8 @@ class DirectTestTraceAdapterTests {
     void acceptedExtractorEvidenceProducesAllDirectObservationsAndGapsDeterministically() {
         EvidenceChannelRecord input = TestBehaviorEvidenceAdapter.loadAccepted(ROOT);
 
-        DirectTestTrace first = DirectTestTraceAdapter.adapt(input);
-        DirectTestTrace second = DirectTestTraceAdapter.adapt(input);
+        DirectTestTrace first = DirectTestTraceAdapter.adapt(ROOT, input);
+        DirectTestTrace second = DirectTestTraceAdapter.adapt(ROOT, input);
 
         assertEquals(first, second);
         assertEquals("818c4136ea971c21674525f9053de0d9c7ad8cfe", first.sourceRevision());
@@ -48,7 +50,7 @@ class DirectTestTraceAdapterTests {
 
     @Test
     void constructorObservationUsesMethodGranularityAndStableQualifiedIdentity() {
-        DirectTestTrace trace = DirectTestTraceAdapter.adapt(TestBehaviorEvidenceAdapter.loadAccepted(ROOT));
+        DirectTestTrace trace = DirectTestTraceAdapter.adapt(ROOT, TestBehaviorEvidenceAdapter.loadAccepted(ROOT));
 
         var constructor = trace.directEvidence().stream()
                 .filter(e -> e.productionSymbol().qualifiedSymbol().endsWith("#<init>"))
@@ -69,13 +71,53 @@ class DirectTestTraceAdapterTests {
         ((com.fasterxml.jackson.databind.node.ObjectNode) observations)
                 .put("canonical_revision", "0000000000000000000000000000000000000000");
         EvidenceChannelRecord mismatched = copyWith(accepted, observations);
-        assertThrows(RuntimeContractException.class, () -> DirectTestTraceAdapter.adapt(mismatched));
+        assertThrows(RuntimeContractException.class, () -> DirectTestTraceAdapter.adapt(ROOT, mismatched));
 
         observations = accepted.observations();
         var symbol = firstResolvedSymbol(observations);
         symbol.put("declaring_type", "src.test.java.EscapedTest");
         EvidenceChannelRecord leaked = copyWith(accepted, observations);
-        assertThrows(RuntimeContractException.class, () -> DirectTestTraceAdapter.adapt(leaked));
+        assertThrows(RuntimeContractException.class, () -> DirectTestTraceAdapter.adapt(ROOT, leaked));
+    }
+
+    @Test
+    void rejectsEvaluatorPathAndGoldVocabularyMutations() {
+        EvidenceChannelRecord accepted = TestBehaviorEvidenceAdapter.loadAccepted(ROOT);
+        EvidenceChannelRecord evaluatorPath = new EvidenceChannelRecord(accepted.channel(), accepted.repositoryId(),
+                accepted.canonicalRevision(), "validation/evaluator/gold-mapping.json", accepted.inputSha256(),
+                accepted.schemaVersion(), accepted.providerId(), accepted.provenance(), accepted.observations());
+        assertThrows(RuntimeContractException.class, () -> DirectTestTraceAdapter.adapt(ROOT, evaluatorPath));
+
+        JsonNode observations = accepted.observations();
+        var gap = (com.fasterxml.jackson.databind.node.ObjectNode) observations.path("test_files").get(0)
+                .path("test_methods").get(0).path("unresolved_references").get(0);
+        gap.put("reference_text", "evaluator gold mapping");
+        assertThrows(RuntimeContractException.class,
+                () -> DirectTestTraceAdapter.adapt(ROOT, copyWith(accepted, observations)));
+    }
+
+    @Test
+    void resolvesNestedTypesFromTheDeclaringSourceInsteadOfGuessing(@TempDir Path temporaryRoot) throws Exception {
+        Path sourceRoot = temporaryRoot.resolve("src/main/java");
+        Path outer = sourceRoot.resolve("example/Outer.java");
+        Files.createDirectories(outer.getParent());
+        Files.writeString(outer, "package example; public class Outer { static class Inner {} }");
+
+        assertEquals("src/main/java/example/Outer.java",
+                ProductionSourcePathResolver.from(sourceRoot).resolve("example.Outer.Inner"));
+        assertThrows(RuntimeContractException.class,
+                () -> ProductionSourcePathResolver.from(sourceRoot).resolve("example.Outer.Missing"));
+    }
+
+    @Test
+    void derivedCollectionsCannotBeSuppliedOrMadeStale() {
+        DirectTestTrace trace = DirectTestTraceAdapter.adapt(ROOT, TestBehaviorEvidenceAdapter.loadAccepted(ROOT));
+
+        assertThrows(UnsupportedOperationException.class, () -> trace.resolvedObservations().clear());
+        assertEquals(trace.resolvedObservations().stream().map(ResolvedDirectObservation::directEvidence).toList(),
+                trace.directEvidence());
+        assertEquals(trace.directEvidence().stream().map(e -> e.productionSymbol()).distinct().toList(),
+                trace.uniqueProductionComponents());
     }
 
     private static com.fasterxml.jackson.databind.node.ObjectNode firstResolvedSymbol(JsonNode observations) {

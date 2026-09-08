@@ -5,47 +5,66 @@ import com.featuredeliveryintelligence.fdi.product.realization.ScenarioMappingCo
 import com.featuredeliveryintelligence.fdi.product.realization.ScenarioMappingContractV04.SeedProvenance;
 import com.featuredeliveryintelligence.fdi.shared.RuntimeContractException;
 
-import java.util.List;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
-/** Deterministic production seeds and explicit gaps derived from one bound extractor output. */
+/** Authoritative direct observations and explicit gaps derived from one bound extractor output. */
 public record DirectTestTrace(
         String repositoryId,
         String sourceRevision,
         String inputPath,
         String inputSha256,
-        List<DirectProductionSymbolEvidence> directEvidence,
-        List<SeedProvenance> seeds,
-        List<UnresolvedDirectReferenceGap> unresolvedGaps,
-        List<ComponentIdentity> uniqueProductionComponents,
-        List<TraceSourceLocation> uniqueObservationLocations) {
+        List<ResolvedDirectObservation> resolvedObservations,
+        List<UnresolvedDirectReferenceGap> unresolvedGaps) {
+    private static final Pattern FORBIDDEN = Pattern.compile(
+            "(?i)(evaluator(?:[ _/-]+gold)?|gold[ _-]+mapping|ground[ _-]+truth|expected[ _-]+mapping)");
+
     public DirectTestTrace {
         if (repositoryId == null || repositoryId.isBlank() || sourceRevision == null
                 || !sourceRevision.matches("[0-9a-f]{40}") || inputPath == null || inputPath.isBlank()
                 || inputSha256 == null || !inputSha256.matches("[0-9a-f]{64}")) {
             throw new RuntimeContractException("invalid direct-test trace binding");
         }
-        directEvidence = List.copyOf(directEvidence);
-        seeds = List.copyOf(seeds);
+        if (FORBIDDEN.matcher(repositoryId).find() || FORBIDDEN.matcher(inputPath).find()) {
+            throw new RuntimeContractException("direct-test trace binding contains evaluator-only vocabulary");
+        }
+        resolvedObservations = List.copyOf(resolvedObservations);
         unresolvedGaps = List.copyOf(unresolvedGaps);
-        uniqueProductionComponents = List.copyOf(uniqueProductionComponents);
-        uniqueObservationLocations = List.copyOf(uniqueObservationLocations);
-        if (directEvidence.size() != seeds.size()) {
-            throw new RuntimeContractException("every direct observation must have one production seed");
+        if (resolvedObservations.size() != 144 || unresolvedGaps.size() != 891) {
+            throw new RuntimeContractException("accepted direct-test trace requires exactly 144 resolved and 891 unresolved observations");
         }
         Set<String> evidenceRefs = new HashSet<>();
         Set<String> seedRefs = new HashSet<>();
-        for (int index = 0; index < directEvidence.size(); index++) {
-            DirectProductionSymbolEvidence evidence = directEvidence.get(index);
-            SeedProvenance seed = seeds.get(index);
-            if (!evidenceRefs.add(evidence.evidenceRef()) || !seedRefs.add(seed.seedRef())) {
-                throw new RuntimeContractException("duplicate direct evidence or seed identity");
-            }
-            if (!seed.directEvidenceRef().equals(evidence.evidenceRef())
-                    || !seed.productionSeed().equals(evidence.productionSymbol())) {
-                throw new RuntimeContractException("direct evidence must bind its exact production seed");
+        Set<String> observationRefs = new HashSet<>();
+        for (ResolvedDirectObservation observation : resolvedObservations) {
+            if (!evidenceRefs.add(observation.directEvidence().evidenceRef())
+                    || !seedRefs.add(observation.seed().seedRef())
+                    || !observationRefs.add(observation.directEvidence().observationRef())) {
+                throw new RuntimeContractException("duplicate direct evidence, seed, or observation identity");
             }
         }
+        for (UnresolvedDirectReferenceGap gap : unresolvedGaps) {
+            if (!observationRefs.add(gap.observationRef())) {
+                throw new RuntimeContractException("duplicate resolved or unresolved observation identity");
+            }
+        }
+    }
+
+    public List<DirectProductionSymbolEvidence> directEvidence() {
+        return resolvedObservations.stream().map(ResolvedDirectObservation::directEvidence).toList();
+    }
+
+    public List<SeedProvenance> seeds() {
+        return resolvedObservations.stream().map(ResolvedDirectObservation::seed).toList();
+    }
+
+    public List<ComponentIdentity> uniqueProductionComponents() {
+        return directEvidence().stream().map(DirectProductionSymbolEvidence::productionSymbol).distinct().toList();
+    }
+
+    public List<TraceSourceLocation> uniqueObservationLocations() {
+        return resolvedObservations.stream().map(ResolvedDirectObservation::sourceLocation).distinct().toList();
     }
 }

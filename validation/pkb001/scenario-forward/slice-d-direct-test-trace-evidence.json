@@ -31,15 +31,19 @@
   "artifacts": {
     "trace_contract": {
       "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/directtrace/DirectTestTrace.java",
-      "sha256": "881d7f9083a57a2fe931494eb2bae0a3b42705bc4e9732c664c47367318ad408"
+      "sha256": "e864038bd0480961eaa59bcf771d03f6a3eb5e3a1b1cb1675d38e31a98d4359f"
     },
     "adapter": {
       "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/directtrace/DirectTestTraceAdapter.java",
-      "sha256": "ec2ce263d5dbffe095a12cc39541cbe13de85483d9597ee4526e80ef44ce4c41"
+      "sha256": "0d32f7b48b4d5db368627d6455bf1e5e1dac34111ab16ff54130afbd109d2bdb"
+    },
+    "source_path_resolver": {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/directtrace/ProductionSourcePathResolver.java",
+      "sha256": "f7c5cebb53fca7d7d1a9d0049162d1ba64efa3eaeef80c6e5fc92e57e1db38d9"
     },
     "tests": {
       "path": "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/directtrace/DirectTestTraceAdapterTests.java",
-      "sha256": "566643b8c4a322a7a18e2aab032880dd7937e27676ae63a30bd53505402bb93f"
+      "sha256": "5b82a2e36e7cc3c2019f1c1076974beea2650438dc6a5362cbdfa7878f78d48c"
     }
   },
   "enforced_boundaries": [
@@ -53,15 +57,19 @@
     "NO_GRAPHIFY_INFERENCE_OR_SYNTHETIC_CALL_EDGE",
     "DETERMINISTIC_INPUT_ORDER_AND_IDENTITIES",
     "EVALUATOR_TRUTH_NOT_ACCESSED"
+    ,"EXACT_ALLOWED_PROVENANCE_AND_AUTHORITATIVE_INPUT_BYTES_ONLY"
+    ,"DERIVED_COLLECTIONS_RECOMPUTED_FROM_AUTHORITATIVE_OBSERVATIONS"
+    ,"NESTED_TYPE_SOURCE_PATH_RESOLVED_FROM_FROZEN_SOURCE_INDEX"
   ],
   "tdd": {
     "red": "DirectTestTraceAdapterTests failed compilation because the direct-trace contract and adapter did not exist.",
-    "focused_green": "DirectTestTraceAdapterTests, ScenarioMappingContractV04Tests, and ScenarioMappingSchemaV04Tests passed."
+    "focused_green": "DirectTestTraceAdapterTests, ScenarioMappingContractV04Tests, and ScenarioMappingSchemaV04Tests passed after bounded combined-review remediation."
   },
   "semantic_publication_allowed": false,
   "limitations": [
     "Slice D converts mechanical test references only; it does not assign scenarios, component roles, or Product meaning.",
     "Repeated observations of the same production component remain separate direct evidence and seed records; the 29 provider-neutral component identities are also reported separately.",
     "Unresolved references are preserved without attempting resolution, and Graphify expansion remains Slice E scope."
+    ,"Production source paths are resolved lexically from the frozen exact-revision fixture source tree; absent, duplicate, malformed, or ambiguous type identities fail closed."
   ]
 }
