@@ -14,7 +14,11 @@
 - Requirement: `PKB-MAPPING-001`
 - Spec revision: `c396b3cf6e3a32d55c1fb57827f2022e4409df8d`
 - Base commit: `e72bbbe2866b52aad6e7a2a165d5d2b70cb9a651`
-- Verified A/B integration candidate and Slice C starting revision: `221c504340852a12b761e27fe996c41f34b7ec89`
+- Verified A/B code baseline: `221c504340852a12b761e27fe996c41f34b7ec89`
+- Slice C starts from the exact dispatch commit issued by the Feature Delivery
+  Plane. That commit MUST contain this Plan revision and MUST descend from the
+  verified A/B code baseline; the Execution Plane verifies both conditions
+  before changing files.
 - Execution ID: `PKB-BL-007-SCENARIO-TRACE-001`
 - Product semantics remain prototype-only; `semantic_publication_allowed` stays false.
 - External Graphify is read-only and remains outside the Java framework.
