@@ -15,21 +15,22 @@
   "result": {
     "capabilities": 5,
     "scenarios": 10,
-    "mapping_proposals": 8,
-    "unresolved_scenarios": 2,
-    "direct_chain_steps": 8,
+    "mapping_proposals": 0,
+    "unresolved_scenarios": 10,
+    "observed_direct_evidence_records_preserved_outside_mapping_chains": 144,
+    "direct_chain_steps": 0,
     "graphify_inferred_chain_steps": 0,
     "preserved_unresolved_direct_references": 891,
     "semantic_publication_allowed": false
   },
   "artifact": {
     "path": "validation/pkb001/scenario-forward/slice-f-scenario-mapping-proposal-001.json",
-    "sha256": "1fc539dd5052e5d3a605cb7197f344199e5ad5096060c01d2ea82e77b1c77b30"
+    "sha256": "3c0e4de7439e9d02749854ff5fbe3014de5b0084840effb0112fc8267da3b372"
   },
   "limitations": [
     "Slice E established and independently verified the bounded Graphify expansion contract but did not freeze a scenario-bound expansion result for this exact run.",
-    "No inferred component is fabricated from the raw graph. Every mapped scenario is PARTIAL and explicitly records the missing bounded Graphify trace.",
-    "HYP-SCENARIO-002 and HYP-SCENARIO-008 are UNRESOLVED because no scenario-specific resolved production observation was available without borrowing evidence.",
+    "No inferred component is fabricated from the raw graph. All scenarios are UNRESOLVED because no scenario-bound evidence demonstrates a component that performs the core behavior.",
+    "Getter, setter, ID, and repository lookup observations remain supporting evidence and cannot satisfy the mandatory PRIMARY role.",
     "The output measures reconstruction consistency against the same repository and remains PROPOSAL_ONLY."
   ],
   "isolation": {
@@ -38,7 +39,8 @@
     "post_generation_judgment_loaded": false
   },
   "focused_verification": {
-    "command": "MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=ScenarioGroundedForwardMapperTests,SliceFScenarioMappingArtifactTests,ScenarioMappingContractV04Tests,ScenarioMappingSchemaV04Tests,DirectTestTraceAdapterTests,GraphifyProductionExpansionTests test",
+    "command": "MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=SliceFInputVerifierTests,ScenarioGroundedForwardMapperTests,SliceFScenarioMappingArtifactTests,ScenarioForwardGateTests,ScenarioMappingContractV04Tests,ScenarioMappingSchemaV04Tests,DirectTestTraceAdapterTests,GraphifyProductionExpansionTests test",
+    "tests": 52,
     "result": "PASS",
     "git_diff_check": "PASS"
   }

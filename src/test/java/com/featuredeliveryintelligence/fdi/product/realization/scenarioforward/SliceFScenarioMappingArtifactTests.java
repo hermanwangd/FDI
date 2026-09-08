@@ -41,9 +41,11 @@ class SliceFScenarioMappingArtifactTests {
         }));
         assertThat(artifact.path("capabilities")).hasSize(5);
         assertThat(actual).isEqualTo(expected).hasSize(10);
-        assertThat(mapped[0]).isEqualTo(8); assertThat(unresolved[0]).isEqualTo(2);
-        assertThat(direct[0]).isEqualTo(8); assertThat(inferred[0]).isZero();
+        assertThat(mapped[0]).isZero(); assertThat(unresolved[0]).isEqualTo(10);
+        assertThat(direct[0]).isZero(); assertThat(inferred[0]).isZero();
+        assertThat(artifact.path("observedDirectEvidenceRefs")).hasSize(144);
         assertThat(artifact.path("unresolvedDirectReferenceRefs")).hasSize(891);
         assertThat(artifact.path("semanticPublicationAllowed").asBoolean()).isFalse();
+        assertThat(artifact.toString()).doesNotContain("Person#getLastName", "BaseEntity#getId");
     }
 }

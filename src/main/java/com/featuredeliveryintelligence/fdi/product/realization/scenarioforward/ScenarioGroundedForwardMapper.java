@@ -54,6 +54,7 @@ public final class ScenarioGroundedForwardMapper {
                 .entrySet().stream().map(entry -> new CapabilityProposal(entry.getKey(), entry.getValue())).toList();
         return new Result(input.snapshotId(), input.semanticsSha256(), input.authorizationSha256(),
                 input.sourceRevision(), input.testEvidenceSha256(), input.graphSha256(), capabilities,
+                input.directObservations().stream().map(value -> value.directEvidence().evidenceRef()).sorted().toList(),
                 input.unresolvedGaps().stream().map(UnresolvedDirectReferenceGap::observationRef).sorted().toList(), false);
     }
 
@@ -77,6 +78,8 @@ public final class ScenarioGroundedForwardMapper {
                     EvidenceStatus.INSUFFICIENT, List.of(), List.of(), List.of(), List.of(), unresolved,
                     List.of("Proposal-only reconstruction; unsupported behavior is not inferred"));
         }
+        if (!assignment.coreBehaviorEvidenceConfirmed())
+            throw failure("direct observation is not confirmed to perform scenario core behavior");
         if (assignment.primaryObservationRef() == null || selected.stream().noneMatch(value ->
                 value.directEvidence().observationRef().equals(assignment.primaryObservationRef())))
             throw failure("mapping proposal requires a scenario-bound PRIMARY observation");
@@ -137,7 +140,8 @@ public final class ScenarioGroundedForwardMapper {
             assignments = List.copyOf(assignments); Objects.requireNonNull(expansion, "expansion");
         }
     }
-    public record ScenarioAssignment(String capabilityId, String scenarioId, String primaryObservationRef, List<String> observationRefs,
+    public record ScenarioAssignment(String capabilityId, String scenarioId, boolean coreBehaviorEvidenceConfirmed,
+            String primaryObservationRef, List<String> observationRefs,
             List<String> relationshipTraceRefs, List<String> gapRefs) {
         public ScenarioAssignment {
             required(capabilityId); required(scenarioId); observationRefs = uniqueStrings(observationRefs);
@@ -161,9 +165,11 @@ public final class ScenarioGroundedForwardMapper {
     }
     public record Result(String snapshotId, String semanticsSha256, String authorizationSha256,
             String sourceRevision, String testEvidenceSha256, String graphSha256,
-            List<CapabilityProposal> capabilities, List<String> unresolvedDirectReferenceRefs,
+            List<CapabilityProposal> capabilities, List<String> observedDirectEvidenceRefs,
+            List<String> unresolvedDirectReferenceRefs,
             boolean semanticPublicationAllowed) {
-        public Result { capabilities = List.copyOf(capabilities); unresolvedDirectReferenceRefs = List.copyOf(unresolvedDirectReferenceRefs);
+        public Result { capabilities = List.copyOf(capabilities); observedDirectEvidenceRefs = List.copyOf(observedDirectEvidenceRefs);
+            unresolvedDirectReferenceRefs = List.copyOf(unresolvedDirectReferenceRefs);
             if (semanticPublicationAllowed) throw failure("publication must remain false"); }
     }
     private static List<String> uniqueStrings(List<String> values) {

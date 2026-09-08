@@ -28,7 +28,7 @@ class ScenarioGroundedForwardMapperTests {
                         List.of(new InferredNeighbour(inferred, "node-2", relationship)))));
 
         var result = ScenarioGroundedForwardMapper.compose(input(List.of(direct), List.of(), expansion,
-                List.of(new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", "obs-1", List.of("obs-1"),
+                List.of(new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", true, "obs-1", List.of("obs-1"),
                         List.of("trace-1"), List.of()))));
 
         assertThat(result.capabilities()).singleElement().satisfies(capability -> {
@@ -52,8 +52,8 @@ class ScenarioGroundedForwardMapperTests {
         var direct = direct("obs-1", "e-1", "seed-1", component("Owner.java", "pet.Owner#save"));
         var expansion = new Result(REV, GRAPH, new QueryBounds(1, 5, 5, 5, 1000, 1000), List.of());
         var result = ScenarioGroundedForwardMapper.compose(input(List.of(direct), List.of(gap("gap-1")), expansion,
-                List.of(new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", "obs-1", List.of("obs-1"), List.of(), List.of()),
-                        new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-2", null, List.of(), List.of(), List.of("/test_files/0/gap-1")))));
+                List.of(new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", true, "obs-1", List.of("obs-1"), List.of(), List.of()),
+                        new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-2", false, null, List.of(), List.of(), List.of("/test_files/0/gap-1")))));
         assertThat(result.capabilities().get(0).scenarios()).extracting(value -> value.mapping().outcome())
                 .containsExactly(Outcome.MAPPING_PROPOSAL, Outcome.UNRESOLVED);
         assertThat(result.capabilities().get(0).scenarios().get(1).mapping().directProductionSymbols()).isEmpty();
@@ -63,11 +63,11 @@ class ScenarioGroundedForwardMapperTests {
     void rejectsDuplicateScenarioUnknownEvidenceCrossSeedTraceAndBindingMismatch() {
         var direct = direct("obs-1", "e-1", "seed-1", component("Owner.java", "pet.Owner#save"));
         var empty = new Result(REV, GRAPH, new QueryBounds(1, 5, 5, 5, 1000, 1000), List.of());
-        var assignment = new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", "obs-1", List.of("obs-1"), List.of(), List.of());
+        var assignment = new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", true, "obs-1", List.of("obs-1"), List.of(), List.of());
         assertThatThrownBy(() -> ScenarioGroundedForwardMapper.compose(input(List.of(direct), List.of(), empty,
                 List.of(assignment, assignment)))).isInstanceOf(RuntimeContractException.class).hasMessageContaining("duplicate scenario");
         assertThatThrownBy(() -> ScenarioGroundedForwardMapper.compose(input(List.of(direct), List.of(), empty,
-                List.of(new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", "missing", List.of("missing"), List.of(), List.of())))))
+                List.of(new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", true, "missing", List.of("missing"), List.of(), List.of())))))
                 .isInstanceOf(RuntimeContractException.class).hasMessageContaining("unknown observation");
         assertThatThrownBy(() -> ScenarioGroundedForwardMapper.compose(new ScenarioGroundedForwardMapper.Input(
                 "wrong", "FROZEN", "REVIEWED_EXPERIMENT_SEMANTICS", REV, SEMANTICS, "c".repeat(64), "d".repeat(64), GRAPH,
@@ -81,9 +81,14 @@ class ScenarioGroundedForwardMapperTests {
                 new ExpandedSeedTrace(new ProductionSeed("other-seed", other, "other"), "other",
                         List.of(new InferredNeighbour(component("Repo.java", "pet.Repo#save"), "repo", crossTrace)))));
         assertThatThrownBy(() -> ScenarioGroundedForwardMapper.compose(input(List.of(direct), List.of(), crossExpansion,
-                List.of(new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", "obs-1",
+                List.of(new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", true, "obs-1",
                         List.of("obs-1"), List.of("cross"), List.of())))))
                 .isInstanceOf(RuntimeContractException.class).hasMessageContaining("scenario direct seed");
+
+        assertThatThrownBy(() -> ScenarioGroundedForwardMapper.compose(input(List.of(direct), List.of(), empty,
+                List.of(new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", false, "obs-1",
+                        List.of("obs-1"), List.of(), List.of())))))
+                .isInstanceOf(RuntimeContractException.class).hasMessageContaining("core behavior");
     }
 
     private static ScenarioGroundedForwardMapper.Input input(List<ResolvedDirectObservation> direct,
