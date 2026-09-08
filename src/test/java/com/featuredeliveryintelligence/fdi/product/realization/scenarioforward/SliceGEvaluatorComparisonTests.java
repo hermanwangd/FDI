@@ -60,8 +60,10 @@ class SliceGEvaluatorComparisonTests {
     }
 
     @Test void evaluatorSealOrGoldMutationFailsClosed() throws Exception {
-        for (String path : new String[]{SliceGEvaluatorComparison.GOLD_PATH, SliceGEvaluatorComparison.GOLD_SEAL_PATH}) {
-            Path root = temp.resolve(path.endsWith("gold-mappings.json") ? "gold" : "seal");
+        for (String path : new String[]{SliceGEvaluatorComparison.GOLD_PATH, SliceGEvaluatorComparison.GOLD_SEAL_PATH,
+                com.featuredeliveryintelligence.fdi.product.realization.evaluation.ProviderNeutralEvaluatorTruth.LEGACY_GOLD_PATH,
+                com.featuredeliveryintelligence.fdi.product.realization.evaluation.ProviderNeutralEvaluatorTruth.LEGACY_SEAL_PATH}) {
+            Path root = temp.resolve(Integer.toHexString(path.hashCode()));
             copyTree(Path.of("."), root);
             Files.writeString(root.resolve(path), "\n", StandardOpenOption.APPEND);
             assertThrows(RuntimeContractException.class,
@@ -85,7 +87,7 @@ class SliceGEvaluatorComparisonTests {
         ArrayNode scenarios = proposal.putArray("capabilities").addObject().putArray("scenarios");
         scenarios.add(first); scenarios.add(second);
         var expected = List.of(key(controller), key(repository),
-                new SliceGEvaluatorComparison.Identity("src/main/java/example/Missing.java", "METHOD", "example.Missing.run"));
+                new SliceGEvaluatorComparison.Identity(REV, "src/main/java/example/Missing.java", "METHOD", "example.Missing#run"));
 
         var report = SliceGEvaluatorComparison.compute(proposal,
                 new SliceGEvaluatorComparison.EvaluatorTruth("b".repeat(64), expected), "c".repeat(64));
@@ -116,12 +118,10 @@ class SliceGEvaluatorComparisonTests {
         assertEquals(0, report.providerNativeDiagnostics().formalComponentCredit());
     }
 
-    @Test void realGraphMethodShapeNormalizesToV04HashQualifiedSymbol() {
-        ObjectNode graphNode = JSON.createObjectNode()
-                .put("id", "ownercontroller_ownercontroller_processfindform")
-                .put("label", ".processFindForm()")
-                .put("source_file", "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java");
-        var expected = SliceGEvaluatorComparison.graphIdentity(graphNode);
+    @Test void realV2StoredMethodIdentityMatchesV04HashQualifiedSymbol() {
+        var expected = new SliceGEvaluatorComparison.Identity(REV,
+                "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java", "METHOD",
+                "org.springframework.samples.petclinic.owner.OwnerController#processFindForm");
         var direct = identity("src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
                 "org.springframework.samples.petclinic.owner.OwnerController#processFindForm");
         ObjectNode proposal = JSON.createObjectNode();
@@ -149,7 +149,9 @@ class SliceGEvaluatorComparisonTests {
             Path from = source.resolve(path), to = target.resolve(path);
             Files.createDirectories(to.getParent()); Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING);
         }
-        for (String path : new String[]{SliceGEvaluatorComparison.GOLD_PATH, SliceGEvaluatorComparison.GOLD_SEAL_PATH}) {
+        for (String path : new String[]{SliceGEvaluatorComparison.GOLD_PATH, SliceGEvaluatorComparison.GOLD_SEAL_PATH,
+                com.featuredeliveryintelligence.fdi.product.realization.evaluation.ProviderNeutralEvaluatorTruth.LEGACY_GOLD_PATH,
+                com.featuredeliveryintelligence.fdi.product.realization.evaluation.ProviderNeutralEvaluatorTruth.LEGACY_SEAL_PATH}) {
             Path from = source.resolve(path), to = target.resolve(path);
             Files.createDirectories(to.getParent()); Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING);
         }
@@ -201,7 +203,7 @@ class SliceGEvaluatorComparisonTests {
     }
 
     private static SliceGEvaluatorComparison.Identity key(ScenarioMappingContractV04.ComponentIdentity identity) {
-        return new SliceGEvaluatorComparison.Identity(identity.sourcePath(), identity.granularity().name(), identity.qualifiedSymbol());
+        return new SliceGEvaluatorComparison.Identity(identity.sourceRevision(), identity.sourcePath(), identity.granularity().name(), identity.qualifiedSymbol());
     }
 
     private static void assertMetric(SliceGEvaluatorComparison.Metric metric, int matched, int expected,

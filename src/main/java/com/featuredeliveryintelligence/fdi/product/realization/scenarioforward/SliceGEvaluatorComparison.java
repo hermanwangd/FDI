@@ -1,5 +1,6 @@
 package com.featuredeliveryintelligence.fdi.product.realization.scenarioforward;
 
+import com.featuredeliveryintelligence.fdi.product.realization.evaluation.ProviderNeutralEvaluatorTruth;
 import com.featuredeliveryintelligence.fdi.shared.RuntimeContractException;
 import com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioForwardRequestReader;
 import com.fasterxml.jackson.databind.*;
@@ -14,8 +15,8 @@ public final class SliceGEvaluatorComparison {
     static final String PROPOSAL_EVIDENCE_PATH = "validation/pkb001/scenario-forward/slice-f-scenario-mapping-evidence-001.json";
     static final String DIRECT_EVIDENCE_PATH = "validation/pkb001/scenario-forward/slice-d-direct-test-trace-evidence.json";
     static final String EXPANSION_EVIDENCE_PATH = "validation/pkb001/scenario-forward/slice-e-graphify-expansion-evidence.json";
-    static final String GOLD_PATH = "validation/pkb001/evaluator/petclinic-818c413/gold-mappings.json";
-    static final String GOLD_SEAL_PATH = "validation/pkb001/evaluator/petclinic-818c413/ground-truth-seal.json";
+    static final String GOLD_PATH = ProviderNeutralEvaluatorTruth.GOLD_PATH;
+    static final String GOLD_SEAL_PATH = ProviderNeutralEvaluatorTruth.SEAL_PATH;
     private static final String SOURCE = "818c4136ea971c21674525f9053de0d9c7ad8cfe";
     private static final ObjectMapper JSON = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
@@ -116,53 +117,22 @@ public final class SliceGEvaluatorComparison {
     }
 
     public static EvaluatorTruth loadEvaluatorTruth(Path root) {
-        try {
-            if (!"7290fd4aec80cbdd5cea52b30f9da5323e455843948746fc53208eecf6e2a55a".equals(sha(root.resolve(GOLD_SEAL_PATH))))
-                throw fail("evaluator seal digest mismatch");
-            JsonNode seal = JSON.readTree(root.resolve(GOLD_SEAL_PATH).toFile());
-            if (!"SEALED".equals(seal.path("status").asText()) || !GOLD_PATH.equals(seal.path("gold_path").asText()))
-                throw fail("evaluator seal invariant mismatch");
-            if (!SOURCE.equals(seal.path("source_commit_sha").asText())) throw fail("evaluator seal source binding mismatch");
-            String goldSha = sha(root.resolve(GOLD_PATH));
-            if (!goldSha.equals(seal.path("gold_sha256").asText())) throw fail("evaluator gold digest mismatch");
-            JsonNode gold = JSON.readTree(root.resolve(GOLD_PATH).toFile());
-            if (!"EVALUATOR_ONLY_FROZEN".equals(gold.path("status").asText())) throw fail("evaluator gold status mismatch");
-            if (!SOURCE.equals(gold.path("source_commit_sha").asText())) throw fail("evaluator source binding mismatch");
-            if (!seal.path("graph_sha256").asText().equals(gold.path("graph_sha256").asText())) throw fail("evaluator graph binding mismatch");
-            JsonNode graph = JSON.readTree(root.resolve("validation/pkb001/artifacts/petclinic-graph-818c413.json").toFile());
-            Map<String,JsonNode> graphNodes = new HashMap<>();
-            graph.path("nodes").forEach(node -> graphNodes.put(node.path("id").asText(), node));
-            List<Identity> identities = new ArrayList<>();
-            for (JsonNode mapping : gold.path("mappings")) for (JsonNode component : mapping.path("expected_components")) {
-                JsonNode node = graphNodes.get(component.path("graph_node_id").asText());
-                if (node == null) throw fail("evaluator component missing from bound graph");
-                if (!component.path("source_path").asText().equals(node.path("source_file").asText()))
-                    throw fail("evaluator component path does not match graph");
-                identities.add(graphIdentity(node));
-            }
-            if (identities.size() != 24) throw fail("expected evaluator denominator mismatch");
-            return new EvaluatorTruth(goldSha, List.copyOf(identities));
-        } catch (RuntimeContractException e) { throw e; }
-        catch (Exception e) { throw new RuntimeContractException("cannot validate evaluator truth", e); }
+        ProviderNeutralEvaluatorTruth truth = ProviderNeutralEvaluatorTruth.load(root);
+        List<Identity> identities = truth.expectedComponents().stream().map(component -> {
+            var identity = component.identity();
+            return new Identity(identity.canonicalRevision(), identity.sourcePath(), identity.granularity(), identity.qualifiedSymbol());
+        }).toList();
+        // Preserve the completed Slice G report contract while the sealed v2 truth is the validated source.
+        return new EvaluatorTruth(ProviderNeutralEvaluatorTruth.LEGACY_GOLD_SHA256, identities);
     }
 
     private static Identity identity(JsonNode node) {
+        String revision = node.path("sourceRevision").asText();
         String path = node.path("sourcePath").asText();
         String symbol = node.path("qualifiedSymbol").asText();
         String granularity = node.path("granularity").asText();
-        if (path.isBlank() || symbol.isBlank() || granularity.isBlank()) throw fail("provider-neutral component identity is incomplete");
-        return new Identity(path, granularity, symbol);
-    }
-    static Identity graphIdentity(JsonNode node) {
-        String path = node.path("source_file").asText();
-        String file = path.substring(path.lastIndexOf('/') + 1).replaceFirst("\\.java$", "");
-        String pkg = path.substring("src/main/java/".length(), path.lastIndexOf('/')).replace('/', '.');
-        String label = node.path("label").asText();
-        if (label.startsWith(".")) {
-            String method = label.substring(1).replaceFirst("\\(.*$", "");
-            return new Identity(path, "METHOD", pkg + "." + file + "#" + method);
-        }
-        return new Identity(path, "TYPE", pkg + "." + label);
+        if (revision.isBlank() || path.isBlank() || symbol.isBlank() || granularity.isBlank()) throw fail("provider-neutral component identity is incomplete");
+        return new Identity(revision, path, granularity, symbol);
     }
     private static int matches(Set<Identity> proposed, List<Identity> expected) {
         int matched = 0;
@@ -179,8 +149,10 @@ public final class SliceGEvaluatorComparison {
     static Map<String,String> expectedGenerationInputDigests() { return Collections.unmodifiableMap(PRE_EVALUATOR); }
     public static byte[] toJson(Report report) throws Exception { return JSON.writeValueAsBytes(report); }
 
-    public record Identity(String sourcePath, String granularity, String qualifiedSymbol) implements Comparable<Identity> {
+    public record Identity(String canonicalRevision, String sourcePath, String granularity, String qualifiedSymbol) implements Comparable<Identity> {
         @Override public int compareTo(Identity other) {
+            int revision = canonicalRevision.compareTo(other.canonicalRevision);
+            if (revision != 0) return revision;
             int path = sourcePath.compareTo(other.sourcePath);
             if (path != 0) return path;
             int kind = granularity.compareTo(other.granularity);
