@@ -10,6 +10,7 @@ import org.junit.jupiter.api.io.TempDir;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -89,8 +90,21 @@ class ScenarioReviewRevisionTwoArtifactTests {
         assertEquals("341c264c660d12ef7d4b96dadf71de30239dc26f9adcda17d34cef15d9ec0de4",
                 sha256(Files.readAllBytes(ROOT.resolve("skills/pkb001/pk-scenario-proposal/SKILL.md"))));
         assertEquals(0, evidence.path("java_cli_exit_code").asInt());
+        assertEquals(sha256(Files.readAllBytes(PACKET.resolve("proposal.json"))),
+                evidence.path("original_proposal_sha256").asText());
+        assertEquals(sha256(Files.readAllBytes(PACKET.resolve("proposal-revision-002.json"))),
+                evidence.path("proposal_sha256").asText());
         assertEquals(sha256(Files.readAllBytes(PACKET.resolve("review-revision-002.json"))),
                 evidence.path("review_json_sha256").asText());
+        assertEquals(sha256(Files.readAllBytes(PACKET.resolve("review-revision-002.md"))),
+                evidence.path("review_markdown_sha256").asText());
+        assertEquals(sha256(Files.readAllBytes(PACKET.resolve("review-decisions-004.json"))),
+                evidence.path("review_decisions_sha256").asText());
+        assertEquals("Supplemental proposal omitted confidence; revision 2 uses 0.0 to preserve "
+                        + "conservative UNCALIBRATED_RANKING_HINT semantics.",
+                evidence.path("scenario_011_confidence_basis").asText());
+        assertEquals(0.0, proposal.path("capability_proposals").get(2).path("scenarios").get(2)
+                .path("confidence").asDouble());
 
         copyToRoot(temp, ROOT.resolve("validation/pkb001/schemas/scenario-proposal.schema.json"),
                 Path.of("validation/pkb001/schemas/scenario-proposal.schema.json"));
@@ -115,6 +129,8 @@ class ScenarioReviewRevisionTwoArtifactTests {
         ScenarioReview.ReviewRender rendered = ScenarioReview.renderReview(
                 temp, proposal, isolatedProposal);
         assertEquals(read("review-revision-002.json"), rendered.review());
+        assertEquals(Files.readString(PACKET.resolve("review-revision-002.md"),
+                StandardCharsets.UTF_8), rendered.markdown());
 
         Set<String> accepted = new HashSet<>();
         ScenarioReview.acceptedScenarios(temp, read("review-decisions-004.json"))
