@@ -1,161 +1,179 @@
 package com.featuredeliveryintelligence.fdi.product.realization;
 
 import com.featuredeliveryintelligence.fdi.shared.RuntimeContractException;
+import java.util.*;
+import java.util.regex.Pattern;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-/** Provider-neutral, proposal-only mapping contract for PK-S1 v0.4. */
+/** Executable provider-neutral, proposal-only mapping contract for PK-S1 v0.4. */
 public record ScenarioMappingContractV04(
-        String capabilityId,
-        String scenarioId,
-        String sourceRevision,
-        String frozenSemanticsSha256,
-        List<DirectProductionSymbolEvidence> directProductionSymbols,
-        List<SeedProvenance> seeds,
-        List<RealizationChainStep> realizationChain,
-        List<String> limitations) {
+        String schemaVersion, String authority, String capabilityId, String scenarioId,
+        String sourceRevision, String graphSha256, String frozenSemanticsSha256,
+        Outcome outcome, EvidenceStatus evidenceStatus,
+        List<DirectProductionSymbolEvidence> directProductionSymbols, List<SeedProvenance> seeds,
+        List<RelationshipTrace> relationshipTraces, List<RealizationChainStep> realizationChain,
+        List<String> evidenceGaps, List<String> limitations) {
 
     public static final String SCHEMA_VERSION = "pkb001.realization-mapping.v0.4";
     public static final String AUTHORITY = "PROPOSAL_ONLY";
-
-    public String schemaVersion() { return SCHEMA_VERSION; }
-    public String authority() { return AUTHORITY; }
-
-    public ScenarioMappingContractV04 {
-        required(capabilityId, "capabilityId");
-        required(scenarioId, "scenarioId");
-        if (forbidden(capabilityId) || forbidden(scenarioId)) fail("evaluator identity is forbidden");
-        revision(sourceRevision);
-        if (frozenSemanticsSha256 == null || !frozenSemanticsSha256.matches("[0-9a-f]{64}")) {
-            fail("frozenSemanticsSha256 must be a lowercase SHA-256");
-        }
-        directProductionSymbols = snapshot(directProductionSymbols, "directProductionSymbols", true);
-        seeds = snapshot(seeds, "seeds", true);
-        realizationChain = snapshot(realizationChain, "realizationChain", true);
-        limitations = strings(limitations, "limitations", true);
-        for (String limitation : limitations) if (forbidden(limitation)) fail("evaluator evidence is forbidden");
-
-        Map<String, DirectProductionSymbolEvidence> evidenceByRef = new HashMap<>();
-        Set<ComponentIdentity> identities = new HashSet<>();
-        for (var evidence : directProductionSymbols) {
-            if (!sourceRevision.equals(evidence.productionSymbol().sourceRevision())) fail("direct symbol revision mismatch");
-            if (evidenceByRef.put(evidence.evidenceRef(), evidence) != null) fail("duplicate direct evidence reference");
-            if (!identities.add(evidence.productionSymbol())) fail("duplicate component identity");
-        }
-        Map<String, SeedProvenance> seedByRef = new HashMap<>();
-        for (var seed : seeds) {
-            var evidence = evidenceByRef.get(seed.directEvidenceRef());
-            if (evidence == null || !evidence.productionSymbol().equals(seed.productionSeed())) fail("unbound seed");
-            if (seedByRef.put(seed.seedRef(), seed) != null) fail("duplicate seed reference");
-        }
-        for (int index = 0; index < realizationChain.size(); index++) {
-            var step = realizationChain.get(index);
-            if (step.order() != index + 1) fail("realization chain order must be contiguous from one");
-            if (!sourceRevision.equals(step.component().sourceRevision())) fail("chain component revision mismatch");
-            if (!seedByRef.containsKey(step.seedRef())) fail("unbound chain seed");
-            if (step.relationshipBasis() == RelationshipBasis.DIRECT_TEST_REFERENCE
-                    && step.traceRefs().stream().noneMatch(evidenceByRef::containsKey)) {
-                fail("direct relationship requires direct-production-symbol evidence");
-            }
-            if (step.relationshipBasis() == RelationshipBasis.DIRECT_TEST_REFERENCE) {
-                boolean exactDirectIdentity = step.traceRefs().stream().map(evidenceByRef::get)
-                        .filter(java.util.Objects::nonNull)
-                        .anyMatch(evidence -> evidence.productionSymbol().equals(step.component()));
-                if (!exactDirectIdentity) fail("direct relationship identity must match its evidence");
-            }
-            if (step.relationshipBasis() == RelationshipBasis.GRAPHIFY_INFERRED && step.traceRefs().isEmpty()) {
-                fail("Graphify inferred relationship requires a trace");
-            }
-        }
-    }
-
+    public enum Outcome { MAPPING_PROPOSAL, UNRESOLVED }
+    public enum EvidenceStatus { COMPLETE, PARTIAL, INSUFFICIENT }
     public enum RelationshipBasis { DIRECT_TEST_REFERENCE, GRAPHIFY_INFERRED }
     public enum Granularity { REPOSITORY, FILE, TYPE, METHOD, TEMPLATE, CONFIGURATION }
 
-    /** Stable framework identity; provider node IDs remain diagnostics outside equality. */
-    public record ComponentIdentity(String sourceRevision, String sourcePath, Granularity granularity,
-                                    String qualifiedSymbol) {
-        public ComponentIdentity {
-            revision(sourceRevision);
-            required(sourcePath, "sourcePath");
-            if (granularity == null) fail("granularity is required");
-            required(qualifiedSymbol, "qualifiedSymbol");
-            if (sourcePath.startsWith("/") || sourcePath.contains("\\") || sourcePath.contains("..")
-                    || sourcePath.matches("^[A-Za-z]:.*") || sourcePath.matches("(^|/)src/test(/|$).*")
-                    || sourcePath.matches("(^|/)test(s)?(/|$).*") || sourcePath.matches(".*Test(s)?\\.java$")) {
-                fail("component must be a canonical production path");
-            }
+    public ScenarioMappingContractV04 {
+        if (!SCHEMA_VERSION.equals(schemaVersion)) fail("schemaVersion is not selected v0.4");
+        if (!AUTHORITY.equals(authority)) fail("authority must be PROPOSAL_ONLY");
+        safe(capabilityId, "capabilityId"); safe(scenarioId, "scenarioId"); revision(sourceRevision);
+        digest(graphSha256, "graphSha256");
+        digest(frozenSemanticsSha256, "frozenSemanticsSha256");
+        if (outcome == null) fail("outcome is required");
+        if (evidenceStatus == null) fail("evidenceStatus is required");
+        directProductionSymbols = snapshot(directProductionSymbols, "directProductionSymbols");
+        seeds = snapshot(seeds, "seeds"); relationshipTraces = snapshot(relationshipTraces, "relationshipTraces");
+        realizationChain = snapshot(realizationChain, "realizationChain");
+        evidenceGaps = safeStrings(evidenceGaps, "evidenceGaps"); limitations = safeStrings(limitations, "limitations");
+        if (limitations.isEmpty()) fail("limitations must not be empty");
+
+        if (outcome == Outcome.UNRESOLVED) {
+            if (evidenceStatus != EvidenceStatus.INSUFFICIENT) fail("UNRESOLVED requires INSUFFICIENT evidence");
+            if (!directProductionSymbols.isEmpty() || !seeds.isEmpty() || !relationshipTraces.isEmpty()
+                    || !realizationChain.isEmpty()) fail("UNRESOLVED cannot claim realization evidence");
+            if (evidenceGaps.isEmpty()) fail("UNRESOLVED requires an explicit evidence gap");
+        } else {
+            if (evidenceStatus == EvidenceStatus.INSUFFICIENT) fail("MAPPING_PROPOSAL cannot have INSUFFICIENT evidence");
+            if (directProductionSymbols.isEmpty() || seeds.isEmpty() || realizationChain.isEmpty())
+                fail("MAPPING_PROPOSAL requires direct production evidence, seeds, and a chain");
+            if (evidenceStatus == EvidenceStatus.COMPLETE && !evidenceGaps.isEmpty()) fail("COMPLETE evidence cannot contain gaps");
+            if (evidenceStatus == EvidenceStatus.PARTIAL && evidenceGaps.isEmpty()) fail("PARTIAL evidence requires a gap");
+            validateMapping(sourceRevision, graphSha256, directProductionSymbols, seeds, relationshipTraces, realizationChain);
         }
     }
 
-    public record DirectProductionSymbolEvidence(String evidenceRef, String observationRef,
-                                                  ComponentIdentity productionSymbol) {
+    private static void validateMapping(String revision, String graphDigest,
+            List<DirectProductionSymbolEvidence> direct, List<SeedProvenance> seeds,
+            List<RelationshipTrace> traces, List<RealizationChainStep> chain) {
+        Map<String, DirectProductionSymbolEvidence> evidenceByRef = uniqueMap(direct,
+                DirectProductionSymbolEvidence::evidenceRef, "direct evidence");
+        Set<ComponentIdentity> identities = new HashSet<>();
+        for (var evidence : direct) {
+            sameRevision(revision, evidence.productionSymbol());
+            if (!identities.add(evidence.productionSymbol())) fail("duplicate provider-neutral component identity");
+        }
+        Map<String, SeedProvenance> seedByRef = uniqueMap(seeds, SeedProvenance::seedRef, "seed");
+        for (var seed : seeds) {
+            var evidence = evidenceByRef.get(seed.directEvidenceRef());
+            if (evidence == null || !evidence.productionSymbol().equals(seed.productionSeed())) fail("unbound seed");
+            sameRevision(revision, seed.productionSeed());
+        }
+        Map<String, RelationshipTrace> traceByRef = uniqueMap(traces, RelationshipTrace::traceId, "relationship trace");
+        for (var trace : traces) {
+            if (!revision.equals(trace.sourceRevision()) || !graphDigest.equals(trace.graphSha256()))
+                fail("relationship trace binding mismatch");
+        }
+        Set<String> usedTraces = new HashSet<>();
+        for (int index = 0; index < chain.size(); index++) {
+            var step = chain.get(index);
+            if (step.order() != index + 1) fail("realization chain order must be contiguous from one");
+            sameRevision(revision, step.component());
+            var seed = seedByRef.get(step.seedRef()); if (seed == null) fail("unbound chain seed");
+            if (step.relationshipBasis() == RelationshipBasis.DIRECT_TEST_REFERENCE) {
+                if (step.relationshipTraceRef() != null) fail("direct relationship cannot cite a Graphify trace");
+                boolean matched = step.evidenceRefs().stream().map(evidenceByRef::get).filter(Objects::nonNull)
+                        .anyMatch(e -> e.productionSymbol().equals(step.component()));
+                if (!matched) fail("direct relationship requires matching direct-production-symbol evidence");
+            } else {
+                if (!step.evidenceRefs().isEmpty()) fail("Graphify inferred relationship uses typed trace, not direct refs");
+                var trace = traceByRef.get(step.relationshipTraceRef()); if (trace == null) fail("unbound relationship trace");
+                if (!trace.startsAt(seed.productionSeed()) || !trace.endsAt(step.component()))
+                    fail("relationship trace endpoints do not bind seed and inferred component");
+                usedTraces.add(trace.traceId());
+            }
+        }
+        if (!usedTraces.equals(traceByRef.keySet())) fail("unused relationship trace");
+        if (chain.get(0).relationshipBasis() != RelationshipBasis.DIRECT_TEST_REFERENCE)
+            fail("realization chain must start from a directly evidenced production seed");
+    }
+
+    /** Provider node IDs are intentionally absent from this durable identity. */
+    public record ComponentIdentity(String sourceRevision, String sourcePath, Granularity granularity, String qualifiedSymbol) {
+        public ComponentIdentity {
+            revision(sourceRevision); safe(sourcePath, "sourcePath");
+            if (granularity == null) fail("granularity is required"); safe(qualifiedSymbol, "qualifiedSymbol");
+            if (!canonicalProductionPath(sourcePath)) fail("sourcePath must be canonical, repository-relative, and production-only");
+        }
+    }
+
+    public record DirectProductionSymbolEvidence(String evidenceRef, String observationRef, ComponentIdentity productionSymbol) {
         public DirectProductionSymbolEvidence {
-            required(evidenceRef, "evidenceRef");
-            required(observationRef, "observationRef");
-            if (forbidden(observationRef)) fail("evaluator evidence is forbidden");
+            safe(evidenceRef, "evidenceRef"); safe(observationRef, "observationRef");
             if (productionSymbol == null) fail("productionSymbol is required");
         }
     }
-
     public record SeedProvenance(String seedRef, String directEvidenceRef, ComponentIdentity productionSeed) {
         public SeedProvenance {
-            required(seedRef, "seedRef");
-            required(directEvidenceRef, "directEvidenceRef");
+            safe(seedRef, "seedRef"); safe(directEvidenceRef, "directEvidenceRef");
             if (productionSeed == null) fail("productionSeed is required");
         }
     }
-
-    public record RealizationChainStep(int order, ComponentIdentity component,
-                                       RelationshipBasis relationshipBasis, String seedRef,
-                                       List<String> traceRefs) {
+    public record RelationshipEdge(int order, ComponentIdentity from, ComponentIdentity to,
+                                   String relationshipType, String evidenceRef) {
+        public RelationshipEdge {
+            if (order < 1) fail("edge order must be positive");
+            if (from == null || to == null) fail("edge endpoints are required");
+            safe(relationshipType, "relationshipType"); safe(evidenceRef, "evidenceRef");
+        }
+    }
+    public record RelationshipTrace(String traceId, String sourceRevision, String graphSha256,
+                                    List<RelationshipEdge> edges) {
+        public RelationshipTrace {
+            safe(traceId, "traceId"); revision(sourceRevision); digest(graphSha256, "graphSha256");
+            edges = snapshot(edges, "edges"); if (edges.isEmpty()) fail("relationship trace requires edges");
+            for (int i = 0; i < edges.size(); i++) {
+                var edge = edges.get(i); if (edge.order() != i + 1) fail("edge order must be contiguous from one");
+                sameRevision(sourceRevision, edge.from()); sameRevision(sourceRevision, edge.to());
+                if (i > 0 && !edges.get(i - 1).to().equals(edge.from())) fail("relationship trace must be contiguous");
+            }
+        }
+        boolean startsAt(ComponentIdentity identity) { return edges.get(0).from().equals(identity); }
+        boolean endsAt(ComponentIdentity identity) { return edges.get(edges.size() - 1).to().equals(identity); }
+    }
+    public record RealizationChainStep(int order, ComponentIdentity component, RelationshipBasis relationshipBasis,
+                                       String seedRef, List<String> evidenceRefs, String relationshipTraceRef) {
         public RealizationChainStep {
-            if (order < 1) fail("order must be positive");
-            if (component == null) fail("component is required");
-            if (relationshipBasis == null) fail("relationshipBasis is required");
-            required(seedRef, "seedRef");
-            traceRefs = strings(traceRefs, "traceRefs", false);
-            for (String trace : traceRefs) if (forbidden(trace)) fail("evaluator evidence is forbidden");
+            if (order < 1) fail("order must be positive"); if (component == null) fail("component is required");
+            if (relationshipBasis == null) fail("relationshipBasis is required"); safe(seedRef, "seedRef");
+            evidenceRefs = safeStrings(evidenceRefs, "evidenceRefs");
+            if (relationshipTraceRef != null) safe(relationshipTraceRef, "relationshipTraceRef");
         }
     }
 
-    private static boolean forbidden(String value) {
-        String normalized = value.toLowerCase(java.util.Locale.ROOT).replace('_', '-');
-        return normalized.contains("evaluator") || normalized.contains("gold-mapping")
-                || normalized.contains("ground-truth") || normalized.contains("expected-mapping");
+    private static final Pattern FORBIDDEN = Pattern.compile(
+            "(?i)(evaluator(?:[ _-]+gold)?|gold[ _-]+mapping|ground[ _-]+truth|expected[ _-]+mapping)");
+    private static void safe(String value, String field) {
+        if (value == null || value.isBlank()) fail(field + " is required");
+        if (FORBIDDEN.matcher(value).find()) fail(field + " contains evaluator-only vocabulary");
     }
-
-    private static void revision(String value) {
-        if (value == null || !value.matches("[0-9a-f]{40}")) fail("sourceRevision must be a full lowercase Git SHA");
+    private static boolean canonicalProductionPath(String path) {
+        if (!path.equals(path.strip()) || path.startsWith("/") || path.startsWith("./") || path.endsWith("/")
+                || path.contains("\\") || path.contains("//") || path.matches("^[A-Za-z]:.*")) return false;
+        String[] parts = path.split("/", -1); for (String part : parts) if (part.isEmpty() || part.equals(".") || part.equals("..")) return false;
+        String lower = path.toLowerCase(Locale.ROOT);
+        return !lower.matches("(^|.*/)(src/test|tests?|test)(/.*|$)") && !path.matches(".*Tests?\\.java$");
     }
-
-    private static <T> List<T> snapshot(List<T> values, String field, boolean nonempty) {
-        if (values == null) fail(field + " is required");
-        var copy = new ArrayList<>(values);
-        if (nonempty && copy.isEmpty()) fail(field + " must not be empty");
-        if (copy.contains(null)) fail(field + " cannot contain null elements");
-        return Collections.unmodifiableList(copy);
+    private static void revision(String value) { if (value == null || !value.matches("[0-9a-f]{40}")) fail("full lowercase source revision required"); }
+    private static void digest(String value, String field) { if (value == null || !value.matches("[0-9a-f]{64}")) fail(field + " must be lowercase SHA-256"); }
+    private static void sameRevision(String revision, ComponentIdentity identity) { if (!revision.equals(identity.sourceRevision())) fail("component revision mismatch"); }
+    private static <T> List<T> snapshot(List<T> values, String field) {
+        if (values == null) fail(field + " is required"); var copy = new ArrayList<>(values);
+        if (copy.contains(null)) fail(field + " cannot contain null"); return Collections.unmodifiableList(copy);
     }
-
-    private static List<String> strings(List<String> values, String field, boolean nonempty) {
-        var copy = snapshot(values, field, nonempty);
-        Set<String> unique = new HashSet<>();
-        for (String value : copy) {
-            required(value, field + " element");
-            if (!unique.add(value)) fail(field + " contains duplicates");
-        }
+    private static List<String> safeStrings(List<String> values, String field) {
+        var copy = snapshot(values, field); Set<String> seen = new HashSet<>();
+        for (String value : copy) { safe(value, field); if (!seen.add(value)) fail(field + " contains duplicates"); }
         return copy;
     }
-
-    private static void required(String value, String field) {
-        if (value == null || value.isBlank()) fail(field + " is required");
+    private static <T> Map<String,T> uniqueMap(List<T> values, java.util.function.Function<T,String> key, String field) {
+        Map<String,T> result = new HashMap<>(); for (T value : values) if (result.put(key.apply(value), value) != null) fail("duplicate " + field + " identity"); return result;
     }
-
     private static void fail(String message) { throw new RuntimeContractException(message); }
 }

@@ -2,101 +2,98 @@ package com.featuredeliveryintelligence.fdi.product.realization;
 
 import com.featuredeliveryintelligence.fdi.shared.RuntimeContractException;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ScenarioMappingContractV04Tests {
-    private static final String REV = "818c4136ea971c21674525f9053de0d9c7ad8cfe";
-    private static final String SEMANTICS = "a".repeat(64);
+    static final String REV = "818c4136ea971c21674525f9053de0d9c7ad8cfe", SHA = "a".repeat(64);
 
-    @Test
-    void acceptsOrderedDirectAndGraphifyProductionChain() {
+    @Test void acceptsSupportedMappingAndHonestUnresolved() {
+        assertEquals(2, mapping().realizationChain().size());
+        var unresolved = new ScenarioMappingContractV04(ScenarioMappingContractV04.SCHEMA_VERSION,
+                ScenarioMappingContractV04.AUTHORITY, "HYP-CAPABILITY-002", "HYP-SCENARIO-002", REV, SHA, SHA,
+                ScenarioMappingContractV04.Outcome.UNRESOLVED, ScenarioMappingContractV04.EvidenceStatus.INSUFFICIENT,
+                List.of(), List.of(), List.of(), List.of(), List.of("No production reference resolved"), List.of("bounded"));
+        assertTrue(unresolved.realizationChain().isEmpty());
+    }
+
+    @Test void outcomeAndEvidenceStatusFailClosed() {
+        var m = mapping();
+        assertThrows(RuntimeContractException.class, () -> copy(m, ScenarioMappingContractV04.Outcome.UNRESOLVED,
+                ScenarioMappingContractV04.EvidenceStatus.INSUFFICIENT, m.directProductionSymbols(), m.seeds(),
+                m.relationshipTraces(), m.realizationChain(), List.of()));
+        assertThrows(RuntimeContractException.class, () -> copy(m, m.outcome(), ScenarioMappingContractV04.EvidenceStatus.COMPLETE,
+                m.directProductionSymbols(), m.seeds(), m.relationshipTraces(), m.realizationChain(), List.of("gap")));
+        assertThrows(RuntimeContractException.class, () -> new ScenarioMappingContractV04(m.schemaVersion(), m.authority(),
+                m.capabilityId(), m.scenarioId(), REV, SHA, SHA, ScenarioMappingContractV04.Outcome.UNRESOLVED,
+                ScenarioMappingContractV04.EvidenceStatus.PARTIAL, List.of(), List.of(), List.of(), List.of(),
+                List.of("gap"), List.of("bounded")));
+    }
+
+    @Test void inferredStepRequiresTypedBoundRevisionAndDigestTrace() {
+        var m = mapping();
+        assertThrows(RuntimeContractException.class, () -> copy(m, m.outcome(), m.evidenceStatus(),
+                m.directProductionSymbols(), m.seeds(), List.of(), m.realizationChain(), List.of()));
+        assertThrows(RuntimeContractException.class, () -> new ScenarioMappingContractV04.RelationshipTrace(
+                "trace-1", "0".repeat(40), SHA, m.relationshipTraces().get(0).edges()));
+        var inferred = m.realizationChain().get(1);
+        var unbound = new ScenarioMappingContractV04.RealizationChainStep(2, inferred.component(), inferred.relationshipBasis(),
+                inferred.seedRef(), List.of(), "trace-missing");
+        assertThrows(RuntimeContractException.class, () -> copy(m, m.outcome(), m.evidenceStatus(),
+                m.directProductionSymbols(), m.seeds(), m.relationshipTraces(), List.of(m.realizationChain().get(0), unbound), List.of()));
+    }
+
+    @Test void canonicalPathsAndProviderNeutralDuplicateAliasesFailClosed() {
+        for (String path : badPaths()) assertThrows(RuntimeContractException.class,
+                () -> identity(path, "example.A.find"), path);
+        var m = mapping();
+        var duplicate = new ScenarioMappingContractV04.DirectProductionSymbolEvidence("direct-2", "observation-2",
+                m.directProductionSymbols().get(0).productionSymbol());
+        assertThrows(RuntimeContractException.class, () -> copy(m, m.outcome(), m.evidenceStatus(),
+                List.of(m.directProductionSymbols().get(0), duplicate), m.seeds(), m.relationshipTraces(), m.realizationChain(), List.of()));
+    }
+
+    @Test void evaluatorLeakageUsesOnePolicyAcrossRelevantStrings() {
+        for (String forbidden : forbiddenRefs()) {
+            assertThrows(RuntimeContractException.class, () -> new ScenarioMappingContractV04.DirectProductionSymbolEvidence(
+                    "direct", forbidden, identity("src/main/java/example/A.java", "example.A.find")), forbidden);
+            assertThrows(RuntimeContractException.class, () -> new ScenarioMappingContractV04.SeedProvenance(
+                    "seed", forbidden, identity("src/main/java/example/A.java", "example.A.find")), forbidden);
+        }
+    }
+
+    static List<String> badPaths() { return List.of("./src/main/A.java", "src//main/A.java", " src/main/A.java",
+            "src/main/A.java ", "/src/main/A.java", "src\\main\\A.java", "src/./main/A.java",
+            "src/main/../A.java", "src/test/java/A.java", "tests/A.java"); }
+    static List<String> forbiddenRefs() { return List.of("evaluator_gold", "evaluator-gold", "evaluator gold",
+            "gold_mapping", "gold-mapping", "gold mapping", "ground_truth", "expected mapping"); }
+
+    static ScenarioMappingContractV04 mapping() {
         var controller = identity("src/main/java/example/OwnerController.java", "example.OwnerController.find");
-        var repository = identity("src/main/java/example/OwnerRepository.java", "example.OwnerRepository.findByLastName");
-        var direct = new ScenarioMappingContractV04.DirectProductionSymbolEvidence(
-                "direct-1", "scenario-observation-1", controller);
+        var repository = identity("src/main/java/example/OwnerRepository.java", "example.OwnerRepository.find");
+        var direct = new ScenarioMappingContractV04.DirectProductionSymbolEvidence("direct-1", "observation-1", controller);
         var seed = new ScenarioMappingContractV04.SeedProvenance("seed-1", "direct-1", controller);
-        var chain = List.of(
-                new ScenarioMappingContractV04.RealizationChainStep(1, controller,
-                        ScenarioMappingContractV04.RelationshipBasis.DIRECT_TEST_REFERENCE,
-                        "seed-1", List.of("direct-1")),
+        var edge = new ScenarioMappingContractV04.RelationshipEdge(1, controller, repository, "CALLS", "graph-edge-1");
+        var trace = new ScenarioMappingContractV04.RelationshipTrace("trace-1", REV, SHA, List.of(edge));
+        var steps = List.of(new ScenarioMappingContractV04.RealizationChainStep(1, controller,
+                        ScenarioMappingContractV04.RelationshipBasis.DIRECT_TEST_REFERENCE, "seed-1", List.of("direct-1"), null),
                 new ScenarioMappingContractV04.RealizationChainStep(2, repository,
-                        ScenarioMappingContractV04.RelationshipBasis.GRAPHIFY_INFERRED,
-                        "seed-1", List.of("graph-path-1")));
-
-        var contract = new ScenarioMappingContractV04("HYP-CAPABILITY-001", "HYP-SCENARIO-001",
-                REV, SEMANTICS, List.of(direct), List.of(seed), chain, List.of("bounded expansion"));
-
-        assertEquals("pkb001.realization-mapping.v0.4", contract.schemaVersion());
-        assertEquals("PROPOSAL_ONLY", contract.authority());
-        assertEquals(2, contract.realizationChain().size());
+                        ScenarioMappingContractV04.RelationshipBasis.GRAPHIFY_INFERRED, "seed-1", List.of(), "trace-1"));
+        return new ScenarioMappingContractV04(ScenarioMappingContractV04.SCHEMA_VERSION, ScenarioMappingContractV04.AUTHORITY,
+                "HYP-CAPABILITY-001", "HYP-SCENARIO-001", REV, SHA, SHA, ScenarioMappingContractV04.Outcome.MAPPING_PROPOSAL,
+                ScenarioMappingContractV04.EvidenceStatus.COMPLETE, List.of(direct), List.of(seed), List.of(trace), steps,
+                List.of(), List.of("bounded"));
     }
 
-    @Test
-    void rejectsTestComponentsMissingIdentityFieldsAndDuplicateIdentity() {
-        assertThrows(RuntimeContractException.class,
-                () -> identity("src/test/java/example/OwnerControllerTests.java", "example.OwnerControllerTests.find"));
-        assertThrows(RuntimeContractException.class,
-                () -> new ScenarioMappingContractV04.ComponentIdentity(REV, " ", ScenarioMappingContractV04.Granularity.METHOD, "example.Owner.find"));
-        assertThrows(RuntimeContractException.class,
-                () -> new ScenarioMappingContractV04.ComponentIdentity(REV, "src/main/java/example/Owner.java", null, "example.Owner.find"));
-        assertThrows(RuntimeContractException.class,
-                () -> new ScenarioMappingContractV04.ComponentIdentity(REV, "src/main/java/example/Owner.java", ScenarioMappingContractV04.Granularity.METHOD, " "));
-        var id = identity("src/main/java/example/Owner.java", "example.Owner.find");
-        var direct = new ScenarioMappingContractV04.DirectProductionSymbolEvidence("d1", "o1", id);
-        assertThrows(RuntimeContractException.class, () -> valid(List.of(direct,
-                new ScenarioMappingContractV04.DirectProductionSymbolEvidence("d2", "o2", id)),
-                List.of(new ScenarioMappingContractV04.SeedProvenance("s1", "d1", id)),
-                List.of(step(1, id, "s1", ScenarioMappingContractV04.RelationshipBasis.DIRECT_TEST_REFERENCE, "d1"))));
+    static ScenarioMappingContractV04 copy(ScenarioMappingContractV04 m, ScenarioMappingContractV04.Outcome outcome,
+            ScenarioMappingContractV04.EvidenceStatus status, List<ScenarioMappingContractV04.DirectProductionSymbolEvidence> direct,
+            List<ScenarioMappingContractV04.SeedProvenance> seeds, List<ScenarioMappingContractV04.RelationshipTrace> traces,
+            List<ScenarioMappingContractV04.RealizationChainStep> chain, List<String> gaps) {
+        return new ScenarioMappingContractV04(m.schemaVersion(), m.authority(), m.capabilityId(), m.scenarioId(),
+                m.sourceRevision(), m.graphSha256(), m.frozenSemanticsSha256(), outcome, status, direct, seeds, traces, chain, gaps, m.limitations());
     }
 
-    @Test
-    void rejectsUnboundSeedUnsupportedBasisAndInferredLinkWithoutTrace() {
-        var id = identity("src/main/java/example/Owner.java", "example.Owner.find");
-        var direct = new ScenarioMappingContractV04.DirectProductionSymbolEvidence("d1", "o1", id);
-        assertThrows(RuntimeContractException.class, () -> valid(List.of(direct),
-                List.of(new ScenarioMappingContractV04.SeedProvenance("s1", "missing", id)),
-                List.of(step(1, id, "s1", ScenarioMappingContractV04.RelationshipBasis.DIRECT_TEST_REFERENCE, "d1"))));
-        assertThrows(IllegalArgumentException.class,
-                () -> ScenarioMappingContractV04.RelationshipBasis.valueOf("SEMANTIC_GUESS"));
-        assertThrows(RuntimeContractException.class, () -> valid(List.of(direct),
-                List.of(new ScenarioMappingContractV04.SeedProvenance("s1", "d1", id)),
-                List.of(step(1, id, "s1", ScenarioMappingContractV04.RelationshipBasis.GRAPHIFY_INFERRED))));
-    }
-
-    @Test
-    void rejectsEvaluatorLeakageBrokenOrderingAndSeedIdentityMismatch() {
-        var id = identity("src/main/java/example/Owner.java", "example.Owner.find");
-        var other = identity("src/main/java/example/Vet.java", "example.Vet.find");
-        var direct = new ScenarioMappingContractV04.DirectProductionSymbolEvidence("d1", "o1", id);
-        assertThrows(RuntimeContractException.class,
-                () -> new ScenarioMappingContractV04.DirectProductionSymbolEvidence("d1", "evaluator-gold/mapping-1", id));
-        assertThrows(RuntimeContractException.class, () -> valid(List.of(direct),
-                List.of(new ScenarioMappingContractV04.SeedProvenance("s1", "d1", other)),
-                List.of(step(1, other, "s1", ScenarioMappingContractV04.RelationshipBasis.DIRECT_TEST_REFERENCE, "d1"))));
-        assertThrows(RuntimeContractException.class, () -> valid(List.of(direct),
-                List.of(new ScenarioMappingContractV04.SeedProvenance("s1", "d1", id)),
-                List.of(step(2, id, "s1", ScenarioMappingContractV04.RelationshipBasis.DIRECT_TEST_REFERENCE, "d1"))));
-    }
-
-    private static ScenarioMappingContractV04 valid(
-            List<ScenarioMappingContractV04.DirectProductionSymbolEvidence> direct,
-            List<ScenarioMappingContractV04.SeedProvenance> seeds,
-            List<ScenarioMappingContractV04.RealizationChainStep> steps) {
-        return new ScenarioMappingContractV04("HYP-CAPABILITY-001", "HYP-SCENARIO-001",
-                REV, SEMANTICS, direct, seeds, steps, List.of("bounded"));
-    }
-
-    private static ScenarioMappingContractV04.ComponentIdentity identity(String path, String symbol) {
+    static ScenarioMappingContractV04.ComponentIdentity identity(String path, String symbol) {
         return new ScenarioMappingContractV04.ComponentIdentity(REV, path, ScenarioMappingContractV04.Granularity.METHOD, symbol);
-    }
-
-    private static ScenarioMappingContractV04.RealizationChainStep step(int order,
-            ScenarioMappingContractV04.ComponentIdentity identity, String seed,
-            ScenarioMappingContractV04.RelationshipBasis basis, String... traces) {
-        return new ScenarioMappingContractV04.RealizationChainStep(order, identity, basis, seed, List.of(traces));
     }
 }

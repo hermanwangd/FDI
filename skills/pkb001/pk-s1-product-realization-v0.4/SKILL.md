@@ -18,16 +18,24 @@ outside this identity and never determine equality.
 
 Every Graphify expansion starts from a production seed bound to one direct-symbol
 evidence reference. Relationship basis is exactly `DIRECT_TEST_REFERENCE` or
-`GRAPHIFY_INFERRED`. An inferred step carries the returned relationship trace;
-absence of a trace is a gap, never permission to invent a link. Graphify supplies
-structural observations and cannot infer Capability meaning.
+`GRAPHIFY_INFERRED`. An inferred step references a declared typed relationship
+trace bound to the exact source revision and graph digest. Its ordered edges must
+form one contiguous path from the declared production seed to the inferred
+component. An arbitrary text reference is not a trace. Absence, mismatch, or an
+unbound trace is a gap, never permission to invent a link. Direct references do
+not require or cite Graphify traces. Graphify supplies structural observations and
+cannot infer Capability meaning.
 
-Emit `pkb001.realization-mapping.v0.4` with `authority: PROPOSAL_ONLY`. Each scenario
-has one ordered, variable-length realization chain whose step order is contiguous
-from one. Preserve unresolved observations as gaps in later slices. Fail closed for
+Emit explicit `schema_version: pkb001.realization-mapping.v0.4` and
+`authority: PROPOSAL_ONLY`, plus exact graph and frozen-semantics digests. A
+`MAPPING_PROPOSAL` uses `COMPLETE` or `PARTIAL` evidence and requires direct
+production evidence, a bound seed, and a supported chain. `UNRESOLVED` uses
+`INSUFFICIENT`, contains no fabricated symbols, seeds, traces, or chain, and states
+at least one evidence gap. Each mapped scenario has one ordered, variable-length
+realization chain whose step order is contiguous from one. Fail closed for
 test-path components, missing identity fields, unsupported relationship basis,
 duplicate provider-neutral identity, unbound seed, evaluator leakage, revision
-mismatch, or inferred link without trace.
+mismatch, or inferred link without a revision- and digest-bound contiguous trace.
 
 The Java contract is
 `com.featuredeliveryintelligence.fdi.product.realization.ScenarioMappingContractV04`

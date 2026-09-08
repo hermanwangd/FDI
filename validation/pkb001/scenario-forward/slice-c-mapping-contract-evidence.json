@@ -9,15 +9,15 @@
   "artifacts": {
     "java_contract": {
       "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/ScenarioMappingContractV04.java",
-      "sha256": "328ff79ca50fd986eac653aa96f5999d246fdb51f4227039c0c5b5db44455fd4"
+      "sha256": "95feaad6bd66f08d7e294bd040cb16fc92c589d4164061f10c6a8619de136baf"
     },
     "json_schema": {
       "path": "validation/pkb001/schemas/realization-mapping-v0.4.schema.json",
-      "sha256": "d9293c4483574e7441aafe69020ee6ec67a2cf1b2a8ce201fd9bc4112fea4b67"
+      "sha256": "f3b81615e7266046b6476b235f4b4694e725f5d9ed50ef149643029119fddb0b"
     },
     "skill": {
       "path": "skills/pkb001/pk-s1-product-realization-v0.4/SKILL.md",
-      "sha256": "0e4f15ab3fe936146a68e021f572095e386bab22d4ad05cbb9c3613d6e9511e1"
+      "sha256": "6f7c1ae092a1867760fc133d42ef1d2ecd11520e2e7e1433a21689610cf5607a"
     }
   },
   "enforced_boundaries": [
@@ -26,18 +26,22 @@
     "DIRECT_TEST_REFERENCE_OR_GRAPHIFY_INFERRED_ONLY",
     "BOUND_SEED_PROVENANCE",
     "ORDERED_VARIABLE_LENGTH_REALIZATION_CHAIN",
+    "EXPLICIT_OUTCOME_AND_EVIDENCE_STATUS",
+    "HONEST_UNRESOLVED_WITHOUT_FABRICATED_COMPONENTS",
+    "TYPED_REVISION_AND_GRAPH_DIGEST_BOUND_RELATIONSHIP_TRACE",
+    "JAVA_JSON_SCHEMA_JAVA_ROUND_TRIP",
     "EVALUATOR_ISOLATION",
     "PRODUCTION_PATH_ONLY"
   ],
   "tdd": {
     "red": "ScenarioMappingContractV04Tests failed compilation before the Java contract existed",
-    "focused_green": "ScenarioMappingContractV04Tests and ScenarioMappingSchemaV04Tests passed"
+    "focused_green": "Eight ScenarioMappingContractV04Tests and ScenarioMappingSchemaV04Tests passed, including shared Java/schema mutations"
   },
   "semantic_publication_allowed": false,
   "graphify_runtime_boundary": "EXTERNAL_PYTHON_MCP_PROVIDER_OUTSIDE_JAVA_FRAMEWORK",
   "limitations": [
     "Slice C defines and validates the mapping data contract only.",
     "Direct Java extraction and Graphify expansion are deferred to Slices D and E.",
-    "Schema validation provides local shape checks; Java enforces cross-reference and ordering invariants."
+    "Schema validation provides local shape and outcome checks; Java additionally enforces cross-reference, trace binding, identity uniqueness, endpoints, and ordering invariants."
   ]
 }
