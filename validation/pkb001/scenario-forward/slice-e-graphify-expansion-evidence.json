@@ -6,12 +6,12 @@
   "requirement": "PKB-MAPPING-001",
   "implementation": {
     "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/graphexpansion/GraphifyProductionExpansion.java",
-    "sha256": "9328dc0e21a11fdcf015f383787d5e36a7f9fadf0b8fcc85e6298c0ca16e3c4a"
+    "sha256": "a5320e8f3a5d92482ec8937de81cb679d49f048496ec586dee42b69f639cfe0b"
   },
   "tests": {
     "path": "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/graphexpansion/GraphifyProductionExpansionTests.java",
-    "sha256": "b14e1a3429d4293a47750e6773643db2cc4c1c4260cfc3e83105bdff86b75947",
-    "focused_and_boundary_tests": 22,
+    "sha256": "f64241a413976e34bf31e03016a0546cf4ff32c9719e256064df25486a7e5aac",
+    "focused_and_boundary_tests": 24,
     "failures": 0,
     "errors": 0,
     "skipped": 0
@@ -32,7 +32,8 @@
       "max_nodes",
       "max_edges",
       "max_paths",
-      "max_result_bytes"
+      "max_result_bytes",
+      "timeout_ms"
     ],
     "binding": [
       "snapshot_id",
@@ -50,6 +51,9 @@
     "ORDERED_CONTIGUOUS_TYPED_RELATIONSHIP_TRACES",
     "TRACE_ENDPOINTS_BIND_SEED_AND_INFERRED_COMPONENT",
     "DETERMINISTIC_CYCLE_AND_DUPLICATE_HANDLING",
+    "PROVIDER_RESPONSE_NODE_EDGE_PATH_DEPTH_BYTE_AND_TIME_BOUNDS_RECHECKED",
+    "TIMED_OUT_OR_TRUNCATED_RESULT_ENVELOPE_REJECTED",
+    "SNAPSHOT_BINDING_DEEPLY_FROZEN_AGAINST_EXTERNAL_MUTATION",
     "MISSING_OR_MISMATCHED_SEED_REVISION_OR_DIGEST_FAILS_CLOSED",
     "PRODUCTION_COMPONENT_PATHS_ONLY",
     "NO_PRODUCT_MEANING_OR_TEST_TO_PRODUCTION_INFERENCE",
@@ -62,7 +66,7 @@
   },
   "limitations": [
     "This slice normalizes a provider response but does not execute a live Graphify runtime.",
-    "The existing provider adapter owns concrete Graphify tool mapping, result-byte enforcement, and runtime transport timeout.",
+    "The existing provider adapter owns concrete Graphify tool mapping and runtime transport timeout; Slice E independently rechecks the declared response byte/time envelope.",
     "Scenario semantics and direct Java test-to-production resolution remain outside Slice E and are joined only in the later authorized Slice F."
   ],
   "semantic_publication_allowed": false
