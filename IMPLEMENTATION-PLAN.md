@@ -1,10 +1,31 @@
 # PKB-001 Implementation Plan
 
-No implementation work is selected. `PKB-BL-011` is terminally closed.
-`PKB-BL-012` and the unselected correction parent `PKB-BL-028` MUST NOT start
-automatically. The Feature Delivery Plane is waiting for Human Authority to
-instruct it to begin vNext reconciliation before writing another execution
-plan or issuing an execution envelope.
+## Selected work — PKB-BL-029 vNext reconciliation
+
+- Execution ID: `SF-VNEXT-RECONCILIATION-20260909-01`
+- Base commit: `a99206722acbb79e36191e8b21a8b29bd4d439ed`
+- Human authorization: start vNext reconciliation after `PKB-BL-011` terminal closure
+- Candidate inputs: `archive/candidates/software-factory-vnext/`
+- Frozen delta digest: `e0ff263a72f974af17845b83d765e209e5645085bddf6f78465b65dbc9adf2d9`
+- Owned project-truth files: `PROJECT-OVERVIEW.md`, `FRAMEWORK-SPEC.md`, `BACKLOG.md`, `IMPLEMENTATION-PLAN.md`, `STATUS.json`
+- Compatibility instruction file: `AGENTS.md`
+- Supporting evidence: `validation/software-factory/vnext-reconciliation-evidence.json`
+
+Execution steps:
+
+1. Compare the archived candidate against Frozen Delta Spec v2 and retain only compatible PKB-001 reusable outcomes.
+2. Replace the five project-truth controls together with one internally consistent Software Factory baseline.
+3. Reconcile `AGENTS.md` as operating instructions, not project truth.
+4. Validate control references, requirement-to-backlog coverage, JSON syntax, prohibited superseded concepts, Git whitespace, Maven tests, Python transitional regression, and public validation.
+5. Commit the atomic control migration and leave `SF-BL-001` unselected until its source-baseline dependency is available.
+
+Acceptance:
+
+- The five controls describe the same active Software Factory baseline.
+- Frozen ExecutionPlan, RequirementCoverage, WorkItem, ChangeClaim, WorkItemResult, retry/replan, T4, and authority semantics match the approved delta.
+- Archived documents remain non-authoritative.
+- No PKB immutable evidence is rewritten and no product semantics are automatically published.
+- `SF-BL-001` remains blocked pending auditable Azure DevOps repository discovery and later Human selection.
 
 ## Verified delivery ledger
 

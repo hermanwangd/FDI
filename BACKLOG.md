@@ -40,6 +40,7 @@ exactly one backlog record. Status means:
 | `PKB-BL-020` | `SECURITY` | `PKB-ISOLATION-001` | Enforce proposal-only output and evaluator-gold isolation. | `VERIFIED` | PK-S1 v0.2 isolation tests passed. |
 | `PKB-BL-021` | `VALIDATION` | `PKB-COMPARISON-001` | Compare path, type, symbol, component, chain, and channel separately. | `VERIFIED` | Deterministic comparator regression passed. |
 | `PKB-BL-022` | `VALIDATION` | `PKB-READINESS-001` | Fail closed unless every next-run input and identity is verified. | `VERIFIED` | Schema, API/CLI, mutation, and clean-copy tests passed. |
+| `PKB-BL-029` | `DOCUMENTATION` | Human Authority-approved vNext reconciliation using Frozen Delta Spec v2 | Reconcile the archived vNext candidate with the post-BL-011 frozen decisions and atomically migrate the five project-truth controls without promoting conflicting runtime contracts. | `IN_PROGRESS` | Selected by Human Authority after BL-011 terminal closure; active plan: `IMPLEMENTATION-PLAN.md`. |
 
 
 ## Maturity

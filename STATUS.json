@@ -19,10 +19,16 @@
     "m1_backlogged": 6,
     "next_experiment_readiness": "NOT_READY"
   },
-  "active_backlog_item": null,
-  "active_implementation_plan": null,
-  "next_action": "Wait for Human Authority instruction to start vNext reconciliation; do not automatically select PKB-BL-012 or PKB-BL-028.",
-  "active_execution": null,
+  "active_backlog_item": "PKB-BL-029",
+  "active_implementation_plan": "IMPLEMENTATION-PLAN.md#selected-work--pkb-bl-029-vnext-reconciliation",
+  "next_action": "Reconcile the archived vNext candidate with Frozen Delta Spec v2 and atomically migrate the five project-truth controls.",
+  "active_execution": {
+    "execution_id": "SF-VNEXT-RECONCILIATION-20260909-01",
+    "base_commit": "a99206722acbb79e36191e8b21a8b29bd4d439ed",
+    "selected_backlog_items": ["PKB-BL-029"],
+    "execution_state": "IN_PROGRESS",
+    "integration_candidate": null
+  },
   "framework_language_target": "JAVA_17_SPRING_BOOT_3_4_1",
   "external_graphify_runtime": "PYTHON_MCP_PROVIDER_OUTSIDE_FRAMEWORK_MIGRATION",
   "python_framework_status": "ALL_REPOSITORY_CONSUMERS_MIGRATED_TO_JAVA_REMAINING_PYTHON_IS_TRANSITIONAL_TESTS_AND_VALIDATORS",
