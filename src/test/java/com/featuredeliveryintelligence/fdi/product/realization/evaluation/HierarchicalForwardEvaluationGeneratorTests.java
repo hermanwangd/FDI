@@ -34,4 +34,13 @@ class HierarchicalForwardEvaluationGeneratorTests {
         RuntimeContractException error=assertThrows(RuntimeContractException.class,()->HierarchicalForwardEvaluationGenerator.generate(root,second));
         assertTrue(error.getMessage().contains("non-evaluator digest mismatch"));
     }
+
+    @Test void refusesChangedExistingArtifactAndCheckedInArtifactsReproduceExactly() throws Exception {
+        HierarchicalForwardEvaluationGenerator.generate(Path.of("."),first);
+        Path report=first.resolve(HierarchicalForwardEvaluationGenerator.REPORT_PATH);Files.writeString(report,"changed");
+        assertThrows(RuntimeContractException.class,()->HierarchicalForwardEvaluationGenerator.generate(Path.of("."),first));
+        Path reproduced=generateSecond();
+        assertArrayEquals(Files.readAllBytes(Path.of(HierarchicalForwardEvaluationGenerator.REPORT_PATH)),Files.readAllBytes(reproduced));
+    }
+    private Path generateSecond(){HierarchicalForwardEvaluationGenerator.generate(Path.of("."),second);return second.resolve(HierarchicalForwardEvaluationGenerator.REPORT_PATH);}
 }
