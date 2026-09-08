@@ -66,8 +66,59 @@
     "source_digests_verified": true,
     "live_readback_verified": false,
     "effective_runtime_loading_verified": false,
-    "handoff_target_probe": "NOT_RUN",
+    "handoff_target_probe": "PASS",
     "in_flight_execution_impact_reconciled": false
+  },
+  "handoff_target_probe_evidence": {
+    "status": "PASS",
+    "probe_project": {
+      "id": "b3d3b17d-a1f3-446d-b9de-f837f0ac0550",
+      "marker": "SF-INSTR-PROBE-20260908-A",
+      "workflow_release": "sf-execution-workflow/0.1.0-rc1-probe-a",
+      "description_byte_length": 495,
+      "description_sha256": "3041ca1e06bea05c4354f3f31217e9cebe3a1ee31d132b06d7674bba0b19e6b4"
+    },
+    "probe_role": {
+      "id": "a2c19762-a0d7-4442-880e-1bba145b1c97",
+      "source_role_id": "bae95d27-dc8e-4491-9766-37320b8ecc11",
+      "effective_instruction_byte_length": 2655,
+      "effective_instruction_sha256": "761434f4d450a5162938f92d5d08e29123626f2e66f63f03e29e8448b60808fb"
+    },
+    "read_only_stage": {
+      "issue": "HERM-353",
+      "issue_id": "01a07f99-d331-7c77-9497-e871f539652e",
+      "run_id": "01a07f99-d34a-7cf2-a811-073d1b55b346",
+      "observed_project_marker": "SF-INSTR-PROBE-20260908-A",
+      "observed_workflow_release": "sf-execution-workflow/0.1.0-rc1-probe-a",
+      "expected_target_id": "4305a761-e7d4-46d8-be4e-464dce67d1d9",
+      "actual_target_id": "4305a761-e7d4-46d8-be4e-464dce67d1d9",
+      "injected_markers": [
+        "BEGIN MULTICA-RUNTIME",
+        "Project Context",
+        ".multica/project/resources.json"
+      ],
+      "structured_mentions_posted": 0,
+      "repository_mutations": 0
+    },
+    "routing_stage": {
+      "issue": "HERM-354",
+      "issue_id": "01a07f9b-7203-7260-ac98-21670355ebfb",
+      "probe_role_run_id": "01a07f9b-7212-7bc7-a7b2-7f60f1d03998",
+      "trigger_comment_id": "01a07f9b-dd7e-79ea-98e5-1c3093cedb67",
+      "coordinator_run_id": "01a07f9b-dd8a-74c4-92cb-838c3b0f4ff1",
+      "coordinator_target_id": "4305a761-e7d4-46d8-be4e-464dce67d1d9",
+      "candidate": "NO_REPOSITORY_CANDIDATE",
+      "structured_mentions_posted": 1,
+      "attributable_coordinator_runs": 1,
+      "duplicate_or_wrong_agent_runs": 0,
+      "repository_mutations": 0
+    },
+    "cleanup": {
+      "probe_agent_archived": true,
+      "probe_project_status": "completed",
+      "production_project_modified": false,
+      "production_role_modified": false
+    }
   },
   "release_rule": "Do not publish until explicit live-settings authorization, in-flight impact reconciliation, exact read-back comparison, and the handoff-target runtime probe pass."
 }
