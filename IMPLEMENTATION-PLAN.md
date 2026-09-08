@@ -28,39 +28,17 @@ formal identity during scoring.
 - Evaluator-only truth remains inaccessible before generation inputs are sealed.
 - Product truth and semantic publication remain false.
 
-## Delivery slice
+## Closure gate
 
-### Task 1 — immutable provider-neutral evaluator truth
-
-**Files:**
-
-- Create `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/evaluation/ProviderNeutralEvaluatorTruth.java`
-- Create `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/evaluation/ProviderNeutralEvaluatorTruthGenerator.java`
-- Create matching JUnit tests under `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/evaluation/`
-- Create `validation/pkb001/evaluator/petclinic-818c413/gold-mappings-v2.json`
-- Create `validation/pkb001/evaluator/petclinic-818c413/ground-truth-seal-v2.json`
-- Modify Slice G evaluator/tests to load v2 identities directly
-
-Required behavior:
-
-1. Start with failing tests for exact 24-component migration, method `#`
-   normalization, type normalization, duplicate preservation by capability,
-   canonical revision/path validation, immutable legacy bytes, and fail-closed
-   digest/source/graph/status/isolation mismatches.
-2. Implement deterministic Java migration from the legacy sealed truth and
-   frozen Graph snapshot. No Product Knowledge or generation artifact may be an
-   input to migration.
-3. Store explicit provider-neutral component identity on every expected
-   component while retaining legacy `component_ref`, Graph node, source path,
-   and source location as evaluator provenance.
-4. Emit v2 gold with `EVALUATOR_ONLY_FROZEN` and v2 seal with `SEALED`; bind
-   exact legacy gold/seal, graph, source revision, v2 gold, generator identity,
-   and `generation_access: DENIED`.
-5. Make Slice G validate v2 seal/gold and compare only the stored normalized
-   identities. Provider-native fields remain diagnostics and receive no formal
-   component credit.
-6. Reproduce v2 artifacts byte-identically, run focused tests, and commit one
-   exact candidate without changing active controls.
+The delivery slice is integrated at
+`0293f5bde0236710b17bacd1703dbb7797425388`, independently reviewed PASS, and
+fully regressed. v2 gold SHA-256 is
+`22292caf3b8f55ff418b0716dce32da19e93974555ef597da1705674b467c385`;
+v2 seal SHA-256 is
+`2b343bc780b1f7a785bd5595ff932cb4dd447a859d3db955958b0215e7342ce0`.
+The Feature Delivery Plane MUST NOT mark `PKB-BL-010` `VERIFIED` until Human
+Authority confirms terminal closure. After confirmation, `PKB-BL-011` becomes
+eligible.
 
 ## Review and integration gates
 
@@ -85,6 +63,7 @@ Terminal `PKB-BL-010` closure still requires Human Authority confirmation.
 | Backlog | Delivered behavior | Evidence |
 |---|---|---|
 | `PKB-BL-007` | Scenario-grounded Forward Slices C–G | Integrated code `587efeeea0ed638f5328fb3f746177455ee9bfcf`; independent PASS; Maven 1010, pytest 62, public 9/9; Human closure confirmed |
+| `PKB-BL-010` | Immutable provider-neutral evaluator truth v2 and direct Slice G consumption | Integrated code `0293f5bde0236710b17bacd1703dbb7797425388`; v2 gold `22292caf3b8f55ff418b0716dce32da19e93974555ef597da1705674b467c385`; independent PASS; Maven 1017, pytest 62, public 9/9 |
 | `PKB-BL-009` | Deterministic Java Reverse proposal generation | Candidate `472b0427725002492fb226e85b684355d2fdc012`; independent PASS |
 | `PKB-BL-026` | Repository-owned framework consumers migrated to Java | `validation/pkb001/java-migration/python-framework-inventory.json` |
 | `PKB-BL-027` | Portable Graphify runtime and bounded Java MCP lifecycle | `validation/pkb001/runtime/pkb-bl027-portable-runtime-evidence.json` |
