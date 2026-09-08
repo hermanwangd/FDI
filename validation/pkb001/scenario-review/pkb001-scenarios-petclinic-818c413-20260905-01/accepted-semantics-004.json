@@ -1,0 +1,140 @@
+{
+  "schema_version": "pkb001.reviewed-experiment-semantics.v0.1",
+  "snapshot_id": "pkb001-petclinic-reviewed-semantics-004",
+  "status": "FROZEN",
+  "authority": "REVIEWED_EXPERIMENT_SEMANTICS",
+  "owner": "HUMAN_REVIEWER",
+  "applicable_source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "capabilities": [
+    {
+      "capability_id": "HYP-CAPABILITY-001",
+      "title": "飼主查詢與詳細資料檢視",
+      "description": "讓使用者依姓名條件尋找飼主，並從查詢結果進入個別飼主的詳細資料。",
+      "includes": ["姓名條件查詢", "多筆結果分批瀏覽", "個別詳細資料檢視"],
+      "excludes": ["新增或修改飼主資料", "寵物資料維護"],
+      "non_goals": ["規定搜尋排序或內部資料查詢方式"],
+      "scenarios": [
+        {
+          "scenario_id": "HYP-SCENARIO-001",
+          "title": "依姓氏找到一筆或多筆飼主資料",
+          "given": ["系統中已有姓氏符合查詢條件的飼主資料。"],
+          "when": "使用者以姓氏輸入查詢條件。",
+          "then": ["系統顯示符合條件的飼主。", "結果較多時可以分批瀏覽。", "使用者可以選取一筆查看詳細資料。"],
+          "scope": "REQUIRED_ACCEPTANCE"
+        },
+        {
+          "scenario_id": "HYP-SCENARIO-002",
+          "title": "查詢條件含前後空白仍可使用",
+          "given": ["系統中已有可由某個姓氏條件找到的飼主資料。"],
+          "when": "使用者在姓氏前後加入空白後送出查詢。",
+          "then": ["系統以正規化後的條件進行查詢。", "原本可找到的資料不會只因前後空白而遺漏。"],
+          "scope": "REQUIRED_ACCEPTANCE"
+        }
+      ]
+    },
+    {
+      "capability_id": "HYP-CAPABILITY-002",
+      "title": "飼主基本資料建立與更新",
+      "description": "讓使用者建立新的飼主資料，並在日後修正既有飼主的聯絡資訊。",
+      "includes": ["建立飼主資料", "檢視後更新聯絡資訊", "維持目標資料身分一致"],
+      "excludes": ["刪除飼主", "合併重複飼主", "帳號或權限管理"],
+      "non_goals": ["規定內部儲存或頁面導向方式"],
+      "scenarios": [
+        {
+          "scenario_id": "HYP-SCENARIO-003",
+          "title": "建立新的飼主資料",
+          "given": ["使用者持有建立飼主所需的有效基本與聯絡資料。"],
+          "when": "使用者送出新的飼主資料。",
+          "then": ["系統建立一筆可後續查詢與檢視的飼主資料。"],
+          "scope": "REQUIRED_ACCEPTANCE"
+        },
+        {
+          "scenario_id": "HYP-SCENARIO-004",
+          "title": "更新既有飼主的聯絡資料",
+          "given": ["已有一筆可識別的飼主資料。"],
+          "when": "使用者修改該飼主的聯絡資料並送出。",
+          "then": ["系統更新正確的飼主資料。", "重新檢視時呈現修改後內容。"],
+          "scope": "REQUIRED_ACCEPTANCE"
+        }
+      ]
+    },
+    {
+      "capability_id": "HYP-CAPABILITY-003",
+      "title": "飼主名下寵物資料與同名限制",
+      "description": "讓使用者在特定飼主名下建立或更新寵物資料，並避免同一飼主名下出現重複名稱。",
+      "includes": ["選擇寵物類型", "建立與更新寵物資料", "同一飼主範圍內的名稱唯一性檢查"],
+      "excludes": ["跨飼主的全域名稱唯一性", "移轉寵物所屬飼主", "刪除寵物"],
+      "non_goals": ["規定內部唯一性或並行控制方式"],
+      "scenarios": [
+        {
+          "scenario_id": "HYP-SCENARIO-005",
+          "title": "在一位飼主名下建立寵物資料",
+          "given": ["已有一筆飼主資料。", "使用者備妥有效的寵物名稱、類型與出生資料。"],
+          "when": "使用者在該飼主名下送出新的寵物資料。",
+          "then": ["系統建立寵物資料。", "該寵物可從所屬飼主的資料中檢視。"],
+          "scope": "REQUIRED_ACCEPTANCE"
+        },
+        {
+          "scenario_id": "HYP-SCENARIO-006",
+          "title": "拒絕同一飼主名下的重複寵物名稱",
+          "given": ["一位飼主名下已有某個名稱的寵物。"],
+          "when": "使用者嘗試為同一飼主新增或更新成相同名稱的另一筆寵物資料。",
+          "then": ["系統不完成造成同名的變更。", "系統讓使用者知道名稱衝突。"],
+          "scope": "REQUIRED_ACCEPTANCE"
+        },
+        {
+          "scenario_id": "HYP-SCENARIO-011",
+          "title": "更新既有寵物資料",
+          "given": ["一位飼主名下已有一筆可識別的寵物資料。"],
+          "when": "使用者修改該寵物的有效資料並送出。",
+          "then": ["系統更新正確的寵物資料。", "重新檢視時呈現修改後內容。"],
+          "scope": "REQUIRED_ACCEPTANCE"
+        }
+      ]
+    },
+    {
+      "capability_id": "HYP-CAPABILITY-004",
+      "title": "寵物看診紀錄與日期限制",
+      "description": "讓使用者為特定寵物新增帶有日期與說明的看診紀錄，並拒絕不符合日期規則的輸入。",
+      "includes": ["指定寵物", "新增看診日期與說明", "日期邊界驗證"],
+      "excludes": ["約診排程與提醒", "帳單", "刪除或修改既有紀錄"],
+      "non_goals": ["規定日期輸入或時區儲存方式"],
+      "scenarios": [
+        {
+          "scenario_id": "HYP-SCENARIO-007",
+          "title": "新增一筆有效的看診紀錄",
+          "given": ["已有一筆寵物資料。", "使用者持有符合規則的看診日期與說明。"],
+          "when": "使用者為該寵物送出看診紀錄。",
+          "then": ["系統新增一筆看診紀錄。", "之後檢視該寵物時可以看到這筆日期與說明。"],
+          "scope": "REQUIRED_ACCEPTANCE"
+        },
+        {
+          "scenario_id": "HYP-SCENARIO-008",
+          "title": "拒絕超出允許範圍的未來看診日期",
+          "given": ["使用者正在為一筆寵物資料新增看診紀錄。"],
+          "when": "使用者送出超出系統允許日期範圍的未來日期。",
+          "then": ["系統不完成新增。", "系統提供日期不符合規則的回饋。"],
+          "scope": "REQUIRED_ACCEPTANCE"
+        }
+      ]
+    },
+    {
+      "capability_id": "HYP-CAPABILITY-005",
+      "title": "獸醫名錄與專長瀏覽",
+      "description": "讓使用者瀏覽獸醫名錄及每位獸醫的專長，資料較多時可以分批查看。",
+      "includes": ["獸醫名錄", "專長資訊", "分批瀏覽"],
+      "excludes": ["獸醫排班或預約", "建立或修改獸醫資料"],
+      "non_goals": ["規定資料輸出格式或內部排序方式"],
+      "scenarios": [
+        {
+          "scenario_id": "HYP-SCENARIO-009",
+          "title": "分批瀏覽獸醫與其專長",
+          "given": ["系統中已有多位獸醫。", "部分獸醫具有一項或多項專長。"],
+          "when": "使用者開啟獸醫名錄並切換結果批次。",
+          "then": ["系統顯示對應批次的獸醫。", "系統呈現每位獸醫可用的專長資訊。"],
+          "scope": "REQUIRED_ACCEPTANCE"
+        }
+      ]
+    }
+  ]
+}

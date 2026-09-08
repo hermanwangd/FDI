@@ -1,0 +1,64 @@
+{
+  "schema_version": "pkb001.acceptance-manifest.v0.1",
+  "scope": "COMPLETE_REVIEWED_EXPERIMENT_SLICE",
+  "status": "FROZEN",
+  "snapshot_id": "pkb001-petclinic-reviewed-semantics-004",
+  "recorded_at": "2026-09-08T13:44:46Z",
+  "reviewer_identity": "individual_experiment_owner",
+  "reviewer_identities": [
+    "current_user",
+    "individual_experiment_owner"
+  ],
+  "contract_owner_role": "HUMAN_REVIEWER",
+  "authorization": {
+    "source": "Bound experiment-owner authorization artifact",
+    "interpretation": "Freeze the complete accepted revision-2 decision set for prototype use only; this does not establish publishable Product truth."
+  },
+  "authorization_artifact": {
+    "path": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/ai-provisional-review-acceptance-001.json",
+    "sha256": "d216701258790a479e95e896581fbc717999a1ca70996cc51b1fe3c164339a77"
+  },
+  "proposal_revision": 2,
+  "proposal_sha256": "7f3e1cc546bf56c9e1f8883825bb27271561e3147b28389d3e4bfdd3d86f5be5",
+  "decision_artifact": {
+    "path": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-decisions-004.json",
+    "sha256": "98c46df1ffdf6ce57d37d6d320b644ac25778797b1ad786831f76d94e0d34f4f"
+  },
+  "semantics_artifact": {
+    "path": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004.json",
+    "sha256": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3"
+  },
+  "accepted_capability_ids": [
+    "HYP-CAPABILITY-001",
+    "HYP-CAPABILITY-002",
+    "HYP-CAPABILITY-003",
+    "HYP-CAPABILITY-004",
+    "HYP-CAPABILITY-005"
+  ],
+  "accepted_scenario_ids": [
+    "HYP-SCENARIO-001",
+    "HYP-SCENARIO-002",
+    "HYP-SCENARIO-003",
+    "HYP-SCENARIO-004",
+    "HYP-SCENARIO-005",
+    "HYP-SCENARIO-006",
+    "HYP-SCENARIO-007",
+    "HYP-SCENARIO-008",
+    "HYP-SCENARIO-009",
+    "HYP-SCENARIO-011"
+  ],
+  "rejected_capability_ids": [
+    "HYP-CAPABILITY-006"
+  ],
+  "rejected_scenario_ids": [
+    "HYP-SCENARIO-010"
+  ],
+  "remaining_pending_decisions": 0,
+  "source_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "identity_policy": "HUMAN_REVIEWER remains the contract ownership role. Historical current_user and individual_experiment_owner labels identify the same individual prototype reviewer and remain unchanged in the immutable review artifact.",
+  "forward_execution_readiness": "READY_FOR_CONTRACT_VALIDATION",
+  "forward_input_contract": "PKS1_V0_3",
+  "whole_experiment_decision": "REVISE",
+  "product_truth_established": false,
+  "semantic_publication_allowed": false
+}

@@ -50,6 +50,34 @@ class ScenarioForwardGateTests {
                 report.generationInputs().stream().map(ScenarioForwardReport.GenerationInput::kind).toList());
     }
 
+    @Test void revisionTwoAcceptedSnapshotIsContractValidWithBoundHumanAuthorization() throws Exception {
+        String folder = "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/";
+        Fixture fixture = fixture(folder + "accepted-semantics-004.json",
+                folder + "acceptance-manifest-004.json", folder + "review-decisions-004.json",
+                folder + "proposal-revision-002.json");
+
+        ScenarioForwardReport report = fixture.validate();
+
+        assertEquals(ScenarioForwardReport.Status.CONTRACT_VALID, report.status(), report.toString());
+        assertEquals(List.of(), report.mappings());
+    }
+
+    @Test void reviewerAliasesFailClosedWithoutExactHumanAuthorization() throws Exception {
+        String folder = "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/";
+        Fixture fixture = fixture(folder + "accepted-semantics-004.json",
+                folder + "acceptance-manifest-004.json", folder + "review-decisions-004.json",
+                folder + "proposal-revision-002.json");
+        fixture.mutate("ACCEPTANCE_MANIFEST", manifest ->
+                manifest.with("authorization_artifact").put("sha256", "0".repeat(64)));
+        assertBlocked(fixture, "DECISION_PROVENANCE_INVALID");
+
+        fixture = fixture(folder + "accepted-semantics-004.json",
+                folder + "acceptance-manifest-004.json", folder + "review-decisions-004.json",
+                folder + "proposal-revision-002.json");
+        fixture.mutate("ACCEPTANCE_MANIFEST", manifest -> manifest.remove("contract_owner_role"));
+        assertBlocked(fixture, "DECISION_PROVENANCE_INVALID");
+    }
+
     @Test void requestAndInputShapeDigestVersionAndForbiddenFamiliesFailClosed() throws Exception {
         Fixture fixture = fixture();
         fixture.inputs.remove(fixture.inputs.size() - 1);
@@ -228,11 +256,17 @@ class ScenarioForwardGateTests {
 
     private Fixture fixture() throws Exception {
         String folder = "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/";
+        return fixture(folder + "accepted-semantics-001.json", folder + "acceptance-manifest-001.json",
+                folder + "review-decisions-001.json", folder + "proposal.json");
+    }
+
+    private Fixture fixture(String semanticsPath, String manifestPath, String reviewPath,
+            String proposalPath) throws Exception {
         Map<String, String> paths = new LinkedHashMap<>();
-        paths.put("PRODUCT_SEMANTICS", folder + "accepted-semantics-001.json");
-        paths.put("ACCEPTANCE_MANIFEST", folder + "acceptance-manifest-001.json");
-        paths.put("REVIEW_DECISIONS", folder + "review-decisions-001.json");
-        paths.put("ORIGINAL_PROPOSAL", folder + "proposal.json");
+        paths.put("PRODUCT_SEMANTICS", semanticsPath);
+        paths.put("ACCEPTANCE_MANIFEST", manifestPath);
+        paths.put("REVIEW_DECISIONS", reviewPath);
+        paths.put("ORIGINAL_PROPOSAL", proposalPath);
         paths.put("GRAPHIFY_BINDING_EVIDENCE", "validation/pkb001/runtime/graphify-petclinic-live-evidence.json");
         paths.put("FROZEN_GRAPH", "validation/pkb001/artifacts/petclinic-graph-818c413.json");
         paths.put("PROPOSAL_SCHEMA", ScenarioForwardGate.SCHEMA_PATH);
@@ -245,36 +279,44 @@ class ScenarioForwardGateTests {
             inputs.add(new ScenarioForwardRequest.BoundInput(entry.getKey(), entry.getValue(),
                     ScenarioForwardRequestReader.sha256(Files.readAllBytes(target))));
         }
+        JsonNode copiedManifest = JSON.readTree(root.resolve(manifestPath).toFile());
+        String authorizationPath = copiedManifest.path("authorization_artifact").path("path").asText();
+        if (!authorizationPath.isBlank()) {
+            Path target = root.resolve(authorizationPath);
+            Files.createDirectories(target.getParent());
+            Files.copy(REPOSITORY.resolve(authorizationPath), target, StandardCopyOption.REPLACE_EXISTING);
+        }
         git("init", "-q");
         git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.test", "commit", "--allow-empty", "-qm", "fixture");
         ObjectNode semantics = (ObjectNode) JSON.readTree(root.resolve(paths.get("PRODUCT_SEMANTICS")).toFile());
-        ObjectNode capability = (ObjectNode) semantics.withArray("capabilities").get(0);
-        ObjectNode result = JSON.createObjectNode();
-        result.put("capability_id", capability.path("capability_id").asText());
-        result.put("source_revision", semantics.path("applicable_source_commit_sha").asText());
-        result.put("outcome", "UNRESOLVED").put("evidence_status", "INSUFFICIENT");
-        result.putArray("components");
-        ArrayNode bound = result.putArray("bound_scenarios");
-        ArrayNode traces = result.putArray("scenario_traces");
-        for (JsonNode scenario : capability.withArray("scenarios")) {
-            bound.addObject().put("scenario_id", scenario.path("scenario_id").asText())
-                    .put("capability_id", capability.path("capability_id").asText());
-            ObjectNode trace = traces.addObject().put("scenario_id", scenario.path("scenario_id").asText())
-                    .put("capability_id", capability.path("capability_id").asText());
-            trace.putArray("steps").addObject().put("behavioral_function", "Synthetic contract-only validation")
-                    .put("state", "EVIDENCE_GAP").putArray("component_refs").removeAll();
-            ObjectNode step = (ObjectNode) trace.withArray("steps").get(0);
-            step.putArray("evidence_refs"); step.put("evidence_gap", "No mapping generation performed"); step.putNull("not_applicable_reason");
-        }
-        result.putArray("limitations").add("Synthetic validation fixture, not a mapping result");
         Map<String, ScenarioForwardRequest.BoundInput> byKind = new LinkedHashMap<>();
         inputs.forEach(input -> byKind.put(input.kind(), input));
         ObjectNode proposal = JSON.createObjectNode().put("schema_version", "pkb001.realization-proposal.v0.3")
                 .put("authority", "PROPOSAL_ONLY").put("run_id", "synthetic-contract-only-fresh")
-                .put("source_revision", result.path("source_revision").asText())
+                .put("source_revision", semantics.path("applicable_source_commit_sha").asText())
                 .put("graph_sha256", byKind.get("FROZEN_GRAPH").sha256())
                 .put("semantics_sha256", byKind.get("PRODUCT_SEMANTICS").sha256());
-        proposal.putArray("capability_results").add(result);
+        ArrayNode results = proposal.putArray("capability_results");
+        for (JsonNode capability : semantics.withArray("capabilities")) {
+            ObjectNode result = results.addObject();
+            result.put("capability_id", capability.path("capability_id").asText());
+            result.put("source_revision", semantics.path("applicable_source_commit_sha").asText());
+            result.put("outcome", "UNRESOLVED").put("evidence_status", "INSUFFICIENT");
+            result.putArray("components");
+            ArrayNode bound = result.putArray("bound_scenarios");
+            ArrayNode traces = result.putArray("scenario_traces");
+            for (JsonNode scenario : capability.withArray("scenarios")) {
+                bound.addObject().put("scenario_id", scenario.path("scenario_id").asText())
+                        .put("capability_id", capability.path("capability_id").asText());
+                ObjectNode trace = traces.addObject().put("scenario_id", scenario.path("scenario_id").asText())
+                        .put("capability_id", capability.path("capability_id").asText());
+                trace.putArray("steps").addObject().put("behavioral_function", "Synthetic contract-only validation")
+                        .put("state", "EVIDENCE_GAP").putArray("component_refs").removeAll();
+                ObjectNode step = (ObjectNode) trace.withArray("steps").get(0);
+                step.putArray("evidence_refs"); step.put("evidence_gap", "No mapping generation performed"); step.putNull("not_applicable_reason");
+            }
+            result.putArray("limitations").add("Synthetic validation fixture, not a mapping result");
+        }
         return new Fixture(inputs, proposal);
     }
 

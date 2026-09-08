@@ -107,7 +107,7 @@ public final class ScenarioForwardGate {
             JsonNode proposal = request.proposal();
             runId = text(proposal, "run_id");
             if (!RUN_ID.matcher(runId).matches()) fail("RUN_ID_INVALID");
-            reviewSemantics(documents, items);
+            reviewSemantics(trustedRoot, documents, items);
             binding(documents, proposal, items);
             graphReferences(documents.get("FROZEN_GRAPH"), proposal, documents.get("PRODUCT_SEMANTICS"));
             runAvailable(trustedRoot.toAbsolutePath().normalize(), runId, documents);
@@ -207,7 +207,8 @@ public final class ScenarioForwardGate {
         } catch (IOException failure) { fail("INPUT_JSON_INVALID"); return null; }
     }
 
-    private static void reviewSemantics(Map<String, JsonNode> docs, Map<String, ScenarioForwardRequest.BoundInput> items) {
+    private static void reviewSemantics(Path root, Map<String, JsonNode> docs,
+            Map<String, ScenarioForwardRequest.BoundInput> items) {
         JsonNode semantics=docs.get("PRODUCT_SEMANTICS"), manifest=docs.get("ACCEPTANCE_MANIFEST"), review=docs.get("REVIEW_DECISIONS"), original=docs.get("ORIGINAL_PROPOSAL");
         int revision = integer(original, "proposal_revision", "PROPOSAL_BINDING_INVALID");
         if (revision < 1) fail("PROPOSAL_BINDING_INVALID");
@@ -218,7 +219,8 @@ public final class ScenarioForwardGate {
                 || !"pkb001.acceptance-manifest.v0.1".equals(text(manifest,"schema_version"))
                 || !"PROPOSAL_ONLY".equals(text(original,"authority")) || !"SCENARIO_PROPOSAL".equals(text(original,"artifact_kind"))
                 || !"SCENARIO_REVIEW_SURFACE".equals(text(review,"artifact_kind"))) fail("AUTHORITY_INVALID");
-        String digest=items.get("ORIGINAL_PROPOSAL").sha256(), reviewer=text(manifest,"reviewer_identity");
+        String digest=items.get("ORIGINAL_PROPOSAL").sha256();
+        Set<String> reviewers = reviewerIdentities(root, manifest);
         String semanticSnapshot = text(semantics, "snapshot_id");
         String manifestSnapshot = text(manifest, "snapshot_id");
         if (blank(semanticSnapshot) || blank(manifestSnapshot) || !manifestSnapshot.equals(semanticSnapshot)
@@ -234,9 +236,9 @@ public final class ScenarioForwardGate {
         ArrayNode accepted=JSON.createArrayNode(); Set<String> capIds=new HashSet<>(), scenarioIds=new HashSet<>(), allCaps=new HashSet<>(), allScenarios=new HashSet<>();
         for(JsonNode cap:review.withArray("capability_proposals")){
             String capId=text(cap,"capability_id"); if(!CAPABILITY_ID.matcher(capId).matches()) fail("CAPABILITY_ID_INVALID"); if(!allCaps.add(capId)) fail("DUPLICATE_CAPABILITY");
-            ObjectNode behavior=decisionBehavior(cap,List.of("title","description","includes","excludes","non_goals"),revision,digest,reviewer);
+            ObjectNode behavior=decisionBehavior(cap,List.of("title","description","includes","excludes","non_goals"),revision,digest,reviewers);
             ArrayNode scenarios=JSON.createArrayNode();
-            for(JsonNode scenario:cap.withArray("scenarios")){String id=text(scenario,"scenario_id");if(!SCENARIO_ID.matcher(id).matches())fail("SCENARIO_ID_INVALID");if(!allScenarios.add(id))fail("SCENARIO_MEMBERSHIP_INVALID");ObjectNode selected=decisionBehavior(scenario,List.of("title","given","when","then","scope"),revision,digest,reviewer);if(selected!=null&&behavior!=null){selected.put("scenario_id",id);scenarios.add(selected);scenarioIds.add(id);}}
+            for(JsonNode scenario:cap.withArray("scenarios")){String id=text(scenario,"scenario_id");if(!SCENARIO_ID.matcher(id).matches())fail("SCENARIO_ID_INVALID");if(!allScenarios.add(id))fail("SCENARIO_MEMBERSHIP_INVALID");ObjectNode selected=decisionBehavior(scenario,List.of("title","given","when","then","scope"),revision,digest,reviewers);if(selected!=null&&behavior!=null){selected.put("scenario_id",id);scenarios.add(selected);scenarioIds.add(id);}}
             if(behavior!=null){behavior.put("capability_id",capId);behavior.set("scenarios",scenarios);accepted.add(behavior);capIds.add(capId);}
         }
         if(accepted.isEmpty()||scenarioIds.isEmpty())fail("ACCEPTED_SET_EMPTY"); if(!accepted.equals(semantics.path("capabilities")))fail("ACCEPTED_BEHAVIOR_MISMATCH");
@@ -244,9 +246,47 @@ public final class ScenarioForwardGate {
         if(!fieldSet(semantics).equals(Set.of("schema_version","snapshot_id","status","authority","owner","applicable_source_commit_sha","capabilities")))fail("SEMANTICS_FIELDS_INVALID");
     }
 
-    private static ObjectNode decisionBehavior(JsonNode item,List<String> fields,int revision,String digest,String reviewer){
+    private static Set<String> reviewerIdentities(Path root, JsonNode manifest) {
+        String primary = text(manifest, "reviewer_identity");
+        JsonNode aliases = manifest.get("reviewer_identities");
+        if (aliases == null) return Set.of(primary);
+        if (!aliases.isArray() || aliases.isEmpty()
+                || !"HUMAN_REVIEWER".equals(text(manifest, "contract_owner_role"))) {
+            fail("DECISION_PROVENANCE_INVALID");
+        }
+        Set<String> reviewers = new HashSet<>();
+        for (JsonNode alias : aliases) {
+            if (!alias.isTextual() || blank(alias.asText()) || !reviewers.add(alias.asText())) {
+                fail("DECISION_PROVENANCE_INVALID");
+            }
+        }
+        if (!reviewers.contains(primary)) fail("DECISION_PROVENANCE_INVALID");
+        JsonNode authorization = manifest.path("authorization_artifact");
+        String path = text(authorization, "path"), digest = text(authorization, "sha256");
+        if (blank(path) || forbidden(path) || !SHA256.matcher(digest).matches()) {
+            fail("DECISION_PROVENANCE_INVALID");
+        }
+        try {
+            byte[] bytes = new ScenarioForwardRequestReader().readBoundFile(root, path);
+            JsonNode artifact = parseObject(bytes);
+            if (!digest.equals(ScenarioForwardRequestReader.sha256(bytes))
+                    || !"EXPERIMENT_OWNER_PROTOTYPE_AUTHORIZATION".equals(text(artifact, "artifact_kind"))
+                    || !"AUTHORIZED_FOR_PROTOTYPE_RECONCILIATION".equals(text(artifact, "status"))
+                    || !"INDIVIDUAL_EXPERIMENT_OWNER".equals(text(artifact, "authority"))
+                    || artifact.path("constraints").path("product_truth_established").asBoolean(true)
+                    || artifact.path("constraints").path("semantic_publication_allowed").asBoolean(true)) {
+                fail("DECISION_PROVENANCE_INVALID");
+            }
+        } catch (RuntimeException failure) {
+            if (failure instanceof GateFailure gate) throw gate;
+            fail("DECISION_PROVENANCE_INVALID");
+        }
+        return Set.copyOf(reviewers);
+    }
+
+    private static ObjectNode decisionBehavior(JsonNode item,List<String> fields,int revision,String digest,Set<String> reviewers){
         JsonNode decision=item.get("decision"); if(decision==null||decision.isNull())return null;if(!decision.isObject())fail("DECISION_INVALID");
-        if(integer(decision,"proposal_revision","DECISION_BINDING_MISMATCH")!=revision||!digest.equals(text(decision,"proposal_sha256"))||!reviewer.equals(text(decision,"reviewer_identity")))fail("DECISION_BINDING_MISMATCH");
+        if(integer(decision,"proposal_revision","DECISION_BINDING_MISMATCH")!=revision||!digest.equals(text(decision,"proposal_sha256"))||!reviewers.contains(text(decision,"reviewer_identity")))fail("DECISION_BINDING_MISMATCH");
         for(String key:List.of("reviewer_identity","reviewed_at","reason"))if(blank(text(decision,key)))fail("DECISION_PROVENANCE_INVALID");
         try{OffsetDateTime.parse(text(decision,"reviewed_at"));}catch(DateTimeParseException failure){fail("DECISION_PROVENANCE_INVALID");}
         String action=text(decision,"action");Set<String> allowed=new HashSet<>(Set.of("action","reviewer_identity","reviewed_at","reason","proposal_revision","proposal_sha256"));JsonNode source=item;
