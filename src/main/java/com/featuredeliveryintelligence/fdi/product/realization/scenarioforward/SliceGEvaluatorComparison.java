@@ -153,14 +153,14 @@ public final class SliceGEvaluatorComparison {
         if (path.isBlank() || symbol.isBlank() || granularity.isBlank()) throw fail("provider-neutral component identity is incomplete");
         return new Identity(path, granularity, symbol);
     }
-    private static Identity graphIdentity(JsonNode node) {
+    static Identity graphIdentity(JsonNode node) {
         String path = node.path("source_file").asText();
         String file = path.substring(path.lastIndexOf('/') + 1).replaceFirst("\\.java$", "");
         String pkg = path.substring("src/main/java/".length(), path.lastIndexOf('/')).replace('/', '.');
         String label = node.path("label").asText();
         if (label.startsWith(".")) {
             String method = label.substring(1).replaceFirst("\\(.*$", "");
-            return new Identity(path, "METHOD", pkg + "." + file + "." + method);
+            return new Identity(path, "METHOD", pkg + "." + file + "#" + method);
         }
         return new Identity(path, "TYPE", pkg + "." + label);
     }

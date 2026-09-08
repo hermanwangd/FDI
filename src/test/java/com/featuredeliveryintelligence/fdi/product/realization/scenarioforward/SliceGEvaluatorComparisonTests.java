@@ -116,6 +116,25 @@ class SliceGEvaluatorComparisonTests {
         assertEquals(0, report.providerNativeDiagnostics().formalComponentCredit());
     }
 
+    @Test void realGraphMethodShapeNormalizesToV04HashQualifiedSymbol() {
+        ObjectNode graphNode = JSON.createObjectNode()
+                .put("id", "ownercontroller_ownercontroller_processfindform")
+                .put("label", ".processFindForm()")
+                .put("source_file", "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java");
+        var expected = SliceGEvaluatorComparison.graphIdentity(graphNode);
+        var direct = identity("src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+                "org.springframework.samples.petclinic.owner.OwnerController#processFindForm");
+        ObjectNode proposal = JSON.createObjectNode();
+        proposal.putArray("capabilities").addObject().putArray("scenarios")
+                .add(scenario("S-1", directOnlyMapping(direct), direct, direct));
+
+        var report = SliceGEvaluatorComparison.compute(proposal,
+                new SliceGEvaluatorComparison.EvaluatorTruth("b".repeat(64), List.of(expected)), "c".repeat(64));
+
+        assertMetric(report.directSymbolRecall(), 1, 1, 1, true);
+        assertMetric(report.exactComponent(), 1, 1, 1, true);
+    }
+
     @Test void committedArtifactsReproduceByteExactly() throws Exception {
         Path output = temp.resolve("generated");
         SliceGEvaluatorComparisonGenerator.generate(Path.of("."), output);
@@ -151,6 +170,18 @@ class SliceGEvaluatorComparisonTests {
                         new ScenarioMappingContractV04.RealizationChainStep(2, inferredIdentity,
                                 ScenarioMappingContractV04.RelationshipBasis.GRAPHIFY_INFERRED, "seed-1", List.of(), "trace-1")),
                 List.of(), List.of("bounded"));
+    }
+
+    private static ScenarioMappingContractV04 directOnlyMapping(ScenarioMappingContractV04.ComponentIdentity identity) {
+        var direct = new ScenarioMappingContractV04.DirectProductionSymbolEvidence("direct-1", "observation-1", identity);
+        var seed = new ScenarioMappingContractV04.SeedProvenance("seed-1", "direct-1", identity);
+        return new ScenarioMappingContractV04(ScenarioMappingContractV04.SCHEMA_VERSION,
+                ScenarioMappingContractV04.AUTHORITY, "C-1", "S-1", REV, SHA, SHA,
+                ScenarioMappingContractV04.Outcome.MAPPING_PROPOSAL, ScenarioMappingContractV04.EvidenceStatus.COMPLETE,
+                List.of(direct), List.of(seed), List.of(),
+                List.of(new ScenarioMappingContractV04.RealizationChainStep(1, identity,
+                        ScenarioMappingContractV04.RelationshipBasis.DIRECT_TEST_REFERENCE,
+                        "seed-1", List.of("direct-1"), null)), List.of(), List.of("bounded"));
     }
 
     private static ObjectNode scenario(String id, ScenarioMappingContractV04 mapping,
