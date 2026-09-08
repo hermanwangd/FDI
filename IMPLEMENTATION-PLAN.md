@@ -13,7 +13,7 @@
 - Backlogs: `PKB-BL-025`, `PKB-BL-006`, `PKB-BL-007`
 - Requirements: `PKB-REVIEW-004`, `PKB-SCENARIO-004`, `PKB-MAPPING-001`
 - Spec revision: `c396b3cf6e3a32d55c1fb57827f2022e4409df8d`
-- Base commit: `e72bbbe26fc2b83ddc008c68d3735747b9d6d0db`
+- Base commit: `e72bbbe2866b52aad6e7a2a165d5d2b70cb9a651`
 - Execution ID: `PKB-BL-007-SCENARIO-TRACE-001`
 - Product semantics remain prototype-only; `semantic_publication_allowed` stays false.
 - External Graphify is read-only and remains outside the Java framework.
