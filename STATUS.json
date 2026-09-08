@@ -15,21 +15,21 @@
   "spec_maturity": {
     "spec_revision": "c396b3cf6e3a32d55c1fb57827f2022e4409df8d",
     "normative_requirements": 24,
-    "m3_verified": 15,
-    "m1_backlogged": 9,
+    "m3_verified": 16,
+    "m1_backlogged": 8,
     "next_experiment_readiness": "NOT_READY"
   },
-  "active_backlog_item": "PKB-BL-007",
-  "active_implementation_plan": "IMPLEMENTATION-PLAN.md#closure-gate",
-  "next_action": "Human Authority confirms or rejects terminal closure of PKB-BL-007; after confirmation, select PKB-BL-010 for sealed evaluator-truth work.",
+  "active_backlog_item": "PKB-BL-010",
+  "active_implementation_plan": "IMPLEMENTATION-PLAN.md#delivery-slice",
+  "next_action": "Dispatch PKB-BL-010 exact-base Java slice to create sealed provider-neutral evaluator truth revision 2 and update Slice G to consume it directly.",
   "active_execution": {
-    "execution_id": "PKB-BL-007-SCENARIO-TRACE-001",
-    "base_commit": "e72bbbe2866b52aad6e7a2a165d5d2b70cb9a651",
+    "execution_id": "PKB-BL-010-PROVIDER-NEUTRAL-TRUTH-001",
+    "base_commit": "e08d5e8f447538c76fe19a7bee92ce59e11f9d13",
     "selected_backlog_items": [
-      "PKB-BL-007"
+      "PKB-BL-010"
     ],
-    "execution_state": "SLICES_C_THROUGH_G_VERIFIED_AWAITING_TERMINAL_CLOSURE",
-    "integration_candidate": "587efeeea0ed638f5328fb3f746177455ee9bfcf"
+    "execution_state": "DISPATCH_READY",
+    "integration_candidate": null
   },
   "framework_language_target": "JAVA_17_SPRING_BOOT_3_4_1",
   "external_graphify_runtime": "PYTHON_MCP_PROVIDER_OUTSIDE_FRAMEWORK_MIGRATION",
@@ -41,7 +41,7 @@
   "scenario_generation": "GRAPHIFY_TEST_BEHAVIOR_AND_DELIVERY_HISTORY_PROPOSALS",
   "scenario_generator_status": "DETERMINISTIC_JAVA_MULTI_EVIDENCE_PROPOSAL_GENERATION_VERIFIED",
   "selected_backlog_items": [
-    "PKB-BL-007"
+    "PKB-BL-010"
   ],
   "review_json": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-decisions-004.json",
   "original_review_packet": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review.md",
