@@ -1,45 +1,94 @@
-# Feature Delivery Intelligence — PKB-001 Prototype
+# FDI Software Factory
 
-## Objective
+## Purpose
 
-PKB-001 tests two exact-revision hypotheses:
+FDI Software Factory turns governed Product Knowledge into verifiable Feature
+delivery while preserving the boundary between Product meaning, engineering
+design, execution, and independent correctness verification.
 
-- **Forward:** Product Semantics + Graphify structural evidence → Capability-to-Component proposals.
-- **Reverse:** Graphify structural evidence + repository test behavior + delivery
-  history → Capability and Behavior Scenario hypotheses → human review.
-
-Reverse output is always proposal-only. The Human Reviewer owns Product meaning;
-Graphify owns structural observations; repository tests and delivery history are
-evidence, not Product truth.
-
-The FDI framework target is Java 17 with Spring Boot 3.4.1. The external
-Graphify Python MCP runtime remains outside the framework migration and is
-accessed only through `CodeIntelligenceProvider` and its Graphify adapter.
+The current minimum operating target is `SF-BL-001 — Product-Knowledge-Assisted
+Feature Delivery MVP`. It will build accepted Product Context from one
+exact-revision SVSPC codebase and training material, deliver the same SPC Chart
+Management Feature through isolated Code Only and Product Knowledge arms, and
+measure whether Product Knowledge materially improves delivery.
 
 ## Active project truth
 
-Read these files in order:
+Read these project-truth controls in order:
 
-1. `PROJECT-OVERVIEW.md` — objective and boundaries.
-2. `FRAMEWORK-SPEC.md` — normative requirements and contracts.
-3. `BACKLOG.md` — one record per normative requirement and its maturity.
-4. `IMPLEMENTATION-PLAN.md` — selected work and verified delivery ledger.
-5. `STATUS.json` — machine-readable current state and next action.
+1. `PROJECT-OVERVIEW.md`
+2. `FRAMEWORK-SPEC.md`
+3. `BACKLOG.md`
+4. `IMPLEMENTATION-PLAN.md`
+5. `STATUS.json`
 
-`AGENTS.md` defines execution rules. Code, tests, schemas, and validation
-artifacts are supporting evidence. Everything under `archive/` is historical
-reference and MUST NOT determine current truth. Conflicts stop as
-`CONTEXT_CONFLICT`; agents must not infer authority from filenames or versions.
+`AGENTS.md` defines agent/workspace operating instructions; it is not an
+independent source of Product or project truth. Code, contracts, Skills, tests,
+and evidence support the controls but do not override them. Everything under
+`archive/` is historical reference only.
 
-## Prototype boundaries
+## Responsibilities
 
-PKB-001 produces bounded experiment evidence and `GO`, `REVISE`, or `STOP`
-decisions. Those decisions do not publish Product semantics. Reverse hypotheses
-and generated behavior scenarios remain proposals until the Human Reviewer
-accepts an exact version.
+```text
+Product Sources
+      ↓
+Product Knowledge
+      ↓ Resolved Product Context
+Feature Delivery: T1 → T2 → T3 → T4
+                         ↓
+                  Execution Boundary
+                         ↓
+                   Execution Plane
+```
 
-This overview intentionally contains no progress counts, selected Backlog item,
-current blocker, or next action. Requirement maturity belongs only in
-`BACKLOG.md`; current execution state belongs only in `STATUS.json`; completed
-delivery detail belongs in the compact ledger in `IMPLEMENTATION-PLAN.md` and
-Git history. This prevents duplicated status from drifting across active files.
+- **Human Authority** owns Product meaning, material scope and architecture
+  changes, Acceptance Criteria changes, publication, deployment, and terminal
+  closure.
+- **Product Knowledge** turns heterogeneous sources into observations and
+  proposals; only Human Authority acceptance creates durable Product Knowledge.
+- **Feature Delivery Plane** owns the five controls, T1–T4 progression,
+  engineering contracts, replanning, correctness routing, and closure proposals.
+- **Execution Plane** executes approved WorkItems, coordinates eligible
+  parallelism, retry, review, integration, regression, and evidence assembly.
+
+The current Execution Plane runtime may be Multica. Core contracts depend only
+on the role boundary, never on a vendor, model, agent, or orchestration product.
+
+## Delivery flow
+
+```text
+Accepted Product Knowledge
+→ T1 IntentSpec + frozen Acceptance Criteria
+→ T2 System Analysis + ChangeSurface + TechnicalDesign + DeliverySpec
+→ T3 ExecutionPlan DAG + WorkItems
+→ Execution Plane implementation and integration
+→ T4 PASS | FAIL | INCONCLUSIVE
+→ ENGINEERING_READY when PASS
+```
+
+T4 failure normally returns to T3 remediation/replanning. A TechnicalDesign
+defect returns to T2. T1 Acceptance Criteria never change merely to make T4
+pass; a Product-intent change stops the current cycle and requires Human
+Authority to create a new IntentSpec and delivery cycle.
+
+## Product Knowledge boundary
+
+Graphify provides structural observations. Repository tests provide behavioral
+evidence. Git, pull requests, and delivery history provide delivery evidence.
+None establishes Product truth automatically. Reverse discovery always produces
+proposals for Human review.
+
+PKB-001 remains immutable validation history and provides reusable Java,
+Graphify-provider, scenario, reverse-discovery, and evaluation foundations. It
+does not by itself prove that Product Knowledge improves real Feature delivery;
+`SF-BL-001` measures that question through the controlled two-arm MVP.
+
+## Technology boundary
+
+Executable FDI framework behavior uses Java 17 and Spring Boot 3.4.1. The
+external Graphify Python MCP runtime remains outside the framework behind the
+Java `CodeIntelligenceProvider` adapter. FDI must verify the installed runtime
+instead of assuming Graphify APIs.
+
+`PASS` means `ENGINEERING_READY`, not deployed, published, or delivered to
+users.

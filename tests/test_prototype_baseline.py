@@ -13,20 +13,15 @@ def test_five_active_truth_entries_exist_and_resolve():
                 'BACKLOG.md', 'IMPLEMENTATION-PLAN.md', 'STATUS.json'}
     assert all((ROOT/name).is_file() for name in expected)
     status = json.loads((ROOT/'STATUS.json').read_text())
-    assert status['current_focus'] == 'PKB-001'
+    assert status['current_focus'] == 'SF-BL-001'
     assert status['framework_spec'] == 'FRAMEWORK-SPEC.md'
     assert status['backlog'] == 'BACKLOG.md'
     assert status['implementation_plan'] == 'IMPLEMENTATION-PLAN.md'
     assert status['archived_documents_are_authority'] is False
-    assert status['semantic_publication_allowed'] is False
-    assert status['review_mode'] == 'INDIVIDUAL_EXPERIMENT_OWNER'
-    maturity = status['spec_maturity']
-    assert maturity['normative_requirements'] == (
-        maturity['m3_verified'] + maturity['m1_backlogged']
-    )
-    assert maturity['next_experiment_readiness'] == 'NOT_READY'
+    assert status['baseline_status'] == 'ACTIVE'
+    assert status['decision'] == 'NOT_RUN'
+    assert status['pkb001_foundation']['automatic_product_truth_publication'] is False
     backlog = (ROOT/status['backlog']).read_text()
-    assert maturity['spec_revision'] in backlog
     selected = status['selected_backlog_items']
     if status['active_backlog_item'] is None:
         assert selected == []
@@ -42,8 +37,7 @@ def test_five_active_truth_entries_exist_and_resolve():
         assert execution['selected_backlog_items'] == selected
         assert execution['base_commit']
         assert execution['execution_state']
-    if status['review_packet'] is not None:
-        assert (ROOT/status['review_packet']).is_file()
+    assert '| `SF-BL-001` |' in backlog
 
 
 def test_project_overview_does_not_duplicate_mutable_delivery_status():
@@ -54,26 +48,28 @@ def test_project_overview_does_not_duplicate_mutable_delivery_status():
     assert 'active_backlog_item' not in overview
 
 
-def test_every_normative_requirement_has_one_bound_backlog_record():
+def test_every_normative_requirement_is_covered_by_the_active_parent_backlog():
     import re
 
     framework = (ROOT/'FRAMEWORK-SPEC.md').read_text()
     backlog = (ROOT/'BACKLOG.md').read_text()
-    requirement_ids = re.findall(
-        r'^\| `(PKB-[A-Z]+(?:-[A-Z]+)*-\d{3})` \|', framework, re.MULTILINE,
-    )
-    records = re.findall(
-        r'^\| `(PKB-BL-\d{3})` \| `(?:FEATURE|BUG|SECURITY|TECH_DEBT|'
-        r'VALIDATION|DOCUMENTATION|OPERATION|RESEARCH)` \| '
-        r'`(PKB-[A-Z]+(?:-[A-Z]+)*-\d{3})` \|',
-        backlog, re.MULTILINE,
-    )
+    requirement_ids = set(re.findall(
+        r'^\| `([A-Z]+(?:-[A-Z0-9]+)*-\d{3})` \|',
+        framework,
+        re.MULTILINE,
+    ))
+    coverage = backlog.split('## Requirement coverage', 1)[1].split(
+        '## Completion gates', 1,
+    )[0]
+    coverage = coverage.split('```text', 1)[1].split('```', 1)[0]
+    covered_ids = set(re.findall(
+        r'\b([A-Z]+(?:-[A-Z0-9]+)*-\d{3})\b',
+        coverage,
+    ))
 
-    assert len(requirement_ids) == len(set(requirement_ids)) == 24
-    assert len(records) == len({backlog_id for backlog_id, _ in records}) == 24
-    assert {requirement_id for _, requirement_id in records} == set(requirement_ids)
-    status = json.loads((ROOT/'STATUS.json').read_text())
-    assert status['spec_maturity']['spec_revision'] in backlog
+    assert len(requirement_ids) == 30
+    assert covered_ids == requirement_ids
+    assert backlog.count('| `SF-BL-001` |') == 1
 
 
 def test_legacy_truth_surfaces_are_archived():
@@ -120,13 +116,14 @@ def test_phase0_is_ready_after_calibration_freeze_and_petclinic_evaluator_seal()
 
 def test_active_truth_discloses_blinding_and_publication_boundaries():
     status = json.loads((ROOT/'STATUS.json').read_text())
-    assert status['blinding_scope'] == 'DETERMINISTIC_LABEL_AND_ORDER_BLINDING'
-    assert status['blinding_limitation'] == (
+    foundation = status['pkb001_foundation']
+    assert foundation['blinding_scope'] == 'DETERMINISTIC_LABEL_AND_ORDER_BLINDING'
+    assert foundation['blinding_limitation'] == (
         'ARM_INFERENCE_POSSIBLE_FROM_EVIDENCE_CONTENT'
     )
     spec = (ROOT/'FRAMEWORK-SPEC.md').read_text()
-    assert 'Deterministic label/order blinding does not establish' in spec
-    assert 'without\npublishing Product semantics' in spec
+    assert 'proposal-only reverse inference' in spec
+    assert 'MUST NOT automatically publish Product Knowledge' in spec
 
 
 def test_control_files_keep_mutable_state_in_one_place():
@@ -142,19 +139,16 @@ def test_control_files_keep_mutable_state_in_one_place():
     assert 'human review remains pending' not in spec
     assert '## Completed five-consumer tranche' not in backlog
     assert '## Execution order and maturity' not in backlog
-    assert set(re.findall(r'^## .+$', backlog, re.MULTILINE)) == {
-        '## Canonical backlog ledger', '## Maturity',
-    }
+    headings = set(re.findall(r'^## .+$', backlog, re.MULTILINE))
+    assert {'## Active ledger', '## Requirement coverage',
+            '## Completion gates', '## Selection boundary'} <= headings
     assert len(plan.encode()) < 10_000
     assert 'HERM-' not in plan
     assert 'tests pass' not in plan
 
-    verified = len(re.findall(
-        r'^\| `PKB-BL-\d{3}` .* \| `VERIFIED` \|', backlog, re.MULTILINE,
-    ))
-    maturity = status['spec_maturity']
-    assert maturity['m3_verified'] == verified
-    assert maturity['m1_backlogged'] == maturity['normative_requirements'] - verified
+    assert status['active_backlog_item'] is None
+    assert status['active_implementation_plan'] is None
+    assert status['active_execution'] is None
 
 
 def test_agents_define_compact_implementation_plan_lifecycle():
@@ -243,7 +237,7 @@ def test_active_execution_contains_project_state_not_actor_identity():
 def test_agent_backlog_contract_matches_compact_ledger():
     instructions = (ROOT/'AGENTS.md').read_text()
     backlog = (ROOT/'BACKLOG.md').read_text()
-    assert '| Backlog ID | Type | Requirement | Outcome | Status | Dependency / evidence |' in backlog
+    assert '| Backlog ID | Type | Requirement binding | Outcome | Status | Dependency / evidence |' in backlog
     for field in (
         'stable Backlog ID', 'work type', 'controlling requirement ID',
         'intended outcome', 'current delivery status',

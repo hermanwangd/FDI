@@ -414,20 +414,12 @@ def test_python_framework_inventory_characterizes_the_migration_boundary():
         for consumer in consumers
         if consumer["migration_state"] != "MIGRATED_TO_JAVA"
     )
-    backlog_lines = (ROOT / "BACKLOG.md").read_text().splitlines()
+    plan = (ROOT / "IMPLEMENTATION-PLAN.md").read_text()
     for backlog_id in ("PKB-BL-026", "PKB-BL-027"):
-        backlog_row = next(
-            line for line in backlog_lines
-            if line.startswith(f"| `{backlog_id}`")
-        )
-        assert "| `VERIFIED` |" in backlog_row
+        assert f"| `{backlog_id}` |" in plan
     status = json.loads((ROOT / "STATUS.json").read_text())
     assert status["active_backlog_item"] != "PKB-BL-026"
-    verified_backlog_count = sum(
-        line.startswith("| `PKB-BL-") and "| `VERIFIED` |" in line
-        for line in backlog_lines
-    )
-    assert status["spec_maturity"]["m3_verified"] == verified_backlog_count
+    assert status["pkb001_foundation"]["status"] == "PRESERVED_IMMUTABLE_HISTORY"
 
     external = inventory["external_runtimes"]
     assert len(external) == 1

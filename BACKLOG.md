@@ -1,51 +1,91 @@
-# PKB-001 Backlog
+# Software Factory Backlog
 
-This is the canonical requirement-to-work ledger for Framework Spec revision
-`c396b3cf6e3a32d55c1fb57827f2022e4409df8d`. Each normative requirement has
-exactly one backlog record. Status means:
+This is the active Spec-to-work ledger. A Backlog state does not authorize
+execution. Human Authority selects the parent item; the Feature Delivery Plane
+then writes one bounded `IMPLEMENTATION-PLAN.md` and execution envelope.
 
-- `VERIFIED`: implementation and verification evidence exist.
-- `IN_PROGRESS`: bounded work has started but the requirement is incomplete.
-- `READY`: dependencies are satisfied and selection is allowed.
-- `BLOCKED_DEPENDENCY`: a named prerequisite is unfinished.
-- `BLOCKED_USER_APPROVAL`: explicit human selection or approval is required.
-- `NEEDS_RECONCILIATION`: delivered transitional behavior differs from the target contract.
+## Active ledger
 
-## Canonical backlog ledger
-
-| Backlog ID | Type | Requirement | Outcome | Status | Dependency / evidence |
+| Backlog ID | Type | Requirement binding | Outcome | Status | Dependency / evidence |
 |---|---|---|---|---|---|
-| `PKB-BL-026` | `TECH_DEBT` | `PKB-JAVA-001` | Migrate repository-owned Python framework consumers to Java; exclude external Graphify. | `VERIFIED` | 15/15 consumers migrated. Evidence: `validation/pkb001/java-migration/python-framework-inventory.json`. |
-| `PKB-BL-023` | `FEATURE` | `PKB-REVIEW-003` | Generate evidence-backed Capability/scenario proposals and one review surface. | `VERIFIED` | Generator and review artifacts exercised. |
-| `PKB-BL-024` | `DOCUMENTATION` | `PKB-STATUS-002` | Point status to the actual generated review material and review state. | `VERIFIED` | Active pointers validated. |
-| `PKB-BL-025` | `FEATURE` | `PKB-REVIEW-004` | Record version-bound human ACCEPT / EDIT / REJECT decisions. | `VERIFIED` | Proposal/review revision 2 contains 17 exact-digest decisions: 15 ACCEPT and 2 REJECT, zero pending. Integrated candidate `221c504340852a12b761e27fe996c41f34b7ec89`; independent Spec and code reviews PASS. |
-| `PKB-BL-004` | `VALIDATION` | `PKB-EVAL-LEGACY-001` | Adjudicate only the eleven existing evaluator disagreements. | `VERIFIED` | Candidate `45b4ba3def00d7b8adfd55153a497788b531a38a`; independent combined review PASS; evidence: `validation/pkb001/task7-evaluation/third-review-adjudication-evidence.json`. |
-| `PKB-BL-005` | `FEATURE` | `PKB-SCENARIO-003` | Make generated-scenario and review lifecycles machine-verifiable. | `VERIFIED` | Contract, validator, and tests delivered. |
-| `PKB-BL-006` | `FEATURE` | `PKB-SCENARIO-004` | Create an approved frozen scenario-bearing semantics revision without overwriting Petclinic. | `VERIFIED` | `accepted-semantics-004.json` is FROZEN with Capabilities 001–005 and Scenarios 001–009 plus 011; zero pending, exact authorization binding, Product truth/publication false. Integrated candidate `221c504340852a12b761e27fe996c41f34b7ec89`; Maven 973, pytest 62, public validation 9/9. |
-| `PKB-BL-007` | `FEATURE` | `PKB-MAPPING-001` | Carry scenario test observations through resolved production symbols into provider-neutral component identities, then expand only from production seeds to propose realization chains. | `VERIFIED` | Human Authority confirmed terminal closure after Slices C–G integrated at `587efeeea0ed638f5328fb3f746177455ee9bfcf`. The sealed comparison independently passed. Calibrated result: 0/24 direct-symbol recall, 0/24 expanded-chain coverage, 0/24 exact-component recall, 0/10 scenario coverage, and 891/1035 unresolved references; this bounded `REVISE` evidence fabricates no Product truth. |
-| `PKB-BL-008` | `RESEARCH` | `PKB-PROVIDER-001` | Verify actual Graphify UI/template capability or record the gap. | `VERIFIED` | Frozen provider contract and live MCP handshake verified. Evidence: `validation/pkb001/runtime/bl008-stage1-integration-evidence.json`. |
-| `PKB-BL-027` | `BUG` | `PKB-RUNTIME-001` | Make the external Graphify runtime workspace-portable and bound the Java stdio-MCP lifecycle. | `VERIFIED` | Candidate `a022b894ff2080390da87eeb017fa243f5afc1b7`. Evidence: `validation/pkb001/runtime/pkb-bl027-portable-runtime-evidence.json`. |
-| `PKB-BL-009` | `FEATURE` | `PKB-REVERSE-002` | Derive reviewable Capability and Behavior Scenario proposals from structural, repository-test, and delivery evidence. | `VERIFIED` | Exact candidate `472b0427725002492fb226e85b684355d2fdc012`; HERM-342 independent PASS; sealed proposal and comparison artifacts reproduced byte-identically; evaluator truth remained generation-inaccessible. |
-| `PKB-BL-010` | `VALIDATION` | `PKB-EVAL-001` | Add sealed provider-neutral component identity to evaluator truth. | `VERIFIED` | Human Authority confirmed terminal closure. Integrated candidate `0293f5bde0236710b17bacd1703dbb7797425388` adds 24 explicit provider-neutral identities in immutable v2 gold/seal, updates Slice G to bind and score that exact v2 truth, preserves legacy bytes, and passes independent review plus Maven 1017, pytest 62, public validation 9/9. |
-| `PKB-BL-011` | `VALIDATION` | `PKB-EVAL-002` | Separate scenario, chain, component, and diagnostic measures. | `VERIFIED` | Human Authority confirmed terminal closure. Integrated candidate `17b8357e360f6d49dcfda4c80211b88e00b82d00` emits immutable separated semantic, scenario, chain, component, and diagnostic metrics. Exact and chain credit use bounded one-to-one provider-neutral identity matching; supporting/provider diagnostics receive zero formal credit; capability alignment is unscored because no sealed crosswalk exists. Independent review PASS; Maven 1028, pytest 62, public validation 9/9. |
-| `PKB-BL-028` | `BUG` | Source: `PKB-BL-007` calibrated REVISE result and `PKB-BL-011` hierarchical evaluation | Correct the misleading unresolved-reference denominator, recover only mechanically provable production receiver references, and enable evidence-backed scenario mapping without turning external or test-helper calls into Product truth. | `BLOCKED_DEPENDENCY` | Not selected. Await vNext reconciliation and later explicit selection. Must use a new immutable run; completed PKB-BL-007 evidence remains unchanged. |
-| `PKB-BL-012` | `VALIDATION` | `PKB-CALIBRATION-001` | Freeze justified numeric acceptance thresholds before the next run. | `BLOCKED_DEPENDENCY` | BL-011 is closed, but threshold preregistration is not selected and is held behind the instructed vNext reconciliation. |
-| `PKB-BL-013` | `RESEARCH` | `PKB-HOLDOUT-001` | Propose, approve, and seal one holdout at an exact revision. | `BLOCKED_USER_APPROVAL` | User selection required; no execution. |
-| `PKB-BL-014` | `VALIDATION` | `PKB-PROTOCOL-001` | Bind every next-experiment input and digest in a frozen protocol. | `BLOCKED_DEPENDENCY` | Depends on BL-006 through BL-013. |
-| `PKB-BL-015` | `VALIDATION` | `PKB-REGRESSION-001` | Run Petclinic regression under the frozen new protocol. | `BLOCKED_DEPENDENCY` | Depends on BL-014. |
-| `PKB-BL-016` | `VALIDATION` | `PKB-HOLDOUT-002` | Execute the sealed holdout once, blind and immutable. | `BLOCKED_DEPENDENCY` | Depends on BL-015. |
-| `PKB-BL-017` | `VALIDATION` | `PKB-DECISION-001` | Review experiment evidence and issue GO / REVISE / STOP. | `BLOCKED_DEPENDENCY` | Depends on BL-016. |
-| `PKB-BL-018` | `FEATURE` | `PKB-COMPONENT-001` | Enforce durable Java structural component identity. | `VERIFIED` | Tasks/commits `d483c39d`, `b634d0fb`; regression passed. |
-| `PKB-BL-019` | `FEATURE` | `PKB-PROPOSAL-001` | Enforce immutable proposal and authority boundaries in Java. | `VERIFIED` | Tasks/commits `40adc0c`, `383cac7`; regression passed. |
-| `PKB-BL-020` | `SECURITY` | `PKB-ISOLATION-001` | Enforce proposal-only output and evaluator-gold isolation. | `VERIFIED` | PK-S1 v0.2 isolation tests passed. |
-| `PKB-BL-021` | `VALIDATION` | `PKB-COMPARISON-001` | Compare path, type, symbol, component, chain, and channel separately. | `VERIFIED` | Deterministic comparator regression passed. |
-| `PKB-BL-022` | `VALIDATION` | `PKB-READINESS-001` | Fail closed unless every next-run input and identity is verified. | `VERIFIED` | Schema, API/CLI, mutation, and clean-copy tests passed. |
-| `PKB-BL-029` | `DOCUMENTATION` | Human Authority-approved vNext reconciliation using Frozen Delta Spec v2 | Reconcile the archived vNext candidate with the post-BL-011 frozen decisions and atomically migrate the five project-truth controls without promoting conflicting runtime contracts. | `IN_PROGRESS` | Selected by Human Authority after BL-011 terminal closure; active plan: `IMPLEMENTATION-PLAN.md`. |
+| `SF-BL-001` | `FEATURE` | `AUTH-*`, `PK-*`, `FD-T1-*`–`FD-T4-*`, `EXEC-*`, `EVID-*`, `SF-EVAL-001`, `TECH-001` | Build accepted Product Context from one exact-revision SVSPC repository and training material; deliver the same SPC Chart Management Feature through isolated Code Only and Product Knowledge T1–T4 arms; compare correctness, first-pass outcome, rework, cycle time, token/tool cost, and bootstrap cost. | `BLOCKED_DEPENDENCY` | First obtain an auditable read-only Azure DevOps repository listing for `organization=tsmcid`, `project=ENGCIM`, name prefix `SVSPC`. No repository is selected yet. |
 
+`SF-BL-001` is one parent item. Its gates and capability list are acceptance
+structure, not child Backlog items.
 
-## Maturity
+## Requirement coverage
 
-24 normative requirements: 18 `VERIFIED`, 6 below M3. `PKB-BL-028` is an
-additional non-Spec bug record and is not included in the normative-requirement
-count. Dependencies and approval blocks are authoritative in the ledger above. Selection and next action belong
-only in `IMPLEMENTATION-PLAN.md` and `STATUS.json`.
+`SF-BL-001` covers the current implementation gap for:
+
+```text
+AUTH-001 AUTH-002 AUTH-003
+PK-001 PK-002 PK-003 PK-004 PK-005
+FD-T1-001 FD-T1-002
+FD-T2-001 FD-T2-002 FD-T2-003 FD-T2-004
+FD-T3-001 FD-T3-002 FD-T3-003 FD-T3-004 FD-T3-005 FD-T3-006 FD-T3-007
+EXEC-001 EXEC-002 EVID-001
+FD-T4-001 FD-T4-002 FD-T4-003 FD-T4-004
+SF-EVAL-001 TECH-001
+```
+
+## Completion gates
+
+1. **Source Baseline** — Human Authority selects one listed SVSPC repository;
+   exact Git revision and immutable snapshot are bound.
+2. **Accepted Product Context** — training material plus exact-revision
+   code/test/history/Graphify evidence produces a versioned Human-accepted
+   Product Context; evidence remains distinct from Product truth.
+3. **Reusable Factory Capability** — the minimum reusable capabilities below
+   expose versioned contracts and have independent verification.
+4. **Frozen A/P Protocol** — Code Only and Product Knowledge arms share the
+   same Feature request, source baseline, frozen Acceptance Criteria, T1–T4
+   contracts, measurement rules, budget, and stopping rules; allowed inputs and
+   isolation boundaries are frozen before delivery begins.
+5. **T1–T4 Delivery** — both isolated arms produce exact IntentSpec,
+   DeliverySpec, ExecutionPlan, integrated candidate, evidence, and independent
+   T4 verdict.
+6. **Comparative Decision** — report Product correctness, first T4 outcome,
+   remediation/replan count, wrong-surface changes, regression defects, cycle
+   time, token/tool cost, and Product Knowledge bootstrap cost, then record one
+   bounded `GO`, `REVISE`, or `STOP` decision.
+
+## Minimum reusable capabilities
+
+- `PA-Codebase-Inventory`
+- `PA-Historical-Delivery`
+- `PK-S1 Product Semantics Synthesis`
+- `PK-S2 Product Realization Synthesis`
+- `FD-Feature-Delivery`
+- `ProductContextValidator`
+- `FeatureDeliveryContractValidator`
+- `DeliveryEvidenceValidator`
+
+Existing PKB-001 implementation may satisfy part of a capability only when its
+exact contract and verification evidence are compatible with the active Spec.
+Compatibility must be demonstrated; maturity is not inherited by name.
+
+## Isolation rules
+
+- Arm A (Code Only) may use only the frozen Feature demand, exact source
+  baseline, and protocol-approved code/test/history/tool inputs. It may not use
+  training material, Product Context, Arm P artifacts, or evaluator truth.
+- Arm P (Product Knowledge) receives the same allowed baseline plus the exact
+  accepted Product Context. It may not access Arm A artifacts or evaluator truth.
+- Product Knowledge must not contain the new Feature's correct implementation,
+  hidden tests, expected components, evaluator mappings, or post-run decisions.
+- Workspaces, prompts, evidence stores, sessions, and output paths are isolated.
+  An isolation or provenance failure invalidates the affected comparison.
+
+## Explicit exclusions
+
+This MVP does not authorize a knowledge-graph database, automatic semantic
+publication, multi-product federation, production deployment, real-time
+equipment integration, a new Factory Control runtime, or one Skill per source
+format.
+
+## Selection boundary
+
+The Azure DevOps listing is read-only discovery, not repository selection.
+Repository selection, retrieval, training-material access, Graphify indexing,
+Product Context acceptance, A/P execution, and terminal closure occur only at
+their defined authority gates. No work is currently selected.

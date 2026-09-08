@@ -1,4 +1,4 @@
-# FDI Agent Instructions
+# FDI Software Factory Agent Instructions
 
 ## Mandatory Read Order
 
@@ -127,6 +127,17 @@ read-only envelope containing the execution ID, Backlog and requirement IDs,
 exact Spec revision and base commit, owned and excluded paths, scope, acceptance
 and negative cases, required verification/review/integration, resource limits,
 and Human-only boundaries.
+
+The envelope is a materialized runtime input, not a new engineering authority.
+Its resolved content must retain references and digests to the governing
+ExecutionPlan, WorkItem, DeliverySpec, and evidence requirements. Runtime routing
+fields may exist in the envelope but must not be added to the logical WorkItem.
+
+Logical execution contracts follow `FRAMEWORK-SPEC.md`: ExecutionPlan owns the
+DAG and DeliveryRequirement-to-WorkItem coverage; ChangeClaims reference
+governed T2 ChangeSurfaces and are hard mutation boundaries. Parallel execution
+requires both dependency safety and provable mutation non-overlap. Unknown
+overlap is a conflict, not permission to run concurrently.
 
 Before dispatch, the Feature Delivery Plane resolves every revision named in the
 envelope to a full 40-character commit and verifies required ancestry. The
@@ -313,24 +324,26 @@ Calculate overall readiness from mandatory gates, not an average maturity
 percentage. One unresolved authority, isolation, binding, or evidence-integrity
 gate prevents a ready claim even when most other requirements are verified.
 
-## PKB-001 Principles
+## Software Factory Principles
 
-Current prototype focus is defined by `STATUS.json`.
+Current focus and phase are defined only by `STATUS.json`.
 
-For PKB-001:
-
-- The user is the sole Human Reviewer / Experiment Owner.
-- Agents propose Capabilities and Behavior Scenarios from Graphify and delivery history.
-- The user reviews with ACCEPT / EDIT / REJECT; only accepted versions enter frozen experiment semantics.
-- Evidence references stay separate from implementation-agnostic scenario text.
-- No Product Team organization or Stage A/B packet split is required.
-- Report reconstruction consistency and reviewer exposure honestly; it is not independent product-requirements validation.
-- Graphify provides structural evidence, not Product truth.
-- Delivery History provides historical evidence, not Product truth.
-- `Product Semantics + Structural Intelligence → Capability → Component` is the forward experiment.
-- `Structural Intelligence + Delivery History → Capability Hypothesis` is the reverse experiment.
-- Reverse inference produces proposals only and requires human review.
-- Do not automatically publish inferred Product Semantics.
+- One individual may act as Human Authority for a prototype; an organizational
+  Product Team is not required.
+- Agents may propose Capabilities and Behavior Scenarios from training material,
+  Graphify, repository tests, and delivery history. Only exact Human-accepted
+  versions enter Product Context or T1.
+- Evidence references stay separate from implementation-agnostic semantic text.
+- Graphify provides structural evidence, repository tests provide behavioral
+  evidence, and delivery history provides historical evidence; none is Product
+  truth.
+- Reverse inference is proposal-only and must not automatically publish Product
+  Knowledge.
+- T1 Acceptance Criteria are immutable within a delivery cycle. T4 revision
+  routes to T3 or T2; a Product-intent change stops the cycle and requires a new
+  Human-authorized IntentSpec.
+- WorkItem completion is not T4 correctness. T4 `PASS` means
+  `ENGINEERING_READY`, not deployed or delivered.
 
 ## Java Framework Rule
 

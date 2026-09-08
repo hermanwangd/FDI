@@ -1,0 +1,37 @@
+{
+  "schema_version": "fdi.software-factory.vnext-reconciliation-evidence.v1",
+  "execution_id": "SF-VNEXT-RECONCILIATION-20260909-01",
+  "base_commit": "a99206722acbb79e36191e8b21a8b29bd4d439ed",
+  "human_authority_instruction": "Start vNext reconciliation and atomic migration after PKB-BL-011 terminal closure.",
+  "inputs": {
+    "archived_candidate_project_overview_sha256": "0818e55cd2f575158c5745cedf4a7bc4aa5534cddf2583ecc5d4a88b9ab65b93",
+    "archived_candidate_framework_spec_sha256": "a37d886a84960b1d62383f0e35958dac18f0c61456ccccc14eea621fa6e38ab0",
+    "archived_candidate_backlog_sha256": "67cf7863dd2b290cb639080263767c8799c5aeafa3b985c1697330ae13890a33",
+    "archived_candidate_agents_sha256": "f541d475ebca12b6f06a055558033b53e6177cd1c0fc0a75d579bcc9e20e5b0c",
+    "frozen_delta_spec_v2_sha256": "e0ff263a72f974af17845b83d765e209e5645085bddf6f78465b65dbc9adf2d9"
+  },
+  "reconciliation": {
+    "archived_candidate_promoted_unchanged": false,
+    "five_project_truth_controls_migrated_together": true,
+    "agents_md_classification": "OPERATING_INSTRUCTIONS_NOT_PROJECT_TRUTH",
+    "pkb001_evidence_rewritten": false,
+    "automatic_product_truth_publication": false,
+    "superseded_factory_runtime_reintroduced": false
+  },
+  "outputs": {
+    "project_overview_sha256": "c3e68658484878f5b8b6f58ebdc1916e88be9b50bb440d7cc288f507a2971e52",
+    "framework_spec_sha256": "8bbb23ba499cfcd43773c8143ecf2cf281623e70a161429f7c40e5f747851384",
+    "backlog_sha256": "eea13a3bd549129778709807088e895981f8c865e25f2734a1c65373ff91d50d",
+    "implementation_plan_sha256": "63cfb4c7f9f02319d2a135d4ced775774cafd0e0780cfea5a00bf5f148b62c26",
+    "status_sha256": "12d52554d03a1954b622243382ba87b2c8c2272e47ff0457b5cee33a97029185",
+    "agents_sha256": "70f30f5f83d701d8563474d88c1a89439553a2f27622998340a84ddfbfc1947f"
+  },
+  "verification": {
+    "status": "PASS",
+    "maven_tests": 1028,
+    "pytest_tests": 62,
+    "public_validation_checks": 9,
+    "json_validation": "PASS",
+    "git_diff_check": "PASS"
+  }
+}
