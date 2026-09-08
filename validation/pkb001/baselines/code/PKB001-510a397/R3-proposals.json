@@ -1,0 +1,273 @@
+{
+  "set_id": "pkb001-r3-proposals-v1",
+  "run_id": "PKB001-R3-510a397",
+  "arm": "R3",
+  "source_commit_sha": "510a397c134324026fe6b20333dfbfa645ab67b4",
+  "graph_artifact_sha256": "b416bded2b325e01bbecb97f5c07cd0a65225a27b890a5f4972f15f893808509",
+  "authority_status": "PROPOSAL_ONLY",
+  "proposals": [
+    {
+      "proposal_id": "R3-application",
+      "arm": "R3",
+      "target_id": "application",
+      "relation_type": "CAPABILITY_HYPOTHESIS",
+      "operation": "CREATE",
+      "label": "Application implemented delivery capability",
+      "component_refs": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/application/Dev204Cli.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/application/FdiApplication.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/application/RuntimeCapabilities.java"
+      ],
+      "evidence_refs": [
+        "git-commit:35c6e115b08d576b81076d1297b5f1426c6376d0",
+        "git-commit:69d1ef15ba65c552ec1623b08b7bd51ee296e03d",
+        "git-commit:846e20493471a76d11e2b1d04470aa9a448df2c3",
+        "git-commit:a9676f6375ab3b34418e4fa692c4bdc620e07b47",
+        "git-commit:c6db0af1f882760e142835d025eb0eb4a0a34541",
+        "graph-node:dev204cli@L1",
+        "graph-node:dev204cli_dev204cli@L1",
+        "graph-node:dev204cli_dev204cli_dev204cli@L1",
+        "graph-node:dev204cli_dev204cli_handles@L1",
+        "graph-node:dev204cli_dev204cli_req@L1",
+        "graph-node:fdiapplication@L1",
+        "graph-node:fdiapplication_fdiapplication@L6",
+        "graph-node:fdiapplication_fdiapplication_main@L8",
+        "graph-node:runtimecapabilities@L1",
+        "graph-node:runtimecapabilities_runtimecapabilities@L5",
+        "graph-node:runtimecapabilities_runtimecapabilities_asmap@L47",
+        "graph-node:runtimecapabilities_runtimecapabilities_compile@L10",
+        "graph-node:runtimecapabilities_runtimecapabilities_runtimecapabilities@L8"
+      ],
+      "confidence": 0.65,
+      "limitations": [
+        "Capability label requires Product Team review."
+      ],
+      "authority_status": "PROPOSAL_ONLY"
+    },
+    {
+      "proposal_id": "R3-feature",
+      "arm": "R3",
+      "target_id": "feature",
+      "relation_type": "CAPABILITY_HYPOTHESIS",
+      "operation": "CREATE",
+      "label": "Feature implemented delivery capability",
+      "component_refs": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/feature/FeatureDiscovery.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/feature/FeatureKnowledgePlan.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/feature/RealizationTraversal.java"
+      ],
+      "evidence_refs": [
+        "git-commit:a9676f6375ab3b34418e4fa692c4bdc620e07b47",
+        "graph-node:featurediscovery@L1",
+        "graph-node:featurediscovery_featurediscovery@L3",
+        "graph-node:featurediscovery_featurediscovery_asmap@L12",
+        "graph-node:featurediscovery_featurediscovery_featurediscovery@L4",
+        "graph-node:featurediscovery_featurediscovery_groundstructuralhints@L5",
+        "graph-node:featurediscovery_featurediscovery_strings@L12",
+        "graph-node:featureknowledgeplan@L1",
+        "graph-node:featureknowledgeplan_featureknowledgeplan@L2",
+        "graph-node:featureknowledgeplan_featureknowledgeplan_compile@L2",
+        "graph-node:featureknowledgeplan_featureknowledgeplan_featureknowledgeplan@L2",
+        "graph-node:featureknowledgeplan_featureknowledgeplan_map@L2",
+        "graph-node:realizationtraversal@L1",
+        "graph-node:realizationtraversal_realizationtraversal@L2",
+        "graph-node:realizationtraversal_realizationtraversal_deriverepositorycandidates@L2",
+        "graph-node:realizationtraversal_realizationtraversal_realizationtraversal@L2"
+      ],
+      "confidence": 0.65,
+      "limitations": [
+        "Capability label requires Product Team review."
+      ],
+      "authority_status": "PROPOSAL_ONLY"
+    },
+    {
+      "proposal_id": "R3-product",
+      "arm": "R3",
+      "target_id": "product",
+      "relation_type": "CAPABILITY_HYPOTHESIS",
+      "operation": "CREATE",
+      "label": "Product implemented delivery capability",
+      "component_refs": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/product/ProductKnowledgeMaintenance.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/product/ProductSemantics.java"
+      ],
+      "evidence_refs": [
+        "git-commit:a9676f6375ab3b34418e4fa692c4bdc620e07b47",
+        "graph-node:productknowledgemaintenance@L1",
+        "graph-node:productknowledgemaintenance_productknowledgemaintenance@L3",
+        "graph-node:productknowledgemaintenance_productknowledgemaintenance_createdraft@L3",
+        "graph-node:productknowledgemaintenance_productknowledgemaintenance_onboardingrequest@L3",
+        "graph-node:productknowledgemaintenance_productknowledgemaintenance_productknowledgemaintenance@L3",
+        "graph-node:productknowledgemaintenance_productknowledgemaintenance_publish@L3",
+        "graph-node:productsemantics@L1",
+        "graph-node:productsemantics_productsemantics@L2",
+        "graph-node:productsemantics_productsemantics_productsemantics@L2",
+        "graph-node:productsemantics_productsemantics_resolvelayer1ref@L2",
+        "graph-node:productsemantics_productsemantics_validate@L2"
+      ],
+      "confidence": 0.65,
+      "limitations": [
+        "Capability label requires Product Team review."
+      ],
+      "authority_status": "PROPOSAL_ONLY"
+    },
+    {
+      "proposal_id": "R3-shared",
+      "arm": "R3",
+      "target_id": "shared",
+      "relation_type": "CAPABILITY_HYPOTHESIS",
+      "operation": "CREATE",
+      "label": "Shared implemented delivery capability",
+      "component_refs": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/shared/RuntimeContractException.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/shared/RuntimeMaps.java"
+      ],
+      "evidence_refs": [
+        "git-commit:a9676f6375ab3b34418e4fa692c4bdc620e07b47",
+        "graph-node:runtimecontractexception@L1",
+        "graph-node:runtimecontractexception_runtimecontractexception@L3",
+        "graph-node:runtimecontractexception_runtimecontractexception_runtimecontractexception@L4",
+        "graph-node:runtimemaps@L1",
+        "graph-node:runtimemaps_runtimemaps@L5",
+        "graph-node:runtimemaps_runtimemaps_copy@L33",
+        "graph-node:runtimemaps_runtimemaps_list@L27",
+        "graph-node:runtimemaps_runtimemaps_requiredmap@L20",
+        "graph-node:runtimemaps_runtimemaps_requiredpositiveint@L14",
+        "graph-node:runtimemaps_runtimemaps_requiredstring@L8",
+        "graph-node:runtimemaps_runtimemaps_runtimemaps@L6"
+      ],
+      "confidence": 0.65,
+      "limitations": [
+        "Capability label requires Product Team review."
+      ],
+      "authority_status": "PROPOSAL_ONLY"
+    },
+    {
+      "proposal_id": "R3-structural",
+      "arm": "R3",
+      "target_id": "structural",
+      "relation_type": "CAPABILITY_HYPOTHESIS",
+      "operation": "CREATE",
+      "label": "Structural implemented delivery capability",
+      "component_refs": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/CodeIntelligenceProvider.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/SnapshotBindingAttestor.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/StructuralIntelligence.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/StructuralMaintenance.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyAdapter.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyBindingAttestor.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyBindingEvidence.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyTransport.java"
+      ],
+      "evidence_refs": [
+        "git-commit:35c6e115b08d576b81076d1297b5f1426c6376d0",
+        "git-commit:69d1ef15ba65c552ec1623b08b7bd51ee296e03d",
+        "git-commit:a9676f6375ab3b34418e4fa692c4bdc620e07b47",
+        "git-commit:cbc96658ecb6daa545c3aff0a7c8e7fd1c4224f7",
+        "graph-node:codeintelligenceprovider@L1",
+        "graph-node:codeintelligenceprovider_codeintelligenceprovider@L5",
+        "graph-node:codeintelligenceprovider_codeintelligenceprovider_diff@L10",
+        "graph-node:codeintelligenceprovider_codeintelligenceprovider_expand@L8",
+        "graph-node:codeintelligenceprovider_codeintelligenceprovider_find@L7",
+        "graph-node:codeintelligenceprovider_codeintelligenceprovider_orient@L6",
+        "graph-node:codeintelligenceprovider_codeintelligenceprovider_trace@L9",
+        "graph-node:graphifyadapter@L1",
+        "graph-node:graphifyadapter_graphifyadapter@L7",
+        "graph-node:graphifyadapter_graphifyadapter_diff@L34",
+        "graph-node:graphifyadapter_graphifyadapter_enforcebounds@L62",
+        "graph-node:graphifyadapter_graphifyadapter_expand@L28",
+        "graph-node:graphifyadapter_graphifyadapter_find@L25",
+        "graph-node:graphifyadapter_graphifyadapter_graphifyadapter@L14",
+        "graph-node:graphifyadapter_graphifyadapter_invoke@L41",
+        "graph-node:graphifyadapter_graphifyadapter_mapped@L51",
+        "graph-node:graphifyadapter_graphifyadapter_orient@L22",
+        "graph-node:graphifyadapter_graphifyadapter_tool@L56",
+        "graph-node:graphifyadapter_graphifyadapter_trace@L31",
+        "graph-node:graphifybindingattestor@L1",
+        "graph-node:graphifybindingattestor_graphifybindingattestor@L18",
+        "graph-node:graphifybindingattestor_graphifybindingattestor_attest@L28",
+        "graph-node:graphifybindingattestor_graphifybindingattestor_graphifybindingattestor@L22",
+        "graph-node:graphifybindingattestor_graphifybindingattestor_map@L102",
+        "graph-node:graphifybindingattestor_graphifybindingattestor_stableid@L92",
+        "graph-node:graphifybindingevidence@L1",
+        "graph-node:graphifybindingevidence_graphifybindingevidence@L11",
+        "graph-node:graphifybindingevidence_graphifybindingevidence_build@L14",
+        "graph-node:graphifybindingevidence_graphifybindingevidence_graphifybindingevidence@L12",
+        "graph-node:graphifytransport@L1",
+        "graph-node:graphifytransport_graphifytransport@L5",
+        "graph-node:graphifytransport_graphifytransport_invoke@L7",
+        "graph-node:snapshotbindingattestor@L1",
+        "graph-node:snapshotbindingattestor_snapshotbindingattestor@L5",
+        "graph-node:snapshotbindingattestor_snapshotbindingattestor_attest@L7",
+        "graph-node:structuralintelligence@L1",
+        "graph-node:structuralintelligence_structuralintelligence@L7",
+        "graph-node:structuralintelligence_structuralintelligence_normalizeobservations@L39",
+        "graph-node:structuralintelligence_structuralintelligence_stableid@L69",
+        "graph-node:structuralintelligence_structuralintelligence_structuralintelligence@L9",
+        "graph-node:structuralintelligence_structuralintelligence_validatesnapshotref@L11",
+        "graph-node:structuralintelligence_structuralintelligence_validatestructuralquery@L28",
+        "graph-node:structuralmaintenance@L1",
+        "graph-node:structuralmaintenance_structuralmaintenance@L2",
+        "graph-node:structuralmaintenance_structuralmaintenance_derivesignals@L2",
+        "graph-node:structuralmaintenance_structuralmaintenance_map@L2",
+        "graph-node:structuralmaintenance_structuralmaintenance_repos@L2",
+        "graph-node:structuralmaintenance_structuralmaintenance_strings@L2",
+        "graph-node:structuralmaintenance_structuralmaintenance_structuralmaintenance@L2"
+      ],
+      "confidence": 0.65,
+      "limitations": [
+        "Capability label requires Product Team review."
+      ],
+      "authority_status": "PROPOSAL_ONLY"
+    },
+    {
+      "proposal_id": "R3-validation",
+      "arm": "R3",
+      "target_id": "validation",
+      "relation_type": "CAPABILITY_HYPOTHESIS",
+      "operation": "CREATE",
+      "label": "Validation implemented delivery capability",
+      "component_refs": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/validation/CanonicalBaseGate.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/validation/Dev204Validation.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/validation/VerificationAccounting.java"
+      ],
+      "evidence_refs": [
+        "git-commit:a9676f6375ab3b34418e4fa692c4bdc620e07b47",
+        "graph-node:canonicalbasegate@L1",
+        "graph-node:canonicalbasegate_canonicalbasegate@L8",
+        "graph-node:canonicalbasegate_canonicalbasegate_canonicalbasegate@L9",
+        "graph-node:canonicalbasegate_canonicalbasegate_relativepathescapes@L51",
+        "graph-node:canonicalbasegate_canonicalbasegate_sha256@L52",
+        "graph-node:canonicalbasegate_canonicalbasegate_verifylock@L11",
+        "graph-node:canonicalbasegate_canonicalbasegate_verifypolicy@L40",
+        "graph-node:dev204validation@L1",
+        "graph-node:dev204validation_dev204validation@L3",
+        "graph-node:dev204validation_dev204validation_blank@L9",
+        "graph-node:dev204validation_dev204validation_dev204validation@L4",
+        "graph-node:dev204validation_dev204validation_e@L9",
+        "graph-node:dev204validation_dev204validation_evaluategate@L7",
+        "graph-node:dev204validation_dev204validation_gate@L9",
+        "graph-node:dev204validation_dev204validation_map@L9",
+        "graph-node:dev204validation_dev204validation_packet@L5",
+        "graph-node:dev204validation_dev204validation_prepare@L8",
+        "graph-node:dev204validation_dev204validation_read@L9",
+        "graph-node:dev204validation_dev204validation_sha@L9",
+        "graph-node:dev204validation_dev204validation_validate@L6",
+        "graph-node:dev204validation_dev204validation_write@L9",
+        "graph-node:verificationaccounting@L1",
+        "graph-node:verificationaccounting_verificationaccounting@L5",
+        "graph-node:verificationaccounting_verificationaccounting_buildverificationsummary@L8",
+        "graph-node:verificationaccounting_verificationaccounting_ispass@L33",
+        "graph-node:verificationaccounting_verificationaccounting_validateresult@L34",
+        "graph-node:verificationaccounting_verificationaccounting_validateverificationsummary@L22",
+        "graph-node:verificationaccounting_verificationaccounting_verificationaccounting@L6"
+      ],
+      "confidence": 0.65,
+      "limitations": [
+        "Capability label requires Product Team review."
+      ],
+      "authority_status": "PROPOSAL_ONLY"
+    }
+  ]
+}

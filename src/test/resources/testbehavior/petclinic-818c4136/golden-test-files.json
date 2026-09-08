@@ -1,0 +1,3185 @@
+{
+  "files": [
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+      "inputDigest": "d6d45501b3bf141644683974cab727d2982062962f74eb38a1f08c5087256fcd",
+      "testClassName": "MySqlIntegrationTests",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "findAll",
+          "declarationLocation": {
+            "line": 62,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "ownerDetails",
+          "declarationLocation": {
+            "line": 68,
+            "column": 7
+          }
+        }
+      ],
+      "importEdgesToProduction": [
+        {
+          "target": "VetRepository.java",
+          "line": "L32",
+          "confidence": "EXTRACTED"
+        }
+      ],
+      "sameFileCalls": 0,
+      "samePackageProductionReferences": [],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.assertj.core.api.Assertions.assertThat",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 19,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 21,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.condition.DisabledInNativeImage",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 22,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.beans.factory.annotation.Autowired",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 23,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.restclient.RestTemplateBuilder",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 24,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.test.context.SpringBootTest",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 25,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.test.context.SpringBootTest.WebEnvironment",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 26,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.test.web.server.LocalServerPort",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 27,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.testcontainers.service.connection.ServiceConnection",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 28,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.HttpStatus",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 29,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.RequestEntity",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 30,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.ResponseEntity",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 31,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.context.ActiveProfiles",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 33,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.context.aot.DisabledInAotMode",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 34,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.web.client.RestTemplate",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 35,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.testcontainers.junit.jupiter.Container",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 36,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.testcontainers.junit.jupiter.Testcontainers",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 37,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.testcontainers.mysql.MySQLContainer",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 38,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.testcontainers.utility.DockerImageName",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+            "line": 39,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MysqlTestApplication.java",
+      "inputDigest": "c74523e82c36e1d4fbde13fd308a47d1eb11c32c3265edae6930e4213b2d1a70",
+      "testClassName": "MysqlTestApplication",
+      "nestedContainer": false,
+      "testMethods": [],
+      "importEdgesToProduction": [],
+      "sameFileCalls": 0,
+      "samePackageProductionReferences": [
+        {
+          "declaringType": "PetClinicApplication",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic//PetClinicApplication.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        }
+      ],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.springframework.boot.SpringApplication",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MysqlTestApplication.java",
+            "line": 19,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.testcontainers.service.connection.ServiceConnection",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MysqlTestApplication.java",
+            "line": 20,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.context.annotation.Bean",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MysqlTestApplication.java",
+            "line": 21,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.context.annotation.Configuration",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MysqlTestApplication.java",
+            "line": 22,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.context.annotation.Profile",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MysqlTestApplication.java",
+            "line": 23,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.testcontainers.mysql.MySQLContainer",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MysqlTestApplication.java",
+            "line": 24,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.testcontainers.utility.DockerImageName",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/MysqlTestApplication.java",
+            "line": 25,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+      "inputDigest": "2c85f0bc9e40966997c5ceab5d54de39a54f58973a9240d3e58178c36da3fc4a",
+      "testClassName": "PetClinicConcurrencyTests",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "testDuplicatePetNameRaceConditionIsBlocked",
+          "declarationLocation": {
+            "line": 41,
+            "column": 14
+          }
+        }
+      ],
+      "importEdgesToProduction": [
+        {
+          "target": "Owner.java",
+          "line": "L22",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "target": "OwnerRepository.java",
+          "line": "L23",
+          "confidence": "EXTRACTED"
+        }
+      ],
+      "sameFileCalls": 0,
+      "samePackageProductionReferences": [],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.assertj.core.api.Assertions.assertThat",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+            "line": 3,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+            "line": 12,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.beans.factory.annotation.Autowired",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+            "line": 13,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.test.context.SpringBootTest",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+            "line": 14,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.test.context.SpringBootTest.WebEnvironment",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+            "line": 15,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.test.web.server.LocalServerPort",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+            "line": 16,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.restclient.RestTemplateBuilder",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+            "line": 17,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.HttpEntity",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+            "line": 18,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.HttpHeaders",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+            "line": 19,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.MediaType",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+            "line": 20,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.ResponseEntity",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+            "line": 21,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.util.LinkedMultiValueMap",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+            "line": 24,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.util.MultiValueMap",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+            "line": 25,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.web.client.RestTemplate",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+            "line": 26,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java",
+      "inputDigest": "17efbf458ce0a5c54a4b46cedd6c7b16dd05d5bef2f332e94913bd46e28f5674",
+      "testClassName": "PetClinicIntegrationTests",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "findAll",
+          "declarationLocation": {
+            "line": 47,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "ownerDetails",
+          "declarationLocation": {
+            "line": 53,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "ownerList",
+          "declarationLocation": {
+            "line": 60,
+            "column": 7
+          }
+        }
+      ],
+      "importEdgesToProduction": [
+        {
+          "target": "VetRepository.java",
+          "line": "L31",
+          "confidence": "EXTRACTED"
+        }
+      ],
+      "sameFileCalls": 0,
+      "samePackageProductionReferences": [
+        {
+          "declaringType": "PetClinicApplication",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic//PetClinicApplication.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        }
+      ],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.assertj.core.api.Assertions.assertThat",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java",
+            "line": 19,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java",
+            "line": 21,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.beans.factory.annotation.Autowired",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java",
+            "line": 22,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.SpringApplication",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java",
+            "line": 23,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.restclient.RestTemplateBuilder",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java",
+            "line": 24,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.test.context.SpringBootTest",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java",
+            "line": 25,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.test.context.SpringBootTest.WebEnvironment",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java",
+            "line": 26,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.test.web.server.LocalServerPort",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java",
+            "line": 27,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.HttpStatus",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java",
+            "line": 28,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.RequestEntity",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java",
+            "line": 29,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.ResponseEntity",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java",
+            "line": 30,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.web.client.RestTemplate",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java",
+            "line": 32,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+      "inputDigest": "2226b14986be562f616c55d25b61de358dd71633e3e3584990150c79f2aa69e8",
+      "testClassName": "PostgresIntegrationTests",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "findAll",
+          "declarationLocation": {
+            "line": 82,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "ownerDetails",
+          "declarationLocation": {
+            "line": 88,
+            "column": 7
+          }
+        }
+      ],
+      "importEdgesToProduction": [
+        {
+          "target": "VetRepository.java",
+          "line": "L46",
+          "confidence": "EXTRACTED"
+        }
+      ],
+      "sameFileCalls": 2,
+      "samePackageProductionReferences": [
+        {
+          "declaringType": "PetClinicApplication",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic//PetClinicApplication.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        }
+      ],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.assertj.core.api.Assertions.assertThat",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 19,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Assertions.assertNotNull",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 20,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Assumptions.assumeTrue",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 21,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.apache.commons.logging.Log",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 27,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.apache.commons.logging.LogFactory",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 28,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.BeforeAll",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 29,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 30,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.condition.DisabledInNativeImage",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 31,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.beans.factory.annotation.Autowired",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 32,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.builder.SpringApplicationBuilder",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 33,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.context.event.ApplicationPreparedEvent",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 34,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.restclient.RestTemplateBuilder",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 35,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.test.context.SpringBootTest",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 36,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.test.context.SpringBootTest.WebEnvironment",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 37,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.test.web.server.LocalServerPort",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 38,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.context.ApplicationListener",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 39,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.core.env.ConfigurableEnvironment",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 40,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.core.env.EnumerablePropertySource",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 41,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.core.env.PropertySource",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 42,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.HttpStatus",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 43,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.RequestEntity",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 44,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.ResponseEntity",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 45,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.context.ActiveProfiles",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 47,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.web.client.RestTemplate",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 48,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.testcontainers.DockerClientFactory",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+            "line": 49,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java",
+      "inputDigest": "0e0bd7fa5639f7584ff75513a1a5194a6d238be14d22e0cacb7762c01aa53f28",
+      "testClassName": "ValidatorTests",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "shouldNotValidateWhenFirstNameEmpty",
+          "declarationLocation": {
+            "line": 49,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "shouldNotValidateWhenLastNameEmpty",
+          "declarationLocation": {
+            "line": 65,
+            "column": 7
+          }
+        }
+      ],
+      "importEdgesToProduction": [],
+      "sameFileCalls": 4,
+      "samePackageProductionReferences": [
+        {
+          "declaringType": "Person",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/model/Person.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        }
+      ],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.assertj.core.api.Assertions.assertThat",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java",
+            "line": 19,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java",
+            "line": 24,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.context.i18n.LocaleContextHolder",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java",
+            "line": 25,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.validation.beanvalidation.LocalValidatorFactoryBean",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java",
+            "line": 26,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "jakarta.validation.ConstraintViolation",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java",
+            "line": 28,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "jakarta.validation.Validator",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java",
+            "line": 29,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+      "inputDigest": "bf12386be5621935b92a30d8f7334e3a0399e41c9547b174f2f95fef96232358",
+      "testClassName": "OwnerControllerTests",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "initCreationForm",
+          "declarationLocation": {
+            "line": 107,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processCreationFormSuccess",
+          "declarationLocation": {
+            "line": 115,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processCreationFormHasErrors",
+          "declarationLocation": {
+            "line": 126,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "initFindForm",
+          "declarationLocation": {
+            "line": 137,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processFindFormSuccess",
+          "declarationLocation": {
+            "line": 145,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processFindFormByLastName",
+          "declarationLocation": {
+            "line": 152,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processFindFormIgnoresSurroundingWhitespace",
+          "declarationLocation": {
+            "line": 161,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processFindFormWithWhitespaceOnlyLastNameReturnsAllOwners",
+          "declarationLocation": {
+            "line": 175,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processFindFormNoOwnersFound",
+          "declarationLocation": {
+            "line": 187,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "initUpdateOwnerForm",
+          "declarationLocation": {
+            "line": 199,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processUpdateOwnerFormSuccess",
+          "declarationLocation": {
+            "line": 212,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processUpdateOwnerFormUnchangedSuccess",
+          "declarationLocation": {
+            "line": 224,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processUpdateOwnerFormHasErrors",
+          "declarationLocation": {
+            "line": 231,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "showOwner",
+          "declarationLocation": {
+            "line": 245,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processUpdateOwnerFormWithIdMismatch",
+          "declarationLocation": {
+            "line": 260,
+            "column": 7
+          }
+        }
+      ],
+      "importEdgesToProduction": [],
+      "sameFileCalls": 5,
+      "samePackageProductionReferences": [
+        {
+          "declaringType": "Owner",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "OwnerController",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "OwnerRepository",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "Pet",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "PetType",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/PetType.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "Visit",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        }
+      ],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.junit.jupiter.api.BeforeEach",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 19,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 20,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.condition.DisabledInNativeImage",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 21,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.beans.factory.annotation.Autowired",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 22,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 23,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.data.domain.Page",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 24,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.data.domain.PageImpl",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 25,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.data.domain.Pageable",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 26,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.context.aot.DisabledInAotMode",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 27,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.context.bean.override.mockito.MockitoBean",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 28,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.MockMvc",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 29,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.request.MockMvcRequestBuilders",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 30,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.hamcrest.Matchers.empty",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 36,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.hamcrest.Matchers.greaterThan",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 37,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.hamcrest.Matchers.hasItem",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 38,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.hamcrest.Matchers.hasProperty",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 39,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.hamcrest.Matchers.hasSize",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 40,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.hamcrest.Matchers.is",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 41,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.hamcrest.Matchers.not",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 42,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.mockito.ArgumentMatchers.any",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 43,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.mockito.ArgumentMatchers.anyString",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 44,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.mockito.ArgumentMatchers.eq",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 45,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.mockito.BDDMockito.given",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 46,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.mockito.Mockito.times",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 47,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.mockito.Mockito.verify",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 48,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.mockito.Mockito.when",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 49,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 50,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+            "line": 51,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerTests.java",
+      "inputDigest": "a0c5366440acf52c330729cc301419acbc279d22c4bc252e0ae70aa02098095d",
+      "testClassName": "OwnerTests",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "addPetAddsPersistedPet",
+          "declarationLocation": {
+            "line": 26,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "addPetDoesNotAddDuplicatePet",
+          "declarationLocation": {
+            "line": 39,
+            "column": 7
+          }
+        }
+      ],
+      "importEdgesToProduction": [],
+      "sameFileCalls": 0,
+      "samePackageProductionReferences": [
+        {
+          "declaringType": "Owner",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "Pet",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        }
+      ],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerTests.java",
+            "line": 18,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Assertions.assertEquals",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerTests.java",
+            "line": 20,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Assertions.assertTrue",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/OwnerTests.java",
+            "line": 21,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+      "inputDigest": "29f21b836ebe350364d9b3084bbb7f46c22d360203144d4a4b425e3583403588",
+      "testClassName": "PetControllerTests",
+      "nestedContainer": true,
+      "testMethods": [
+        {
+          "methodName": "initCreationForm",
+          "declarationLocation": {
+            "line": 90,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processCreationFormSuccess",
+          "declarationLocation": {
+            "line": 98,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processCreationFormWithBlankName",
+          "declarationLocation": {
+            "line": 111,
+            "column": 8
+          }
+        },
+        {
+          "methodName": "processCreationFormWithDuplicateName",
+          "declarationLocation": {
+            "line": 124,
+            "column": 8
+          }
+        },
+        {
+          "methodName": "processCreationFormWithMissingPetType",
+          "declarationLocation": {
+            "line": 137,
+            "column": 8
+          }
+        },
+        {
+          "methodName": "processCreationFormWithInvalidBirthDate",
+          "declarationLocation": {
+            "line": 150,
+            "column": 8
+          }
+        },
+        {
+          "methodName": "processCreationFormWithDataIntegrityViolation",
+          "declarationLocation": {
+            "line": 166,
+            "column": 8
+          }
+        },
+        {
+          "methodName": "initUpdateForm",
+          "declarationLocation": {
+            "line": 182,
+            "column": 8
+          }
+        },
+        {
+          "methodName": "processUpdateFormSuccess",
+          "declarationLocation": {
+            "line": 192,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processUpdateFormWithSameName",
+          "declarationLocation": {
+            "line": 202,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processUpdateFormWithDuplicateName",
+          "declarationLocation": {
+            "line": 218,
+            "column": 8
+          }
+        },
+        {
+          "methodName": "processUpdateFormWithInvalidBirthDate",
+          "declarationLocation": {
+            "line": 233,
+            "column": 8
+          }
+        },
+        {
+          "methodName": "processUpdateFormWithBlankName",
+          "declarationLocation": {
+            "line": 245,
+            "column": 8
+          }
+        },
+        {
+          "methodName": "processUpdateFormWithDataIntegrityViolation",
+          "declarationLocation": {
+            "line": 257,
+            "column": 8
+          }
+        }
+      ],
+      "importEdgesToProduction": [],
+      "sameFileCalls": 0,
+      "samePackageProductionReferences": [
+        {
+          "declaringType": "Owner",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "OwnerRepository",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "Pet",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "PetController",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "PetType",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/PetType.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "PetTypeFormatter",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/PetTypeFormatter.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "PetTypeRepository",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        }
+      ],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.junit.jupiter.api.BeforeEach",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 19,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Nested",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 20,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 21,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.condition.DisabledInNativeImage",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 22,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.beans.factory.annotation.Autowired",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 23,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 24,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.context.annotation.ComponentScan",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 25,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.context.annotation.FilterType",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 26,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.context.aot.DisabledInAotMode",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 27,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.context.bean.override.mockito.MockitoBean",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 28,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.MockMvc",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 29,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.dao.DataIntegrityViolationException",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 35,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.mockito.ArgumentMatchers.any",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 37,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.mockito.BDDMockito.given",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 38,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 39,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 40,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.result.MockMvcResultMatchers.model",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 41,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.result.MockMvcResultMatchers.status",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 42,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.result.MockMvcResultMatchers.view",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+            "line": 43,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java",
+      "inputDigest": "137f03c4bc02c86f2d1cf100124ac67dd863e8281b4942b099b49e4a2fb95fc5",
+      "testClassName": "PetTypeFormatterTests",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "testPrint",
+          "declarationLocation": {
+            "line": 56,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "shouldParse",
+          "declarationLocation": {
+            "line": 64,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "shouldThrowParseException",
+          "declarationLocation": {
+            "line": 71,
+            "column": 7
+          }
+        }
+      ],
+      "importEdgesToProduction": [],
+      "sameFileCalls": 2,
+      "samePackageProductionReferences": [
+        {
+          "declaringType": "PetType",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/PetType.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "PetTypeFormatter",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/PetTypeFormatter.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "PetTypeRepository",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        }
+      ],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.assertj.core.api.Assertions.assertThat",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java",
+            "line": 19,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.mockito.BDDMockito.given",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java",
+            "line": 20,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Assertions",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java",
+            "line": 28,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.BeforeEach",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java",
+            "line": 29,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java",
+            "line": 30,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.condition.DisabledInNativeImage",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java",
+            "line": 31,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.extension.ExtendWith",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java",
+            "line": 32,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.mockito.Mock",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java",
+            "line": 33,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.mockito.junit.jupiter.MockitoExtension",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java",
+            "line": 34,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java",
+      "inputDigest": "91a7c7d4273233d61881519447af8690ace3e19f8a34fe4b874ad1534a462487",
+      "testClassName": "PetValidatorTests",
+      "nestedContainer": true,
+      "testMethods": [
+        {
+          "methodName": "supportsPetClass",
+          "declarationLocation": {
+            "line": 66,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "doesNotSupportNonPetClass",
+          "declarationLocation": {
+            "line": 71,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "validate",
+          "declarationLocation": {
+            "line": 76,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "validateWithInvalidPetName",
+          "declarationLocation": {
+            "line": 91,
+            "column": 8
+          }
+        },
+        {
+          "methodName": "validateWithInvalidPetType",
+          "declarationLocation": {
+            "line": 103,
+            "column": 8
+          }
+        },
+        {
+          "methodName": "validateWithInvalidBirthDate",
+          "declarationLocation": {
+            "line": 114,
+            "column": 8
+          }
+        },
+        {
+          "methodName": "validateWithLongPetName",
+          "declarationLocation": {
+            "line": 126,
+            "column": 8
+          }
+        }
+      ],
+      "importEdgesToProduction": [],
+      "sameFileCalls": 4,
+      "samePackageProductionReferences": [
+        {
+          "declaringType": "Pet",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "PetType",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/PetType.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "PetValidator",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/PetValidator.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        }
+      ],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.junit.jupiter.api.BeforeEach",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java",
+            "line": 19,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Nested",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java",
+            "line": 20,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java",
+            "line": 21,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.condition.DisabledInNativeImage",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java",
+            "line": 22,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.extension.ExtendWith",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java",
+            "line": 23,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.mockito.junit.jupiter.MockitoExtension",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java",
+            "line": 24,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.validation.Errors",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java",
+            "line": 25,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.validation.MapBindingResult",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java",
+            "line": 26,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Assertions.assertFalse",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java",
+            "line": 31,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Assertions.assertTrue",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java",
+            "line": 32,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+      "inputDigest": "e3d9fe4ad0c92bab43919d53d5e56a5036e0c694c3ad348a6796fdce762532bf",
+      "testClassName": "VisitControllerTests",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "initNewVisitForm",
+          "declarationLocation": {
+            "line": 69,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processNewVisitFormSuccess",
+          "declarationLocation": {
+            "line": 76,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processNewVisitFormHasErrors",
+          "declarationLocation": {
+            "line": 87,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "processNewVisitFormHasErrorsWhenVisitDateIsNotInFuture",
+          "declarationLocation": {
+            "line": 97,
+            "column": 7
+          }
+        }
+      ],
+      "importEdgesToProduction": [],
+      "sameFileCalls": 0,
+      "samePackageProductionReferences": [
+        {
+          "declaringType": "Owner",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "OwnerRepository",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "Pet",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/Pet.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "Visit",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "VisitController",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        }
+      ],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.mockito.BDDMockito.given",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+            "line": 19,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+            "line": 20,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+            "line": 21,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.result.MockMvcResultMatchers.model",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+            "line": 22,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.result.MockMvcResultMatchers.status",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+            "line": 23,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.result.MockMvcResultMatchers.view",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+            "line": 24,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.BeforeEach",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+            "line": 26,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+            "line": 27,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.condition.DisabledInNativeImage",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+            "line": 28,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.beans.factory.annotation.Autowired",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+            "line": 29,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+            "line": 30,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.context.aot.DisabledInAotMode",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+            "line": 31,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.context.bean.override.mockito.MockitoBean",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+            "line": 32,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.MockMvc",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+            "line": 33,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java",
+      "inputDigest": "b2ee15c0337a75ada96d83139fa08d81dd47d81c3094f5fca7917772770669bf",
+      "testClassName": "ClinicServiceTests",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "shouldFindOwnersByLastName",
+          "declarationLocation": {
+            "line": 90,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "shouldFindSingleOwnerWithPet",
+          "declarationLocation": {
+            "line": 99,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "shouldInsertOwner",
+          "declarationLocation": {
+            "line": 111,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "shouldUpdateOwner",
+          "declarationLocation": {
+            "line": 130,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "shouldFindAllPetTypes",
+          "declarationLocation": {
+            "line": 148,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "shouldInsertPetIntoDatabaseAndGenerateId",
+          "declarationLocation": {
+            "line": 159,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "shouldUpdatePetName",
+          "declarationLocation": {
+            "line": 187,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "shouldFindVets",
+          "declarationLocation": {
+            "line": 207,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "shouldAddNewVisitForPet",
+          "declarationLocation": {
+            "line": 219,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "shouldFindVisitsByPetId",
+          "declarationLocation": {
+            "line": 238,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "shouldFailToInsertDuplicatePetNameForSameOwner",
+          "declarationLocation": {
+            "line": 255,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "shouldAllowSamePetNameForDifferentOwners",
+          "declarationLocation": {
+            "line": 281,
+            "column": 7
+          }
+        }
+      ],
+      "importEdgesToProduction": [
+        {
+          "target": "Owner.java",
+          "line": "L34",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "target": "OwnerRepository.java",
+          "line": "L35",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "target": "Pet.java",
+          "line": "L36",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "target": "PetType.java",
+          "line": "L37",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "target": "PetTypeRepository.java",
+          "line": "L38",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "target": "Visit.java",
+          "line": "L39",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "target": "Vet.java",
+          "line": "L40",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "target": "VetRepository.java",
+          "line": "L41",
+          "confidence": "EXTRACTED"
+        }
+      ],
+      "sameFileCalls": 0,
+      "samePackageProductionReferences": [],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.assertj.core.api.Assertions.assertThat",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java",
+            "line": 19,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Assertions.assertThrows",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java",
+            "line": 20,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.dao.DataIntegrityViolationException",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java",
+            "line": 22,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java",
+            "line": 27,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.beans.factory.annotation.Autowired",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java",
+            "line": 28,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java",
+            "line": 29,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java",
+            "line": 30,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase.Replace",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java",
+            "line": 31,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.data.domain.Page",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java",
+            "line": 32,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.data.domain.Pageable",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java",
+            "line": 33,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.transaction.annotation.Transactional",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java",
+            "line": 42,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/service/EntityUtils.java",
+      "inputDigest": "9e54d9b9976128b9aff1845201a8a8ced8ebfa0b7fdfd0904a6763ba31efa2a9",
+      "testClassName": "EntityUtils",
+      "nestedContainer": false,
+      "testMethods": [],
+      "importEdgesToProduction": [
+        {
+          "target": "BaseEntity.java",
+          "line": "L20",
+          "confidence": "EXTRACTED"
+        }
+      ],
+      "sameFileCalls": 0,
+      "samePackageProductionReferences": [],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.springframework.orm.ObjectRetrievalFailureException",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/service/EntityUtils.java",
+            "line": 19,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+      "inputDigest": "e3237a6754842dccf92abc2ebfb7a515d79de55a482e165580ed2f39e529dbf3",
+      "testClassName": "CrashControllerIntegrationTests",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "triggerExceptionJson",
+          "declarationLocation": {
+            "line": 62,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "triggerExceptionHtml",
+          "declarationLocation": {
+            "line": 78,
+            "column": 7
+          }
+        }
+      ],
+      "importEdgesToProduction": [],
+      "sameFileCalls": 0,
+      "samePackageProductionReferences": [],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.assertj.core.api.Assertions.assertThat",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 19,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 20,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 25,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.beans.factory.annotation.Autowired",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 26,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.beans.factory.annotation.Value",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 27,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.autoconfigure.SpringBootApplication",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 28,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 29,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 30,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.jdbc.autoconfigure.DataSourceTransactionManagerAutoConfiguration",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 31,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.resttestclient.TestRestTemplate",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 32,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 33,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.test.context.SpringBootTest",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 34,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.core.ParameterizedTypeReference",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 35,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.HttpEntity",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 36,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.HttpHeaders",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 37,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.HttpMethod",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 38,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.HttpStatus",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 39,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.MediaType",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 40,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.RequestEntity",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 41,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.ResponseEntity",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+            "line": 42,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerTests.java",
+      "inputDigest": "1b7da80161788a0429a1949b421931aadd72fd5a1422b7cc0c2823c499c329df",
+      "testClassName": "CrashControllerTests",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "triggerException",
+          "declarationLocation": {
+            "line": 36,
+            "column": 7
+          }
+        }
+      ],
+      "importEdgesToProduction": [],
+      "sameFileCalls": 0,
+      "samePackageProductionReferences": [
+        {
+          "declaringType": "CrashController",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/system/CrashController.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        }
+      ],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerTests.java",
+            "line": 19,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.assertj.core.api.Assertions.assertThatExceptionOfType",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/CrashControllerTests.java",
+            "line": 21,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/I18nPropertiesSyncTest.java",
+      "inputDigest": "b99f0289c84aaa6d3fb1503ea9fdf8472171fe6e65dbb25f1cc9b820764c83f6",
+      "testClassName": "I18nPropertiesSyncTest",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "checkNonInternationalizedStrings",
+          "declarationLocation": {
+            "line": 40,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "checkI18nPropertyFilesAreInSync",
+          "declarationLocation": {
+            "line": 87,
+            "column": 7
+          }
+        }
+      ],
+      "importEdgesToProduction": [],
+      "sameFileCalls": 0,
+      "samePackageProductionReferences": [],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/I18nPropertiesSyncTest.java",
+            "line": 3,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Assertions.fail",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/I18nPropertiesSyncTest.java",
+            "line": 16,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/WelcomeControllerTests.java",
+      "inputDigest": "805bc085bfd0132307e82c20db0a36132df04bfec5b1f21addbefcf2a32ccfae",
+      "testClassName": "WelcomeControllerTests",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "welcome",
+          "declarationLocation": {
+            "line": 39,
+            "column": 7
+          }
+        }
+      ],
+      "importEdgesToProduction": [],
+      "sameFileCalls": 0,
+      "samePackageProductionReferences": [
+        {
+          "declaringType": "WelcomeController",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        }
+      ],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/WelcomeControllerTests.java",
+            "line": 19,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.condition.DisabledInNativeImage",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/WelcomeControllerTests.java",
+            "line": 20,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.beans.factory.annotation.Autowired",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/WelcomeControllerTests.java",
+            "line": 21,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/WelcomeControllerTests.java",
+            "line": 22,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.context.aot.DisabledInAotMode",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/WelcomeControllerTests.java",
+            "line": 23,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.MockMvc",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/WelcomeControllerTests.java",
+            "line": 24,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/WelcomeControllerTests.java",
+            "line": 26,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.result.MockMvcResultMatchers.status",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/WelcomeControllerTests.java",
+            "line": 27,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.result.MockMvcResultMatchers.view",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/system/WelcomeControllerTests.java",
+            "line": 28,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+      "inputDigest": "09c5a5b3d3c5f180ed1ef9ef2e4fc3d08989a18fe1e10d4b559b0e503babe182",
+      "testClassName": "VetControllerTests",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "showVetListHtml",
+          "declarationLocation": {
+            "line": 83,
+            "column": 7
+          }
+        },
+        {
+          "methodName": "showResourcesVetList",
+          "declarationLocation": {
+            "line": 93,
+            "column": 7
+          }
+        }
+      ],
+      "importEdgesToProduction": [],
+      "sameFileCalls": 2,
+      "samePackageProductionReferences": [
+        {
+          "declaringType": "Specialty",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "Vet",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "VetController",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        },
+        {
+          "declaringType": "VetRepository",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        }
+      ],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.assertj.core.util.Lists",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 19,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.BeforeEach",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 20,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 21,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.junit.jupiter.api.condition.DisabledInNativeImage",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 22,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.beans.factory.annotation.Autowired",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 23,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 24,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.data.domain.PageImpl",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 25,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.data.domain.Pageable",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 26,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.http.MediaType",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 27,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.context.aot.DisabledInAotMode",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 28,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.context.bean.override.mockito.MockitoBean",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 29,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.MockMvc",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 30,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.ResultActions",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 31,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.request.MockMvcRequestBuilders",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 32,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.mockito.ArgumentMatchers.any",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 34,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.mockito.BDDMockito.given",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 35,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+            "line": 36,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    },
+    {
+      "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetTests.java",
+      "inputDigest": "d481304b6cfaa573b08d8c727402bb4f3fe61736e1a8b762a34a5571da86ac44",
+      "testClassName": "VetTests",
+      "nestedContainer": false,
+      "testMethods": [
+        {
+          "methodName": "serialization",
+          "declarationLocation": {
+            "line": 29,
+            "column": 7
+          }
+        }
+      ],
+      "importEdgesToProduction": [],
+      "sameFileCalls": 0,
+      "samePackageProductionReferences": [
+        {
+          "declaringType": "Vet",
+          "repositoryRelativePath": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java",
+          "referenceKind": "TYPE",
+          "relationshipBasis": "SAME_PACKAGE_SOURCE_ROOT"
+        }
+      ],
+      "unresolvedReferences": [
+        {
+          "referenceText": "org.junit.jupiter.api.Test",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetTests.java",
+            "line": 18,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.springframework.util.SerializationUtils",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetTests.java",
+            "line": 19,
+            "column": 8
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        },
+        {
+          "referenceText": "org.assertj.core.api.Assertions.assertThat",
+          "location": {
+            "repositoryRelativePath": "src/test/java/org/springframework/samples/petclinic/vet/VetTests.java",
+            "line": 21,
+            "column": 15
+          },
+          "kind": "EXTERNAL_DEPENDENCY_NOT_RESOLVED"
+        }
+      ]
+    }
+  ]
+}

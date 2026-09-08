@@ -1,0 +1,319 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "scenario-proposal.schema.json",
+  "title": "PKB-001 scenario proposal and individual review surface",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "artifact_kind", "run_id", "proposal_revision",
+    "authority", "scenario_status", "review_language", "source_revision",
+    "graph_sha256", "history_cutoff", "generation_context",
+    "reviewer_exposure", "experiment_limitation", "generation_inputs",
+    "channel_availability", "evidence_catalog", "capability_proposals"
+  ],
+  "properties": {
+    "schema_version": {"const": "pkb001.scenario-proposal.v0.1"},
+    "artifact_kind": {"enum": ["SCENARIO_PROPOSAL", "SCENARIO_REVIEW_SURFACE"]},
+    "run_id": {"$ref": "#/$defs/nonblank"},
+    "proposal_revision": {"type": "integer", "minimum": 1},
+    "proposal_artifact_path": {"$ref": "#/$defs/relativePath"},
+    "proposal_sha256": {"$ref": "#/$defs/sha256"},
+    "authority": {"const": "PROPOSAL_ONLY"},
+    "scenario_status": {"const": "UNREVIEWED"},
+    "review_language": {"type": "string", "pattern": "^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$"},
+    "source_revision": {"$ref": "#/$defs/revision"},
+    "graph_sha256": {"$ref": "#/$defs/sha256"},
+    "history_cutoff": {"type": "string", "format": "date-time", "pattern": "Z$"},
+    "generation_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generator_role", "generator_identity", "evaluator_gold_access",
+        "accepted_forward_semantics_access", "post_generation_judgments_access"
+      ],
+      "properties": {
+        "generator_role": {"const": "SCENARIO_PROPOSAL_AGENT"},
+        "generator_identity": {"$ref": "#/$defs/nonblank"},
+        "evaluator_gold_access": {"const": "PROHIBITED"},
+        "accepted_forward_semantics_access": {"const": "PROHIBITED"},
+        "post_generation_judgments_access": {"const": "PROHIBITED"}
+      }
+    },
+    "reviewer_exposure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["technical_evidence_visible", "content_level_arm_anonymity"],
+      "properties": {
+        "technical_evidence_visible": {"const": true},
+        "content_level_arm_anonymity": {"const": "NOT_CLAIMED"}
+      }
+    },
+    "experiment_limitation": {
+      "const": "RECONSTRUCTION_CONSISTENCY_NOT_INDEPENDENT_PRODUCT_VALIDATION"
+    },
+    "generation_inputs": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": {"$ref": "#/$defs/generationInput"}
+    },
+    "channel_availability": {
+      "type": "object", "additionalProperties": false,
+      "required": ["STRUCTURAL", "DELIVERY_HISTORY"],
+      "properties": {
+        "STRUCTURAL": {"$ref": "#/$defs/channelAvailability"},
+        "DELIVERY_HISTORY": {"$ref": "#/$defs/channelAvailability"}
+      }
+    },
+    "evidence_catalog": {
+      "type": "array", "minItems": 1, "maxItems": 1000,
+      "items": {"$ref": "#/$defs/evidenceReference"}
+    },
+    "resolved_evidence": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/nonblank"}
+    },
+    "capability_proposals": {
+      "type": "array", "minItems": 1, "maxItems": 100,
+      "items": {"$ref": "#/$defs/capabilityProposal"}
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"artifact_kind": {"const": "SCENARIO_PROPOSAL"}}},
+      "then": {
+        "not": {
+          "anyOf": [
+            {"required": ["proposal_artifact_path"]},
+            {"required": ["proposal_sha256"]},
+            {"required": ["resolved_evidence"]}
+          ]
+        }
+      }
+    },
+    {
+      "if": {"properties": {"artifact_kind": {"const": "SCENARIO_REVIEW_SURFACE"}}},
+      "then": {"required": ["proposal_artifact_path", "proposal_sha256", "resolved_evidence"]}
+    }
+  ],
+  "$defs": {
+    "nonblank": {"type": "string", "pattern": ".*\\S.*", "maxLength": 4096},
+    "semanticText": {
+      "allOf": [
+        {"$ref": "#/$defs/nonblank"},
+        {
+          "not": {
+            "pattern": "(?:[Gg][Rr][Aa][Pp][Hh][Ii][Ff][Yy]|provider[_ -]?node|source[_ -]?path|qualified[_ -]?symbol|evaluator[_ -]?gold|expected[_ -]?mapping|[A-Za-z0-9_.\\/-]+\\.(?:java|py|js|ts|html|mustache|jsp|xml|yaml|yml)(?:\\s|$)|(?:src|app|lib|templates?)/|(?:[A-Za-z_$][A-Za-z0-9_$]*\\.)+[A-Za-z_$][A-Za-z0-9_$]*|[A-Za-z_$][A-Za-z0-9_$]*\\s*\\(|[A-Z][A-Za-z0-9_$]*(?:Controller|Service|Repository|Entity|Config|Configuration|Template))"
+          }
+        }
+      ]
+    },
+    "revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "relativePath": {
+      "type": "string", "minLength": 1, "maxLength": 1024,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)(?:\\.|\\.\\.)(?:/|$)).+$"
+    },
+    "stringList": {
+      "type": "array", "minItems": 1, "maxItems": 100,
+      "items": {"$ref": "#/$defs/semanticText"}
+    },
+    "plainStringList": {
+      "type": "array", "minItems": 1, "maxItems": 100,
+      "items": {"$ref": "#/$defs/nonblank"}
+    },
+    "generationInput": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "path", "sha256"],
+      "properties": {
+        "kind": {"enum": ["GRAPHIFY_BINDING", "FROZEN_GRAPH", "DELIVERY_HISTORY", "SCENARIO_SKILL"]},
+        "path": {"$ref": "#/$defs/relativePath"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "channelAvailability": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "reason"],
+      "properties": {
+        "status": {"enum": ["AVAILABLE", "UNAVAILABLE"]},
+        "reason": {"type": ["string", "null"]}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"const": "AVAILABLE"}}},
+          "then": {"properties": {"reason": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "UNAVAILABLE"}}},
+          "then": {"properties": {"reason": {"$ref": "#/$defs/nonblank"}}}
+        }
+      ]
+    },
+    "evidenceReference": {
+      "type": "object", "additionalProperties": false,
+      "required": ["evidence_id", "channel", "artifact_path", "artifact_sha256", "json_pointer"],
+      "properties": {
+        "evidence_id": {"type": "string", "pattern": "^EV-[A-Z0-9][A-Z0-9-]*$"},
+        "channel": {"enum": ["STRUCTURAL", "DELIVERY_HISTORY"]},
+        "artifact_path": {"$ref": "#/$defs/relativePath"},
+        "artifact_sha256": {"$ref": "#/$defs/sha256"},
+        "json_pointer": {
+          "type": "string",
+          "pattern": "^/(?:nodes|links|commits|pull_requests)/(?:0|[1-9][0-9]*)$"
+        }
+      }
+    },
+    "decisionBase": {
+      "type": "object",
+      "required": [
+        "action", "reviewer_identity", "reviewed_at", "reason",
+        "proposal_revision", "proposal_sha256"
+      ],
+      "properties": {
+        "action": {"enum": ["ACCEPT", "EDIT", "REJECT"]},
+        "reviewer_identity": {"$ref": "#/$defs/nonblank"},
+        "reviewed_at": {"type": "string", "format": "date-time"},
+        "reason": {"$ref": "#/$defs/nonblank"},
+        "proposal_revision": {"type": "integer", "minimum": 1},
+        "proposal_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "capabilityBehavior": {
+      "type": "object", "additionalProperties": false,
+      "required": ["title", "description", "includes", "excludes", "non_goals"],
+      "properties": {
+        "title": {"$ref": "#/$defs/semanticText"},
+        "description": {"$ref": "#/$defs/semanticText"},
+        "includes": {"$ref": "#/$defs/stringList"},
+        "excludes": {"$ref": "#/$defs/stringList"},
+        "non_goals": {"$ref": "#/$defs/stringList"}
+      }
+    },
+    "scenarioBehavior": {
+      "type": "object", "additionalProperties": false,
+      "required": ["title", "given", "when", "then", "scope"],
+      "properties": {
+        "title": {"$ref": "#/$defs/semanticText"},
+        "given": {"$ref": "#/$defs/stringList"},
+        "when": {"$ref": "#/$defs/semanticText"},
+        "then": {"$ref": "#/$defs/stringList"},
+        "scope": {"enum": ["REQUIRED_ACCEPTANCE", "ILLUSTRATIVE"]}
+      }
+    },
+    "capabilityDecision": {
+      "allOf": [
+        {"$ref": "#/$defs/decisionBase"},
+        {
+          "type": "object", "additionalProperties": false,
+          "properties": {
+            "action": true, "reviewer_identity": true, "reviewed_at": true,
+            "reason": true, "proposal_revision": true, "proposal_sha256": true,
+            "replacement_behavior": {"$ref": "#/$defs/capabilityBehavior"},
+            "edit_confirmed": {"type": "boolean"}
+          }
+        },
+        {
+          "if": {"properties": {"action": {"const": "EDIT"}}},
+          "then": {"required": ["replacement_behavior", "edit_confirmed"]},
+          "else": {
+            "not": {"anyOf": [{"required": ["replacement_behavior"]}, {"required": ["edit_confirmed"]}]}
+          }
+        }
+      ]
+    },
+    "scenarioDecision": {
+      "allOf": [
+        {"$ref": "#/$defs/decisionBase"},
+        {
+          "type": "object", "additionalProperties": false,
+          "properties": {
+            "action": true, "reviewer_identity": true, "reviewed_at": true,
+            "reason": true, "proposal_revision": true, "proposal_sha256": true,
+            "replacement_behavior": {"$ref": "#/$defs/scenarioBehavior"},
+            "edit_confirmed": {"type": "boolean"}
+          }
+        },
+        {
+          "if": {"properties": {"action": {"const": "EDIT"}}},
+          "then": {"required": ["replacement_behavior", "edit_confirmed"]},
+          "else": {
+            "not": {"anyOf": [{"required": ["replacement_behavior"]}, {"required": ["edit_confirmed"]}]}
+          }
+        }
+      ]
+    },
+    "proposalEvidence": {
+      "type": "object",
+      "required": [
+        "evidence_refs", "inference_rationale", "confidence",
+        "confidence_interpretation", "limitations"
+      ],
+      "properties": {
+        "evidence_refs": {
+          "type": "array", "minItems": 1, "maxItems": 100, "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^EV-[A-Z0-9][A-Z0-9-]*$"}
+        },
+        "inference_rationale": {"$ref": "#/$defs/nonblank"},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "confidence_interpretation": {"const": "UNCALIBRATED_RANKING_HINT"},
+        "limitations": {"$ref": "#/$defs/plainStringList"}
+      }
+    },
+    "scenarioProposal": {
+      "allOf": [
+        {"$ref": "#/$defs/proposalEvidence"},
+        {
+          "type": "object", "additionalProperties": false,
+          "required": [
+            "scenario_id", "title", "given", "when", "then", "scope",
+            "evidence_refs", "inference_rationale", "confidence",
+            "confidence_interpretation", "limitations", "decision"
+          ],
+          "properties": {
+            "scenario_id": {"type": "string", "pattern": "^HYP-SCENARIO-[A-Z0-9][A-Z0-9-]*$"},
+            "title": {"$ref": "#/$defs/semanticText"},
+            "given": {"$ref": "#/$defs/stringList"},
+            "when": {"$ref": "#/$defs/semanticText"},
+            "then": {"$ref": "#/$defs/stringList"},
+            "scope": {"enum": ["REQUIRED_ACCEPTANCE", "ILLUSTRATIVE"]},
+            "evidence_refs": true,
+            "inference_rationale": true,
+            "confidence": true,
+            "confidence_interpretation": true,
+            "limitations": true,
+            "decision": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/scenarioDecision"}]}
+          }
+        }
+      ]
+    },
+    "capabilityProposal": {
+      "allOf": [
+        {"$ref": "#/$defs/proposalEvidence"},
+        {
+          "type": "object", "additionalProperties": false,
+          "required": [
+            "capability_id", "title", "description", "includes", "excludes",
+            "non_goals", "evidence_refs", "inference_rationale", "confidence",
+            "confidence_interpretation", "limitations", "decision", "scenarios"
+          ],
+          "properties": {
+            "capability_id": {"type": "string", "pattern": "^HYP-CAPABILITY-[A-Z0-9][A-Z0-9-]*$"},
+            "title": {"$ref": "#/$defs/semanticText"},
+            "description": {"$ref": "#/$defs/semanticText"},
+            "includes": {"$ref": "#/$defs/stringList"},
+            "excludes": {"$ref": "#/$defs/stringList"},
+            "non_goals": {"$ref": "#/$defs/stringList"},
+            "evidence_refs": true,
+            "inference_rationale": true,
+            "confidence": true,
+            "confidence_interpretation": true,
+            "limitations": true,
+            "decision": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/capabilityDecision"}]},
+            "scenarios": {
+              "type": "array", "minItems": 1, "maxItems": 100,
+              "items": {"$ref": "#/$defs/scenarioProposal"}
+            }
+          }
+        }
+      ]
+    }
+  }
+}

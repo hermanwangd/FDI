@@ -1,0 +1,73 @@
+{
+  "schema_version": "pkb001.reverse.evaluator-defect-ledger.v1",
+  "ledger_id": "pkb001-petclinic-reverse-evaluator-defects-001",
+  "authority": "EVALUATOR_ONLY",
+  "purpose": "Bind observed evaluator findings to exact Reverse proposal IDs as advisory inputs for PKB-BL-009.",
+  "semantic_publication_allowed": false,
+  "automatic_semantic_mutation_allowed": false,
+  "source_binding": {
+    "source_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "reverse_run_id": "pkb001-reverse-task5-root-pkb001-reverse-run-20260904T170320Z",
+    "reverse_hypotheses_path": "validation/pkb001/reverse-task5-pkb001_reverse_run/capability-hypotheses.json",
+    "reverse_hypotheses_sha256": "8037b14aae0ff1f9adbce30409ea29ba13d4d024f07dcaa3835eddcaba7cb450",
+    "sealed_blind_key_path": "validation/pkb001/task6-blind-review/sealed-blind-key.json",
+    "sealed_blind_key_sha256": "3f22e51bcbfbfeeef9438334daa361aadb9e1eeffca93f31bb7539887425047d",
+    "evaluation_report_path": "validation/pkb001/task7-evaluation/evaluation-report.json",
+    "evaluation_report_sha256": "9aa55e5cb6a66f962771986b61710d578fa1f3480c8e397789e22ee59532f8fc",
+    "third_review_result_path": "validation/pkb001/task7-evaluation/third-review-result.json",
+    "third_review_result_sha256": "f4282c641f40eb435216269b40feecc6333c58823cfe7aad2d261849f8e11edc"
+  },
+  "allowed_signals": [
+    "POSSIBLE_DUPLICATE",
+    "POSSIBLE_COMPOSITE",
+    "POSSIBLE_OVERCLAIM"
+  ],
+  "entries": [
+    {
+      "proposal_id": "PKS2-HYP-001",
+      "blind_id": "BR-010",
+      "label": "Client record search and result browsing",
+      "signals": ["POSSIBLE_DUPLICATE"],
+      "evaluator_basis": "Both independent reviewers returned DUPLICATE with MERGE action.",
+      "required_human_interpretation": "Decide whether the proposal overlaps another Product Capability; do not merge automatically."
+    },
+    {
+      "proposal_id": "PKS2-HYP-002",
+      "blind_id": "BR-001",
+      "label": "Companion record identity and update safeguards",
+      "signals": ["POSSIBLE_COMPOSITE"],
+      "evaluator_basis": "Both independent reviewers returned PARTIALLY_SUPPORTED with SPLIT action.",
+      "required_human_interpretation": "Decide whether creation, update, uniqueness, association, and validation represent one or several Capabilities; do not split automatically."
+    },
+    {
+      "proposal_id": "PKS2-HYP-003",
+      "blind_id": "BR-008",
+      "label": "Visit date intake safeguards",
+      "signals": ["POSSIBLE_OVERCLAIM"],
+      "evaluator_basis": "The adjudicated result is PARTIALLY_SUPPORTED; enforcement, exception policy, and user wording exceed the frozen evidence.",
+      "required_human_interpretation": "Decide whether to narrow or rename the claim; do not rewrite it automatically."
+    },
+    {
+      "proposal_id": "PKS2-HYP-004",
+      "blind_id": "BR-003",
+      "label": "Practitioner directory and specialty presentation",
+      "signals": ["POSSIBLE_COMPOSITE", "POSSIBLE_OVERCLAIM"],
+      "evaluator_basis": "Both independent reviewers returned PARTIALLY_SUPPORTED with SPLIT action; presentation behavior is not fully established by Java structural evidence.",
+      "required_human_interpretation": "Decide the directory/specialty boundary and whether presentation claims need separate evidence; do not split or narrow automatically."
+    },
+    {
+      "proposal_id": "PKS2-HYP-005",
+      "blind_id": "BR-011",
+      "label": "Locale-selectable presentation",
+      "signals": ["POSSIBLE_OVERCLAIM"],
+      "evaluator_basis": "The adjudicated result is PARTIALLY_SUPPORTED; runtime selection, rendering, translation completeness, and language coverage are not proven.",
+      "required_human_interpretation": "Decide whether infrastructure alone supports the proposed Product behavior; do not accept or rename automatically."
+    }
+  ],
+  "interpretation_limits": [
+    "Signals describe this exact Petclinic run and are not general quality thresholds.",
+    "Evaluator findings do not establish Product meaning.",
+    "Java validators may validate shape, references, bindings, and authority only; they must not decide semantic correctness.",
+    "A later run must preserve uncertainty and report signals without automatic merge, split, drop, rename, or publication."
+  ]
+}

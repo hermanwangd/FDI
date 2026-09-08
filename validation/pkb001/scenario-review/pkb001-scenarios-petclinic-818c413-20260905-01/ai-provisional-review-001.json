@@ -1,0 +1,70 @@
+{
+  "schema_version": "pkb001.ai-provisional-review.v0.1",
+  "artifact_kind": "AI_PROVISIONAL_SEMANTIC_REVIEW",
+  "authority": "AI_EVALUATOR_RECOMMENDATION",
+  "status": "COMPLETE_PENDING_CONTROL_RECONCILIATION",
+  "reviewed_at": "2026-09-06T14:14:14Z",
+  "reviewer": "FEATURE_DELIVERY_PLANE_AI_REVIEWER",
+  "authorization": {
+    "source": "Current conversation",
+    "user_statement": "我也不是產品團隊，你幫我直接審核判斷就好; go",
+    "scope": "Review all eight remaining Capability and Behavior Scenario proposals without claiming Product Team authority."
+  },
+  "source_artifacts": [
+    "review-decisions-003.json",
+    "supplemental-scenario-proposal-001.json"
+  ],
+  "decision_summary": {
+    "accept": 6,
+    "edit": 0,
+    "reject": 2
+  },
+  "decisions": [
+    {
+      "item_id": "HYP-SCENARIO-011",
+      "action": "ACCEPT",
+      "reason": "The accepted parent capability explicitly includes update behavior, and the scenario supplies the missing positive externally observable example without inventing implementation details."
+    },
+    {
+      "item_id": "HYP-CAPABILITY-004",
+      "action": "ACCEPT",
+      "reason": "Recording visits and enforcing the associated date boundary form one coherent user outcome; appointment scheduling, billing, and record mutation remain excluded."
+    },
+    {
+      "item_id": "HYP-SCENARIO-007",
+      "action": "ACCEPT",
+      "reason": "The scenario states the minimum observable successful visit-recording behavior and preserves uncertainty about UI, ordering, and storage implementation."
+    },
+    {
+      "item_id": "HYP-SCENARIO-008",
+      "action": "ACCEPT",
+      "reason": "The scenario captures the evidenced future-date rejection boundary without inventing its exact cutoff, timezone, or presentation text."
+    },
+    {
+      "item_id": "HYP-CAPABILITY-005",
+      "action": "ACCEPT",
+      "reason": "Browsing veterinarians with specialties and pagination is a coherent capability supported by both structural and delivery evidence; UI rendering remains an explicit evidence gap."
+    },
+    {
+      "item_id": "HYP-SCENARIO-009",
+      "action": "ACCEPT",
+      "reason": "The scenario expresses observable directory pagination and specialty presentation while leaving sorting, page size, and empty-specialty behavior unspecified."
+    },
+    {
+      "item_id": "HYP-CAPABILITY-006",
+      "action": "REJECT",
+      "reason": "The available evidence suggests locale infrastructure but does not establish a user-visible language-selection capability or its persistence across navigation. Retain it as a historical hypothesis, not prototype semantics."
+    },
+    {
+      "item_id": "HYP-SCENARIO-010",
+      "action": "REJECT",
+      "reason": "The Given and Then clauses assume an exposed language selector, multiple supported choices, persistence, and translated-page behavior that the allowed evidence does not verify."
+    }
+  ],
+  "prototype_use": {
+    "allowed_now": false,
+    "blocked_by": "The active Framework Spec still requires Human Reviewer-owned frozen semantics; changing that contract during PKB-BL-004 execution would invalidate its bound active Plan revision.",
+    "next_transition": "After PKB-BL-004 reaches its integration boundary, reconcile FRAMEWORK-SPEC.md, BACKLOG.md, IMPLEMENTATION-PLAN.md, and STATUS.json before deriving a provisional semantics snapshot."
+  },
+  "semantic_publication_allowed": false
+}

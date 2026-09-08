@@ -1,0 +1,129 @@
+{
+  "checks": [
+    {
+      "detail": "Both public readiness fields are READY",
+      "name": "phase0_ready",
+      "passed": true
+    },
+    {
+      "detail": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+      "name": "graph_digest",
+      "passed": true
+    },
+    {
+      "detail": "87b70439f69bb82cee0139b65108ecce6044aff1a4d1b5ce6324933acbeab2d1",
+      "name": "history_digest",
+      "passed": true
+    },
+    {
+      "detail": "Runtime, graph, and history bind the required immutable source commit",
+      "name": "exact_source_binding",
+      "passed": true
+    },
+    {
+      "detail": "Frozen history and exclude-after-cutoff policy are present",
+      "name": "history_boundary",
+      "passed": true
+    },
+    {
+      "detail": "6 exact inputs",
+      "name": "visible_input_allowlist_exact",
+      "passed": true
+    },
+    {
+      "detail": "5 isolated outputs",
+      "name": "output_scope_isolated",
+      "passed": true
+    },
+    {
+      "detail": "Both records attest false",
+      "name": "forbidden_inputs_not_accessed",
+      "passed": true
+    },
+    {
+      "detail": "Every visible input matches its recorded SHA-256",
+      "name": "manifest_input_digests",
+      "passed": true
+    },
+    {
+      "detail": "Artifact and validator match manifest digests",
+      "name": "manifest_primary_output_digests",
+      "passed": true
+    },
+    {
+      "detail": "Witness binds exact manifest input set",
+      "name": "witness_input_digests",
+      "passed": true
+    },
+    {
+      "detail": "Witness binds the primary generated outputs",
+      "name": "witness_output_digests",
+      "passed": true
+    },
+    {
+      "detail": "Witness binds the immutable manifest bytes",
+      "name": "witness_manifest_digest",
+      "passed": true
+    },
+    {
+      "detail": "Fresh PK-S2 orchestration identity and no-history fork are explicit",
+      "name": "fresh_orchestration_identity",
+      "passed": true
+    },
+    {
+      "detail": "Witness makes its assurance limit explicit",
+      "name": "attestation_label",
+      "passed": true
+    },
+    {
+      "detail": "READY at 2026-09-04T17:03:20+00:00 before generation at 2026-09-04T17:05:25+00:00",
+      "name": "phase0_precedes_generation",
+      "passed": true
+    },
+    {
+      "detail": "Artifact is proposal-only and exactly bound",
+      "name": "artifact_binding",
+      "passed": true
+    },
+    {
+      "detail": "5 unique IDs",
+      "name": "stable_unique_proposal_ids",
+      "passed": true
+    },
+    {
+      "detail": "Graph nodes/edges, commits, PRs, and changed paths resolve in frozen inputs",
+      "name": "all_evidence_refs_resolve",
+      "passed": true
+    },
+    {
+      "detail": "Every cited commit and PR event is at or before the frozen cutoff",
+      "name": "all_evidence_before_cutoff",
+      "passed": true
+    },
+    {
+      "detail": "Every proposal has overlapping graph source and delivery path evidence",
+      "name": "structural_delivery_convergence",
+      "passed": true
+    },
+    {
+      "detail": "Every hypothesis retains proposal-only authority and exact binding",
+      "name": "proposal_only_per_hypothesis",
+      "passed": true
+    },
+    {
+      "detail": "Labels differ from graph technical labels and value/confidence/limitations are present",
+      "name": "reviewable_neutral_hypotheses",
+      "passed": true
+    },
+    {
+      "detail": "Unresolved candidate boundaries are explicit",
+      "name": "ambiguity_preserved",
+      "passed": true
+    }
+  ],
+  "forbidden_areas_inspected": false,
+  "passed": true,
+  "schema_version": "pkb001.pk-s2.public-validation-report.v1",
+  "validation_scope": "PUBLIC_SEAM_ONLY_NO_SEMANTIC_CORRECTNESS_JUDGMENT",
+  "validator": "validation/pkb001/reverse-task5-pkb001_reverse_run/public_validate.py"
+}

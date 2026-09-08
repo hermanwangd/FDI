@@ -1,0 +1,237 @@
+{
+  "entry_template": {
+    "active_review_seconds": null,
+    "evidence_validity": null,
+    "limitations": null,
+    "outcome": null,
+    "precision": null,
+    "review_action": null,
+    "reviewer_notes": null,
+    "suggested_name": null,
+    "unsupported_claims": null,
+    "usefulness": null
+  },
+  "judgments": [
+    {
+      "active_review_seconds": 130,
+      "blind_id": "BR-002",
+      "evidence_validity": 0.9,
+      "limitations": [
+        "The graph does not prove the transaction or UI binding joining these components.",
+        "Structural presence of the methods does not by itself prove the end-to-end register-pet user flow."
+      ],
+      "outcome": "SUPPORTED",
+      "precision": 0.9,
+      "review_action": "ACCEPT",
+      "reviewer_notes": "Every element named in the capability is directly evidenced: typed (pet_settype plus pettyperepository_findpettypes populating the types), named (namedentity_setname), dated (pet_setbirthdate), and attached to an owner (owner_addpet), with form init/process methods completing the intake path. The supplied evidence supports the capability as a structural realization candidate. It does not establish the transaction or UI binding, which the stated limitation already concedes.",
+      "suggested_name": null,
+      "unsupported_claims": [
+        "complete realization including transaction/UI binding joining the components is asserted but not established by the supplied graph evidence"
+      ],
+      "usefulness": 0.9
+    },
+    {
+      "active_review_seconds": 100,
+      "blind_id": "BR-004",
+      "evidence_validity": 0.92,
+      "limitations": [
+        "Graph structure does not expose rendered result links or request mappings.",
+        "Search-result navigation beyond pagination parameters is not evidenced."
+      ],
+      "outcome": "SUPPORTED",
+      "precision": 0.93,
+      "review_action": "ACCEPT",
+      "reviewer_notes": "The evidence is tight and internally consistent: a find-form entry point (initfindform), form processing (processfindform), a paginated last-name search on the controller (findpaginatedforownerslastname), and a matching repository prefix query (findbylastnamestartingwith). Together these directly realize a find-owners search capability. The evidence does not establish rendered result links or request mappings, but those are peripheral to the search claim itself.",
+      "suggested_name": null,
+      "unsupported_claims": [
+        "rendered result links and request mappings are not established by the supplied evidence"
+      ],
+      "usefulness": 0.9
+    },
+    {
+      "active_review_seconds": 100,
+      "blind_id": "BR-005",
+      "evidence_validity": 0.93,
+      "limitations": [
+        "The extracted graph does not demonstrate persistence success or validation behavior.",
+        "The evidence shows record-shape and controller paths, not runtime visit-record creation."
+      ],
+      "outcome": "SUPPORTED",
+      "precision": 0.94,
+      "review_action": "ACCEPT",
+      "reviewer_notes": "The claim covers visit creation and processing explicitly loading a pet with a visit (loadpetwithvisit), form init/process, date and description mutation (visit_setdate, visit_setdescription), and owner-side visit aggregation (owner_addvisit). All five evidence refs map one-to-one onto the capability elements. The evidence does not demonstrate persistence success or validation behavior, but the structural realization of recording a visit is well supported.",
+      "suggested_name": null,
+      "unsupported_claims": [
+        "persistence success and validation behavior are not demonstrated by the supplied evidence"
+      ],
+      "usefulness": 0.9
+    },
+    {
+      "active_review_seconds": 95,
+      "blind_id": "BR-006",
+      "evidence_validity": 0.88,
+      "limitations": [
+        "List presentation and navigation controls are outside the Java-only graph.",
+        "The evidence supports list retrieval and pagination structure, not the rendered browsing experience."
+      ],
+      "outcome": "SUPPORTED",
+      "precision": 0.9,
+      "review_action": "ACCEPT",
+      "reviewer_notes": "The evidence gives a coherent browse path: list method (showvetlist), pagination model (addpaginationmodel), paginated find (findpaginated), repository collection retrieval (findall), and a list accessor (getvetlist). These directly support a veterinarian-browsing capability at the structural level. Rendering and navigation controls are admittedly outside the evidence, so the outcome is supported at the realization-candidate level only.",
+      "suggested_name": null,
+      "unsupported_claims": [
+        "list presentation and navigation controls are asserted as part of browsing but are outside the supplied evidence"
+      ],
+      "usefulness": 0.85
+    },
+    {
+      "active_review_seconds": 130,
+      "blind_id": "BR-007",
+      "evidence_validity": 0.72,
+      "limitations": [
+        "No view-template node confirms that the visit collection is rendered or ordered as history.",
+        "The accessor chain is structural; the 'review ... history' presentation semantics exceed the supplied evidence.",
+        "Ordering, grouping, or chronology of the presented visits is not evidenced anywhere in the packet."
+      ],
+      "outcome": "PARTIALLY_SUPPORTED",
+      "precision": 0.78,
+      "review_action": "ACCEPT",
+      "reviewer_notes": "The evidence establishes a real structural chain: owner detail entry (showowner), owner-to-pets accessor (owner_getpets), pet-to-visits accessor (pet_getvisits), and visit date/description accessors. That supports access to visit data in owner and pet context. However, nothing in the supplied evidence shows the visits being rendered or organized as a reviewable history, so the capability as named ('Review Pet Visit History') is only partially supported; the presentation/history aspect exceeds the evidence.",
+      "suggested_name": null,
+      "unsupported_claims": [
+        "rendering or ordering of the visit collection as history is not confirmed by any view-template or equivalent node in the supplied evidence"
+      ],
+      "usefulness": 0.7
+    },
+    {
+      "active_review_seconds": 110,
+      "blind_id": "BR-008",
+      "evidence_validity": 0.75,
+      "limitations": [
+        "Only one delivery episode is cited, so independent repetition is absent.",
+        "No cross-file graph edge connects the visit entity and controller in this extraction.",
+        "The exact business exception policy and user wording are not established by the frozen evidence.",
+        "The structural nodes alone (date accessors, minVisitDate, form processing) do not prove that a safeguard is enforced."
+      ],
+      "outcome": "PARTIALLY_SUPPORTED",
+      "precision": 0.8,
+      "review_action": "ACCEPT",
+      "reviewer_notes": "The evidence shows the raw ingredients of a date safeguard: visit date accessors, a minVisitDate calculation node, and new-visit form processing, plus one delivery episode that co-changed the visit entity and controller to validate future dates. That single co-change episode is meaningful corroboration, but with only one episode, no cross-file graph edge, and no established exception policy or wording, the safeguard claim is only partially supported: the components and one change history support it, independent repetition and enforcement semantics do not.",
+      "suggested_name": null,
+      "unsupported_claims": [
+        "the exact business exception policy and user-facing wording are not established by the frozen evidence",
+        "safeguard enforcement is inferred from one delivery episode rather than independently repeated evidence"
+      ],
+      "usefulness": 0.72
+    },
+    {
+      "active_review_seconds": 110,
+      "blind_id": "BR-011",
+      "evidence_validity": 0.7,
+      "limitations": [
+        "Translation completeness and runtime rendering are not proven by the Java-only graph.",
+        "Only one delivery episode overlaps the web configuration and localized resources in this proposal.",
+        "Language coverage and terminology remain Product Team review questions.",
+        "The interceptor and resolver are registration-time structure; selectable-by-user behavior at runtime is not demonstrated."
+      ],
+      "outcome": "PARTIALLY_SUPPORTED",
+      "precision": 0.75,
+      "review_action": "ACCEPT",
+      "reviewer_notes": "The evidence establishes locale-switching infrastructure: locale resolver, locale-change interceptor, and interceptor registration with a calls edge, plus one delivery episode that changed the same web configuration together with a Spanish messages bundle and the layout template. That episode usefully reaches outside the Java graph into resources and templates, supporting the presentation aspect. However, with a single delivery episode and no runtime rendering or completeness evidence, locale-selectable presentation as a full capability is only partially supported.",
+      "suggested_name": null,
+      "unsupported_claims": [
+        "translation completeness and runtime rendering of localized presentation are not proven by the supplied evidence",
+        "language coverage beyond the cited bundles is not established"
+      ],
+      "usefulness": 0.68
+    },
+    {
+      "active_review_seconds": 95,
+      "blind_id": "BR-012",
+      "evidence_validity": 0.9,
+      "limitations": [
+        "Persistence calls and field validation are not proven by the extracted cross-component graph.",
+        "The evidence covers form methods and field mutators, not the saved-owner outcome."
+      ],
+      "outcome": "SUPPORTED",
+      "precision": 0.9,
+      "review_action": "ACCEPT",
+      "reviewer_notes": "The evidence maps cleanly onto the capability: creation-form init/process methods on the controller, and person/owner mutators covering first name, last name, address, and telephone — exactly the registration fields claimed. This is a direct structural realization of an owner-registration capability. Persistence and validation are not proven, but they are conceded in the stated limitation and do not undermine the registration-path claim.",
+      "suggested_name": null,
+      "unsupported_claims": [
+        "persistence calls and field validation are not proven by the supplied evidence"
+      ],
+      "usefulness": 0.88
+    },
+    {
+      "active_review_seconds": 105,
+      "blind_id": "BR-013",
+      "evidence_validity": 0.9,
+      "limitations": [
+        "Name handling is inherited through NamedEntity and the graph does not establish form field coverage.",
+        "The same PetController update methods cited here also appear in another packet item that bundles update with duplicate-name safeguards, so a merge/boundary decision belongs to the human Product Team."
+      ],
+      "outcome": "SUPPORTED",
+      "precision": 0.9,
+      "review_action": "ACCEPT",
+      "reviewer_notes": "On its own evidence this item is well supported: dedicated update-form init/process methods, an updatePetDetails method, and the identifying pet mutators (setbirthdate, settype) directly realize maintaining pet details. The inherited name handling leaves field coverage partially open, as the limitation states. I also note, for the coordinator's awareness, that the update methods cited here overlap another packet item's broader update-plus-safeguards proposal; that boundary question is not mine to settle and does not change this item's own evidence merits.",
+      "suggested_name": null,
+      "unsupported_claims": [
+        "name field coverage via NamedEntity inheritance is not established by the supplied evidence",
+        "form field coverage for the update form is not established by the supplied evidence"
+      ],
+      "usefulness": 0.87
+    },
+    {
+      "active_review_seconds": 95,
+      "blind_id": "BR-014",
+      "evidence_validity": 0.88,
+      "limitations": [
+        "Associated activity rendering is inferred only from structural accessors, not template evidence.",
+        "The evidence supports owner-profile maintenance; the surrounding detail-page context is only accessor-level."
+      ],
+      "outcome": "SUPPORTED",
+      "precision": 0.88,
+      "review_action": "ACCEPT",
+      "reviewer_notes": "The evidence directly supports owner-profile maintenance: update-form init/process methods, the show-owner entry point, a profile mutator (setcity), and associated-pet accessor structure. The capability as named — maintaining owner details — is structurally realized. The associated-activity rendering claim exceeds the evidence, but it is peripheral to the maintenance claim and is already flagged as a limitation.",
+      "suggested_name": null,
+      "unsupported_claims": [
+        "associated activity rendering is inferred from accessors only and is not template-evidenced"
+      ],
+      "usefulness": 0.85
+    },
+    {
+      "active_review_seconds": 105,
+      "blind_id": "BR-015",
+      "evidence_validity": 0.78,
+      "limitations": [
+        "The graph does not include the view responsible for displaying specialty names.",
+        "Specialty association is evidenced at accessor level; its presentation with each listed veterinarian is not.",
+        "Specialty add/edit administration is not part of the supplied evidence and should not be read into this candidate."
+      ],
+      "outcome": "PARTIALLY_SUPPORTED",
+      "precision": 0.8,
+      "review_action": "ACCEPT",
+      "reviewer_notes": "The evidence supports the association structure behind reviewing veterinarian specialties: the veterinarian list entry point, specialty accessors on Vet (getspecialties, getnrofspecialties), and the Specialty type node. That realizes the data side of reviewing specialties per veterinarian. The display view is not in the graph, so the presentation half of the capability as named is not established; the outcome is partially supported rather than unsupported because the list-plus-accessor chain is genuine convergent evidence.",
+      "suggested_name": null,
+      "unsupported_claims": [
+        "specialty names being displayed with each listed veterinarian is not established because the responsible view is outside the supplied evidence"
+      ],
+      "usefulness": 0.75
+    }
+  ],
+  "packet_sha256": "13451c06a6b635f6d6ea58e7cb3faa8fdfd8f9cc6c011d8fdc3dbebac395c89a",
+  "reviewer_context": {
+    "actor_type": "NON_HUMAN",
+    "authority": "EVALUATOR_ONLY",
+    "can_complete_product_team_review": false,
+    "independent_from_reviewer_01_and_reviewer_02": true
+  },
+  "reviewer_isolation": {
+    "ground_truth_accessible_from_packet_workspace": false,
+    "other_workspace_future_judgments_accessible": false,
+    "sealed_key_accessible": false
+  },
+  "schema_version": "pkb001.task6.blind-judgment-workspace.v1",
+  "workspace_id": "reviewer-03"
+}

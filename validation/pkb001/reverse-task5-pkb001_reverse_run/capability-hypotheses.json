@@ -1,0 +1,331 @@
+{
+  "schema_version": "pkb001.pk-s2.capability-hypotheses.v1",
+  "experiment_id": "PKB-001",
+  "run_id": "pkb001-reverse-task5-root-pkb001-reverse-run-20260904T170320Z",
+  "generated_at": "2026-09-04T17:05:25Z",
+  "authority": "PROPOSAL_ONLY",
+  "human_review_required": true,
+  "source_binding": {
+    "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+    "graphify_runtime_evidence_sha256": "fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8",
+    "delivery_history_sha256": "87b70439f69bb82cee0139b65108ecce6044aff1a4d1b5ce6324933acbeab2d1",
+    "history_cutoff": "2026-08-26T10:57:54Z",
+    "post_cutoff_knowledge_policy": "EXCLUDE_AFTER_CUTOFF",
+    "graphify_result": "EXACTLY_BOUND",
+    "delivery_history_status": "FROZEN",
+    "phase0_status": "READY"
+  },
+  "method": {
+    "skill": "pk-s2-capability-hypothesis",
+    "generation_mode": "FRESH_AGENT_REASONING",
+    "structural_proximity_only_is_insufficient": true,
+    "product_semantics_visible": false,
+    "summary": "Delivery episodes were grouped by shared changed paths and resolvable commit or pull-request evidence, then compared with exactly bound graph components. A proposal was retained only when structural and delivery evidence overlapped."
+  },
+  "hypotheses": [
+    {
+      "proposal_id": "PKS2-HYP-001",
+      "label": "Client record search and result browsing",
+      "user_product_value": "A user can search client records by a name prefix, receive normalized matching behavior, and browse a paginated result set.",
+      "authority": "PROPOSAL_ONLY",
+      "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+      "evidence_refs": {
+        "graph_node_ids": [
+          "ownercontroller_ownercontroller_processfindform",
+          "ownercontroller_ownercontroller_findpaginatedforownerslastname",
+          "ownerrepository_ownerrepository_findbylastnamestartingwith"
+        ],
+        "graph_edges": [
+          {
+            "source": "ownercontroller_ownercontroller_processfindform",
+            "relation": "calls",
+            "target": "ownercontroller_ownercontroller_findpaginatedforownerslastname"
+          }
+        ],
+        "commit_shas": [
+          "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+          "bb37aad8c332264723817d855e8b3b96b7c392bc"
+        ],
+        "pull_request_numbers": [2589],
+        "changed_path_refs": [
+          {
+            "commit_sha": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java"
+          },
+          {
+            "commit_sha": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java"
+          },
+          {
+            "commit_sha": "bb37aad8c332264723817d855e8b3b96b7c392bc",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java"
+          }
+        ]
+      },
+      "structural_delivery_convergence": "The graph exposes a find-form path into paginated owner lookup and a repository prefix-search operation; delivery episodes added owner-list pagination and later corrected whitespace handling on the same controller path.",
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.86,
+        "rationale": "Two temporally distinct delivery episodes overlap the bound controller and repository components, including one narrowly scoped pull request."
+      },
+      "limitations": [
+        "The graph has no direct controller-to-repository call edge, so the repository association is supported by co-change and naming rather than a graph path.",
+        "The graph does not index the HTML templates, so the visible pagination experience is inferred from delivery paths and subjects.",
+        "This proposal does not establish the Product Team's preferred terminology or boundary."
+      ]
+    },
+    {
+      "proposal_id": "PKS2-HYP-002",
+      "label": "Companion record identity and update safeguards",
+      "user_product_value": "A user can create or update a companion record while the system protects per-client name uniqueness, persisted associations, and basic name validity.",
+      "authority": "PROPOSAL_ONLY",
+      "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+      "evidence_refs": {
+        "graph_node_ids": [
+          "owner_owner_addpet",
+          "owner_owner_getpet",
+          "petcontroller_petcontroller_processcreationform",
+          "petcontroller_petcontroller_processupdateform",
+          "petcontroller_petcontroller_updatepetdetails",
+          "petcontroller_petcontroller_isduplicatepetnameviolation",
+          "petvalidator_petvalidator_validate"
+        ],
+        "graph_edges": [
+          {
+            "source": "petcontroller_petcontroller_processcreationform",
+            "relation": "calls",
+            "target": "petcontroller_petcontroller_isduplicatepetnameviolation"
+          },
+          {
+            "source": "petcontroller_petcontroller_processupdateform",
+            "relation": "calls",
+            "target": "petcontroller_petcontroller_updatepetdetails"
+          },
+          {
+            "source": "petcontroller_petcontroller_processupdateform",
+            "relation": "calls",
+            "target": "petcontroller_petcontroller_isduplicatepetnameviolation"
+          }
+        ],
+        "commit_shas": [
+          "b11afec3af05e8ff5156566aa014f2036b276647",
+          "b3ee2c53e76e9267f03551a7cd36b0983c859c56",
+          "e0db9b184e028d41bcb626f3cbf03a942f67e104",
+          "676db04515ee5f289641cea6cb379dc02b40f67f"
+        ],
+        "pull_request_numbers": [2536, 2537, 2573, 2611],
+        "changed_path_refs": [
+          {
+            "commit_sha": "e0db9b184e028d41bcb626f3cbf03a942f67e104",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java"
+          },
+          {
+            "commit_sha": "676db04515ee5f289641cea6cb379dc02b40f67f",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/Owner.java"
+          },
+          {
+            "commit_sha": "676db04515ee5f289641cea6cb379dc02b40f67f",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/PetValidator.java"
+          },
+          {
+            "commit_sha": "b11afec3af05e8ff5156566aa014f2036b276647",
+            "path": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java"
+          },
+          {
+            "commit_sha": "b3ee2c53e76e9267f03551a7cd36b0983c859c56",
+            "path": "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java"
+          }
+        ]
+      },
+      "structural_delivery_convergence": "Bound create and update handlers call duplicate-name and update paths, while owner association and validator nodes are present; four linked delivery episodes exercise duplicate-name behavior, persisted association, name validation, and update regression coverage.",
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.93,
+        "rationale": "Multiple narrowly scoped commits and pull requests align with the exact bound controller, owner, and validator components, including repeated regression evidence."
+      },
+      "limitations": [
+        "Database uniqueness scripts and test behavior are delivery evidence but are not represented as graph nodes in the Java-only graph.",
+        "The graph does not provide cross-file edges between the controller, owner entity, and validator; convergence depends on shared delivery episodes.",
+        "The proposal intentionally does not decide whether creation, update, and validation are one Product Capability or several."
+      ]
+    },
+    {
+      "proposal_id": "PKS2-HYP-003",
+      "label": "Visit date intake safeguards",
+      "user_product_value": "A user can record a visit with date constraints that reject unsupported future dates before the visit is accepted.",
+      "authority": "PROPOSAL_ONLY",
+      "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+      "evidence_refs": {
+        "graph_node_ids": [
+          "visit_visit_getdate",
+          "visit_visit_setdate",
+          "visitcontroller_visitcontroller_minvisitdate",
+          "visitcontroller_visitcontroller_processnewvisitform"
+        ],
+        "graph_edges": [],
+        "commit_shas": ["753d35c2f84432d88c0f3b61c9302a16069b78dd"],
+        "pull_request_numbers": [2490],
+        "changed_path_refs": [
+          {
+            "commit_sha": "753d35c2f84432d88c0f3b61c9302a16069b78dd",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/Visit.java"
+          },
+          {
+            "commit_sha": "753d35c2f84432d88c0f3b61c9302a16069b78dd",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java"
+          }
+        ]
+      },
+      "structural_delivery_convergence": "The bound graph contains visit date accessors and controller nodes for minimum-date calculation and new-visit processing; one focused pull request changed both Java components together to validate future dates.",
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.88,
+        "rationale": "A focused commit and pull request overlap both structural components and state the same date constraint visible in the bound node names."
+      },
+      "limitations": [
+        "Only one delivery episode is cited, so independent repetition is absent.",
+        "No cross-file graph edge connects the visit entity and controller in this extraction.",
+        "The exact business exception policy and user wording are not established by the frozen evidence."
+      ]
+    },
+    {
+      "proposal_id": "PKS2-HYP-004",
+      "label": "Practitioner directory and specialty presentation",
+      "user_product_value": "A user can browse a paginated practitioner directory and view practitioner specialties in a predictable order and machine-readable representation.",
+      "authority": "PROPOSAL_ONLY",
+      "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+      "evidence_refs": {
+        "graph_node_ids": [
+          "vet_vet_getspecialties",
+          "vetcontroller_vetcontroller_showvetlist",
+          "vetcontroller_vetcontroller_addpaginationmodel",
+          "vetcontroller_vetcontroller_findpaginated",
+          "vetcontroller_vetcontroller_showresourcesvetlist",
+          "vetrepository_vetrepository_findall",
+          "vets_vets_getvetlist"
+        ],
+        "graph_edges": [
+          {
+            "source": "vetcontroller_vetcontroller_showvetlist",
+            "relation": "calls",
+            "target": "vetcontroller_vetcontroller_findpaginated"
+          },
+          {
+            "source": "vetcontroller_vetcontroller_showvetlist",
+            "relation": "calls",
+            "target": "vetcontroller_vetcontroller_addpaginationmodel"
+          }
+        ],
+        "commit_shas": [
+          "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+          "73d73609b5dafb11e070f19150f66a4fc679d314",
+          "1312314e4ef7493f11596313d40c7ecb8429aed3"
+        ],
+        "pull_request_numbers": [1775, 2491],
+        "changed_path_refs": [
+          {
+            "commit_sha": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+            "path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java"
+          },
+          {
+            "commit_sha": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+            "path": "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java"
+          },
+          {
+            "commit_sha": "8ad9c05f74a96f46dd4211766fbb0bc78d48f94d",
+            "path": "src/main/java/org/springframework/samples/petclinic/vet/Vets.java"
+          },
+          {
+            "commit_sha": "73d73609b5dafb11e070f19150f66a4fc679d314",
+            "path": "src/main/java/org/springframework/samples/petclinic/vet/Vet.java"
+          },
+          {
+            "commit_sha": "1312314e4ef7493f11596313d40c7ecb8429aed3",
+            "path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java"
+          }
+        ]
+      },
+      "structural_delivery_convergence": "The graph connects list display to pagination and exposes resource-list, repository-list, collection, and specialty-access nodes; delivery history co-changed the directory components for pagination and later refined specialty ordering and controller representation handling.",
+      "confidence": {
+        "level": "MEDIUM",
+        "score": 0.74,
+        "rationale": "The structural cluster is broad and delivery evidence spans pagination plus two maintenance-oriented episodes rather than a single explicit end-to-end feature."
+      },
+      "limitations": [
+        "The pagination commit is broad and changes owner, visit, cache, and practitioner paths together, weakening boundary precision.",
+        "Two cited pull requests are maintenance or refactoring changes and do not independently prove an end-user capability.",
+        "The HTML and serialized representations are not nodes in the Java-only graph."
+      ]
+    },
+    {
+      "proposal_id": "PKS2-HYP-005",
+      "label": "Locale-selectable presentation",
+      "user_product_value": "A user can select a locale and receive translated interface text across multiple presentation surfaces.",
+      "authority": "PROPOSAL_ONLY",
+      "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+      "evidence_refs": {
+        "graph_node_ids": [
+          "webconfiguration_webconfiguration_localeresolver",
+          "webconfiguration_webconfiguration_localechangeinterceptor",
+          "webconfiguration_webconfiguration_addinterceptors"
+        ],
+        "graph_edges": [
+          {
+            "source": "webconfiguration_webconfiguration_localechangeinterceptor",
+            "relation": "calls",
+            "target": "webconfiguration_webconfiguration_addinterceptors"
+          }
+        ],
+        "commit_shas": ["0c88f916db87a2a54c3cfa235d635248d400808b"],
+        "pull_request_numbers": [1856],
+        "changed_path_refs": [
+          {
+            "commit_sha": "0c88f916db87a2a54c3cfa235d635248d400808b",
+            "path": "src/main/java/org/springframework/samples/petclinic/system/WebConfiguration.java"
+          },
+          {
+            "commit_sha": "0c88f916db87a2a54c3cfa235d635248d400808b",
+            "path": "src/main/resources/messages/messages_es.properties"
+          },
+          {
+            "commit_sha": "0c88f916db87a2a54c3cfa235d635248d400808b",
+            "path": "src/main/resources/templates/fragments/layout.html"
+          }
+        ]
+      },
+      "structural_delivery_convergence": "The graph exposes locale resolution and locale-change interception registered in web configuration; one linked delivery episode changed that same configuration alongside multiple translation bundles and presentation templates.",
+      "confidence": {
+        "level": "MEDIUM",
+        "score": 0.79,
+        "rationale": "The structural locale controls and delivery paths align directly, but only one linked episode is cited and resources are outside the Java graph."
+      },
+      "limitations": [
+        "Translation completeness and runtime rendering are not proven by the Java-only graph.",
+        "Only one delivery episode overlaps the web configuration and localized resources in this proposal.",
+        "Language coverage and terminology remain Product Team review questions."
+      ]
+    }
+  ],
+  "unresolved_boundaries": [
+    {
+      "proposal_ids": ["PKS2-HYP-001", "PKS2-HYP-002", "PKS2-HYP-003"],
+      "reason": "Client, companion, and visit components share paths and aggregate-style delivery history, but their focused delivery episodes and graph communities remain distinct; no merge is forced."
+    },
+    {
+      "proposal_ids": ["PKS2-HYP-004", "PKS2-HYP-005"],
+      "reason": "Directory presentation can be localized, but structural locale controls and directory delivery episodes do not justify collapsing the two proposals."
+    }
+  ],
+  "global_limitations": [
+    "The graph contains deterministic Java AST evidence only and has no embedded Git revision metadata; exact binding is supplied by the frozen live-evidence record and digest.",
+    "Pull-request coverage is limited to the frozen dataset's acquisition boundary.",
+    "No Product Semantics, evaluator truth, forward output, post-cutoff knowledge, or historical reverse output was used.",
+    "These are blinded proposals for human review, not accepted or published Product truth."
+  ]
+}

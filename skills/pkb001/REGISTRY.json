@@ -1,0 +1,27 @@
+{
+  "registry_id": "pkb001-execution-skills-v1",
+  "product_semantics_path": "validation/pkb001/datasets/petclinic-product-semantics-candidate.json",
+  "product_semantics_sha256": "72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea",
+  "product_semantics_status": "FROZEN",
+  "calibration_status": "FROZEN",
+  "evaluator_ground_truth_status": "SEALED",
+  "phase0_readiness": "READY",
+  "delivery_history": {
+    "path": "validation/pkb001/datasets/petclinic-delivery-history.json",
+    "sha256": "87b70439f69bb82cee0139b65108ecce6044aff1a4d1b5ce6324933acbeab2d1",
+    "status": "FROZEN",
+    "post_cutoff_knowledge_policy": "EXCLUDE_AFTER_CUTOFF"
+  },
+  "skills": {
+    "PK-S1": {
+      "path": "skills/pkb001/pk-s1-product-realization/SKILL.md",
+      "sha256": "f97d4e5b13605de81ab1b149e338031feea736666dc2c6f0b7635ce9131a2ca9",
+      "status": "REGISTERED_NON_GOVERNING"
+    },
+    "PK-S2": {
+      "path": "skills/pkb001/pk-s2-capability-hypothesis/SKILL.md",
+      "sha256": "5e5afa756e0341d284e48e7e0cb9694fbd7c1c333404248ab0f5cb200beba6c2",
+      "status": "REGISTERED_NON_GOVERNING"
+    }
+  }
+}

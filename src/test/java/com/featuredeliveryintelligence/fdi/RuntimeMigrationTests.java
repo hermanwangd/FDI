@@ -1,4 +1,4 @@
-package com.featuredeliveryintelligence.fdi;import com.featuredeliveryintelligence.fdi.application.RuntimeCapabilities;import com.featuredeliveryintelligence.fdi.validation.CanonicalBaseGate;import com.featuredeliveryintelligence.fdi.validation.Dev204Validation;import com.featuredeliveryintelligence.fdi.validation.VerificationAccounting;import com.featuredeliveryintelligence.fdi.feature.FeatureDiscovery;import com.featuredeliveryintelligence.fdi.feature.FeatureKnowledgePlan;import com.featuredeliveryintelligence.fdi.feature.RealizationTraversal;import com.featuredeliveryintelligence.fdi.product.ProductSemantics;import com.featuredeliveryintelligence.fdi.product.ProductKnowledgeMaintenance;import com.featuredeliveryintelligence.fdi.structural.graphify.GrafelAdapter;import com.featuredeliveryintelligence.fdi.structural.graphify.GrafelBindingAttestor;import com.featuredeliveryintelligence.fdi.structural.graphify.GrafelBindingEvidence;import com.featuredeliveryintelligence.fdi.structural.graphify.GrafelTransport;import com.featuredeliveryintelligence.fdi.structural.api.CodeIntelligenceProvider;import com.featuredeliveryintelligence.fdi.structural.api.SnapshotBindingAttestor;import com.featuredeliveryintelligence.fdi.structural.api.StructuralIntelligence;import com.featuredeliveryintelligence.fdi.structural.api.StructuralMaintenance;import com.featuredeliveryintelligence.fdi.shared.RuntimeMaps;import com.featuredeliveryintelligence.fdi.shared.RuntimeContractException;
+package com.featuredeliveryintelligence.fdi;import com.featuredeliveryintelligence.fdi.application.RuntimeCapabilities;import com.featuredeliveryintelligence.fdi.validation.CanonicalBaseGate;import com.featuredeliveryintelligence.fdi.validation.Dev204Validation;import com.featuredeliveryintelligence.fdi.validation.VerificationAccounting;import com.featuredeliveryintelligence.fdi.feature.FeatureDiscovery;import com.featuredeliveryintelligence.fdi.feature.FeatureKnowledgePlan;import com.featuredeliveryintelligence.fdi.feature.RealizationTraversal;import com.featuredeliveryintelligence.fdi.product.ProductSemantics;import com.featuredeliveryintelligence.fdi.product.ProductKnowledgeMaintenance;import com.featuredeliveryintelligence.fdi.structural.graphify.GraphifyAdapter;import com.featuredeliveryintelligence.fdi.structural.graphify.GraphifyBindingAttestor;import com.featuredeliveryintelligence.fdi.structural.graphify.GraphifyBindingEvidence;import com.featuredeliveryintelligence.fdi.structural.graphify.GraphifyTransport;import com.featuredeliveryintelligence.fdi.structural.api.CodeIntelligenceProvider;import com.featuredeliveryintelligence.fdi.structural.api.SnapshotBindingAttestor;import com.featuredeliveryintelligence.fdi.structural.api.StructuralIntelligence;import com.featuredeliveryintelligence.fdi.structural.api.StructuralMaintenance;import com.featuredeliveryintelligence.fdi.shared.RuntimeMaps;import com.featuredeliveryintelligence.fdi.shared.RuntimeContractException;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -27,10 +27,14 @@ class RuntimeMigrationTests {
     }
 
     @Test
-    void grafelAdapterPassesExactRouteAndBounds() {
+    void graphifyAdapterPassesExactRouteAndBounds() {
         List<Map<String, Object>> calls = new ArrayList<>();
-        GrafelTransport transport = (tool, payload) -> { calls.add(Map.of("tool", tool, "payload", payload)); return Map.of("nodes", List.of(), "edges", List.of(), "paths", List.of()); };
-        GrafelAdapter adapter = new GrafelAdapter(transport, snapshot -> Map.of("result", "EXACTLY_BOUND"));
+        GraphifyTransport transport = (tool, payload) -> { calls.add(Map.of("tool", tool, "payload", payload)); return Map.of("nodes", List.of(), "edges", List.of(), "paths", List.of()); };
+        GraphifyAdapter adapter = new GraphifyAdapter(
+                transport,
+                snapshot -> Map.of("result", "EXACTLY_BOUND"),
+                Map.of("TRACE", "discovered_native_path_operation"),
+                (operation, raw) -> raw);
         Map<String, Object> snapshot = snapshot();
         Map<String, Object> query = new LinkedHashMap<>(bounds(3, 10, 10, 5, 10_000));
         query.put("snapshot_id", "s"); query.put("operation", "TRACE"); query.put("query_id", "q");
@@ -38,10 +42,39 @@ class RuntimeMigrationTests {
         adapter.trace(query, snapshot);
 
         assertThat(calls).singleElement().satisfies(call -> {
-            assertThat(call.get("tool")).isEqualTo("grafel_find_paths");
+            assertThat(call.get("tool")).isEqualTo("discovered_native_path_operation");
             @SuppressWarnings("unchecked") Map<String, Object> payload = (Map<String, Object>) call.get("payload");
             assertThat(payload).containsEntry("group", "g").containsEntry("ref", "r");
         });
+    }
+
+    @Test
+    void graphifyAdapterHasNoAssumedNativeOperationConstructor() {
+        assertThat(GraphifyAdapter.class.getConstructors())
+                .noneMatch(constructor -> constructor.getParameterCount() == 2);
+    }
+
+    @Test
+    void graphifyEvidenceMatchesProviderContractKeys() {
+        GraphifyBindingAttestor attestor = new GraphifyBindingAttestor(ignored -> Map.of(
+                "queryable", true,
+                "runtime_version", "1.0.0",
+                "wire_version", "mcp-1",
+                "repository_bindings", List.of(Map.of(
+                        "repository_id", "repo",
+                        "indexed_revision", "a".repeat(40)))), "fdi-0.4.8.3");
+        Map<String, Object> binding = attestor.attest(snapshot());
+
+        Map<String, Object> evidence = GraphifyBindingEvidence.build(
+                snapshot(), binding, "product", "2026-09-04T00:00:00Z", List.of("local-only"));
+
+        assertThat(evidence.keySet()).containsExactlyInAnyOrder(
+                "schema_version", "evidence_id", "product_or_scenario_id", "snapshot_ref",
+                "snapshot_binding_attestation", "captured_at", "result", "limitations");
+        assertThat(evidence.get("evidence_id").toString()).matches("gbe:[0-9a-f]{24}");
+        assertThat(binding).containsEntry("binding_state", "VERIFIED");
+        assertThat(binding).containsKeys("provider_route", "repositories", "provider_runtime", "freshness");
+        assertThat(binding).doesNotContainKeys("repository_bindings", "runtime_version", "wire_version", "result");
     }
 
     @Test

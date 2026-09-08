@@ -1,0 +1,197 @@
+{
+  "set_id": "pkb001-r2-proposals-v1",
+  "run_id": "PKB001-R2-510a397",
+  "arm": "R2",
+  "source_commit_sha": "510a397c134324026fe6b20333dfbfa645ab67b4",
+  "graph_artifact_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "authority_status": "PROPOSAL_ONLY",
+  "proposals": [
+    {
+      "proposal_id": "R2-application",
+      "arm": "R2",
+      "target_id": "application",
+      "relation_type": "CAPABILITY_HYPOTHESIS",
+      "operation": "CREATE",
+      "label": "Application delivery responsibility",
+      "component_refs": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/Dev204Cli.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/FdiApplication.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/application/Dev204Cli.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/application/FdiApplication.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/application/RuntimeCapabilities.java",
+        "src/test/java/com/featuredeliveryintelligence/fdi/FdiApplicationTests.java",
+        "src/test/java/com/featuredeliveryintelligence/fdi/PackageArchitectureTests.java",
+        "src/test/java/com/featuredeliveryintelligence/fdi/ReviewRegressionTests.java",
+        "src/test/java/com/featuredeliveryintelligence/fdi/RuntimeMigrationTests.java",
+        "src/test/java/com/featuredeliveryintelligence/fdi/application/FdiApplicationTests.java"
+      ],
+      "evidence_refs": [
+        "git-commit:35c6e115b08d576b81076d1297b5f1426c6376d0",
+        "git-commit:69d1ef15ba65c552ec1623b08b7bd51ee296e03d",
+        "git-commit:846e20493471a76d11e2b1d04470aa9a448df2c3",
+        "git-commit:a9676f6375ab3b34418e4fa692c4bdc620e07b47",
+        "git-commit:c6db0af1f882760e142835d025eb0eb4a0a34541"
+      ],
+      "confidence": 0.4,
+      "limitations": [
+        "Delivery history is evidence, not Product truth."
+      ],
+      "authority_status": "PROPOSAL_ONLY"
+    },
+    {
+      "proposal_id": "R2-feature",
+      "arm": "R2",
+      "target_id": "feature",
+      "relation_type": "CAPABILITY_HYPOTHESIS",
+      "operation": "CREATE",
+      "label": "Feature delivery responsibility",
+      "component_refs": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/feature/FeatureDiscovery.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/feature/FeatureKnowledgePlan.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/feature/RealizationTraversal.java"
+      ],
+      "evidence_refs": [
+        "git-commit:a9676f6375ab3b34418e4fa692c4bdc620e07b47"
+      ],
+      "confidence": 0.4,
+      "limitations": [
+        "Delivery history is evidence, not Product truth."
+      ],
+      "authority_status": "PROPOSAL_ONLY"
+    },
+    {
+      "proposal_id": "R2-product",
+      "arm": "R2",
+      "target_id": "product",
+      "relation_type": "CAPABILITY_HYPOTHESIS",
+      "operation": "CREATE",
+      "label": "Product delivery responsibility",
+      "component_refs": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/product/ProductKnowledgeMaintenance.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/product/ProductSemantics.java"
+      ],
+      "evidence_refs": [
+        "git-commit:a9676f6375ab3b34418e4fa692c4bdc620e07b47"
+      ],
+      "confidence": 0.4,
+      "limitations": [
+        "Delivery history is evidence, not Product truth."
+      ],
+      "authority_status": "PROPOSAL_ONLY"
+    },
+    {
+      "proposal_id": "R2-runtime",
+      "arm": "R2",
+      "target_id": "runtime",
+      "relation_type": "CAPABILITY_HYPOTHESIS",
+      "operation": "CREATE",
+      "label": "Runtime delivery responsibility",
+      "component_refs": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/CanonicalBaseGate.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/CodeIntelligenceProvider.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/Dev204Validation.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/FeatureDiscovery.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/FeatureKnowledgePlan.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/GrafelAdapter.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/GrafelBindingAttestor.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/GrafelBindingEvidence.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/GrafelTransport.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/ProductKnowledgeMaintenance.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/ProductSemantics.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/RealizationTraversal.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/RuntimeCapabilities.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/RuntimeContractException.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/RuntimeMaps.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/SnapshotBindingAttestor.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/StructuralIntelligence.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/StructuralMaintenance.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/runtime/VerificationAccounting.java",
+        "src/test/java/com/featuredeliveryintelligence/fdi/runtime/ReviewRegressionTests.java",
+        "src/test/java/com/featuredeliveryintelligence/fdi/runtime/RuntimeMigrationTests.java"
+      ],
+      "evidence_refs": [
+        "git-commit:a9676f6375ab3b34418e4fa692c4bdc620e07b47",
+        "git-commit:c6db0af1f882760e142835d025eb0eb4a0a34541"
+      ],
+      "confidence": 0.4,
+      "limitations": [
+        "Delivery history is evidence, not Product truth."
+      ],
+      "authority_status": "PROPOSAL_ONLY"
+    },
+    {
+      "proposal_id": "R2-shared",
+      "arm": "R2",
+      "target_id": "shared",
+      "relation_type": "CAPABILITY_HYPOTHESIS",
+      "operation": "CREATE",
+      "label": "Shared delivery responsibility",
+      "component_refs": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/shared/RuntimeContractException.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/shared/RuntimeMaps.java"
+      ],
+      "evidence_refs": [
+        "git-commit:a9676f6375ab3b34418e4fa692c4bdc620e07b47"
+      ],
+      "confidence": 0.4,
+      "limitations": [
+        "Delivery history is evidence, not Product truth."
+      ],
+      "authority_status": "PROPOSAL_ONLY"
+    },
+    {
+      "proposal_id": "R2-structural",
+      "arm": "R2",
+      "target_id": "structural",
+      "relation_type": "CAPABILITY_HYPOTHESIS",
+      "operation": "CREATE",
+      "label": "Structural delivery responsibility",
+      "component_refs": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/CodeIntelligenceProvider.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/SnapshotBindingAttestor.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/StructuralIntelligence.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/api/StructuralMaintenance.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GrafelAdapter.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GrafelBindingAttestor.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GrafelBindingEvidence.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GrafelTransport.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyAdapter.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyBindingAttestor.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyBindingEvidence.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/structural/graphify/GraphifyTransport.java"
+      ],
+      "evidence_refs": [
+        "git-commit:35c6e115b08d576b81076d1297b5f1426c6376d0",
+        "git-commit:69d1ef15ba65c552ec1623b08b7bd51ee296e03d",
+        "git-commit:a9676f6375ab3b34418e4fa692c4bdc620e07b47",
+        "git-commit:cbc96658ecb6daa545c3aff0a7c8e7fd1c4224f7"
+      ],
+      "confidence": 0.4,
+      "limitations": [
+        "Delivery history is evidence, not Product truth."
+      ],
+      "authority_status": "PROPOSAL_ONLY"
+    },
+    {
+      "proposal_id": "R2-validation",
+      "arm": "R2",
+      "target_id": "validation",
+      "relation_type": "CAPABILITY_HYPOTHESIS",
+      "operation": "CREATE",
+      "label": "Validation delivery responsibility",
+      "component_refs": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/validation/CanonicalBaseGate.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/validation/Dev204Validation.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/validation/VerificationAccounting.java"
+      ],
+      "evidence_refs": [
+        "git-commit:a9676f6375ab3b34418e4fa692c4bdc620e07b47"
+      ],
+      "confidence": 0.4,
+      "limitations": [
+        "Delivery history is evidence, not Product truth."
+      ],
+      "authority_status": "PROPOSAL_ONLY"
+    }
+  ]
+}

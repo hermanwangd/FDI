@@ -1,0 +1,322 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:pkb001:realization-proposal:v0.3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "authority",
+    "run_id",
+    "source_revision",
+    "graph_sha256",
+    "semantics_sha256",
+    "capability_results"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "pkb001.realization-proposal.v0.3"
+    },
+    "authority": {
+      "const": "PROPOSAL_ONLY"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+    },
+    "source_revision": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "graph_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "semantics_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "capability_results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/result"
+      },
+      "minItems": 1
+    }
+  },
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_revision",
+        "source_path",
+        "granularity",
+        "qualified_symbol",
+        "provider_node_id"
+      ],
+      "properties": {
+        "source_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "source_path": {
+          "type": "string",
+          "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+        },
+        "granularity": {
+          "enum": [
+            "REPOSITORY",
+            "FILE",
+            "TYPE",
+            "METHOD",
+            "TEMPLATE",
+            "CONFIGURATION"
+          ]
+        },
+        "qualified_symbol": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "provider_node_id": {
+          "type": "string",
+          "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+        }
+      }
+    },
+    "bound": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scenario_id",
+        "capability_id"
+      ],
+      "properties": {
+        "scenario_id": {
+          "type": "string",
+          "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+        },
+        "capability_id": {
+          "type": "string",
+          "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+        }
+      }
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "component_ref",
+        "component",
+        "directly_evidenced_methods",
+        "containing_component_reason"
+      ],
+      "properties": {
+        "component_ref": {
+          "type": "string",
+          "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+        },
+        "component": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "identity",
+            "selection_reason"
+          ],
+          "properties": {
+            "role": {
+              "enum": [
+                "PRIMARY",
+                "SUPPORTING"
+              ]
+            },
+            "identity": {
+              "$ref": "#/$defs/identity"
+            },
+            "selection_reason": {
+              "type": "string",
+              "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+            }
+          }
+        },
+        "directly_evidenced_methods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identity"
+          },
+          "minItems": 0
+        },
+        "containing_component_reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "behavioral_function",
+        "state",
+        "component_refs",
+        "evidence_refs",
+        "evidence_gap",
+        "not_applicable_reason"
+      ],
+      "properties": {
+        "behavioral_function": {
+          "type": "string",
+          "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+        },
+        "state": {
+          "enum": [
+            "EVIDENCED",
+            "EVIDENCE_GAP",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "component_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "evidence_gap": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "not_applicable_reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scenario_id",
+        "capability_id",
+        "steps"
+      ],
+      "properties": {
+        "scenario_id": {
+          "type": "string",
+          "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+        },
+        "capability_id": {
+          "type": "string",
+          "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/step"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability_id",
+        "source_revision",
+        "outcome",
+        "evidence_status",
+        "bound_scenarios",
+        "components",
+        "scenario_traces",
+        "limitations"
+      ],
+      "properties": {
+        "capability_id": {
+          "type": "string",
+          "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+        },
+        "source_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "outcome": {
+          "enum": [
+            "MAPPING_PROPOSAL",
+            "UNRESOLVED"
+          ]
+        },
+        "evidence_status": {
+          "enum": [
+            "COMPLETE",
+            "PARTIAL",
+            "INSUFFICIENT"
+          ]
+        },
+        "bound_scenarios": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/bound"
+          },
+          "minItems": 1
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/component"
+          },
+          "minItems": 0
+        },
+        "scenario_traces": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/trace"
+          },
+          "minItems": 1
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "[^\\t\\n\\v\\f\\r \\u001c-\\u001f\\u1680\\u2000-\\u2006\\u2008-\\u200a\\u2028\\u2029\\u205f\\u3000]"
+          },
+          "minItems": 1
+        }
+      }
+    }
+  }
+}

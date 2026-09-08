@@ -1,0 +1,33 @@
+{
+  "schema_version": "pkb001.supplemental-scenario-proposal.v0.1",
+  "artifact_kind": "SCENARIO_PROPOSAL",
+  "authority": "PROPOSAL_ONLY",
+  "proposal_id": "HYP-SCENARIO-011",
+  "parent_capability_id": "HYP-CAPABILITY-003",
+  "status": "PENDING_HUMAN_REVIEW",
+  "generated_at": "2026-09-06T13:57:58Z",
+  "generation_reason": "Positive update behavior was present in the accepted capability boundary but absent from its reviewed scenarios.",
+  "evidence_refs": [
+    "EV-G-N072",
+    "EV-G-N074",
+    "EV-H-C0942",
+    "EV-H-C1033"
+  ],
+  "behavior": {
+    "title": "更新既有寵物資料",
+    "given": [
+      "一位飼主名下已有一筆可識別的寵物資料。"
+    ],
+    "when": "使用者修改該寵物的有效資料並送出。",
+    "then": [
+      "系統更新正確的寵物資料。",
+      "重新檢視時呈現修改後內容。"
+    ],
+    "scope": "REQUIRED_ACCEPTANCE"
+  },
+  "limitations": [
+    "允許修改的欄位與出生日期邊界仍未知。",
+    "並行更新及送出資料與目標身分不一致時的行為仍需獨立情境。"
+  ],
+  "decision": null
+}

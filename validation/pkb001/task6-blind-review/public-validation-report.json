@@ -1,0 +1,77 @@
+{
+  "checks": [
+    {
+      "detail": "Every packet input matches its recorded SHA-256",
+      "name": "input_digests",
+      "passed": true
+    },
+    {
+      "detail": "Both runs bind the same source commit and graph digest",
+      "name": "shared_source_binding",
+      "passed": true
+    },
+    {
+      "detail": "Every source record remains proposal-only",
+      "name": "proposal_only_bindings",
+      "passed": true
+    },
+    {
+      "detail": "All source attestation booleans explicitly remain false",
+      "name": "explicit_non_access_witness_booleans",
+      "passed": true
+    },
+    {
+      "detail": "Source artifact and manifest digests resolve",
+      "name": "source_artifact_digests",
+      "passed": true
+    },
+    {
+      "detail": "9 forward mappings, 1 unresolved forward result, and 5 reverse hypotheses are all present",
+      "name": "exact_item_accounting",
+      "passed": true
+    },
+    {
+      "detail": "Packet and separately sealed key digests bind exactly",
+      "name": "sealed_key_digest_binding",
+      "passed": true
+    },
+    {
+      "detail": "Packet removes explicit arm labels/source identifiers and uses deterministic obscured ordering",
+      "name": "deterministic_label_and_order_blinding",
+      "passed": true
+    },
+    {
+      "detail": "Record shapes are uniform; this check does not establish content-level arm anonymity",
+      "name": "uniform_packet_record_shape",
+      "passed": true
+    },
+    {
+      "detail": "All 15 blank judgments use the frozen vocabulary and required dimensions",
+      "name": "frozen_judgment_vocabulary",
+      "passed": true
+    },
+    {
+      "detail": "Both evaluator workspaces retain identical packet bytes, valid judgment state, and isolation contracts",
+      "name": "reviewer_isolation_contracts",
+      "passed": true
+    },
+    {
+      "detail": "Evidence categories and values can permit arm inference; no content-anonymity claim is made",
+      "name": "content_arm_inference_limit_disclosed",
+      "passed": true
+    },
+    {
+      "detail": "Instructions separate measurement from human Product meaning authority",
+      "name": "authority_instructions",
+      "passed": true
+    },
+    {
+      "detail": "Task 6 creation manifest records no fabricated review or final decision",
+      "name": "task6_creation_boundary",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "schema_version": "pkb001.task6.public-validation-report.v1",
+  "validation_scope": "PACKET_AND_REVIEW_WORKSPACE_CONTRACT_ONLY"
+}

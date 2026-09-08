@@ -1,0 +1,92 @@
+{
+  "revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "pinnedMatrix": {
+    "path": "validation/pkb001/reverse-pkb-bl009-petclinic-001/provider-discovery/per-file-inventory.json",
+    "sha256": "216a0bb06fa0ad2adde6139b2d4a800b4ab7cd6d57b9cd209f5fdfadb852bb01"
+  },
+  "totals": {
+    "testFiles": 20,
+    "testFilesWithAtTest": 18,
+    "atTestMethods": 76,
+    "importEdgesToProduction": 14,
+    "sameFileCalls": 19
+  },
+  "derivationRules": {
+    "testMethods": "@Test-annotated method declarations in source order; declarationLocation is the 1-based line/column of the method-name identifier.",
+    "importEdgesToProduction": "Verbatim copy of the pinned per-file matrix entries (target, line, confidence); counts must equal the matrix mechanically.",
+    "sameFileCalls": "Verbatim copy of the pinned per-file matrix count; must equal the matrix mechanically.",
+    "samePackageProductionReferences": "Expected-basis proxy: same-package production type whose simple name occurs as a whole identifier token in the comment-stripped test source; basis SAME_PACKAGE_SOURCE_ROOT. Real source-root resolution in Slice B compares against this expectation; mismatches become evidence, never invented links.",
+    "unresolvedReferences": "Import declarations outside java.* and outside org.springframework.samples.petclinic.* (not resolvable against ReflectionTypeSolver plus the configured source roots), kind EXTERNAL_DEPENDENCY_NOT_RESOLVED, kept as explicit evidence gaps.",
+    "nestedContainer": "Source contains a @Nested annotation (comment-stripped scan)."
+  },
+  "caseCoverage": {
+    "nestedTests": [
+      "PetControllerTests.java",
+      "PetValidatorTests.java"
+    ],
+    "nonTestBearingFiles": [
+      "EntityUtils.java",
+      "MysqlTestApplication.java"
+    ],
+    "filesWithoutProductionImportEdges": [
+      "CrashControllerIntegrationTests.java",
+      "CrashControllerTests.java",
+      "I18nPropertiesSyncTest.java",
+      "MysqlTestApplication.java",
+      "OwnerControllerTests.java",
+      "OwnerTests.java",
+      "PetControllerTests.java",
+      "PetTypeFormatterTests.java",
+      "PetValidatorTests.java",
+      "ValidatorTests.java",
+      "VetControllerTests.java",
+      "VetTests.java",
+      "VisitControllerTests.java",
+      "WelcomeControllerTests.java"
+    ],
+    "filesWithUnresolvedExternalImports": [
+      "ClinicServiceTests.java",
+      "CrashControllerIntegrationTests.java",
+      "CrashControllerTests.java",
+      "EntityUtils.java",
+      "I18nPropertiesSyncTest.java",
+      "MySqlIntegrationTests.java",
+      "MysqlTestApplication.java",
+      "OwnerControllerTests.java",
+      "OwnerTests.java",
+      "PetClinicConcurrencyTests.java",
+      "PetClinicIntegrationTests.java",
+      "PetControllerTests.java",
+      "PetTypeFormatterTests.java",
+      "PetValidatorTests.java",
+      "PostgresIntegrationTests.java",
+      "ValidatorTests.java",
+      "VetControllerTests.java",
+      "VetTests.java",
+      "VisitControllerTests.java",
+      "WelcomeControllerTests.java"
+    ]
+  },
+  "goldenFile": "golden-test-files.json",
+  "productionInputDigests": {
+    "src/main/java/org/springframework/samples/petclinic//PetClinicApplication.java": "9d99b4b59cc6e185e9a27964b24ede04180ca34211a7e19f968249ee3dac9df3",
+    "src/main/java/org/springframework/samples/petclinic/model/Person.java": "a872c368cd5b09a7cb8a3f42e1baff1f6b0adc7cfc5bccf5f426374292ba4244",
+    "src/main/java/org/springframework/samples/petclinic/owner/Owner.java": "7cac66179350f35c0b3b0622a8a9f79de3b232641aac88da4e816437451c7daa",
+    "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java": "f1f61c17a818e0a0643bf3cd9bb3eaf32d6e019b3dac4f5dfd4890dc1221d16e",
+    "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java": "654cc5a38b2806748116caf4fbd6a99010a35605db32a12707078c34ccec2cd9",
+    "src/main/java/org/springframework/samples/petclinic/owner/Pet.java": "ec77c2d70ae043c6eb441e47ebc93a3d848d8ae9729068e8f4e997aedfa0bbd7",
+    "src/main/java/org/springframework/samples/petclinic/owner/PetController.java": "1a8a8097ff334b85d3a62c4df79ec52c2dbee8777925970e140081cff7e7c25e",
+    "src/main/java/org/springframework/samples/petclinic/owner/PetType.java": "9e64329633ce98a96f18cecf7426338d57b753fd24b7b47f7af483467a3df92e",
+    "src/main/java/org/springframework/samples/petclinic/owner/PetTypeFormatter.java": "af232944dba211094ee5f6b5b3e2bc9696e46ba8f40cad0e5bf7e0b283aacac7",
+    "src/main/java/org/springframework/samples/petclinic/owner/PetTypeRepository.java": "696705e51ab5835ac28630397de2d3f3541d3f419f19461e11755a9aac2afa04",
+    "src/main/java/org/springframework/samples/petclinic/owner/PetValidator.java": "1cee4c2a57afd7edb3521fa7a19c4b643f23c2f5b91406ecd638319c6cce9f7f",
+    "src/main/java/org/springframework/samples/petclinic/owner/Visit.java": "8587d71a42308feb8fe427236a4d3e211bd1b3554e645d0e235afd681683226c",
+    "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java": "b7c8f9cb7b2b2b5827d85787d1f18c95762a0213760013cef9d0a9e1c2c0f8d8",
+    "src/main/java/org/springframework/samples/petclinic/system/CrashController.java": "d7c003dc6357596eefa345eff63ecf3909a50238e030e3c93f09426e537ba517",
+    "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java": "cfdffa794c8ec7a0c634a7d39d39f9abc1dd2ddc4b4d7a591b341136015a6f66",
+    "src/main/java/org/springframework/samples/petclinic/vet/Specialty.java": "0fa07bcb3b7b4ddb380a278d98dcfe03bec5e3a1e42b9f08c555d75a6be256d0",
+    "src/main/java/org/springframework/samples/petclinic/vet/Vet.java": "8548e47aaf310b276d5cc9f58976756339b16a02ac47944f778260f2ed121b78",
+    "src/main/java/org/springframework/samples/petclinic/vet/VetController.java": "8a0d285d35e59e61ec98e650506b0b19d0142d75a0886268dd139530f3efb8b8",
+    "src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java": "732888e66084f9f94dd79c181e29dbbe2c752959c10ebf82b0940700f61c0dde"
+  }
+}

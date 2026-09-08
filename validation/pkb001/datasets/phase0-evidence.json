@@ -1,0 +1,107 @@
+{
+  "product_semantics": {
+    "status": "FROZEN",
+    "owner": "PRODUCT_TEAM",
+    "path": "validation/pkb001/datasets/petclinic-product-semantics-candidate.json",
+    "sha256": "72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea"
+  },
+  "graphify": {
+    "result": "EXACTLY_BOUND",
+    "queryable": true,
+    "runtime_identity": "graphifyy",
+    "runtime_version": "0.1.14",
+    "transport": "MCP stdio",
+    "wire_version": "MCP 2025-11-25",
+    "mcp_version": "1.29.1",
+    "supported_operations": [
+      "query_graph",
+      "get_node",
+      "get_neighbors",
+      "get_community",
+      "god_nodes",
+      "graph_stats",
+      "shortest_path"
+    ],
+    "exact_revision_opened": true,
+    "source_location_provenance": "git tree f92df0b05c91c7d29d81e70cf86f8678b0545bd2 at immutable commit 818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "structural_proof": {"node_query": true, "path_query": true},
+    "snapshot_binding": {
+      "requested_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "indexed_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "input_git_tree_oid": "f92df0b05c91c7d29d81e70cf86f8678b0545bd2",
+      "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e"
+    },
+    "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+    "input_policy_sha256": "3c0f7224ba4b75e04a0c3c69914b45ec52275932cc1c82a9772c8c876ca5dc6d",
+    "live_evidence_path": "validation/pkb001/runtime/graphify-petclinic-live-evidence.json",
+    "live_evidence_sha256": "fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8"
+  },
+  "calibration": {
+    "status": "FROZEN",
+    "path": "validation/pkb001/datasets/petclinic-calibration-candidate.json",
+    "sha256": "103fca15071c9f741492c6207f41e68b751e129543f05fd2d63f1c206ae224a7",
+    "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "source_tree_oid": "0bb31bb92bc1839f6378e832e54c8b4af03e4ee2",
+    "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+    "live_evidence_sha256": "fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8",
+    "delivery_history_sha256": "87b70439f69bb82cee0139b65108ecce6044aff1a4d1b5ce6324933acbeab2d1",
+    "resource_policy_status": "FROZEN",
+    "post_cutoff_knowledge_policy": "EXCLUDE_AFTER_CUTOFF"
+  },
+  "skills": {
+    "pk_s1_path": "skills/pkb001/pk-s1-product-realization/SKILL.md",
+    "pk_s2_path": "skills/pkb001/pk-s2-capability-hypothesis/SKILL.md",
+    "pk_s1_registration": "REGISTERED_NON_GOVERNING",
+    "pk_s2_registration": "REGISTERED_NON_GOVERNING",
+    "delivery_history_path": "validation/pkb001/datasets/petclinic-delivery-history.json",
+    "delivery_history_sha256": "87b70439f69bb82cee0139b65108ecce6044aff1a4d1b5ce6324933acbeab2d1",
+    "delivery_history_status": "FROZEN",
+    "post_cutoff_knowledge_policy": "EXCLUDE_AFTER_CUTOFF"
+  },
+  "ground_truth": {
+    "status": "SEALED",
+    "gold_path": "validation/pkb001/evaluator/petclinic-818c413/gold-mappings.json",
+    "gold_sha256": "4d22799e4d7597e0bbc302c9db3cd0510f70cc946cb5de5909ded9c4b1b112d1",
+    "seal_path": "validation/pkb001/evaluator/petclinic-818c413/ground-truth-seal.json",
+    "seal_sha256": "7290fd4aec80cbdd5cea52b30f9da5323e455843948746fc53208eecf6e2a55a",
+    "product_semantics_sha256": "72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea",
+    "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+    "isolation_status": "VERIFIED",
+    "review_protocol_status": "FROZEN",
+    "reviewers": [
+      "agent-context:expected-realization-author",
+      "agent-context:seal-integrity-verifier"
+    ],
+    "reviewer_roles": {
+      "agent-context:expected-realization-author": {
+        "actor_type": "AI_AGENT_CONTEXT",
+        "context_id": "agent-context:expected-realization-author",
+        "independent_context": true,
+        "role": "EXPECTED_REALIZATION_AUTHOR"
+      },
+      "agent-context:seal-integrity-verifier": {
+        "actor_type": "AI_AGENT_CONTEXT",
+        "context_id": "agent-context:seal-integrity-verifier",
+        "independent_context": true,
+        "role": "DIGEST_ISOLATION_AND_RESOLUTION_VERIFIER"
+      }
+    },
+    "human_review_completed": false,
+    "non_human_review_completed": true,
+    "human_review_status": "PENDING_POST_GENERATION_SECTION_6",
+    "judgment_vocabulary": [
+      "ACCEPT",
+      "RENAME",
+      "MERGE",
+      "SPLIT",
+      "REJECT",
+      "ADD_MISSING"
+    ],
+    "creation_before_generation_ordering": {
+      "status": "VERIFIED",
+      "rule": "SEALED_BEFORE_VALID_EXPERIMENT_GENERATION",
+      "valid_experiment_generation_started": false
+    }
+  }
+}
