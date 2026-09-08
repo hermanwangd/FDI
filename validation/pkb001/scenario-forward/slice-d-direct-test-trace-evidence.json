@@ -1,0 +1,67 @@
+{
+  "evidence_type": "PKB_BL_007_SLICE_D_DIRECT_TEST_TRACE",
+  "execution_id": "PKB-BL-007-SCENARIO-TRACE-001",
+  "slice": "D",
+  "dispatch_commit": "58d7a75cd1ba29e42291949a766243d8afd5aafe",
+  "mapping_contract_version": "pkb001.realization-mapping.v0.4",
+  "source_binding": {
+    "repository_id": "spring-petclinic",
+    "canonical_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "test_behavior_evidence_path": "validation/pkb001/reverse-pkb-bl009-petclinic-001/java-test-behavior/evidence.json",
+    "test_behavior_evidence_sha256": "4db3b4fcac22c704f321e2a3bef20091741147984815addf3ebf77d88643e66d",
+    "test_behavior_package_sha256": "082c621945ef063fec82adb3766348c0ecc888ba71a2f1ed34b147ebfa8bcc8a"
+  },
+  "deterministic_result": {
+    "resolved_observations": 144,
+    "direct_evidence_records": 144,
+    "production_seed_records": 144,
+    "unique_production_component_identities": 29,
+    "unique_production_source_paths": 12,
+    "unique_resolved_observation_locations": 139,
+    "unresolved_reference_gaps": 891,
+    "resolved_by_extractor_basis": {
+      "IMPORTED_SOURCE_ROOT": 61,
+      "SAME_PACKAGE_SOURCE_ROOT": 83
+    },
+    "unresolved_by_kind": {
+      "EXTERNAL_DEPENDENCY_NOT_RESOLVED": 849,
+      "MISSING_SOURCE": 42
+    }
+  },
+  "artifacts": {
+    "trace_contract": {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/directtrace/DirectTestTrace.java",
+      "sha256": "881d7f9083a57a2fe931494eb2bae0a3b42705bc4e9732c664c47367318ad408"
+    },
+    "adapter": {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/directtrace/DirectTestTraceAdapter.java",
+      "sha256": "ec2ce263d5dbffe095a12cc39541cbe13de85483d9597ee4526e80ef44ce4c41"
+    },
+    "tests": {
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/directtrace/DirectTestTraceAdapterTests.java",
+      "sha256": "566643b8c4a322a7a18e2aab032880dd7937e27676ae63a30bd53505402bb93f"
+    }
+  },
+  "enforced_boundaries": [
+    "ONLY_EXTRACTOR_RESOLVED_OBSERVATIONS_BECOME_DIRECT_COMPONENT_EVIDENCE",
+    "ALL_EXTRACTOR_UNRESOLVED_REFERENCES_REMAIN_EXPLICIT_GAPS",
+    "PRODUCTION_PATHS_ONLY_CASE_INSENSITIVE_TEST_NODE_REJECTION",
+    "CANONICAL_REPOSITORY_RELATIVE_COMPONENT_PATHS",
+    "FULL_EXACT_SOURCE_REVISION_AND_INPUT_DIGEST_BINDING",
+    "METHOD_GRANULARITY_AND_QUALIFIED_SYMBOL_REQUIRED",
+    "DIRECT_EVIDENCE_BINDS_EXACT_PRODUCTION_SEED",
+    "NO_GRAPHIFY_INFERENCE_OR_SYNTHETIC_CALL_EDGE",
+    "DETERMINISTIC_INPUT_ORDER_AND_IDENTITIES",
+    "EVALUATOR_TRUTH_NOT_ACCESSED"
+  ],
+  "tdd": {
+    "red": "DirectTestTraceAdapterTests failed compilation because the direct-trace contract and adapter did not exist.",
+    "focused_green": "DirectTestTraceAdapterTests, ScenarioMappingContractV04Tests, and ScenarioMappingSchemaV04Tests passed."
+  },
+  "semantic_publication_allowed": false,
+  "limitations": [
+    "Slice D converts mechanical test references only; it does not assign scenarios, component roles, or Product meaning.",
+    "Repeated observations of the same production component remain separate direct evidence and seed records; the 29 provider-neutral component identities are also reported separately.",
+    "Unresolved references are preserved without attempting resolution, and Graphify expansion remains Slice E scope."
+  ]
+}
