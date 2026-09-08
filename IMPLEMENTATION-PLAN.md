@@ -15,25 +15,17 @@
 - Spec revision: `c396b3cf6e3a32d55c1fb57827f2022e4409df8d`
 - Base commit: `e72bbbe2866b52aad6e7a2a165d5d2b70cb9a651`
 - Verified C/D/E/F integration baseline: `91bddd86f61d7ce48895d7ba73e4d4d95ec930eb`
-- Slice G starts from the exact dispatch commit issued by the Feature Delivery
-  Plane. That commit MUST contain this Plan revision and MUST descend from the
-  verified C/D/E/F integration baseline; the Execution Plane verifies both conditions
-  before changing files.
+- Verified Slice G code integration candidate: `587efeeea0ed638f5328fb3f746177455ee9bfcf`
 - Execution ID: `PKB-BL-007-SCENARIO-TRACE-001`
 - Product semantics remain prototype-only; `semantic_publication_allowed` stays false.
 - External Graphify is read-only and remains outside the Java framework.
 
-## Remaining Delivery DAG
+## Closure gate
 
-Slices A through F are integrated and verified prerequisites. Their compact delivery
-records are retained in the ledger below; their removed construction detail
-remains available in Git history.
-
-### Slice G — evaluator-only comparison and independent review (after F)
-
-Seal outputs before evaluator access. Report old and new Forward metrics separately: graph-node coverage, direct-symbol recall, expanded-chain coverage, exact-component precision/recall, unresolved-reference rate, and per-scenario trace coverage. Compare against the previous 70.8% graph-node coverage and 0/24 exact proposed-component baseline without selecting thresholds from observed results.
-
-Run an independent exact-candidate review. The Feature Delivery Plane alone reconciles `BACKLOG.md`, this plan, and `STATUS.json` after PASS; no Execution Plane agent may modify active controls.
+Slices A through G are integrated, fully regressed, and independently reviewed.
+The Feature Delivery Plane has reconciled the evidence, but MUST NOT mark
+`PKB-BL-007` `VERIFIED` until Human Authority confirms terminal closure. After
+confirmation, `PKB-BL-010` becomes the next eligible Backlog item.
 
 ## Verification
 
@@ -57,6 +49,7 @@ The combined handoff must include exact candidate SHA, changed paths, artifact d
 | `PKB-BL-006` | Immutable frozen scenario semantics with exact authorization and false publication authority | Integrated candidate `221c504340852a12b761e27fe996c41f34b7ec89`; `accepted-semantics-004.json`; Maven 973, pytest 62, public validation 9/9 |
 | `PKB-BL-007` (Slices C–E) | v0.4 mapping contract, exact direct Java trace, and bounded Graphify production expansion | Integrated baseline `213c3b9d99314a41aba644a5b85e223888893443`; independent D/E review PASS; Maven 996, pytest 62, public validation 9/9 |
 | `PKB-BL-007` (Slice F) | Exact-input scenario mapping without fabricated core-behavior claims | Integrated baseline `91bddd86f61d7ce48895d7ba73e4d4d95ec930eb`; all 10 scenarios `UNRESOLVED/INSUFFICIENT`; proposal digest `8c940fb94d3c86c80ff2c9555eb5d77b130f6d0d944593424fb7f2ae563535f2`; independent review PASS |
+| `PKB-BL-007` (Slice G) | Sealed evaluator-only comparison over provider-neutral v0.4 identities | Integrated candidate `587efeeea0ed638f5328fb3f746177455ee9bfcf`; report digest `485db9822611f086b6d903788c8b4b8a77be018545e48dee50f0c268a965dfaa`; evidence digest `1262d9928750f60e80bf1d9c1f89b1d90523acefb07f7b54f1373dfb3eab5ae6`; independent review PASS; Maven 1010, pytest 62, public validation 9/9 |
 | `PKB-BL-009` | Deterministic Java Reverse proposal generation | Candidate `472b0427725002492fb226e85b684355d2fdc012`; independent PASS; Maven 961/961, pytest 62/62 |
 | `PKB-BL-026` | Repository-owned framework consumers migrated to Java | `validation/pkb001/java-migration/python-framework-inventory.json` |
 | `PKB-BL-027` | Portable Graphify runtime and bounded Java MCP lifecycle | `validation/pkb001/runtime/pkb-bl027-portable-runtime-evidence.json` |
