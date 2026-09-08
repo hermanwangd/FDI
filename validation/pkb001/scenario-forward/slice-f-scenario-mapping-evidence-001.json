@@ -1,0 +1,45 @@
+{
+  "evidence_type": "PKB_BL_007_SLICE_F_SCENARIO_GROUNDED_FORWARD",
+  "execution_id": "PKB-BL-007-SCENARIO-TRACE-001",
+  "slice": "F",
+  "dispatch_commit": "8059732c40e58ca98175ae655c3f7f83a5998988",
+  "requirement": "PKB-MAPPING-001",
+  "bindings": {
+    "semantics_snapshot": "pkb001-petclinic-reviewed-semantics-004",
+    "semantics_sha256": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+    "authorization_sha256": "d5aaa1d485f585c3b2b4162263f7e4dcc95033f11b7c4e6ad5b077b9da7a889e",
+    "source_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "test_evidence_sha256": "4db3b4fcac22c704f321e2a3bef20091741147984815addf3ebf77d88643e66d",
+    "graph_sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e"
+  },
+  "result": {
+    "capabilities": 5,
+    "scenarios": 10,
+    "mapping_proposals": 8,
+    "unresolved_scenarios": 2,
+    "direct_chain_steps": 8,
+    "graphify_inferred_chain_steps": 0,
+    "preserved_unresolved_direct_references": 891,
+    "semantic_publication_allowed": false
+  },
+  "artifact": {
+    "path": "validation/pkb001/scenario-forward/slice-f-scenario-mapping-proposal-001.json",
+    "sha256": "1fc539dd5052e5d3a605cb7197f344199e5ad5096060c01d2ea82e77b1c77b30"
+  },
+  "limitations": [
+    "Slice E established and independently verified the bounded Graphify expansion contract but did not freeze a scenario-bound expansion result for this exact run.",
+    "No inferred component is fabricated from the raw graph. Every mapped scenario is PARTIAL and explicitly records the missing bounded Graphify trace.",
+    "HYP-SCENARIO-002 and HYP-SCENARIO-008 are UNRESOLVED because no scenario-specific resolved production observation was available without borrowing evidence.",
+    "The output measures reconstruction consistency against the same repository and remains PROPOSAL_ONLY."
+  ],
+  "isolation": {
+    "evaluator_input_loaded": false,
+    "gold_input_loaded": false,
+    "post_generation_judgment_loaded": false
+  },
+  "focused_verification": {
+    "command": "MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=ScenarioGroundedForwardMapperTests,SliceFScenarioMappingArtifactTests,ScenarioMappingContractV04Tests,ScenarioMappingSchemaV04Tests,DirectTestTraceAdapterTests,GraphifyProductionExpansionTests test",
+    "result": "PASS",
+    "git_diff_check": "PASS"
+  }
+}
