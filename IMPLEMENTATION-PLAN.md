@@ -14,10 +14,10 @@
 - Requirement: `PKB-MAPPING-001`
 - Spec revision: `c396b3cf6e3a32d55c1fb57827f2022e4409df8d`
 - Base commit: `e72bbbe2866b52aad6e7a2a165d5d2b70cb9a651`
-- Verified A/B code baseline: `221c504340852a12b761e27fe996c41f34b7ec89`
-- Slice C starts from the exact dispatch commit issued by the Feature Delivery
+- Verified C/D/E integration baseline: `213c3b9d99314a41aba644a5b85e223888893443`
+- Slice F starts from the exact dispatch commit issued by the Feature Delivery
   Plane. That commit MUST contain this Plan revision and MUST descend from the
-  verified A/B code baseline; the Execution Plane verifies both conditions
+  verified C/D/E integration baseline; the Execution Plane verifies both conditions
   before changing files.
 - Execution ID: `PKB-BL-007-SCENARIO-TRACE-001`
 - Product semantics remain prototype-only; `semantic_publication_allowed` stays false.
@@ -25,27 +25,9 @@
 
 ## Remaining Delivery DAG
 
-Slices A and B are integrated and verified prerequisites. Their compact delivery
+Slices A through E are integrated and verified prerequisites. Their compact delivery
 records are retained in the ledger below; their removed construction detail
 remains available in Git history.
-
-### Slice C — mapping contract foundation
-
-Version the PK-S1 mapping contract without modifying v0.2. Add explicit direct-production-symbol evidence, provider-neutral component identity, relationship basis (`DIRECT_TEST_REFERENCE` or `GRAPHIFY_INFERRED`), seed provenance, and ordered realization-chain steps.
-
-Negative cases: test-path component, missing revision/path/granularity/qualified symbol, unbound seed, unsupported relationship basis, duplicate identity, evaluator leakage, or inferred link without a trace fails closed.
-
-### Slice D — direct Java test trace adapter (after C)
-
-Convert resolved Java test-behavior observations into production component identities. Preserve all unresolved references as gaps. Never emit `src/test/**` as a production component and never infer a call that the extractor did not resolve.
-
-Acceptance: the existing 144 resolved observations are deterministically normalized; unique identities and source locations are stable; direct-symbol recall is reported against evaluator-only truth after sealing.
-
-### Slice E — Graphify production expansion (after C, parallel with D)
-
-Implement bounded expansion from supplied production seeds through `CodeIntelligenceProvider`. Do not ask Graphify to infer Product meaning or fabricate test-to-production edges. Record query bounds, returned relationship path, provider node IDs as diagnostics, exact graph digest, and source revision.
-
-Acceptance: a missing/mismatched seed or revision fails closed; results distinguish direct seed identities from inferred neighbours; cycles and duplicates are deterministic.
 
 ### Slice F — scenario-grounded Forward mapping (after D and E)
 
@@ -79,6 +61,7 @@ The combined handoff must include exact candidate SHA, changed paths, artifact d
 |---|---|---|
 | `PKB-BL-025` | Exact revision-2 proposal review with 15 ACCEPT, 2 REJECT, and zero pending decisions | Integrated candidate `221c504340852a12b761e27fe996c41f34b7ec89`; `review-decisions-004.json`; independent reviews PASS |
 | `PKB-BL-006` | Immutable frozen scenario semantics with exact authorization and false publication authority | Integrated candidate `221c504340852a12b761e27fe996c41f34b7ec89`; `accepted-semantics-004.json`; Maven 973, pytest 62, public validation 9/9 |
+| `PKB-BL-007` (Slices C–E) | v0.4 mapping contract, exact direct Java trace, and bounded Graphify production expansion | Integrated baseline `213c3b9d99314a41aba644a5b85e223888893443`; independent D/E review PASS; Maven 996, pytest 62, public validation 9/9 |
 | `PKB-BL-009` | Deterministic Java Reverse proposal generation | Candidate `472b0427725002492fb226e85b684355d2fdc012`; independent PASS; Maven 961/961, pytest 62/62 |
 | `PKB-BL-026` | Repository-owned framework consumers migrated to Java | `validation/pkb001/java-migration/python-framework-inventory.json` |
 | `PKB-BL-027` | Portable Graphify runtime and bounded Java MCP lifecycle | `validation/pkb001/runtime/pkb-bl027-portable-runtime-evidence.json` |
