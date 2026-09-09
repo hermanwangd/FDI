@@ -1,53 +1,45 @@
 {
-  "schema_version": "software-factory.sf-bl002-remediation-evidence.v0.1",
-  "execution_id": "SF-BL-002-PRODUCTION-SCENARIO-002",
-  "execution_base_commit": "13890ccff85fa7b2f79341a2c7439cac02059f87",
-  "generator_code_commit": "cf2161375eaeb77f898d58a7c7c4561da59d7bb7",
-  "independent_review": {
-    "reviewer": "Independent Adjudicator (HERM-361)",
-    "verdict": "PASS",
-    "bound_candidate": "3082c07d11990d061e89219c836978fb5c89c3ec",
-    "evidence": "28 focused tests, 1060-test full regression, determinism double-run, negative acceptance cases, validation/pkb001 byte-unchanged"
-  },
-  "source_binding": {
-    "repository_id": "spring-petclinic",
-    "canonical_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
-    "fixture_root": "src/test/resources/testbehavior/petclinic-818c4136/fixtures"
-  },
-  "production_reference_result": {
-    "status": "PASS",
-    "before": {
-      "resolved_production_references": 144,
-      "production_resolution_gaps": 35,
-      "test_helper_diagnostics": 7,
-      "external_dependency_diagnostics": 849,
-      "production_resolution_rate": 0.8044692737
+  "schema_version": "software-factory.sf-bl002-remediation-evidence.v0.2",
+  "execution_id": "SF-BL-002-SCENARIO-EFFECTIVENESS-004",
+  "plan_task": "Task D — combined integration, production artifacts, full regression, remediation evidence",
+  "execution_base_commit": "feab9dfa03be5240ade2951c8f500a230ebc6f33",
+  "spec_revision": "be2a5742e270659bd2f24fd578b7142d00c8232a",
+  "worktree_starting_commit": "3d6febb",
+  "generator_code_commit": "ed4cd66",
+  "slice_replay": [
+    {
+      "slice": "A",
+      "accepted_candidate": "69d2d635605750d43e988ad47d80b03e656f0c3a",
+      "replay_commits": ["f119bff", "d90743c"],
+      "independent_review": "PASS (HERM-376, fresh exact-SHA review of remediation)"
     },
-    "after": {
-      "resolved_production_references": 168,
-      "production_resolution_gaps": 11,
-      "test_helper_diagnostics": 7,
-      "external_dependency_diagnostics": 849,
-      "production_resolution_rate": 0.9385474860
+    {
+      "slice": "B",
+      "accepted_candidate": "34546f686164e675a0633d10e30d8c20464c33ec",
+      "replay_commits": ["3bab45a"],
+      "independent_review": "PASS (HERM-374)"
     },
-    "recovered_mechanically_provable_production_receiver_references": 24,
-    "resolved_reference_increase_rate": 0.1666666667,
-    "denominator_policy": "Only resolved production references plus production-resolution gaps form the production resolution denominator. External-dependency and test-helper diagnostics are reported separately and receive no mapping credit.",
-    "remaining_gap_note": "The 11 remaining production-root calls are inherited dependency methods not declared by the bound production receiver source; they are not promoted without stronger evidence."
-  },
-  "scenario_mapping_contract_result": {
+    {
+      "slice": "C",
+      "accepted_candidate": "03e372d19ebd8dbb6be0890b0244130052b1ca6c",
+      "replay_commits": ["5fcdf50 (revert of superseded badc3323 replay a597db9)", "3ff540e (b89b9aa)", "ed4cd66 (03e372d1)"],
+      "independent_review": "PASS (HERM-378, fresh exact-SHA review of HERM-377 contract remediation)"
+    }
+  ],
+  "prior_cycle_note": "Supersedes the 2026-09-09T16:46Z PLAN_CONFLICT: the originally accepted slice C candidate badc3323c7765b98365c31f6647441c8baa91f75 consumed the legacy -001 contract (top-level authorization_sha256; camelCase sourceRevision/authorizationSha256; per-scenario evidenceStatus/realizationChain/componentRoles), so production generation order A -> B -> C failed at C with 'authorization_sha256 required'. Bounded remediation HERM-377 rebound the evaluator to the real -002 producer contracts; the superseded slice C replay was removed by revert and replaced with the review-accepted remediated commits. The production chain now binds end to end.",
+  "contract_remediation_result": {
     "status": "PASS",
     "verified_behaviors": [
-      "known direct production evidence can create a PROPOSAL_ONLY primary chain",
-      "unknown direct evidence fails closed",
-      "unassigned scenarios remain UNRESOLVED",
-      "caller cannot inject components or a confirmation flag",
-      "semantic publication remains false"
-    ],
-    "calibration_scenario_run": "NOT_RUN"
+      "slice A emits -002 assignments with single-string primaryEvidenceRef and intent_sha256 / intent_acceptance_sha256 top-level digest keys (manifest schema v0.2)",
+      "slice B emits -002 proposal/evidence with top-level source_revision and flat scenarios (outcome/primary/supporting/rationale)",
+      "slice C consumes exactly those -002 shapes; legacy -001 keys are rejected fail-closed",
+      "assignment authorization derives from the acceptance manifest's authorization_artifact, not a top-level authorization_sha256",
+      "production generation order A -> B -> C completes without RuntimeContractException"
+    ]
   },
   "scenario_evaluation_result": {
-    "status": "COMPLETE_FAIL_CLOSED",
+    "status": "COMPLETE",
+    "authority": "EVALUATOR_ONLY",
     "before": {
       "scenario_trace_coverage": "NOT_COMPUTABLE_NO_MAPPING_RUN",
       "chain_coverage": "NOT_COMPUTABLE_NO_MAPPING_RUN",
@@ -56,112 +48,100 @@
       "exact_component_f1": "NOT_COMPUTABLE_NO_MAPPING_RUN"
     },
     "after": {
-      "assignments_emitted": 10,
-      "assignments_with_direct_refs": 0,
-      "assignments_with_explicit_gap": 10,
-      "force_mapped_scenarios": 0,
-      "observed_direct_evidence_refs": 168,
-      "unresolved_direct_reference_refs": 867,
-      "mapped_scenarios": 0,
-      "unresolved_scenarios": 10,
-      "primary_component_occurrences": 0,
-      "supporting_component_occurrences": 0,
-      "scenario_trace_coverage": 0.0,
+      "mapped_scenarios": 10,
+      "unresolved_scenarios": 0,
+      "traced_scenarios": 7,
+      "scenario_trace_coverage": 0.7,
       "scenario_trace_coverage_denominator": 10,
-      "chain_coverage": 0.0,
-      "chain_coverage_denominator": 24,
-      "exact_component_matched": 0,
+      "chain_direct_steps": 7,
+      "chain_inferred_steps": 0,
+      "chain_gap_steps": 0,
+      "exact_component_matched": 2,
       "exact_component_expected": 24,
-      "exact_component_proposed": 0,
-      "exact_component_precision": "UNDEFINED_NO_PRIMARY_PROPOSALS",
-      "exact_component_recall": 0.0,
-      "exact_component_f1": "UNDEFINED_PRECISION_UNDEFINED",
+      "exact_component_proposed": 7,
+      "exact_component_precision": 0.2857142857,
+      "exact_component_recall": 0.0833333333,
+      "exact_component_f1": 0.1290322581,
+      "source_path_precision": 1.0,
+      "source_path_recall": 0.3846153846,
+      "provider_native_overlap": 2,
+      "provider_native_formal_credit": 0,
+      "supporting_count": 0,
+      "supporting_formal_credit": 0,
       "capability_alignment": "NOT_COMPARABLE_NO_SEALED_CROSSWALK"
     },
-    "interpretation": "All 10 frozen scenarios carry no mechanical token overlap with test class/method identity, observed expressions, or resolved production symbols in the sealed test-behavior evidence. Each scenario was emitted UNRESOLVED with an explicit evidence gap and was never force-mapped to improve coverage. Diagnostics (supporting components, provider overlap, similarity signals) received zero formal precision/recall/F1 credit.",
+    "interpretation": "All 10 frozen scenarios received a PRIMARY mapping proposal from mechanically resolved production identities over real graph links; 7 of 10 scenarios trace end to end. Exact component scoring is honestly low (2/24 matched): the remaining 22 expected identities include inherited dependency methods not declared by the bound production receiver source, and force-mapping was prohibited. Provider-native overlap and supporting evidence receive zero formal credit.",
     "evaluator_truth_used_for_generation": false,
     "semantic_publication_allowed": false
   },
   "artifacts": {
-    "test_behavior_evidence": {
-      "path": "validation/software-factory/sf-bl002/test-behavior-evidence.json",
-      "sha256": "6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2"
-    },
     "scenario_observation_assignments": {
-      "path": "validation/software-factory/sf-bl002/scenario-observation-assignments-001.json",
-      "sha256": "503876f57b1c541df9b7f16ec1c3c2bc1c177c227e4bb75e251100eae2ec6943"
+      "path": "validation/software-factory/sf-bl002/scenario-observation-assignments-002.json",
+      "sha256": "95271ce158778a99d5ed07c250b6ca8916528e1903c8a1908a45eb399ff7c5fe"
     },
     "scenario_observation_assignments_manifest": {
-      "path": "validation/software-factory/sf-bl002/scenario-observation-assignments-001-manifest.json",
-      "sha256": "fb9f909ad8db7c166127ce58c1435e03c2665c7030eab1a39ac6b70f42054aa8"
+      "path": "validation/software-factory/sf-bl002/scenario-observation-assignments-002-manifest.json",
+      "sha256": "eb70465390a8f4c3f95e0b6ec704230e8fcaffbc8aa90e55d07f5c8a1240df43"
     },
     "scenario_mapping_proposal": {
-      "path": "validation/software-factory/sf-bl002/scenario-mapping-proposal-001.json",
-      "sha256": "38e8963996226dd614ae0abbf3ec6c4d2a8b60fb9c6b9c22ffee210b3dddaf9d"
+      "path": "validation/software-factory/sf-bl002/scenario-mapping-proposal-002.json",
+      "sha256": "5fcacac27ce4cd74d4734a435035b5396f0492ba3b71cd43219ad624333b94c8"
     },
     "scenario_mapping_evidence": {
-      "path": "validation/software-factory/sf-bl002/scenario-mapping-proposal-evidence-001.json",
-      "sha256": "4de9e1e2670974768a5cf7be570e3f1cd665d02e099622c4434bb318f1773bea"
+      "path": "validation/software-factory/sf-bl002/scenario-mapping-proposal-evidence-002.json",
+      "sha256": "37fcfac7ca9000086bcc83ced0ff97172c0a17d6b15bf7c61b3720e5d012bb10"
     },
     "hierarchical_evaluation": {
-      "path": "validation/software-factory/sf-bl002/hierarchical-evaluation-001.json",
-      "sha256": "4728d7fb0daad4517b8d3af8fd23e369b6676234b14555e8516dc1272bf0fd8c"
+      "path": "validation/software-factory/sf-bl002/hierarchical-evaluation-002.json",
+      "sha256": "b70215348ffd9ad69e9af52f4a52acfdddbb4d6eaaae201c8b2c5562128a3456"
     },
     "hierarchical_evaluation_evidence": {
-      "path": "validation/software-factory/sf-bl002/hierarchical-evaluation-evidence-001.json",
-      "sha256": "f165c3f3809808ebbaf10a2ea6b56b6329d9d9d784db40ccbc6a2286f1517b5a"
-    },
-    "schema": {
-      "path": "contracts/test-behavior-evidence.schema.json",
-      "sha256": "eeac56f63f2c179e848d2a826beab112aec2022c09987ba7cab60a8ce8859926"
-    },
-    "extractor": {
-      "path": "src/main/java/com/featuredeliveryintelligence/fdi/testbehavior/extractor/JavaParserTestBehaviorExtractor.java",
-      "sha256": "d735eafc2eab2008c9fa804b3b5a38df874fa220ac3c81d32a562ab0e514ebf8"
+      "path": "validation/software-factory/sf-bl002/hierarchical-evaluation-evidence-002.json",
+      "sha256": "961aa31206536b83e223bd6bdcdf2f67d90c6bbc5bbda94a2c13bb73e05654b5"
     }
   },
-  "generation_command": "java -Xmx2g -jar target/fdi-0.4.8.3.jar test-behavior-extract --repository-root src/test/resources/testbehavior/petclinic-818c4136/fixtures --repository-id spring-petclinic --revision 818c4136ea971c21674525f9053de0d9c7ad8cfe --schema contracts/test-behavior-evidence.schema.json --output validation/software-factory/sf-bl002/test-behavior-evidence.json",
-  "successor_generation_commands": [
-    "java -cp target/classes:<deps> com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.ScenarioObservationAssignmentGenerator <root> [output-root]",
-    "java -cp target/classes:<deps> com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002ScenarioMappingRun <root> [output-root]",
-    "java -cp target/classes:<deps> com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002HierarchicalEvaluation <root> [output-root]"
+  "artifact_digest_chain": "Each artifact is bound with SHA-256 in its own evidence/manifest document: the assignments manifest binds the assignments digest; the mapping evidence binds the proposal output digest and the assignments digest; the evaluation evidence binds the proposal, mapping-evidence, assignments, assignments-manifest, and evaluation output digests plus all sealed input digests. Fail-closed on any mismatch.",
+  "production_generation_commands": [
+    "java -Xmx2g -cp target/classes:<deps> com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.ScenarioSearchIntentMatcher <root> [output-root]",
+    "java -Xmx2g -cp target/classes:<deps> com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002ScenarioEffectivenessRun <root> [output-root]",
+    "java -Xmx2g -cp target/classes:<deps> com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002ScenarioEffectivenessEvaluation <root> [output-root]"
   ],
   "determinism_verification": {
-    "method": "Each new generator executed twice into separate temporary output roots; outputs compared byte-for-byte and by SHA-256.",
+    "method": "The full A -> B -> C chain executed twice into separate temporary output roots; all six -002 outputs compared byte-for-byte and by SHA-256, then compared against the committed artifacts.",
     "result": "PASS",
     "byte_identical": true,
+    "regenerated_outputs_match_committed_artifacts": true,
     "digests_run_a": {
-      "validation/software-factory/sf-bl002/scenario-observation-assignments-001.json": "503876f57b1c541df9b7f16ec1c3c2bc1c177c227e4bb75e251100eae2ec6943",
-      "validation/software-factory/sf-bl002/scenario-observation-assignments-001-manifest.json": "fb9f909ad8db7c166127ce58c1435e03c2665c7030eab1a39ac6b70f42054aa8",
-      "validation/software-factory/sf-bl002/scenario-mapping-proposal-001.json": "38e8963996226dd614ae0abbf3ec6c4d2a8b60fb9c6b9c22ffee210b3dddaf9d",
-      "validation/software-factory/sf-bl002/scenario-mapping-proposal-evidence-001.json": "4de9e1e2670974768a5cf7be570e3f1cd665d02e099622c4434bb318f1773bea",
-      "validation/software-factory/sf-bl002/hierarchical-evaluation-001.json": "4728d7fb0daad4517b8d3af8fd23e369b6676234b14555e8516dc1272bf0fd8c",
-      "validation/software-factory/sf-bl002/hierarchical-evaluation-evidence-001.json": "f165c3f3809808ebbaf10a2ea6b56b6329d9d9d784db40ccbc6a2286f1517b5a"
-    },
-    "regenerated_outputs_match_committed_artifacts": true
+      "validation/software-factory/sf-bl002/scenario-observation-assignments-002.json": "95271ce158778a99d5ed07c250b6ca8916528e1903c8a1908a45eb399ff7c5fe",
+      "validation/software-factory/sf-bl002/scenario-observation-assignments-002-manifest.json": "eb70465390a8f4c3f95e0b6ec704230e8fcaffbc8aa90e55d07f5c8a1240df43",
+      "validation/software-factory/sf-bl002/scenario-mapping-proposal-002.json": "5fcacac27ce4cd74d4734a435035b5396f0492ba3b71cd43219ad624333b94c8",
+      "validation/software-factory/sf-bl002/scenario-mapping-proposal-evidence-002.json": "37fcfac7ca9000086bcc83ced0ff97172c0a17d6b15bf7c61b3720e5d012bb10",
+      "validation/software-factory/sf-bl002/hierarchical-evaluation-002.json": "b70215348ffd9ad69e9af52f4a52acfdddbb4d6eaaae201c8b2c5562128a3456",
+      "validation/software-factory/sf-bl002/hierarchical-evaluation-evidence-002.json": "961aa31206536b83e223bd6bdcdf2f67d90c6bbc5bbda94a2c13bb73e05654b5"
+    }
   },
   "verification": {
-    "command": "MAVEN_OPTS='-Xmx2g' ./mvnw -q clean test",
-    "tests": 1060,
-    "test_classes": 87,
+    "command": "MAVEN_OPTS='-Xmx2g' ./mvnw clean test",
+    "tests": 1109,
+    "test_classes": 91,
     "failures": 0,
     "errors": 0,
     "skipped": 0,
-    "historical_evidence_diff_command": "git diff --exit-code -- validation/pkb001",
-    "historical_evidence_diff_result": "PASS",
-    "historical_evidence_paths_in_candidate_diff": 0
+    "expected_tests": 1109,
+    "historical_evidence_diff_command": "git diff --exit-code feab9dfa03be5240ade2951c8f500a230ebc6f33 -- validation/pkb001 'validation/**/*-001.json'",
+    "historical_evidence_diff_result": "PASS"
   },
   "historical_evidence_modified": false,
   "evaluator_truth_used_for_generation": false,
   "semantic_publication_allowed": false,
   "limitations": [
-    "Zero scenario trace coverage is a fail-closed result, not a defect: frozen scenario texts contain no mechanical tokens that match sealed test-behavior evidence, and force-mapping was prohibited.",
-    "The 11 remaining production-resolution gaps and 867 unresolved direct reference refs require stronger evidence and are reported, not promoted.",
+    "Exact component scoring is honestly low (precision 0.286, recall 0.083, F1 0.129; 2/24 matched): 22 expected identities are not mechanically provable from the sealed evidence and were not force-mapped.",
+    "3 of 10 scenarios remain untraced; chain coverage is partial (7 direct steps, 0 inferred, 0 gap-filled).",
     "Capability alignment and semantic precision/recall/F1 remain NOT_COMPARABLE without a sealed HYP-to-PET crosswalk.",
     "Results bind exactly to spring-petclinic revision 818c4136ea971c21674525f9053de0d9c7ad8cfe and snapshot pkb001-petclinic-reviewed-semantics-004; they do not generalize to other revisions.",
     "This package is execution evidence, not project truth; it cannot terminally close SF-BL-002."
   ],
-  "overall_status": "EVIDENCE_PACKAGE_COMPLETE_REVIEW_PASSED",
-  "closure_recommendation": "RECOMMEND_HUMAN_CLOSURE_REVIEW",
-  "next_gate": "Feature Delivery Plane reconciles this package against active controls; Human Authority alone may terminally close SF-BL-002."
+  "overall_status": "EVIDENCE_PACKAGE_COMPLETE",
+  "closure_recommendation": "COMBINED_REVIEW",
+  "next_gate": "Independent combined review of the integration candidate, then Feature Delivery Plane reconciliation against active controls; Human Authority alone may terminally close SF-BL-002."
 }
