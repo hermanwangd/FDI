@@ -1,0 +1,72 @@
+{
+  "schema_version": "software-factory.sf-bl002-remediation-evidence.v0.1",
+  "execution_id": "SF-BL-002-PRODUCTION-SCENARIO-001",
+  "execution_base_commit": "f6ac9d0d389c6857ec0374575bd5af312b704ae9",
+  "generator_code_commit": "c20e232e0a2d443ca47cccb0e80492160a3199bd",
+  "source_binding": {
+    "repository_id": "spring-petclinic",
+    "canonical_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "fixture_root": "src/test/resources/testbehavior/petclinic-818c4136/fixtures"
+  },
+  "production_reference_result": {
+    "status": "PASS",
+    "before": {
+      "resolved_production_references": 144,
+      "production_resolution_gaps": 35,
+      "test_helper_diagnostics": 7,
+      "external_dependency_diagnostics": 849,
+      "production_resolution_rate": 0.8044692737
+    },
+    "after": {
+      "resolved_production_references": 168,
+      "production_resolution_gaps": 11,
+      "test_helper_diagnostics": 7,
+      "external_dependency_diagnostics": 849,
+      "production_resolution_rate": 0.9385474860
+    },
+    "recovered_mechanically_provable_production_receiver_references": 24,
+    "resolved_reference_increase_rate": 0.1666666667,
+    "denominator_policy": "Only resolved production references plus production-resolution gaps form the production resolution denominator. External-dependency and test-helper diagnostics are reported separately and receive no mapping credit.",
+    "remaining_gap_note": "The 11 remaining production-root calls are inherited dependency methods not declared by the bound production receiver source; they are not promoted without stronger evidence."
+  },
+  "scenario_mapping_contract_result": {
+    "status": "PASS",
+    "verified_behaviors": [
+      "known direct production evidence can create a PROPOSAL_ONLY primary chain",
+      "unknown direct evidence fails closed",
+      "unassigned scenarios remain UNRESOLVED",
+      "caller cannot inject components or a confirmation flag",
+      "semantic publication remains false"
+    ],
+    "calibration_scenario_run": "NOT_RUN"
+  },
+  "artifacts": {
+    "test_behavior_evidence": {
+      "path": "validation/software-factory/sf-bl002/test-behavior-evidence.json",
+      "sha256": "6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2"
+    },
+    "schema": {
+      "path": "contracts/test-behavior-evidence.schema.json",
+      "sha256": "eeac56f63f2c179e848d2a826beab112aec2022c09987ba7cab60a8ce8859926"
+    },
+    "extractor": {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/testbehavior/extractor/JavaParserTestBehaviorExtractor.java",
+      "sha256": "d735eafc2eab2008c9fa804b3b5a38df874fa220ac3c81d32a562ab0e514ebf8"
+    }
+  },
+  "generation_command": "java -Xmx2g -jar target/fdi-0.4.8.3.jar test-behavior-extract --repository-root src/test/resources/testbehavior/petclinic-818c4136/fixtures --repository-id spring-petclinic --revision 818c4136ea971c21674525f9053de0d9c7ad8cfe --schema contracts/test-behavior-evidence.schema.json --output validation/software-factory/sf-bl002/test-behavior-evidence.json",
+  "verification": {
+    "command": "MAVEN_OPTS='-Xmx2g' ./mvnw -q clean test",
+    "tests": 1032,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "historical_evidence_diff_command": "git diff --exit-code -- validation/pkb001",
+    "historical_evidence_diff_result": "PASS"
+  },
+  "historical_evidence_modified": false,
+  "evaluator_truth_used_for_generation": false,
+  "semantic_publication_allowed": false,
+  "overall_status": "PARTIAL",
+  "next_gate": "Run the frozen scenarios through the evidence-backed mapper and report scenario, chain, and component metrics before closure."
+}
