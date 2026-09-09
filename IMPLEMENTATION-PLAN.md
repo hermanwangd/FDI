@@ -58,8 +58,20 @@ only from those seeds. Existing PKB-001 evidence remains immutable.
 - Evaluator gold/crosswalk data is not an input to generation.
 - No file under `validation/pkb001/` is modified.
 
-The execution envelope will be activated after this selected-control revision
-is committed so its exact base commit contains this plan.
+### Active execution envelope
+
+- Execution ID: `SF-BL-002-PRODUCTION-SCENARIO-001`
+- Exact base and Spec revision: `f6ac9d0d389c6857ec0374575bd5af312b704ae9`
+- Requirement bindings: `AUTH-002`, `PK-004`, `EVID-001`, `TECH-001`
+- Owned paths: the Java test-behavior extractor/API, scenario-forward mapper and
+  their tests, plus new `validation/software-factory/sf-bl002/` artifacts.
+- Excluded paths: all `validation/pkb001/` files, evaluator-only gold/crosswalk
+  inputs, Graphify Python runtime, SF-BL-001/Azure DevOps inputs, and unrelated
+  framework modules.
+- Resource bound: Java 17, Spring Boot 3.4.1, Maven heap at most 2 GiB; total
+  command memory must remain below the workspace 8 GiB ceiling.
+- Required result: combined tests/evidence plus an independent-review-ready
+  integration candidate. Only Human Authority may terminally close the parent.
 
 ## Verified delivery ledger
 
