@@ -121,7 +121,7 @@ only from those seeds. Existing PKB-001 evidence remains immutable.
 - Evaluator gold/crosswalk data is not an input to generation.
 - No file under `validation/pkb001/` is modified.
 
-### Active execution envelope
+### Superseded execution envelope
 
 - Execution ID: `SF-BL-002-PRODUCTION-SCENARIO-001`
 - Exact base and Spec revision: `f6ac9d052efe4d7f695c0f941a0e0b7b9c79ba81`
@@ -136,10 +136,25 @@ only from those seeds. Existing PKB-001 evidence remains immutable.
 - Required result: combined tests/evidence plus an independent-review-ready
   integration candidate. Only Human Authority may terminally close the parent.
 
-Tasks 3–6 above materially clarify the construction and scoring protocol. The
-current execution must stop at its completed production-reference checkpoint;
-a successor envelope will bind the exact commit containing this revised Plan
-before scenario assignment or evaluation starts.
+The execution above stopped at its completed production-reference checkpoint
+after Tasks 3–6 materially clarified the construction and scoring protocol.
+
+### Active successor execution envelope
+
+- Execution ID: `SF-BL-002-PRODUCTION-SCENARIO-002`
+- Exact base and Spec revision: `13890ccff85fa7b2f79341a2c7439cac02059f87`
+- Selected scope: Tasks 3–6 only; Tasks 1–2 and the production-reference
+  checkpoint are read-only inputs.
+- Owned paths: new Java assignment/mapping/evaluation classes and tests plus
+  new or updated files under `validation/software-factory/sf-bl002/`.
+- Excluded paths: all five active control files, `AGENTS.md`, every file under
+  `validation/pkb001/`, evaluator inputs during generation, Graphify Python,
+  SF-BL-001/Azure DevOps inputs, and unrelated framework modules.
+- Execution Plane duties: decompose eligible non-overlapping slices, implement
+  with TDD, independently review producer changes, integrate on one candidate,
+  run combined verification, and return one evidence package. It may not close
+  the parent or edit this Plan.
+- Resource bound: Maven heap at most 2 GiB and total command memory below 8 GiB.
 
 ## Verified delivery ledger
 
