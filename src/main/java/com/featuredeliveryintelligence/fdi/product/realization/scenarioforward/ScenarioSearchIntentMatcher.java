@@ -34,8 +34,9 @@ import java.util.regex.Pattern;
  * intents. Ranking is purely mechanical: accepted retrieval terms (action, entity, conditions,
  * aliases) tokenized by the single named {@code CAMEL_CASE_LATIN_V1} policy are intersected with
  * tokens of test class/method identity, observed expressions, and resolved production symbols;
- * ties rank by score descending then evidence ref ascending, and one PRIMARY is emitted per
- * production identity. Scenarios without positive overlap stay honestly UNRESOLVED and are never
+ * ties rank by score descending then evidence ref ascending, and the single top-ranked PRIMARY
+ * is emitted per scenario as the {@code primaryEvidenceRef} string ({@code UNRESOLVED} when no
+ * candidate qualifies). Scenarios without positive overlap stay honestly UNRESOLVED and are never
  * force-mapped. Every consumed artifact is validated as a whole document before use and output
  * authority stays PROPOSAL_ONLY with semantic publication refused. Evaluator truth, gold/seal
  * mappings, expected components, and post-run metrics are never read.
@@ -51,7 +52,7 @@ import java.util.regex.Pattern;
 public final class ScenarioSearchIntentMatcher {
     public static final String EXECUTION_ID = "SF-BL-002-SCENARIO-EFFECTIVENESS-004";
     public static final String SCHEMA_VERSION = "software-factory.sf-bl002-scenario-observation-assignments.v0.2";
-    public static final String MANIFEST_SCHEMA_VERSION = "software-factory.sf-bl002-artifact-manifest.v0.1";
+    public static final String MANIFEST_SCHEMA_VERSION = "software-factory.sf-bl002-artifact-manifest.v0.2";
     public static final String ARTIFACT_PATH = "validation/software-factory/sf-bl002/scenario-observation-assignments-002.json";
     public static final String MANIFEST_PATH = "validation/software-factory/sf-bl002/scenario-observation-assignments-002-manifest.json";
     public static final String SEMANTICS_PATH = "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004.json";
@@ -156,7 +157,7 @@ public final class ScenarioSearchIntentMatcher {
         artifact.put("tokenization_policy", TOKENIZATION_POLICY);
         artifact.put("semantics_sha256", digests.semantics());
         artifact.put("acceptance_manifest_sha256", digests.acceptance());
-        artifact.put("intents_sha256", digests.intents());
+        artifact.put("intent_sha256", digests.intents());
         artifact.put("intent_acceptance_sha256", digests.intentAcceptance());
         artifact.put("test_evidence_sha256", digests.evidence());
         ArrayNode assignments = artifact.putArray("assignments");
@@ -264,31 +265,34 @@ public final class ScenarioSearchIntentMatcher {
         List<String> gapRefs = rankGaps(terms, index);
         ObjectNode record = JSON.createObjectNode();
         record.put("capabilityId", capabilityId).put("scenarioId", scenarioId);
-        ArrayNode primary = record.putArray("primaryEvidenceRefs");
-        ArrayList<String> rationale = new ArrayList<>();
-        for (Candidate candidate : selected) {
-            primary.add(candidate.observation().directEvidence().evidenceRef());
-            rationale.add("PRIMARY " + candidate.observation().directEvidence().evidenceRef()
-                    + " (matched terms " + candidate.matchedTokens()
-                    + "; basis: test identity " + candidate.testClass() + "#" + candidate.testMethod()
-                    + ", production symbol "
-                    + candidate.observation().directEvidence().productionSymbol().qualifiedSymbol() + ")");
-        }
-        ArrayNode gaps = record.putArray("gapRefs");
-        gapRefs.forEach(gaps::add);
         String rationaleText;
         if (selected.isEmpty()) {
+            record.put("primaryEvidenceRef", "UNRESOLVED");
             record.put("status", "UNRESOLVED");
             rationaleText = "no positive token overlap between accepted retrieval terms " + terms
                     + " and test identity, expressions, or resolved production symbols in the sealed"
                     + " test-behavior evidence; the scenario stays UNRESOLVED with an explicit gap and"
                     + " is never force-mapped";
         } else {
+            Candidate top = selected.get(0);
+            String primaryRef = top.observation().directEvidence().evidenceRef();
+            record.put("primaryEvidenceRef", primaryRef);
             record.put("status", "PRIMARY_ASSIGNED");
-            rationaleText = String.join("; ", rationale);
+            rationaleText = "PRIMARY " + primaryRef
+                    + " (matched terms " + top.matchedTokens()
+                    + "; basis: test identity " + top.testClass() + "#" + top.testMethod()
+                    + ", production symbol "
+                    + top.observation().directEvidence().productionSymbol().qualifiedSymbol() + ")"
+                    + (selected.size() > 1
+                            ? "; ranking kept " + (selected.size() - 1)
+                                + " additional distinct production identit" + (selected.size() > 2 ? "ies" : "y")
+                                + " deterministicall" + "y behind the emitted PRIMARY"
+                            : "");
         }
         guard(rationaleText, "selectionRationale");
         record.put("selectionRationale", rationaleText);
+        ArrayNode gaps = record.putArray("gapRefs");
+        gapRefs.forEach(gaps::add);
         record.put("sourceRevision", sourceRevision);
         record.put("semanticsDigest", digests.semantics());
         record.put("intentDigest", digests.intents());
@@ -316,19 +320,19 @@ public final class ScenarioSearchIntentMatcher {
                 "mixed-revision assignment: intentAcceptanceDigest does not match the intent acceptance");
         require(digests.evidence().equals(record.path("testEvidenceDigest").asText()),
                 "mixed-revision assignment: testEvidenceDigest does not match the sealed evidence");
-        Set<String> refs = new LinkedHashSet<>();
-        JsonNode primaryRefs = record.path("primaryEvidenceRefs");
-        require(primaryRefs.isArray(), "primaryEvidenceRefs must be an array");
-        require((status.equals("PRIMARY_ASSIGNED")) != primaryRefs.isEmpty(),
-                "status and primary refs disagree for " + status);
-        for (JsonNode ref : primaryRefs) {
-            String value = ref.asText();
-            require(refs.add(value), "duplicate PRIMARY evidence ref: " + value);
-            var observation = index.observationsByRef().get(value);
-            require(observation != null, "unknown PRIMARY evidence ref: " + value);
+        require(!record.has("primaryEvidenceRefs"), "legacy primaryEvidenceRefs array is not part of the -002 contract");
+        String primaryRef = record.path("primaryEvidenceRef").asText();
+        require(!primaryRef.isBlank(), "primaryEvidenceRef is required");
+        guard(primaryRef, "primaryEvidenceRef");
+        if (status.equals("UNRESOLVED")) {
+            require("UNRESOLVED".equals(primaryRef), "UNRESOLVED status must emit primaryEvidenceRef UNRESOLVED");
+        } else {
+            require(!"UNRESOLVED".equals(primaryRef), "PRIMARY_ASSIGNED status must emit a resolved primaryEvidenceRef");
+            var observation = index.observationsByRef().get(primaryRef);
+            require(observation != null, "unknown PRIMARY evidence ref: " + primaryRef);
             String path = observation.directEvidence().productionSymbol().sourcePath();
             require(path.startsWith("src/main/") && !path.toLowerCase(Locale.ROOT).contains("/test/"),
-                    "non-production PRIMARY evidence ref: " + value);
+                    "non-production PRIMARY evidence ref: " + primaryRef);
         }
         Set<String> gapSet = new LinkedHashSet<>();
         for (JsonNode ref : record.path("gapRefs")) {

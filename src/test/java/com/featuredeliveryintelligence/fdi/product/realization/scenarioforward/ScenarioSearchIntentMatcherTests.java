@@ -63,7 +63,10 @@ class ScenarioSearchIntentMatcherTests {
         assertEquals("CAMEL_CASE_LATIN_V1", artifact.path("tokenization_policy").asText());
         assertEquals(REV, artifact.path("source_revision").asText());
         assertEquals(SEM_SHA, artifact.path("semantics_sha256").asText());
-        assertEquals(ScenarioSearchIntentMatcher.INTENTS_SHA256, artifact.path("intents_sha256").asText());
+        assertEquals(ScenarioSearchIntentMatcher.INTENTS_SHA256, artifact.path("intent_sha256").asText());
+        assertEquals(ScenarioSearchIntentMatcher.INTENT_ACCEPTANCE_SHA256,
+                artifact.path("intent_acceptance_sha256").asText());
+        assertEquals(EV_SHA, artifact.path("test_evidence_sha256").asText());
         assertEquals(10, artifact.path("assignments").size());
         for (JsonNode record : artifact.path("assignments")) {
             assertEquals("PROPOSAL_ONLY", record.path("authority").asText());
@@ -75,8 +78,19 @@ class ScenarioSearchIntentMatcherTests {
                     record.path("intentAcceptanceDigest").asText());
             assertEquals(EV_SHA, record.path("testEvidenceDigest").asText());
             assertTrue(record.path("status").asText().matches("PRIMARY_ASSIGNED|UNRESOLVED"));
+            String status = record.path("status").asText();
+            String primaryRef = record.path("primaryEvidenceRef").asText();
+            assertFalse(primaryRef.isBlank());
+            assertFalse(record.has("primaryEvidenceRefs"), "legacy array field must not be emitted");
+            if (status.equals("UNRESOLVED")) {
+                assertEquals("UNRESOLVED", primaryRef);
+            } else {
+                assertNotEquals("UNRESOLVED", primaryRef);
+                assertTrue(primaryRef.startsWith("direct-test-reference:"));
+            }
         }
         JsonNode manifest = JSON.readTree(output.resolve(ScenarioSearchIntentMatcher.MANIFEST_PATH).toFile());
+        assertEquals("software-factory.sf-bl002-artifact-manifest.v0.2", manifest.path("schema_version").asText());
         assertEquals(result.artifactSha256(), manifest.path("artifact").path("sha256").asText());
         assertEquals(5, manifest.path("inputs").size());
         assertEquals(SEM_SHA, manifest.path("inputs").path(ScenarioSearchIntentMatcher.SEMANTICS_PATH).asText());
@@ -191,8 +205,7 @@ class ScenarioSearchIntentMatcherTests {
         ObjectNode record = ScenarioSearchIntentMatcher.assignmentRecord("HYP-CAPABILITY-001",
                 intent("HYP-CAPABILITY-001", "HYP-SCENARIO-001", "FIND", "OWNER",
                         List.of("last-name-criteria"), List.of("find owner")), REV, DIGESTS, index);
-        assertEquals(List.of("direct-test-reference:0001", "direct-test-reference:0003"),
-                toList(record.path("primaryEvidenceRefs")));
+        assertEquals("direct-test-reference:0001", record.path("primaryEvidenceRef").asText());
         assertTrue(record.path("selectionRationale").asText().contains("matched terms [find, last, name, owner]"),
                 "matched terms must keep deterministic sorted order");
     }
@@ -211,7 +224,7 @@ class ScenarioSearchIntentMatcherTests {
         ObjectNode dedup = ScenarioSearchIntentMatcher.assignmentRecord("HYP-CAPABILITY-001",
                 intent("HYP-CAPABILITY-001", "HYP-SCENARIO-001", "FIND", "OWNER",
                         List.of("last-name-criteria"), List.of("find owner")), REV, DIGESTS, index);
-        assertEquals(List.of("direct-test-reference:0001"), toList(dedup.path("primaryEvidenceRefs")));
+        assertEquals("direct-test-reference:0001", dedup.path("primaryEvidenceRef").asText());
 
         ObjectNode unresolved = ScenarioSearchIntentMatcher.assignmentRecord("HYP-CAPABILITY-005",
                 intent("HYP-CAPABILITY-005", "HYP-SCENARIO-009", "BROWSE", "VET",
@@ -220,8 +233,29 @@ class ScenarioSearchIntentMatcherTests {
                         "org.springframework.samples.petclinic.owner.OwnerRepository", "findByLastName",
                         "OwnerControllerTests", "testFind", Set.of("owner", "find", "by", "last", "name"))));
         assertEquals("UNRESOLVED", unresolved.path("status").asText());
-        assertTrue(unresolved.path("primaryEvidenceRefs").isEmpty());
+        assertEquals("UNRESOLVED", unresolved.path("primaryEvidenceRef").asText());
         assertTrue(unresolved.path("selectionRationale").asText().contains("UNRESOLVED"));
+    }
+
+    @Test void legacyArrayShapedRecordIsRejectedFailClosed() {
+        var index = index(candidate("direct-test-reference:0001",
+                "org.springframework.samples.petclinic.owner.OwnerRepository", "findByLastName",
+                "OwnerControllerTests", "testFind", Set.of("owner", "find", "by", "last", "name")));
+        ObjectNode legacy = ScenarioSearchIntentMatcher.assignmentRecord("HYP-CAPABILITY-001",
+                intent("HYP-CAPABILITY-001", "HYP-SCENARIO-001", "FIND", "OWNER",
+                        List.of("last-name-criteria"), List.of("find owner")), REV, DIGESTS, index);
+        legacy.remove("primaryEvidenceRef");
+        var legacyArray = legacy.putArray("primaryEvidenceRefs");
+        legacyArray.add("direct-test-reference:0001");
+        assertThrows(RuntimeContractException.class,
+                () -> ScenarioSearchIntentMatcher.validateAssignment(legacy, index, REV, DIGESTS));
+
+        ObjectNode mismatched = ScenarioSearchIntentMatcher.assignmentRecord("HYP-CAPABILITY-001",
+                intent("HYP-CAPABILITY-001", "HYP-SCENARIO-001", "FIND", "OWNER",
+                        List.of("last-name-criteria"), List.of("find owner")), REV, DIGESTS, index);
+        mismatched.put("primaryEvidenceRef", "UNRESOLVED");
+        assertThrows(RuntimeContractException.class,
+                () -> ScenarioSearchIntentMatcher.validateAssignment(mismatched, index, REV, DIGESTS));
     }
 
     @Test void immutablePolicyCollectionsRejectMutation() {
@@ -250,10 +284,6 @@ class ScenarioSearchIntentMatcherTests {
         record.put("status", "PRIMARY");
         assertThrows(RuntimeContractException.class,
                 () -> ScenarioSearchIntentMatcher.validateAssignment(record, index, REV, DIGESTS));
-    }
-
-    private static List<String> toList(JsonNode array) {
-        return java.util.stream.StreamSupport.stream(array.spliterator(), false).map(JsonNode::asText).toList();
     }
 
     private static JsonNode intent(String capabilityId, String scenarioId, String action, String entity,
