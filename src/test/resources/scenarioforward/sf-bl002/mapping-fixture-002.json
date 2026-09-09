@@ -1,0 +1,156 @@
+{
+  "schema_version": "software-factory.sf-bl002-scenario-mapping-proposal.v0.2",
+  "execution_id": "SF-BL-002-SCENARIO-MAPPING-002-SYNTHETIC-FIXTURE",
+  "authority": "PROPOSAL_ONLY",
+  "semantic_publication_allowed": false,
+  "semanticPublicationAllowed": false,
+  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "semanticsSha256": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+  "authorizationSha256": "d5aaa1d485f585c3b2b4162263f7e4dcc95033f11b7c4e6ad5b077b9da7a889e",
+  "testEvidenceSha256": "6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2",
+  "graphSha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+  "capabilities": [
+    {
+      "capabilityId": "CAP-SYNTH-A",
+      "scenarios": [
+        {
+          "mapping": {
+            "schemaVersion": "pkb001.realization-mapping.v0.4",
+            "authority": "PROPOSAL_ONLY",
+            "capabilityId": "CAP-SYNTH-A",
+            "scenarioId": "SCN-SYNTH-101",
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "graphSha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+            "frozenSemanticsSha256": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+            "outcome": "MAPPING_PROPOSAL",
+            "evidenceStatus": "COMPLETE",
+            "directProductionSymbols": [],
+            "seeds": [],
+            "relationshipTraces": [],
+            "realizationChain": [
+              {
+                "relationshipBasis": "DIRECT_TEST_REFERENCE",
+                "component": {
+                  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+                  "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+                  "granularity": "METHOD",
+                  "containingType": "org.springframework.samples.petclinic.owner.PetController",
+                  "qualifiedSymbol": "org.springframework.samples.petclinic.owner.PetController#processCreationForm"
+                }
+              }
+            ],
+            "evidenceGaps": [],
+            "limitations": [
+              "Synthetic frozen fixture: direct reference is a deterministic stand-in, not production evidence."
+            ]
+          },
+          "componentRoles": [
+            {
+              "role": "PRIMARY",
+              "providerNodeId": "node-x-a",
+              "component": {
+                "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+                "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+                "granularity": "METHOD",
+                "containingType": "org.springframework.samples.petclinic.owner.PetController",
+                "qualifiedSymbol": "org.springframework.samples.petclinic.owner.PetController#processCreationForm"
+              }
+            },
+            {
+              "role": "SUPPORTING",
+              "providerNodeId": "node-s-a",
+              "component": {
+                "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+                "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+                "granularity": "METHOD",
+                "containingType": "org.springframework.samples.petclinic.owner.PetController",
+                "qualifiedSymbol": "org.springframework.samples.petclinic.owner.PetController#findOwner"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "CAP-SYNTH-B",
+      "scenarios": [
+        {
+          "mapping": {
+            "schemaVersion": "pkb001.realization-mapping.v0.4",
+            "authority": "PROPOSAL_ONLY",
+            "capabilityId": "CAP-SYNTH-B",
+            "scenarioId": "SCN-SYNTH-102",
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "graphSha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+            "frozenSemanticsSha256": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+            "outcome": "MAPPING_PROPOSAL",
+            "evidenceStatus": "PARTIAL",
+            "directProductionSymbols": [],
+            "seeds": [],
+            "relationshipTraces": [],
+            "realizationChain": [
+              {
+                "relationshipBasis": "GRAPHIFY_INFERRED",
+                "component": {
+                  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+                  "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+                  "granularity": "METHOD",
+                  "containingType": "org.springframework.samples.petclinic.owner.OwnerController",
+                  "qualifiedSymbol": "org.springframework.samples.petclinic.owner.OwnerController#initFindForm"
+                }
+              }
+            ],
+            "evidenceGaps": [
+              "Synthetic frozen fixture: the inferred chain step is not test-referenced."
+            ],
+            "limitations": [
+              "Synthetic frozen fixture: Graphify-inferred step is a deterministic stand-in, not production evidence."
+            ]
+          },
+          "componentRoles": [
+            {
+              "role": "PRIMARY",
+              "providerNodeId": "node-z-b",
+              "component": {
+                "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+                "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+                "granularity": "METHOD",
+                "containingType": "org.springframework.samples.petclinic.owner.PetController",
+                "qualifiedSymbol": "org.springframework.samples.petclinic.owner.PetController#processUpdateForm"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "capabilityId": "CAP-SYNTH-C",
+      "scenarios": [
+        {
+          "mapping": {
+            "schemaVersion": "pkb001.realization-mapping.v0.4",
+            "authority": "PROPOSAL_ONLY",
+            "capabilityId": "CAP-SYNTH-C",
+            "scenarioId": "SCN-SYNTH-103",
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "graphSha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+            "frozenSemanticsSha256": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+            "outcome": "UNRESOLVED",
+            "evidenceStatus": "INSUFFICIENT",
+            "directProductionSymbols": [],
+            "seeds": [],
+            "relationshipTraces": [],
+            "realizationChain": [],
+            "evidenceGaps": [
+              "Synthetic frozen fixture: unresolved scenario carries no positive proposal."
+            ],
+            "limitations": [
+              "Synthetic frozen fixture: no production identity is proposed for this scenario."
+            ]
+          },
+          "componentRoles": []
+        }
+      ]
+    }
+  ]
+}
