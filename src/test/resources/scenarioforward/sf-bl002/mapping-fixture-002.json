@@ -1,156 +1,128 @@
 {
   "schema_version": "software-factory.sf-bl002-scenario-mapping-proposal.v0.2",
-  "execution_id": "SF-BL-002-SCENARIO-MAPPING-002-SYNTHETIC-FIXTURE",
+  "execution_id": "SF-BL-002-SCENARIO-EFFECTIVENESS-004",
   "authority": "PROPOSAL_ONLY",
   "semantic_publication_allowed": false,
-  "semanticPublicationAllowed": false,
-  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
-  "semanticsSha256": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
-  "authorizationSha256": "d5aaa1d485f585c3b2b4162263f7e4dcc95033f11b7c4e6ad5b077b9da7a889e",
-  "testEvidenceSha256": "6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2",
-  "graphSha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
-  "capabilities": [
+  "source_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "generation_method": "SfBl002ScenarioEffectivenessRun.generate",
+  "inputs": {
+    "validation/pkb001/artifacts/petclinic-graph-818c413.json": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+    "validation/pkb001/runtime/graphify-petclinic-live-evidence.json": "fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8",
+    "validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json": "3c5da364196f1bbec17aabdbf2923c65f2bc0d90b2e9788bac8427219d554a3f",
+    "validation/software-factory/sf-bl002/scenario-search-intent-acceptance-manifest-002.json": "8772b2a1b4cbb485f0ebce793be734bbd8414aaf318e6033bab7225b1e03fd1b",
+    "validation/software-factory/sf-bl002/test-behavior-evidence.json": "6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2",
+    "validation/software-factory/sf-bl002/scenario-observation-assignments-002.json": "__ASSIGNMENTS_SHA256__"
+  },
+  "scenarios": [
     {
-      "capabilityId": "CAP-SYNTH-A",
-      "scenarios": [
+      "capabilityId": "HYP-CAPABILITY-001",
+      "scenarioId": "HYP-SCENARIO-001",
+      "rationale": "PRIMARY synthetic direct-test-reference:synth-0001 selects PetController#processCreationForm (frozen fixture stand-in, not production evidence)",
+      "supporting": [
         {
-          "mapping": {
-            "schemaVersion": "pkb001.realization-mapping.v0.4",
-            "authority": "PROPOSAL_ONLY",
-            "capabilityId": "CAP-SYNTH-A",
-            "scenarioId": "SCN-SYNTH-101",
-            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
-            "graphSha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
-            "frozenSemanticsSha256": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
-            "outcome": "MAPPING_PROPOSAL",
-            "evidenceStatus": "COMPLETE",
-            "directProductionSymbols": [],
-            "seeds": [],
-            "relationshipTraces": [],
-            "realizationChain": [
-              {
-                "relationshipBasis": "DIRECT_TEST_REFERENCE",
-                "component": {
-                  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
-                  "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
-                  "granularity": "METHOD",
-                  "containingType": "org.springframework.samples.petclinic.owner.PetController",
-                  "qualifiedSymbol": "org.springframework.samples.petclinic.owner.PetController#processCreationForm"
-                }
-              }
-            ],
-            "evidenceGaps": [],
-            "limitations": [
-              "Synthetic frozen fixture: direct reference is a deterministic stand-in, not production evidence."
+          "providerNodeId": "node-s-a",
+          "label": ".findOwner()",
+          "sourceFile": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+          "formalPrimaryPrecisionCredit": false,
+          "relationshipTrace": {
+            "edges": [
+              {"from": "node-x-a", "to": "node-s-a", "relationship": "calls", "sourceLocation": "L120"}
             ]
-          },
-          "componentRoles": [
-            {
-              "role": "PRIMARY",
-              "providerNodeId": "node-x-a",
-              "component": {
-                "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
-                "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
-                "granularity": "METHOD",
-                "containingType": "org.springframework.samples.petclinic.owner.PetController",
-                "qualifiedSymbol": "org.springframework.samples.petclinic.owner.PetController#processCreationForm"
-              }
-            },
-            {
-              "role": "SUPPORTING",
-              "providerNodeId": "node-s-a",
-              "component": {
-                "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
-                "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
-                "granularity": "METHOD",
-                "containingType": "org.springframework.samples.petclinic.owner.PetController",
-                "qualifiedSymbol": "org.springframework.samples.petclinic.owner.PetController#findOwner"
-              }
-            }
-          ]
+          }
         }
-      ]
+      ],
+      "primary": {
+        "evidenceRef": "direct-test-reference:synth-0001",
+        "providerNodeId": "node-x-a",
+        "productionSymbol": {
+          "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+          "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+          "granularity": "METHOD",
+          "qualifiedSymbol": "org.springframework.samples.petclinic.owner.PetController#processCreationForm"
+        }
+      },
+      "outcome": "MAPPING_PROPOSAL"
     },
     {
-      "capabilityId": "CAP-SYNTH-B",
-      "scenarios": [
-        {
-          "mapping": {
-            "schemaVersion": "pkb001.realization-mapping.v0.4",
-            "authority": "PROPOSAL_ONLY",
-            "capabilityId": "CAP-SYNTH-B",
-            "scenarioId": "SCN-SYNTH-102",
-            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
-            "graphSha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
-            "frozenSemanticsSha256": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
-            "outcome": "MAPPING_PROPOSAL",
-            "evidenceStatus": "PARTIAL",
-            "directProductionSymbols": [],
-            "seeds": [],
-            "relationshipTraces": [],
-            "realizationChain": [
-              {
-                "relationshipBasis": "GRAPHIFY_INFERRED",
-                "component": {
-                  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
-                  "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
-                  "granularity": "METHOD",
-                  "containingType": "org.springframework.samples.petclinic.owner.OwnerController",
-                  "qualifiedSymbol": "org.springframework.samples.petclinic.owner.OwnerController#initFindForm"
-                }
-              }
-            ],
-            "evidenceGaps": [
-              "Synthetic frozen fixture: the inferred chain step is not test-referenced."
-            ],
-            "limitations": [
-              "Synthetic frozen fixture: Graphify-inferred step is a deterministic stand-in, not production evidence."
-            ]
-          },
-          "componentRoles": [
-            {
-              "role": "PRIMARY",
-              "providerNodeId": "node-z-b",
-              "component": {
-                "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
-                "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
-                "granularity": "METHOD",
-                "containingType": "org.springframework.samples.petclinic.owner.PetController",
-                "qualifiedSymbol": "org.springframework.samples.petclinic.owner.PetController#processUpdateForm"
-              }
-            }
-          ]
+      "capabilityId": "HYP-CAPABILITY-001",
+      "scenarioId": "HYP-SCENARIO-002",
+      "rationale": "PRIMARY synthetic direct-test-reference:synth-0002 selects OwnerController#processFindFormSuccess (frozen fixture stand-in, not production evidence)",
+      "supporting": [],
+      "primary": {
+        "evidenceRef": "direct-test-reference:synth-0002",
+        "providerNodeId": "node-y-b",
+        "productionSymbol": {
+          "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+          "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+          "granularity": "METHOD",
+          "qualifiedSymbol": "org.springframework.samples.petclinic.owner.OwnerController#processFindFormSuccess"
         }
-      ]
+      },
+      "outcome": "MAPPING_PROPOSAL"
     },
     {
-      "capabilityId": "CAP-SYNTH-C",
-      "scenarios": [
-        {
-          "mapping": {
-            "schemaVersion": "pkb001.realization-mapping.v0.4",
-            "authority": "PROPOSAL_ONLY",
-            "capabilityId": "CAP-SYNTH-C",
-            "scenarioId": "SCN-SYNTH-103",
-            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
-            "graphSha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
-            "frozenSemanticsSha256": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
-            "outcome": "UNRESOLVED",
-            "evidenceStatus": "INSUFFICIENT",
-            "directProductionSymbols": [],
-            "seeds": [],
-            "relationshipTraces": [],
-            "realizationChain": [],
-            "evidenceGaps": [
-              "Synthetic frozen fixture: unresolved scenario carries no positive proposal."
-            ],
-            "limitations": [
-              "Synthetic frozen fixture: no production identity is proposed for this scenario."
-            ]
-          },
-          "componentRoles": []
-        }
-      ]
+      "capabilityId": "HYP-CAPABILITY-002",
+      "scenarioId": "HYP-SCENARIO-003",
+      "rationale": "no production identity accepted for this scenario; honest UNRESOLVED (frozen fixture stand-in)",
+      "supporting": [],
+      "primary": null,
+      "outcome": "UNRESOLVED"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-002",
+      "scenarioId": "HYP-SCENARIO-004",
+      "rationale": "no production identity accepted for this scenario; honest UNRESOLVED (frozen fixture stand-in)",
+      "supporting": [],
+      "primary": null,
+      "outcome": "UNRESOLVED"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-003",
+      "scenarioId": "HYP-SCENARIO-005",
+      "rationale": "no production identity accepted for this scenario; honest UNRESOLVED (frozen fixture stand-in)",
+      "supporting": [],
+      "primary": null,
+      "outcome": "UNRESOLVED"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-003",
+      "scenarioId": "HYP-SCENARIO-006",
+      "rationale": "no production identity accepted for this scenario; honest UNRESOLVED (frozen fixture stand-in)",
+      "supporting": [],
+      "primary": null,
+      "outcome": "UNRESOLVED"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-004",
+      "scenarioId": "HYP-SCENARIO-007",
+      "rationale": "no production identity accepted for this scenario; honest UNRESOLVED (frozen fixture stand-in)",
+      "supporting": [],
+      "primary": null,
+      "outcome": "UNRESOLVED"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-004",
+      "scenarioId": "HYP-SCENARIO-008",
+      "rationale": "no production identity accepted for this scenario; honest UNRESOLVED (frozen fixture stand-in)",
+      "supporting": [],
+      "primary": null,
+      "outcome": "UNRESOLVED"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-005",
+      "scenarioId": "HYP-SCENARIO-009",
+      "rationale": "no production identity accepted for this scenario; honest UNRESOLVED (frozen fixture stand-in)",
+      "supporting": [],
+      "primary": null,
+      "outcome": "UNRESOLVED"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-003",
+      "scenarioId": "HYP-SCENARIO-011",
+      "rationale": "no production identity accepted for this scenario; honest UNRESOLVED (frozen fixture stand-in)",
+      "supporting": [],
+      "primary": null,
+      "outcome": "UNRESOLVED"
     }
   ]
 }

@@ -7,11 +7,13 @@ import com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioFo
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -20,21 +22,45 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 /**
  * Task C (Slice C) of the SF-BL-002 Tasks 3-5 remediation: evaluator-only hierarchical scoring of
- * the immutable slice-B mapping proposal {@code scenario-mapping-proposal-002.json}. Every
+ * the immutable slice-B mapping proposal {@code scenario-mapping-proposal-002.json} as actually
+ * emitted in schema {@code software-factory.sf-bl002-scenario-mapping-proposal.v0.2}. Every
  * non-evaluator input — accepted semantics, acceptance manifest, accepted search intents and their
  * acceptance manifest, test-behavior evidence, graph snapshot, Graphify runtime evidence, the
  * slice-A assignment artifact and manifest, and the slice-B mapping proposal and its evidence —
  * is digest-sealed and whole-document validated before evaluator truth is opened; any mutation
- * fails closed before evaluator access. Matching semantics are reused from
- * {@link HierarchicalForwardEvaluation}; no capability crosswalk is invented, so capability
- * alignment stays not comparable while scenario trace, chain coverage, exact PRIMARY
- * precision/recall/F1, and diagnostic-only SUPPORTING overlap are reported. Threshold results are
- * recorded, not enforced, and the production {@code hierarchical-evaluation-002.json} pair is
- * generated only at integration against the real slice-A/B artifacts.
+ * fails closed before evaluator access.
+ *
+ * <p>The consumed contract is the real v0.2 producer shape: the slice-A assignments carry
+ * snake_case {@code source_revision}, {@code semantics_sha256}, {@code acceptance_manifest_sha256},
+ * {@code intent_sha256}, {@code intent_acceptance_sha256}, {@code test_evidence_sha256} and
+ * per-record {@code primaryEvidenceRef} (single string, {@code UNRESOLVED} when unassigned); the
+ * slice-B proposal carries top-level {@code source_revision}, an {@code inputs} digest map, and
+ * flat {@code scenarios[]} whose mapped records hold {@code outcome}, {@code rationale},
+ * {@code primary}{@code .evidenceRef/.providerNodeId/.productionSymbol} and diagnostic-only
+ * {@code supporting[]} entries. Assignment authorization is derived from the acceptance manifest's
+ * {@code authorization_artifact.sha256} — never from a top-level {@code authorization_sha256} key,
+ * which the v0.2 assignments do not carry.
+ *
+ * <p>The shared {@link HierarchicalForwardEvaluation} consumes a different normalized comparison
+ * document, so this unit mechanically derives one from the validated v0.2 proposal: each mapped
+ * scenario contributes one {@code DIRECT_TEST_REFERENCE} realization-chain step and one
+ * {@code PRIMARY} component role for its exact {@code productionSymbol}. Because the shared
+ * evaluator credits each distinct component once per capability, a component already contributed
+ * by an earlier scenario of the same capability (sorted by scenario id) is not repeated; that is
+ * the evaluator's own credit semantics, not a weakening. Evidence status is derived deterministically
+ * from the outcome ({@code MAPPING_PROPOSAL} → {@code COMPLETE}, {@code UNRESOLVED} →
+ * {@code INSUFFICIENT}). v0.2 supporting entries carry no formal component identity, so they are
+ * validated and reported as counts and provider-node overlap only, with zero formal credit. No
+ * capability crosswalk is invented, so capability alignment stays not comparable while scenario
+ * trace, chain coverage, exact PRIMARY precision/recall/F1, and diagnostic-only SUPPORTING
+ * overlap are reported. Threshold results are recorded, not enforced, and the production
+ * {@code hierarchical-evaluation-002.json} pair is generated only at integration against the real
+ * slice-A/B artifacts.
  */
 public final class SfBl002ScenarioEffectivenessEvaluation {
     public static final String EXECUTION_ID = "SF-BL-002-SCENARIO-EFFECTIVENESS-004";
@@ -66,11 +92,15 @@ public final class SfBl002ScenarioEffectivenessEvaluation {
     public static final String MAPPING_PROPOSAL_PATH = "validation/software-factory/sf-bl002/scenario-mapping-proposal-002.json";
     public static final String MAPPING_PROPOSAL_EVIDENCE_PATH =
             "validation/software-factory/sf-bl002/scenario-mapping-proposal-evidence-002.json";
+    public static final String ASSIGNMENTS_SCHEMA_VERSION = "software-factory.sf-bl002-scenario-observation-assignments.v0.2";
+    public static final String ASSIGNMENTS_MANIFEST_SCHEMA_VERSION = "software-factory.sf-bl002-artifact-manifest.v0.2";
+    public static final String MAPPING_PROPOSAL_SCHEMA_VERSION = "software-factory.sf-bl002-scenario-mapping-proposal.v0.2";
+    public static final String MAPPING_EVIDENCE_SCHEMA_VERSION = "software-factory.sf-bl002-scenario-mapping-evidence.v0.2";
+    static final String MAPPING_GENERATION_METHOD = "SfBl002ScenarioEffectivenessRun.generate";
     static final Pattern EVALUATOR_VOCABULARY = Pattern.compile(
             "(?i)(evaluator(?:[ _/-]+gold)?|gold[ _-]+mapping|ground[ _-]+truth|expected[ _-]+mapping)");
     private static final Set<String> OUTCOMES = Set.of("MAPPING_PROPOSAL", "UNRESOLVED");
-    private static final Set<String> EVIDENCE_STATUS = Set.of("COMPLETE", "PARTIAL", "INSUFFICIENT");
-    private static final Set<String> CHAIN_BASES = Set.of("DIRECT_TEST_REFERENCE", "GRAPHIFY_INFERRED", "EVIDENCE_GAP");
+    private static final Set<String> ASSIGNMENT_STATUSES = Set.of("PRIMARY_ASSIGNED", "UNRESOLVED");
     private static final ObjectMapper JSON = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
     private SfBl002ScenarioEffectivenessEvaluation() { }
@@ -91,9 +121,12 @@ public final class SfBl002ScenarioEffectivenessEvaluation {
     static Result generate(Path root, Path outputRoot, HierarchicalForwardEvaluation.EvaluatorAccess evaluatorAccess,
             String goldSealSha256, String goldInputKey, String sealInputKey) {
         try {
-            HierarchicalForwardEvaluation.Report report = HierarchicalForwardEvaluation.compare(root,
-                    SfBl002ScenarioEffectivenessEvaluation::seal, evaluatorAccess, goldSealSha256);
-            byte[] reportBytes = JSON.writeValueAsBytes(buildArtifact(report));
+            SealedMapping sealed = seal(root);
+            HierarchicalForwardEvaluation.EvaluatorTruth truth = Objects.requireNonNull(evaluatorAccess.load(root),
+                    "evaluator truth");
+            HierarchicalForwardEvaluation.Report report = HierarchicalForwardEvaluation.evaluate(sealed.derived(),
+                    truth, sealed.proposalSha256(), goldSealSha256);
+            byte[] reportBytes = JSON.writeValueAsBytes(buildArtifact(report, sealed.stats(), truth));
             String reportSha = sha(reportBytes);
             ObjectNode evidence = JSON.createObjectNode();
             evidence.put("schema_version", EVIDENCE_SCHEMA_VERSION).put("execution_id", EXECUTION_ID);
@@ -139,8 +172,12 @@ public final class SfBl002ScenarioEffectivenessEvaluation {
         return sealed;
     }
 
-    /** Seals all non-evaluator inputs, validating every consumed document fail-closed, before evaluator access. */
-    static HierarchicalForwardEvaluation.SealedInputs seal(Path root) {
+    /**
+     * Seals all non-evaluator inputs, validating every consumed document fail-closed against the
+     * real v0.2 producer shapes, before evaluator access. Returns the mechanically derived
+     * comparison document together with the validated mapping statistics.
+     */
+    static SealedMapping seal(Path root) {
         try {
             Map<String, String> sealed = nonEvaluatorInputs();
             for (Map.Entry<String, String> entry : sealed.entrySet()) {
@@ -171,32 +208,29 @@ public final class SfBl002ScenarioEffectivenessEvaluation {
                 require(recordIds.add(id.asText()), "duplicate accepted record id");
             }
             require(recordIds.size() == 10, "exactly ten accepted intent records required");
+            Map<String, String> capabilityByScenario = new LinkedHashMap<>();
+            for (JsonNode record : intents.path("records")) {
+                require(capabilityByScenario.put(text(record, "scenarioId"), text(record, "capabilityId")) == null,
+                        "duplicate accepted intent record");
+            }
+            require(capabilityByScenario.keySet().equals(recordIds), "accepted intent records mismatch");
 
             byte[] assignmentBytes = Files.readAllBytes(root.resolve(ASSIGNMENTS_PATH));
             byte[] assignmentManifestBytes = Files.readAllBytes(root.resolve(ASSIGNMENTS_MANIFEST_PATH));
             byte[] mappingEvidenceBytes = Files.readAllBytes(root.resolve(MAPPING_PROPOSAL_EVIDENCE_PATH));
             byte[] proposalBytes = Files.readAllBytes(root.resolve(MAPPING_PROPOSAL_PATH));
 
-            JsonNode assignments = validateAssignments(JSON.readTree(assignmentBytes), sourceRevision, sealed);
-            JsonNode assignmentManifest = JSON.readTree(assignmentManifestBytes);
-            require(ASSIGNMENTS_PATH.equals(text(assignmentManifest.path("artifact"), "path")),
-                    "assignment manifest artifact path mismatch");
-            require(sha(assignmentBytes).equals(text(assignmentManifest.path("artifact"), "sha256")),
-                    "assignment manifest artifact digest mismatch");
-            guardDocument(assignmentManifest);
-
+            JsonNode assignments = validateAssignments(JSON.readTree(assignmentBytes), sourceRevision, sealed,
+                    capabilityByScenario);
+            validateAssignmentsManifest(JSON.readTree(assignmentManifestBytes), sha(assignmentBytes));
+            JsonNode mappingEvidence = validateMappingEvidence(JSON.readTree(mappingEvidenceBytes),
+                    sha(proposalBytes), sha(assignmentBytes), sealed);
             JsonNode proposal = JSON.readTree(proposalBytes);
-            validateMapping(proposal, sourceRevision, authorizationSha, sealed, assignments);
-
-            JsonNode mappingEvidence = JSON.readTree(mappingEvidenceBytes);
-            require(!mappingEvidence.path("semantic_publication_allowed").asBoolean(true),
-                    "semantic publication refusal violated by mapping evidence");
-            require(MAPPING_PROPOSAL_PATH.equals(text(mappingEvidence.path("output"), "path")),
-                    "mapping evidence output path mismatch");
-            require(sha(proposalBytes).equals(text(mappingEvidence.path("output"), "sha256")),
-                    "mapping evidence output digest mismatch");
+            MappingStats stats = validateMapping(proposal, sourceRevision, authorizationSha, sealed,
+                    assignments, sha(assignmentBytes));
             guardDocument(mappingEvidence);
-            return new HierarchicalForwardEvaluation.SealedInputs(proposal, sha(proposalBytes));
+            ObjectNode derived = derivedModel(proposal, sourceRevision, sealed, authorizationSha);
+            return new SealedMapping(derived, sha(proposalBytes), stats);
         } catch (RuntimeContractException error) {
             throw error;
         } catch (Exception error) {
@@ -204,90 +238,235 @@ public final class SfBl002ScenarioEffectivenessEvaluation {
         }
     }
 
-    /** Whole-document validation of the mapping input: schema, authority, unique IDs, revision, and governing digests. */
-    private static void validateMapping(JsonNode proposal, String sourceRevision, String authorizationSha,
-            Map<String, String> sealed, JsonNode assignments) {
-        require(proposal != null && proposal.isObject(), "mapping proposal must be an object");
-        require(!proposal.path("semantic_publication_allowed").asBoolean(true),
-                "semantic publication refusal violated by mapping proposal");
-        require(!proposal.path("semanticPublicationAllowed").asBoolean(true),
-                "semantic publication refusal violated by mapping proposal");
-        require(!required(proposal, "schema_version").isBlank(), "mapping proposal schema version required");
-        require("PROPOSAL_ONLY".equals(required(proposal, "authority")), "mapping proposal authority invalid");
-        require(sourceRevision.equals(required(proposal, "sourceRevision")), "mapping proposal revision mismatch");
-        require(sealed.get(SEMANTICS_PATH).equals(required(proposal, "semanticsSha256")),
-                "mapping proposal semantics digest mismatch");
-        require(authorizationSha.equals(required(proposal, "authorizationSha256")),
-                "mapping proposal authorization digest mismatch");
-        require(sealed.get(TEST_EVIDENCE_PATH).equals(required(proposal, "testEvidenceSha256")),
-                "mapping proposal test evidence digest mismatch");
-        require(sealed.get(GRAPH_PATH).equals(required(proposal, "graphSha256")),
-                "mapping proposal graph digest mismatch");
-        guardDocument(proposal);
-
-        Set<List<String>> assigned = assignmentScenarioIds(assignments);
-        Set<List<String>> mapped = new LinkedHashSet<>();
-        JsonNode capabilities = proposal.path("capabilities");
-        require(capabilities.isArray() && !capabilities.isEmpty(), "mapping proposal capabilities required");
-        Set<String> capabilityIds = new LinkedHashSet<>();
-        for (JsonNode capability : capabilities) {
-            String capabilityId = required(capability, "capabilityId");
-            require(capabilityIds.add(capabilityId), "duplicate capability identity");
-            for (JsonNode scenario : capability.path("scenarios")) {
-                JsonNode mapping = scenario.path("mapping");
-                String scenarioId = required(mapping, "scenarioId");
-                require(mapped.add(List.of(capabilityId, scenarioId)), "duplicate scenario identity");
-                require("PROPOSAL_ONLY".equals(required(mapping, "authority")), "mapping authority invalid");
-                require(sourceRevision.equals(required(mapping, "sourceRevision")), "mixed source revision");
-                require(OUTCOMES.contains(required(mapping, "outcome")), "invalid mapping outcome");
-                require(EVIDENCE_STATUS.contains(required(mapping, "evidenceStatus")), "invalid evidence status");
-                for (JsonNode step : mapping.path("realizationChain")) {
-                    String basis = required(step, "relationshipBasis");
-                    require(CHAIN_BASES.contains(basis), "invalid chain relationship basis");
-                    if (!"EVIDENCE_GAP".equals(basis)) requireIdentity(step.path("component"), sourceRevision);
-                }
-                for (JsonNode role : scenario.path("componentRoles")) {
-                    String name = required(role, "role");
-                    require("PRIMARY".equals(name) || "SUPPORTING".equals(name), "invalid component role");
-                    requireIdentity(role.path("component"), sourceRevision);
-                }
-            }
-        }
-        require(mapped.equals(assigned), "mapping proposal scenarios must equal assignment artifact scenarios");
-    }
-
-    private static JsonNode validateAssignments(JsonNode document, String sourceRevision, Map<String, String> sealed) {
+    /** Whole-document validation of the slice-A assignments artifact in its real v0.2 shape. */
+    private static JsonNode validateAssignments(JsonNode document, String sourceRevision, Map<String, String> sealed,
+            Map<String, String> capabilityByScenario) {
         require(document != null && document.isObject(), "assignment artifact must be an object");
+        require(ASSIGNMENTS_SCHEMA_VERSION.equals(text(document, "schema_version")),
+                "assignment artifact schema mismatch");
+        require(EXECUTION_ID.equals(text(document, "execution_id")), "assignment artifact execution mismatch");
         require("PROPOSAL_ONLY".equals(text(document, "authority")), "assignment artifact authority mismatch");
         require(!document.path("semantic_publication_allowed").asBoolean(true),
                 "semantic publication refusal violated by assignment artifact");
-        require(sourceRevision.equals(text(document, "source_revision")), "assignment artifact revision mismatch");
+        require(!document.path("semanticPublicationAllowed").asBoolean(false),
+                "assignment artifact carries a camelCase publication flag");
+        require(!document.has("authorization_sha256"),
+                "assignment artifact must not carry a legacy top-level authorization_sha256");
+        require(sourceRevision.equals(text(document, "source_revision")),
+                "assignment artifact revision mismatch");
         require(sealed.get(SEMANTICS_PATH).equals(text(document, "semantics_sha256")),
                 "assignment artifact semantics digest mismatch");
-        require(AUTHORIZATION_SHA256.equals(text(document, "authorization_sha256")),
-                "assignment artifact authorization digest mismatch");
+        require(sealed.get(ACCEPTANCE_MANIFEST_PATH).equals(text(document, "acceptance_manifest_sha256")),
+                "assignment artifact acceptance manifest digest mismatch");
+        require(sealed.get(INTENTS_PATH).equals(text(document, "intent_sha256")),
+                "assignment artifact intent digest mismatch");
+        require(sealed.get(INTENT_ACCEPTANCE_PATH).equals(text(document, "intent_acceptance_sha256")),
+                "assignment artifact intent acceptance digest mismatch");
         require(sealed.get(TEST_EVIDENCE_PATH).equals(text(document, "test_evidence_sha256")),
                 "assignment artifact evidence digest mismatch");
-        assignmentScenarioIds(document);
+        JsonNode records = document.path("assignments");
+        require(records.isArray(), "assignments must be an array");
+        Set<String> assigned = new LinkedHashSet<>();
+        for (JsonNode record : records) {
+            String capabilityId = required(record, "capabilityId");
+            String scenarioId = required(record, "scenarioId");
+            require(capabilityId.equals(capabilityByScenario.get(scenarioId)),
+                    "assignment capability does not match accepted intent: " + scenarioId);
+            require(assigned.add(scenarioId), "duplicate scenario assignment");
+            String status = required(record, "status");
+            require(ASSIGNMENT_STATUSES.contains(status), "invalid assignment status");
+            String primaryRef = required(record, "primaryEvidenceRef");
+            require("UNRESOLVED".equals(primaryRef) == "UNRESOLVED".equals(status),
+                    "assignment status and primary evidence are inconsistent");
+            String rationale = required(record, "selectionRationale");
+            require(!EVALUATOR_VOCABULARY.matcher(rationale).find(),
+                    "selectionRationale contains evaluator-only vocabulary");
+            require(record.path("gapRefs").isArray(), "assignment gapRefs must be an array");
+        }
+        require(assigned.equals(capabilityByScenario.keySet()),
+                "assignment artifact must contain exactly one record per accepted scenario");
         guardDocument(document);
         return document;
     }
 
-    private static Set<List<String>> assignmentScenarioIds(JsonNode document) {
-        JsonNode records = document.path("assignments");
-        require(records.isArray(), "assignments must be an array");
-        Set<List<String>> ids = new LinkedHashSet<>();
-        for (JsonNode record : records) {
-            String capabilityId = required(record, "capabilityId");
-            String scenarioId = required(record, "scenarioId");
-            require(ids.add(List.of(capabilityId, scenarioId)), "duplicate scenario assignment");
-        }
-        return ids;
+    /** The upstream assignments manifest must bind the exact v0.2 assignments artifact bytes. */
+    private static void validateAssignmentsManifest(JsonNode manifest, String assignmentsSha256) {
+        require(ASSIGNMENTS_MANIFEST_SCHEMA_VERSION.equals(text(manifest, "schema_version")),
+                "assignments manifest schema mismatch");
+        require(EXECUTION_ID.equals(text(manifest, "execution_id")), "assignments manifest execution mismatch");
+        require(ASSIGNMENTS_PATH.equals(text(manifest.path("artifact"), "path")),
+                "assignments manifest artifact path mismatch");
+        require(assignmentsSha256.equals(text(manifest.path("artifact"), "sha256")),
+                "assignments manifest artifact digest mismatch");
     }
 
-    private static void requireIdentity(JsonNode node, String sourceRevision) {
-        HierarchicalForwardEvaluation.Identity identity = HierarchicalForwardEvaluation.Identity.from(node);
-        require(sourceRevision.equals(identity.sourceRevision()), "mixed source revision");
+    /** Whole-document validation of the slice-B mapping evidence in its real v0.2 shape. */
+    private static JsonNode validateMappingEvidence(JsonNode evidence, String proposalSha256,
+            String assignmentsSha256, Map<String, String> sealed) {
+        require(MAPPING_EVIDENCE_SCHEMA_VERSION.equals(text(evidence, "schema_version")),
+                "mapping evidence schema mismatch");
+        require(EXECUTION_ID.equals(text(evidence, "execution_id")), "mapping evidence execution mismatch");
+        require("PROPOSAL_ONLY".equals(text(evidence, "authority")), "mapping evidence authority mismatch");
+        require(!evidence.path("semantic_publication_allowed").asBoolean(true),
+                "semantic publication refusal violated by mapping evidence");
+        require(!evidence.path("evaluator_inputs_accessed").asBoolean(true),
+                "mapping evidence accessed evaluator inputs");
+        require(MAPPING_GENERATION_METHOD.equals(text(evidence, "generation_method")),
+                "mapping evidence generation method mismatch");
+        require(MAPPING_PROPOSAL_PATH.equals(text(evidence.path("output"), "path")),
+                "mapping evidence output path mismatch");
+        require(proposalSha256.equals(text(evidence.path("output"), "sha256")),
+                "mapping evidence output digest mismatch");
+        requireMappingInputs(evidence.path("inputs"), sealed, assignmentsSha256);
+        return evidence;
+    }
+
+    /** The proposal inputs digest map must bind exactly the sealed inputs and the assignments. */
+    private static void requireMappingInputs(JsonNode inputs, Map<String, String> sealed, String assignmentsSha256) {
+        require(inputs != null && inputs.isObject(), "mapping proposal inputs must be an object");
+        Set<String> expected = new TreeSet<>(sealed.keySet());
+        expected.remove(ACCEPTANCE_MANIFEST_PATH);
+        expected.remove(SEMANTICS_PATH);
+        expected.add(ASSIGNMENTS_PATH);
+        Set<String> actual = new TreeSet<>();
+        inputs.fieldNames().forEachRemaining(actual::add);
+        require(actual.equals(expected), "mapping proposal input set mismatch");
+        for (String path : expected) {
+            String digest = ASSIGNMENTS_PATH.equals(path) ? assignmentsSha256 : sealed.get(path);
+            require(digest.equals(inputs.path(path).asText()), "mapping proposal input digest mismatch: " + path);
+        }
+    }
+
+    /** Whole-document validation of the slice-B mapping proposal in its real v0.2 shape. */
+    static MappingStats validateMapping(JsonNode proposal, String sourceRevision, String authorizationSha,
+            Map<String, String> sealed, JsonNode assignments, String assignmentsSha256) {
+        require(proposal != null && proposal.isObject(), "mapping proposal must be an object");
+        require(MAPPING_PROPOSAL_SCHEMA_VERSION.equals(required(proposal, "schema_version")),
+                "mapping proposal schema mismatch");
+        require(EXECUTION_ID.equals(required(proposal, "execution_id")), "mapping proposal execution mismatch");
+        require(!proposal.path("semantic_publication_allowed").asBoolean(true),
+                "semantic publication refusal violated by mapping proposal");
+        require(!proposal.path("semanticPublicationAllowed").asBoolean(false),
+                "mapping proposal carries a camelCase publication flag");
+        require(!proposal.has("authorizationSha256") && !proposal.has("sourceRevision"),
+                "mapping proposal must not carry legacy camelCase binding fields");
+        require("PROPOSAL_ONLY".equals(required(proposal, "authority")), "mapping proposal authority invalid");
+        require(sourceRevision.equals(required(proposal, "source_revision")), "mapping proposal revision mismatch");
+        require(MAPPING_GENERATION_METHOD.equals(required(proposal, "generation_method")),
+                "mapping proposal generation method mismatch");
+        requireMappingInputs(proposal.path("inputs"), sealed, assignmentsSha256);
+
+        Map<String, JsonNode> assignmentByScenario = new LinkedHashMap<>();
+        Set<List<String>> assigned = new LinkedHashSet<>();
+        for (JsonNode record : assignments.path("assignments")) {
+            assignmentByScenario.put(required(record, "scenarioId"), record);
+            assigned.add(List.of(required(record, "capabilityId"), required(record, "scenarioId")));
+        }
+        Set<List<String>> mapped = new LinkedHashSet<>();
+        int supportingCount = 0;
+        Set<String> supportingProviderNodeIds = new LinkedHashSet<>();
+        JsonNode scenarios = proposal.path("scenarios");
+        require(scenarios.isArray(), "mapping proposal scenarios must be an array");
+        for (JsonNode scenario : scenarios) {
+            String capabilityId = required(scenario, "capabilityId");
+            String scenarioId = required(scenario, "scenarioId");
+            JsonNode assignment = assignmentByScenario.get(scenarioId);
+            require(assignment != null, "mapping scenario without assignment: " + scenarioId);
+            require(mapped.add(List.of(capabilityId, scenarioId)), "duplicate scenario identity");
+            require(capabilityId.equals(required(assignment, "capabilityId")),
+                    "mapping capability does not match assignment: " + scenarioId);
+            require(required(scenario, "rationale").equals(required(assignment, "selectionRationale")),
+                    "mapping rationale does not match assignment: " + scenarioId);
+            String outcome = required(scenario, "outcome");
+            require(OUTCOMES.contains(outcome), "invalid mapping outcome");
+            JsonNode primary = scenario.path("primary");
+            String assignmentRef = required(assignment, "primaryEvidenceRef");
+            if ("MAPPING_PROPOSAL".equals(outcome)) {
+                require(primary.isObject(), "mapped scenario requires a primary: " + scenarioId);
+                require(assignmentRef.equals(required(primary, "evidenceRef")),
+                        "primary evidence ref does not match assignment: " + scenarioId);
+                require(!required(primary, "providerNodeId").isBlank(), "primary provider node id required");
+                HierarchicalForwardEvaluation.Identity identity =
+                        HierarchicalForwardEvaluation.Identity.from(primary.path("productionSymbol"));
+                require(sourceRevision.equals(identity.sourceRevision()), "mixed source revision: " + scenarioId);
+                require(!identity.sourcePath().contains("/test/"), "non-production primary selection: " + scenarioId);
+            } else {
+                require(primary.isNull(), "unresolved scenario must carry a null primary: " + scenarioId);
+                require("UNRESOLVED".equals(assignmentRef),
+                        "unresolved mapping contradicts assignment: " + scenarioId);
+            }
+            JsonNode supporting = scenario.path("supporting");
+            require(supporting.isArray(), "mapping supporting must be an array: " + scenarioId);
+            supportingCount += supporting.size();
+            for (JsonNode entry : supporting) {
+                supportingProviderNodeIds.add(required(entry, "providerNodeId"));
+                require(!required(entry, "label").isBlank(), "supporting label required");
+                require(!required(entry, "sourceFile").isBlank(), "supporting source file required");
+                require(!entry.path("formalPrimaryPrecisionCredit").asBoolean(true),
+                        "supporting entry claims formal PRIMARY credit");
+                JsonNode edges = entry.path("relationshipTrace").path("edges");
+                require(edges.isArray(), "supporting relationship trace must carry edges");
+                for (JsonNode edge : edges) {
+                    require(!required(edge, "from").isBlank(), "supporting edge from required");
+                    require(!required(edge, "to").isBlank(), "supporting edge to required");
+                    require(!required(edge, "relationship").isBlank(), "supporting edge relationship required");
+                }
+            }
+        }
+        require(mapped.equals(assigned), "mapping proposal scenarios must equal assignment artifact scenarios");
+        guardDocument(proposal);
+        return new MappingStats(supportingCount, Set.copyOf(supportingProviderNodeIds));
+    }
+
+    /**
+     * Derives the shared evaluator's normalized comparison document from the validated v0.2
+     * proposal. Each distinct primary component contributes one {@code DIRECT_TEST_REFERENCE}
+     * chain step and one {@code PRIMARY} role per capability (first scenario by sorted scenario id
+     * wins), matching the evaluator's once-per-capability credit semantics; unresolved scenarios
+     * contribute empty chains and an {@code INSUFFICIENT} evidence status.
+     */
+    static ObjectNode derivedModel(JsonNode proposal, String sourceRevision, Map<String, String> sealed,
+            String authorizationSha) {
+        ObjectNode model = JSON.createObjectNode();
+        model.put("sourceRevision", sourceRevision);
+        model.put("semanticPublicationAllowed", false);
+        model.put("semanticsSha256", sealed.get(SEMANTICS_PATH));
+        model.put("authorizationSha256", authorizationSha);
+        Map<String, List<JsonNode>> byCapability = new TreeMap<>();
+        for (JsonNode scenario : proposal.path("scenarios")) {
+            byCapability.computeIfAbsent(scenario.path("capabilityId").asText(), key -> new ArrayList<>()).add(scenario);
+        }
+        ArrayNode capabilities = model.putArray("capabilities");
+        for (Map.Entry<String, List<JsonNode>> capability : byCapability.entrySet()) {
+            ObjectNode capabilityNode = capabilities.addObject();
+            capabilityNode.put("capabilityId", capability.getKey());
+            ArrayNode capabilityScenarios = capabilityNode.putArray("scenarios");
+            Set<JsonNode> contributed = new LinkedHashSet<>();
+            for (JsonNode scenario : capability.getValue()) {
+                String outcome = scenario.path("outcome").asText();
+                boolean mapped = "MAPPING_PROPOSAL".equals(outcome) && scenario.path("primary").isObject();
+                JsonNode symbol = scenario.path("primary").path("productionSymbol");
+                ObjectNode scenarioNode = capabilityScenarios.addObject();
+                ObjectNode mapping = scenarioNode.putObject("mapping");
+                mapping.put("scenarioId", scenario.path("scenarioId").asText());
+                mapping.put("authority", "PROPOSAL_ONLY");
+                mapping.put("sourceRevision", sourceRevision);
+                mapping.put("outcome", outcome);
+                mapping.put("evidenceStatus", mapped ? "COMPLETE" : "INSUFFICIENT");
+                ArrayNode chain = mapping.putArray("realizationChain");
+                ArrayNode roles = scenarioNode.putArray("componentRoles");
+                if (mapped && contributed.add(symbol)) {
+                    ObjectNode step = chain.addObject();
+                    step.put("relationshipBasis", "DIRECT_TEST_REFERENCE");
+                    step.set("component", symbol);
+                    ObjectNode role = roles.addObject();
+                    role.put("role", "PRIMARY");
+                    role.put("providerNodeId", scenario.path("primary").path("providerNodeId").asText());
+                    role.set("component", symbol);
+                }
+            }
+        }
+        return model;
     }
 
     static HierarchicalForwardEvaluation.EvaluatorTruth loadEvaluatorTruth(Path root) {
@@ -308,7 +487,8 @@ public final class SfBl002ScenarioEffectivenessEvaluation {
     }
 
     /** Wraps the reused evaluator report with SF-BL-002 coverage metrics, threshold results, and diagnostics. */
-    static ObjectNode buildArtifact(HierarchicalForwardEvaluation.Report report) {
+    static ObjectNode buildArtifact(HierarchicalForwardEvaluation.Report report, MappingStats stats,
+            HierarchicalForwardEvaluation.EvaluatorTruth truth) {
         ObjectNode artifact = JSON.createObjectNode();
         artifact.put("schema_version", SCHEMA_VERSION).put("execution_id", EXECUTION_ID);
         artifact.put("authority", "EVALUATOR_ONLY").put("semantic_publication_allowed", false);
@@ -324,8 +504,12 @@ public final class SfBl002ScenarioEffectivenessEvaluation {
         component.set("precision", ratio(exact.precision()));
         component.set("f1", ratioValue(f1(exact.recall(), exact.precision())));
         artifact.put("capability_alignment", report.semantic().capabilityAlignment().status());
+        Set<String> expectedNodes = new TreeSet<>();
+        truth.expected().forEach(expected -> expectedNodes.add(expected.providerNodeId()));
+        long supportingProviderOverlap = stats.supportingProviderNodeIds().stream().filter(expectedNodes::contains).count();
         ObjectNode supporting = artifact.putObject("supporting_overlap");
-        supporting.put("supporting_count", report.diagnostics().supportingCount());
+        supporting.put("supporting_count", stats.supportingCount());
+        supporting.put("provider_node_overlap", supportingProviderOverlap);
         supporting.put("exact_overlap", report.diagnostics().supportingExactOverlap());
         supporting.put("formal_credit", report.diagnostics().supportingFormalCredit());
         supporting.put("interpretation", "DIAGNOSTIC_ONLY_ZERO_FORMAL_CREDIT");
@@ -430,6 +614,16 @@ public final class SfBl002ScenarioEffectivenessEvaluation {
     }
 
     private static RuntimeContractException fail(String message) { return new RuntimeContractException(message); }
+
+    /** Validated v0.2 mapping statistics reported as diagnostics. */
+    record MappingStats(int supportingCount, Set<String> supportingProviderNodeIds) {
+        MappingStats {
+            supportingProviderNodeIds = Set.copyOf(supportingProviderNodeIds);
+        }
+    }
+
+    /** The sealed derivation handed to the shared evaluator after non-evaluator validation. */
+    record SealedMapping(ObjectNode derived, String proposalSha256, MappingStats stats) { }
 
     /** One exact ratio value pair. */
     record RatioValue(boolean defined, Double value) { }

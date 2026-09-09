@@ -5,6 +5,7 @@ import com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.S
 import com.featuredeliveryintelligence.fdi.shared.RuntimeContractException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -14,20 +15,29 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Slice C evaluator-only scoring tests. Every run binds only a synthetic mapping fixture and
- * temp-root synthetic upstream artifacts; evaluator truth is a test spy and the real
- * {@code ProviderNeutralEvaluatorTruth} gold/seal inputs are never opened.
+ * Slice C evaluator-only scoring tests. Every run binds only a synthetic mapping fixture in the
+ * real v0.2 producer shape and temp-root synthetic upstream artifacts; evaluator truth is a test
+ * spy and the real {@code ProviderNeutralEvaluatorTruth} gold/seal inputs are never opened.
  */
 class SfBl002ScenarioEffectivenessEvaluationTests {
     private static final ObjectMapper JSON = new ObjectMapper();
     private static final Path FIXTURE = Path.of("src/test/resources/scenarioforward/sf-bl002/mapping-fixture-002.json");
     private static final String REVISION = "818c4136ea971c21674525f9053de0d9c7ad8cfe";
     private static final String TYPE = "org.springframework.samples.petclinic.owner.";
+    private static final String RATIONALE_101 =
+            "PRIMARY synthetic direct-test-reference:synth-0001 selects PetController#processCreationForm"
+                    + " (frozen fixture stand-in, not production evidence)";
+    private static final String RATIONALE_102 =
+            "PRIMARY synthetic direct-test-reference:synth-0002 selects OwnerController#processFindFormSuccess"
+                    + " (frozen fixture stand-in, not production evidence)";
+    private static final String RATIONALE_103 =
+            "no production identity accepted for this scenario; honest UNRESOLVED (frozen fixture stand-in)";
     private static final String SYNTHETIC_GOLD_SHA = "1111111111111111111111111111111111111111111111111111111111111111";
     private static final String SYNTHETIC_SEAL_SHA = "2222222222222222222222222222222222222222222222222222222222222222";
     @TempDir Path temp;
@@ -39,7 +49,7 @@ class SfBl002ScenarioEffectivenessEvaluationTests {
 
         var report = result.report();
         assertEquals("EVALUATOR_ONLY", report.authority());
-        assertEquals(3, report.scenario().total());
+        assertEquals(10, report.scenario().total());
         assertEquals(2, report.scenario().traced());
         assertEquals(2, report.chain().exactExpectedDenominator());
         assertEquals(1, report.chain().exactExpectedCovered());
@@ -59,8 +69,8 @@ class SfBl002ScenarioEffectivenessEvaluationTests {
         assertEquals("EVALUATOR_ONLY", artifact.path("authority").asText());
         assertFalse(artifact.path("semantic_publication_allowed").asBoolean());
         assertEquals(2, artifact.path("scenario_trace_coverage").path("covered").asInt());
-        assertEquals(3, artifact.path("scenario_trace_coverage").path("denominator").asInt());
-        assertEquals(2.0 / 3.0, artifact.path("scenario_trace_coverage").path("ratio").asDouble(), 1e-12);
+        assertEquals(10, artifact.path("scenario_trace_coverage").path("denominator").asInt());
+        assertEquals(0.2, artifact.path("scenario_trace_coverage").path("ratio").asDouble(), 1e-12);
         assertEquals(0.5, artifact.path("chain_coverage").path("ratio").asDouble(), 1e-12);
         JsonNode f1 = artifact.path("exact_component").path("f1");
         assertTrue(f1.path("defined").asBoolean());
@@ -68,12 +78,14 @@ class SfBl002ScenarioEffectivenessEvaluationTests {
         assertEquals("NOT_COMPARABLE_NO_SEALED_CROSSWALK", artifact.path("capability_alignment").asText());
         JsonNode thresholds = artifact.path("threshold_results");
         assertFalse(thresholds.path("enforced").asBoolean());
-        assertTrue(thresholds.path("scenario_trace_coverage").path("met").asBoolean());
+        assertFalse(thresholds.path("scenario_trace_coverage").path("met").asBoolean());
+        assertEquals(0.2, thresholds.path("scenario_trace_coverage").path("observed").asDouble(), 1e-12);
         assertTrue(thresholds.path("exact_chain_recall").path("met").asBoolean());
         assertFalse(thresholds.path("exact_primary_precision").path("met").asBoolean());
         assertEquals(0.5, thresholds.path("exact_primary_precision").path("observed").asDouble(), 1e-12);
         JsonNode supporting = artifact.path("supporting_overlap");
         assertEquals(1, supporting.path("supporting_count").asInt());
+        assertEquals(0, supporting.path("provider_node_overlap").asInt());
         assertEquals(0, supporting.path("exact_overlap").asInt());
         assertEquals(0, supporting.path("formal_credit").asInt());
 
@@ -122,9 +134,13 @@ class SfBl002ScenarioEffectivenessEvaluationTests {
         JSON.writeValue(file.toFile(), doc);
     }
 
+    /** Rebinds every digest the mapping evidence carries after a synthetic proposal/assignments edit. */
     private static void rebindMappingEvidence(Path root) throws Exception {
         Path evidencePath = root.resolve(SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_EVIDENCE_PATH);
         ObjectNode evidence = (ObjectNode) JSON.readTree(evidencePath.toFile());
+        ObjectNode inputs = (ObjectNode) evidence.path("inputs");
+        inputs.put(SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_PATH, sha(Files.readAllBytes(
+                root.resolve(SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_PATH))));
         ((ObjectNode) evidence.path("output")).put("sha256", sha(Files.readAllBytes(
                 root.resolve(SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_PATH))));
         JSON.writeValue(evidencePath.toFile(), evidence);
@@ -158,15 +174,30 @@ class SfBl002ScenarioEffectivenessEvaluationTests {
     @Test void undefinedF1IsReportedNotInventedWhenNoPrimaryProposed() throws Exception {
         Path root = temp.resolve("root");
         buildRoot(root);
-        ObjectNode emptyPrimary = (ObjectNode) JSON.readTree(root.resolve(
-                SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_PATH).toFile());
-        emptyPrimary.path("capabilities").forEach(capability -> capability.path("scenarios").forEach(scenario -> {
-            ObjectNode mapping = (ObjectNode) scenario.path("mapping");
-            mapping.put("outcome", "UNRESOLVED");
-            ((ObjectNode) scenario).remove("componentRoles");
-        }));
+        ObjectNode assignments = (ObjectNode) JSON.readTree(root.resolve(
+                SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_PATH).toFile());
+        assignments.path("assignments").forEach(record -> {
+            ((ObjectNode) record).put("primaryEvidenceRef", "UNRESOLVED");
+            ((ObjectNode) record).put("status", "UNRESOLVED");
+        });
         JSON.writerWithDefaultPrettyPrinter().writeValue(
-                root.resolve(SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_PATH).toFile(), emptyPrimary);
+                root.resolve(SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_PATH).toFile(), assignments);
+        ObjectNode manifest = (ObjectNode) JSON.readTree(root.resolve(
+                SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_MANIFEST_PATH).toFile());
+        ((ObjectNode) manifest.path("artifact")).put("sha256", sha(Files.readAllBytes(root.resolve(
+                SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_PATH))));
+        JSON.writerWithDefaultPrettyPrinter().writeValue(
+                root.resolve(SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_MANIFEST_PATH).toFile(), manifest);
+        ObjectNode proposal = (ObjectNode) JSON.readTree(root.resolve(
+                SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_PATH).toFile());
+        ((ObjectNode) proposal.path("inputs")).put(SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_PATH,
+                sha(Files.readAllBytes(root.resolve(SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_PATH))));
+        proposal.path("scenarios").forEach(scenario -> {
+            ((ObjectNode) scenario).put("outcome", "UNRESOLVED");
+            ((ObjectNode) scenario).putNull("primary");
+        });
+        JSON.writerWithDefaultPrettyPrinter().writeValue(
+                root.resolve(SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_PATH).toFile(), proposal);
         rebindMappingEvidence(root);
         var result = generate(root, temp.resolve("out"), new AtomicInteger());
         var exact = result.report().component().exact();
@@ -208,6 +239,7 @@ class SfBl002ScenarioEffectivenessEvaluationTests {
             Path root = temp.resolve(mutation);
             buildRoot(root);
             mutateMapping(root, mutation);
+            rebindMappingEvidence(root);
             AtomicInteger accesses = new AtomicInteger();
             assertThrows(RuntimeContractException.class,
                     () -> generate(root, temp.resolve("out-" + mutation), accesses), mutation);
@@ -216,40 +248,114 @@ class SfBl002ScenarioEffectivenessEvaluationTests {
     }
 
     private static void mutateMapping(Path root, String mutation) throws Exception {
-        ObjectNode doc = (ObjectNode) JSON.readTree(root.resolve(
-                SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_PATH).toFile());
+        Path proposalPath = root.resolve(SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_PATH);
+        ObjectNode doc = (ObjectNode) JSON.readTree(proposalPath.toFile());
         switch (mutation) {
             case "publication" -> doc.put("semantic_publication_allowed", true);
-            case "revision" -> ((ObjectNode) doc.path("capabilities").get(0).path("scenarios").get(0)
-                    .path("mapping")).put("sourceRevision", "0000000000000000000000000000000000000000");
+            case "revision" -> ((ObjectNode) doc.path("scenarios").get(0).path("primary")
+                    .path("productionSymbol")).put("sourceRevision",
+                            "0000000000000000000000000000000000000000");
             case "duplicate" -> {
-                JsonNode first = doc.path("capabilities").get(0).path("scenarios").get(0);
-                ((ObjectNode) doc.path("capabilities").get(0)).putArray("scenarios").add(first.deepCopy());
+                JsonNode first = doc.path("scenarios").get(0);
+                ((ArrayNode) doc.path("scenarios")).add(first.deepCopy());
             }
-            case "digest" -> doc.put("semanticsSha256",
+            case "digest" -> ((ObjectNode) doc.path("inputs")).put(
+                    SfBl002ScenarioEffectivenessEvaluation.TEST_EVIDENCE_PATH,
                     "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-            case "outcome" -> ((ObjectNode) doc.path("capabilities").get(0).path("scenarios").get(0)
-                    .path("mapping")).put("outcome", "PRODUCT_TRUTH");
-            case "vocabulary" -> ((ObjectNode) doc.path("capabilities").get(0).path("scenarios").get(0)
-                    .path("mapping")).put("scenarioId", "SCN-SYNTH-EVALUATOR-GOLD");
+            case "outcome" -> ((ObjectNode) doc.path("scenarios").get(0)).put("outcome", "PRODUCT_TRUTH");
+            case "vocabulary" -> ((ObjectNode) doc.path("scenarios").get(0))
+                    .put("scenarioId", "SCN-SYNTH-EVALUATOR-GOLD");
             default -> throw new IllegalStateException(mutation);
         }
-        JSON.writerWithDefaultPrettyPrinter().writeValue(
-                root.resolve(SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_PATH).toFile(), doc);
+        JSON.writerWithDefaultPrettyPrinter().writeValue(proposalPath.toFile(), doc);
+    }
+
+    @Test void assignmentsWholeDocumentValidationFailsClosed() throws Exception {
+        for (String mutation : List.of("legacyAuthorization", "digest", "status", "rationale")) {
+            Path root = temp.resolve("assignments-" + mutation);
+            buildRoot(root);
+            mutateAssignments(root, mutation);
+            AtomicInteger accesses = new AtomicInteger();
+            assertThrows(RuntimeContractException.class,
+                    () -> generate(root, temp.resolve("out-assignments-" + mutation), accesses), mutation);
+            assertEquals(0, accesses.get(), "evaluator opened after assignment mutation: " + mutation);
+        }
+    }
+
+    private static void mutateAssignments(Path root, String mutation) throws Exception {
+        Path assignmentsPath = root.resolve(SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_PATH);
+        ObjectNode doc = (ObjectNode) JSON.readTree(assignmentsPath.toFile());
+        switch (mutation) {
+            case "legacyAuthorization" -> doc.put("authorization_sha256",
+                    "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+            case "digest" -> doc.put("test_evidence_sha256",
+                    "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+            case "status" -> ((ObjectNode) doc.path("assignments").get(0)).put("status", "UNRESOLVED");
+            case "rationale" -> ((ObjectNode) doc.path("assignments").get(0)).put("selectionRationale",
+                    "expected mapping per reviewer ground truth");
+            default -> throw new IllegalStateException(mutation);
+        }
+        JSON.writerWithDefaultPrettyPrinter().writeValue(assignmentsPath.toFile(), doc);
+    }
+
+    @Test void derivedModelDeduplicatesSharedPrimaryComponentsWithinCapability() {
+        ObjectNode proposal = syntheticSharedComponentProposal();
+        ObjectNode derived = SfBl002ScenarioEffectivenessEvaluation.derivedModel(proposal, REVISION,
+                Map.of(SfBl002ScenarioEffectivenessEvaluation.SEMANTICS_PATH,
+                        SfBl002ScenarioEffectivenessEvaluation.SEMANTICS_SHA256),
+                SfBl002ScenarioEffectivenessEvaluation.AUTHORIZATION_SHA256);
+        JsonNode capability = derived.path("capabilities").get(0);
+        assertEquals("CAP-DUP", capability.path("capabilityId").asText());
+        assertEquals(2, capability.path("scenarios").size());
+        int roles = 0, chainSteps = 0, traced = 0;
+        for (JsonNode scenario : capability.path("scenarios")) {
+            roles += scenario.path("componentRoles").size();
+            chainSteps += scenario.path("mapping").path("realizationChain").size();
+            if (!scenario.path("mapping").path("realizationChain").isEmpty()) traced++;
+        }
+        assertEquals(1, roles, "distinct component credited once per capability");
+        assertEquals(1, chainSteps, "distinct chain component contributed once per capability");
+        assertEquals(1, traced, "only the first scenario of a shared component is traced");
+    }
+
+    private static ObjectNode syntheticSharedComponentProposal() {
+        ObjectNode proposal = JSON.createObjectNode();
+        ArrayNode scenarios = proposal.putArray("scenarios");
+        for (String scenarioId : List.of("SCN-DUP-1", "SCN-DUP-2")) {
+            ObjectNode scenario = scenarios.addObject();
+            scenario.put("capabilityId", "CAP-DUP").put("scenarioId", scenarioId);
+            scenario.put("outcome", "MAPPING_PROPOSAL");
+            ObjectNode primary = scenario.putObject("primary");
+            primary.put("evidenceRef", "direct-test-reference:synth-dup");
+            primary.put("providerNodeId", "node-dup");
+            ObjectNode symbol = primary.putObject("productionSymbol");
+            symbol.put("sourceRevision", REVISION);
+            symbol.put("sourcePath", "src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java");
+            symbol.put("granularity", "METHOD");
+            symbol.put("qualifiedSymbol",
+                    "org.springframework.samples.petclinic.owner.OwnerRepository#findByLastNameStartingWith");
+        }
+        return proposal;
     }
 
     @Test void frozenFixtureAndSyntheticInputsCarryNoEvaluatorVocabulary() throws Exception {
-        String fixture = Files.readString(FIXTURE);
-        assertFalse(SfBl002ScenarioEffectivenessEvaluation.EVALUATOR_VOCABULARY.matcher(fixture).find(),
-                "frozen mapping fixture embeds evaluator vocabulary");
+        assertNoEvaluatorVocabulary(JSON.readTree(FIXTURE.toFile()), "frozen mapping fixture");
         buildRoot(temp.resolve("root"));
         for (String path : new String[]{SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_PATH,
                 SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_MANIFEST_PATH,
                 SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_EVIDENCE_PATH}) {
-            assertFalse(SfBl002ScenarioEffectivenessEvaluation.EVALUATOR_VOCABULARY.matcher(
-                    Files.readString(temp.resolve("root").resolve(path))).find(),
-                    "synthetic upstream artifact embeds evaluator vocabulary: " + path);
+            assertNoEvaluatorVocabulary(JSON.readTree(temp.resolve("root").resolve(path).toFile()),
+                    "synthetic upstream artifact: " + path);
         }
+    }
+
+    private static void assertNoEvaluatorVocabulary(JsonNode node, String label) {
+        if (node.isTextual()) {
+            assertFalse(SfBl002ScenarioEffectivenessEvaluation.EVALUATOR_VOCABULARY.matcher(node.asText()).find(),
+                    label + " embeds evaluator vocabulary");
+            return;
+        }
+        node.forEach(child -> assertNoEvaluatorVocabulary(child, label));
     }
 
     @Test void exactF1FollowsDefinedRatioRules() {
@@ -285,9 +391,9 @@ class SfBl002ScenarioEffectivenessEvaluationTests {
 
     private static HierarchicalForwardEvaluation.EvaluatorTruth syntheticTruth() {
         return new HierarchicalForwardEvaluation.EvaluatorTruth(SYNTHETIC_GOLD_SHA, List.of(
-                new HierarchicalForwardEvaluation.Expected("CAP-SYNTH-A", "REF-X", "node-x", identity(
+                new HierarchicalForwardEvaluation.Expected("HYP-CAPABILITY-001", "REF-X", "node-x", identity(
                         "PetController.java", "PetController#processCreationForm")),
-                new HierarchicalForwardEvaluation.Expected("CAP-SYNTH-B", "REF-Y", "node-y", identity(
+                new HierarchicalForwardEvaluation.Expected("HYP-CAPABILITY-002", "REF-Y", "node-y", identity(
                         "OwnerController.java", "OwnerController#processCreationForm"))));
     }
 
@@ -304,63 +410,94 @@ class SfBl002ScenarioEffectivenessEvaluationTests {
             Files.createDirectories(to.getParent());
             Files.copy(Path.of(".").resolve(path), to, StandardCopyOption.REPLACE_EXISTING);
         }
-        Files.createDirectories(root.resolve(SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_PATH).getParent());
-        Files.copy(FIXTURE, root.resolve(SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_PATH),
-                StandardCopyOption.REPLACE_EXISTING);
+        Files.createDirectories(root.resolve(SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_PATH).getParent());
         String assignments = """
                 {
                   "schema_version": "software-factory.sf-bl002-scenario-observation-assignments.v0.2",
-                  "execution_id": "SF-BL-002-SCENARIO-MATCHER-002-SYNTHETIC-FIXTURE",
+                  "execution_id": "SF-BL-002-SCENARIO-EFFECTIVENESS-004",
                   "authority": "PROPOSAL_ONLY",
                   "semantic_publication_allowed": false,
                   "source_revision": "%s",
+                  "tokenization_policy": "CAMEL_CASE_LATIN_V1",
                   "semantics_sha256": "%s",
-                  "authorization_sha256": "%s",
+                  "acceptance_manifest_sha256": "%s",
+                  "intent_sha256": "%s",
+                  "intent_acceptance_sha256": "%s",
                   "test_evidence_sha256": "%s",
                   "assignments": [
-                    {"capabilityId": "CAP-SYNTH-A", "scenarioId": "SCN-SYNTH-101", "directEvidenceRefs": [], "gapRefs": []},
-                    {"capabilityId": "CAP-SYNTH-B", "scenarioId": "SCN-SYNTH-102", "directEvidenceRefs": [], "gapRefs": []},
-                    {"capabilityId": "CAP-SYNTH-C", "scenarioId": "SCN-SYNTH-103", "directEvidenceRefs": [], "gapRefs": []}
+                    {"capabilityId": "HYP-CAPABILITY-001", "scenarioId": "HYP-SCENARIO-001", "primaryEvidenceRef": "direct-test-reference:synth-0001", "status": "PRIMARY_ASSIGNED", "selectionRationale": "%s", "gapRefs": []},
+                    {"capabilityId": "HYP-CAPABILITY-001", "scenarioId": "HYP-SCENARIO-002", "primaryEvidenceRef": "direct-test-reference:synth-0002", "status": "PRIMARY_ASSIGNED", "selectionRationale": "%s", "gapRefs": []},
+                    {"capabilityId": "HYP-CAPABILITY-002", "scenarioId": "HYP-SCENARIO-003", "primaryEvidenceRef": "UNRESOLVED", "status": "UNRESOLVED", "selectionRationale": "%s", "gapRefs": ["/synthetic/gaps/0"]},
+                    {"capabilityId": "HYP-CAPABILITY-002", "scenarioId": "HYP-SCENARIO-004", "primaryEvidenceRef": "UNRESOLVED", "status": "UNRESOLVED", "selectionRationale": "%s", "gapRefs": []},
+                    {"capabilityId": "HYP-CAPABILITY-003", "scenarioId": "HYP-SCENARIO-005", "primaryEvidenceRef": "UNRESOLVED", "status": "UNRESOLVED", "selectionRationale": "%s", "gapRefs": []},
+                    {"capabilityId": "HYP-CAPABILITY-003", "scenarioId": "HYP-SCENARIO-006", "primaryEvidenceRef": "UNRESOLVED", "status": "UNRESOLVED", "selectionRationale": "%s", "gapRefs": []},
+                    {"capabilityId": "HYP-CAPABILITY-004", "scenarioId": "HYP-SCENARIO-007", "primaryEvidenceRef": "UNRESOLVED", "status": "UNRESOLVED", "selectionRationale": "%s", "gapRefs": []},
+                    {"capabilityId": "HYP-CAPABILITY-004", "scenarioId": "HYP-SCENARIO-008", "primaryEvidenceRef": "UNRESOLVED", "status": "UNRESOLVED", "selectionRationale": "%s", "gapRefs": []},
+                    {"capabilityId": "HYP-CAPABILITY-005", "scenarioId": "HYP-SCENARIO-009", "primaryEvidenceRef": "UNRESOLVED", "status": "UNRESOLVED", "selectionRationale": "%s", "gapRefs": []},
+                    {"capabilityId": "HYP-CAPABILITY-003", "scenarioId": "HYP-SCENARIO-011", "primaryEvidenceRef": "UNRESOLVED", "status": "UNRESOLVED", "selectionRationale": "%s", "gapRefs": []}
                   ]
                 }
                 """.formatted(REVISION,
                 SfBl002ScenarioEffectivenessEvaluation.SEMANTICS_SHA256,
-                SfBl002ScenarioEffectivenessEvaluation.AUTHORIZATION_SHA256,
-                SfBl002ScenarioEffectivenessEvaluation.TEST_EVIDENCE_SHA256);
+                SfBl002ScenarioEffectivenessEvaluation.ACCEPTANCE_MANIFEST_SHA256,
+                SfBl002ScenarioEffectivenessEvaluation.INTENTS_SHA256,
+                SfBl002ScenarioEffectivenessEvaluation.INTENT_ACCEPTANCE_SHA256,
+                SfBl002ScenarioEffectivenessEvaluation.TEST_EVIDENCE_SHA256,
+                RATIONALE_101, RATIONALE_102, RATIONALE_103,
+                RATIONALE_103, RATIONALE_103, RATIONALE_103, RATIONALE_103, RATIONALE_103, RATIONALE_103, RATIONALE_103);
         Files.writeString(root.resolve(SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_PATH), assignments);
         String manifest = """
                 {
                   "schema_version": "software-factory.sf-bl002-artifact-manifest.v0.2",
-                  "execution_id": "SF-BL-002-SCENARIO-MATCHER-002-SYNTHETIC-FIXTURE",
+                  "execution_id": "SF-BL-002-SCENARIO-EFFECTIVENESS-004",
                   "artifact": {
                     "path": "%s",
                     "sha256": "%s"
                   },
                   "inputs": {
                     "semantics": "%s",
-                    "authorization": "%s",
+                    "acceptance_manifest": "%s",
                     "test_evidence": "%s"
                   }
                 }
                 """.formatted(SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_PATH,
                 sha(Files.readAllBytes(root.resolve(SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_PATH))),
                 SfBl002ScenarioEffectivenessEvaluation.SEMANTICS_SHA256,
-                SfBl002ScenarioEffectivenessEvaluation.AUTHORIZATION_SHA256,
+                SfBl002ScenarioEffectivenessEvaluation.ACCEPTANCE_MANIFEST_SHA256,
                 SfBl002ScenarioEffectivenessEvaluation.TEST_EVIDENCE_SHA256);
         Files.writeString(root.resolve(SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_MANIFEST_PATH), manifest);
+        String fixture = Files.readString(FIXTURE).replace("__ASSIGNMENTS_SHA256__", sha(Files.readAllBytes(
+                root.resolve(SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_PATH))));
+        Files.writeString(root.resolve(SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_PATH), fixture);
         String mappingEvidence = """
                 {
                   "schema_version": "software-factory.sf-bl002-scenario-mapping-evidence.v0.2",
-                  "execution_id": "SF-BL-002-SCENARIO-MAPPING-002-SYNTHETIC-FIXTURE",
+                  "execution_id": "SF-BL-002-SCENARIO-EFFECTIVENESS-004",
                   "authority": "PROPOSAL_ONLY",
                   "semantic_publication_allowed": false,
+                  "evaluator_inputs_accessed": false,
+                  "generation_method": "SfBl002ScenarioEffectivenessRun.generate",
                   "output": {
                     "path": "%s",
                     "sha256": "%s"
+                  },
+                  "inputs": {
+                    "validation/pkb001/artifacts/petclinic-graph-818c413.json": "%s",
+                    "validation/pkb001/runtime/graphify-petclinic-live-evidence.json": "%s",
+                    "validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json": "%s",
+                    "validation/software-factory/sf-bl002/scenario-search-intent-acceptance-manifest-002.json": "%s",
+                    "validation/software-factory/sf-bl002/test-behavior-evidence.json": "%s",
+                    "validation/software-factory/sf-bl002/scenario-observation-assignments-002.json": "%s"
                   }
                 }
                 """.formatted(SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_PATH,
-                sha(Files.readAllBytes(root.resolve(SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_PATH))));
+                sha(Files.readAllBytes(root.resolve(SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_PATH))),
+                SfBl002ScenarioEffectivenessEvaluation.GRAPH_SHA256,
+                SfBl002ScenarioEffectivenessEvaluation.GRAPHIFY_LIVE_EVIDENCE_SHA256,
+                SfBl002ScenarioEffectivenessEvaluation.INTENTS_SHA256,
+                SfBl002ScenarioEffectivenessEvaluation.INTENT_ACCEPTANCE_SHA256,
+                SfBl002ScenarioEffectivenessEvaluation.TEST_EVIDENCE_SHA256,
+                sha(Files.readAllBytes(root.resolve(SfBl002ScenarioEffectivenessEvaluation.ASSIGNMENTS_PATH))));
         Files.writeString(root.resolve(SfBl002ScenarioEffectivenessEvaluation.MAPPING_PROPOSAL_EVIDENCE_PATH),
                 mappingEvidence);
     }
