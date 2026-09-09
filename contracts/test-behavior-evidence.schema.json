@@ -69,7 +69,7 @@
         "kind": {"enum": ["TYPE", "METHOD", "FIELD", "CONSTRUCTOR"]},
         "declaring_type": {"type": "string", "minLength": 1, "pattern": ".*\\S.*"},
         "symbol_name": {"type": "string", "minLength": 1, "pattern": ".*\\S.*"},
-        "basis": {"enum": ["SAME_PACKAGE_SOURCE_ROOT", "IMPORTED_SOURCE_ROOT"]}
+        "basis": {"enum": ["SAME_PACKAGE_SOURCE_ROOT", "IMPORTED_SOURCE_ROOT", "PRODUCTION_RECEIVER_SOURCE_ROOT"]}
       }
     },
     "behavior_observation": {
