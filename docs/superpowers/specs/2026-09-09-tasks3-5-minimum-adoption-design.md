@@ -22,7 +22,9 @@ artifacts after dispatch.
 It must not:
 
 - modify accepted Task 1 proposal or acceptance artifacts;
-- modify `validation/pkb001/` or any existing `*-001.json` evidence;
+- modify PKB-001 experimental evidence or any existing `*-001.json` artifact;
+  the supporting operations guide may receive only the approved HERM-364 KPI
+  record before the next assigned control commit is frozen;
 - change Product meaning, accepted Behavior Scenarios, evaluator truth, or
   acceptance thresholds;
 - select `SF-BL-003` or perform a broad scenario-pipeline refactor;

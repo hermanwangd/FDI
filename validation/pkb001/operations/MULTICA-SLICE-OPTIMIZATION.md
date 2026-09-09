@@ -247,3 +247,34 @@ logs. Do not dispatch extra LLM runs solely to populate the record.
   Apply the already-installed single-trigger, serialized Coordinator routing to
   the next comparable execution. Its success criterion is zero duplicate runs;
   then compare the same three KPIs without reducing verification or review.
+
+## Completed execution record — HERM-364
+
+- Scope: `SF-BL-002-SCENARIO-INTENT-003` Task 1; one implementation slice plus
+  exact-candidate review. Candidate `50ceb93290348ee5888a798787505e26ced2f13c`
+  was integrated byte-equivalently as `9ad0d17`; HERM-366 returned `PASS`.
+- Runs: Coordinator `01a0868e-2f53-75b7-8229-9e537f1ae773`, Engineer
+  `01a08691-6eff-72ba-b2eb-df8de545a99d`, review-routing Coordinator
+  `01a0869a-5815-7e97-8549-d32253ad951e`, Adjudicator
+  `01a0869c-6954-7ed4-b6fe-29d7ec589b51`, and finalization Coordinator runs
+  `01a086a0-a83a-73d9-9643-1c66d03cb6d2` plus
+  `01a086a2-1435-7a06-9dfa-8a11aeaca2ae`. No duplicate implementation or
+  review issue was observed.
+- Cycle time: implementation start 14:27Z, implementation complete 14:37Z,
+  review start 14:39Z, independent verdict 14:44Z on 2026-09-09; approximately
+  17 minutes end to end and 2 minutes review-routing wait.
+- First-pass: `1/1 = 100%`; no remediation. Focused verification passed `9/9`;
+  Feature Delivery integration later passed the full `1069/1069` suite.
+- Tool calls: implementation reported `24/60`; reviewer and Coordinator totals
+  are `UNKNOWN`. Token usage is `UNKNOWN`; the checked issue/run/comment
+  surfaces did not expose a complete attributable token record. Collection
+  source: Multica issue runs and delivery comments, collected 2026-09-09;
+  telemetry completeness: timing and verdict complete, usage incomplete.
+- Quality: exact-input, evaluator isolation, deterministic output and immutable
+  history passed. Independent standards review later identified no hard
+  violation and four deferred maintainability findings. Spec review caused a
+  separate acceptance-manifest provenance correction before the next dispatch.
+- Decision: single-trigger routing met the under-5-minute routing target and
+  first-pass quality improved over the 75% baseline, but token-cost change is
+  not measurable. Next measurement must require explicit usage completeness
+  while preserving the same review and verification gates.
