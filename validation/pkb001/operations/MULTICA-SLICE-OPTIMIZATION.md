@@ -64,6 +64,49 @@ analysis only.
   pin its path, digest and interpreter/runtime boundary in every slice brief.
   Reuse it for implementation, review and integration. Extend it only for a
   newly evidenced mismatch; do not repeat open-ended legacy-behavior discovery.
+- Before implementation dispatch, the Feature Delivery Plane and Coordinator
+  apply the following bounded-slice gate to each proposed implementation slice.
+  Estimates are planning signals, not delivery metrics:
+
+  ```text
+  BOUNDED_SLICE_ALLOWED = owned_paths <= 5
+      AND estimated_code_and_test_delta <= 500 lines
+      AND estimated_tool_calls <= 60
+      AND one_primary_deliverable
+  ```
+
+  If any term is false, split the work into independently verifiable vertical
+  slices or record one concrete reason why splitting would create overlapping
+  ownership, a shared mutable contract, unsafe shared state, or an unavailable
+  deterministic fixture. Task numbering and downstream runtime data flow are
+  not sufficient reasons to combine work. Generated evidence lines do not count
+  toward the code-and-test estimate, but each separately generated artifact is
+  still part of ownership and integration planning.
+- Every implementation slice brief must contain an exact-input manifest before
+  dispatch. It lists only inputs the worker actually needs:
+
+  ```text
+  path / SHA-256 or exact Git revision / schema or contract / authority
+  allowed phase / evaluator-visible yes-no / mutation allowed yes-no
+  ```
+
+  The manifest must name frozen semantics, acceptance or authorization inputs,
+  structural/runtime evidence, fixtures, and evaluator-only inputs when they
+  apply. A worker verifies the supplied identities but does not rediscover
+  paths, digests, schemas, or authority already frozen by the Plan. A missing or
+  inconsistent required identity is `PLAN_BLOCKED` or `PLAN_CONFLICT`; it is not
+  permission for open-ended repository discovery. Evaluator-only inputs remain
+  inaccessible until the explicitly authorized evaluation phase.
+- Apply a per-stage context budget to implementation runs. Preflight should
+  finish within 10 minutes and 15 tool calls. At 40 total tool calls the worker
+  compacts state to the exact base, current candidate, completed criteria,
+  remaining checks and blockers. At 60 calls it stops optional exploration and
+  reports `SLICE_SIZE_EXCEEDED` unless only the already-required focused/full
+  verification and final handoff remain. The worker may exceed these planning
+  thresholds only to preserve a required correctness, safety or verification
+  gate, and must identify the concrete cause in its handoff. Token or call
+  budgets never authorize weaker tests, skipped independent review, or an
+  incomplete evidence package.
 - Independent slices may run concurrently with separate worktrees and explicit
   non-overlapping ownership. Integrate shared controls serially and verify the
   combined candidate. Stay within the aggregate 8 GB resource limit.
@@ -159,12 +202,15 @@ fan-out; parallelism is credited only when it reduces measured wall-clock time.
 
 ```text
 Slice / canonical Backlog / scope / complexity rationale:
+Bounded-slice estimate / gate result / exception rationale or N/A:
 Base / candidate / integration candidate:
+Exact-input manifest digest / identity verification / discovery deviation:
 Model / runtime / instruction revision:
 Run IDs and roles / source / collected at / completeness:
 Input / output / cache-read / duplicate-trigger runs:
 Start / implementation complete / review start / verdict / combined verdict:
-Cycle time / review-routing wait / first-pass yes-no-unknown:
+Cycle time / preflight time and calls / total tool calls / review-routing wait:
+First-pass yes-no-unknown / context-budget result / SLICE_SIZE_EXCEEDED yes-no:
 Independent reviewer run / actor / candidate / clean-export result:
 Required tests / independent review / scope drift / reconciliation:
 Comparable cohort / sample count / changes or N/A:
