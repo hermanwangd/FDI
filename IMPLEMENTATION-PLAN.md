@@ -124,7 +124,7 @@ only from those seeds. Existing PKB-001 evidence remains immutable.
 ### Active execution envelope
 
 - Execution ID: `SF-BL-002-PRODUCTION-SCENARIO-001`
-- Exact base and Spec revision: `f6ac9d0d389c6857ec0374575bd5af312b704ae9`
+- Exact base and Spec revision: `f6ac9d052efe4d7f695c0f941a0e0b7b9c79ba81`
 - Requirement bindings: `AUTH-002`, `PK-004`, `EVID-001`, `TECH-001`
 - Owned paths: the Java test-behavior extractor/API, scenario-forward mapper and
   their tests, plus new `validation/software-factory/sf-bl002/` artifacts.
