@@ -13,6 +13,7 @@ import com.featuredeliveryintelligence.fdi.testbehavior.api.TestBehaviorExtracti
 import com.featuredeliveryintelligence.fdi.testbehavior.api.TestFileObservation;
 import com.featuredeliveryintelligence.fdi.testbehavior.api.TestMethodObservation;
 import com.featuredeliveryintelligence.fdi.testbehavior.api.UnresolvedKind;
+import com.featuredeliveryintelligence.fdi.testbehavior.api.UnresolvedReference;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -254,7 +255,11 @@ class JavaParserTestBehaviorExtractorTests {
                 .orElseThrow();
 
         assertThat(call.referencedSymbol()).isEmpty();
-        assertThat(method.unresolvedReferences()).anyMatch(gap -> gap.referenceText().startsWith("helper.getById"));
+        assertThat(method.unresolvedReferences()).filteredOn(
+                        gap -> gap.referenceText().startsWith("helper.getById"))
+                .singleElement()
+                .extracting(UnresolvedReference::kind)
+                .isEqualTo(UnresolvedKind.SYNTACTIC_ONLY);
     }
 
     @Test

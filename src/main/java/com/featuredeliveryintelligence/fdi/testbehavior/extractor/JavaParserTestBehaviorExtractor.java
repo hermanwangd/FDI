@@ -533,8 +533,12 @@ public final class JavaParserTestBehaviorExtractor implements TestBehaviorEviden
                 ResolvedType scopeType = facade.getType(scope);
                 Optional<? extends ResolvedReferenceTypeDeclaration> declaration =
                         scopeType.asReferenceType().getTypeDeclaration();
-                if (declaration.isPresent() && isSourceRootDeclaration(declaration.get())) {
+                Optional<Path> declarationPath = declaration.flatMap(this::sourcePathOf);
+                if (declarationPath.filter(path -> isUnder(productionRoots, path)).isPresent()) {
                     return UnresolvedKind.MISSING_SOURCE;
+                }
+                if (declarationPath.filter(path -> isUnder(testRoots, path)).isPresent()) {
+                    return UnresolvedKind.SYNTACTIC_ONLY;
                 }
                 return UnresolvedKind.EXTERNAL_DEPENDENCY_NOT_RESOLVED;
             } catch (RuntimeException notASourceRootType) {
@@ -542,12 +546,11 @@ public final class JavaParserTestBehaviorExtractor implements TestBehaviorEviden
             }
         }
 
-        /** True when the declaration was parsed from a configured source root rather than reflection/JDK. */
-        private boolean isSourceRootDeclaration(ResolvedReferenceTypeDeclaration declaration) {
-            return declaration instanceof JavaParserClassDeclaration
-                    || declaration instanceof JavaParserEnumDeclaration
-                    || declaration instanceof JavaParserInterfaceDeclaration
-                    || declaration instanceof JavaParserRecordDeclaration;
+        private Optional<Path> sourcePathOf(ResolvedReferenceTypeDeclaration declaration) {
+            return sourceTypeOf(declaration)
+                    .flatMap(type -> type.findAncestor(CompilationUnit.class))
+                    .flatMap(unit -> unit.getStorage()
+                            .map(storage -> storage.getPath().toAbsolutePath().normalize()));
         }
 
         private RelationshipBasis basisOf(CompilationUnit unit, ResolvedReferenceTypeDeclaration type) {
