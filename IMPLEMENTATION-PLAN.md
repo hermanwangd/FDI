@@ -2,19 +2,113 @@
 
 ## Selected work
 
-`SF-BL-002` is selected as one bounded Java correction. `SF-BL-001` remains
-`BLOCKED_DEPENDENCY`; this plan does not select, clone, index, or modify an
-SVSPC repository.
+`SF-BL-002` remains selected for one bounded effectiveness successor.
+`SF-BL-001` and `SF-BL-003` remain `BLOCKED_DEPENDENCY`. This Plan does not
+select, clone, index, or modify an SVSPC repository and does not select the
+maintainability refactor.
 
 ### Goal and construction
 
-Recover production calls only when the receiver type is provably declared under
-a configured production source root, keep external and test-helper calls out of
-production mappings, and allow frozen scenarios to select known direct
-production evidence as proposal-only realization seeds. Graphify may expand
-only from those seeds. Existing PKB-001 evidence remains immutable.
+Preserve the independently verified production-reference correction, then
+improve evaluator-blind scenario assignment without changing frozen Product
+Semantics. Generate proposal-only search intents, review and seal them, match
+only mechanically resolved production evidence, and allow Graphify to expand
+only from accepted `PRIMARY` seeds. Existing PKB-001 and `*-001.json` evidence
+remains immutable.
 
-### TDD tasks
+### Selected successor tasks
+
+1. **Scenario search-intent proposals**
+   - Create
+     `ScenarioSearchIntentProposalGenerator.java` and
+     `ScenarioSearchIntentProposalGeneratorTests.java` under the existing
+     `product/realization/scenarioforward` source and test packages.
+   - Define one proposal per frozen scenario with `capabilityId`, `scenarioId`,
+     `action`, `entity`, `conditions`, `aliases`, exact semantics digest,
+     source revision, rationale and `PROPOSAL_ONLY` authority. Generation may
+     read only the sealed semantics and acceptance manifest; evaluator truth,
+     expected components, previous evaluation output and post-run metrics are
+     prohibited inputs.
+   - Write new collision-protected artifacts
+     `validation/software-factory/sf-bl002/scenario-search-intent-proposals-002.json`
+     and `scenario-search-intent-proposals-evidence-002.json`.
+   - Test one-to-one scenario coverage, deterministic bytes, forbidden
+     evaluator vocabulary, changed-output collision, mixed revision and refusal
+     to publish Product truth.
+   - Verify with `MAVEN_OPTS='-Xmx2g' ./mvnw -q
+     -Dtest=ScenarioSearchIntentProposalGeneratorTests test`.
+2. **Human review and immutable intent seal**
+   - The Execution Plane returns Task 1 artifacts without starting matching.
+     The Feature Delivery Plane prepares the 10-record review package; Human
+     Authority accepts or rejects the generated retrieval aids without manually
+     authoring them.
+   - An accepted set is written once as
+     `validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json`
+     with an acceptance manifest binding reviewer decision, proposal digest,
+     exact source revision and accepted/rejected record IDs.
+   - Until this exact artifact and digest exist, Tasks 3–5 are
+     `BLOCKED_DEPENDENCY`; no placeholder digest or inferred approval is valid.
+3. **Deterministic PRIMARY matching**
+   - Create `ScenarioSearchIntentMatcher.java` and
+     `ScenarioSearchIntentMatcherTests.java`. The matcher consumes the accepted
+     intent set plus exact test-behavior evidence and emits a new immutable
+     `scenario-observation-assignments-002.json`.
+   - Ranking uses accepted action/entity/condition/alias terms, test identity,
+     observed expressions and mechanically resolved production symbols. Every
+     selected ref must exist at the exact revision. Unknown, duplicate,
+     external-only, test-helper, mixed-revision and non-production selections
+     fail closed; insufficient evidence stays `UNRESOLVED`.
+   - Test positive mapped and honest unresolved cases, deterministic ranking,
+     tie handling, digest/revision mismatch, evaluator blindness and collision
+     protection.
+   - Verify with `MAVEN_OPTS='-Xmx2g' ./mvnw -q
+     -Dtest=ScenarioSearchIntentMatcherTests test`.
+4. **Bounded Graphify expansion and immutable run**
+   - Create `SfBl002ScenarioEffectivenessRun.java` and its matching test. It
+     seals the accepted intent set, new assignments, test evidence, exact graph
+     snapshot and Graphify runtime evidence before composing proposals.
+   - A mechanically selected production component is `PRIMARY`. Graphify may
+     add `SUPPORTING` only through a bounded relationship trace starting from
+     that exact seed. An unbound neighbour fails closed and supporting nodes
+     receive zero formal PRIMARY precision credit.
+   - Write only new `scenario-mapping-proposal-002.json` and its evidence
+     manifest. Test a real bound expansion, an unbound neighbour, no-seed
+     behavior, deterministic reproduction, evaluator-vocabulary rejection and
+     semantic-publication refusal.
+   - Verify with `MAVEN_OPTS='-Xmx2g' ./mvnw -q
+     -Dtest=SfBl002ScenarioEffectivenessRunTests test`.
+5. **Evaluator-only scoring and combined decision**
+   - Create `SfBl002ScenarioEffectivenessEvaluation.java` and its matching
+     tests. Seal all non-evaluator inputs before evaluator access and reuse the
+     existing exact one-to-one hierarchical scoring semantics.
+   - Produce new `hierarchical-evaluation-002.json`, evaluator evidence and an
+     updated remediation decision package. Report scenario trace coverage,
+     chain coverage, exact `PRIMARY` precision/recall/F1 and diagnostic-only
+     supporting overlap. Without a sealed crosswalk, semantic scenario metrics
+     remain `NOT_COMPARABLE`.
+   - Acceptance requires scenario trace coverage at least `6/10`, exact chain
+     recall greater than `0.0`, and exact `PRIMARY` precision at least `0.70`.
+     Failure is `REVISE`; it cannot be repaired by broader guesses or evaluator
+     leakage.
+   - Run the focused suite, deterministic double-run, `MAVEN_OPTS='-Xmx2g'
+     `./mvnw -q clean test`, and prove `validation/pkb001` plus every committed
+     `*-001.json` byte is unchanged.
+
+### Exact-input manifest
+
+| Input | Identity | Allowed phase | Evaluator-visible | Mutable |
+|---|---|---|---|---|
+| accepted semantics | `validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004.json`; SHA-256 `6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3` | all generation | no | no |
+| acceptance manifest | `validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/acceptance-manifest-004.json`; SHA-256 `1b3fbbfd210c2c0d82d74a2579c1980d5de6b047fff56a08cc2b43097c76e2a9` | all generation | no | no |
+| test-behavior evidence | `validation/software-factory/sf-bl002/test-behavior-evidence.json`; SHA-256 `6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2` | matching onward | no | no |
+| Graphify snapshot | `validation/pkb001/artifacts/petclinic-graph-818c413.json`; SHA-256 `e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e` | expansion onward | no | no |
+| Graphify runtime evidence | `validation/pkb001/runtime/graphify-petclinic-live-evidence.json`; SHA-256 `fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8` | expansion onward | no | no |
+| evaluator truth | existing sealed `ProviderNeutralEvaluatorTruth` input and seal | evaluation only, after non-evaluator seal | yes | no |
+
+The accepted search-intent artifact is intentionally absent until Task 2. Its
+exact path and SHA-256 must be added before Tasks 3–5 dispatch.
+
+### Verified predecessor tasks (read-only)
 
 1. **Production receiver recovery**
    - Test first in `JavaParserTestBehaviorExtractorTests`: an unresolved method
@@ -139,7 +233,7 @@ only from those seeds. Existing PKB-001 evidence remains immutable.
 The execution above stopped at its completed production-reference checkpoint
 after Tasks 3–6 materially clarified the construction and scoring protocol.
 
-### Active successor execution envelope
+### Verified predecessor execution envelope
 
 - Execution ID: `SF-BL-002-PRODUCTION-SCENARIO-002`
 - Exact base and Spec revision: `13890ccff85fa7b2f79341a2c7439cac02059f87`
@@ -155,12 +249,41 @@ after Tasks 3–6 materially clarified the construction and scoring protocol.
   run combined verification, and return one evidence package. It may not close
   the parent or edit this Plan.
 - Resource bound: Maven heap at most 2 GiB and total command memory below 8 GiB.
+- Integrated candidate:
+  `370166070fa1674658c92ca41717ab2d29d9659d`; independently reproduced
+  `1060/1060` passing tests and immutable evidence; integrated onto the Feature
+  Delivery branch at `b1c46cd7b70bc01aae594f5f9aa16982705646cc`.
+
+### Active effectiveness execution envelope
+
+- Execution ID: `SF-BL-002-SCENARIO-INTENT-003`
+- Exact implementation base and Spec revision:
+  `b1c46cd7b70bc01aae594f5f9aa16982705646cc`
+- Selected scope: selected successor Task 1 only. Task 2 is the required Human
+  review gate; Tasks 3–5 must not execute until the accepted intent artifact and
+  its exact digest are added to this Plan.
+- Owned paths: the new Java search-intent proposal generator and tests plus only
+  new `scenario-search-intent-proposals-*-002.json` files under
+  `validation/software-factory/sf-bl002/`.
+- Excluded paths: all five active control files, `AGENTS.md`, existing Java
+  assignment/mapping/evaluation implementation, every `*-001.json`, every file
+  under `validation/pkb001/`, test-behavior evidence, evaluator inputs,
+  Graphify runtime and snapshot, `SF-BL-001`, `SF-BL-003`, Azure DevOps inputs,
+  and unrelated framework modules.
+- Bounded-slice estimate: at most 4 owned paths, at most 500 code/test lines,
+  at most 60 tool calls, one primary deliverable. Exceeding a bound requires
+  `SLICE_SIZE_EXCEEDED`; it does not authorize scope expansion.
+- Execution Plane duties: TDD implementation, focused verification,
+  deterministic double-run, immutable-output and evaluator-vocabulary negative
+  cases, independent review, and one exact-candidate evidence package. It may
+  not proceed through the Human review gate, edit this Plan or close the parent.
+- Resource bound: Maven heap at most 2 GiB and total command memory below 8 GiB.
 
 ### Future execution parallel-slice planning gate
 
-This gate applies when planning a successor execution envelope. It does not
-change, cancel, or redispatch the active `SF-BL-002-PRODUCTION-SCENARIO-002`
-execution or its current Multica issue DAG.
+This gate applies when planning successor execution envelopes. It did not alter
+the completed `SF-BL-002-PRODUCTION-SCENARIO-002` evidence chain and governs
+every dispatch beginning with `SF-BL-002-SCENARIO-INTENT-003`.
 
 Before a Coordinator chooses a fully sequential DAG, it must classify each
 dependency as either:
@@ -192,8 +315,10 @@ to serialize implementation.
 | `PKB-BL-027` | Exact-provenance external provider resolution and bounded Java MCP lifecycle verified. | `validation/pkb001/runtime/pkb-bl027-portable-runtime-evidence.json` |
 | `PKB-BL-011` | Hierarchical metrics terminally closed before vNext reconciliation. | Candidate `17b8357e360f6d49dcfda4c80211b88e00b82d00`; Human closure commit `a99206722acbb79e36191e8b21a8b29bd4d439ed` |
 | Software Factory vNext reconciliation | Five project-truth controls atomically migrated using archived candidate plus Frozen Delta Spec v2; superseded runtime schemas were not promoted. | `validation/software-factory/vnext-reconciliation-evidence.json` and the Git commit containing this ledger |
+| `SF-BL-002-PRODUCTION-SCENARIO-002` | Engineering-safe production-reference and fail-closed scenario pipeline verified; experimental effectiveness remained `0/10` trace and `0/24` chain coverage, so the parent remains open. | Integrated candidate `370166070fa1674658c92ca41717ab2d29d9659d`, HERM-361 and HERM-363 independent `PASS`, and `validation/software-factory/sf-bl002/remediation-evidence.json` |
 
 ## Deferred work
 
-After `SF-BL-002` is independently verified and terminally closed, `SF-BL-001`
+`SF-BL-003` remains blocked until the `SF-BL-002` effectiveness successor is
+independently verified. After `SF-BL-002` is terminally closed, `SF-BL-001`
 remains blocked until an auditable Azure DevOps repository listing is available.
