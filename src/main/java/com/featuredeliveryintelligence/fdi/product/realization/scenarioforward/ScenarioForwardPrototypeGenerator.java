@@ -51,6 +51,6 @@ public final class ScenarioForwardPrototypeGenerator {
         return result;
     }
     private static ScenarioGroundedForwardMapper.ScenarioAssignment unresolved(String capability, String scenario) {
-        return new ScenarioGroundedForwardMapper.ScenarioAssignment(capability, scenario, List.of());
+        return new ScenarioGroundedForwardMapper.ScenarioAssignment(capability, scenario, List.of(), List.of());
     }
 }

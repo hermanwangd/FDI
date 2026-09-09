@@ -14,7 +14,7 @@ class ScenarioGroundedForwardMapperTests {
 
     @Test void currentContractCanOnlyEmitUnresolvedAndPreservesObservedEvidenceOutsideChains() {
         var result = ScenarioGroundedForwardMapper.compose(input(List.of(direct()),
-                List.of(new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", List.of()))));
+                List.of(new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", List.of(), List.of()))));
         var proposal = result.capabilities().get(0).scenarios().get(0);
         assertThat(proposal.mapping().outcome()).isEqualTo(Outcome.UNRESOLVED);
         assertThat(proposal.mapping().evidenceStatus()).isEqualTo(EvidenceStatus.INSUFFICIENT);
@@ -23,9 +23,38 @@ class ScenarioGroundedForwardMapperTests {
         assertThat(result.observedDirectEvidenceRefs()).containsExactly("e-1");
     }
 
+    @Test void selectedKnownDirectEvidenceProducesProposalOnlyPrimaryChain() {
+        var result = ScenarioGroundedForwardMapper.compose(input(List.of(direct()),
+                List.of(new ScenarioGroundedForwardMapper.ScenarioAssignment(
+                        "CAP-1", "SC-1", List.of("e-1"), List.of()))));
+
+        var proposal = result.capabilities().get(0).scenarios().get(0);
+        assertThat(proposal.mapping().authority()).isEqualTo("PROPOSAL_ONLY");
+        assertThat(proposal.mapping().outcome()).isEqualTo(Outcome.MAPPING_PROPOSAL);
+        assertThat(proposal.mapping().evidenceStatus()).isEqualTo(EvidenceStatus.COMPLETE);
+        assertThat(proposal.mapping().directProductionSymbols()).hasSize(1);
+        assertThat(proposal.mapping().realizationChain()).singleElement()
+                .satisfies(step -> {
+                    assertThat(step.relationshipBasis()).isEqualTo(RelationshipBasis.DIRECT_TEST_REFERENCE);
+                    assertThat(step.evidenceRefs()).containsExactly("e-1");
+                });
+        assertThat(proposal.componentRoles()).singleElement()
+                .extracting(ScenarioGroundedForwardMapper.ComponentRole::role)
+                .isEqualTo("PRIMARY");
+        assertThat(result.semanticPublicationAllowed()).isFalse();
+    }
+
+    @Test void unknownDirectEvidenceFailsClosed() {
+        assertThatThrownBy(() -> ScenarioGroundedForwardMapper.compose(input(List.of(direct()),
+                List.of(new ScenarioGroundedForwardMapper.ScenarioAssignment(
+                        "CAP-1", "SC-1", List.of("missing"), List.of())))))
+                .isInstanceOf(RuntimeContractException.class)
+                .hasMessageContaining("unknown direct evidence");
+    }
+
     @Test void callerCannotInjectPrimaryOrFlipAConfirmationFlag() {
         String injected = """
-                {"capabilityId":"CAP-1","scenarioId":"SC-1","gapRefs":[],
+                {"capabilityId":"CAP-1","scenarioId":"SC-1","directEvidenceRefs":[],"gapRefs":[],
                  "coreBehaviorEvidenceConfirmed":true,
                  "primaryComponent":{"sourceRevision":"%s","sourcePath":"src/main/java/pet/Controller.java",
                  "granularity":"METHOD","qualifiedSymbol":"pet.Controller#save"}}
@@ -35,11 +64,11 @@ class ScenarioGroundedForwardMapperTests {
     }
 
     @Test void rejectsDuplicateScenarioUnknownGapAndBindingMismatch() {
-        var assignment = new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", List.of());
+        var assignment = new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", List.of(), List.of());
         assertThatThrownBy(() -> ScenarioGroundedForwardMapper.compose(input(List.of(), List.of(assignment, assignment))))
                 .isInstanceOf(RuntimeContractException.class).hasMessageContaining("duplicate scenario");
         assertThatThrownBy(() -> ScenarioGroundedForwardMapper.compose(input(List.of(), List.of(
-                new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", List.of("missing"))))))
+                new ScenarioGroundedForwardMapper.ScenarioAssignment("CAP-1", "SC-1", List.of(), List.of("missing"))))))
                 .isInstanceOf(RuntimeContractException.class).hasMessageContaining("unknown evidence gap");
         var value = input(List.of(), List.of(assignment));
         assertThatThrownBy(() -> ScenarioGroundedForwardMapper.compose(new ScenarioGroundedForwardMapper.Input(
