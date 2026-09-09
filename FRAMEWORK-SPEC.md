@@ -41,6 +41,7 @@ strength.
 | `EXEC-001` | Execution Plane schedules, executes, reviews, integrates, and reports without changing engineering authority. |
 | `EXEC-002` | Materialization creates a portable envelope without creating authority. |
 | `EVID-001` | Evidence binds exact inputs, outputs, revisions, generation method, and digests. |
+| `PORT-001` | Cross-baseline change export is exact-revision, cross-file, reference-only, and fail-closed. |
 | `FD-T4-001` | T4 independently evaluates the integrated candidate. |
 | `FD-T4-002` | Correctness verdict is exactly `PASS | FAIL | INCONCLUSIVE`. |
 | `FD-T4-003` | Revision routing cannot silently modify T1. |
@@ -389,6 +390,32 @@ digests, generation method, tool/runtime identity, result, artifacts, and
 digests. Prose claims alone cannot satisfy a mandatory gate. Provider-native
 diagnostics may remain in an evidence envelope without becoming core domain
 fields.
+
+### PORT-001 — Cross-baseline change reference export
+
+When source and receiving repositories have no shared Git commit baseline, the
+framework MAY export a change-reference package from one exact ancestral source
+commit range. The package MUST represent changed portions across code, tests,
+documentation, active controls, contracts, configuration, Skills, and bounded
+evidence; it MUST NOT assume that source paths or complete files can replace the
+receiving repository.
+
+Every package and record MUST declare `REFERENCE_ONLY`,
+`DO_NOT_APPLY_BLINDLY`, `NO_SHARED_BASELINE`, and that automatic application is
+not allowed. The receiving actor MUST locate the corresponding local surface,
+adapt the intended behavior, verify it under receiving-repository controls, and
+use its own review and merge process. An exported active-control change is a
+review input only and MUST NOT overwrite or establish receiving project truth.
+External execution status SHOULD be marked as not recommended for adoption.
+
+Export MUST bind exact source commits, committed blob identities, changed-path
+operations, bounded before/after excerpts, output digests, generation method,
+classification, omissions, truncation, and safety decisions. Deterministic
+inputs and a fixed clock MUST produce byte-identical output. Secrets, unsafe
+paths, evaluator-only truth, build output, archives, and binary payloads MUST
+fail closed or remain explicitly excluded metadata; a partial package MUST NOT
+be published. The exporter MUST NOT mutate, merge, cherry-pick, or execute code
+in the receiving repository.
 
 ## 9. T4 — Correctness
 

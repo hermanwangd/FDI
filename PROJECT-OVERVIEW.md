@@ -89,6 +89,15 @@ Graphify-provider, scenario, reverse-discovery, and evaluation foundations. It
 does not by itself prove that Product Knowledge improves real Feature delivery;
 `SF-BL-001` measures that question through the controlled two-arm MVP.
 
+## Cross-baseline change portability
+
+External and company repositories may evolve without a shared Git commit
+baseline. FDI may export exact-revision, cross-file change references containing
+bounded before/after excerpts, intent and verification context, and digest-bound
+provenance for company-side adaptation. Such a package is reference evidence,
+not an applicable patch: it cannot modify the company repository, replace its
+active controls, or establish company project truth.
+
 ## Technology boundary
 
 Executable FDI framework behavior uses Java 17 and Spring Boot 3.4.1. The
