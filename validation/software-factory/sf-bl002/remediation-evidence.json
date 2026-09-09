@@ -1,8 +1,14 @@
 {
   "schema_version": "software-factory.sf-bl002-remediation-evidence.v0.1",
-  "execution_id": "SF-BL-002-PRODUCTION-SCENARIO-001",
-  "execution_base_commit": "f6ac9d052efe4d7f695c0f941a0e0b7b9c79ba81",
-  "generator_code_commit": "c20e232e0a2d443ca47cccb0e80492160a3199bd",
+  "execution_id": "SF-BL-002-PRODUCTION-SCENARIO-002",
+  "execution_base_commit": "13890ccff85fa7b2f79341a2c7439cac02059f87",
+  "generator_code_commit": "cf2161375eaeb77f898d58a7c7c4561da59d7bb7",
+  "independent_review": {
+    "reviewer": "Independent Adjudicator (HERM-361)",
+    "verdict": "PASS",
+    "bound_candidate": "3082c07d11990d061e89219c836978fb5c89c3ec",
+    "evidence": "28 focused tests, 1060-test full regression, determinism double-run, negative acceptance cases, validation/pkb001 byte-unchanged"
+  },
   "source_binding": {
     "repository_id": "spring-petclinic",
     "canonical_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
@@ -40,10 +46,70 @@
     ],
     "calibration_scenario_run": "NOT_RUN"
   },
+  "scenario_evaluation_result": {
+    "status": "COMPLETE_FAIL_CLOSED",
+    "before": {
+      "scenario_trace_coverage": "NOT_COMPUTABLE_NO_MAPPING_RUN",
+      "chain_coverage": "NOT_COMPUTABLE_NO_MAPPING_RUN",
+      "exact_component_precision": "NOT_COMPUTABLE_NO_MAPPING_RUN",
+      "exact_component_recall": "NOT_COMPUTABLE_NO_MAPPING_RUN",
+      "exact_component_f1": "NOT_COMPUTABLE_NO_MAPPING_RUN"
+    },
+    "after": {
+      "assignments_emitted": 10,
+      "assignments_with_direct_refs": 0,
+      "assignments_with_explicit_gap": 10,
+      "force_mapped_scenarios": 0,
+      "observed_direct_evidence_refs": 168,
+      "unresolved_direct_reference_refs": 867,
+      "mapped_scenarios": 0,
+      "unresolved_scenarios": 10,
+      "primary_component_occurrences": 0,
+      "supporting_component_occurrences": 0,
+      "scenario_trace_coverage": 0.0,
+      "scenario_trace_coverage_denominator": 10,
+      "chain_coverage": 0.0,
+      "chain_coverage_denominator": 24,
+      "exact_component_matched": 0,
+      "exact_component_expected": 24,
+      "exact_component_proposed": 0,
+      "exact_component_precision": "UNDEFINED_NO_PRIMARY_PROPOSALS",
+      "exact_component_recall": 0.0,
+      "exact_component_f1": "UNDEFINED_PRECISION_UNDEFINED",
+      "capability_alignment": "NOT_COMPARABLE_NO_SEALED_CROSSWALK"
+    },
+    "interpretation": "All 10 frozen scenarios carry no mechanical token overlap with test class/method identity, observed expressions, or resolved production symbols in the sealed test-behavior evidence. Each scenario was emitted UNRESOLVED with an explicit evidence gap and was never force-mapped to improve coverage. Diagnostics (supporting components, provider overlap, similarity signals) received zero formal precision/recall/F1 credit.",
+    "evaluator_truth_used_for_generation": false,
+    "semantic_publication_allowed": false
+  },
   "artifacts": {
     "test_behavior_evidence": {
       "path": "validation/software-factory/sf-bl002/test-behavior-evidence.json",
       "sha256": "6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2"
+    },
+    "scenario_observation_assignments": {
+      "path": "validation/software-factory/sf-bl002/scenario-observation-assignments-001.json",
+      "sha256": "503876f57b1c541df9b7f16ec1c3c2bc1c177c227e4bb75e251100eae2ec6943"
+    },
+    "scenario_observation_assignments_manifest": {
+      "path": "validation/software-factory/sf-bl002/scenario-observation-assignments-001-manifest.json",
+      "sha256": "fb9f909ad8db7c166127ce58c1435e03c2665c7030eab1a39ac6b70f42054aa8"
+    },
+    "scenario_mapping_proposal": {
+      "path": "validation/software-factory/sf-bl002/scenario-mapping-proposal-001.json",
+      "sha256": "38e8963996226dd614ae0abbf3ec6c4d2a8b60fb9c6b9c22ffee210b3dddaf9d"
+    },
+    "scenario_mapping_evidence": {
+      "path": "validation/software-factory/sf-bl002/scenario-mapping-proposal-evidence-001.json",
+      "sha256": "4de9e1e2670974768a5cf7be570e3f1cd665d02e099622c4434bb318f1773bea"
+    },
+    "hierarchical_evaluation": {
+      "path": "validation/software-factory/sf-bl002/hierarchical-evaluation-001.json",
+      "sha256": "4728d7fb0daad4517b8d3af8fd23e369b6676234b14555e8516dc1272bf0fd8c"
+    },
+    "hierarchical_evaluation_evidence": {
+      "path": "validation/software-factory/sf-bl002/hierarchical-evaluation-evidence-001.json",
+      "sha256": "f165c3f3809808ebbaf10a2ea6b56b6329d9d9d784db40ccbc6a2286f1517b5a"
     },
     "schema": {
       "path": "contracts/test-behavior-evidence.schema.json",
@@ -55,18 +121,47 @@
     }
   },
   "generation_command": "java -Xmx2g -jar target/fdi-0.4.8.3.jar test-behavior-extract --repository-root src/test/resources/testbehavior/petclinic-818c4136/fixtures --repository-id spring-petclinic --revision 818c4136ea971c21674525f9053de0d9c7ad8cfe --schema contracts/test-behavior-evidence.schema.json --output validation/software-factory/sf-bl002/test-behavior-evidence.json",
+  "successor_generation_commands": [
+    "java -cp target/classes:<deps> com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.ScenarioObservationAssignmentGenerator <root> [output-root]",
+    "java -cp target/classes:<deps> com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002ScenarioMappingRun <root> [output-root]",
+    "java -cp target/classes:<deps> com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002HierarchicalEvaluation <root> [output-root]"
+  ],
+  "determinism_verification": {
+    "method": "Each new generator executed twice into separate temporary output roots; outputs compared byte-for-byte and by SHA-256.",
+    "result": "PASS",
+    "byte_identical": true,
+    "digests_run_a": {
+      "validation/software-factory/sf-bl002/scenario-observation-assignments-001.json": "503876f57b1c541df9b7f16ec1c3c2bc1c177c227e4bb75e251100eae2ec6943",
+      "validation/software-factory/sf-bl002/scenario-observation-assignments-001-manifest.json": "fb9f909ad8db7c166127ce58c1435e03c2665c7030eab1a39ac6b70f42054aa8",
+      "validation/software-factory/sf-bl002/scenario-mapping-proposal-001.json": "38e8963996226dd614ae0abbf3ec6c4d2a8b60fb9c6b9c22ffee210b3dddaf9d",
+      "validation/software-factory/sf-bl002/scenario-mapping-proposal-evidence-001.json": "4de9e1e2670974768a5cf7be570e3f1cd665d02e099622c4434bb318f1773bea",
+      "validation/software-factory/sf-bl002/hierarchical-evaluation-001.json": "4728d7fb0daad4517b8d3af8fd23e369b6676234b14555e8516dc1272bf0fd8c",
+      "validation/software-factory/sf-bl002/hierarchical-evaluation-evidence-001.json": "f165c3f3809808ebbaf10a2ea6b56b6329d9d9d784db40ccbc6a2286f1517b5a"
+    },
+    "regenerated_outputs_match_committed_artifacts": true
+  },
   "verification": {
     "command": "MAVEN_OPTS='-Xmx2g' ./mvnw -q clean test",
-    "tests": 1032,
+    "tests": 1060,
+    "test_classes": 87,
     "failures": 0,
     "errors": 0,
     "skipped": 0,
     "historical_evidence_diff_command": "git diff --exit-code -- validation/pkb001",
-    "historical_evidence_diff_result": "PASS"
+    "historical_evidence_diff_result": "PASS",
+    "historical_evidence_paths_in_candidate_diff": 0
   },
   "historical_evidence_modified": false,
   "evaluator_truth_used_for_generation": false,
   "semantic_publication_allowed": false,
-  "overall_status": "PARTIAL",
-  "next_gate": "Run the frozen scenarios through the evidence-backed mapper and report scenario, chain, and component metrics before closure."
+  "limitations": [
+    "Zero scenario trace coverage is a fail-closed result, not a defect: frozen scenario texts contain no mechanical tokens that match sealed test-behavior evidence, and force-mapping was prohibited.",
+    "The 11 remaining production-resolution gaps and 867 unresolved direct reference refs require stronger evidence and are reported, not promoted.",
+    "Capability alignment and semantic precision/recall/F1 remain NOT_COMPARABLE without a sealed HYP-to-PET crosswalk.",
+    "Results bind exactly to spring-petclinic revision 818c4136ea971c21674525f9053de0d9c7ad8cfe and snapshot pkb001-petclinic-reviewed-semantics-004; they do not generalize to other revisions.",
+    "This package is execution evidence, not project truth; it cannot terminally close SF-BL-002."
+  ],
+  "overall_status": "EVIDENCE_PACKAGE_COMPLETE_REVIEW_PASSED",
+  "closure_recommendation": "RECOMMEND_HUMAN_CLOSURE_REVIEW",
+  "next_gate": "Feature Delivery Plane reconciles this package against active controls; Human Authority alone may terminally close SF-BL-002."
 }
