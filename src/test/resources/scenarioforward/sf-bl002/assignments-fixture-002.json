@@ -1,0 +1,93 @@
+{
+  "schema_version": "software-factory.sf-bl002-scenario-observation-assignments.v0.2",
+  "execution_id": "SF-BL-002-SCENARIO-EFFECTIVENESS-004",
+  "authority": "PROPOSAL_ONLY",
+  "semantic_publication_allowed": false,
+  "source_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "semantics_sha256": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+  "intent_sha256": "3c5da364196f1bbec17aabdbf2923c65f2bc0d90b2e9788bac8427219d554a3f",
+  "intent_acceptance_sha256": "8772b2a1b4cbb485f0ebce793be734bbd8414aaf318e6033bab7225b1e03fd1b",
+  "test_evidence_sha256": "6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2",
+  "assignments": [
+    {
+      "capabilityId": "HYP-CAPABILITY-001",
+      "scenarioId": "HYP-SCENARIO-001",
+      "primaryEvidenceRef": "direct-test-reference:0018",
+      "gapRefs": [],
+      "selectionRationale": "synthetic test fixture: last-name owner search mechanically matches OwnerRepository.findByLastNameStartingWith observed in OwnerControllerTests#processFindFormSuccess; fixture is not production evidence",
+      "authority": "PROPOSAL_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-001",
+      "scenarioId": "HYP-SCENARIO-002",
+      "primaryEvidenceRef": "UNRESOLVED",
+      "gapRefs": [],
+      "selectionRationale": "synthetic test fixture: no-positive-overlap scenario stays UNRESOLVED and is never force-mapped; fixture is not production evidence",
+      "authority": "PROPOSAL_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-002",
+      "scenarioId": "HYP-SCENARIO-003",
+      "primaryEvidenceRef": "direct-test-reference:0030",
+      "gapRefs": [],
+      "selectionRationale": "synthetic test fixture: owner creation mechanically matches Owner.addPet observed in OwnerTests#addPetAddsPersistedPet; fixture is not production evidence",
+      "authority": "PROPOSAL_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-002",
+      "scenarioId": "HYP-SCENARIO-004",
+      "primaryEvidenceRef": "direct-test-reference:0023",
+      "gapRefs": [],
+      "selectionRationale": "synthetic test fixture: owner update mechanically matches Owner.setAddress observed in OwnerControllerTests#processUpdateOwnerFormWithIdMismatch; fixture is not production evidence",
+      "authority": "PROPOSAL_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-003",
+      "scenarioId": "HYP-SCENARIO-005",
+      "primaryEvidenceRef": "direct-test-reference:0004",
+      "gapRefs": [],
+      "selectionRationale": "synthetic test fixture: pet creation mechanically matches Owner.getPets observed in PetClinicConcurrencyTests#testDuplicatePetNameRaceConditionIsBlocked; fixture is not production evidence",
+      "authority": "PROPOSAL_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-003",
+      "scenarioId": "HYP-SCENARIO-006",
+      "primaryEvidenceRef": "direct-test-reference:0053",
+      "gapRefs": [],
+      "selectionRationale": "synthetic test fixture: duplicate pet-name rejection mechanically matches PetValidator.validate observed in PetValidatorTests#validate; fixture is not production evidence",
+      "authority": "PROPOSAL_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-003",
+      "scenarioId": "HYP-SCENARIO-011",
+      "primaryEvidenceRef": "direct-test-reference:0111",
+      "gapRefs": [],
+      "selectionRationale": "synthetic test fixture: pet update mechanically matches Owner.getPet observed in ClinicServiceTests#shouldUpdatePetName; fixture is not production evidence",
+      "authority": "PROPOSAL_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-004",
+      "scenarioId": "HYP-SCENARIO-007",
+      "primaryEvidenceRef": "direct-test-reference:0126",
+      "gapRefs": [],
+      "selectionRationale": "synthetic test fixture: visit creation mechanically matches Owner.addVisit observed in ClinicServiceTests#shouldAddNewVisitForPet; fixture is not production evidence",
+      "authority": "PROPOSAL_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-004",
+      "scenarioId": "HYP-SCENARIO-008",
+      "primaryEvidenceRef": "direct-test-reference:0132",
+      "gapRefs": [],
+      "selectionRationale": "synthetic test fixture: visit date-range handling mechanically matches Visit.setDescription observed in ClinicServiceTests#shouldAddNewVisitForPet; fixture is not production evidence",
+      "authority": "PROPOSAL_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-005",
+      "scenarioId": "HYP-SCENARIO-009",
+      "primaryEvidenceRef": "direct-test-reference:0121",
+      "gapRefs": [],
+      "selectionRationale": "synthetic test fixture: vet browsing mechanically matches Vet.getSpecialties observed in ClinicServiceTests#shouldFindVets; fixture is not production evidence",
+      "authority": "PROPOSAL_ONLY"
+    }
+  ]
+}
