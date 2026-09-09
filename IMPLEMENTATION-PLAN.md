@@ -101,15 +101,19 @@ remains immutable.
 | accepted semantics | `validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004.json`; SHA-256 `6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3` | all generation | no | no |
 | acceptance manifest | `validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/acceptance-manifest-004.json`; SHA-256 `1b3fbbfd210c2c0d82d74a2579c1980d5de6b047fff56a08cc2b43097c76e2a9` | all generation | no | no |
 | accepted scenario search intents | `validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json`; SHA-256 `3c5da364196f1bbec17aabdbf2923c65f2bc0d90b2e9788bac8427219d554a3f` | matching onward | no | no |
+| scenario search-intent acceptance manifest | `validation/software-factory/sf-bl002/scenario-search-intent-acceptance-manifest-002.json`; SHA-256 `8772b2a1b4cbb485f0ebce793be734bbd8414aaf318e6033bab7225b1e03fd1b` | matching onward | no | no |
 | test-behavior evidence | `validation/software-factory/sf-bl002/test-behavior-evidence.json`; SHA-256 `6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2` | matching onward | no | no |
 | Graphify snapshot | `validation/pkb001/artifacts/petclinic-graph-818c413.json`; SHA-256 `e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e` | expansion onward | no | no |
 | Graphify runtime evidence | `validation/pkb001/runtime/graphify-petclinic-live-evidence.json`; SHA-256 `fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8` | expansion onward | no | no |
 | evaluator truth | existing sealed `ProviderNeutralEvaluatorTruth` input and seal | evaluation only, after non-evaluator seal | yes | no |
 
-Task 2 accepted all 10 proposal records as retrieval aids only. The acceptance
-does not establish Product truth, component correctness, or matching
-effectiveness. Tasks 3–5 may use only the exact accepted artifact and digest
-above; any byte change requires a new review and immutable identity.
+Task 2 accepted all 10 proposal records as retrieval aids only. The separate
+acceptance manifest binds the reviewer decision, proposal and accepted-artifact
+digests, exact source revision, accepted/rejected IDs, and authority limits.
+The acceptance does not establish Product truth, component correctness, or
+matching effectiveness. Tasks 3–5 may use only the exact accepted artifact and
+manifest digests above; any byte change requires a new review and immutable
+identity.
 
 ### Verified predecessor tasks (read-only)
 
