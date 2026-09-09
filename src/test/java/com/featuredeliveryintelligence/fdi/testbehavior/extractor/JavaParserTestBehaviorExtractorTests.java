@@ -189,6 +189,75 @@ class JavaParserTestBehaviorExtractorTests {
     }
 
     @Test
+    void recoversDeclaredProductionMethodFromProvableReceiverWhenArgumentsDoNotResolve() throws IOException {
+        write("src/main/java/demo/OwnerRepository.java", """
+                package demo;
+                public class OwnerRepository {
+                    public void save(String owner) { }
+                }
+                """);
+        write("src/test/java/demo/OwnerRepositoryTests.java", """
+                package demo;
+                import org.junit.jupiter.api.Test;
+                class OwnerRepositoryTests {
+                    private OwnerRepository repository;
+                    private MissingFixture fixture;
+                    @Test
+                    void savesOwner() {
+                        repository.save(fixture.owner());
+                    }
+                }
+                """);
+
+        TestMethodObservation method = extract().testFiles().get(0).testMethods().get(0);
+        BehaviorObservation save = method.actions().stream()
+                .filter(action -> action.observedExpression().startsWith("repository.save"))
+                .findFirst()
+                .orElseThrow();
+
+        assertThat(save.referencedSymbol()).get()
+                .extracting(ReferencedProductionSymbol::declaringType,
+                        ReferencedProductionSymbol::symbolName,
+                        ReferencedProductionSymbol::basis)
+                .containsExactly("demo.OwnerRepository", "save",
+                        RelationshipBasis.PRODUCTION_RECEIVER_SOURCE_ROOT);
+        assertThat(method.unresolvedReferences()).noneMatch(gap -> gap.referenceText().startsWith("repository.save"));
+    }
+
+    @Test
+    void neverRecoversTestHelperReceiverAsProductionReference() throws IOException {
+        write("src/test/java/demo/EntityUtils.java", """
+                package demo;
+                class EntityUtils {
+                    void getById(String value) { }
+                }
+                """);
+        write("src/test/java/demo/EntityUtilsTests.java", """
+                package demo;
+                import org.junit.jupiter.api.Test;
+                class EntityUtilsTests {
+                    private EntityUtils helper;
+                    private MissingFixture fixture;
+                    @Test
+                    void readsFixture() {
+                        helper.getById(fixture.id());
+                    }
+                }
+                """);
+
+        TestMethodObservation method = extract().testFiles().stream()
+                .filter(file -> file.testClassName().equals("demo.EntityUtilsTests"))
+                .findFirst().orElseThrow().testMethods().get(0);
+        BehaviorObservation call = method.actions().stream()
+                .filter(action -> action.observedExpression().startsWith("helper.getById"))
+                .findFirst()
+                .orElseThrow();
+
+        assertThat(call.referencedSymbol()).isEmpty();
+        assertThat(method.unresolvedReferences()).anyMatch(gap -> gap.referenceText().startsWith("helper.getById"));
+    }
+
+    @Test
     void repeatedExtractionOverIdenticalInputsIsDeterministic() throws IOException {
         write("src/main/java/demo/Owner.java", """
                 package demo;

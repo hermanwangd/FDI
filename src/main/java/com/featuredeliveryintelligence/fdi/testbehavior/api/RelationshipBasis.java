@@ -9,5 +9,10 @@ public enum RelationshipBasis {
     /** Resolved to a production type in the same package from a source root. */
     SAME_PACKAGE_SOURCE_ROOT,
     /** Resolved to a production type through an explicit import from a source root. */
-    IMPORTED_SOURCE_ROOT
+    IMPORTED_SOURCE_ROOT,
+    /**
+     * Full call resolution failed, but the receiver type and named method were
+     * both found in a configured production source root.
+     */
+    PRODUCTION_RECEIVER_SOURCE_ROOT
 }

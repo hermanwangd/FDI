@@ -382,11 +382,25 @@ public final class JavaParserTestBehaviorExtractor implements TestBehaviorEviden
                     addObservation(kind, call.toString(), location, referenced, fixtures, actions, assertions);
                     return;
                 }
+                Optional<ReferencedProductionSymbol> receiverReference =
+                        productionReceiverSymbol(call);
+                if (receiverReference.isPresent()) {
+                    addObservation(kind, call.toString(), location, receiverReference,
+                            fixtures, actions, assertions);
+                    return;
+                }
                 addObservation(kind, call.toString(), location, Optional.empty(),
                         fixtures, actions, assertions);
                 methodUnresolved.add(new UnresolvedReference(
                         call.toString(), location, classifyUnresolved(call.getScope().orElse(null))));
             } catch (RuntimeException failure) {
+                Optional<ReferencedProductionSymbol> receiverReference =
+                        productionReceiverSymbol(call);
+                if (receiverReference.isPresent()) {
+                    addObservation(kind, call.toString(), location, receiverReference,
+                            fixtures, actions, assertions);
+                    return;
+                }
                 addObservation(kind, call.toString(), location, Optional.empty(),
                         fixtures, actions, assertions);
                 methodUnresolved.add(new UnresolvedReference(
@@ -442,6 +456,56 @@ public final class JavaParserTestBehaviorExtractor implements TestBehaviorEviden
                             parserMethod.declaringType().getQualifiedName(),
                             parserMethod.getName(),
                             basisOf(unit, parserMethod.declaringType())));
+        }
+
+        /**
+         * Recovers only the relationship that remains mechanically provable
+         * when argument types prevent full call resolution: the receiver is a
+         * production-root type and that type declares a method with this name.
+         */
+        private Optional<ReferencedProductionSymbol> productionReceiverSymbol(MethodCallExpr call) {
+            if (call.getScope().isEmpty()) return Optional.empty();
+            try {
+                Optional<? extends ResolvedReferenceTypeDeclaration> declaration =
+                        facade.getType(call.getScope().orElseThrow())
+                                .asReferenceType().getTypeDeclaration();
+                if (declaration.isEmpty()) return Optional.empty();
+                ResolvedReferenceTypeDeclaration type = declaration.get();
+                Optional<TypeDeclaration<?>> sourceType = sourceTypeOf(type);
+                if (sourceType.isEmpty()) return Optional.empty();
+                Optional<Path> sourcePath = sourceType.get().findAncestor(CompilationUnit.class)
+                        .flatMap(unit -> unit.getStorage()
+                                .map(storage -> storage.getPath().toAbsolutePath().normalize()));
+                if (sourcePath.filter(path -> isUnder(productionRoots, path)).isEmpty()) {
+                    return Optional.empty();
+                }
+                boolean methodDeclared = sourceType.get().getMethods().stream()
+                        .anyMatch(method -> method.getNameAsString().equals(call.getNameAsString()));
+                if (!methodDeclared) return Optional.empty();
+                return Optional.of(new ReferencedProductionSymbol(
+                        ReferenceKind.METHOD,
+                        type.getQualifiedName(),
+                        call.getNameAsString(),
+                        RelationshipBasis.PRODUCTION_RECEIVER_SOURCE_ROOT));
+            } catch (RuntimeException unresolvedReceiver) {
+                return Optional.empty();
+            }
+        }
+
+        private Optional<TypeDeclaration<?>> sourceTypeOf(ResolvedReferenceTypeDeclaration declaration) {
+            if (declaration instanceof JavaParserClassDeclaration value) {
+                return Optional.of(value.getWrappedNode());
+            }
+            if (declaration instanceof JavaParserInterfaceDeclaration value) {
+                return Optional.of(value.getWrappedNode());
+            }
+            if (declaration instanceof JavaParserEnumDeclaration value) {
+                return Optional.of(value.getWrappedNode());
+            }
+            if (declaration instanceof JavaParserRecordDeclaration value) {
+                return Optional.of(value.getWrappedNode());
+            }
+            return Optional.empty();
         }
 
         /** Source file a source-root-resolved declaration was parsed from, when it is file-backed. */
