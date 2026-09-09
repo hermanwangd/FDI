@@ -156,6 +156,33 @@ after Tasks 3–6 materially clarified the construction and scoring protocol.
   the parent or edit this Plan.
 - Resource bound: Maven heap at most 2 GiB and total command memory below 8 GiB.
 
+### Future execution parallel-slice planning gate
+
+This gate applies when planning a successor execution envelope. It does not
+change, cancel, or redispatch the active `SF-BL-002-PRODUCTION-SCENARIO-002`
+execution or its current Multica issue DAG.
+
+Before a Coordinator chooses a fully sequential DAG, it must classify each
+dependency as either:
+
+- a **construction dependency**, where one slice cannot compile or be tested
+  until another slice's code or contract exists; or
+- a **runtime artifact dependency**, where independently implementable code may
+  be built and tested against a frozen fixture, but the final production run
+  must wait for an upstream artifact.
+
+Every successor Plan must provide a small slice matrix containing owned paths,
+test paths, required inputs, produced outputs, and integration order. Slices
+with non-overlapping owned paths and only runtime artifact dependencies should
+be dispatched in parallel using frozen fixtures. Their outputs are integrated
+once on the Coordinator-owned candidate before combined verification.
+
+A fully sequential DAG is allowed only when the Coordinator records at least
+one concrete blocker: overlapping owned paths, a shared mutable contract,
+compile-time dependency, unsafe shared state, or unavailable deterministic
+fixture. Task numbering or downstream data flow alone is not sufficient reason
+to serialize implementation.
+
 ## Verified delivery ledger
 
 | Delivery | Result | Evidence |
