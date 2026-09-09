@@ -472,7 +472,14 @@ exact-revision binding.
 
 ## 12. Current scope boundary
 
-The active implementation target is only `SF-BL-001`. This baseline does not
+The active delivery target is `SF-BL-001`. One bounded prerequisite correction,
+`SF-BL-002`, MAY repair the preserved PKB-001 evidence pipeline before reuse.
+That correction MUST keep reverse inference proposal-only, MUST distinguish
+production-resolution gaps from external and test-helper diagnostics, MUST use
+only mechanically provable production references, and MUST write a new
+immutable evidence run rather than alter preserved PKB-001 results.
+
+This baseline does not
 authorize a knowledge-graph database, automatic semantic publication,
 maintenance engine, multi-product federation, production deployment, real-time
 equipment integration, a Factory Control runtime, or one Skill per source type.

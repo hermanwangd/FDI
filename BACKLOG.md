@@ -9,6 +9,7 @@ then writes one bounded `IMPLEMENTATION-PLAN.md` and execution envelope.
 | Backlog ID | Type | Requirement binding | Outcome | Status | Dependency / evidence |
 |---|---|---|---|---|---|
 | `SF-BL-001` | `FEATURE` | `AUTH-*`, `PK-*`, `FD-T1-*`–`FD-T4-*`, `EXEC-*`, `EVID-*`, `SF-EVAL-001`, `TECH-001` | Build accepted Product Context from one exact-revision SVSPC repository and training material; deliver the same SPC Chart Management Feature through isolated Code Only and Product Knowledge T1–T4 arms; compare correctness, first-pass outcome, rework, cycle time, token/tool cost, and bootstrap cost. | `BLOCKED_DEPENDENCY` | First obtain an auditable read-only Azure DevOps repository listing for `organization=tsmcid`, `project=ENGCIM`, name prefix `SVSPC`. No repository is selected yet. |
+| `SF-BL-002` | `BUG` | `AUTH-002`, `PK-004`, `EVID-001`, `TECH-001`; source: immutable PKB-BL-007/011 `REVISE` evidence | Correct the misleading unresolved-reference denominator, recover only mechanically provable production receiver references, and enable evidence-backed scenario mapping without treating external/test-helper calls or proposals as Product truth. | `SELECTED` | Human Authority selected this bounded correction. Use a new immutable run; do not mutate completed PKB-001 evidence or access evaluator-only mappings during generation. |
 
 `SF-BL-001` is one parent item. Its gates and capability list are acceptance
 structure, not child Backlog items.
@@ -88,4 +89,6 @@ format.
 The Azure DevOps listing is read-only discovery, not repository selection.
 Repository selection, retrieval, training-material access, Graphify indexing,
 Product Context acceptance, A/P execution, and terminal closure occur only at
-their defined authority gates. No work is currently selected.
+their defined authority gates. Only `SF-BL-002` is selected. Its execution must
+remain independent of the blocked SVSPC dependency and must not start
+`SF-BL-001` delivery.

@@ -12,6 +12,12 @@ exact-revision SVSPC codebase and training material, deliver the same SPC Chart
 Management Feature through isolated Code Only and Product Knowledge arms, and
 measure whether Product Knowledge materially improves delivery.
 
+Before that MVP consumes the PKB-001 foundation, `SF-BL-002` performs one
+bounded foundation correction: distinguish production-reference resolution
+gaps from external/test-helper diagnostics and permit evidence-backed,
+proposal-only scenario-to-production mapping. It does not reopen PKB-001 or
+change Product meaning.
+
 ## Active project truth
 
 Read these project-truth controls in order:
