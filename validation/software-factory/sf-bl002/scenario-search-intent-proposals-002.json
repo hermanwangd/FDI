@@ -1,0 +1,120 @@
+{
+  "schema_version" : "software-factory.sf-bl002-scenario-search-intent-proposals.v0.1",
+  "execution_id" : "SF-BL-002-SCENARIO-INTENT-003",
+  "authority" : "PROPOSAL_ONLY",
+  "semantic_publication_allowed" : false,
+  "source_revision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "semantics_sha256" : "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+  "acceptance_manifest_sha256" : "1b3fbbfd210c2c0d82d74a2579c1980d5de6b047fff56a08cc2b43097c76e2a9",
+  "proposals" : [ {
+    "capabilityId" : "HYP-CAPABILITY-001",
+    "scenarioId" : "HYP-SCENARIO-001",
+    "action" : "FIND",
+    "entity" : "OWNER",
+    "conditions" : [ "last-name-criteria", "paged-results", "detail-view", "multi-result" ],
+    "aliases" : [ "find owner", "owner find" ],
+    "semanticsDigest" : "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+    "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "rationale" : "mechanical retrieval aid derived from frozen scenario text: action=FIND (keyword 找到), entity=OWNER (keyword 飼主), conditions=[last-name-criteria, paged-results, detail-view, multi-result]; search intent only, not Product truth",
+    "authority" : "PROPOSAL_ONLY"
+  }, {
+    "capabilityId" : "HYP-CAPABILITY-001",
+    "scenarioId" : "HYP-SCENARIO-002",
+    "action" : "FIND",
+    "entity" : "OWNER",
+    "conditions" : [ "last-name-criteria", "normalized-input" ],
+    "aliases" : [ "find owner", "owner find" ],
+    "semanticsDigest" : "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+    "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "rationale" : "mechanical retrieval aid derived from frozen scenario text: action=FIND (keyword 找到), entity=OWNER (keyword 飼主), conditions=[last-name-criteria, normalized-input]; search intent only, not Product truth",
+    "authority" : "PROPOSAL_ONLY"
+  }, {
+    "capabilityId" : "HYP-CAPABILITY-002",
+    "scenarioId" : "HYP-SCENARIO-003",
+    "action" : "CREATE",
+    "entity" : "OWNER",
+    "conditions" : [ "contact-details", "post-operation-view" ],
+    "aliases" : [ "create owner", "owner create" ],
+    "semanticsDigest" : "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+    "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "rationale" : "mechanical retrieval aid derived from frozen scenario text: action=CREATE (keyword 建立), entity=OWNER (keyword 飼主), conditions=[contact-details, post-operation-view]; search intent only, not Product truth",
+    "authority" : "PROPOSAL_ONLY"
+  }, {
+    "capabilityId" : "HYP-CAPABILITY-002",
+    "scenarioId" : "HYP-SCENARIO-004",
+    "action" : "UPDATE",
+    "entity" : "OWNER",
+    "conditions" : [ "contact-details", "post-operation-view" ],
+    "aliases" : [ "owner update", "update owner" ],
+    "semanticsDigest" : "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+    "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "rationale" : "mechanical retrieval aid derived from frozen scenario text: action=UPDATE (keyword 更新), entity=OWNER (keyword 飼主), conditions=[contact-details, post-operation-view]; search intent only, not Product truth",
+    "authority" : "PROPOSAL_ONLY"
+  }, {
+    "capabilityId" : "HYP-CAPABILITY-003",
+    "scenarioId" : "HYP-SCENARIO-005",
+    "action" : "CREATE",
+    "entity" : "PET",
+    "conditions" : [ "post-operation-view" ],
+    "aliases" : [ "create pet", "pet create" ],
+    "semanticsDigest" : "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+    "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "rationale" : "mechanical retrieval aid derived from frozen scenario text: action=CREATE (keyword 建立), entity=PET (keyword 寵物), conditions=[post-operation-view]; search intent only, not Product truth",
+    "authority" : "PROPOSAL_ONLY"
+  }, {
+    "capabilityId" : "HYP-CAPABILITY-003",
+    "scenarioId" : "HYP-SCENARIO-006",
+    "action" : "REJECT",
+    "entity" : "PET",
+    "conditions" : [ "duplicate-name-guard" ],
+    "aliases" : [ "pet reject", "reject pet" ],
+    "semanticsDigest" : "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+    "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "rationale" : "mechanical retrieval aid derived from frozen scenario text: action=REJECT (keyword 拒絕), entity=PET (keyword 寵物), conditions=[duplicate-name-guard]; search intent only, not Product truth",
+    "authority" : "PROPOSAL_ONLY"
+  }, {
+    "capabilityId" : "HYP-CAPABILITY-003",
+    "scenarioId" : "HYP-SCENARIO-011",
+    "action" : "UPDATE",
+    "entity" : "PET",
+    "conditions" : [ "post-operation-view" ],
+    "aliases" : [ "pet update", "update pet" ],
+    "semanticsDigest" : "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+    "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "rationale" : "mechanical retrieval aid derived from frozen scenario text: action=UPDATE (keyword 更新), entity=PET (keyword 寵物), conditions=[post-operation-view]; search intent only, not Product truth",
+    "authority" : "PROPOSAL_ONLY"
+  }, {
+    "capabilityId" : "HYP-CAPABILITY-004",
+    "scenarioId" : "HYP-SCENARIO-007",
+    "action" : "CREATE",
+    "entity" : "VISIT",
+    "conditions" : [ "post-operation-view" ],
+    "aliases" : [ "create visit", "visit create" ],
+    "semanticsDigest" : "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+    "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "rationale" : "mechanical retrieval aid derived from frozen scenario text: action=CREATE (keyword 新增), entity=VISIT (keyword 看診), conditions=[post-operation-view]; search intent only, not Product truth",
+    "authority" : "PROPOSAL_ONLY"
+  }, {
+    "capabilityId" : "HYP-CAPABILITY-004",
+    "scenarioId" : "HYP-SCENARIO-008",
+    "action" : "REJECT",
+    "entity" : "VISIT",
+    "conditions" : [ "date-range-guard" ],
+    "aliases" : [ "reject visit", "visit reject" ],
+    "semanticsDigest" : "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+    "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "rationale" : "mechanical retrieval aid derived from frozen scenario text: action=REJECT (keyword 拒絕), entity=VISIT (keyword 看診), conditions=[date-range-guard]; search intent only, not Product truth",
+    "authority" : "PROPOSAL_ONLY"
+  }, {
+    "capabilityId" : "HYP-CAPABILITY-005",
+    "scenarioId" : "HYP-SCENARIO-009",
+    "action" : "BROWSE",
+    "entity" : "VET",
+    "conditions" : [ "paged-results", "multi-result", "specialty-listed" ],
+    "aliases" : [ "browse vet", "vet browse" ],
+    "semanticsDigest" : "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+    "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "rationale" : "mechanical retrieval aid derived from frozen scenario text: action=BROWSE (keyword 瀏覽), entity=VET (keyword 獸醫), conditions=[paged-results, multi-result, specialty-listed]; search intent only, not Product truth",
+    "authority" : "PROPOSAL_ONLY"
+  } ]
+}
