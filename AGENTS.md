@@ -30,6 +30,13 @@ Files under `archive/` are historical reference only.
 
 Supporting files under `contracts/`, `skills/`, `validation/`, `src/`, `config/`, and `tests/` provide implementation detail or evidence, but must not override the five active control documents.
 
+For Java engineering defaults, read `JAVA-CODING-GUIDELINES.md` only when the
+assigned control commit contains this reference. It is supporting guidance:
+the five active controls and `AGENTS.md` must both be satisfied and take
+precedence over the coding guidelines; repository instructions take precedence
+over optional agent skills. Existing in-flight executions bound to an earlier
+control commit are unaffected.
+
 If a supporting artifact conflicts with an active control document, stop and report the conflict.
 
 ## Cross-Agent Authority
