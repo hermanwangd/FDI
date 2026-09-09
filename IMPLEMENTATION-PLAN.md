@@ -100,13 +100,16 @@ remains immutable.
 |---|---|---|---|---|
 | accepted semantics | `validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004.json`; SHA-256 `6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3` | all generation | no | no |
 | acceptance manifest | `validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/acceptance-manifest-004.json`; SHA-256 `1b3fbbfd210c2c0d82d74a2579c1980d5de6b047fff56a08cc2b43097c76e2a9` | all generation | no | no |
+| accepted scenario search intents | `validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json`; SHA-256 `3c5da364196f1bbec17aabdbf2923c65f2bc0d90b2e9788bac8427219d554a3f` | matching onward | no | no |
 | test-behavior evidence | `validation/software-factory/sf-bl002/test-behavior-evidence.json`; SHA-256 `6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2` | matching onward | no | no |
 | Graphify snapshot | `validation/pkb001/artifacts/petclinic-graph-818c413.json`; SHA-256 `e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e` | expansion onward | no | no |
 | Graphify runtime evidence | `validation/pkb001/runtime/graphify-petclinic-live-evidence.json`; SHA-256 `fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8` | expansion onward | no | no |
 | evaluator truth | existing sealed `ProviderNeutralEvaluatorTruth` input and seal | evaluation only, after non-evaluator seal | yes | no |
 
-The accepted search-intent artifact is intentionally absent until Task 2. Its
-exact path and SHA-256 must be added before Tasks 3–5 dispatch.
+Task 2 accepted all 10 proposal records as retrieval aids only. The acceptance
+does not establish Product truth, component correctness, or matching
+effectiveness. Tasks 3–5 may use only the exact accepted artifact and digest
+above; any byte change requires a new review and immutable identity.
 
 ### Verified predecessor tasks (read-only)
 
@@ -259,9 +262,15 @@ after Tasks 3–6 materially clarified the construction and scoring protocol.
 - Execution ID: `SF-BL-002-SCENARIO-INTENT-003`
 - Exact implementation base and Spec revision:
   `b1c46cd7b70bc01aae594f5f9aa16982705646cc`
-- Selected scope: selected successor Task 1 only. Task 2 is the required Human
-  review gate; Tasks 3–5 must not execute until the accepted intent artifact and
-  its exact digest are added to this Plan.
+- Completed scope: successor Task 1 and Task 2 review gate. Task 1 integrated
+  byte-equivalently at `9ad0d17`; independent verdict `PASS` remains bound to
+  producer candidate `50ceb93290348ee5888a798787505e26ced2f13c`. Task 2
+  accepted all 10 retrieval-aid records in the exact artifact recorded above.
+- Tasks 3–5 are not yet dispatched. Their execution envelope must bind an exact
+  control commit containing `AGENTS.md` and `JAVA-CODING-GUIDELINES.md` commit
+  `277100f6bcf18a7cba5b565f7d44f71967021a1f`, and must explicitly require the
+  producer and independent reviewer to read the guideline. The assigned
+  control commit must be a descendant of `277100f6bcf18a7cba5b565f7d44f71967021a1f`.
 - Owned paths: the new Java search-intent proposal generator and tests plus only
   new `scenario-search-intent-proposals-*-002.json` files under
   `validation/software-factory/sf-bl002/`.

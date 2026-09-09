@@ -1,0 +1,137 @@
+{
+  "schema_version": "software-factory.sf-bl002-accepted-scenario-search-intents.v0.1",
+  "status": "FROZEN",
+  "authority": "ACCEPTED_RETRIEVAL_AID_ONLY",
+  "semantic_publication_allowed": false,
+  "reviewer_role": "HUMAN_AUTHORITY_DELEGATED_FEATURE_DELIVERY_REVIEW",
+  "review_decision": "ACCEPT_ALL",
+  "proposal_artifact": {
+    "path": "validation/software-factory/sf-bl002/scenario-search-intent-proposals-002.json",
+    "sha256": "730416e2811c22b9c457f7cb152c527c6aa35f1441c02d420831a0112cd35d7d"
+  },
+  "source_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "semantics_sha256": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+  "accepted_record_ids": [
+    "HYP-SCENARIO-001", "HYP-SCENARIO-002", "HYP-SCENARIO-003",
+    "HYP-SCENARIO-004", "HYP-SCENARIO-005", "HYP-SCENARIO-006",
+    "HYP-SCENARIO-011", "HYP-SCENARIO-007", "HYP-SCENARIO-008",
+    "HYP-SCENARIO-009"
+  ],
+  "rejected_record_ids": [],
+  "limitations": [
+    "The accepted terms are lexical retrieval aids scoped to the frozen Traditional-Chinese scenario vocabulary.",
+    "Acceptance does not establish Product truth, component correctness, or matching effectiveness."
+  ],
+  "records": [
+    {
+      "capabilityId": "HYP-CAPABILITY-001",
+      "scenarioId": "HYP-SCENARIO-001",
+      "action": "FIND",
+      "entity": "OWNER",
+      "conditions": ["last-name-criteria", "paged-results", "detail-view", "multi-result"],
+      "aliases": ["find owner", "owner find"],
+      "semanticsDigest": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-001",
+      "scenarioId": "HYP-SCENARIO-002",
+      "action": "FIND",
+      "entity": "OWNER",
+      "conditions": ["last-name-criteria", "normalized-input"],
+      "aliases": ["find owner", "owner find"],
+      "semanticsDigest": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-002",
+      "scenarioId": "HYP-SCENARIO-003",
+      "action": "CREATE",
+      "entity": "OWNER",
+      "conditions": ["contact-details", "post-operation-view"],
+      "aliases": ["create owner", "owner create"],
+      "semanticsDigest": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-002",
+      "scenarioId": "HYP-SCENARIO-004",
+      "action": "UPDATE",
+      "entity": "OWNER",
+      "conditions": ["contact-details", "post-operation-view"],
+      "aliases": ["owner update", "update owner"],
+      "semanticsDigest": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-003",
+      "scenarioId": "HYP-SCENARIO-005",
+      "action": "CREATE",
+      "entity": "PET",
+      "conditions": ["post-operation-view"],
+      "aliases": ["create pet", "pet create"],
+      "semanticsDigest": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-003",
+      "scenarioId": "HYP-SCENARIO-006",
+      "action": "REJECT",
+      "entity": "PET",
+      "conditions": ["duplicate-name-guard"],
+      "aliases": ["pet reject", "reject pet"],
+      "semanticsDigest": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-003",
+      "scenarioId": "HYP-SCENARIO-011",
+      "action": "UPDATE",
+      "entity": "PET",
+      "conditions": ["post-operation-view"],
+      "aliases": ["pet update", "update pet"],
+      "semanticsDigest": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-004",
+      "scenarioId": "HYP-SCENARIO-007",
+      "action": "CREATE",
+      "entity": "VISIT",
+      "conditions": ["post-operation-view"],
+      "aliases": ["create visit", "visit create"],
+      "semanticsDigest": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-004",
+      "scenarioId": "HYP-SCENARIO-008",
+      "action": "REJECT",
+      "entity": "VISIT",
+      "conditions": ["date-range-guard"],
+      "aliases": ["reject visit", "visit reject"],
+      "semanticsDigest": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY"
+    },
+    {
+      "capabilityId": "HYP-CAPABILITY-005",
+      "scenarioId": "HYP-SCENARIO-009",
+      "action": "BROWSE",
+      "entity": "VET",
+      "conditions": ["paged-results", "multi-result", "specialty-listed"],
+      "aliases": ["browse vet", "vet browse"],
+      "semanticsDigest": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY"
+    }
+  ]
+}
