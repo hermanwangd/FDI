@@ -1,0 +1,635 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sf:portability:contracts:1-proposed",
+  "$defs": {
+    "ChangeClaim": {
+      "type": "object",
+      "properties": {
+        "changeSurfaceRef": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "changeSurfaceRef"
+      ],
+      "additionalProperties": false
+    },
+    "WorkItem": {
+      "type": "object",
+      "properties": {
+        "workItemRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "objective": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "changeClaims": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ChangeClaim"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "outputRequirementRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "evidenceRequirementRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "workItemRef",
+        "objective",
+        "inputRefs",
+        "changeClaims",
+        "outputRequirementRefs",
+        "evidenceRequirementRefs",
+        "constraints"
+      ],
+      "additionalProperties": false
+    },
+    "Dependency": {
+      "type": "object",
+      "properties": {
+        "predecessorRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "successorRef": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "predecessorRef",
+        "successorRef"
+      ],
+      "additionalProperties": false
+    },
+    "RequirementCoverage": {
+      "type": "object",
+      "properties": {
+        "deliveryRequirementRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workItemRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "deliveryRequirementRef",
+        "workItemRefs"
+      ],
+      "additionalProperties": false
+    },
+    "ExecutionPlan": {
+      "type": "object",
+      "properties": {
+        "planRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "deliverySpecRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorkItem"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dependency"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "requirementCoverage": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RequirementCoverage"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "planRef",
+        "deliverySpecRef",
+        "workItems",
+        "dependencies",
+        "requirementCoverage"
+      ],
+      "additionalProperties": false
+    },
+    "WorkItemResult": {
+      "type": "object",
+      "properties": {
+        "workItemRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "executedContractDigest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "COMPLETED",
+            "FAILED",
+            "BLOCKED"
+          ]
+        },
+        "outcomeReasonCode": {
+          "type": "string",
+          "enum": [
+            "SCOPE_CONFLICT",
+            "INPUT_UNAVAILABLE",
+            "CONSTRAINT_VIOLATION",
+            "EXECUTION_FAILURE"
+          ]
+        },
+        "outputRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "workItemRef",
+        "executedContractDigest",
+        "outcome",
+        "outputRefs",
+        "evidenceRefs"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "COMPLETED"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "outcomeReasonCode"
+              ]
+            }
+          },
+          "else": {
+            "required": [
+              "outcomeReasonCode"
+            ]
+          }
+        }
+      ]
+    },
+    "BoundRef": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "authority": {
+          "type": "string",
+          "enum": [
+            "GOVERNING",
+            "INPUT",
+            "EVIDENCE",
+            "PROPOSED"
+          ]
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "GENERATION",
+            "REVIEW",
+            "EVALUATOR"
+          ]
+        },
+        "mutationAllowed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "ref",
+        "kind",
+        "path",
+        "sha256",
+        "authority",
+        "visibility",
+        "mutationAllowed"
+      ],
+      "additionalProperties": false
+    },
+    "Envelope": {
+      "type": "object",
+      "properties": {
+        "profileVersion": {
+          "const": "sf-portability.envelope/1.0-proposed"
+        },
+        "executionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "controlCommit": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "baseCommit": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "planRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workItemRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "executedContractDigest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/BoundRef"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "ownedPaths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "excludedPaths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "authorizationRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runtimeProfileRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredSkills": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "requiredCapabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "profileVersion",
+        "executionId",
+        "controlCommit",
+        "baseCommit",
+        "planRef",
+        "workItemRef",
+        "executedContractDigest",
+        "bindings",
+        "ownedPaths",
+        "excludedPaths",
+        "authorizationRef",
+        "runtimeProfileRef",
+        "requiredSkills",
+        "requiredCapabilities"
+      ],
+      "additionalProperties": false
+    },
+    "Evidence": {
+      "type": "object",
+      "properties": {
+        "evidenceRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "classification": {
+          "type": "string",
+          "enum": [
+            "AGENT_CLAIM",
+            "TOOL_OBSERVATION",
+            "INDEPENDENT_CHECK"
+          ]
+        },
+        "workItemRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contractDigest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "inputDigests": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "candidateCommit": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "generatorActor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generatorRun": {
+          "type": "string",
+          "minLength": 1
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "toolVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "PASS",
+            "FAIL",
+            "INCONCLUSIVE"
+          ]
+        },
+        "artifactRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/BoundRef"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "producerActors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "reviewerActor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewerRun": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "evidenceRef",
+        "classification",
+        "workItemRef",
+        "contractDigest",
+        "inputDigests",
+        "candidateCommit",
+        "generatorActor",
+        "generatorRun",
+        "method",
+        "toolVersion",
+        "observedAt",
+        "result",
+        "artifactRefs",
+        "producerActors"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "classification": {
+                "const": "INDEPENDENT_CHECK"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "reviewerActor",
+              "reviewerRun"
+            ]
+          }
+        }
+      ]
+    },
+    "RuntimeProfile": {
+      "type": "object",
+      "properties": {
+        "profileRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "PROPOSED",
+            "VALIDATED"
+          ]
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "maxAttempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "attemptTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "totalDeadlineSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "memoryLimitBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8000000000
+        },
+        "maxConcurrency": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "isolation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identityVerification": {
+          "type": "string",
+          "minLength": 1
+        },
+        "deduplication": {
+          "type": "string",
+          "minLength": 1
+        },
+        "conformanceEvidenceRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "profileRef",
+        "status",
+        "capabilities",
+        "maxAttempts",
+        "attemptTimeoutSeconds",
+        "totalDeadlineSeconds",
+        "memoryLimitBytes",
+        "maxConcurrency",
+        "isolation",
+        "identityVerification",
+        "deduplication",
+        "conformanceEvidenceRefs"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "VALIDATED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "conformanceEvidenceRefs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

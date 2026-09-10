@@ -1,0 +1,74 @@
+{
+  "status": "PROPOSED_REASONING_BLUEPRINT_NOT_EXECUTION_PLAN",
+  "rules": [
+    "Exact Human-accepted context required before forward realization and T1.",
+    "Reverse mode uses a separately approved blinded allowlist.",
+    "EP executes approved ExecutionPlan DAG, not this blueprint.",
+    "Independent review and T4 use actors distinct from every producer/integrator.",
+    "T4 PASS is ENGINEERING_READY; Human terminal closure remains separate.",
+    "Learning stays proposal-only."
+  ],
+  "steps": [
+    {
+      "id": "inventory",
+      "role": "Inventory/history analyst",
+      "skill": "pa-codebase-inventory",
+      "requires": []
+    },
+    {
+      "id": "history",
+      "role": "Inventory/history analyst",
+      "skill": "pa-historical-delivery",
+      "requires": []
+    },
+    {
+      "id": "semantic-proposal",
+      "role": "Product analyst",
+      "skill": "pk-s1-product-semantics",
+      "requires": [
+        "inventory",
+        "history"
+      ]
+    },
+    {
+      "id": "realization-proposal",
+      "role": "Product analyst",
+      "skill": "pk-s2-product-realization",
+      "requires": [
+        "semantic-proposal"
+      ]
+    },
+    {
+      "id": "T1-T3",
+      "role": "Delivery actor",
+      "skill": "sf-feature-delivery",
+      "requires": [
+        "semantic-proposal"
+      ]
+    },
+    {
+      "id": "execute-review-integrate",
+      "role": "Execution coordinator",
+      "skill": "sf-execution",
+      "requires": [
+        "T1-T3"
+      ]
+    },
+    {
+      "id": "T4",
+      "role": "T4 evaluator",
+      "skill": "sf-feature-delivery",
+      "requires": [
+        "execute-review-integrate"
+      ]
+    },
+    {
+      "id": "learning-proposal",
+      "role": "Product analyst",
+      "skill": "pk-s1-product-semantics",
+      "requires": [
+        "T4"
+      ]
+    }
+  ]
+}

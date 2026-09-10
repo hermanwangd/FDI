@@ -1,0 +1,118 @@
+{
+  "status": "PASS_PACKAGE_STRUCTURE_AND_SHAPE_ONLY",
+  "sourceCommit": "2877007af6f6f4ebcc23a393c0d2424292cb6f0e",
+  "validator": "jsonschema 4.26.0 / Draft202012Validator",
+  "checks": [
+    {
+      "case": "examples/ExecutionPlan.json",
+      "expected": "VALID",
+      "actual": "VALID"
+    },
+    {
+      "case": "examples/WorkItemResult.json",
+      "expected": "VALID",
+      "actual": "VALID"
+    },
+    {
+      "case": "examples/Envelope.json",
+      "expected": "VALID",
+      "actual": "VALID"
+    },
+    {
+      "case": "adapters/multica-reference.json",
+      "expected": "VALID",
+      "actual": "VALID"
+    },
+    {
+      "case": "adapters/company-binding.json",
+      "expected": "VALID",
+      "actual": "VALID"
+    },
+    {
+      "case": "examples/WorkItem-change.json",
+      "expected": "VALID",
+      "actual": "VALID"
+    },
+    {
+      "case": "examples/WorkItem-integrate.json",
+      "expected": "VALID",
+      "actual": "VALID"
+    },
+    {
+      "case": "examples/WorkItem-regress.json",
+      "expected": "VALID",
+      "actual": "VALID"
+    },
+    {
+      "case": "WorkItem rejects agent",
+      "expected": "INVALID",
+      "actual": "INVALID"
+    },
+    {
+      "case": "WorkItem rejects runtime",
+      "expected": "INVALID",
+      "actual": "INVALID"
+    },
+    {
+      "case": "WorkItem rejects attempt",
+      "expected": "INVALID",
+      "actual": "INVALID"
+    },
+    {
+      "case": "WorkItem rejects retry",
+      "expected": "INVALID",
+      "actual": "INVALID"
+    },
+    {
+      "case": "WorkItem rejects acceptanceCriteria",
+      "expected": "INVALID",
+      "actual": "INVALID"
+    },
+    {
+      "case": "WorkItem rejects dependencies",
+      "expected": "INVALID",
+      "actual": "INVALID"
+    },
+    {
+      "case": "COMPLETED with reason",
+      "expected": "INVALID",
+      "actual": "INVALID"
+    },
+    {
+      "case": "FAILED without reason",
+      "expected": "INVALID",
+      "actual": "INVALID"
+    },
+    {
+      "case": "Product verdict in result",
+      "expected": "INVALID",
+      "actual": "INVALID"
+    },
+    {
+      "case": "Routing decision in reason",
+      "expected": "INVALID",
+      "actual": "INVALID"
+    },
+    {
+      "case": "Invalid digest",
+      "expected": "INVALID",
+      "actual": "INVALID"
+    },
+    {
+      "case": "Claim expanded fields",
+      "expected": "INVALID",
+      "actual": "INVALID"
+    }
+  ],
+  "skillCount": 6,
+  "behavioralCaseCount": 28,
+  "localLinks": "PASS",
+  "skillDependencies": "PASS",
+  "sourceSnapshotDigests": "PASS",
+  "semanticContractChecks": "NOT_EXECUTED",
+  "runtimeBehaviorTests": "NOT_EXECUTED",
+  "independentReview": "NOT_PERFORMED_AUTHOR_SELF_REVIEW_ONLY",
+  "P1_P2": "NOT_VALIDATED",
+  "productionReadiness": "NOT_CLAIMED",
+  "syntheticExamples": "Zero commit and synthetic refs must fail real dispatch admission."
+}

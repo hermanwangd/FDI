@@ -1,0 +1,275 @@
+[
+  {
+    "id": "reject-agent",
+    "schema": "WorkItem",
+    "expectedValid": false,
+    "input": {
+      "workItemRef": "change",
+      "objective": "Implement approved synthetic output",
+      "inputRefs": [
+        "synthetic-input"
+      ],
+      "changeClaims": [
+        {
+          "changeSurfaceRef": "surface-a"
+        }
+      ],
+      "outputRequirementRefs": [
+        "out-change"
+      ],
+      "evidenceRequirementRefs": [
+        "evidence-change"
+      ],
+      "constraints": [
+        "no-control-mutation"
+      ],
+      "agent": "forbidden"
+    }
+  },
+  {
+    "id": "reject-runtime",
+    "schema": "WorkItem",
+    "expectedValid": false,
+    "input": {
+      "workItemRef": "change",
+      "objective": "Implement approved synthetic output",
+      "inputRefs": [
+        "synthetic-input"
+      ],
+      "changeClaims": [
+        {
+          "changeSurfaceRef": "surface-a"
+        }
+      ],
+      "outputRequirementRefs": [
+        "out-change"
+      ],
+      "evidenceRequirementRefs": [
+        "evidence-change"
+      ],
+      "constraints": [
+        "no-control-mutation"
+      ],
+      "runtime": "forbidden"
+    }
+  },
+  {
+    "id": "reject-attempt",
+    "schema": "WorkItem",
+    "expectedValid": false,
+    "input": {
+      "workItemRef": "change",
+      "objective": "Implement approved synthetic output",
+      "inputRefs": [
+        "synthetic-input"
+      ],
+      "changeClaims": [
+        {
+          "changeSurfaceRef": "surface-a"
+        }
+      ],
+      "outputRequirementRefs": [
+        "out-change"
+      ],
+      "evidenceRequirementRefs": [
+        "evidence-change"
+      ],
+      "constraints": [
+        "no-control-mutation"
+      ],
+      "attempt": "forbidden"
+    }
+  },
+  {
+    "id": "reject-retry",
+    "schema": "WorkItem",
+    "expectedValid": false,
+    "input": {
+      "workItemRef": "change",
+      "objective": "Implement approved synthetic output",
+      "inputRefs": [
+        "synthetic-input"
+      ],
+      "changeClaims": [
+        {
+          "changeSurfaceRef": "surface-a"
+        }
+      ],
+      "outputRequirementRefs": [
+        "out-change"
+      ],
+      "evidenceRequirementRefs": [
+        "evidence-change"
+      ],
+      "constraints": [
+        "no-control-mutation"
+      ],
+      "retry": "forbidden"
+    }
+  },
+  {
+    "id": "reject-acceptanceCriteria",
+    "schema": "WorkItem",
+    "expectedValid": false,
+    "input": {
+      "workItemRef": "change",
+      "objective": "Implement approved synthetic output",
+      "inputRefs": [
+        "synthetic-input"
+      ],
+      "changeClaims": [
+        {
+          "changeSurfaceRef": "surface-a"
+        }
+      ],
+      "outputRequirementRefs": [
+        "out-change"
+      ],
+      "evidenceRequirementRefs": [
+        "evidence-change"
+      ],
+      "constraints": [
+        "no-control-mutation"
+      ],
+      "acceptanceCriteria": "forbidden"
+    }
+  },
+  {
+    "id": "reject-dependencies",
+    "schema": "WorkItem",
+    "expectedValid": false,
+    "input": {
+      "workItemRef": "change",
+      "objective": "Implement approved synthetic output",
+      "inputRefs": [
+        "synthetic-input"
+      ],
+      "changeClaims": [
+        {
+          "changeSurfaceRef": "surface-a"
+        }
+      ],
+      "outputRequirementRefs": [
+        "out-change"
+      ],
+      "evidenceRequirementRefs": [
+        "evidence-change"
+      ],
+      "constraints": [
+        "no-control-mutation"
+      ],
+      "dependencies": "forbidden"
+    }
+  },
+  {
+    "id": "completed-reason",
+    "schema": "WorkItemResult",
+    "expectedValid": false,
+    "input": {
+      "workItemRef": "change",
+      "executedContractDigest": "3284e91e70cf2370cdfc0369545998a5d7625915176cfe74a7b4bdd9d60c479a",
+      "outcome": "COMPLETED",
+      "outputRefs": [
+        "synthetic-output"
+      ],
+      "evidenceRefs": [
+        "synthetic-evidence"
+      ],
+      "outcomeReasonCode": "EXECUTION_FAILURE"
+    }
+  },
+  {
+    "id": "failed-no-reason",
+    "schema": "WorkItemResult",
+    "expectedValid": false,
+    "input": {
+      "workItemRef": "change",
+      "executedContractDigest": "3284e91e70cf2370cdfc0369545998a5d7625915176cfe74a7b4bdd9d60c479a",
+      "outcome": "FAILED",
+      "outputRefs": [
+        "synthetic-output"
+      ],
+      "evidenceRefs": [
+        "synthetic-evidence"
+      ]
+    }
+  },
+  {
+    "id": "unknown-outcome",
+    "schema": "WorkItemResult",
+    "expectedValid": false,
+    "input": {
+      "workItemRef": "change",
+      "executedContractDigest": "3284e91e70cf2370cdfc0369545998a5d7625915176cfe74a7b4bdd9d60c479a",
+      "outcome": "PASS",
+      "outputRefs": [
+        "synthetic-output"
+      ],
+      "evidenceRefs": [
+        "synthetic-evidence"
+      ]
+    }
+  },
+  {
+    "id": "routing-reason",
+    "schema": "WorkItemResult",
+    "expectedValid": false,
+    "input": {
+      "workItemRef": "change",
+      "executedContractDigest": "3284e91e70cf2370cdfc0369545998a5d7625915176cfe74a7b4bdd9d60c479a",
+      "outcome": "BLOCKED",
+      "outputRefs": [
+        "synthetic-output"
+      ],
+      "evidenceRefs": [
+        "synthetic-evidence"
+      ],
+      "outcomeReasonCode": "PLAN_CHANGE_REQUIRED"
+    }
+  },
+  {
+    "id": "bad-digest",
+    "schema": "WorkItemResult",
+    "expectedValid": false,
+    "input": {
+      "workItemRef": "change",
+      "executedContractDigest": "abc",
+      "outcome": "COMPLETED",
+      "outputRefs": [
+        "synthetic-output"
+      ],
+      "evidenceRefs": [
+        "synthetic-evidence"
+      ]
+    }
+  },
+  {
+    "id": "claim-extra-field",
+    "schema": "WorkItem",
+    "expectedValid": false,
+    "input": {
+      "workItemRef": "change",
+      "objective": "Implement approved synthetic output",
+      "inputRefs": [
+        "synthetic-input"
+      ],
+      "changeClaims": [
+        {
+          "changeSurfaceRef": "a",
+          "ownedPaths": [
+            "x"
+          ]
+        }
+      ],
+      "outputRequirementRefs": [
+        "out-change"
+      ],
+      "evidenceRequirementRefs": [
+        "evidence-change"
+      ],
+      "constraints": [
+        "no-control-mutation"
+      ]
+    }
+  }
+]

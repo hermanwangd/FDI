@@ -1,0 +1,21 @@
+{
+  "profileRef": "company-binding",
+  "status": "PROPOSED",
+  "capabilities": [
+    "exact-inputs/1",
+    "durable-receipts/1",
+    "independent-review/1",
+    "isolated-workspace/1",
+    "mutation-boundary/1",
+    "reconcile-cancel/1"
+  ],
+  "maxAttempts": 3,
+  "attemptTimeoutSeconds": 900,
+  "totalDeadlineSeconds": 2700,
+  "memoryLimitBytes": 6000000000,
+  "maxConcurrency": 1,
+  "isolation": "Receiving-company adapter must provide equivalent durable lookup, attributable actors and isolated candidate workspaces; APIs not yet selected.",
+  "identityVerification": "Resolve exact actor and run from authenticated runtime records.",
+  "deduplication": "Exclusive durable claim or verified single-writer reconciliation; no atomicity assumption.",
+  "conformanceEvidenceRefs": []
+}

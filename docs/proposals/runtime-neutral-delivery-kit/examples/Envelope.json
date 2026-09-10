@@ -1,0 +1,43 @@
+{
+  "profileVersion": "sf-portability.envelope/1.0-proposed",
+  "executionId": "SYNTHETIC-ONLY",
+  "controlCommit": "0000000000000000000000000000000000000000",
+  "baseCommit": "0000000000000000000000000000000000000000",
+  "planRef": "synthetic-plan-1",
+  "workItemRef": "change",
+  "executedContractDigest": "3284e91e70cf2370cdfc0369545998a5d7625915176cfe74a7b4bdd9d60c479a",
+  "bindings": [
+    {
+      "ref": "synthetic-input",
+      "kind": "Fixture",
+      "path": "examples/input.txt",
+      "sha256": "ba29587314683077c296e2990010fd99a906ebae533bfba3942e874e68435934",
+      "authority": "INPUT",
+      "visibility": "GENERATION",
+      "mutationAllowed": false
+    }
+  ],
+  "ownedPaths": [
+    "synthetic/src/output.txt"
+  ],
+  "excludedPaths": [
+    "PROJECT-OVERVIEW.md",
+    "FRAMEWORK-SPEC.md",
+    "BACKLOG.md",
+    "IMPLEMENTATION-PLAN.md",
+    "STATUS.json"
+  ],
+  "authorizationRef": "SYNTHETIC-NOT-A-GRANT",
+  "runtimeProfileRef": "company-binding",
+  "requiredSkills": [
+    "sf-execution"
+  ],
+  "requiredCapabilities": [
+    "exact-inputs/1",
+    "durable-receipts/1",
+    "independent-review/1",
+    "isolated-workspace/1",
+    "mutation-boundary/1",
+    "reconcile-cancel/1"
+  ]
+}
