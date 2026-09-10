@@ -1,0 +1,87 @@
+{
+  "schema_version": "1",
+  "execution_id": "SF-BL-004-CHANGE-REFERENCE-001",
+  "task": "Task 5 combined integration, golden pilot, and acceptance evidence",
+  "authority": "REFERENCE_ONLY",
+  "canonical_backlog": "SF-BL-004",
+  "base_commit": "af8ef6e457634c04bee0e4fb48378c144ced36d1",
+  "control_commit": "a504944515a309c8a6e776cff8c4db4e6cacc0d3",
+  "integrated_candidate": {
+    "branch": "agent/delivery-engineer/herm-389",
+    "chain": [
+      {"commit": "ab599b0", "role": "daemon starting commit (managed worktree baseline)"},
+      {"commit": "b690e39", "role": "Task 1 replay (accepted 210c0919a8dc352ee670fa252379fda4f20cce71, HERM-382 PASS)"},
+      {"commit": "e30d0b7", "role": "Task 2 replay (accepted de791a3aad1c9172149f06d39dc90ba1d243699a, HERM-384 PASS)"},
+      {"commit": "2783758", "role": "Task 3 replay (accepted 7a9e8b673a79d605a123055d11aa79b7710deb2a, HERM-386 PASS)"},
+      {"commit": "7ca138eb884278f8d51b94d37af3a25b8c3d77a0", "role": "Task 4 replay (accepted 3ea6f45883548b898245faebf4b0a4ac5621871c, HERM-388 PASS)"},
+      {"commit": "f115143", "role": "Task 5 integration test and expected structural manifest"}
+    ],
+    "replay_identity": "git diff 3ea6f458..7ca138e -- src pom.xml is empty: replayed chain is byte-identical to the accepted candidates over all slice-owned paths; af8ef6e4 is a confirmed ancestor of HEAD"
+  },
+  "changed_paths_task5": [
+    "src/test/java/com/featuredeliveryintelligence/fdi/portability/changereference/ProjectChangeReferenceIntegrationTests.java",
+    "src/test/resources/project-change-reference/expected-package.json",
+    "validation/software-factory/sf-bl004/change-reference-001-evidence.json"
+  ],
+  "per_slice_verification": [
+    {"slice": "T1", "candidate": "210c0919a8dc352ee670fa252379fda4f20cce71", "focused_tests": "GitChangeSourceTests, ChangeClassifierTests", "review": "HERM-382 independent adjudication PASS"},
+    {"slice": "T2", "candidate": "de791a3aad1c9172149f06d39dc90ba1d243699a", "focused_tests": "ChangeExtractorTests", "review": "HERM-384 independent adjudication PASS"},
+    {"slice": "T3", "candidate": "7a9e8b673a79d605a123055d11aa79b7710deb2a", "focused_tests": "ReferencePackageWriterTests", "review": "HERM-386 independent adjudication PASS"},
+    {"slice": "T4", "candidate": "3ea6f45883548b898245faebf4b0a4ac5621871c", "focused_tests": "ProjectChangeReferenceCliTests", "review": "HERM-388 independent adjudication PASS"}
+  ],
+  "task5_verification": {
+    "focused_test_command": "MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=ProjectChangeReferenceIntegrationTests test",
+    "focused_test_result": "PASS (1 integration test: mixed Git fixture export, safety assertions, digest validation, structural manifest equality, fixed-clock double-run byte parity)",
+    "tdd_record": "test authored before first run; first run failed (missing assets/ parent directory), second run failed (over-strict authority-marker assertion on manifest.json), both corrected in test code only; implementation untouched",
+    "fixture": "temporary Git repository with 17 committed changed paths: CODE, TEST, DOCUMENTATION, CONTROL (BACKLOG.md, STATUS.json), CONTRACT, CONFIGURATION, SKILL, EVIDENCE, RENAME, DELETE, secret (SECRET_DETECTED), unsafe .env/.pem (PATH_UNSAFE), and NUL-byte binary",
+    "golden_pilot": {
+      "command": "java -cp target/classes:<dependency-classpath> com.featuredeliveryintelligence.fdi.application.FdiApplication project-change-reference-export --repository . --repository-name fdi-software-factory --from af8ef6e457634c04bee0e4fb48378c144ced36d1 --to 7ca138eb884278f8d51b94d37af3a25b8c3d77a0 --output <new-dir> --context-lines 5 --max-text-bytes 262144",
+      "runs": 2,
+      "result": "exit 0 both runs; 15 records, 2 excluded; all 15 CR-NNNN.md records, IMPORT-PROMPT.md byte-identical across runs; only generatedAt (CLI system clock) and the dependent manifest.json/manifest.sha256 differ",
+      "fixed_clock_parity": "ProjectChangeReferenceIntegrationTests asserts two Clock.fixed exports are byte-identical across the whole package tree including manifest.json",
+      "output_digests_run1": {
+        "CHANGE-SUMMARY.md": "58dda4d41c931a942723595b2a139d37156b6de038d9cd25b5a7f4de0171f4e7",
+        "IMPORT-PROMPT.md": "3fb72ec5492ae701998d34f2f2ac60a4c8de27206cfcc1e363e5e8ca1f769551",
+        "changes/CR-0001.md": "e5d40cb0163952e1c1861eb6c55cc4ee8c0e2f277387b32467cfb28a9501f4ee",
+        "changes/CR-0002.md": "607d49f40a76626a805f3e6f8dc5aec00632ccd98d89406eb3db70e27860a440",
+        "changes/CR-0003.md": "38c0d0cd3e44784d1e112153f8e9dbf7b2c788c1a3f0f98709d0f57805e25651",
+        "changes/CR-0004.md": "8511abfc1f15b9bd83b7a6dd571617c07b5713b89cd4ee3b0a3998c23d2631d0",
+        "changes/CR-0005.md": "23ac8aa43da9f4afe0b87d0ab04aeb57715b584aee84a7c02b0c0422f6628230",
+        "changes/CR-0006.md": "6b22e0eab1ed9472f4fe54c16854f3b3b54bdf90f6e775e1d598f2d57256fd7a",
+        "changes/CR-0007.md": "094bdfa1f0244bfae1d8270cdfa1380a301f14f541e4143d765e15a7e5883a9",
+        "changes/CR-0008.md": "2c5d6ced50726ee957aebe674766b5287ca8feebeaca5445088a382efcc0d1d1",
+        "changes/CR-0009.md": "2528202443b1afdc1da7f07079b50a277d80f45f5b60ea11f3a956c96317b78b",
+        "changes/CR-0010.md": "cd20bedc7527ce80014d7f3802974def888a9337933d84210a665303d262dd73",
+        "changes/CR-0011.md": "060e5f23ec8e0eed585b4bac761dcf4229bc93a0a87dc6a4bb1d1cb336437183",
+        "changes/CR-0012.md": "ac296380ebaa3e0fd6b66e03c315b1a345123f02a2ab1d18b598916c8e93719f",
+        "changes/CR-0013.md": "fd28b81204360b1dc1159fbfe823c58bca61298176113f66172dbbf691709bab",
+        "changes/CR-0014.md": "a32fff2c0b426877ae7a00feb6eef9b444fb04dacf12f87ec935bfd84085e67d",
+        "changes/CR-0015.md": "5b74e86cc9d751fab4663e5ece5b748cd9847491b7de2101a3ed0698d5f77a33",
+        "manifest.json": "953d908b3f16e1f47c9c5dab0e614dc0b5eec17f6298835042bab47ac43a36ed",
+        "manifest.sha256": "e086d31a9d1637cdc77d5420306922a92574a2766e25291a19f3b311e7c68e32"
+      }
+    }
+  },
+  "exclusions_observed": [
+    {"path": "src/test/java/com/featuredeliveryintelligence/fdi/application/ProjectChangeReferenceCliTests.java", "reason": "SECRET_DETECTED (committed test fixture contains a secret-signature literal; fail-closed content scanning is not fixture-aware)"},
+    {"path": "src/test/java/com/featuredeliveryintelligence/fdi/portability/changereference/ChangeClassifierTests.java", "reason": "SECRET_DETECTED (same cause)"}
+  ],
+  "plan_change_required_findings": [
+    {
+      "id": "PCR-001",
+      "requirement": "IMPLEMENTATION-PLAN.md Task 5 acceptance: control records carry adoption warnings, STATUS.json is ADOPTION_NOT_RECOMMENDED; design 494f8c0 'Authority and safety boundary': STATUS.json is exported as historical context and marked ADOPTION_NOT_RECOMMENDED",
+      "observed": "the integrated candidate classifies STATUS.json as CONTROL and every record carries REFERENCE_ONLY/DO_NOT_APPLY_BLINDLY/verification-obligation warnings, but no ADOPTION_NOT_RECOMMENDED marker is emitted anywhere in the package; STATUS.json is exported with regular excerpts like any control file",
+      "cause": "no Task 1-4 slice owned this behavior and no independent review asserted it",
+      "route": "Feature Delivery Plane decision: add the marker (new bounded slice over ReferencePackageWriter) or revise the plan/design text; Task 5 envelope (3 test/evidence paths) cannot implement it without unauthorized expansion"
+    }
+  ],
+  "limitations": [
+    "Packaged CLI uses Clock.systemUTC(), so two CLI runs differ only in generatedAt and the dependent manifest checksum; fixed-clock byte parity is proven through the facade API in the integration test (reviewer-accepted T4 limitation)",
+    "Secret-signature fail-closed scanning excludes the two exporter test files that carry signature literals as fixtures; the exported reference range is therefore missing their test evidence (safe by design, adoption-relevant)",
+    "KPI telemetry (token usage, cycle time, first-pass rate) is not emitted by the runtime for this slice: reported as N/A per MULTICA-SLICE-OPTIMIZATION counting rules"
+  ],
+  "blockers": [],
+  "recommended_completion_state": "INTEGRATION_PASS_WITH_PLAN_CHANGE_REQUIRED_FINDING",
+  "sf_bl004_verified": false,
+  "note": "This evidence package is supporting evidence, not project truth; SF-BL-004 terminal closure requires Human confirmation."
+}
