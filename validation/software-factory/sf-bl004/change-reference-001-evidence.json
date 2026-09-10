@@ -113,10 +113,9 @@
     "plan_change_required_findings": [
         {
             "id": "PCR-001",
+            "status": "RESOLVED",
             "requirement": "IMPLEMENTATION-PLAN.md Task 5 acceptance: control records carry adoption warnings, STATUS.json is ADOPTION_NOT_RECOMMENDED; design 494f8c0 'Authority and safety boundary': STATUS.json is exported as historical context and marked ADOPTION_NOT_RECOMMENDED",
-            "observed": "the integrated candidate classifies STATUS.json as CONTROL and every record carries REFERENCE_ONLY/DO_NOT_APPLY_BLINDLY/verification-obligation warnings, but no ADOPTION_NOT_RECOMMENDED marker is emitted anywhere in the package; STATUS.json is exported with regular excerpts like any control file",
-            "cause": "no Task 1-4 slice owned this behavior and no independent review asserted it",
-            "route": "Feature Delivery Plane decision: add the marker (new bounded slice over ReferencePackageWriter) or revise the plan/design text; Task 5 envelope (3 test/evidence paths) cannot implement it without unauthorized expansion"
+            "resolution": "The ADOPTION_NOT_RECOMMENDED marker WAS added by the PCR-001 remediation delivered at 839d67cb643ce6cd9ecc607b66ff43d1e1e3bfbd: ReferencePackageWriter renders the STATUS.json CONTROL record with the exact marker, focused tests (ReferencePackageWriterTests, ProjectChangeReferenceIntegrationTests) and the full Java 17 regression passed, and the golden-pilot rerun re-recorded digests reproduce. The previously OPEN finding was stale; it is recorded here as RESOLVED. Details in pcr001_remediation."
         }
     ],
     "limitations": [
@@ -125,7 +124,7 @@
         "KPI telemetry (token usage, cycle time, first-pass rate) is not emitted by the runtime for this slice: reported as N/A per MULTICA-SLICE-OPTIMIZATION counting rules"
     ],
     "blockers": [],
-    "recommended_completion_state": "INTEGRATION_PASS_WITH_PLAN_CHANGE_REQUIRED_FINDING",
+    "recommended_completion_state": "ENGINEERING_READY",
     "sf_bl004_verified": false,
     "note": "This evidence package is supporting evidence, not project truth; SF-BL-004 terminal closure requires Human confirmation.",
     "pcr001_remediation": {
