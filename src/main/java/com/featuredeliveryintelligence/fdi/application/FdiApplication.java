@@ -57,6 +57,9 @@ public class FdiApplication {
         if (HumanReviewPacketCli.handles(args)) {
             System.exit(HumanReviewPacketCli.run(args, System.out, System.err));
         }
+        if (ProjectChangeReferenceCli.handles(args)) {
+            System.exit(ProjectChangeReferenceCli.run(args, System.out, System.err));
+        }
         if (Dev204Cli.handles(args)) return;
         SpringApplication.run(FdiApplication.class, args);
     }
