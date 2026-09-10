@@ -20,7 +20,8 @@ import java.util.stream.Collectors;
  *  publishes it with an atomic directory move. On any failure the staging directory
  *  is removed and nothing is published. REFERENCE_ONLY, DO_NOT_APPLY_BLINDLY,
  *  NO_SHARED_BASELINE, and automatic_application_allowed=false are preserved in
- *  every output. */
+ *  every output. The STATUS.json CONTROL record additionally carries the exact
+ *  marker ADOPTION_NOT_RECOMMENDED; no other record receives that marker. */
 final class ReferencePackageWriter {
 
     static final String GENERATOR_VERSION = "1.0.0";
@@ -187,6 +188,10 @@ final class ReferencePackageWriter {
         blob(md, "External after blob", r.newBlobId, r.newSha256);
         md.append("\nAuthority: REFERENCE_ONLY — DO_NOT_APPLY_BLINDLY. NO_SHARED_BASELINE; ")
                 .append("automatic_application_allowed=false.\n");
+        if (isStatusJsonControl(r)) {
+            md.append("\nAdoption: ADOPTION_NOT_RECOMMENDED — external execution state is historical ")
+                    .append("context only and has no direct meaning in the company repository.\n");
+        }
         if (!r.text) {
             md.append("\nBinary content: excluded (metadata and digest only); bytes are never embedded.\n");
         } else if (r.change.excerpts().isEmpty()) {
@@ -213,6 +218,11 @@ final class ReferencePackageWriter {
         md.append("- Add or update company tests, verify, and merge through company authority.\n");
         md.append("- This record is REFERENCE_ONLY evidence from an unrelated repository (NO_SHARED_BASELINE).\n");
         return md.toString();
+    }
+
+    private static boolean isStatusJsonControl(Record r) {
+        return r.category.equals(Category.CONTROL.name())
+                && (r.path.equals("STATUS.json") || r.path.endsWith("/STATUS.json"));
     }
 
     private static String summary(WriteRequest request, List<Record> records, List<PackageChange> excluded) {

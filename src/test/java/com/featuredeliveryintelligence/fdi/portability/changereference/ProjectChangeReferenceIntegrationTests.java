@@ -24,7 +24,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 /** Combined integration and golden pilot (SF-BL-004 CHANGE-REFERENCE-001 Task 5):
  *  a temporary Git fixture with mixed change kinds exports as one safe package —
  *  every supported category appears with correct changed portions only, control
- *  records carry adoption warnings, secret content fails closed, binary bytes are
+ *  records carry adoption warnings and the STATUS.json control record carries the
+ *  exact ADOPTION_NOT_RECOMMENDED marker (assigned to no other record), secret
+ *  content fails closed, binary bytes are
  *  absent, and no API can target a receiving repository. Two fixed-clock exports
  *  are byte-identical, digests validate against the detached checksum, and the
  *  compact structural manifest matches the pinned expected-package.json.
@@ -218,6 +220,11 @@ class ProjectChangeReferenceIntegrationTests {
                     .contains("Company-side verification obligations")
                     .contains("This record is REFERENCE_ONLY evidence from an unrelated repository");
         }
+        String status = recordFor(output, "STATUS.json");
+        assertThat(status).contains("ADOPTION_NOT_RECOMMENDED")
+                .contains("REFERENCE_ONLY").contains("DO_NOT_APPLY_BLINDLY").contains("NO_SHARED_BASELINE")
+                .contains("automatic_application_allowed=false");
+        assertThat(recordFor(output, "BACKLOG.md")).doesNotContain("ADOPTION_NOT_RECOMMENDED");
     }
 
     private static void assertSecretAndUnsafeContentAbsent(Path output) throws Exception {

@@ -213,6 +213,32 @@ class ReferencePackageWriterTests {
     }
 
     @Test
+    void statusJsonControlRecordCarriesAdoptionNotRecommendedMarkerOnly() throws Exception {
+        List<ReferencePackageWriter.PackageChange> controlChanges = List.of(
+                change("STATUS.json", Category.CONTROL, Operation.MODIFY, "{\"gate\":1}\n", "{\"gate\":2}\n",
+                        excerpt("gate", false, "+\"gate\":2")),
+                change("BACKLOG.md", Category.CONTROL, Operation.MODIFY, "- PKB-001 READY\n", "- PKB-001 VERIFIED\n",
+                        excerpt("PKB-001", false, "- PKB-001 VERIFIED")),
+                change("docs/guide.md", Category.DOCUMENTATION, Operation.MODIFY, "old\n", "new\n",
+                        excerpt("guide", false, "+new")));
+        Path output = new ReferencePackageWriter().write(
+                new ReferencePackageWriter.WriteRequest("external-fdi", FROM, TO, controlChanges,
+                        dir.resolve("pkg"), FIXED));
+        JsonNode manifest = MAPPER.readTree(read(output, "manifest.json"));
+        String statusRecord = null;
+        for (JsonNode record : manifest.get("records")) {
+            if (record.get("path").asText().equals("STATUS.json")) {
+                statusRecord = read(output, "changes/" + record.get("recordId").asText() + ".md");
+            }
+        }
+        assertThat(statusRecord).isNotNull()
+                .contains("ADOPTION_NOT_RECOMMENDED")
+                .contains("REFERENCE_ONLY", "DO_NOT_APPLY_BLINDLY", "NO_SHARED_BASELINE");
+        assertThat(read(output, "changes/CR-0001.md")).doesNotContain("ADOPTION_NOT_RECOMMENDED");
+        assertThat(read(output, "changes/CR-0003.md")).doesNotContain("ADOPTION_NOT_RECOMMENDED");
+    }
+
+    @Test
     void rejectsMissingAuthorityMarkers() throws Exception {
         Path output = write(dir.resolve("pkg"));
         Files.writeString(output.resolve("CHANGE-SUMMARY.md"),
