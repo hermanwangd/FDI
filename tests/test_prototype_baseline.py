@@ -225,6 +225,32 @@ def test_agents_define_responsibility_planes_without_software_authority():
     assert 'Sequential execution is not an allowed fallback' in multica
 
 
+def test_specialist_dispatch_uses_one_exclusive_start_trigger():
+    operational = (
+        ROOT/'validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md'
+    ).read_text()
+    projection = (
+        ROOT/'validation/pkb001/operations/INSTRUCTION-PROJECTIONS-DRAFT.md'
+    ).read_text()
+
+    for instructions in (operational, projection):
+        normalized = ' '.join(instructions.split())
+        assert (
+            'If issue creation includes the specialist assignee, that assignment '
+            'is the sole start trigger'
+        ) in normalized
+        assert 'MUST NOT post a structured mention to the same specialist' in normalized
+        assert (
+            'If the issue is created unassigned, one structured specialist mention '
+            'is the sole start trigger'
+        ) in normalized
+        assert 'COALESCED_DUPLICATE' in normalized
+
+    # Coordinator prevents the second trigger at source; both executable
+    # specialist projections also fail closed if the runtime replays a run.
+    assert projection.count('COALESCED_DUPLICATE') >= 3
+
+
 def test_active_execution_contains_project_state_not_actor_identity():
     status = json.loads((ROOT/'STATUS.json').read_text())
     execution = status['active_execution']

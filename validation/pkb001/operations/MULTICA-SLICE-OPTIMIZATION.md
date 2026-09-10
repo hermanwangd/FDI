@@ -41,6 +41,23 @@ analysis only.
   active/queued/retrying runs. Use exactly one trigger: assignment, mention or
   rerun. After an ambiguous response, query existing runs before retrying.
   These are instruction-level safeguards, not atomic programmatic deduplication.
+- Choose the specialist start mode before creating or activating its issue.
+  If issue creation includes the specialist assignee, that assignment is the
+  sole start trigger; the Coordinator MUST NOT post a structured mention to the
+  same specialist, activate the same assignment again, or rerun it. If the issue
+  is created unassigned, one structured specialist mention is the sole start
+  trigger; do not also assign, activate, or rerun it. Immediately after either
+  trigger, query the issue's runs and record the observed run identity before
+  another routing mutation. The phrase "assignment plus mention" is always two
+  triggers and is prohibited.
+- At specialist-run intake, compare the current stable routing/review key with
+  earlier runs by the same specialist role and with any exact-candidate verdict
+  already recorded on the issue. If an earlier equivalent run is queued,
+  running, or completed, or the exact verdict already exists, classify the
+  later attempt as `COALESCED_DUPLICATE`: perform no implementation or review,
+  emit no second verdict or Coordinator mention, and stop after recording the
+  duplicate attempt. This intake guard limits damage from runtime replay; it
+  does not replace source-side exclusive-trigger dispatch.
 - Resolve every envelope revision with `git rev-parse --verify '<sha>^{commit}'`
   before issue creation and record the resulting full 40-character SHA. The
   assigned checkout repeats the check and verifies required ancestry before
@@ -125,7 +142,9 @@ analysis only.
   Coordinator mention in the exact-candidate verdict and no reassignment. The
   Coordinator claims the issue with a non-starting assignment only after its run
   begins. This avoids both duplicate triggers and the assignment/task-completion
-  race for implementation and review handoffs.
+  race for implementation and review handoffs. That verdict handoff is distinct
+  from the Coordinator's earlier specialist start trigger; it does not authorize
+  assignment plus a reviewer mention when review begins.
 - Preserve the managed worktree's starting commit ancestry and assigned branch.
   Replay/cherry-pick recovery changes onto it; bind verification to the new SHA.
 - Review exact candidates in a separate export for Git-independent tests, or an
