@@ -4,7 +4,7 @@
 
 ### SF-BL-002-ROUTE-EFFECTIVENESS-005
 
-**State:** `SELECTED_NOT_DISPATCHED`
+**State:** `DISPATCHED_CONTROLLER_PREFLIGHT`
 
 **Goal:** Replace token-only mapping with exact route-to-handler evidence and
 conservative qualification, then produce an immutable thresholded `-003` run.
