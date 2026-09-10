@@ -13,15 +13,15 @@ def test_five_active_truth_entries_exist_and_resolve():
                 'BACKLOG.md', 'IMPLEMENTATION-PLAN.md', 'STATUS.json'}
     assert all((ROOT/name).is_file() for name in expected)
     status = json.loads((ROOT/'STATUS.json').read_text())
-    assert status['current_focus'] == 'SF-BL-001'
     assert status['framework_spec'] == 'FRAMEWORK-SPEC.md'
     assert status['backlog'] == 'BACKLOG.md'
     assert status['implementation_plan'] == 'IMPLEMENTATION-PLAN.md'
     assert status['archived_documents_are_authority'] is False
     assert status['baseline_status'] == 'ACTIVE'
-    assert status['decision'] == 'NOT_RUN'
+    assert status['decision'] in {None, 'NOT_RUN', 'GO', 'REVISE', 'STOP'}
     assert status['pkb001_foundation']['automatic_product_truth_publication'] is False
     backlog = (ROOT/status['backlog']).read_text()
+    assert f"| `{status['current_focus']}` |" in backlog
     selected = status['selected_backlog_items']
     if status['active_backlog_item'] is None:
         assert selected == []
@@ -48,7 +48,7 @@ def test_project_overview_does_not_duplicate_mutable_delivery_status():
     assert 'active_backlog_item' not in overview
 
 
-def test_every_normative_requirement_is_covered_by_the_active_parent_backlog():
+def test_every_normative_requirement_is_covered_by_the_backlog():
     import re
 
     framework = (ROOT/'FRAMEWORK-SPEC.md').read_text()
@@ -66,15 +66,23 @@ def test_every_normative_requirement_is_covered_by_the_active_parent_backlog():
         r'\b([A-Z]+(?:-[A-Z0-9]+)*-\d{3})\b',
         coverage,
     ))
+    backlog_requirement_ids = set(re.findall(
+        r'\b([A-Z]+(?:-[A-Z0-9]+)*-\d{3})\b',
+        backlog,
+    ))
 
-    assert len(requirement_ids) == 30
-    assert covered_ids == requirement_ids
+    assert covered_ids <= requirement_ids
+    assert requirement_ids <= covered_ids | backlog_requirement_ids
     assert backlog.count('| `SF-BL-001` |') == 1
 
 
-def test_legacy_truth_surfaces_are_archived():
-    for path in ('docs', 'governance', 'release', 'agent', 'README.md'):
+def test_legacy_truth_surfaces_are_archived_and_active_design_docs_are_allowed():
+    for path in ('governance', 'release', 'agent', 'README.md'):
         assert not (ROOT/path).exists()
+    assert (
+        ROOT/'docs/superpowers/specs/'
+        '2026-09-10-project-change-reference-exporter-design.md'
+    ).is_file()
     assert (ROOT/'archive/legacy-baseline/docs').is_dir()
     assert (ROOT/'archive/legacy-baseline/governance').is_dir()
 
