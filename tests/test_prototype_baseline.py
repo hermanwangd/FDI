@@ -154,9 +154,16 @@ def test_control_files_keep_mutable_state_in_one_place():
     assert 'HERM-' not in plan
     assert 'tests pass' not in plan
 
-    assert status['active_backlog_item'] is None
-    assert status['active_implementation_plan'] is None
-    assert status['active_execution'] is None
+    execution = status['active_execution']
+    if execution is None:
+        assert status['active_backlog_item'] is None
+        assert status['active_implementation_plan'] is None
+    else:
+        assert status['active_backlog_item'] in execution['selected_backlog_items']
+        assert status['active_implementation_plan'].startswith(
+            'IMPLEMENTATION-PLAN.md#'
+        )
+        assert f"### {execution['execution_id']}" in plan
 
 
 def test_agents_define_compact_implementation_plan_lifecycle():
