@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1",
+  "recordCount": 12,
+  "excludedCount": 3,
+  "records": [
+    {"id": "CR-0001", "path": "BACKLOG.md", "category": "CONTROL", "operation": "MODIFY"},
+    {"id": "CR-0002", "path": "README.md", "category": "DOCUMENTATION", "operation": "MODIFY"},
+    {"id": "CR-0003", "path": "STATUS.json", "category": "CONTROL", "operation": "MODIFY"},
+    {"id": "CR-0004", "path": "assets/logo.png", "category": "BINARY", "operation": "ADD"},
+    {"id": "CR-0005", "path": "config/app.properties", "category": "CONFIGURATION", "operation": "MODIFY"},
+    {"id": "CR-0006", "path": "contracts/payload.schema.json", "category": "CONTRACT", "operation": "ADD"},
+    {"id": "CR-0007", "path": "docs/new-name.md", "category": "DOCUMENTATION", "operation": "RENAME", "oldPath": "docs/old-name.md"},
+    {"id": "CR-0008", "path": "docs/to-delete.txt", "category": "DOCUMENTATION", "operation": "DELETE"},
+    {"id": "CR-0009", "path": "skills/pilot/SKILL.md", "category": "SKILL", "operation": "ADD"},
+    {"id": "CR-0010", "path": "src/main/java/com/example/NewService.java", "category": "CODE", "operation": "ADD"},
+    {"id": "CR-0011", "path": "src/test/java/com/example/AppTests.java", "category": "TEST", "operation": "MODIFY"},
+    {"id": "CR-0012", "path": "validation/run/evidence.json", "category": "EVIDENCE", "operation": "ADD"}
+  ],
+  "excluded": [
+    {"path": ".env.local", "category": "BINARY", "reason": "PATH_UNSAFE"},
+    {"path": "config/api-token.txt", "category": "BINARY", "reason": "SECRET_DETECTED"},
+    {"path": "config/prod.pem", "category": "BINARY", "reason": "PATH_UNSAFE"}
+  ],
+  "categories": ["BINARY", "CODE", "CONFIGURATION", "CONTRACT", "CONTROL", "DOCUMENTATION", "EVIDENCE", "SKILL", "TEST"],
+  "operations": ["ADD", "DELETE", "MODIFY", "RENAME"]
+}
