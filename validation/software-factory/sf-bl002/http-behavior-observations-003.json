@@ -1,0 +1,354 @@
+{
+  "schema_version" : "software-factory.sf-bl002-http-behavior-observations.v0.3",
+  "execution_id" : "SF-BL-002-ROUTE-EFFECTIVENESS-005",
+  "authority" : "PROPOSAL_ONLY",
+  "semantic_publication_allowed" : false,
+  "source_revision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "generation_method" : "SfBl002RouteEffectivenessRun.generate",
+  "observations" : [ {
+    "observationRef" : "http-behavior-observation-00001",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java",
+    "testMethod" : "ownerDetails",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java:70",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners/1",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00002",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java",
+    "testMethod" : "testDuplicatePetNameRaceConditionIsBlocked",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/PetClinicConcurrencyTests.java:80",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{variable}/pets/new",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00003",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java",
+    "testMethod" : "ownerDetails",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java:55",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners/1",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00004",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java",
+    "testMethod" : "ownerList",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java:62",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00005",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java",
+    "testMethod" : "ownerDetails",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java:90",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners/1",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00006",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+    "testMethod" : "initCreationForm",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java:108",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners/new",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00007",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+    "testMethod" : "processCreationFormSuccess",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java:116",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/new",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00008",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+    "testMethod" : "processCreationFormHasErrors",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java:127",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/new",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00009",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+    "testMethod" : "initFindForm",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java:138",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners/find",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00010",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+    "testMethod" : "processFindFormSuccess",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java:148",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00011",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+    "testMethod" : "processFindFormByLastName",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java:155",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00012",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+    "testMethod" : "processFindFormIgnoresSurroundingWhitespace",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java:166",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00013",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+    "testMethod" : "processFindFormWithWhitespaceOnlyLastNameReturnsAllOwners",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java:179",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00014",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+    "testMethod" : "processFindFormNoOwnersFound",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java:190",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00015",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+    "testMethod" : "initUpdateOwnerForm",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java:200",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/edit",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00016",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+    "testMethod" : "processUpdateOwnerFormSuccess",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java:213",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/edit",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00017",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+    "testMethod" : "processUpdateOwnerFormUnchangedSuccess",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java:225",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/edit",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00018",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+    "testMethod" : "processUpdateOwnerFormHasErrors",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java:232",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/edit",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00019",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+    "testMethod" : "showOwner",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java:246",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners/{ownerId}",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00020",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java",
+    "testMethod" : "processUpdateOwnerFormWithIdMismatch",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java:273",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/edit",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00021",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+    "testMethod" : "initCreationForm",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java:91",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/new",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00022",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+    "testMethod" : "processCreationFormSuccess",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java:99",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/new",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00023",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+    "testMethod" : "processCreationFormWithBlankName",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java:112",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/new",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00024",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+    "testMethod" : "processCreationFormWithDuplicateName",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java:125",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/new",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00025",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+    "testMethod" : "processCreationFormWithMissingPetType",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java:138",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/new",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00026",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+    "testMethod" : "processCreationFormWithInvalidBirthDate",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java:154",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/new",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00027",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+    "testMethod" : "processCreationFormWithDataIntegrityViolation",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java:169",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/new",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00028",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+    "testMethod" : "initUpdateForm",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java:183",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/{petId}/edit",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00029",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+    "testMethod" : "processUpdateFormSuccess",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java:193",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/{petId}/edit",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00030",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+    "testMethod" : "processUpdateFormWithSameName",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java:203",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/{petId}/edit",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00031",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+    "testMethod" : "processUpdateFormWithDuplicateName",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java:219",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/{petId}/edit",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00032",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+    "testMethod" : "processUpdateFormWithInvalidBirthDate",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java:234",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/{petId}/edit",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00033",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+    "testMethod" : "processUpdateFormWithBlankName",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java:246",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/{petId}/edit",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00034",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java",
+    "testMethod" : "processUpdateFormWithDataIntegrityViolation",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java:260",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/{petId}/edit",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00035",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+    "testMethod" : "initNewVisitForm",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java:70",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/{petId}/visits/new",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00036",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+    "testMethod" : "processNewVisitFormSuccess",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java:77",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/{petId}/visits/new",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00037",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+    "testMethod" : "processNewVisitFormHasErrors",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java:88",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/{petId}/visits/new",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00038",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java",
+    "testMethod" : "processNewVisitFormHasErrorsWhenVisitDateIsNotInFuture",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java:98",
+    "httpMethod" : "POST",
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/{petId}/visits/new",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00039",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+    "testMethod" : "triggerExceptionJson",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java:63",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/oups",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00040",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java",
+    "testMethod" : "triggerExceptionHtml",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java:81",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/oups",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00041",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/system/WelcomeControllerTests.java",
+    "testMethod" : "welcome",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/system/WelcomeControllerTests.java:40",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00042",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+    "testMethod" : "showVetListHtml",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java:85",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/vets.html",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  }, {
+    "observationRef" : "http-behavior-observation-00043",
+    "testSourcePath" : "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java",
+    "testMethod" : "showResourcesVetList",
+    "sourceLocation" : "src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java:94",
+    "httpMethod" : "GET",
+    "normalizedRouteTemplate" : "/vets",
+    "extractionBasis" : "MOCK_MVC_REQUEST_BUILDER"
+  } ],
+  "gaps" : [ "src/test/java/org/springframework/samples/petclinic/system/I18nPropertiesSyncTest.java:101 unsupported dynamic route expression in RestTemplate put call" ]
+}
