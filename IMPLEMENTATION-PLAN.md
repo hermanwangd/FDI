@@ -4,8 +4,7 @@
 
 ### SF-BL-002-ROUTE-EFFECTIVENESS-005
 
-**State:** `INTEGRATION_GATE_RECONCILED` — approved protected-file baseline correction;
-combined integration and fresh independent verification remain required.
+**State:** `ENGINEERING_READY` — accepted intake; Human terminal closure pending.
 
 **Goal:** Replace token-only mapping with exact route-to-handler evidence and
 conservative qualification, then produce an immutable thresholded `-003` run.
@@ -25,15 +24,19 @@ evaluation starts after generation seals.
 - Design: `docs/superpowers/specs/2026-09-10-sf-bl002-route-aware-correction-design.md`
 - Source input: `https://github.com/spring-projects/spring-petclinic.git` at
   `818c4136ea971c21674525f9053de0d9c7ad8cfe`
-- Frozen SHA-256: intents
-  `3c5da364196f1bbec17aabdbf2923c65f2bc0d90b2e9788bac8427219d554a3f`;
-  acceptance `8772b2a1b4cbb485f0ebce793be734bbd8414aaf318e6033bab7225b1e03fd1b`;
-  tests `6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2`;
-  graph `e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e`;
-  runtime `fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8`.
+- Frozen input SHA-256 pins: `governing_inputs` in
+  `validation/software-factory/sf-bl002/execution-envelope-005.json` at
+  `631edaca5855543bc9276f515455501b182494de`; all remain mandatory.
 
 Evaluator truth is excluded from generation. Product semantics, Graphify runtime,
 active controls, `validation/pkb001/**`, and `*-001`/`*-002` are read-only.
+
+Path shorthand below: `main:` means `src/main/java/com/featuredeliveryintelligence/fdi/`;
+`test:` means `src/test/java/com/featuredeliveryintelligence/fdi/`.
+
+Focused-test command: `MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=<Focused TDD value> test`.
+Within shorthand paths, `r/` = `product/realization/route/` and
+`s/` = `product/realization/scenarioforward/`.
 
 ## Execution DAG and mutation ownership
 
@@ -52,12 +55,12 @@ disjoint. Task 3 requires 2A/2B; Task 4 requires Task 3/2C. Unknown overlap is
 
 **Create:**
 
-- `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/route/HttpBehaviorObservation.java`
-- `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/route/HttpBehaviorExtractionResult.java`
-- `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/route/RouteHandler.java`
-- `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/route/RouteResolution.java`
-- `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/route/ScenarioComponentProposal.java`
-- `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/route/RouteContractTests.java`
+- `main:r/HttpBehaviorObservation.java`
+- `main:r/HttpBehaviorExtractionResult.java`
+- `main:r/RouteHandler.java`
+- `main:r/RouteResolution.java`
+- `main:r/ScenarioComponentProposal.java`
+- `test:r/RouteContractTests.java`
 - `src/test/resources/scenarioforward/sf-bl002/route-aware/RouteFixtureController.java`
 - `src/test/resources/scenarioforward/sf-bl002/route-aware/RouteFixtureTests.java`
 
@@ -68,54 +71,42 @@ Reject blank identity, unsafe paths, invalid methods/routes, unordered evidence,
 and proposals without qualified components. Fixtures cover mapping composition,
 queries, variables, dynamic paths, ambiguity, positive behavior, and rejection.
 
-**TDD command:**
-
-```bash
-MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=RouteContractTests test
-```
+**Focused TDD:** `RouteContractTests`.
 
 ### Task 2A — HTTP behavior observation extractor
 
 **Create:**
 
-- `src/main/java/com/featuredeliveryintelligence/fdi/testbehavior/http/HttpBehaviorObservationExtractor.java`
-- `src/test/java/com/featuredeliveryintelligence/fdi/testbehavior/http/HttpBehaviorObservationExtractorTests.java`
+- `main:testbehavior/http/HttpBehaviorObservationExtractor.java`
+- `test:testbehavior/http/HttpBehaviorObservationExtractorTests.java`
 
 Expose `HttpBehaviorExtractionResult extract(Path checkout, List<Path>
 testFiles)`. Recover bounded MockMvc/RestTemplate routes, normalize queries and
 path variables, retain provenance, and preserve unsupported gaps. External
 library calls remain external; ordering is stable.
 
-**TDD command:**
-
-```bash
-MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=HttpBehaviorObservationExtractorTests test
-```
+**Focused TDD:** `HttpBehaviorObservationExtractorTests`.
 
 ### Task 2B — Spring route-handler index
 
 **Create:**
 
-- `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/route/SpringRouteHandlerIndex.java`
-- `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/route/SpringRouteHandlerIndexTests.java`
+- `main:r/SpringRouteHandlerIndex.java`
+- `test:r/SpringRouteHandlerIndexTests.java`
 
 Expose `SpringRouteHandlerIndex build(Path checkout, List<Path>
 productionFiles)` and `RouteResolution resolve(String httpMethod, String
 normalizedRouteTemplate)`. Compose class/method mappings. Unique exact match
 resolves; zero is `UNRESOLVED`; multiple are `AMBIGUOUS`; never guess.
 
-**TDD command:**
-
-```bash
-MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=SpringRouteHandlerIndexTests test
-```
+**Focused TDD:** `SpringRouteHandlerIndexTests`.
 
 ### Task 2C — Evaluator decision enforcement
 
 **Create:**
 
-- `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SfBl002RouteEffectivenessEvaluation.java`
-- `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SfBl002RouteEffectivenessEvaluationTests.java`
+- `main:s/SfBl002RouteEffectivenessEvaluation.java`
+- `test:s/SfBl002RouteEffectivenessEvaluationTests.java`
 
 Revalidate proof after non-evaluator sealing. Compute trace coverage, exact
 counts, precision/recall/F1, route/proof counts, and failures.
@@ -123,33 +114,25 @@ counts, precision/recall/F1, route/proof counts, and failures.
 `>0.1290322581`; otherwise return `REVISE`. Boundary equality, undefined ratios,
 pre-seal evaluator access, and forged credit must fail tests.
 
-**TDD command:**
-
-```bash
-MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=SfBl002RouteEffectivenessEvaluationTests test
-```
+**Focused TDD:** `SfBl002RouteEffectivenessEvaluationTests`.
 
 ### Task 3 — Behavior policy and proposal generation
 
 **Create:**
 
-- `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/BehaviorEvidencePolicy.java`
-- `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/RouteAwareScenarioMapper.java`
-- `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SfBl002RouteEffectivenessRun.java`
-- `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/BehaviorEvidencePolicyTests.java`
-- `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/RouteAwareScenarioMapperTests.java`
-- `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SfBl002RouteEffectivenessRunTests.java`
+- `main:s/BehaviorEvidencePolicy.java`
+- `main:s/RouteAwareScenarioMapper.java`
+- `main:s/SfBl002RouteEffectivenessRun.java`
+- `test:s/BehaviorEvidencePolicyTests.java`
+- `test:s/RouteAwareScenarioMapperTests.java`
+- `test:s/SfBl002RouteEffectivenessRunTests.java`
 
 Implement only the approved action families and proof paths. One token or HTTP
 verb never qualifies; reject requires same-test negative evidence. Graphify is
 diagnostic without independent proof. Emit ordered components/gaps,
 `PROPOSAL_ONLY`, and `semantic_publication_allowed=false`.
 
-**TDD command:**
-
-```bash
-MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=BehaviorEvidencePolicyTests,RouteAwareScenarioMapperTests,SfBl002RouteEffectivenessRunTests test
-```
+**Focused TDD:** `BehaviorEvidencePolicyTests,RouteAwareScenarioMapperTests,SfBl002RouteEffectivenessRunTests`.
 
 ### Task 4 — Exact-revision immutable run
 
@@ -187,11 +170,9 @@ git diff --exit-code 18d2a1f94894e9ada7c928988ee6604a7018f688 -- validation/pkb0
 git diff --exit-code 2877007af6f6f4ebcc23a393c0d2424292cb6f0e -- validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md validation/pkb001/operations/INSTRUCTION-PROJECTIONS-DRAFT.md
 ```
 
-Both protected-file checks are mandatory. Only the two named operational files
-use the accepted workflow baseline `2877007`; every other protected path retains
-`18d2a1f`. Construction ancestry and all experiment thresholds are unchanged.
-Do not exclude the operations directory wholesale or restore superseded workflow
-instructions merely to satisfy the older comparison.
+Both checks are mandatory: only the two named ops files use `2877007`;
+all other protected paths retain `18d2a1f`. No directory-wide waiver,
+superseded instructions, ancestry change, or threshold change is allowed.
 
 The fresh combined candidate must include the reviewed subject correction
 `ce8e078efd94e4f69a6e271c5e29786caf378252`, evaluator
@@ -202,8 +183,8 @@ not overwrite a newer reviewed correction. `8adf3d27a4408b371dc760836c392aed19ad
 is diagnostic only and is not an accepted integration candidate.
 Run full Java/Python regression and the pipeline tests with required source
 checkout available (zero skips), then fresh independent combined review.
-Existing slice verdicts and diagnostic GO do not replace these gates. Changed
-outputs require a fresh immutable run identity and post-integration evaluation.
+Slice verdicts/diagnostic GO cannot replace these gates. Changed outputs require
+a fresh immutable run identity and post-integration evaluation.
 
 Require zero failures/errors/skips, immutable old evidence, deterministic
 `-003` replay, and independent exact-candidate review for leakage, route/proof
