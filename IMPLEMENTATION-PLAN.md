@@ -4,7 +4,8 @@
 
 ### SF-BL-002-ROUTE-EFFECTIVENESS-005
 
-**State:** `DISPATCHED_CONTROLLER_PREFLIGHT`
+**State:** `INTEGRATION_GATE_RECONCILED` — approved protected-file baseline correction;
+combined integration and fresh independent verification remain required.
 
 **Goal:** Replace token-only mapping with exact route-to-handler evidence and
 conservative qualification, then produce an immutable thresholded `-003` run.
@@ -182,8 +183,27 @@ Run focused tests, then:
 ```bash
 MAVEN_OPTS='-Xmx2g' ./mvnw -q test
 python3 -m pytest -q
-git diff --exit-code 18d2a1f94894e9ada7c928988ee6604a7018f688 -- validation/pkb001 'validation/software-factory/sf-bl002/*-001.json' 'validation/software-factory/sf-bl002/*-002.json' validation/software-factory/sf-bl002/test-behavior-evidence.json
+git diff --exit-code 18d2a1f94894e9ada7c928988ee6604a7018f688 -- validation/pkb001 'validation/software-factory/sf-bl002/*-001.json' 'validation/software-factory/sf-bl002/*-002.json' validation/software-factory/sf-bl002/test-behavior-evidence.json ':(exclude)validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md' ':(exclude)validation/pkb001/operations/INSTRUCTION-PROJECTIONS-DRAFT.md'
+git diff --exit-code 2877007af6f6f4ebcc23a393c0d2424292cb6f0e -- validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md validation/pkb001/operations/INSTRUCTION-PROJECTIONS-DRAFT.md
 ```
+
+Both protected-file checks are mandatory. Only the two named operational files
+use the accepted workflow baseline `2877007`; every other protected path retains
+`18d2a1f`. Construction ancestry and all experiment thresholds are unchanged.
+Do not exclude the operations directory wholesale or restore superseded workflow
+instructions merely to satisfy the older comparison.
+
+The fresh combined candidate must include the reviewed subject correction
+`ce8e078efd94e4f69a6e271c5e29786caf378252`, evaluator
+`57496334a8589699ed6029f202f5bd20d83dca79`, and pipeline acceptance tests
+`c2f5656c129f9d78c010914f3bc680cdfe0a3909`. Record a per-path final-owner/blob
+manifest including other required accepted dependencies; an older merge must
+not overwrite a newer reviewed correction. `8adf3d27a4408b371dc760836c392aed19ad8ae5`
+is diagnostic only and is not an accepted integration candidate.
+Run full Java/Python regression and the pipeline tests with required source
+checkout available (zero skips), then fresh independent combined review.
+Existing slice verdicts and diagnostic GO do not replace these gates. Changed
+outputs require a fresh immutable run identity and post-integration evaluation.
 
 Require zero failures/errors/skips, immutable old evidence, deterministic
 `-003` replay, and independent exact-candidate review for leakage, route/proof
