@@ -154,9 +154,16 @@ def test_control_files_keep_mutable_state_in_one_place():
     assert 'HERM-' not in plan
     assert 'tests pass' not in plan
 
-    assert status['active_backlog_item'] is None
-    assert status['active_implementation_plan'] is None
-    assert status['active_execution'] is None
+    execution = status['active_execution']
+    if execution is None:
+        assert status['active_backlog_item'] is None
+        assert status['active_implementation_plan'] is None
+    else:
+        assert status['active_backlog_item'] in execution['selected_backlog_items']
+        assert status['active_implementation_plan'].startswith(
+            'IMPLEMENTATION-PLAN.md#'
+        )
+        assert f"### {execution['execution_id']}" in plan
 
 
 def test_agents_define_compact_implementation_plan_lifecycle():
@@ -216,6 +223,32 @@ def test_agents_define_responsibility_planes_without_software_authority():
     assert 'complete child issue skeleton before implementation' in multica
     assert 'IMPLEMENTATION_ALLOWED' in multica
     assert 'Sequential execution is not an allowed fallback' in multica
+
+
+def test_specialist_dispatch_uses_one_exclusive_start_trigger():
+    operational = (
+        ROOT/'validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md'
+    ).read_text()
+    projection = (
+        ROOT/'validation/pkb001/operations/INSTRUCTION-PROJECTIONS-DRAFT.md'
+    ).read_text()
+
+    for instructions in (operational, projection):
+        normalized = ' '.join(instructions.split())
+        assert (
+            'If issue creation includes the specialist assignee, that assignment '
+            'is the sole start trigger'
+        ) in normalized
+        assert 'MUST NOT post a structured mention to the same specialist' in normalized
+        assert (
+            'If the issue is created unassigned, one structured specialist mention '
+            'is the sole start trigger'
+        ) in normalized
+        assert 'COALESCED_DUPLICATE' in normalized
+
+    # Coordinator prevents the second trigger at source; both executable
+    # specialist projections also fail closed if the runtime replays a run.
+    assert projection.count('COALESCED_DUPLICATE') >= 3
 
 
 def test_active_execution_contains_project_state_not_actor_identity():
