@@ -17,17 +17,26 @@
     "selected_backlog_items": [
       "SF-BL-005"
     ],
-    "execution_state": "IMPLEMENTING",
-    "integration_candidate": null
+    "execution_state": "COMPLETED",
+    "integration_candidate": "4d3584aa1a74987e204b63d3556c18dd58157a9d"
   },
-  "next_action": "Implement and independently verify generic evidence selection, branch-aware source calls and explicit read-side associations; execute new immutable METHOD calibration until recall >0.60 and precision >0.80 are verified without changing gold or scoring.",
+  "next_action": "Metric goal verified on METHOD-QUALITY-007. Await selection of follow-up work; formal holdout, overall chain coverage and parent closure remain separate gates.",
   "blocking_dependency": null,
-  "metric_goal": { "recall_strictly_greater_than": 0.60, "precision_strictly_greater_than": 0.80, "gold_pair_count": 40, "dataset_kind": "CALIBRATION" },
+  "metric_goal": {
+    "status": "VERIFIED",
+    "recall_strictly_greater_than": 0.60,
+    "precision_strictly_greater_than": 0.80,
+    "actual_recall": 0.70,
+    "actual_precision": 0.8484848484848485,
+    "gold_pair_count": 40,
+    "dataset_kind": "CALIBRATION",
+    "evidence": "validation/software-factory/sf-bl005/method-quality-007/receipt-review.md"
+  },
   "latest_calibration": {
-    "execution_id": "SF-BL-005-METHOD-QUALITY-006",
+    "execution_id": "SF-BL-005-METHOD-QUALITY-007",
     "assessment": "INCONCLUSIVE",
     "engineering_recommendation": "REVISE",
-    "evidence": "validation/software-factory/sf-bl005/method-quality-006/RESULTS.md"
+    "evidence": "validation/software-factory/sf-bl005/method-quality-007/RESULTS.md"
   },
   "pkb001_foundation": {
     "status": "PRESERVED_IMMUTABLE_HISTORY",
