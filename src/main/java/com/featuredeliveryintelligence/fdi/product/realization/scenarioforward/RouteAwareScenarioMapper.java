@@ -183,8 +183,16 @@ public final class RouteAwareScenarioMapper {
 
     private static ScenarioComponentProposal mapScenario(ScenarioIntent intent, MappingInput input,
             Map<String, TestMethodBehavior> behaviors, List<String> diagnostics) {
-        ActionFamily family = BehaviorEvidencePolicy.classifyAction(intent.action())
-                .orElseThrow(() -> fail("unsupported scenario action term: " + intent.action()));
+        ActionFamily family = BehaviorEvidencePolicy.classifyAction(intent.action()).orElse(null);
+        if (family == null) {
+            // Absent ActionFamily (an unsupported action term such as AUTHENTICATE):
+            // one honest UNRESOLVED proposal with a deterministic gap and diagnostic,
+            // never relabeled or dropped, and the ordered loop continues with the
+            // remaining intents.
+            diagnostics.add("unsupported-action:" + intent.scenarioId() + ":" + intent.action());
+            return new ScenarioComponentProposal(intent.scenarioId(), ScenarioComponentProposal.Outcome.UNRESOLVED,
+                    List.of(), List.of("unsupported-action-term:" + intent.action()));
+        }
         ScenarioSignals signals = new ScenarioSignals(intent.scenarioId(), family, intent.entity(),
                 intent.conditions(), intent.aliases());
 

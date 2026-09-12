@@ -523,10 +523,60 @@ class RouteAwareScenarioMapperTests {
     }
 
     @Test
-    void unsupportedActionTermFailsClosed() throws Exception {
+    void unsupportedActionTermIsContainedAndDoesNotAbortSupportedScenarios() throws Exception {
+        // The CROSSREPO-REALWORLD-001 failure mode: an unsupported action such as
+        // AUTHENTICATE becomes one honest UNRESOLVED proposal with a deterministic
+        // gap and diagnostic, and the ordered loop continues so the supported
+        // CREATE scenario maps unchanged.
+        ScenarioIntent authenticate = intent("HYP-SCENARIO-100", "AUTHENTICATE", "USER",
+                List.of("valid-credentials"), List.of("log in"));
+        ScenarioIntent createPet = intent("HYP-SCENARIO-001", "CREATE", "PET",
+                List.of(), List.of("create pet"));
+        MappingResult result = RouteAwareScenarioMapper.map(input(List.of(authenticate, createPet),
+                extraction(observation("obs-create", "testCreatePet", HttpMethod.POST,
+                        "/owners/{ownerId}/pets/new")),
+                overloadedIndex()));
+
+        assertEquals(2, result.proposals().size());
+        ScenarioComponentProposal unsupported = result.proposals().get(0);
+        assertEquals("HYP-SCENARIO-100", unsupported.scenarioId());
+        assertEquals(Outcome.UNRESOLVED, unsupported.outcome());
+        assertEquals(List.of(), unsupported.components());
+        assertEquals(List.of("unsupported-action-term:AUTHENTICATE"), unsupported.gaps());
+
+        // Exactly one deterministic diagnostic; the unsupported scenario cannot
+        // borrow evidence from the supported observation.
+        assertEquals(List.of("unsupported-action:HYP-SCENARIO-100:AUTHENTICATE"), result.diagnostics());
+
+        ScenarioComponentProposal supported = result.proposals().get(1);
+        assertEquals("HYP-SCENARIO-001", supported.scenarioId());
+        assertEquals(Outcome.MAPPING_PROPOSAL, supported.outcome());
+        assertEquals(1, supported.components().size());
+        Component component = supported.components().get(0);
+        assertEquals(RouteAwareScenarioMapper.ROLE_ROUTE_HANDLER, component.role());
+        assertEquals(EvidenceStrength.EXACT_ROUTE_HANDLER, component.evidenceStrength());
+        assertEquals("samples.petclinic.owner.OverloadedPetController#processCreationForm",
+                component.productionIdentity());
+        assertEquals(List.of("obs-create"), component.evidenceRefs());
+        assertEquals(List.of(), supported.gaps());
+    }
+
+    @Test
+    void unsupportedActionTermBecomesUnresolvedProposalInsteadOfAborting() throws Exception {
+        // Any absent ActionFamily (unrecognized single-token term or multi-token
+        // term) no longer aborts the run: it is contained as one honest UNRESOLVED
+        // proposal with a deterministic gap and diagnostic.
         ScenarioIntent unknown = intent("HYP-SCENARIO-099", "TELEPORT", "OWNER", List.of(), List.of());
-        assertThrows(RuntimeContractException.class, () -> RouteAwareScenarioMapper.map(
-                input(List.of(unknown), extraction(), ownerIndex())));
+        MappingResult result = RouteAwareScenarioMapper.map(
+                input(List.of(unknown), extraction(), ownerIndex()));
+
+        assertEquals(1, result.proposals().size());
+        ScenarioComponentProposal proposal = result.proposals().get(0);
+        assertEquals("HYP-SCENARIO-099", proposal.scenarioId());
+        assertEquals(Outcome.UNRESOLVED, proposal.outcome());
+        assertEquals(List.of(), proposal.components());
+        assertEquals(List.of("unsupported-action-term:TELEPORT"), proposal.gaps());
+        assertEquals(List.of("unsupported-action:HYP-SCENARIO-099:TELEPORT"), result.diagnostics());
     }
 
     @Test
