@@ -40,6 +40,47 @@ class SfBl002RouteEffectivenessRunTests {
             "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3";
     @TempDir Path temp;
 
+    @org.junit.jupiter.api.BeforeEach void canonicalTemporaryDirectory() throws Exception {
+        temp = temp.toRealPath();
+    }
+
+    @Test void independentRepositoryAndSemanticsBindWithoutPetclinicIdentity() throws Exception {
+        Path checkout = writeCheckout();
+        String revision = gitRevision(checkout);
+        Path root = writeSealedRoot(checkout, revision);
+        String semantics = "b".repeat(64);
+        for (String relative : List.of(SfBl002RouteEffectivenessRun.INTENTS_PATH,
+                SfBl002RouteEffectivenessRun.INTENT_ACCEPTANCE_PATH)) {
+            Path path = root.resolve(relative);
+            Files.writeString(path, Files.readString(path).replace(SEMANTICS_SHA256, semantics));
+        }
+        Path evidencePath = root.resolve(SfBl002RouteEffectivenessRun.TEST_EVIDENCE_PATH);
+        Files.writeString(evidencePath, Files.readString(evidencePath).replace("spring-petclinic", "independent-app"));
+        Path acceptancePath = root.resolve(SfBl002RouteEffectivenessRun.INTENT_ACCEPTANCE_PATH);
+        ObjectNode acceptance = (ObjectNode) JSON.readTree(acceptancePath.toFile());
+        ((ObjectNode) acceptance.path("accepted_artifact")).put("sha256",
+                sha(Files.readAllBytes(root.resolve(SfBl002RouteEffectivenessRun.INTENTS_PATH))));
+        Files.write(acceptancePath, JSON.writeValueAsBytes(acceptance));
+        Path runtimePath = root.resolve(SfBl002RouteEffectivenessRun.RUNTIME_EVIDENCE_PATH);
+        ObjectNode runtime = (ObjectNode) JSON.readTree(runtimePath.toFile());
+        runtime.put("repository_id", "independent-app").put("canonical_revision", revision)
+                .put("graph_sha256", sha(Files.readAllBytes(root.resolve(SfBl002RouteEffectivenessRun.GRAPH_PATH))));
+        Files.write(runtimePath, JSON.writeValueAsBytes(runtime));
+        var result = SfBl002RouteEffectivenessRun.generate(root, checkout, temp.resolve("independent"),
+                sealedMap(root), revision, semantics, "independent-app");
+        assertEquals(3, result.scenarioCount());
+        assertEquals(3, result.mappedScenarios());
+        assertThrows(RuntimeContractException.class, () -> generate(root, checkout, temp.resolve("old-default")));
+        assertThrows(RuntimeContractException.class, () -> SfBl002RouteEffectivenessRun.generate(
+                root, checkout, temp.resolve("wrong-id"), sealedMap(root), revision, semantics, "wrong-app"));
+        assertThrows(RuntimeContractException.class, () -> SfBl002RouteEffectivenessRun.generate(
+                root, checkout, temp.resolve("unsealed"), Map.of(), revision, semantics, "independent-app"));
+        runtime.put("graph_sha256", "0".repeat(64));
+        Files.write(runtimePath, JSON.writeValueAsBytes(runtime));
+        assertThrows(RuntimeContractException.class, () -> SfBl002RouteEffectivenessRun.generate(
+                root, checkout, temp.resolve("wrong-graph"), sealedMap(root), revision, semantics, "independent-app"));
+    }
+
     @Test void frozenSyntheticRunWritesFourArtifactsWithRouteAndDirectProof() throws Exception {
         Path checkout = writeCheckout();
         String revision = gitRevision(checkout);

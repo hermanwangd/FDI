@@ -2,93 +2,109 @@
 
 ## Current selection
 
-### SF-BL-005-METHOD-QUALITY-007
+### SF-BL-005-CROSSREPO-REALWORLD-001
 
-Execution completed: independent receipt verifies recall70% and precision84.85%.
-Evidence: validation/software-factory/sf-bl005/method-quality-007/receipt-review.md.
-No further implementation selected by this increment. Parent remains IN_PROGRESS;
-formal holdout, overall chain coverage and Human-only closure are separate gates.
+User approved RealWorld and a first ten-scenario cross-repository validation.
+Base/Spec: deec2512293550c233afcf4d6eeed6e00acd7819.
+Repository: https://github.com/gothinkster/spring-boot-realworld-example-app.git
+Exact source: ee17e31aafe733d98c4853c8b9a74d7f2f6c924a.
+Thresholds remain precision >0.80 and recall >0.60, without rounding.
+007 metric goal remains VERIFIED on Petclinic only; old runs are immutable.
 
-Goal remains recall >0.60 AND precision >0.80 (strict). Backlog SF-BL-005;
-requirements AUTH-002, PK-004, EVID-001, TECH-001.
-Base: 7f099229d51a7f8f0bd7bae325bbad52f009f7f9.
-Bound Spec: 021070c523a4f76f25799b7f2d26b3e59e01f54d.
-Source: Petclinic 818c4136ea971c21674525f9053de0d9c7ad8cfe.
-006 is sealed: TP28/FP7/FN12, recall .70, precision .80; strict goal unmet.
-Evidence: validation/software-factory/sf-bl005/method-quality-006/RESULTS.md.
+This is first-use cross-repository validation, not an authorized formal GO.
+The unchanged evaluator permits CALIBRATION, not HOLDOUT; retain that label
+with exposureClass FIRST_CROSS_REPOSITORY_RUN rather than weaken its gate.
+No claim the public repository is unseen to model pretraining.
+FDP maintains controls; main implements ingress only. Independent actors author,
+review and seal evaluator truth before generation, then adjudicate source proofs.
+No new parent, no Coordinator dispatch, no per-slice confirmations.
 
-FDP owns controls; main implements directly. Independent actors review code and
-source proofs. No new Coordinator dispatch or per-slice Human confirmations.
-Existing PORTABILITY-002 retains its pinned, nonoverlapping envelope.
+## Frozen first-run scope and budget
 
-## Construction and owned paths
+REST scope, ten preselected behavior topics: valid registration, valid login,
+article creation, own-article update, duplicate-email rejection, invalid-password
+rejection, unauthorized article-update rejection, invalid article rejection,
+paginated article listing, and paginated following feed. Four success, four
+rejection and two pagination topics. Derive implementation-free retrieval aids
+from public Product/API descriptions; exact statements and necessary METHOD pairs
+are independently frozen. Missing source/test support is a reported gap, not
+permission to replace a hard scenario. No Product truth publication.
+No GraphQL, deployment, database server, upstream application tests or secret use.
 
-Own src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/**
-and matching src/test/java/** package; validation/software-factory/sf-bl005/method-quality-007/**
-and later fresh numbered run namespaces if needed. Do not change old runs,
-gold/scorer, accepted semantics, other Backlog scopes, company documents,
-legacy route policy, or extractor/module-root correction files.
-No automatic merge, push or parent closure.
+One scored run; one deterministic replay may verify identical mechanics.
+Do not tune selector, mapping, branch or call rules using RealWorld outputs.
+Only input loading, revision/digest parameters and serialization adapters may
+change. The six 007 methodcalibration algorithm files retain source byte hashes;
+only runner ingress (MethodCalibrationRun) may change. SourceMethodIndex,
+ScenarioEvidenceSelector, QualifiedSourceCalls, QualifiedCalibrationProducer,
+RedirectEvidenceAssociation and CalibrationProducer are frozen.
+Unknown syntax/naming remains an observable portability gap; do not rename
+source symbols or inject expected methods into producer inputs.
 
-Generic gap: a successful UPDATE of an existing target must not acquire a
-creation fallback solely because the source helper also supports an absent
-target. Add bounded qualification for a local, explicitly typed lookup result
-whose type matches the updated method parameter and whose null check separates
-existing-target from absent-target branches. Exclude the absent-target branch
-for UPDATE unless separately supported; do not interpret arbitrary null checks,
-primitive/string defaults, unrelated types or unknown calls as target identity.
-Keep CREATE behavior and the unchanged baseline resolver intact. No scenario IDs,
-Petclinic method names, evaluator IDs or expected-method lists in selection code.
-This is candidate qualification, not proof of observed execution.
+One heavy JVM/fork; aggregate <8 GB. Maven -Xmx2g and fork -Xmx2g,
+producer <=1g, evaluator <=512m. Commands bounded to 20 minutes; no paid services,
+Graphify reinstall or unbounded retries. Discovery/index failure stops generation
+with evidence; no fabricated Graphify output. Existing local external Graphify
+runtime may index this exact source after live API inspection.
+Graphify indexing time/cost reported separately from mapping and evaluator work.
 
-1. Extend QualifiedSourceCalls with the smallest typed existing-target branch
-   check. Reuse exact source resolution; unknown/generic/external ambiguities
-   remain unresolved. Keep existing hasErrors and catch qualification.
-2. Preserve ScenarioEvidenceSelector request-bound assertions, success/error
-   distinctions, query/normalization/paging constraints, multiple evidence refs,
-   and RedirectEvidenceAssociation's unique source route + independent GET proof.
-3. MethodCalibrationRun qualified execution identity becomes METHOD-QUALITY-007;
-   old public MethodCalibrationRun legacy mode stays unchanged. Baseline still
-   replays the 005 expanded algorithm. Improved uses the new qualification.
-   Same five digest-locked inputs, exact clean source and actual JAR for both arms.
-4. New immutable output only. Seal producer digests before evaluator adjudication.
-   Preserve every emitted claim; no deleting FP after scoring.
-   Depth <=3, <=64 distinct methods/scenario, no dynamic/persistence claims.
+## Owned paths and construction
 
-## Verification and acceptance
+Java prefix J=src/main/java/com/featuredeliveryintelligence/fdi/.
+Own J/product/realization/methodcalibration/{CrossRepositoryManifest,CrossRepositoryMethodRun}.java,
+input-only refactoring of MethodCalibrationRun.java,
+input-only overloads in J/product/realization/scenarioforward/SfBl002RouteEffectivenessRun.java,
+and corresponding tests. Existing matching/evaluator algorithms and all old evidence
+are excluded.
+Also own J/validation/liveverifier/CrossRepositoryGraphifyEvidence.java and its
+tests: Java orchestrates the installed external Graphify extraction/build/export
+APIs and existing stdio client plus GraphifyAdapter/CodeIntelligenceProvider;
+frozen source/digest checks surround indexing and live query. Index a byte-verified
+Java-source copy outside the clean Git snapshot because the runtime writes cache
+under its inputs; retain failed attempt evidence. No runtime edits.
+Own validation/software-factory/sf-bl005/cross-repo-realworld-001/**
+and new .fdi-work/realworld-ee17e31 source snapshot (never edit tracked source).
+Graphify integration uses existing CodeIntelligenceProvider/Java adapter; if a
+generic runtime-evidence bridge is needed, describe its exact path in this Plan
+before implementation. Other Backlog work and user files are excluded.
 
-Use JAVA-CODING-GUIDELINES.md, TDD and independent code review.
-First RED synthetic tests: UPDATE known-domain lookup excludes creation fallback;
-CREATE keeps it; arbitrary/unrelated null checks are not reclassified; alternate
-null-check polarity is handled. Existing tests remain unchanged except additions.
-Then green focused tests and independent review of exact final candidate.
+- [ ] Freeze selection/protocol; retrieve exact clean source with hooks disabled.
+- [ ] Independent actor writes public retrieval aids separately from evaluator-only
+  truth and chain definitions; independent second actor reviews before sealing.
+  Main may consume retrieval aids, never raw gold or missing-pair lists.
+- [ ] TDD CrossRepositoryManifest: strict schema, full revision, semantics hash,
+  exactly five allowed input paths/digests, no extra/evaluator files, no symlinks,
+  source changes refused. Unknown fields/invalid hashes fail closed.
+- [ ] Parameterize only repository ID, semantics digest, revision, sealed inputs
+  and execution identity. Existing Petclinic entry retains exact defaults and
+  existing tests/byte-parity behavior. Do not pretend another repository is Petclinic.
+- [ ] Add synthetic second-repository tests before implementation; old controls,
+  consumer negative tests and frozen algorithm hashes must continue to pass.
+- [ ] Verify installed Graphify and create exact-source structural snapshot plus
+  live provider evidence; keep indexing output outside the source tree.
+- [ ] Freeze manifest SHA, allowed-input directory, source and final runtime JAR.
+  Independent ingress review then full Java/Python regressions.
+- [ ] Execute old baseline and frozen007 improved algorithms on identical inputs;
+  seal outputs before exposing evaluator-only files. No scoring from synthetic
+  fixtures or old Petclinic graph/truth.
+- [ ] Independent fresh proof ledger; unchanged METHOD-PAIR scorer; separate
+  receipt replay. Report counts, precision/recall/F1, scenario/chain coverage,
+  unresolved/unsupported data, and first-run limits. Bad/undefined results remain.
+- [ ] Reconcile BACKLOG/STATUS and retain first result; no automatic tuning,
+  merge, push, formal GO, parent closure or further repository selection.
 
-Run full ./mvnw -q -DargLine=-Xmx2g package, python3 -m pytest -q, git diff --check.
-Run new real producer after review and regression pass; verify source and old
-artifacts unchanged, overwrite refusal, baseline equality to 005 proposals.
-Have a separate evaluator author a fresh proof ledger for all current claims;
-do not reuse old support flags automatically. Copy the original truth bytes,
-SHA256 39aa27459305c05a4c983b0c414c60b39ec3e460491b9edb5da49c620bc2de2c,
-keeping all 40 expected pairs and all 10 scenarios. Producer never reads raw
-gold or missing-pair lists. Use unchanged METHOD-PAIR-001 scorer and pinned
-manifest. Report exact TP/FP/FN, precision/recall/F1, scenario/chain coverage.
-Independent receipt review checks bindings and result before metric completion.
+## Verification commands
 
-Both strict inequalities must hold in fresh independently verified scoring.
-If not, continue generic evidence-backed correction in a new immutable run.
-Do not weaken gold, standards, denominators, or redefine the goal.
-This is repeated exposed CALIBRATION only. Missing chain definition remains
-unavailable; formal holdout selection/GO and terminal parent closure remain
-Human-gated and are not implied by metric-goal completion.
-
-## Resources
-
-One heavy JVM/fork at a time; aggregate <8 GB.
-JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home.
+JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home
 MAVEN_OPTS=-Xmx2g; -DargLine=-Xmx2g. Never JAVA_TOOL_OPTIONS.
-SFBL002_PETCLINIC_ROOT=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/sfbl002-petclinic-818c413.
-20-minute hard command deadline. No upstream/Docker tests or Graphify installs;
-reuse verified Graphify snapshot, not a claim of fresh indexing.
+SFBL002_PETCLINIC_ROOT=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/sfbl002-petclinic-818c413
+Run ./mvnw -q -DargLine=-Xmx2g -Dtest=CrossRepositoryManifestTests test
+for RED then GREEN; full ./mvnw -q -DargLine=-Xmx2g package,
+python3 -m pytest -q, git diff --check. Preserve 007 algorithm file digests.
+New runner takes manifest path + SHA, input root, exact-source root, fresh output.
+Manifest/CLI schema must be tested with absent, changed and extra inputs.
+Budget/sample/authority changes require explicit revised selection; execution
+must not silently turn lack of support into a passing score.
 
 ## Frozen scoring contract — SFBL005-METHOD-PAIR-001
 

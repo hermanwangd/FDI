@@ -112,20 +112,49 @@ public final class SfBl002RouteEffectivenessRun {
      */
     static Result generate(Path root, Path sourceRoot, Path outputRoot,
             Map<String, String> sealed, String sourceRevision) {
+        return generateBound(root, sourceRoot, outputRoot, sealed, sourceRevision, SEMANTICS_SHA256, "spring-petclinic");
+    }
+
+    /** Cross-repository ingress; caller supplies an independently sealed input manifest. */
+    public static Result generate(Path root, Path sourceRoot, Path outputRoot,
+            Map<String, String> sealed, String sourceRevision, String semanticsSha256, String repositoryId) {
+        require(sealed != null && sealed.keySet().equals(Set.of(INTENTS_PATH, INTENT_ACCEPTANCE_PATH,
+                TEST_EVIDENCE_PATH, GRAPH_PATH, RUNTIME_EVIDENCE_PATH)), "exact five sealed inputs required");
+        try {
+            for (var entry : sealed.entrySet()) {
+                require(entry.getValue() != null && entry.getValue().matches("[0-9a-f]{64}"), "input digest required");
+                Path file = root.resolve(entry.getKey());
+                for (Path part = file.toAbsolutePath(); part != null; part = part.getParent())
+                    require(!Files.isSymbolicLink(part), "symlink input refused");
+                require(Files.isRegularFile(file) && Files.size(file) <= 16L * 1024 * 1024, "bounded input required");
+                require(entry.getValue().equals(sha(Files.readAllBytes(file))), "sealed input digest mismatch");
+            }
+            JsonNode runtime = JSON.readTree(root.resolve(RUNTIME_EVIDENCE_PATH).toFile());
+            require(repositoryId != null && repositoryId.equals(text(runtime, "repository_id")), "runtime repository mismatch");
+            require(sourceRevision != null && sourceRevision.equals(text(runtime, "canonical_revision")), "runtime revision mismatch");
+            require(sealed.get(GRAPH_PATH).equals(text(runtime, "graph_sha256")), "runtime graph digest mismatch");
+        } catch (IOException error) { throw fail("cannot verify cross-repository input binding: " + error.getMessage()); }
+        return generateBound(root, sourceRoot, outputRoot, sealed, sourceRevision, semanticsSha256, repositoryId);
+    }
+
+    private static Result generateBound(Path root, Path sourceRoot, Path outputRoot,
+            Map<String, String> sealed, String sourceRevision, String semanticsSha256, String repositoryId) {
         try {
             require(FULL_SHA.matcher(sourceRevision).matches(), "full source revision required");
+            require(semanticsSha256 != null && semanticsSha256.matches("[0-9a-f]{64}"), "semantics digest required");
+            require(repositoryId != null && repositoryId.matches("[A-Za-z0-9][A-Za-z0-9._-]{0,127}"), "repository identity required");
             for (Map.Entry<String, String> entry : sealed.entrySet()) {
                 String actual = sha(Files.readAllBytes(root.resolve(entry.getKey())));
                 if (!entry.getValue().equals(actual)) throw fail("sealed input digest mismatch: " + entry.getKey());
             }
             byte[] intentBytes = Files.readAllBytes(root.resolve(INTENTS_PATH));
             List<RouteAwareScenarioMapper.ScenarioIntent> intents =
-                    validateIntents(JSON.readTree(intentBytes), sourceRevision);
+                    validateIntents(JSON.readTree(intentBytes), sourceRevision, semanticsSha256);
             validateAcceptance(JSON.readTree(root.resolve(INTENT_ACCEPTANCE_PATH).toFile()),
-                    intents, sha(intentBytes), sourceRevision);
+                    intents, sha(intentBytes), sourceRevision, semanticsSha256);
 
             byte[] evidenceBytes = Files.readAllBytes(root.resolve(TEST_EVIDENCE_PATH));
-            JsonNode evidence = validateEvidence(JSON.readTree(evidenceBytes), sourceRevision);
+            JsonNode evidence = validateEvidence(JSON.readTree(evidenceBytes), sourceRevision, repositoryId);
             ObjectNode runtime = validateRuntimeEvidence(
                     JSON.readTree(root.resolve(RUNTIME_EVIDENCE_PATH).toFile()));
             validateGraph(JSON.readTree(root.resolve(GRAPH_PATH).toFile()));
@@ -200,6 +229,11 @@ public final class SfBl002RouteEffectivenessRun {
     /** Whole-document validation of the accepted scenario search intents; fail closed. */
     static List<RouteAwareScenarioMapper.ScenarioIntent> validateIntents(
             JsonNode document, String sourceRevision) {
+        return validateIntents(document, sourceRevision, SEMANTICS_SHA256);
+    }
+
+    private static List<RouteAwareScenarioMapper.ScenarioIntent> validateIntents(
+            JsonNode document, String sourceRevision, String semanticsSha256) {
         require("software-factory.sf-bl002-accepted-scenario-search-intents.v0.1"
                 .equals(text(document, "schema_version")), "intent artifact schema mismatch");
         require("FROZEN".equals(text(document, "status")), "intent artifact status mismatch");
@@ -209,7 +243,7 @@ public final class SfBl002RouteEffectivenessRun {
         String revision = text(document, "source_revision");
         require(revision.matches("[0-9a-f]{40}"), "full source revision required");
         require(sourceRevision.equals(revision), "intent artifact revision mismatch");
-        require(SEMANTICS_SHA256.equals(text(document, "semantics_sha256")), "intent semantics digest mismatch");
+        require(semanticsSha256.equals(text(document, "semantics_sha256")), "intent semantics digest mismatch");
         JsonNode records = document.path("records");
         require(records.isArray() && !records.isEmpty(), "intent artifact contains no records");
         Set<String> scenarioIds = new LinkedHashSet<>();
@@ -226,7 +260,7 @@ public final class SfBl002RouteEffectivenessRun {
             require("ACCEPTED_RETRIEVAL_AID_ONLY".equals(text(record, "authority")),
                     "intent record authority mismatch");
             require(revision.equals(text(record, "sourceRevision")), "intent record revision mismatch");
-            require(SEMANTICS_SHA256.equals(text(record, "semanticsDigest")), "intent record digest mismatch");
+            require(semanticsSha256.equals(text(record, "semanticsDigest")), "intent record digest mismatch");
             require(scenarioIds.add(scenarioId), "duplicate intent scenario identity: " + scenarioId);
             List<String> conditions = new ArrayList<>();
             for (JsonNode condition : record.path("conditions")) conditions.add(guardedValue(condition, "condition"));
@@ -241,12 +275,17 @@ public final class SfBl002RouteEffectivenessRun {
     /** Whole-document validation of the intent acceptance manifest against the sealed intents. */
     static void validateAcceptance(JsonNode manifest, List<RouteAwareScenarioMapper.ScenarioIntent> intents,
             String intentsSha256, String sourceRevision) {
+        validateAcceptance(manifest, intents, intentsSha256, sourceRevision, SEMANTICS_SHA256);
+    }
+
+    private static void validateAcceptance(JsonNode manifest, List<RouteAwareScenarioMapper.ScenarioIntent> intents,
+            String intentsSha256, String sourceRevision, String semanticsSha256) {
         require("software-factory.sf-bl002-scenario-search-intent-acceptance-manifest.v0.1"
                 .equals(text(manifest, "schema_version")), "intent acceptance manifest schema mismatch");
         require("FROZEN".equals(text(manifest, "status")), "intent acceptance manifest status mismatch");
         require(sourceRevision.equals(text(manifest, "source_revision")),
                 "intent acceptance manifest revision mismatch");
-        require(SEMANTICS_SHA256.equals(text(manifest, "semantics_sha256")),
+        require(semanticsSha256.equals(text(manifest, "semantics_sha256")),
                 "intent acceptance manifest semantics digest mismatch");
         require(intentsSha256.equals(text(manifest.path("accepted_artifact"), "sha256")),
                 "intent acceptance manifest accepted-artifact digest mismatch");
@@ -263,8 +302,12 @@ public final class SfBl002RouteEffectivenessRun {
 
     /** Structural validation of the sealed test-behavior evidence document; fail closed. */
     static JsonNode validateEvidence(JsonNode document, String sourceRevision) {
+        return validateEvidence(document, sourceRevision, "spring-petclinic");
+    }
+
+    private static JsonNode validateEvidence(JsonNode document, String sourceRevision, String repositoryId) {
         require("1".equals(text(document, "schema_version")), "test-behavior evidence schema version mismatch");
-        require("spring-petclinic".equals(text(document, "repository_id")), "test-behavior evidence repository mismatch");
+        require(repositoryId.equals(text(document, "repository_id")), "test-behavior evidence repository mismatch");
         require("fdi-testbehavior-javaparser"
                 .equals(text(document.path("provenance"), "provider_id")), "test-behavior evidence provider mismatch");
         String revision = text(document, "canonical_revision");

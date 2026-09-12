@@ -29,26 +29,33 @@ public final class MethodCalibrationRun {
     }
 
     static void run(String[] args, boolean qualified) throws Exception {
+        run(args, qualified, null);
+    }
+
+    static void run(String[] args, boolean qualified, CrossRepositoryManifest manifest) throws Exception {
         if (args.length != 3) throw new IllegalArgumentException("usage: <five-input-root> <exact-source-root> <new-output-root>");
         Path output = Path.of(args[2]).toAbsolutePath().normalize();
         if (Files.exists(output, LinkOption.NOFOLLOW_LINKS)) throw new IllegalArgumentException("OUTPUT_EXISTS");
         Path inputs = Path.of(args[0]).toRealPath();
         Path source = Path.of(args[1]).toRealPath();
-        Map<String, String> sealed = sealed();
+        Map<String, String> sealed = manifest == null ? sealed() : manifest.inputs();
+        String revision = manifest == null ? SOURCE_REVISION : manifest.sourceRevision();
         verifyInputs(inputs, sealed);
-        verifyCheckout(source);
+        verifyCheckout(source, revision);
         List<Path> files = verifySources(inputs, source);
         // PropertiesLauncher must execute the same sole JAR whose bytes bind the extractor.
         Path runtime = Path.of(System.getProperty("java.class.path")).toAbsolutePath().normalize();
         if (!runtime.toString().endsWith(".jar") || !Files.isRegularFile(runtime)
                 || Files.size(runtime) > 128L * 1024 * 1024) throw new IllegalArgumentException("SINGLE_RUNTIME_JAR_REQUIRED");
         String jarSha = digest(runtime);
-        var binding = new CalibrationProducer.Binding(SOURCE_REVISION, List.of("src/main/java"),
+        var binding = new CalibrationProducer.Binding(revision, List.of("src/main/java"),
                 List.of("src/test/java"), sha(JSON.writeValueAsBytes(sealed)), jarSha);
         Files.createDirectory(output);
         String start = Instant.now().toString();
         Path seedOutput = Files.createDirectory(output.resolve("seed"));
-        SfBl002RouteEffectivenessRun.generate(inputs, source, seedOutput);
+        if (manifest == null) SfBl002RouteEffectivenessRun.generate(inputs, source, seedOutput);
+        else SfBl002RouteEffectivenessRun.generate(inputs, source, seedOutput, sealed, revision,
+                manifest.semanticsSha256(), manifest.repositoryId());
         var seeds = JSON.readTree(seedOutput.resolve(PROPOSAL_PATH).toFile());
         var index = new SourceMethodIndex(source, files);
         var baseline = CalibrationProducer.produce(binding, seeds, index, qualified);
@@ -68,7 +75,7 @@ public final class MethodCalibrationRun {
         }
         verifyInputs(inputs, sealed);
         verifySources(inputs, source);
-        verifyCheckout(source);
+        verifyCheckout(source, revision);
         if (!jarSha.equals(digest(runtime))) throw new IllegalArgumentException("RUNTIME_CHANGED");
         write(output.resolve("baseline.json"), baseline);
         write(output.resolve("improved.json"), improved);
@@ -78,11 +85,13 @@ public final class MethodCalibrationRun {
                 outputs.put(output.relativize(path).toString(), digest(path));
         }
         write(output.resolve("generation.json"), Map.of(
-                "executionId", qualified ? "SF-BL-005-METHOD-QUALITY-007" : "SF-BL-005-METHOD-CALIBRATION-005", "datasetKind", "CALIBRATION",
+                "executionId", manifest != null ? manifest.executionId()
+                        : qualified ? "SF-BL-005-METHOD-QUALITY-007" : "SF-BL-005-METHOD-CALIBRATION-005", "datasetKind", "CALIBRATION",
                 "binding", binding, "inputs", sealed, "outputs", outputs,
                 "startedAt", start, "finishedAt", Instant.now().toString(),
                 "authority", "PROPOSAL_ONLY", "expansion", Map.of("depth", qualified ? 3 : 2, "maxMethodsPerScenario", 64),
-                "limitations", List.of("STATIC_CALL_NOT_OBSERVED_EXECUTION", "GRAPHIFY_SNAPSHOT_REUSED_NOT_REINDEXED",
+                "limitations", List.of("STATIC_CALL_NOT_OBSERVED_EXECUTION", manifest == null
+                        ? "GRAPHIFY_SNAPSHOT_REUSED_NOT_REINDEXED" : "FIRST_CROSS_REPOSITORY_RUN_NOT_FORMAL_HOLDOUT",
                         "NO_EVALUATOR_INPUTS", "NO_UPSTREAM_TEST_EXECUTION", "TOP_LEVEL_SOURCE_DECLARATIONS_ONLY")));
     }
 
@@ -124,8 +133,8 @@ public final class MethodCalibrationRun {
         return files.stream().sorted().toList();
     }
 
-    private static void verifyCheckout(Path source) throws Exception {
-        if (!git(source, "rev-parse", "HEAD").trim().equals(SOURCE_REVISION)
+    private static void verifyCheckout(Path source, String revision) throws Exception {
+        if (!git(source, "rev-parse", "HEAD").trim().equals(revision)
                 || !git(source, "status", "--porcelain", "--untracked-files=all").isBlank())
             throw new IllegalArgumentException("EXACT_CLEAN_SOURCE_REQUIRED");
     }
