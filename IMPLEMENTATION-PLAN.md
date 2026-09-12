@@ -4,7 +4,7 @@
 
 ### SF-BL-005-PORTABILITY-002
 
-State: DISPATCH_READY. Human selected CLI/module-root minimum correction.
+State: DISPATCHED. Human selected CLI/module-root minimum correction.
 Requirements AUTH-002, PK-004, EVID-001, TECH-001; Backlog SF-BL-005.
 Base and bound Spec: 31524d2d0c38749c707a199dd0f960b6ed689777.
 Feasibility receipt: validation/software-factory/sf-bl005/acceptance-feasibility-001.md.
