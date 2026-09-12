@@ -4,6 +4,14 @@
 
 ### SF-BL-005-METHOD-CALIBRATION-005
 
+Completed bounded calibration on reviewed code 6bd20ec64442a73f56bfc27e8106b377e2014c6f.
+Evidence: validation/software-factory/sf-bl005/method-calibration-005/RESULTS.md.
+Calibration INCONCLUSIVE; engineering REVISE; formal experiment NOT_RUN.
+No producer tuning after scoring. A further change requires a newly selected run.
+Preserve the sealed gold-authoring EOF blank line; scoped whitespace check
+excludes only that file. Evidence-format exception: method-calibration-005/
+verification-note.md under the evidence directory above. All other checks apply.
+
 Human selected direct implementation of real producer wiring, independent gold
 and producer improvement followed by a paired comparison. Base and bound Spec:
 1c8706982cbda6513b5a8ad90c94b53d5322d884 plus co-delivered section 12.

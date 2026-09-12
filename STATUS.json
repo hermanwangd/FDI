@@ -17,11 +17,17 @@
     "selected_backlog_items": [
       "SF-BL-005"
     ],
-    "execution_state": "IMPLEMENTING",
-    "integration_candidate": null
+    "execution_state": "CALIBRATION_COMPLETE_REQUIRES_REVISION",
+    "integration_candidate": "6bd20ec64442a73f56bfc27e8106b377e2014c6f"
   },
-  "next_action": "Implement real METHOD producer and bounded expansion; independently seal Petclinic calibration truth before generation, adjudicate proofs and compare both arms without gold-driven tuning.",
-  "blocking_dependency": null,
+  "next_action": "Review METHOD calibration evidence, then select a new bounded scenario-specific evidence and branch-qualification correction; do not tune or rerun the sealed comparison automatically.",
+  "blocking_dependency": "Formal readiness remains gated: precision below 0.70, no complete defined chain, one unavailable chain definition, and no selected unseen holdout.",
+  "latest_calibration": {
+    "execution_id": "SF-BL-005-METHOD-CALIBRATION-005",
+    "assessment": "INCONCLUSIVE",
+    "engineering_recommendation": "REVISE",
+    "evidence": "validation/software-factory/sf-bl005/method-calibration-005/RESULTS.md"
+  },
   "pkb001_foundation": {
     "status": "PRESERVED_IMMUTABLE_HISTORY",
     "bounded_decision": "REVISE",

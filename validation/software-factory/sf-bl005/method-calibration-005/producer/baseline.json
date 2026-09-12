@@ -1,0 +1,125 @@
+{
+  "binding" : {
+    "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "productionRoots" : [ "src/main/java" ],
+    "testRoots" : [ "src/test/java" ],
+    "inputSnapshotSha256" : "41a7f9fc60bf9f0de938a5c2f4fd29e33f8258a060d0826f4240baa180e6fa37",
+    "extractorSha256" : "2fb7fccb31523f2f95b5c79af1bd9e191ebfef3a2b155b00e4eee59de713b762"
+  },
+  "proposals" : {
+    "methods" : [ {
+      "pair" : {
+        "scenarioId" : "HYP-SCENARIO-001",
+        "method" : {
+          "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+          "path" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+          "signature" : "org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)"
+        }
+      },
+      "role" : "ROUTE_HANDLER",
+      "evidenceRef" : "seed:http-behavior-observation-00004"
+    }, {
+      "pair" : {
+        "scenarioId" : "HYP-SCENARIO-002",
+        "method" : {
+          "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+          "path" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+          "signature" : "org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)"
+        }
+      },
+      "role" : "ROUTE_HANDLER",
+      "evidenceRef" : "seed:http-behavior-observation-00004"
+    }, {
+      "pair" : {
+        "scenarioId" : "HYP-SCENARIO-003",
+        "method" : {
+          "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+          "path" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+          "signature" : "org.springframework.samples.petclinic.owner.OwnerController#processCreationForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)"
+        }
+      },
+      "role" : "ROUTE_HANDLER",
+      "evidenceRef" : "seed:http-behavior-observation-00007"
+    }, {
+      "pair" : {
+        "scenarioId" : "HYP-SCENARIO-004",
+        "method" : {
+          "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+          "path" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+          "signature" : "org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,int,org.springframework.web.servlet.mvc.support.RedirectAttributes)"
+        }
+      },
+      "role" : "ROUTE_HANDLER",
+      "evidenceRef" : "seed:http-behavior-observation-00016"
+    }, {
+      "pair" : {
+        "scenarioId" : "HYP-SCENARIO-005",
+        "method" : {
+          "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+          "path" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+          "signature" : "org.springframework.samples.petclinic.owner.PetController#processCreationForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)"
+        }
+      },
+      "role" : "ROUTE_HANDLER",
+      "evidenceRef" : "seed:http-behavior-observation-00022"
+    }, {
+      "pair" : {
+        "scenarioId" : "HYP-SCENARIO-011",
+        "method" : {
+          "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+          "path" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+          "signature" : "org.springframework.samples.petclinic.owner.PetController#processUpdateForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)"
+        }
+      },
+      "role" : "ROUTE_HANDLER",
+      "evidenceRef" : "seed:http-behavior-observation-00029"
+    }, {
+      "pair" : {
+        "scenarioId" : "HYP-SCENARIO-007",
+        "method" : {
+          "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+          "path" : "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java",
+          "signature" : "org.springframework.samples.petclinic.owner.VisitController#processNewVisitForm(org.springframework.samples.petclinic.owner.Owner,int,org.springframework.samples.petclinic.owner.Visit,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)"
+        }
+      },
+      "role" : "ROUTE_HANDLER",
+      "evidenceRef" : "seed:http-behavior-observation-00037"
+    }, {
+      "pair" : {
+        "scenarioId" : "HYP-SCENARIO-008",
+        "method" : {
+          "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+          "path" : "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java",
+          "signature" : "org.springframework.samples.petclinic.owner.VisitController#processNewVisitForm(org.springframework.samples.petclinic.owner.Owner,int,org.springframework.samples.petclinic.owner.Visit,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)"
+        }
+      },
+      "role" : "ROUTE_HANDLER",
+      "evidenceRef" : "seed:http-behavior-observation-00037"
+    }, {
+      "pair" : {
+        "scenarioId" : "HYP-SCENARIO-009",
+        "method" : {
+          "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+          "path" : "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+          "signature" : "org.springframework.samples.petclinic.vet.VetController#showResourcesVetList()"
+        }
+      },
+      "role" : "ROUTE_HANDLER",
+      "evidenceRef" : "seed:http-behavior-observation-00043"
+    }, {
+      "pair" : {
+        "scenarioId" : "HYP-SCENARIO-009",
+        "method" : {
+          "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+          "path" : "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+          "signature" : "org.springframework.samples.petclinic.vet.VetController#showVetList(int,org.springframework.ui.Model)"
+        }
+      },
+      "role" : "ROUTE_HANDLER",
+      "evidenceRef" : "seed:http-behavior-observation-00042"
+    } ],
+    "edges" : [ ],
+    "unresolvedScenarios" : [ "HYP-SCENARIO-006" ],
+    "unsupportedTypes" : [ ]
+  }
+}

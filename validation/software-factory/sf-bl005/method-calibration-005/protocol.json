@@ -1,0 +1,35 @@
+{
+  "executionId": "SF-BL-005-METHOD-CALIBRATION-005",
+  "frozenAt": "2026-09-12T07:50:04Z",
+  "datasetKind": "CALIBRATION",
+  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "candidate": "31faecddb4e8f76aed46961347d4a0ff661be95f",
+  "scoringContract": "SFBL005-METHOD-PAIR-001",
+  "selectedScenarios": "All ten previously accepted Petclinic scenarios, unchanged",
+  "baseline": "Fresh legacy route/direct-reference seeds converted to unique canonical METHOD identities",
+  "improved": "Same seeds plus unique source-declared calls, breadth first, depth 2, maximum 64 methods per scenario",
+  "sharedInputs": "Five exact-digest inputs pinned by SfBl002RouteEffectivenessRun plus clean exact source checkout",
+  "sharedExtractor": "Identical packaged Java runtime JAR SHA256 in both arms",
+  "isolation": {
+    "producerInputRoot": "/tmp/sfbl005-method-005.R8hq3T/producer-inputs",
+    "goldAuthor": "/root/calibration_gold",
+    "goldReviewer": "/root/calibration_evaluator_review",
+    "truthSha256": "39aa27459305c05a4c983b0c414c60b39ec3e460491b9edb5da49c620bc2de2c",
+    "goldAuthoringSha256": "33a6f29d26d1fcf2cb36db6bb66671dcf467a9bf131dff7903edb28857b71b28",
+    "goldReviewSha256": "01821cec35390bceecf568e051becb8062d1266e5a9139443b5b8b8886ff983a",
+    "producerAuthorReadGold": false,
+    "mechanism": "Separate actor contexts and strict producer five-file allowlist; not an OS sandbox"
+  },
+  "proofRule": "Independent reviewer adjudicates source/scenario support after both producer artifacts are sealed; static calls do not prove observed execution",
+  "limits": { "jvmMaxGiB": 2, "aggregateMaxGiBExclusive": 8, "commandTimeoutSeconds": 1200 },
+  "stoppingRule": "One paired calibration; no tuning against scored misses; preserve failed/incomplete namespaces",
+  "decisionRule": "Use frozen Plan thresholds for calibration only; undefined mandatory metrics yield INCONCLUSIVE; integrity failure invalidates comparison",
+  "formalExperimentDecision": "NOT_RUN",
+  "limitations": [
+    "Exposed calibration, not unseen holdout or statistical generalization",
+    "Forward realization only, not Reverse capability discovery",
+    "Graphify frozen snapshot reused as context, not newly indexed or call-execution proof",
+    "No upstream application tests executed",
+    "Top-level source declarations only; generic, overloaded, inherited or uncertain identities abstain"
+  ]
+}
