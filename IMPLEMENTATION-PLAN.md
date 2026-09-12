@@ -2,152 +2,101 @@
 
 ## Current selection
 
-### SF-BL-005-CROSSREPO-REALWORLD-001
+### SF-BL-005-CROSSREPO-UNSUPPORTED-ACTION-002
 
-User approved RealWorld and a first ten-scenario cross-repository validation.
-Base/Spec: deec2512293550c233afcf4d6eeed6e00acd7819.
-Repository: https://github.com/gothinkster/spring-boot-realworld-example-app.git
-Exact source: ee17e31aafe733d98c4853c8b9a74d7f2f6c924a.
-Thresholds remain precision >0.80 and recall >0.60, without rounding.
-007 metric goal remains VERIFIED on Petclinic only; old runs are immutable.
+> Execution Plane must use `executing-plans`, implement with TDD, coordinate
+> independent review and return one integrated evidence package. Active controls
+> are read-only to every Execution Plane actor.
 
-First RealWorld attempt stopped before scoring: AUTHENTICATE is rejected by the
-frozen mapper. No valid producer outputs; all quality metrics unavailable.
-Candidate: 2f8a51717c892b6bd3b5673758da4ac9951c6e71.
-Evidence: validation/software-factory/sf-bl005/cross-repo-realworld-001/RESULTS.md.
-No automatic follow-up tuning; a revised execution selection is required.
+**Goal:** One unsupported scenario action becomes an honest scenario-level
+`UNRESOLVED` result and does not abort processing of other scenarios.
 
-This is first-use cross-repository validation, not an authorized formal GO.
-The unchanged evaluator permits CALIBRATION, not HOLDOUT; retain that label
-with exposureClass FIRST_CROSS_REPOSITORY_RUN rather than weaken its gate.
-No claim the public repository is unseen to model pretraining.
-FDP maintains controls; main implements ingress only. Independent actors author,
-review and seal evaluator truth before generation, then adjudicate source proofs.
-No new parent, no Coordinator dispatch, no per-slice confirmations.
+**Architecture:** Keep `BehaviorEvidencePolicy` and every action classification
+unchanged. At the mapper boundary, convert an absent `ActionFamily` into a
+`ScenarioComponentProposal(UNRESOLVED, no components, one deterministic gap)`;
+continue the existing ordered loop. Do not add `AUTHENTICATE` support or tune
+RealWorld retrieval/matching.
 
-## Frozen first-run scope and budget
+**Tech stack:** Java 17, Spring Boot 3.4.1, JUnit 5.
 
-REST scope, ten preselected behavior topics: valid registration, valid login,
-article creation, own-article update, duplicate-email rejection, invalid-password
-rejection, unauthorized article-update rejection, invalid article rejection,
-paginated article listing, and paginated following feed. Four success, four
-rejection and two pagination topics. Derive implementation-free retrieval aids
-from public Product/API descriptions; exact statements and necessary METHOD pairs
-are independently frozen. Missing source/test support is a reported gap, not
-permission to replace a hard scenario. No Product truth publication.
-No GraphQL, deployment, database server, upstream application tests or secret use.
+Backlog: `SF-BL-005`; requirements: `AUTH-002`, `PK-004`, `EVID-001`,
+`TECH-001`. Work category/size: fix / S. Rationale: one existing mapper contract,
+two owned paths, local and full regression verification. Implementation base:
+`e461e06018fd983c7392eb5c48ee26d7008ba5ca`. Prior failed run and all evidence
+under `validation/software-factory/sf-bl005/cross-repo-realworld-001/**` are
+immutable. This selection authorizes implementation and verification, not a
+new RealWorld run, scoring, Product publication, merge, push, or parent closure.
 
-One scored run; one deterministic replay may verify identical mechanics.
-Do not tune selector, mapping, branch or call rules using RealWorld outputs.
-Only input loading, revision/digest parameters and serialization adapters may
-change. The six 007 methodcalibration algorithm files retain source byte hashes;
-only runner ingress (MethodCalibrationRun) may change. SourceMethodIndex,
-ScenarioEvidenceSelector, QualifiedSourceCalls, QualifiedCalibrationProducer,
-RedirectEvidenceAssociation and CalibrationProducer are frozen.
-Unknown syntax/naming remains an observable portability gap; do not rename
-source symbols or inject expected methods into producer inputs.
+## Mutation boundary
 
-One heavy JVM/fork; aggregate <8 GB. Maven -Xmx2g and fork -Xmx2g,
-producer <=1g, evaluator <=512m. Commands bounded to 20 minutes; no paid services,
-Graphify reinstall or unbounded retries. Discovery/index failure stops generation
-with evidence; no fabricated Graphify output. Existing local external Graphify
-runtime may index this exact source after live API inspection.
-Graphify indexing time/cost reported separately from mapping and evaluator work.
+Owned paths only:
 
-## Owned paths and construction
+- `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/RouteAwareScenarioMapper.java`
+- `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/RouteAwareScenarioMapperTests.java`
 
-Java prefix J=src/main/java/com/featuredeliveryintelligence/fdi/.
-Own J/product/realization/methodcalibration/{CrossRepositoryManifest,CrossRepositoryMethodRun}.java,
-input-only refactoring of MethodCalibrationRun.java,
-input-only overloads in J/product/realization/scenarioforward/SfBl002RouteEffectivenessRun.java,
-and corresponding tests. Existing matching/evaluator algorithms and all old evidence
-are excluded.
-Also own J/validation/liveverifier/CrossRepositoryGraphifyEvidence.java and its
-tests: Java orchestrates the installed external Graphify extraction/build/export
-APIs and existing stdio client plus GraphifyAdapter/CodeIntelligenceProvider;
-frozen source/digest checks surround indexing and live query. Index a byte-verified
-Java-source copy outside the clean Git snapshot because the runtime writes cache
-under its inputs; retain failed attempt evidence. No runtime edits.
-Own validation/software-factory/sf-bl005/cross-repo-realworld-001/**
-and new .fdi-work/realworld-ee17e31 source snapshot (never edit tracked source).
-Graphify integration uses existing CodeIntelligenceProvider/Java adapter; if a
-generic runtime-evidence bridge is needed, describe its exact path in this Plan
-before implementation. Other Backlog work and user files are excluded.
+All active controls, `BehaviorEvidencePolicy`, scoring/evaluator code, cross-repo
+inputs/results, Graphify integration, algorithm files and unrelated user files
+are excluded. Unknown overlap is `PLAN_CONFLICT`.
 
-- [x] Freeze selection/protocol; retrieve exact clean source with hooks disabled.
-- [x] Independent actor writes public retrieval aids separately from evaluator-only
-  truth and chain definitions; independent second actor reviews before sealing.
-  Main may consume retrieval aids, never raw gold or missing-pair lists.
-- [x] TDD CrossRepositoryManifest: strict schema, full revision, semantics hash,
-  exactly five allowed input paths/digests, no extra/evaluator files, no symlinks,
-  source changes refused. Unknown fields/invalid hashes fail closed.
-- [x] Parameterize only repository ID, semantics digest, revision, sealed inputs
-  and execution identity. Existing Petclinic entry retains exact defaults and
-  existing tests/byte-parity behavior. Do not pretend another repository is Petclinic.
-- [x] Add synthetic second-repository tests before implementation; old controls,
-  consumer negative tests and frozen algorithm hashes must continue to pass.
-- [x] Verify installed Graphify and create exact-source structural snapshot plus
-  live provider evidence; keep indexing output outside the source tree.
-- [x] Freeze manifest SHA, allowed-input directory, source and final runtime JAR.
-  Independent ingress review then full Java/Python regressions.
-- [ ] Execute old baseline and frozen007 improved algorithms on identical inputs;
-  seal outputs before exposing evaluator-only files. No scoring from synthetic
-  fixtures or old Petclinic graph/truth.
-  Attempted generation-001: FAILED_UNSUPPORTED_SCENARIO_ACTION; no output seal.
-- [ ] Independent fresh proof ledger; unchanged METHOD-PAIR scorer; separate
-  receipt replay. Report counts, precision/recall/F1, scenario/chain coverage,
-  unresolved/unsupported data, and first-run limits. Bad/undefined results remain.
-  Scorer not run because generation failed; no fabricated metric denominator.
-- [x] Reconcile BACKLOG/STATUS and retain first result; no automatic tuning,
-  merge, push, formal GO, parent closure or further repository selection.
-  Independent first-run-review.md verifies the same no-score failure by replay.
+## Acceptance and negative cases
 
-## Verification commands
+- With ordered intents `[AUTHENTICATE, CREATE]`, mapper returns two proposals in
+  the same order: first `UNRESOLVED`, empty components, exactly
+  `unsupported-action-term:AUTHENTICATE`; second follows existing CREATE mapping.
+- The unsupported scenario adds exactly one deterministic diagnostic
+  `unsupported-action:<scenarioId>:AUTHENTICATE` and cannot borrow evidence.
+- Supported actions keep existing byte/behavior semantics and all current tests.
+- Null/blank intent fields remain rejected by their existing contract; exceptions
+  unrelated to unsupported action classification remain fail-closed.
+- Do not relabel, drop, substitute or map `AUTHENTICATE`; do not catch arbitrary
+  runtime exceptions around a scenario.
 
+## TDD and delivery sequence
+
+- [ ] Add one focused mixed-input test proving unsupported-first does not abort,
+  exact gap/diagnostic/order, empty components, and unchanged CREATE result.
+- [ ] Run only that test and record expected RED: existing code throws
+  `unsupported scenario action term: AUTHENTICATE`.
+- [ ] Implement the smallest mapper-only branch for absent `ActionFamily`.
+- [ ] Run all `RouteAwareScenarioMapperTests`; then the full Java package and
+  Python controls with resource limits below.
+- [ ] Self-check exact two-path diff and prove no forbidden path or action table
+  changed. Commit one implementation candidate.
+- [ ] Coordinator assigns an independently attributable reviewer who verifies
+  the exact candidate, negative cases, scope and full evidence. Remediate and
+  obtain fresh review automatically if required.
+- [ ] Coordinator returns one delivery package with exact base/candidate,
+  changed paths, RED/GREEN evidence, test totals, review run/actor, limitations,
+  token/cycle/first-pass KPI data and recommendation. Do not edit controls.
+
+## Verification
+
+Use one heavy JVM at a time and stay below aggregate 8 GB:
+
+```text
 JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home
-MAVEN_OPTS=-Xmx2g; -DargLine=-Xmx2g. Never JAVA_TOOL_OPTIONS.
-SFBL002_PETCLINIC_ROOT=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/sfbl002-petclinic-818c413
-Run ./mvnw -q -DargLine=-Xmx2g -Dtest=CrossRepositoryManifestTests test
-for RED then GREEN; full ./mvnw -q -DargLine=-Xmx2g package,
-python3 -m pytest -q, git diff --check. Preserve 007 algorithm file digests.
-New runner takes manifest path + SHA, input root, exact-source root, fresh output.
-Manifest/CLI schema must be tested with absent, changed and extra inputs.
-Budget/sample/authority changes require explicit revised selection; execution
-must not silently turn lack of support into a passing score.
+MAVEN_OPTS=-Xmx2g
+./mvnw -q -DargLine=-Xmx2g -Dtest=RouteAwareScenarioMapperTests test
+./mvnw -q -DargLine=-Xmx2g package
+python3 -m pytest -q
+git diff --check
+```
+
+Bound each Maven command to 20 minutes. Never set `JAVA_TOOL_OPTIONS`. No paid
+service, Graphify indexing, upstream RealWorld build/database/Docker, deployment,
+network mutation, merge or push. Full regression is required before PASS.
+
+## Continuation gate
+
+An independently reviewed implementation candidate is `ENGINEERING_READY` for
+FDP intake only. FDP then decides whether to authorize a new immutable RealWorld
+calibration attempt. The first no-score result remains the first result.
 
 ## Frozen scoring contract — SFBL005-METHOD-PAIR-001
 
-Applies to successor comparison, not old artifacts/current evaluator.
-Unit: (accepted scenario ID, canonical source revision, repository-relative path,
-METHOD qualified signature including overload parameters). Gold/proposals use the
-same unit. Unresolvable identity normalization cannot be guessed.
-Exact duplicate claims collapse once (report duplicate count); same method across
-scenarios is a different pair. Role is diagnostic, not a way to multiply TP.
-Gold necessary pairs and directed chain edges are independently authored/sealed
-before generation. No producer-defined denominator. Capability without sealed
-crosswalk is NOT_COMPARABLE. TYPE unsupported is reported separately, not hidden.
-
-TP: unique expected proposed pair whose scenario/evidence proof revalidates.
-FP: every other parseable proposed pair, including wrong subject or weak proof;
-do not remove invalid-proof claims from precision denominator.
-FN: each expected pair without valid TP; wrong claims can cause both FP and FN.
-UNRESOLVED contributes abstention and FN where a pair is expected.
-Schema/digest/isolation failure invalidates run; emit no quality score.
-precision=TP/(TP+FP); recall=TP/(TP+FN); F1=2TP/(2TP+FP+FN).
-Zero denominator is undefined, never silently zero/one. Report raw counts.
-Scenario coverage: selected scenarios with >=1 TP / all selected scenarios.
-Complete-chain coverage: scenarios with all sealed necessary methods/edges
-supported / selected scenarios requiring nonempty chains. Missing gold chain is
-unavailable, never vacuous success. Structure != observed execution; mocks and
-redirects cannot prove downstream execution.
-
-For valid paired runs under the same inputs, extractor and new evaluator:
-GO requires precision >=0.70 AND >= baseline precision, recall > baseline recall,
-F1 > baseline F1, scenario and complete-chain coverage >= baseline, and all
-engineering/isolation gates PASS. Otherwise valid comparison is REVISE.
-Undefined mandatory metrics or insufficient data are INCONCLUSIVE; integrity
-failure invalidates the comparison. STOP requires FDP recommendation and Human
-decision. No rounding before comparison; no claim of statistical generalization.
-Exact holdout, sample/stratum counts and cost budget are still required Human
-pre-comparison gates, sealed before any formal experimental scoring run.
-The selected synthetic/calibration mechanics checks do not satisfy those gates.
+No scoring occurs in this selection. A later authorized successor retains the
+frozen contract: unique `(scenario ID, revision, path, METHOD signature)` pairs;
+invalid or unexpected claims are FP, missing expected pairs are FN, unresolved
+expected scenarios contribute FN, undefined denominators remain null. Precision,
+recall and F1 are computed without rounding. Exact truth/input isolation and
+independent proof review remain mandatory; this fix cannot establish formal GO.
