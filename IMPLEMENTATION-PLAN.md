@@ -2,6 +2,44 @@
 
 ## Current selection
 
+### SF-BL-005-METHOD-CALIBRATION-005
+
+Human selected direct implementation of real producer wiring, independent gold
+and producer improvement followed by a paired comparison. Base and bound Spec:
+1c8706982cbda6513b5a8ad90c94b53d5322d884 plus co-delivered section 12.
+Parent SF-BL-005; requirements AUTH-002, PK-004, EVID-001, TECH-001.
+Petclinic 818c4136ea971c21674525f9053de0d9c7ad8cfe is exposed CALIBRATION,
+not holdout. Reuse its five sealed producer inputs and accepted ten scenarios.
+Own new J/product/realization/methodcalibration/**, matching T/** and
+validation/software-factory/sf-bl005/method-calibration-005/**; FDP owns controls.
+Do not change legacy pipelines, scorer semantics, PORTABILITY-002 owned paths,
+company documents, accepted semantics, or prior validation artifacts.
+
+Main implements locally with synthetic TDD. A separately attributable evaluator
+author independently defines all scenario METHOD pairs and directed chains from
+accepted semantics and exact source/tests, seals truth before generation, and
+does not disclose gold identities to producer author. A separate reviewer checks
+the gold and later adjudicates exact proposal-digest-bound source proofs.
+Baseline retains mechanically verified route/direct-reference method seeds.
+Improvement adds bounded, uniquely resolved production calls from those seeds;
+ambiguous/external/test/mock calls cannot establish production execution.
+Canonical signatures include qualified parameter types; uncertain identity
+abstains. Both arms share source, five inputs, extractor and bounds; only the
+expansion switch differs. Use sealed Graphify observations as structural
+context, never execution proof. No new Graphify run is claimed.
+
+Verify clean exact source and all digests; run producer without evaluator files.
+Seal both arms and terminate generation before proof review/evaluation. Never
+tune against scored misses. Comparison uses METHOD-PAIR-001; report raw counts,
+all five quality metrics, undefined chains and a calibration-only decision.
+Formal experiment remains NOT_RUN. Integrity failure invalidates scoring.
+TDD covers resolution/overloads/ambiguity, binding, deterministic immutable
+outputs, and arm parity with expansion off. Run focused tests, full Java package,
+Python controls and independent candidate review under resource limits below.
+No Coordinator dispatch, per-slice approval, merge, push or parent closure.
+
+## Prior real-data reproduction
+
 ### SF-BL-005-PETCLINIC-REPLAY-004
 
 User requested a real-data rerun. Execute directly, without a Coordinator task.
@@ -14,25 +52,7 @@ PK-004, EVID-001, TECH-001; parent SF-BL-005 remains IN_PROGRESS.
 This is reproduction of frozen SF-BL-002-ROUTE-EFFECTIVENESS-005, not a
 METHOD-PAIR-001 experiment, new holdout, producer improvement or new GO claim.
 
-Own only validation/software-factory/sf-bl005/petclinic-replay-004/** and
-fresh disposable runtime directories. No Java/source/old-artifact mutations.
-FDP maintains these controls. Rebuild the existing Java application, verify real
-Petclinic checkout 818c4136ea971c21674525f9053de0d9c7ad8cfe clean, and snapshot
-the five producer inputs named by SfBl002RouteEffectivenessRun.sealedInputs().
-Withhold evaluator inputs from producer workspace. Execute that class's public
-main with producer-input root, exact source checkout and a fresh output root.
-Seal output hashes, terminate producer, then stage existing sealed evaluator
-inputs and run SfBl002RouteEffectivenessEvaluation in a separate Java process.
-Retain original internal schema/execution identities for byte comparison; the
-new outer run identity and manifest distinguish this invocation. Never relabel
-old-unit results as METHOD-pair results. Use existing frozen Graphify evidence;
-do not claim a fresh Graphify runtime/index or upstream application test run.
-Save new outputs, timings, hashes, computed metrics, raw threshold decision and
-comparison with preserved outputs. Acceptance is digest/byte reproducibility,
-not beating the old score. Old evaluator's GO remains historical-protocol only.
-Resource limits below apply; one JVM <=2 GiB, each command <=20 minutes.
-Do not modify code to force a match or invent missing METHOD gold/proof ledger.
-Missing prerequisites for the newer experiment must be reported separately.
+Construction detail is preserved at base commit; old results remain immutable.
 
 ## Reviewed scorer increment
 
@@ -51,29 +71,10 @@ T/application/MethodPairCompareCliTests.java and
 validation/software-factory/sf-bl005/method-evaluator-003/**.
 J/T abbreviations are defined below. FDP owns the supporting control update.
 
-Implement the frozen METHOD scoring contract below without changing the old
-evaluator. Package-local calculation has no public unsealed entry point. A
-public Java runner snapshots digest-bound producer outputs before opening
-evaluator-only expected pairs, directed chains and independent proof ledger.
-The CLI requires a caller-pinned manifest digest. Typed JSON rejects unknown,
-missing, null and duplicate fields; bounded regular files, canonical paths,
-containment, strict hashes and immutable output are required. Bind both arms
-to identical source/input/extractor identities; match ledger proofs by exact
-arm digest, scenario, method/edge and evidence reference, never producer booleans.
-The ledger is independently reviewed input, not proof of independence by itself;
-its source-proof review and operational isolation remain experiment gates.
-Only SYNTHETIC/CALIBRATION are accepted. Outputs are scoring-mechanics evidence,
-not experimental GO or holdout readiness. Missing chain definitions yield an
-unavailable overall chain metric. TYPE claims remain separate diagnostics.
-
-TDD: pair TP/FP/FN (invalid expected proof is FP+FN), role/duplicate handling,
-abstention, directed chain, zero denominators; then strict binding/CLI refusal,
-determinism and no-overwrite tests. Run MethodPairScorerTests,
-MethodPairComparisonRunnerTests, MethodPairCompareCliTests, full Java regression,
-existing Python control tests and git diff --check under resources below.
-No producer tuning, production runner migration, real repository scoring,
-Graphify indexing, evaluator gold creation, merge, push or parent closure here.
-Those dependent increments follow acceptance of the existing correction.
+Delivered strict digest-bound comparison runner and CLI with 22 focused tests;
+full regression 1349 Java and 63 Python tests passed. Scoring mechanics alone
+do not verify source proofs, independent authorship or formal experiment gates.
+Frozen arithmetic below remains controlling for the selected successor.
 
 ## Existing correction and resources
 

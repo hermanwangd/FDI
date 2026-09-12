@@ -509,6 +509,10 @@ does not select a holdout or establish an experimental GO decision.
 User-requested reproduction of an existing frozen real-data protocol MAY run
 in a new isolated output namespace. It MUST identify the original protocol and
 MUST NOT present old-unit scores as successor METHOD-pair results.
+Human-selected real METHOD calibration MAY wire producers, independently seal
+METHOD/chain truth before generation, and compare bounded producer improvements
+with identical inputs and scoring. Exposed repositories remain calibration;
+this does not authorize formal holdout execution or a generalization claim.
 This permission does
 not amend prior experimental verdicts or authorize TYPE generation, automatic
 Product publication, or formal holdout execution without its selection gates.
