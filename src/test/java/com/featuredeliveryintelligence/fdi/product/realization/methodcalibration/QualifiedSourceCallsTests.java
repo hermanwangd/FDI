@@ -61,6 +61,40 @@ class QualifiedSourceCallsTests {
         return new QualifiedSourceCalls(index).calls(index.unique(name), action).stream()
                 .map(SourceMethodIndex.Method::signature).toList();
     }
+    @Test void existingTargetUpdateDoesNotInheritAbsentTargetCreationFallback() throws Exception {
+        var index = index("""
+                package demo;
+                class Item {}
+                class Repo { Item find(int id){return null;} }
+                class Service { Repo repo;
+                  void run(Item input,int id){Item stored=repo.find(id);if(stored!=null){change(stored);}else{create(input);}}
+                  void inverse(Item input,int id){Item stored=repo.find(id);if(null==stored){create(input);}else{change(stored);}}
+                  void change(Item input){} void create(Item input){}
+                }
+                """);
+        assertFalse(signatures(index,"demo.Service#run","UPDATE").contains("demo.Service#create(demo.Item)"));
+        assertTrue(signatures(index,"demo.Service#run","UPDATE").contains("demo.Service#change(demo.Item)"));
+        assertTrue(signatures(index,"demo.Service#run","CREATE").contains("demo.Service#create(demo.Item)"));
+        assertFalse(signatures(index,"demo.Service#inverse","UPDATE").contains("demo.Service#create(demo.Item)"));
+    }
+    @Test void unrelatedNullDefaultIsNotAnAbsentTargetBranch() throws Exception {
+        var index = index("""
+                package demo; class Item {}
+                class Service { String find(){return null;}
+                  void run(Item input){String label=find();if(label==null){useDefault();}}
+                  void useDefault(){}
+                }
+                """);
+        assertTrue(signatures(index,"demo.Service#run","UPDATE").contains("demo.Service#useDefault()"));
+    }
+    @Test void reassignedLookupCannotSuppressItsNewValuesBranch() throws Exception {
+        var index = index("""
+                package demo; class Item{} class Repo{Item find(int id){return null;}}
+                class Service{Repo repo;void run(Item input,int id){Item stored=repo.find(id);
+                stored=null;if(stored==null){repair(input);}}void repair(Item input){} }
+                """);
+        assertTrue(signatures(index,"demo.Service#run","UPDATE").contains("demo.Service#repair(demo.Item)"));
+    }
     @Test void unknownSuperclassCannotBeSilentlyReplacedByInterfaceDeclaration() throws Exception {
         var index = index("""
                 package demo;

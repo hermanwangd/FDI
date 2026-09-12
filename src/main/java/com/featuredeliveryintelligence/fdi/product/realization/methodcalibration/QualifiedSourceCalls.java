@@ -18,7 +18,8 @@ final class QualifiedSourceCalls {
         Set<SourceMethodIndex.Method> result = new LinkedHashSet<>();
         for (var call : definition.node().findAll(MethodCallExpr.class)) {
             if (!direct(call, definition.node(), !"REJECT".equals(action))
-                    || !branchQualified(call, definition.node(), action)) continue;
+                    || !branchQualified(call, definition.node(), action)
+                    || !existingTargetBranch(call, definition, action)) continue;
             var target = resolve(call, definition, 0);
             if (target != null && !trivialAccessor(target)) result.add(target.method());
         }
@@ -104,6 +105,36 @@ final class QualifiedSourceCalls {
             if (parent instanceof LambdaExpr || parent instanceof ClassOrInterfaceDeclaration
                     || parent instanceof MethodDeclaration || parent instanceof ObjectCreationExpr
                     || success && parent instanceof CatchClause) return false;
+        }
+        return true;
+    }
+    private boolean existingTargetBranch(Node call, SourceMethodIndex.Definition context, String action) {
+        if (!"UPDATE".equals(action)) return true;
+        for (var branch : context.node().findAll(com.github.javaparser.ast.stmt.IfStmt.class)) {
+            if (!branch.getCondition().isBinaryExpr()) continue;
+            var condition = branch.getCondition().asBinaryExpr();
+            if (condition.getOperator() != BinaryExpr.Operator.EQUALS
+                    && condition.getOperator() != BinaryExpr.Operator.NOT_EQUALS) continue;
+            Expression value = condition.getLeft().isNullLiteralExpr() ? condition.getRight()
+                    : condition.getRight().isNullLiteralExpr() ? condition.getLeft() : null;
+            if (value == null || !value.isNameExpr()) continue;
+            var variables = context.node().findAll(VariableDeclarator.class).stream()
+                    .filter(v -> v.getNameAsString().equals(value.asNameExpr().getNameAsString())).toList();
+            if (variables.size() != 1) continue;
+            var variable = variables.get(0);
+            if (context.node().findAll(AssignExpr.class).stream().anyMatch(a -> a.getTarget().isNameExpr()
+                    && a.getTarget().asNameExpr().getNameAsString().equals(variable.getNameAsString()))) continue;
+            var initializer = variable.getInitializer().orElse(null);
+            if (initializer == null || !initializer.isMethodCallExpr()) continue;
+            String name = initializer.asMethodCallExpr().getNameAsString();
+            if (!name.matches("(get|find|lookup|load|fetch)([A-Z].*)?")) continue;
+            String declared = index.qualify(variable.getType(), context.owner());
+            if (declared == null || index.owner(declared) == null || !declared.equals(type(value, context, 0))
+                    || !declared.equals(type(initializer, context, 0))
+                    || context.node().getParameters().stream().noneMatch(p -> declared.equals(index.qualify(p.getType(), context.owner())))) continue;
+            Node absent = condition.getOperator() == BinaryExpr.Operator.EQUALS ? branch.getThenStmt()
+                    : branch.getElseStmt().orElse(null);
+            if (absent != null && (absent == call || absent.isAncestorOf(call))) return false;
         }
         return true;
     }

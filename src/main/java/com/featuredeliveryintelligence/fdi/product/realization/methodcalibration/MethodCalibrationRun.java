@@ -78,7 +78,7 @@ public final class MethodCalibrationRun {
                 outputs.put(output.relativize(path).toString(), digest(path));
         }
         write(output.resolve("generation.json"), Map.of(
-                "executionId", qualified ? "SF-BL-005-METHOD-QUALITY-006" : "SF-BL-005-METHOD-CALIBRATION-005", "datasetKind", "CALIBRATION",
+                "executionId", qualified ? "SF-BL-005-METHOD-QUALITY-007" : "SF-BL-005-METHOD-CALIBRATION-005", "datasetKind", "CALIBRATION",
                 "binding", binding, "inputs", sealed, "outputs", outputs,
                 "startedAt", start, "finishedAt", Instant.now().toString(),
                 "authority", "PROPOSAL_ONLY", "expansion", Map.of("depth", qualified ? 3 : 2, "maxMethodsPerScenario", 64),
