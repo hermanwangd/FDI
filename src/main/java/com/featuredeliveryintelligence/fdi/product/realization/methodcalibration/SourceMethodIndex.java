@@ -5,9 +5,11 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.expr.LambdaExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.expr.ObjectCreationExpr;
+import com.github.javaparser.ast.expr.PatternExpr;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.type.Type;
 import java.io.IOException;
@@ -44,7 +46,9 @@ final class SourceMethodIndex {
             }
         }
         for (Owner owner : owners.values()) {
+            if (!owner.node().getTypeParameters().isEmpty()) continue;
             for (MethodDeclaration method : owner.node().getMethods()) {
+                if (!method.getTypeParameters().isEmpty()) continue;
                 List<String> params = new ArrayList<>();
                 boolean known = true;
                 for (var param : method.getParameters()) {
@@ -85,7 +89,9 @@ final class SourceMethodIndex {
             String target = receiver(call, definition);
             if (target == null) continue;
             Owner targetOwner = owners.get(target);
-            if (targetOwner == null || targetOwner.node().getMethodsByName(call.getNameAsString()).stream()
+            if (targetOwner == null || !targetOwner.node().getExtendedTypes().isEmpty()
+                    || !targetOwner.node().getImplementedTypes().isEmpty()
+                    || targetOwner.node().getMethodsByName(call.getNameAsString()).stream()
                     .filter(m -> m.getParameters().size() == call.getArguments().size()).count() != 1) continue;
             // No overload/type guessing: retain only one declaration at this arity.
             var candidates = definitions.values().stream().filter(d -> d.owner().name().equals(target)
@@ -106,6 +112,9 @@ final class SourceMethodIndex {
         else if (scope.isNameExpr()) name = scope.asNameExpr().getNameAsString();
         else return null;
         if (!explicitField) {
+            if (!definition.node().findAll(PatternExpr.class).isEmpty()) return null;
+            if (definition.node().findAll(Parameter.class).stream().anyMatch(p ->
+                    p.getNameAsString().equals(name) && p.getParentNode().orElse(null) != definition.node())) return null;
             // Any local shadow makes a field/parameter receiver uncertain. No scope guessing.
             if (definition.node().findAll(VariableDeclarator.class).stream()
                     .anyMatch(v -> v.getNameAsString().equals(name))) return null;
@@ -138,7 +147,13 @@ final class SourceMethodIndex {
         }
         if (!type.isClassOrInterfaceType()) return null;
         String name = type.asClassOrInterfaceType().getNameWithScope();
-        if (name.contains(".")) return name; // already qualified; nested imported aliases unsupported below
+        if (name.contains(".")) {
+            // Scoped imported aliases and type variables are not fully qualified names.
+            String first = name.substring(0, name.indexOf('.'));
+            if (Character.isUpperCase(first.charAt(0)) || owner.unit().getImports().stream()
+                    .anyMatch(i -> !i.isAsterisk() && i.getName().getIdentifier().equals(first))) return null;
+            return name;
+        }
         List<String> imports = owner.unit().getImports().stream()
                 .filter(i -> !i.isAsterisk() && !i.isStatic() && i.getName().getIdentifier().equals(name))
                 .map(i -> i.getNameAsString()).distinct().toList();

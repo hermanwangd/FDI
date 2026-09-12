@@ -72,7 +72,7 @@ validation/software-factory/sf-bl005/method-evaluator-003/**.
 J/T abbreviations are defined below. FDP owns the supporting control update.
 
 Delivered strict digest-bound comparison runner and CLI with 22 focused tests;
-full regression 1349 Java and 63 Python tests passed. Scoring mechanics alone
+full regression: Java 1349/1349 and Python 63/63. Scoring mechanics alone
 do not verify source proofs, independent authorship or formal experiment gates.
 Frozen arithmetic below remains controlling for the selected successor.
 
