@@ -19,7 +19,7 @@ claim or parent closure.
 
 Backlog: `SF-BL-005`; requirements: `AUTH-002`, `PK-004`, `EVID-001`,
 `SF-EVAL-001`, `TECH-001`. Construction base:
-`1cbfbac28d0119cc6732a7bb072ce22a9d59eab6`, containing reviewed mapper
+`1cbfbac252b8c48567ecfdeac43fa87fcbddb643`, containing reviewed mapper
 candidate `ec604f1fb6d1f774f4268f70af63e0850357ff74` replayed as `6a19bc0`, and
 reviewed gate candidate `2c69c62d7c5b9fd33f11c90b52b7a8f0d1bc4ce8` replayed as `1cbfbac`.
 Controlling design:
