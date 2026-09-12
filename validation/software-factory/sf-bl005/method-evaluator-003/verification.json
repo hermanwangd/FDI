@@ -6,12 +6,12 @@
   "framework_runtime": "Java 17 / Spring Boot 3.4.1",
   "java": {
     "suites": 108,
-    "tests": 1347,
+    "tests": 1349,
     "failures": 0,
     "errors": 0,
     "skipped": 0,
-    "new_tests": 20,
-    "command": "./mvnw -q -DargLine=-Xmx2g test"
+    "new_tests": 22,
+    "command": "./mvnw -q -DargLine=-Xmx2g package"
   },
   "python_control_regression": {
     "tests": 63,
@@ -19,9 +19,9 @@
     "command": "python3 -m pytest -q"
   },
   "package": {
-    "command": "./mvnw -q -DskipTests package",
+    "command": "./mvnw -q -DargLine=-Xmx2g package",
     "exit_code": 0,
-    "note": "Separate build after successful full regression; no skipped tests in the reported regression."
+    "note": "Full test and package lifecycle after review remediation; zero skipped tests."
   },
   "source_fixture": {
     "path": ".fdi-work/sfbl002-petclinic-818c413",
@@ -38,7 +38,8 @@
     "initial_scorer_red": "New scorer API absent at test compilation; then 6 scoring tests green.",
     "runner_red": "6 assertion failures and 3 missing-output errors against empty runner.",
     "cli_and_coercion_red": "5 assertion failures; fixed numeric-to-string coercion and application command dispatch.",
-    "final_focused_tests_passed": 20
+    "final_focused_tests_passed": 22,
+    "review_remediation_red": "Valid demo.Evaluator#score(int) rejected by inherited producer vocabulary filter; reproduced before replacing only the evaluator structural boundary."
   },
   "preservation": {
     "pkb001_tracked_diff": "EMPTY",
@@ -60,9 +61,16 @@
     "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairComparisonRunner.java": "f27d3d54a96b24e2d8692bcfe5385acb40b86228e2916f4acaf70ab41d014e49",
     "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairData.java": "52145068432a13e264f3025cb6f35df7bf55c50c6ec9b3233da1c4f3c6431233",
     "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairScorer.java": "88c07dcbfa56eb822648846358d54ac61e46acf9af26e60fca298e8e679bd031",
-    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairValidation.java": "aa8d55026bb3372a44124461db723bb2a89b49a52c661472a1265f861c8c08e9",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairValidation.java": "f83800c607af327999f16aea52e73ebd4f2811e0d11e7ff1a926cd2e0c77a180",
     "src/test/java/com/featuredeliveryintelligence/fdi/application/MethodPairCompareCliTests.java": "35fdecac37888fb0cbf0376210a0c60b1b8f89d738ea427b11cb721161da8705",
-    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairComparisonRunnerTests.java": "9911823c1ef74fbc91db1595bb294de8b6da16f6db262fd3fe2888473f455cf9",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairComparisonRunnerTests.java": "c9d7470174d37c3a2b3a1654c1ad5586731d26180c438eb6dddf9f67a5b4ea20",
     "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairScorerTests.java": "2e011876fdf59a2dc7159f71ab19d3302c061982efcdadc5e309674d591a7e2f"
+  },
+  "initial_independent_review": {
+    "reviewer_run": "/root/method_pair_review",
+    "candidate": "f8d04d01a4b62661f85471fabf88110c82f55b0a",
+    "verdict": "REVISE",
+    "finding": "P2: evaluator inherited producer vocabulary exclusions; legitimate Evaluator method identities rejected.",
+    "remediation": "New evaluator validates structural identities locally; legacy producer validator unchanged. 2 regression tests added; fresh review pending."
   }
 }

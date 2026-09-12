@@ -1,10 +1,8 @@
 package com.featuredeliveryintelligence.fdi.product.realization.methodpair;
 
-import com.featuredeliveryintelligence.fdi.product.realization.ScenarioMappingContractV04.ComponentIdentity;
-import com.featuredeliveryintelligence.fdi.product.realization.ScenarioMappingContractV04.Granularity;
-
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -116,8 +114,15 @@ final class MethodPairValidation {
 
     private static void method(Method method) {
         require(method != null, "MISSING_METHOD");
+        text(method.path());
         path(method.path());
-        new ComponentIdentity(method.sourceRevision(), method.path(), Granularity.METHOD, method.signature());
+        require(method.sourceRevision() != null && method.sourceRevision().matches("[a-f0-9]{40}"), "INVALID_REVISION");
+        text(method.signature());
+        // This evaluator boundary validates structure, not producer vocabulary. In
+        // particular, legitimate Java classes named Evaluator must remain comparable.
+        String lowerPath = method.path().toLowerCase(Locale.ROOT);
+        require(!lowerPath.matches("(^|.*/)(src/test|tests?|test)(/.*|$)")
+                && !lowerPath.matches(".*tests?\\.java$"), "TEST_METHOD_PATH");
         require(method.path().endsWith(".java") && SIGNATURE.matcher(method.signature()).matches(), "INVALID_METHOD_SIGNATURE");
     }
 

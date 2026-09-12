@@ -191,6 +191,39 @@ class MethodPairComparisonRunnerTests {
         }
     }
 
+    @Test
+    void legitimateEvaluatorMethodNamesAreNotProducerVocabularyViolations() throws Exception {
+        Fixture f = fixture();
+        Method method = new Method(REVISION, "backend/src/main/java/demo/Evaluator.java", "demo.Evaluator#score(int)");
+        Pair pair = new Pair("s1", method);
+        f.replace("improved", Map.of("binding", binding(), "proposals",
+                proposals(List.of(claim(pair, "e")), List.of(), List.of())));
+        f.replace("truth", truth(List.of("s1"), List.of(pair),
+                List.of(new Chain("s1", List.of(method), List.of()))));
+        f.replace("proofs", Map.of(
+                "baseline", new Proofs(sha(Files.readAllBytes(root.resolve("baseline.json"))), List.of(), List.of()),
+                "improved", new Proofs(sha(Files.readAllBytes(root.resolve("improved.json"))),
+                        List.of(new MethodProof(pair, "e")), List.of())));
+        f.run();
+        assertThat(JSON.readTree(f.output.toFile()).at("/improved/truePositives").asInt()).isEqualTo(1);
+    }
+
+    @Test
+    void structuralIdentityValidationStillRefusesTestsUnsafePathsAndInvalidRevisions() throws Exception {
+        for (Method method : List.of(
+                new Method(REVISION, "backend/src/test/java/demo/Service.java", A.signature()),
+                new Method(REVISION, "backend/src/main/java/demo/ServiceTest.java", A.signature()),
+                new Method(REVISION, " backend/src/main/java/demo/Service.java", A.signature()),
+                new Method(REVISION, "backend/src/main/java/demo/../Service.java", A.signature()),
+                new Method(REVISION, "backend\\src\\main\\java\\Service.java", A.signature()),
+                new Method("not-a-revision", A.path(), A.signature()))) {
+            Fixture f = fixture();
+            f.replace("truth", truth(List.of("s1"), List.of(new Pair("s1", method)), List.of()));
+            assertThatThrownBy(f::run).isInstanceOf(IllegalArgumentException.class);
+            assertThat(f.output).doesNotExist();
+        }
+    }
+
     private Map<String, Object> binding() {
         return Map.of("sourceRevision", REVISION, "productionRoots", List.of("backend/src/main/java"),
                 "testRoots", List.of("backend/src/test/java"), "inputSnapshotSha256", DIGEST,
