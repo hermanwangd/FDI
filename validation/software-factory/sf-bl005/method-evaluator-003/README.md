@@ -140,6 +140,10 @@ is required before depending on its changed extractor/resolver behavior.
 
 ## Verification
 
-See `verification.json` for the tested source hashes and results. Verification is
-the implementer's local check, **not** an independent-review verdict. The full
-suite is Java; the unchanged transitional Python control suite was also run.
+See `verification.json` for tested source hashes, results and the separate
+independent-review record. Candidate `e7bcfad400d4618b3e22570cdb7c2948f2f74a77`
+passed independent review after one P2 identity-validation fix. The implementer
+ran all 1,349 Java tests and the package lifecycle; the reviewer reran the 22
+focused tests and inspected full-regression evidence. The unchanged transitional
+Python control suite also passed 63 tests. This receipt does not close SF-BL-005
+or prove new real-repository experiment quality.

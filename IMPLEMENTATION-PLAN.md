@@ -5,7 +5,8 @@
 ### SF-BL-005-METHOD-EVALUATOR-003
 
 Human selected direct local implementation; no new Coordinator dispatch.
-Local implementation and verification complete; independent review pending.
+Local implementation, full regression and independent review passed for
+e7bcfad400d4618b3e22570cdb7c2948f2f74a77. Parent remains IN_PROGRESS.
 Evidence: validation/software-factory/sf-bl005/method-evaluator-003/README.md.
 Backlog SF-BL-005; requirements AUTH-002, PK-004, EVID-001, TECH-001.
 Base: b32261bd99190190390553a814ab0f56e47fee72. Bound Spec: that

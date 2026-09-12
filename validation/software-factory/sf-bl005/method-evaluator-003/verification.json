@@ -51,8 +51,7 @@
     "SCORING_MECHANICS_ONLY",
     "NOT_A_NEW_REAL_REPOSITORY_EXPERIMENT",
     "NO_FORMAL_HOLDOUT_EXECUTION",
-    "PROOF_LEDGER_SOURCE_REVIEW_AND_PROCESS_ISOLATION_ARE_EXTERNAL_GATES",
-    "INDEPENDENT_REVIEW_PENDING"
+    "PROOF_LEDGER_SOURCE_REVIEW_AND_PROCESS_ISOLATION_ARE_EXTERNAL_GATES"
   ],
   "tested_source_sha256": {
     "src/main/java/com/featuredeliveryintelligence/fdi/application/FdiApplication.java": "5ccbc28d630d129ed705e564c292a40a66bfdd5f37a1a105ec00cc65bc44bc57",
@@ -71,6 +70,24 @@
     "candidate": "f8d04d01a4b62661f85471fabf88110c82f55b0a",
     "verdict": "REVISE",
     "finding": "P2: evaluator inherited producer vocabulary exclusions; legitimate Evaluator method identities rejected.",
-    "remediation": "New evaluator validates structural identities locally; legacy producer validator unchanged. 2 regression tests added; fresh review pending."
+    "remediation": "Resolved in e7bcfad400d4618b3e22570cdb7c2948f2f74a77; legacy producer validator unchanged. New positive identity and negative preservation regressions pass."
+  },
+  "final_independent_review": {
+    "reviewer_run": "/root/method_pair_review",
+    "candidate": "e7bcfad400d4618b3e22570cdb7c2948f2f74a77",
+    "verdict": "PASS",
+    "open_actionable_findings": 0,
+    "performed": [
+      "Read-only review of exact three-file remediation and full candidate scope",
+      "22 focused Java tests passed",
+      "10 recorded source hashes verified",
+      "Full candidate diff whitespace check"
+    ],
+    "inspected_not_rerun": [
+      "108 Java suite reports: 1349 tests, 0 failures/errors/skips",
+      "Full package lifecycle producer evidence"
+    ],
+    "previous_review_performed": "63 Python control tests passed; remediation changes no Python files",
+    "scope": "Scoring mechanics and sealed comparison-input binding only; not source-proof adjudication, process isolation, production migration or holdout readiness."
   }
 }
