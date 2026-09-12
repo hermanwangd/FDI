@@ -91,9 +91,8 @@ final class SourceMethodIndex {
             Owner targetOwner = owners.get(target);
             if (targetOwner == null || !targetOwner.node().getExtendedTypes().isEmpty()
                     || !targetOwner.node().getImplementedTypes().isEmpty()
-                    || targetOwner.node().getMethodsByName(call.getNameAsString()).stream()
-                    .filter(m -> m.getParameters().size() == call.getArguments().size()).count() != 1) continue;
-            // No overload/type guessing: retain only one declaration at this arity.
+                    || targetOwner.node().getMethodsByName(call.getNameAsString()).size() != 1) continue;
+            // No overload/type guessing, including variable-arity alternatives.
             var candidates = definitions.values().stream().filter(d -> d.owner().name().equals(target)
                     && d.node().getNameAsString().equals(call.getNameAsString())
                     && d.node().getParameters().size() == call.getArguments().size()

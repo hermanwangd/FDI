@@ -106,4 +106,17 @@ class SourceMethodIndexTests {
         assertAll(() -> assertTrue(index.calls(index.unique("demo.Service#inherited")).isEmpty()),
                 () -> assertTrue(index.calls(index.unique("demo.Service#caught")).isEmpty()));
     }
+
+    @Test void variableArityOverloadCannotDisappearFromCandidateSet() throws Exception {
+        Path file = root.resolve("Service.java");
+        Files.writeString(file, """
+                package demo; class Service {
+                  void run() { save("x"); }
+                  void save(Integer x) {}
+                  void save(String x, Object... rest) {}
+                }
+                """);
+        var index = new SourceMethodIndex(root, List.of(file));
+        assertTrue(index.calls(index.unique("demo.Service#run")).isEmpty());
+    }
 }
