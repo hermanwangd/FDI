@@ -11,6 +11,12 @@ Exact source: ee17e31aafe733d98c4853c8b9a74d7f2f6c924a.
 Thresholds remain precision >0.80 and recall >0.60, without rounding.
 007 metric goal remains VERIFIED on Petclinic only; old runs are immutable.
 
+First RealWorld attempt stopped before scoring: AUTHENTICATE is rejected by the
+frozen mapper. No valid producer outputs; all quality metrics unavailable.
+Candidate: 2f8a51717c892b6bd3b5673758da4ac9951c6e71.
+Evidence: validation/software-factory/sf-bl005/cross-repo-realworld-001/RESULTS.md.
+No automatic follow-up tuning; a revised execution selection is required.
+
 This is first-use cross-repository validation, not an authorized formal GO.
 The unchanged evaluator permits CALIBRATION, not HOLDOUT; retain that label
 with exposureClass FIRST_CROSS_REPOSITORY_RUN rather than weaken its gate.
@@ -68,30 +74,33 @@ Graphify integration uses existing CodeIntelligenceProvider/Java adapter; if a
 generic runtime-evidence bridge is needed, describe its exact path in this Plan
 before implementation. Other Backlog work and user files are excluded.
 
-- [ ] Freeze selection/protocol; retrieve exact clean source with hooks disabled.
-- [ ] Independent actor writes public retrieval aids separately from evaluator-only
+- [x] Freeze selection/protocol; retrieve exact clean source with hooks disabled.
+- [x] Independent actor writes public retrieval aids separately from evaluator-only
   truth and chain definitions; independent second actor reviews before sealing.
   Main may consume retrieval aids, never raw gold or missing-pair lists.
-- [ ] TDD CrossRepositoryManifest: strict schema, full revision, semantics hash,
+- [x] TDD CrossRepositoryManifest: strict schema, full revision, semantics hash,
   exactly five allowed input paths/digests, no extra/evaluator files, no symlinks,
   source changes refused. Unknown fields/invalid hashes fail closed.
-- [ ] Parameterize only repository ID, semantics digest, revision, sealed inputs
+- [x] Parameterize only repository ID, semantics digest, revision, sealed inputs
   and execution identity. Existing Petclinic entry retains exact defaults and
   existing tests/byte-parity behavior. Do not pretend another repository is Petclinic.
-- [ ] Add synthetic second-repository tests before implementation; old controls,
+- [x] Add synthetic second-repository tests before implementation; old controls,
   consumer negative tests and frozen algorithm hashes must continue to pass.
-- [ ] Verify installed Graphify and create exact-source structural snapshot plus
+- [x] Verify installed Graphify and create exact-source structural snapshot plus
   live provider evidence; keep indexing output outside the source tree.
-- [ ] Freeze manifest SHA, allowed-input directory, source and final runtime JAR.
+- [x] Freeze manifest SHA, allowed-input directory, source and final runtime JAR.
   Independent ingress review then full Java/Python regressions.
 - [ ] Execute old baseline and frozen007 improved algorithms on identical inputs;
   seal outputs before exposing evaluator-only files. No scoring from synthetic
   fixtures or old Petclinic graph/truth.
+  Attempted generation-001: FAILED_UNSUPPORTED_SCENARIO_ACTION; no output seal.
 - [ ] Independent fresh proof ledger; unchanged METHOD-PAIR scorer; separate
   receipt replay. Report counts, precision/recall/F1, scenario/chain coverage,
   unresolved/unsupported data, and first-run limits. Bad/undefined results remain.
-- [ ] Reconcile BACKLOG/STATUS and retain first result; no automatic tuning,
+  Scorer not run because generation failed; no fabricated metric denominator.
+- [x] Reconcile BACKLOG/STATUS and retain first result; no automatic tuning,
   merge, push, formal GO, parent closure or further repository selection.
+  Independent first-run-review.md verifies the same no-score failure by replay.
 
 ## Verification commands
 
