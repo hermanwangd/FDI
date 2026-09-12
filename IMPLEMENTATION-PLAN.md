@@ -2,117 +2,118 @@
 
 ## Current selection
 
-### SF-BL-005-METHOD-CALIBRATION-005
+### SF-BL-005-METHOD-QUALITY-006
 
-Completed bounded calibration on reviewed code 6bd20ec64442a73f56bfc27e8106b377e2014c6f.
-Evidence: validation/software-factory/sf-bl005/method-calibration-005/RESULTS.md.
-Calibration INCONCLUSIVE; engineering REVISE; formal experiment NOT_RUN.
-No producer tuning after scoring. A further change requires a newly selected run.
-Preserve the sealed gold-authoring EOF blank line; scoped whitespace check
-excludes only that file. Evidence-format exception: method-calibration-005/
-verification-note.md under the evidence directory above. All other checks apply.
-
-Human selected direct implementation of real producer wiring, independent gold
-and producer improvement followed by a paired comparison. Base and bound Spec:
-1c8706982cbda6513b5a8ad90c94b53d5322d884 plus co-delivered section 12.
-Parent SF-BL-005; requirements AUTH-002, PK-004, EVID-001, TECH-001.
-Petclinic 818c4136ea971c21674525f9053de0d9c7ad8cfe is exposed CALIBRATION,
-not holdout. Reuse its five sealed producer inputs and accepted ten scenarios.
-Own new J/product/realization/methodcalibration/**, matching T/** and
-validation/software-factory/sf-bl005/method-calibration-005/**; FDP owns controls.
-Do not change legacy pipelines, scorer semantics, PORTABILITY-002 owned paths,
-company documents, accepted semantics, or prior validation artifacts.
-
-Main implements locally with synthetic TDD. A separately attributable evaluator
-author independently defines all scenario METHOD pairs and directed chains from
-accepted semantics and exact source/tests, seals truth before generation, and
-does not disclose gold identities to producer author. A separate reviewer checks
-the gold and later adjudicates exact proposal-digest-bound source proofs.
-Baseline retains mechanically verified route/direct-reference method seeds.
-Improvement adds bounded, uniquely resolved production calls from those seeds;
-ambiguous/external/test/mock calls cannot establish production execution.
-Canonical signatures include qualified parameter types; uncertain identity
-abstains. Both arms share source, five inputs, extractor and bounds; only the
-expansion switch differs. Use sealed Graphify observations as structural
-context, never execution proof. No new Graphify run is claimed.
-
-Verify clean exact source and all digests; run producer without evaluator files.
-Seal both arms and terminate generation before proof review/evaluation. Never
-tune against scored misses. Comparison uses METHOD-PAIR-001; report raw counts,
-all five quality metrics, undefined chains and a calibration-only decision.
-Formal experiment remains NOT_RUN. Integrity failure invalidates scoring.
-TDD covers resolution/overloads/ambiguity, binding, deterministic immutable
-outputs, and arm parity with expansion off. Run focused tests, full Java package,
-Python controls and independent candidate review under resource limits below.
-No Coordinator dispatch, per-slice approval, merge, push or parent closure.
-
-## Prior real-data reproduction
-
-### SF-BL-005-PETCLINIC-REPLAY-004
-
-User requested a real-data rerun. Execute directly, without a Coordinator task.
-Completed: legacy metrics and four primary artifact bytes reproduced; two
-evidence metadata differences reflect Java 17 instead of the old Java 23 run.
-Evidence: validation/software-factory/sf-bl005/petclinic-replay-004/RESULTS.md.
-Base/bound Spec: 981b6323c66f8a1117a9eb61c083afcb4771105a plus the
-co-delivered section 12 reproducibility permission. Requirements AUTH-002,
-PK-004, EVID-001, TECH-001; parent SF-BL-005 remains IN_PROGRESS.
-This is reproduction of frozen SF-BL-002-ROUTE-EFFECTIVENESS-005, not a
-METHOD-PAIR-001 experiment, new holdout, producer improvement or new GO claim.
-
-Construction detail is preserved at base commit; old results remain immutable.
-
-## Reviewed scorer increment
-
-### SF-BL-005-METHOD-EVALUATOR-003
-
-Human selected direct local implementation; no new Coordinator dispatch.
-Local implementation, full regression and independent review passed for
-e7bcfad400d4618b3e22570cdb7c2948f2f74a77. Parent remains IN_PROGRESS.
-Evidence: validation/software-factory/sf-bl005/method-evaluator-003/README.md.
+User goal: achieve recall >0.60 AND precision >0.80 on the existing real METHOD
+calibration. These are strict inequalities, not rounded >= thresholds.
 Backlog SF-BL-005; requirements AUTH-002, PK-004, EVID-001, TECH-001.
-Base: b32261bd99190190390553a814ab0f56e47fee72. Bound Spec: that
-revision plus the co-delivered section 12 successor-preparation permission.
-Own J/product/realization/methodpair/**, matching T/**,
-J/application/MethodPairCompareCli.java, J/application/FdiApplication.java,
-T/application/MethodPairCompareCliTests.java and
-validation/software-factory/sf-bl005/method-evaluator-003/**.
-J/T abbreviations are defined below. FDP owns the supporting control update.
+Base and bound Spec: 021070c523a4f76f25799b7f2d26b3e59e01f54d.
+Source remains Petclinic 818c4136ea971c21674525f9053de0d9c7ad8cfe,
+CALIBRATION only. Prior run 005 is immutable. Retain its 40-pair gold digest
+39aa27459305c05a4c983b0c414c60b39ec3e460491b9edb5da49c620bc2de2c,
+all ten scenarios and unchanged METHOD-PAIR-001 scorer. At least 25 supported
+true pairs are required; precision must exceed 80% over every emitted pair.
+Metric-goal achievement is not formal GO, holdout readiness or parent closure.
 
-Delivered strict digest-bound comparison runner and CLI with 22 focused tests;
-full regression: Java 1349/1349 and Python 63/63. Scoring mechanics alone
-do not verify source proofs, independent authorship or formal experiment gates.
-Frozen arithmetic below remains controlling for the selected successor.
+FDP maintains this file, BACKLOG and STATUS. Main implements directly, no new
+Coordinator dispatch and no per-slice confirmations. Independent code/proof
+review uses separate actors as required by AGENTS. Read JAVA-CODING-GUIDELINES.md.
+Existing nonoverlapping PORTABILITY-002 work retains its pinned envelope.
 
-## Existing correction and resources
-
-PORTABILITY-002 R1/R2 remediation continues under its already-issued read-only
-envelope. Its construction detail and A/B/C/D ownership remain pinned at
-b32261bd99190190390553a814ab0f56e47fee72:IMPLEMENTATION-PLAN.md; this selection
-does not change or redispatch it. Producer/integrator paths are excluded from
-METHOD-EVALUATOR-003. Do not accept the original full-tree candidate; receive
-only the bounded reviewed correction and independently verify it before reuse.
-No company learning documents or prior experiment artifacts may enter either diff.
+## Construction and owned paths
 
 J = src/main/java/com/featuredeliveryintelligence/fdi/
 T = src/test/java/com/featuredeliveryintelligence/fdi/
-Read JAVA-CODING-GUIDELINES.md. One heavy test process/fork at a time, aggregate
-memory <8 GB and a hard 20-minute command deadline.
-JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home
-MAVEN_OPTS=-Xmx2g; Maven test fork -DargLine=-Xmx2g; never JAVA_TOOL_OPTIONS.
-Full regression: ./mvnw -q -DargLine=-Xmx2g test; python3 -m pytest -q;
-git diff --check. Bind SFBL002_PETCLINIC_ROOT to the local read-only checkout at
-818c4136ea971c21674525f9053de0d9c7ad8cfe. Do not inspect evaluator-only gold to
-tune implementation. No upstream/Docker/IT reruns, runtime install or Graphify
-probes in this increment. Existing operational guidance:
-validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md.
+Own J/product/realization/methodcalibration/** and matching T/**;
+validation/software-factory/sf-bl005/method-quality-006/** and later fresh
+numbered method-quality run namespaces if another reviewed increment is needed.
+Do not edit old run artifacts, evaluator truth/scorer, accepted semantics,
+company documents, legacy route policy, extractor/module-root correction files,
+or other Backlog items. No automatic merge, push or parent closure.
 
-Local verification is not independent review. Keep the parent IN_PROGRESS and
-report readiness limits; no merge, push, experimental GO or automatic closure.
-FDP alone updates controls. Next dependent work remains generic production
-runner migration, exact-snapshot Graphify evidence, isolated gold review and
-producer improvement before a comparable new experiment.
+1. ScenarioEvidenceSelector.java: correlate accepted retrieval intent with
+   observation, exact unique route handler, and the cited test AST. Retain
+   independent references, not the first lexical match. Match entity/action,
+   input/query conditions and asserted success/error behavior. Normalize query
+   removal only for route matching; retain actual test params as evidence.
+   Resolve nested test owner identity by matching observation method identifier.
+   A negative test cannot seed a success scenario. Duplicate/date/normalization/
+   paging conditions need their own evidence, not handler-name similarity.
+   Observation and source location remain auditable; no scenario-ID switches.
+2. QualifiedSourceCalls.java: new bounded source-call resolution and branch
+   qualification. Source-declared typed receiver/argument identities may recover
+   exact declarations; inheritance/overload ambiguity must remain unresolved.
+   Retain existing SourceMethodIndex conservative behavior for the baseline.
+   Skip catch/error-only calls for success scenarios; preserve matching guards
+   for reject scenarios. Field access plumbing is diagnostic, not automatically
+   a semantic method claim. Bounds: at most depth 3 and 64 methods per scenario.
+3. QualifiedCalibrationProducer.java: compose selected seeds, qualified calls,
+   and explicit redirect-to-GET route associations for post-operation-view or
+   detail-view intent only. A redirect is structural read-side realization,
+   never proof that the browser followed it or persistence succeeded. Require
+   a unique target route and independent target GET test evidence; never infer
+   an arbitrary read handler from an entity name. Preserve all claims and proof
+   references for independent adjudication.
+4. EvidenceQualifiedCalibrationRun.java: production ingress binds the same five
+   sealed inputs, exact clean source and runtime JAR for both arms. Baseline
+   re-executes run-005 expansion unchanged; improved uses the new components.
+   Preserve public old runner behavior. Use a new output directory; reject
+   overwrite, extra input files and changed hashes. Seal outputs before opening
+   evaluator files. No raw evaluator inputs are passed to either producer.
 
+## TDD and verification sequence
+
+Use test-driven-development for implementation and requesting-code-review before
+real generation. Synthetic tests first, observe failures, implement, then rerun.
+- Selector: successful vs validation-error requests to identical handlers;
+  nonempty query vs empty query, whitespace normalization, paging vs unpaged;
+  duplicate guard vs unrelated rejection; renamed scenario IDs preserve output.
+- Source calls: exact typed declaration, source inheritance/overloads, catch and
+  variable shadowing, varargs, unknown external method and ambiguous arguments;
+  success path excludes exception-only relation; reject path retains guard.
+- Composition: unique redirect target with independent GET evidence; missing or
+  ambiguous redirect abstains; no implicit dynamic-execution credit; duplicate
+  roles do not inflate pair counts; unchanged baseline and deterministic bytes.
+- Runner: strict five-input isolation/digest, clean exact source, immutable output.
+  Retain old focused tests; no weakening previously valid negative cases.
+
+Run focused new tests with ./mvnw -q -DargLine=-Xmx2g -Dtest=CLASS_LIST test.
+After independent source review passes, run full ./mvnw -q -DargLine=-Xmx2g
+package, python3 -m pytest -q, and git diff --check. Then execute the real runner
+in a five-input-only directory, close generation, seal hashes, and have an
+independent evaluator adjudicate every emitted method/edge against source and
+the exact cited evidence. Old proof flags are not automatically accepted.
+Run unchanged method-pair-compare with a digest-pinned manifest. Report raw
+TP/FP/FN, precision/recall/F1, scenario and chain coverage, and integrity limits.
+A missing chain definition remains unavailable; it cannot be dropped or invented.
+
+## Iteration and completion discipline
+
+Prior exposed calibration diagnostics may motivate generic failure-class fixes;
+producer implementation must not inspect evaluator-only gold/missing-pair lists
+or embed Petclinic paths, scenario IDs or evaluator decisions as selection rules.
+Do not redefine gold, drop hard cases, remove FP after evaluation, or relax proof
+standards. Each subsequent change uses a new immutable reviewed run and records
+that this is repeated exposed calibration, not unbiased generalization.
+If target is not reached, retain full goal and continue with evidence-supported
+generic improvements; an interim improvement is not completion.
+Target completion requires a fresh independent-ledger real score showing both
+strict inequalities, unchanged 40-pair gold/all scenarios, code review and
+regression passing. Formal holdout and all parent completion gates remain separate.
+
+## Resources and preserved deliveries
+
+One heavy JVM/fork at a time; aggregate memory <8 GB, MAVEN_OPTS=-Xmx2g and
+-DargLine=-Xmx2g. JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home.
+Never JAVA_TOOL_OPTIONS. Commands have a 20-minute hard timeout.
+SFBL002_PETCLINIC_ROOT=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/sfbl002-petclinic-818c413.
+No upstream application/Docker tests or Graphify runtime installs. Graphify's
+existing exact snapshot remains verified/bound, not newly indexed. Missing
+external type information is a declared resolution gap, never an invented API.
+
+Run-005 code 6bd20ec64442a73f56bfc27e8106b377e2014c6f and result receipt
+021070c523a4f76f25799b7f2d26b3e59e01f54d: precision 11/19, recall 11/40,
+F1 22/59. Evidence: validation/software-factory/sf-bl005/method-calibration-005/RESULTS.md.
 ## Frozen scoring contract — SFBL005-METHOD-PAIR-001
 
 Applies to successor comparison, not old artifacts/current evaluator.
@@ -149,13 +150,3 @@ decision. No rounding before comparison; no claim of statistical generalization.
 Exact holdout, sample/stratum counts and cost budget are still required Human
 pre-comparison gates, sealed before any formal experimental scoring run.
 The selected synthetic/calibration mechanics checks do not satisfy those gates.
-
-
-## Prior deliveries
-
-SF-BL-005-FEASIBILITY-001: scoped evidence accepted with limitations; original full
-candidate not merged. Receipt: validation/software-factory/sf-bl005/acceptance-feasibility-001.md;
-frozen prior Plan at 72c1798d451b106eb7bf2f2c5ecd9e68d13a042f.
-SF-BL-002 remains IN_PROGRESS pending Human closure, no active work.
-Acceptance: validation/software-factory/sf-bl002/acceptance-005.md;
-reviewed a4f37d318ed361d1d5134d8647b9b37e75758049; bounded GO, not new scoring.

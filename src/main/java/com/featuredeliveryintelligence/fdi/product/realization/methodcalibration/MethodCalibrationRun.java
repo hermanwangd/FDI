@@ -25,6 +25,10 @@ public final class MethodCalibrationRun {
             .enable(SerializationFeature.INDENT_OUTPUT, SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS);
     private MethodCalibrationRun() { }
     public static void main(String[] args) throws Exception {
+        run(args, false);
+    }
+
+    static void run(String[] args, boolean qualified) throws Exception {
         if (args.length != 3) throw new IllegalArgumentException("usage: <five-input-root> <exact-source-root> <new-output-root>");
         Path output = Path.of(args[2]).toAbsolutePath().normalize();
         if (Files.exists(output, LinkOption.NOFOLLOW_LINKS)) throw new IllegalArgumentException("OUTPUT_EXISTS");
@@ -47,8 +51,21 @@ public final class MethodCalibrationRun {
         SfBl002RouteEffectivenessRun.generate(inputs, source, seedOutput);
         var seeds = JSON.readTree(seedOutput.resolve(PROPOSAL_PATH).toFile());
         var index = new SourceMethodIndex(source, files);
-        var baseline = CalibrationProducer.produce(binding, seeds, index, false);
-        var improved = CalibrationProducer.produce(binding, seeds, index, true);
+        var baseline = CalibrationProducer.produce(binding, seeds, index, qualified);
+        CalibrationProducer.Artifact improved;
+        if (qualified) {
+            var intents = JSON.readTree(inputs.resolve(INTENTS_PATH).toFile());
+            var observations = JSON.readTree(seedOutput.resolve(OBSERVATIONS_PATH).toFile());
+            var handlers = JSON.readTree(seedOutput.resolve(ROUTE_INDEX_PATH).toFile());
+            var selected = new ArrayList<>(ScenarioEvidenceSelector.select(intents, observations, handlers, source));
+            selected.addAll(RedirectEvidenceAssociation.select(selected, index, observations, handlers, source));
+            List<String> scenarios = new ArrayList<>();
+            intents.required("records").forEach(record -> scenarios.add(record.required("scenarioId").asText()));
+            improved = QualifiedCalibrationProducer.produce(binding, scenarios, selected, index);
+            write(output.resolve("selected-evidence.json"), selected);
+        } else {
+            improved = CalibrationProducer.produce(binding, seeds, index, true);
+        }
         verifyInputs(inputs, sealed);
         verifySources(inputs, source);
         verifyCheckout(source);
@@ -61,10 +78,10 @@ public final class MethodCalibrationRun {
                 outputs.put(output.relativize(path).toString(), digest(path));
         }
         write(output.resolve("generation.json"), Map.of(
-                "executionId", "SF-BL-005-METHOD-CALIBRATION-005", "datasetKind", "CALIBRATION",
+                "executionId", qualified ? "SF-BL-005-METHOD-QUALITY-006" : "SF-BL-005-METHOD-CALIBRATION-005", "datasetKind", "CALIBRATION",
                 "binding", binding, "inputs", sealed, "outputs", outputs,
                 "startedAt", start, "finishedAt", Instant.now().toString(),
-                "authority", "PROPOSAL_ONLY", "expansion", Map.of("depth", 2, "maxMethodsPerScenario", 64),
+                "authority", "PROPOSAL_ONLY", "expansion", Map.of("depth", qualified ? 3 : 2, "maxMethodsPerScenario", 64),
                 "limitations", List.of("STATIC_CALL_NOT_OBSERVED_EXECUTION", "GRAPHIFY_SNAPSHOT_REUSED_NOT_REINDEXED",
                         "NO_EVALUATOR_INPUTS", "NO_UPSTREAM_TEST_EXECUTION", "TOP_LEVEL_SOURCE_DECLARATIONS_ONLY")));
     }

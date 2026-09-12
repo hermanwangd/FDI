@@ -12,16 +12,17 @@
     "SF-BL-005"
   ],
   "active_execution": {
-    "execution_id": "SF-BL-005-METHOD-CALIBRATION-005",
-    "base_commit": "1c8706982cbda6513b5a8ad90c94b53d5322d884",
+    "execution_id": "SF-BL-005-METHOD-QUALITY-006",
+    "base_commit": "021070c523a4f76f25799b7f2d26b3e59e01f54d",
     "selected_backlog_items": [
       "SF-BL-005"
     ],
-    "execution_state": "CALIBRATION_COMPLETE_REQUIRES_REVISION",
-    "integration_candidate": "6bd20ec64442a73f56bfc27e8106b377e2014c6f"
+    "execution_state": "IMPLEMENTING",
+    "integration_candidate": null
   },
-  "next_action": "Review METHOD calibration evidence, then select a new bounded scenario-specific evidence and branch-qualification correction; do not tune or rerun the sealed comparison automatically.",
-  "blocking_dependency": "Formal readiness remains gated: precision below 0.70, no complete defined chain, one unavailable chain definition, and no selected unseen holdout.",
+  "next_action": "Implement and independently verify generic evidence selection, branch-aware source calls and explicit read-side associations; execute new immutable METHOD calibration until recall >0.60 and precision >0.80 are verified without changing gold or scoring.",
+  "blocking_dependency": null,
+  "metric_goal": { "recall_strictly_greater_than": 0.60, "precision_strictly_greater_than": 0.80, "gold_pair_count": 40, "dataset_kind": "CALIBRATION" },
   "latest_calibration": {
     "execution_id": "SF-BL-005-METHOD-CALIBRATION-005",
     "assessment": "INCONCLUSIVE",

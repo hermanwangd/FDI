@@ -24,8 +24,8 @@ import java.util.TreeMap;
 
 final class SourceMethodIndex {
     record Method(String path, String signature) { }
-    private record Owner(String name, String path, CompilationUnit unit, ClassOrInterfaceDeclaration node) { }
-    private record Definition(Method method, Owner owner, MethodDeclaration node) { }
+    record Owner(String name, String path, CompilationUnit unit, ClassOrInterfaceDeclaration node) { }
+    record Definition(Method method, Owner owner, MethodDeclaration node) { }
     private final Map<String, Owner> owners = new TreeMap<>();
     private final Map<Method, Definition> definitions = new LinkedHashMap<>();
 
@@ -138,7 +138,11 @@ final class SourceMethodIndex {
         return true;
     }
 
-    private String qualify(Type type, Owner owner) {
+    Definition definition(Method method) { return definitions.get(method); }
+    Owner owner(String name) { return owners.get(name); }
+    List<Definition> definitions() { return List.copyOf(definitions.values()); }
+
+    String qualify(Type type, Owner owner) {
         if (type.isPrimitiveType()) return type.asString();
         if (type.isArrayType()) {
             String element = qualify(type.asArrayType().getComponentType(), owner);
