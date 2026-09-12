@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "execution_id": "SF-BL-006-COMPANY-AI-SHARE-001",
+  "source_commit": "23283bbd6c24ce8758af94311b59db0eb94322fb",
+  "sharing_status": "NOT_APPROVED_FOR_UPLOAD",
+  "artifacts": [
+    {
+      "name": "company-ai-learning-learner-20260912.zip",
+      "sha256": "dff0ea1d93c0dc8ad98da08fc03ec1f0a3f053c1e218796f5c40fd66e7ab59fe"
+    },
+    {
+      "name": "company-ai-learning-evaluator-only-20260912.zip",
+      "sha256": "b73190f4e780044345e65c20b27290f316875ff026b1c7a623222f545efaf0c2"
+    }
+  ],
+  "verification": {
+    "manifest_bytes_and_hashes": "PASS",
+    "membership_disjoint": "PASS",
+    "learner_answer_leakage": "PASS",
+    "learner_markdown_links": "PASS",
+    "unsafe_archive_paths": "PASS_NONE_FOUND",
+    "personal_absolute_paths": "PASS_NONE_FOUND",
+    "credential_like_values": "PASS_NONE_FOUND",
+    "deterministic_rebuild": "PASS_BYTE_IDENTICAL"
+  },
+  "limitations": [
+    "COMPANY_RUNTIME_NOT_VALIDATED",
+    "COMPANY_DATA_CLASSIFICATION_UNBOUND",
+    "AUTHORIZED_RECIPIENT_AND_AI_ENVIRONMENT_UNBOUND",
+    "OWNER_SHARING_APPROVAL_UNBOUND"
+  ]
+}
