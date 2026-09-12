@@ -501,6 +501,9 @@ exact-revision binding.
 
 `SF-BL-005` MAY perform the explicitly selected scenario-mapping feasibility
 tranche and define an execution-specific successor scoring protocol. This does
+also permit the Human-selected minimal nested-test identity and module-root
+correction under a revised Plan/envelope, preserving prior accepted outputs.
+This permission does
 not amend prior experimental verdicts or authorize TYPE generation, automatic
 Product publication, or formal holdout execution without its selection gates.
 Its current mutation and execution boundary is the selected Implementation Plan.
