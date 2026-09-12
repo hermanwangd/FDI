@@ -69,6 +69,22 @@ class ScenarioEvidenceSelectorTests {
                 """).getResult().orElseThrow().findFirst(com.github.javaparser.ast.body.MethodDeclaration.class).orElseThrow();
         assertFalse(ScenarioEvidenceSelector.qualifies(test,"BROWSE",List.of("paged-results")));
     }
+    @Test void queryEvidenceDistinguishesEmptyNonemptyAndNormalizedInput() {
+        for (String value : List.of("", "   ", "Smith", " Smith ")) {
+            var test = ScenarioEvidenceSelector.parser().parse("class Tests {void search(){mock.perform(get(\"/items\")"
+                    + ".param(\"lastName\",\"" + value + "\")).andExpect(status().isOk());}}")
+                    .getResult().orElseThrow().findFirst(com.github.javaparser.ast.body.MethodDeclaration.class).orElseThrow();
+            assertEquals(!value.isBlank(), ScenarioEvidenceSelector.qualifies(test,"FIND",List.of("last-name-criteria")));
+            assertEquals(value.equals(" Smith "), ScenarioEvidenceSelector.qualifies(test,"FIND",
+                    List.of("last-name-criteria","normalized-input")));
+        }
+    }
+    @Test void pagingQueryOnBoundRequestIsSupported() {
+        var test = ScenarioEvidenceSelector.parser().parse("""
+                class Tests {void browse(){mock.perform(get("/items?page=1")).andExpect(status().isOk());}}
+                """).getResult().orElseThrow().findFirst(com.github.javaparser.ast.body.MethodDeclaration.class).orElseThrow();
+        assertTrue(ScenarioEvidenceSelector.qualifies(test,"BROWSE",List.of("paged-results")));
+    }
     private static com.fasterxml.jackson.databind.JsonNode observations(String... names) {
         var root = JSON.createObjectNode(); var array = root.putArray("observations");
         for (String name : names) array.addObject().put("observationRef", "obs-" + name)
