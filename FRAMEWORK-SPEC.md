@@ -503,6 +503,9 @@ exact-revision binding.
 tranche and define an execution-specific successor scoring protocol. This does
 also permit the Human-selected minimal nested-test identity and module-root
 correction under a revised Plan/envelope, preserving prior accepted outputs.
+Human-selected successor preparation MAY implement the Java METHOD-pair evaluator
+and sealed comparison-input binding with synthetic/calibration validation. This
+does not select a holdout or establish an experimental GO decision.
 This permission does
 not amend prior experimental verdicts or authorize TYPE generation, automatic
 Product publication, or formal holdout execution without its selection gates.

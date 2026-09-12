@@ -2,116 +2,72 @@
 
 ## Current selection
 
-### SF-BL-005-PORTABILITY-002
+### SF-BL-005-METHOD-EVALUATOR-003
 
-State: DISPATCHED. Human selected CLI/module-root minimum correction.
-Requirements AUTH-002, PK-004, EVID-001, TECH-001; Backlog SF-BL-005.
-Base and bound Spec: 31524d2d0c38749c707a199dd0f960b6ed689777.
-Feasibility receipt: validation/software-factory/sf-bl005/acceptance-feasibility-001.md.
-This is Java 17 / Boot 3.4.1 implementation, not a new scored experiment.
-KPI category feature/fix, size M: two module boundaries and integrated validation.
-No historical normalized index until five comparable observations exist.
+Human selected direct local implementation; no new Coordinator dispatch.
+Local implementation and verification complete; independent review pending.
+Evidence: validation/software-factory/sf-bl005/method-evaluator-003/README.md.
+Backlog SF-BL-005; requirements AUTH-002, PK-004, EVID-001, TECH-001.
+Base: b32261bd99190190390553a814ab0f56e47fee72. Bound Spec: that
+revision plus the co-delivered section 12 successor-preparation permission.
+Own J/product/realization/methodpair/**, matching T/**,
+J/application/MethodPairCompareCli.java, J/application/FdiApplication.java,
+T/application/MethodPairCompareCliTests.java and
+validation/software-factory/sf-bl005/method-evaluator-003/**.
+J/T abbreviations are defined below. FDP owns the supporting control update.
 
-## Execution DAG and fixed ownership
+Implement the frozen METHOD scoring contract below without changing the old
+evaluator. Package-local calculation has no public unsealed entry point. A
+public Java runner snapshots digest-bound producer outputs before opening
+evaluator-only expected pairs, directed chains and independent proof ledger.
+The CLI requires a caller-pinned manifest digest. Typed JSON rejects unknown,
+missing, null and duplicate fields; bounded regular files, canonical paths,
+containment, strict hashes and immutable output are required. Bind both arms
+to identical source/input/extractor identities; match ledger proofs by exact
+arm digest, scenario, method/edge and evidence reference, never producer booleans.
+The ledger is independently reviewed input, not proof of independence by itself;
+its source-proof review and operational isolation remain experiment gates.
+Only SYNTHETIC/CALIBRATION are accepted. Outputs are scoring-mechanics evidence,
+not experimental GO or holdout readiness. Missing chain definitions yield an
+unavailable overall chain metric. TYPE claims remain separate diagnostics.
 
-A and B parallel in separate managed worktrees, then C combined integration,
-then D independent exact-candidate review. Coordinator routes only; ordinary
-review/remediation/integration require no Human confirmation.
-Let J = src/main/java/com/featuredeliveryintelligence/fdi/
-and T = src/test/java/com/featuredeliveryintelligence/fdi/.
-Evidence E = validation/software-factory/sf-bl005/portability-002/.
-Each slice owns only listed files plus E/<slice>/report.md and manifest.json.
-Max five files and estimated <=500 code/test lines per implementation slice;
-<=60 planned calls, preflight <=15. Changed scope returns PLAN_CHANGE_REQUIRED.
+TDD: pair TP/FP/FN (invalid expected proof is FP+FN), role/duplicate handling,
+abstention, directed chain, zero denominators; then strict binding/CLI refusal,
+determinism and no-overwrite tests. Run MethodPairScorerTests,
+MethodPairComparisonRunnerTests, MethodPairCompareCliTests, full Java regression,
+existing Python control tests and git diff --check under resources below.
+No producer tuning, production runner migration, real repository scoring,
+Graphify indexing, evaluator gold creation, merge, push or parent closure here.
+Those dependent increments follow acceptance of the existing correction.
 
-### A — CLI nested-test identity (a/)
+## Existing correction and resources
 
-Own J/testbehavior/extractor/JavaParserTestBehaviorExtractor.java,
-T/testbehavior/extractor/JavaParserTestBehaviorExtractorTests.java,
-T/testbehavior/cli/NestedTestIdentityCliTests.java.
-Reproduce whole-CLI refusal for two @Nested classes declaring same @Test name.
-Do not disable validator duplicate checks, discard either test or change schema.
-For a method-name collision across distinct named declaring types in one file,
-use deterministic full lexical declaring-type qualification plus method name
-in the existing method_name string (e.g. pkg.Outer.Left#same).
-Only collision groups change; all previously accepted non-collision output
-bytes and provider metadata remain identical. The existing string schema permits
-this representation. True same-declaring-type duplicates/ambiguous identities
-remain fail-closed. Anonymous/local ambiguous owners must not be guessed.
-No overload/parameterized-test support expansion or HTTP inference change.
-TDD: red sibling-nested fixture; implement minimum grouping/qualification;
-green two distinct records with correct source locations; test deeper nesting,
-duplicate same owner, repeated deterministic CLI runs and unaffected plain cases.
-Full CLI serialized evidence must pass existing schema/validator; no API-only bypass.
+PORTABILITY-002 R1/R2 remediation continues under its already-issued read-only
+envelope. Its construction detail and A/B/C/D ownership remain pinned at
+b32261bd99190190390553a814ab0f56e47fee72:IMPLEMENTATION-PLAN.md; this selection
+does not change or redispatch it. Producer/integrator paths are excluded from
+METHOD-EVALUATOR-003. Do not accept the original full-tree candidate; receive
+only the bounded reviewed correction and independently verify it before reuse.
+No company learning documents or prior experiment artifacts may enter either diff.
 
-### B — module-root source identity (b/)
+J = src/main/java/com/featuredeliveryintelligence/fdi/
+T = src/test/java/com/featuredeliveryintelligence/fdi/
+Read JAVA-CODING-GUIDELINES.md. One heavy test process/fork at a time, aggregate
+memory <8 GB and a hard 20-minute command deadline.
+JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home
+MAVEN_OPTS=-Xmx2g; Maven test fork -DargLine=-Xmx2g; never JAVA_TOOL_OPTIONS.
+Full regression: ./mvnw -q -DargLine=-Xmx2g test; python3 -m pytest -q;
+git diff --check. Bind SFBL002_PETCLINIC_ROOT to the local read-only checkout at
+818c4136ea971c21674525f9053de0d9c7ad8cfe. Do not inspect evaluator-only gold to
+tune implementation. No upstream/Docker/IT reruns, runtime install or Graphify
+probes in this increment. Existing operational guidance:
+validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md.
 
-Own J/product/realization/directtrace/ProductionSourcePathResolver.java,
-T/product/realization/directtrace/ProductionSourcePathResolverTests.java,
-T/testbehavior/cli/ModuleRootCliTests.java.
-Add an explicit repository-root + production-root factory overload to the existing
-resolver. Resolve paths relative to repository root, including backend/src/main/java,
-not by prepending src/main/java. Retain old from(productionSourceRoot) as the
-legacy compatibility entry point with byte-identical results. Do not weaken frozen
-DirectTestTraceAdapter/Petclinic identity/digest checks or generalize the evaluator.
-TDD synthetic repository: root-layout and backend-layout positive mapping, duplicate
-qualified types, nonexistent roots, escaped/symlink-outside roots/files negative.
-New overload requires real containment and canonical forward-slash repository paths.
-Exercise the existing packaged CLI with --production-root backend/src/main/java
-and --test-root backend/src/test/java against a synthetic exact-revision Git fixture;
-assert source-root/digest/location preservation and legacy default-root parity.
-CLI already supports these options; do not add a second discovery mechanism.
-This prepares the reusable resolver and verifies CLI ingestion; it does not make
-the frozen Petclinic-only runner a generic LMS end-to-end mapper.
-
-### C — combined integration (c/)
-
-Own E/c/report.md and manifest.json; replay only exact accepted A/B owned paths.
-Require A+B handoffs and no mutation overlap; if either fails route bounded
-remediation before integration. Verify negative cases, full regression and same
-synthetic backend tree containing nested duplicate names through the CLI.
-Temporary harness/fixtures outside tracked source are allowed, retain commands
-and digests in owned evidence; no new production implementation in C.
-Record byte-parity on unchanged legacy fixtures/serialized outputs, not just exit 0.
-Compare old/new extraction on the same available legacy input into separate fresh
-temporary outputs. If required input unavailable report BLOCKED, never silently skip.
-No .multica/task-local, whole-tree exports, caches or raw logs in a candidate commit.
-
-### D — independent review (d/)
-
-Own E/d/verdict.md and manifest.json. Different actor from every producer/integrator.
-Review exact C candidate from a clean export/isolated clone; tests requiring Git use
-a clone, no managed HEAD change. Recompute digests, changed-path allowlist and
-parity evidence, inspect real regression reports, negative checks and isolation.
-Review covers both code and evidence; any changed content requires fresh review.
-Return to FDP. No automatic Backlog closure, main merge, push or next tranche.
-
-## Verification and resources
-
-Read JAVA-CODING-GUIDELINES.md and the bound operations guidance.
-A focused: ./mvnw -q -Dtest=JavaParserTestBehaviorExtractorTests,NestedTestIdentityCliTests test
-B focused: ./mvnw -q -Dtest=ProductionSourcePathResolverTests,ModuleRootCliTests,DirectTestTraceAdapterTests test
-C/D: ./mvnw -q test; python3 -m pytest -q; git diff --check.
-Explicit JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home
-and MAVEN_OPTS=-Xmx2g. Aggregate task memory <8 GB; one Maven process/fork at a
-time (parallel code work, serialized heavy tests). Hard 20-minute command deadline;
-stop at it, preserve partial results, never use a 25-minute outer timeout.
-Existing full-pipeline tests require SFBL002_PETCLINIC_ROOT at
-818c4136ea971c21674525f9053de0d9c7ad8cfe; resolve local checkout read-only and record
-exact path. Do not inspect evaluator-only contents for implementation decisions.
-No upstream Maven/Docker/IT reruns or Graphify probes in this correction.
-Raw logs remain outside tracked tree; declared candidate diff is a hard boundary.
-
-## Exclusions and continuation
-
-No active-control/AGENTS edits by EP; no company learning docs, prior evidence,
-schema, dependency, provider install/index, .multica artifacts or old experiments
-may be committed. No new scorer, graph-chain tuning, dynamic route handling,
-holdout, Product publication or parent closure. Producer inputs exclude evaluator
-truth and gold-derived missing-component lists. All outputs remain observations.
-A new LMS snapshot probe and generic runner binding are later separately selected work.
-FDP alone receives evidence and updates controls.
-Operational routing: validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md.
+Local verification is not independent review. Keep the parent IN_PROGRESS and
+report readiness limits; no merge, push, experimental GO or automatic closure.
+FDP alone updates controls. Next dependent work remains generic production
+runner migration, exact-snapshot Graphify evidence, isolated gold review and
+producer improvement before a comparable new experiment.
 
 ## Frozen scoring contract — SFBL005-METHOD-PAIR-001
 
@@ -147,13 +103,15 @@ Undefined mandatory metrics or insufficient data are INCONCLUSIVE; integrity
 failure invalidates the comparison. STOP requires FDP recommendation and Human
 decision. No rounding before comparison; no claim of statistical generalization.
 Exact holdout, sample/stratum counts and cost budget are still required Human
-pre-comparison gates, sealed in a successor envelope before any scoring run.
+pre-comparison gates, sealed before any formal experimental scoring run.
+The selected synthetic/calibration mechanics checks do not satisfy those gates.
 
 
 ## Prior deliveries
 
 SF-BL-005-FEASIBILITY-001: scoped evidence accepted with limitations; original full
-candidate not merged. Receipt above; frozen prior Plan at 72c1798d451b106eb7bf2f2c5ecd9e68d13a042f.
+candidate not merged. Receipt: validation/software-factory/sf-bl005/acceptance-feasibility-001.md;
+frozen prior Plan at 72c1798d451b106eb7bf2f2c5ecd9e68d13a042f.
 SF-BL-002 remains IN_PROGRESS pending Human closure, no active work.
 Acceptance: validation/software-factory/sf-bl002/acceptance-005.md;
 reviewed a4f37d318ed361d1d5134d8647b9b37e75758049; bounded GO, not new scoring.
