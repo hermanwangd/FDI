@@ -18,9 +18,9 @@ UNBOUND 表示未知，不是全包停用；不適用欄位填 N/A 並說明。�
 
 | 按實際動作選用的綁定 | 公司值 |
 |---|---|
-| 公司資料分類 | UNBOUND |
-| 允許接收者與 AI 環境 | UNBOUND |
-| 教材 owner / 分享 approval reference | UNBOUND |
+| 公司資料分類 | REFERENCE_ONLY_NO_COMPANY_DATA |
+| 允許接收者與 AI 環境 | khwangd@tsmc.com / EMAIL_DELIVERY_ONLY；下游 AI 環境仍 UNBOUND |
+| 教材 owner / 分享 approval reference | USER_DIRECTIVE_2026-09-12_SEND_TO_KHWANGD |
 | 公司 Repo / branch / 公司本地 exact base revision（非 Git 教材試驗用檔案 digest） | UNBOUND |
 | 本地 AGENTS 與 authority documents / revisions | UNBOUND |
 | Human 委派目標、agent 決策/資源邊界與最終 PR reviewer | UNBOUND |
@@ -55,8 +55,10 @@ rule path + SHA-256 / owner adoption reference / supersedes。
 正式派工只核對該動作必要綁定；索引缺失本身不阻擋原本已授權且不依賴它的工作。
 不得為填表自行創建權限。
 
-前三項分享欄位是上傳、寄送或安裝的必要 gate；任一項為 `UNBOUND` 時，整包狀態為
-`NOT_APPROVED_FOR_UPLOAD`。這只阻擋分享動作，不阻擋本地唯讀審核、建包及完整性驗證。
+前三項分享欄位是分享 gate。明確綁定收件者與 email approval 只授權將 learner
+archive 寄給該收件者，不授權 evaluator-only archive、轉寄、AI 上傳或安裝。
+AI 環境仍為 `UNBOUND` 時，狀態為 `EMAIL_DELIVERY_ONLY`；本地唯讀審核、建包及
+完整性驗證不受影響。
 
 模式採用後，範圍內的候選決策、開發、review/remediation 不需逐項 Human 確認。
 正式合併/採用才核對 [PR-REVIEW.md](PR-REVIEW.md) 的最終 gate。

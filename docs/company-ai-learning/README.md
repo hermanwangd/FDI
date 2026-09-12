@@ -60,9 +60,10 @@ PR 模板與最終批准門檻見 [PR-REVIEW.md](PR-REVIEW.md)。
 - evaluator-only archive：`CASES.md`、`EVALUATION.md`、`FIXED-RUBRIC.md`；
 - 各 archive 只攜帶自己的 manifest，外層 checksum 檔驗證兩個 archive。
 
-分享前必須在 [ADOPTION.md](ADOPTION.md) 綁定公司資料分類、允許的接收者與環境、
-教材 owner 及 approval reference。任一欄為 `UNBOUND` 時，狀態是
-`NOT_APPROVED_FOR_UPLOAD`；可以本地建包與審核，但不得上傳、寄送或安裝。
+分享前必須在 [ADOPTION.md](ADOPTION.md) 綁定公司資料分類、允許的收件者或 AI
+環境、教材 owner 及 approval reference。只綁定 email 收件者時，僅可寄送 learner
+archive 給該地址；不得附 evaluator-only archive，也不授權收件者上傳或安裝至尚未
+綁定的 AI 環境。未綁定分享欄位時可以本地建包與審核，但不得對外傳送。
 
 ## 交付與限制
 
