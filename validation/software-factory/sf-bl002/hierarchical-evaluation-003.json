@@ -1,0 +1,78 @@
+{
+  "schema_version" : "software-factory.sf-bl002-hierarchical-evaluation.v0.3",
+  "execution_id" : "SF-BL-002-ROUTE-EFFECTIVENESS-005",
+  "authority" : "EVALUATOR_ONLY",
+  "semantic_publication_allowed" : false,
+  "source_revision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "decision" : "GO",
+  "capability_alignment" : "NOT_COMPARABLE_NO_SEALED_CROSSWALK",
+  "proof_revalidation" : {
+    "independent" : true,
+    "producer_credit_flags_trusted" : false,
+    "producer_inputs_accessed_claim" : false,
+    "producer_claim_isolation_evidence" : false
+  },
+  "scenario_trace_coverage" : {
+    "covered" : 9,
+    "denominator" : 10,
+    "ratio" : 0.9
+  },
+  "exact_component" : {
+    "matched" : 7,
+    "proposed" : 8,
+    "expected" : 24,
+    "precision" : {
+      "defined" : true,
+      "value" : 0.875
+    },
+    "recall" : {
+      "defined" : true,
+      "value" : 0.2916666666666667
+    },
+    "f1" : {
+      "defined" : true,
+      "value" : 0.43750000000000006
+    }
+  },
+  "route_resolution" : {
+    "resolved" : 41,
+    "unresolved" : 0,
+    "ambiguous" : 2,
+    "observations" : 43,
+    "handlers" : 17
+  },
+  "proof_counts" : {
+    "exact_route_handler_valid" : 10,
+    "direct_reference_valid" : 0,
+    "graph_trace_diagnostic" : 0
+  },
+  "mapping_counts" : {
+    "mapping_proposals" : 9,
+    "unresolved" : 1,
+    "recomputed_from_revalidated_proof" : true
+  },
+  "failed_evidence_rules" : [ ],
+  "threshold_results" : {
+    "enforced" : true,
+    "scenario_trace_coverage" : {
+      "threshold" : ">= 0.6",
+      "observed" : 0.9,
+      "met" : true
+    },
+    "exact_component_precision" : {
+      "threshold" : ">= 0.70",
+      "observed" : 0.875,
+      "met" : true
+    },
+    "exact_component_recall" : {
+      "threshold" : "> 0.0833333333",
+      "observed" : 0.2916666666666667,
+      "met" : true
+    },
+    "exact_component_f1" : {
+      "threshold" : "> 0.1290322581",
+      "observed" : 0.43750000000000006,
+      "met" : true
+    }
+  }
+}

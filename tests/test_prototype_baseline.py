@@ -23,20 +23,26 @@ def test_five_active_truth_entries_exist_and_resolve():
     backlog = (ROOT/status['backlog']).read_text()
     assert f"| `{status['current_focus']}` |" in backlog
     selected = status['selected_backlog_items']
-    if status['active_backlog_item'] is None:
+    active_items = status['active_backlog_items']
+    executions = status['active_executions']
+    if not active_items:
         assert selected == []
-        assert status['active_execution'] is None
+        assert executions == []
         assert status['active_implementation_plan'] is None
     else:
-        assert selected == [status['active_backlog_item']]
-        assert f"| `{status['active_backlog_item']}` |" in backlog
+        assert selected == active_items
+        assert all(f"| `{item}` |" in backlog for item in active_items)
         assert status['active_implementation_plan'].startswith(
             'IMPLEMENTATION-PLAN.md#'
         )
-        execution = status['active_execution']
-        assert execution['selected_backlog_items'] == selected
-        assert execution['base_commit']
-        assert execution['execution_state']
+        assert len({execution['lane_id'] for execution in executions}) == len(executions)
+        assert {
+            item
+            for execution in executions
+            for item in execution['selected_backlog_items']
+        } == set(selected)
+        assert all(execution['base_commit'] for execution in executions)
+        assert all(execution['execution_state'] for execution in executions)
     assert '| `SF-BL-001` |' in backlog
 
 
@@ -154,16 +160,20 @@ def test_control_files_keep_mutable_state_in_one_place():
     assert 'HERM-' not in plan
     assert 'tests pass' not in plan
 
-    execution = status['active_execution']
-    if execution is None:
-        assert status['active_backlog_item'] is None
+    executions = status['active_executions']
+    if not executions:
+        assert status['active_backlog_items'] == []
         assert status['active_implementation_plan'] is None
     else:
-        assert status['active_backlog_item'] in execution['selected_backlog_items']
+        assert set(status['active_backlog_items']) == {
+            item
+            for execution in executions
+            for item in execution['selected_backlog_items']
+        }
         assert status['active_implementation_plan'].startswith(
             'IMPLEMENTATION-PLAN.md#'
         )
-        assert f"### {execution['execution_id']}" in plan
+        assert all(execution['execution_id'] in plan for execution in executions)
 
 
 def test_agents_define_compact_implementation_plan_lifecycle():
@@ -251,28 +261,28 @@ def test_specialist_dispatch_uses_one_exclusive_start_trigger():
     assert projection.count('COALESCED_DUPLICATE') >= 3
 
 
-def test_active_execution_contains_project_state_not_actor_identity():
+def test_active_executions_contain_project_state_not_actor_identity():
     status = json.loads((ROOT/'STATUS.json').read_text())
-    execution = status['active_execution']
-    if execution is None:
-        assert status['active_backlog_item'] is None
+    executions = status['active_executions']
+    if not executions:
+        assert status['active_backlog_items'] == []
         assert status['active_implementation_plan'] is None
         assert status['selected_backlog_items'] == []
         return
 
-    assert status['active_backlog_item'] in status['selected_backlog_items']
+    assert status['active_backlog_items'] == status['selected_backlog_items']
     assert status['active_implementation_plan']
-    assert {
-        'execution_id', 'base_commit', 'selected_backlog_items',
-        'execution_state', 'integration_candidate',
-    }.issubset(execution)
-    assert len(execution['base_commit']) == 40
-    assert execution['selected_backlog_items'] == status['selected_backlog_items']
     forbidden = {
         'software', 'model', 'agent', 'worker', 'coordinator', 'issue',
         'mention', 'control_writer_role', 'control_writer_id',
     }
-    assert forbidden.isdisjoint(execution)
+    for execution in executions:
+        assert {
+            'lane_id', 'execution_id', 'base_commit', 'selected_backlog_items',
+            'execution_state', 'integration_candidate',
+        }.issubset(execution)
+        assert len(execution['base_commit']) == 40
+        assert forbidden.isdisjoint(execution)
 
 
 def test_agent_backlog_contract_matches_compact_ledger():

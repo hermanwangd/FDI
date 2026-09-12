@@ -1,0 +1,272 @@
+{
+  "tool_catalog" : {
+    "tools" : [ {
+      "name" : "query_graph",
+      "description" : "Search the knowledge graph using BFS or DFS. Returns relevant nodes and edges as text context.",
+      "inputSchema" : {
+        "type" : "object",
+        "properties" : {
+          "question" : {
+            "type" : "string",
+            "description" : "Natural language question or keyword search"
+          },
+          "mode" : {
+            "type" : "string",
+            "enum" : [ "bfs", "dfs" ],
+            "default" : "bfs",
+            "description" : "bfs=broad context, dfs=trace a specific path"
+          },
+          "depth" : {
+            "type" : "integer",
+            "default" : 3,
+            "description" : "Traversal depth (1-6)"
+          },
+          "token_budget" : {
+            "type" : "integer",
+            "default" : 2000,
+            "description" : "Max output tokens"
+          }
+        },
+        "required" : [ "question" ]
+      }
+    }, {
+      "name" : "get_node",
+      "description" : "Get full details for a specific node by label or ID.",
+      "inputSchema" : {
+        "type" : "object",
+        "properties" : {
+          "label" : {
+            "type" : "string",
+            "description" : "Node label or ID to look up"
+          }
+        },
+        "required" : [ "label" ]
+      }
+    }, {
+      "name" : "get_neighbors",
+      "description" : "Get all direct neighbors of a node with edge details.",
+      "inputSchema" : {
+        "type" : "object",
+        "properties" : {
+          "label" : {
+            "type" : "string"
+          },
+          "relation_filter" : {
+            "type" : "string",
+            "description" : "Optional: filter by relation type"
+          }
+        },
+        "required" : [ "label" ]
+      }
+    }, {
+      "name" : "get_community",
+      "description" : "Get all nodes in a community by community ID.",
+      "inputSchema" : {
+        "type" : "object",
+        "properties" : {
+          "community_id" : {
+            "type" : "integer",
+            "description" : "Community ID (0-indexed by size)"
+          }
+        },
+        "required" : [ "community_id" ]
+      }
+    }, {
+      "name" : "god_nodes",
+      "description" : "Return the most connected nodes - the core abstractions of the knowledge graph.",
+      "inputSchema" : {
+        "type" : "object",
+        "properties" : {
+          "top_n" : {
+            "type" : "integer",
+            "default" : 10
+          }
+        }
+      }
+    }, {
+      "name" : "graph_stats",
+      "description" : "Return summary statistics: node count, edge count, communities, confidence breakdown.",
+      "inputSchema" : {
+        "type" : "object",
+        "properties" : { }
+      }
+    }, {
+      "name" : "shortest_path",
+      "description" : "Find the shortest path between two concepts in the knowledge graph.",
+      "inputSchema" : {
+        "type" : "object",
+        "properties" : {
+          "source" : {
+            "type" : "string",
+            "description" : "Source concept label or keyword"
+          },
+          "target" : {
+            "type" : "string",
+            "description" : "Target concept label or keyword"
+          },
+          "max_hops" : {
+            "type" : "integer",
+            "default" : 8,
+            "description" : "Maximum hops to consider"
+          }
+        },
+        "required" : [ "source", "target" ]
+      }
+    } ]
+  },
+  "query_result" : {
+    "content" : [ {
+      "type" : "text",
+      "text" : "Node: Article.java\n  ID: article\n  Source: src/main/java/io/spring/core/article/Article.java L1\n  Type: code\n  Community: None\n  Degree: 26"
+    } ],
+    "isError" : false
+  },
+  "server_initialization" : {
+    "protocolVersion" : "2025-11-25",
+    "capabilities" : {
+      "experimental" : { },
+      "tools" : {
+        "listChanged" : false
+      }
+    },
+    "serverInfo" : {
+      "name" : "graphify",
+      "version" : "1.29.1"
+    }
+  },
+  "query_label" : "Article.java",
+  "result" : "EXACTLY_BOUND",
+  "queryable" : true,
+  "exact_revision_opened" : true,
+  "repository_id" : "realworld",
+  "canonical_revision" : "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+  "graph_sha256" : "2c554b8b0e35922b7be423978e6bcf9b9e139607c09299ef8ccb3c84409b0857",
+  "runtime_identity" : "graphifyy",
+  "runtime_version" : "0.1.14",
+  "runtime_python" : "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/graphify-venv312/bin/python",
+  "python_sha256" : "2e2d019d3fde1eeb5c4224d7f024e9b59a191d6c76aea30cf83b8bda3f4fa115",
+  "started_at" : "2026-09-12T09:55:34.233287Z",
+  "finished_at" : "2026-09-12T09:55:35.191692Z",
+  "node_count" : 557,
+  "edge_count" : 862,
+  "semantic_publication_allowed" : false,
+  "index_mode" : "EXTERNAL_GRAPHIFY_AST_ONLY_NO_CLUSTERING",
+  "source_digests" : {
+    "src/main/java/io/spring/JacksonCustomizations.java" : "50a980f7b49e90ac0e88bbca1e01e454f6bbae11fc60658c8d617cd113edcc01",
+    "src/main/java/io/spring/MyBatisConfig.java" : "87f909b1497f1f5f52866f9bca36b3ffe27861362162d009e6d1cc281be452f0",
+    "src/main/java/io/spring/RealWorldApplication.java" : "5c7107a858fa60f1a74a92841f238269f0a0a47e0e02d51957559b117296d767",
+    "src/main/java/io/spring/Util.java" : "3846d4f022890d3e3d00b31227c583ac27b18b076eb455dc0c7fb8abe19cb49f",
+    "src/main/java/io/spring/api/ArticleApi.java" : "6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+    "src/main/java/io/spring/api/ArticleFavoriteApi.java" : "d3f44c10c425e57df26755bb37188699deb8a53bc0a10124a6e27eee8c5eb6bb",
+    "src/main/java/io/spring/api/ArticlesApi.java" : "9c0500e2b74a21fb4431b8719b97adfdd4a5421779c11343404ed7284b4df8d1",
+    "src/main/java/io/spring/api/CommentsApi.java" : "688fd94dc61f87552412dcc6205d5d3257b7ac961a14c693a7f222b4de5a9f89",
+    "src/main/java/io/spring/api/CurrentUserApi.java" : "131deb9234c4817d67fa9e4cc40b0068ce45cec3fc4c22b9b769ed832f0ea68d",
+    "src/main/java/io/spring/api/ProfileApi.java" : "314dbd49f5b7c8b95763f73f960d538275a31e4ed35929b1b2e2840c0a7bbbf2",
+    "src/main/java/io/spring/api/TagsApi.java" : "f83c118f5089ba7fcd6a05e297069a9d0c214df97664e843ec33383c920f4c46",
+    "src/main/java/io/spring/api/UsersApi.java" : "1d1b1fc09791dc54d2610415ed4511f006d282f34127f4a4a71cd2e4a780e823",
+    "src/main/java/io/spring/api/exception/CustomizeExceptionHandler.java" : "ed12f74ddbd8a97e2a8d688eb35875196490cbc4794ce915f7147a9c9cee7fab",
+    "src/main/java/io/spring/api/exception/ErrorResource.java" : "750c7d2395841d89e05f6cbf36ac0fd1b89ee061e412add67877339747f816f6",
+    "src/main/java/io/spring/api/exception/ErrorResourceSerializer.java" : "183b691223a90e3021f38160156e41ca2855d15422e1a70546d45d221573c8cc",
+    "src/main/java/io/spring/api/exception/FieldErrorResource.java" : "56f2a5d265d66fd1de6ecb3a2e546842783ad66f5bc6d27106b3de6036e39809",
+    "src/main/java/io/spring/api/exception/InvalidAuthenticationException.java" : "3ddf776dbc51ab93144c8cf62ab99779f36c27ae8e29a5455a153da1b5e9eb8b",
+    "src/main/java/io/spring/api/exception/InvalidRequestException.java" : "5da8b608232cfa18737ddee79a9eb69c7110f9dc6c0877ce5daab16b59628023",
+    "src/main/java/io/spring/api/exception/NoAuthorizationException.java" : "0d8c248f8027dcb60746547447b3a0a4e35ad54ac7e3e795716578aee2ac0a1a",
+    "src/main/java/io/spring/api/exception/ResourceNotFoundException.java" : "97f82260220fae62fd72f3e33b97510603a733306e2d1268197bb83c067a36c2",
+    "src/main/java/io/spring/api/security/JwtTokenFilter.java" : "80ff3d269990725d192c5d12611182cd6cbeefba18d5441ea1b8c7cfe1c2d8b5",
+    "src/main/java/io/spring/api/security/WebSecurityConfig.java" : "028c5ac9ad44db09b60bc94baec9e9298a0af9a25417ecb320120a73a4b6c7fc",
+    "src/main/java/io/spring/application/ArticleQueryService.java" : "1517ac4317b0812596bace87f8ebbba69d337e02ffbd27cd52bdcb74297b88af",
+    "src/main/java/io/spring/application/CommentQueryService.java" : "4d95985dcd719afce93deb69be74dcdd5ac09b716a98dae52876095aeaea494e",
+    "src/main/java/io/spring/application/CursorPageParameter.java" : "ed45ab05547fb7778b78068afe3523a3beaef4d067f4c8b3c9d864138c592c3f",
+    "src/main/java/io/spring/application/CursorPager.java" : "f977c8f27ea0c4b9ac6fcd97687121d8d2cfc92c406f6590e51b52786937025e",
+    "src/main/java/io/spring/application/DateTimeCursor.java" : "01a0ed8327b538c2355d7b520bea7b3384ce366df58255e16e8f5e36b1860b75",
+    "src/main/java/io/spring/application/Node.java" : "d6217cb3c67bd547fae7d7c5997fcb216172e7c8923a616e1c75f281e49534db",
+    "src/main/java/io/spring/application/Page.java" : "e1a704eeadc35a27a62f0330b6b002238e00d21c62620b99d28d98210337c3cd",
+    "src/main/java/io/spring/application/PageCursor.java" : "1388b6bc9484d1a772b9c3131c38b493b6d31f16cc895c1a24590b4195b1666a",
+    "src/main/java/io/spring/application/ProfileQueryService.java" : "ce71ec543fe9d09c438b03769f77c402d5832bd784bc702f86be32ae58a65b9f",
+    "src/main/java/io/spring/application/TagsQueryService.java" : "be02490d4007366be1f2bfa83871f1fc1b3480db04d95e20a66337642a6aaf6c",
+    "src/main/java/io/spring/application/UserQueryService.java" : "b29870f8313e0a33cb1806e0d44c46424bc996d0b94cfe58949980c1ea1bbcfd",
+    "src/main/java/io/spring/application/article/ArticleCommandService.java" : "906036ede7cb975a1880e7fa46af17ca84e368dd94a5f22abb97e804162adfc0",
+    "src/main/java/io/spring/application/article/DuplicatedArticleConstraint.java" : "d29dd193f8efd74ccbef113166ceb086505651ab296002e09ed230363bcec363",
+    "src/main/java/io/spring/application/article/DuplicatedArticleValidator.java" : "0726e78bf666067790e0962fbd0e1f2dec496d10b1091649190bdd9c87642e77",
+    "src/main/java/io/spring/application/article/NewArticleParam.java" : "aa89375253af3ad9e7373f934f12dd1925ca908d3fd583a8643ef953185078df",
+    "src/main/java/io/spring/application/article/UpdateArticleParam.java" : "082735eae1966215d0393e3d1821acd7410e70f38444aee0e15df4ff03cf6cae",
+    "src/main/java/io/spring/application/data/ArticleData.java" : "1a640361a6f3789fee22ac6ac496f840ace30eca9437a7ce96fa90a458a2981f",
+    "src/main/java/io/spring/application/data/ArticleDataList.java" : "3d05080ead5d60470c59cf372776b02a14a5650c3f576199074c3a0d76001362",
+    "src/main/java/io/spring/application/data/ArticleFavoriteCount.java" : "422a5ca612ae5ccd0bf561df3e35744fe8d38fde75946041c73c809121a7662f",
+    "src/main/java/io/spring/application/data/CommentData.java" : "e3d0ccc3fceab969cb232cda56ffddcb6d642123efb8aed512d11f8eb4be3a6c",
+    "src/main/java/io/spring/application/data/ProfileData.java" : "9055bacf7ec5edffe0f83bfec55c59cb09a8b31a30488705502c768f99e42df7",
+    "src/main/java/io/spring/application/data/UserData.java" : "3f809303054e08ad4c31b11bdfffe997eab7b6873d5ab4c09c10057d35446ab6",
+    "src/main/java/io/spring/application/data/UserWithToken.java" : "61bda82c022bd5bc7f499abbb86049f7c09088792cfc4cf3fea244c95fe58eff",
+    "src/main/java/io/spring/application/user/DuplicatedEmailConstraint.java" : "bfb9986cc044e4df2820a96003a44964da20c919787e5b3c8acc05bf8ad96d62",
+    "src/main/java/io/spring/application/user/DuplicatedEmailValidator.java" : "22654e5a2ab17074ae1701cab368ecf0819f774767cc981d7eba7040038dcc0b",
+    "src/main/java/io/spring/application/user/DuplicatedUsernameConstraint.java" : "1cf972712bb567eaf81726efcd08e1e5fc42f7cdd8e36765af2d068e902d3144",
+    "src/main/java/io/spring/application/user/DuplicatedUsernameValidator.java" : "674fb348ff6931b3c8d36696df8035ad0a76b5f41af2e95d94d2665b3e41150d",
+    "src/main/java/io/spring/application/user/RegisterParam.java" : "58984f358ad0e20e0a444b7039313c131220a1e347a85c326f888deeb465d3b6",
+    "src/main/java/io/spring/application/user/UpdateUserCommand.java" : "2957e5538209f99ffa3d9f6c3e405e9e04a4f152768485a98dc0e511f3a73f3b",
+    "src/main/java/io/spring/application/user/UpdateUserParam.java" : "efa6358d0a5eaff16589619ae004a4c4d208f529d4d4306917cf5ffd37ef4e30",
+    "src/main/java/io/spring/application/user/UserService.java" : "ead094e348c252b3c29739713545fb024e380779cf78bcf0a6720948bbc65ebb",
+    "src/main/java/io/spring/core/article/Article.java" : "e12d9310496a9df4e2a854697a333226b84da1f80eaba84b6effc4d471e60cf5",
+    "src/main/java/io/spring/core/article/ArticleRepository.java" : "fd13826d97299009db79c48aad17c9b814ad4d928c0a6c94c30794321b567ea7",
+    "src/main/java/io/spring/core/article/Tag.java" : "ac6f8f44d64a487bd69722a47021ed468545338c38b4ec12dbf7796790907add",
+    "src/main/java/io/spring/core/comment/Comment.java" : "17ed709649839f2bbea21a149b1ee4dbfb505197d8f6e098cf2b3ef7228384e3",
+    "src/main/java/io/spring/core/comment/CommentRepository.java" : "198d466f655593198bc17927ad4db16b899dea6da7d1ac9873128b295993ffb2",
+    "src/main/java/io/spring/core/favorite/ArticleFavorite.java" : "bf0e5ad7d41d01b19914bcb1c5c9c19b23da2f2efdc462c85272503196cb728b",
+    "src/main/java/io/spring/core/favorite/ArticleFavoriteRepository.java" : "64fbd1668cf66542d7c52a95cf84d8416f5abb58fca909a0ac7f352fc47b9115",
+    "src/main/java/io/spring/core/service/AuthorizationService.java" : "f7f2a6cf973929ce07c23dc359c92758768be38c23b69883c5561f884421ffb5",
+    "src/main/java/io/spring/core/service/JwtService.java" : "c81abf7985be7e1f7dfebd722def6890e68c937a31bc23d9f8b58797ca71445a",
+    "src/main/java/io/spring/core/user/FollowRelation.java" : "46150c9a5e9d0518846d27b00fdae466b879721643d66c910154b35b6994a903",
+    "src/main/java/io/spring/core/user/User.java" : "0a6dbe64ec842468be6eb191ae741de4c671b59736aa65c7935364936c16a568",
+    "src/main/java/io/spring/core/user/UserRepository.java" : "e3d851e937562f7e1dcaba95b2a8866164e125a16849122f97fa133e430329b4",
+    "src/main/java/io/spring/graphql/ArticleDatafetcher.java" : "e5a9d54b3e101950fa4f6107c45f06862b581e1c4cf768be2bf15576d08ea107",
+    "src/main/java/io/spring/graphql/ArticleMutation.java" : "fd9ccb3d96dbdce838d9adc2304cfa581e6afe6e8e73195afb34fafcd6a43da3",
+    "src/main/java/io/spring/graphql/CommentDatafetcher.java" : "ac94c346def78e16f28ad1727d7a271db303e9f42dfd470339e168b994a45957",
+    "src/main/java/io/spring/graphql/CommentMutation.java" : "c5e02a215eb1455c2cd8e26e0a7558a308dc6f0124afb11dfe867aa26048bf6b",
+    "src/main/java/io/spring/graphql/MeDatafetcher.java" : "04b0dbf6207604d1e3e13405a33b4449ffe542d5e640baf2ef52b10c82900e86",
+    "src/main/java/io/spring/graphql/ProfileDatafetcher.java" : "ab0297a8b747e8527535fc246fac123c443b42301d42416d45e2ceb9ed8931a7",
+    "src/main/java/io/spring/graphql/RelationMutation.java" : "ecb9f459710057bdf777b64b94e53dc9f5c4df83522e178ebd396bd8006e6d95",
+    "src/main/java/io/spring/graphql/SecurityUtil.java" : "cca2f90eed2cf5967be93d9bbbdbe1eeabfd400ed54c91ec78dc0cd876d75893",
+    "src/main/java/io/spring/graphql/TagDatafetcher.java" : "d45298c1d4734f272323fc740fc69b5f3b6af833905a5cb0a9cf456a4e54e955",
+    "src/main/java/io/spring/graphql/UserMutation.java" : "71a15d098e2d2d5465647f60dd52dba7ff8407f8ab106e0f041d861609dce5ce",
+    "src/main/java/io/spring/graphql/exception/AuthenticationException.java" : "4431a72b0a57511b25caec01036a1949629a3bc5a82459d387966790b24c534d",
+    "src/main/java/io/spring/graphql/exception/GraphQLCustomizeExceptionHandler.java" : "cd6009d3c2bb74a1e0f62003bbabc3db21fa072cd2576321655ca87fc6fe594c",
+    "src/main/java/io/spring/infrastructure/mybatis/DateTimeHandler.java" : "7f41e89d21da32adb387d256985f042a954528d0042e0216458a529386e03930",
+    "src/main/java/io/spring/infrastructure/mybatis/mapper/ArticleFavoriteMapper.java" : "e137da77e17b79d42d002dc296dc2f8a65f5f1eecf99013552783b22edabc528",
+    "src/main/java/io/spring/infrastructure/mybatis/mapper/ArticleMapper.java" : "d1d39327db7d05c9ff51883e0d8c5c6c6597a34b6271d08a941ac22411a2e83f",
+    "src/main/java/io/spring/infrastructure/mybatis/mapper/CommentMapper.java" : "e5fef0de94152515fb812afa7f7642beb06ffe8a0e399e1da9563290e2bca7ec",
+    "src/main/java/io/spring/infrastructure/mybatis/mapper/UserMapper.java" : "a46c8222cd75fbc7abe8facb2bb0fe0d8261d9273479f5e26f8aa3238e1c0ceb",
+    "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleFavoritesReadService.java" : "a022656611c034c80e45d4dea690cc203828329074ea76d34947e5dd6e3e01ab",
+    "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java" : "8309bebe30f9b84059216c47f874787d5a08d9eb62703cff521715dfcfd635bc",
+    "src/main/java/io/spring/infrastructure/mybatis/readservice/CommentReadService.java" : "0daefcd7068532a08a62b32e16bfcd83d7f8dcdda527e55ae36c18442618842f",
+    "src/main/java/io/spring/infrastructure/mybatis/readservice/TagReadService.java" : "3da232bbc7c3e2e7028589a9f3efb4b8bc6724fda5a268f33d75cfacfe5d8130",
+    "src/main/java/io/spring/infrastructure/mybatis/readservice/UserReadService.java" : "9a42f0cd84ba8ae3a2370676cd26b05957e5776bfec8575cb868375eab70b551",
+    "src/main/java/io/spring/infrastructure/mybatis/readservice/UserRelationshipQueryService.java" : "ff5ef730a0e6d4a5f198ae126a6fc78ced3a0d9c299f18a22ff11a14d190b270",
+    "src/main/java/io/spring/infrastructure/repository/MyBatisArticleFavoriteRepository.java" : "0e57ae3b0bba2997fed7ad59fdcf103f3f7a5fbad42b1f087ee01f0298210ecc",
+    "src/main/java/io/spring/infrastructure/repository/MyBatisArticleRepository.java" : "3caa65953caa4f1b75923b79cb246075fdc1f60f40b837ab66e824eafb1fe3d2",
+    "src/main/java/io/spring/infrastructure/repository/MyBatisCommentRepository.java" : "d466ec816e8e078bce974051a1d076d0ffbbe3c5cc256bd2fe83bdd24c0da69c",
+    "src/main/java/io/spring/infrastructure/repository/MyBatisUserRepository.java" : "749264fa31ea58a4a56b431a1098d45444620dd5b7a91ce9b5b4c7cb08cd5e0a",
+    "src/main/java/io/spring/infrastructure/service/DefaultJwtService.java" : "640c6d59c9e489f5be3d7366047b0773015f844c900b89189feedb3e72f1f87f",
+    "src/test/java/io/spring/RealworldApplicationTests.java" : "99d503358535afc5b4b622f17abc0859246bad49e734825460db6bec02faa97c",
+    "src/test/java/io/spring/TestHelper.java" : "2166b221fa10a53ae99fb2da85c507a4e08a658b49f0afa64d15f03a249d6736",
+    "src/test/java/io/spring/api/ArticleApiTest.java" : "786f03763a4679009125e35fee54da170ed734d50e0c5f45f6cd7122738ceb9d",
+    "src/test/java/io/spring/api/ArticleFavoriteApiTest.java" : "ecd2cb12e3af05849881575042f9340a4f6f731d76db5ee4e754e52169003102",
+    "src/test/java/io/spring/api/ArticlesApiTest.java" : "902ee5ab48258fec3e4bc8186a5a3a548e47f0a367257197d690fe0faf309977",
+    "src/test/java/io/spring/api/CommentsApiTest.java" : "7ce5a9e647588f3e41b0bb86765f1e9dbd41d3ec00745c13f49c163733e45383",
+    "src/test/java/io/spring/api/CurrentUserApiTest.java" : "aeeaf546cf0b7f7e5e37e7d8d08b7957bcbf2181d4d842234b290a4480b54040",
+    "src/test/java/io/spring/api/ListArticleApiTest.java" : "f35ee9ae2d3f7934364cbb0ef6154bbb45f5bd9adc6c37cc8acf1a255ede6133",
+    "src/test/java/io/spring/api/ProfileApiTest.java" : "0a090b57f4c912c8675508af7e2d58814effa439bf6ae27aa166cb2b19f66dc8",
+    "src/test/java/io/spring/api/TestWithCurrentUser.java" : "6193bc8cf18412e2f5748bd3ff011d1fa705e0b65e59995dd50df5451f67feb9",
+    "src/test/java/io/spring/api/UsersApiTest.java" : "0b2db298ac46e78fb1636b5adda47045a10ab43bd9c750fae336387b7459af6b",
+    "src/test/java/io/spring/application/article/ArticleQueryServiceTest.java" : "0d649a45d43fd7ad66bc7bc21370cb29ef54a8a1fda9c732d1a352ec6c5f19d4",
+    "src/test/java/io/spring/application/comment/CommentQueryServiceTest.java" : "8f7a56af68b3f6ea75c0b3a5dc5e57f6ba2d3bb15dd5c49a53f713586def89ae",
+    "src/test/java/io/spring/application/profile/ProfileQueryServiceTest.java" : "b9e274a7ab65b9838754796f413257023f33877e1287381707575e21f1cdec5a",
+    "src/test/java/io/spring/application/tag/TagsQueryServiceTest.java" : "59968600b02abbad7597bfbb42034c95ff6c71a01c11e81d9ee3261c13290e3c",
+    "src/test/java/io/spring/core/article/ArticleTest.java" : "ef24c7c0145ce955057e2e1dcfa54c9a2e4b6a050af99d02f014222554e6b89d",
+    "src/test/java/io/spring/infrastructure/DbTestBase.java" : "ccea3ed525ba19d775f0159cd331b3a05982d85ce47aa53ea9c984f71fe856b5",
+    "src/test/java/io/spring/infrastructure/article/ArticleRepositoryTransactionTest.java" : "9282e9e98ccb156fbb89a7f96493857cb3a9ba06b857b4e6fae0867530869afe",
+    "src/test/java/io/spring/infrastructure/article/MyBatisArticleRepositoryTest.java" : "f46bd7de2d4420c4005835d37856a2120b02e2aa688d63f04764673380c35926",
+    "src/test/java/io/spring/infrastructure/comment/MyBatisCommentRepositoryTest.java" : "af785c5d5541c468c67e559b0d594a1eceff56b21c4ae02547eeb74c920f3e2f",
+    "src/test/java/io/spring/infrastructure/favorite/MyBatisArticleFavoriteRepositoryTest.java" : "465bb00ebf84a0b5507a3a32fec11bf4d4d66656bff59931ba21a9cacce0c974",
+    "src/test/java/io/spring/infrastructure/service/DefaultJwtServiceTest.java" : "3a234fd8036e90b0bd517cea01e3e7ba215fc7a42884e0bf885f697cba4d6c5a",
+    "src/test/java/io/spring/infrastructure/user/MyBatisUserRepositoryTest.java" : "a3b836676798594b9441c7026846885723e3b5bf12aa312adc58972e332eca08"
+  }
+}

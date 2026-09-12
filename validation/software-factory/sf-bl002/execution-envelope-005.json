@@ -13,7 +13,7 @@
   ],
   "revision_binding": {
     "construction_base": "18d2a1f94894e9ada7c928988ee6604a7018f688",
-    "materialized_from_control_commit": "ba266c0957feca2c883579e86f4ace388afdf329",
+    "materialized_from_control_commit": "b165a9491f595ad9e9557cdded69ef6a643f9839",
     "dispatch_start_commit_rule": "PIN_THE_FULL_COMMIT_CONTAINING_THIS_ENVELOPE",
     "required_ancestry": [
       "18d2a1f94894e9ada7c928988ee6604a7018f688",
@@ -55,7 +55,7 @@
     {
       "ref": "BACKLOG",
       "path": "BACKLOG.md",
-      "sha256": "0605d924e1cb09f325a2724b533b09107e14662d40ca48d80d92a1a6ec1ca990",
+      "sha256": "a0cc90c0e0627fe09164ee05a83690ae613b2b53de348e10f1e244e19465db4c",
       "authority": "ACTIVE_CONTROL",
       "allowed_phase": "PREFLIGHT_ONLY",
       "evaluator_visible": true,
@@ -65,7 +65,7 @@
       "ref": "IMPLEMENTATION_PLAN",
       "path": "IMPLEMENTATION-PLAN.md",
       "anchor": "current-selection",
-      "sha256": "ac08303e5ff3b5104aae387aadd06345d664f2d38dfd0037f550aabee3db9b46",
+      "sha256": "c03a0426b854413751bfdb3c881db7df5c9dbeff501828acd6ec8f6b8710d926",
       "authority": "ACTIVE_CONTROL",
       "allowed_phase": "ALL",
       "evaluator_visible": true,
@@ -74,7 +74,7 @@
     {
       "ref": "STATUS",
       "path": "STATUS.json",
-      "sha256": "3eb5634ed84ec86e13ad8e52c2938dbd208cbc714384f55246261452bbb05ea4",
+      "sha256": "20d772f3c7994be2ce074215fd03c91ea3b44da55d9dd3ea3fa8fa0daf6e8b83",
       "authority": "ACTIVE_CONTROL",
       "allowed_phase": "PREFLIGHT_ONLY",
       "evaluator_visible": true,
@@ -92,7 +92,7 @@
     {
       "ref": "EXECUTION_GUIDANCE",
       "path": "validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md",
-      "sha256": "411e07239877b26a3114013e01559ff18d13f158c1b608a2527912ecc4f712b8",
+      "sha256": "56fea1accd2bc1c9da3e06fe371c9a4bcb29b5fc2d02fa3fd54d64cf4550e99b",
       "authority": "SUPPORTING_OPERATIONAL_GUIDANCE",
       "allowed_phase": "ALL",
       "evaluator_visible": true,
@@ -188,7 +188,12 @@
       "role": "Delivery Engineer",
       "dependencies": [],
       "objective": "Implement route observation, extraction-result, handler, and resolution contracts with focused tests.",
-      "input_refs": ["AGENTS", "FRAMEWORK_SPEC", "IMPLEMENTATION_PLAN", "APPROVED_DESIGN"],
+      "input_refs": [
+        "AGENTS",
+        "FRAMEWORK_SPEC",
+        "IMPLEMENTATION_PLAN",
+        "APPROVED_DESIGN"
+      ],
       "change_claims": [
         "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/route/HttpBehaviorObservation.java",
         "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/route/HttpBehaviorExtractionResult.java",
@@ -206,9 +211,16 @@
       "plan_task": "Task 1",
       "stage": 2,
       "role": "Delivery Engineer",
-      "dependencies": ["W1A_ROUTE_CONTRACTS"],
+      "dependencies": [
+        "W1A_ROUTE_CONTRACTS"
+      ],
       "objective": "Implement the proposal contract and deterministic Spring test fixtures.",
-      "input_refs": ["AGENTS", "FRAMEWORK_SPEC", "IMPLEMENTATION_PLAN", "APPROVED_DESIGN"],
+      "input_refs": [
+        "AGENTS",
+        "FRAMEWORK_SPEC",
+        "IMPLEMENTATION_PLAN",
+        "APPROVED_DESIGN"
+      ],
       "change_claims": [
         "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/route/ScenarioComponentProposal.java",
         "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/route/RouteContractTests.java",
@@ -225,9 +237,18 @@
       "plan_task": "Task 2A",
       "stage": 3,
       "role": "Delivery Engineer",
-      "dependencies": ["W1A_ROUTE_CONTRACTS", "W1B_PROPOSAL_FIXTURES"],
+      "dependencies": [
+        "W1A_ROUTE_CONTRACTS",
+        "W1B_PROPOSAL_FIXTURES"
+      ],
       "objective": "Extract bounded MockMvc and RestTemplate HTTP observations without converting external calls into production references.",
-      "input_refs": ["AGENTS", "IMPLEMENTATION_PLAN", "APPROVED_DESIGN", "TEST_EVIDENCE", "PETCLINIC_SOURCE"],
+      "input_refs": [
+        "AGENTS",
+        "IMPLEMENTATION_PLAN",
+        "APPROVED_DESIGN",
+        "TEST_EVIDENCE",
+        "PETCLINIC_SOURCE"
+      ],
       "change_claims": [
         "src/main/java/com/featuredeliveryintelligence/fdi/testbehavior/http/HttpBehaviorObservationExtractor.java",
         "src/test/java/com/featuredeliveryintelligence/fdi/testbehavior/http/HttpBehaviorObservationExtractorTests.java"
@@ -242,9 +263,17 @@
       "plan_task": "Task 2B",
       "stage": 3,
       "role": "Delivery Engineer",
-      "dependencies": ["W1A_ROUTE_CONTRACTS", "W1B_PROPOSAL_FIXTURES"],
+      "dependencies": [
+        "W1A_ROUTE_CONTRACTS",
+        "W1B_PROPOSAL_FIXTURES"
+      ],
       "objective": "Build and resolve a deterministic class-plus-method Spring route-handler index.",
-      "input_refs": ["AGENTS", "IMPLEMENTATION_PLAN", "APPROVED_DESIGN", "PETCLINIC_SOURCE"],
+      "input_refs": [
+        "AGENTS",
+        "IMPLEMENTATION_PLAN",
+        "APPROVED_DESIGN",
+        "PETCLINIC_SOURCE"
+      ],
       "change_claims": [
         "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/route/SpringRouteHandlerIndex.java",
         "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/route/SpringRouteHandlerIndexTests.java"
@@ -259,9 +288,16 @@
       "plan_task": "Task 2C",
       "stage": 3,
       "role": "Delivery Engineer",
-      "dependencies": ["W1A_ROUTE_CONTRACTS", "W1B_PROPOSAL_FIXTURES"],
+      "dependencies": [
+        "W1A_ROUTE_CONTRACTS",
+        "W1B_PROPOSAL_FIXTURES"
+      ],
       "objective": "Implement post-seal proof validation, metrics, and computed GO or REVISE thresholds using synthetic truth only.",
-      "input_refs": ["AGENTS", "IMPLEMENTATION_PLAN", "APPROVED_DESIGN"],
+      "input_refs": [
+        "AGENTS",
+        "IMPLEMENTATION_PLAN",
+        "APPROVED_DESIGN"
+      ],
       "change_claims": [
         "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SfBl002RouteEffectivenessEvaluation.java",
         "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SfBl002RouteEffectivenessEvaluationTests.java"
@@ -277,9 +313,21 @@
       "plan_task": "Task 3",
       "stage": 4,
       "role": "Delivery Engineer",
-      "dependencies": ["W2A_HTTP_EXTRACTOR", "W2B_HANDLER_INDEX"],
+      "dependencies": [
+        "W2A_HTTP_EXTRACTOR",
+        "W2B_HANDLER_INDEX"
+      ],
       "objective": "Implement provider-neutral evidence qualification and ordered proposal mapping with honest abstention.",
-      "input_refs": ["AGENTS", "IMPLEMENTATION_PLAN", "APPROVED_DESIGN", "ACCEPTED_INTENTS", "INTENT_ACCEPTANCE", "TEST_EVIDENCE", "GRAPH_SNAPSHOT", "GRAPHIFY_RUNTIME_EVIDENCE"],
+      "input_refs": [
+        "AGENTS",
+        "IMPLEMENTATION_PLAN",
+        "APPROVED_DESIGN",
+        "ACCEPTED_INTENTS",
+        "INTENT_ACCEPTANCE",
+        "TEST_EVIDENCE",
+        "GRAPH_SNAPSHOT",
+        "GRAPHIFY_RUNTIME_EVIDENCE"
+      ],
       "change_claims": [
         "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/BehaviorEvidencePolicy.java",
         "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/BehaviorEvidencePolicyTests.java",
@@ -297,9 +345,23 @@
       "plan_task": "Task 3",
       "stage": 5,
       "role": "Delivery Engineer",
-      "dependencies": ["W2A_HTTP_EXTRACTOR", "W2B_HANDLER_INDEX", "W3_POLICY_MAPPER"],
+      "dependencies": [
+        "W2A_HTTP_EXTRACTOR",
+        "W2B_HANDLER_INDEX",
+        "W3_POLICY_MAPPER"
+      ],
       "objective": "Compose the evaluator-blind immutable v0.3 generation runner and collision-safe focused tests.",
-      "input_refs": ["AGENTS", "IMPLEMENTATION_PLAN", "APPROVED_DESIGN", "ACCEPTED_INTENTS", "INTENT_ACCEPTANCE", "TEST_EVIDENCE", "GRAPH_SNAPSHOT", "GRAPHIFY_RUNTIME_EVIDENCE", "PETCLINIC_SOURCE"],
+      "input_refs": [
+        "AGENTS",
+        "IMPLEMENTATION_PLAN",
+        "APPROVED_DESIGN",
+        "ACCEPTED_INTENTS",
+        "INTENT_ACCEPTANCE",
+        "TEST_EVIDENCE",
+        "GRAPH_SNAPSHOT",
+        "GRAPHIFY_RUNTIME_EVIDENCE",
+        "PETCLINIC_SOURCE"
+      ],
       "change_claims": [
         "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SfBl002RouteEffectivenessRun.java",
         "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SfBl002RouteEffectivenessRunTests.java"
@@ -315,9 +377,21 @@
       "plan_task": "Task 4",
       "stage": 6,
       "role": "Validation Steward",
-      "dependencies": ["W3_RUNNER"],
+      "dependencies": [
+        "W3_RUNNER"
+      ],
       "objective": "Run the exact-revision generator twice, prove deterministic equality, and publish only immutable generation -003 artifacts.",
-      "input_refs": ["AGENTS", "IMPLEMENTATION_PLAN", "APPROVED_DESIGN", "ACCEPTED_INTENTS", "INTENT_ACCEPTANCE", "TEST_EVIDENCE", "GRAPH_SNAPSHOT", "GRAPHIFY_RUNTIME_EVIDENCE", "PETCLINIC_SOURCE"],
+      "input_refs": [
+        "AGENTS",
+        "IMPLEMENTATION_PLAN",
+        "APPROVED_DESIGN",
+        "ACCEPTED_INTENTS",
+        "INTENT_ACCEPTANCE",
+        "TEST_EVIDENCE",
+        "GRAPH_SNAPSHOT",
+        "GRAPHIFY_RUNTIME_EVIDENCE",
+        "PETCLINIC_SOURCE"
+      ],
       "change_claims": [
         "validation/software-factory/sf-bl002/http-behavior-observations-003.json",
         "validation/software-factory/sf-bl002/route-handler-index-003.json",
@@ -335,9 +409,17 @@
       "plan_task": "Task 4",
       "stage": 7,
       "role": "Validation Steward",
-      "dependencies": ["W2C_EVALUATOR", "W4_GENERATION"],
+      "dependencies": [
+        "W2C_EVALUATOR",
+        "W4_GENERATION"
+      ],
       "objective": "After generation sealing, evaluate the exact proposal and publish the immutable hierarchical report and evidence.",
-      "input_refs": ["AGENTS", "IMPLEMENTATION_PLAN", "APPROVED_DESIGN", "EVALUATOR_TRUTH"],
+      "input_refs": [
+        "AGENTS",
+        "IMPLEMENTATION_PLAN",
+        "APPROVED_DESIGN",
+        "EVALUATOR_TRUTH"
+      ],
       "change_claims": [
         "validation/software-factory/sf-bl002/hierarchical-evaluation-003.json",
         "validation/software-factory/sf-bl002/hierarchical-evaluation-evidence-003.json"
@@ -352,9 +434,24 @@
       "plan_task": "Task 5",
       "stage": 8,
       "role": "Delivery Engineer",
-      "dependencies": ["W1A_ROUTE_CONTRACTS", "W1B_PROPOSAL_FIXTURES", "W2A_HTTP_EXTRACTOR", "W2B_HANDLER_INDEX", "W2C_EVALUATOR", "W3_POLICY_MAPPER", "W3_RUNNER", "W4_GENERATION", "W4_EVALUATION"],
+      "dependencies": [
+        "W1A_ROUTE_CONTRACTS",
+        "W1B_PROPOSAL_FIXTURES",
+        "W2A_HTTP_EXTRACTOR",
+        "W2B_HANDLER_INDEX",
+        "W2C_EVALUATOR",
+        "W3_POLICY_MAPPER",
+        "W3_RUNNER",
+        "W4_GENERATION",
+        "W4_EVALUATION"
+      ],
       "objective": "Integrate accepted child candidates without novel mutation, run full verification, and assemble one candidate evidence handoff.",
-      "input_refs": ["AGENTS", "FRAMEWORK_SPEC", "IMPLEMENTATION_PLAN", "EXECUTION_GUIDANCE"],
+      "input_refs": [
+        "AGENTS",
+        "FRAMEWORK_SPEC",
+        "IMPLEMENTATION_PLAN",
+        "EXECUTION_GUIDANCE"
+      ],
       "change_claims": [],
       "primary_deliverable": "One exact combined integration candidate and evidence handoff",
       "estimated_code_and_test_delta": 0,
@@ -417,5 +514,30 @@
     "computed GO or REVISE metrics",
     "limitations and blockers",
     "all run IDs with token, cache-read, cycle-time, review-wait, first-pass, duplicate-trigger, tool-call and completeness KPIs"
-  ]
+  ],
+  "protected_path_baselines": {
+    "default_revision": "18d2a1f94894e9ada7c928988ee6604a7018f688",
+    "exact_path_overrides": [
+      {
+        "path": "validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md",
+        "revision": "2877007af6f6f4ebcc23a393c0d2424292cb6f0e",
+        "sha256": "56fea1accd2bc1c9da3e06fe371c9a4bcb29b5fc2d02fa3fd54d64cf4550e99b"
+      },
+      {
+        "path": "validation/pkb001/operations/INSTRUCTION-PROJECTIONS-DRAFT.md",
+        "revision": "2877007af6f6f4ebcc23a393c0d2424292cb6f0e",
+        "sha256": "871303e39345d00ce990e708b39de8ee559e9e3730b0c2778fa86d5fd7f7370c"
+      }
+    ],
+    "both_plan_checks_required": true
+  },
+  "integration_reconciliation": {
+    "plan_commit": "b165a9491f595ad9e9557cdded69ef6a643f9839",
+    "required_subject_candidate": "ce8e078efd94e4f69a6e271c5e29786caf378252",
+    "required_evaluator_candidate": "57496334a8589699ed6029f202f5bd20d83dca79",
+    "required_pipeline_test_candidate": "c2f5656c129f9d78c010914f3bc680cdfe0a3909",
+    "per_path_final_owner_manifest_required": true,
+    "full_regression_zero_skips_required": true,
+    "fresh_combined_review_required": true
+  }
 }

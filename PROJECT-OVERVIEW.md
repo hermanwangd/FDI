@@ -57,6 +57,12 @@ Feature Delivery: T1 → T2 → T3 → T4
 - **Execution Plane** executes approved WorkItems, coordinates eligible
   parallelism, retry, review, integration, regression, and evidence assembly.
 
+Unrelated Backlog items may execute in separate lanes when each has an exact
+envelope, isolated workspace, non-overlapping mutation ownership, independent
+evidence and closure, and a bounded share of the aggregate resource limit. The
+five active controls remain singletons maintained by one serialized Feature
+Delivery Plane owner.
+
 The current Execution Plane runtime may be Multica. Core contracts depend only
 on the role boundary, never on a vendor, model, agent, or orchestration product.
 

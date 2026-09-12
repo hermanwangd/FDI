@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "execution_id": "SF-BL-006-COMPANY-AI-SHARE-001",
+  "source_commit": "c13caeea1366b3967e318f55caab5eb17c92fe87",
+  "sharing_status": "LEARNER_EMAIL_DELIVERY_TO_KHWANGD_ONLY",
+  "artifacts": [
+    {
+      "name": "company-ai-learning-learner-email-approved-20260912.zip",
+      "sha256": "5d44a74d2fee4c7dccf664d31a80759aaa322becde0e984b2b6247d8ddb9a2c9"
+    },
+    {
+      "name": "company-ai-learning-evaluator-only-20260912.zip",
+      "sha256": "b73190f4e780044345e65c20b27290f316875ff026b1c7a623222f545efaf0c2"
+    }
+  ],
+  "verification": {
+    "manifest_bytes_and_hashes": "PASS",
+    "membership_disjoint": "PASS",
+    "learner_answer_leakage": "PASS",
+    "learner_markdown_links": "PASS",
+    "unsafe_archive_paths": "PASS_NONE_FOUND",
+    "personal_absolute_paths": "PASS_NONE_FOUND",
+    "credential_like_values": "PASS_NONE_FOUND",
+    "deterministic_rebuild": "PASS_BYTE_IDENTICAL"
+  },
+  "limitations": [
+    "COMPANY_RUNTIME_NOT_VALIDATED",
+    "DOWNSTREAM_AI_ENVIRONMENT_UNBOUND_NOT_AUTHORIZED_FOR_UPLOAD_OR_INSTALL",
+    "EVALUATOR_ONLY_ARCHIVE_NOT_AUTHORIZED_FOR_EMAIL_DELIVERY"
+  ]
+}

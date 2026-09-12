@@ -210,7 +210,50 @@ tests or independent review to improve a metric.
 
 ## Comparison and decision
 
-Use at least three comparable slices in each before/after cohort and report sample
+### Size-normalized comparison
+
+Before dispatch, FDP records work category, size and a concrete sizing rationale
+in the execution brief. Categories are feature/fix, investigation/experiment,
+and documentation; these are KPI cohorts, not replacement Backlog work types.
+Size describes the independently acceptable delivery outcome, not agent count,
+slice count, file count or tokens consumed:
+
+| Size | Pre-dispatch criterion |
+|---|---|
+| S | One module, existing contract, local verification sufficient. |
+| M | Cross-module or interface change requiring integration verification. |
+| L | Cross-system, external runtime, migration or end-to-end isolation verification. |
+
+Use the highest applicable criterion. Preserve the original classification;
+authorized scope changes get a dated scope revision, never retrospective sizing
+to excuse overruns. Historical unclassified work is descriptive only, not a
+prospectively sized benchmark.
+
+Keep raw metrics. Token index = total input+output / prior same-category,
+same-size median; cycle index = elapsed time / that cohort's elapsed-time median.
+Lower than 1 means lower consumption/time, not automatically better quality.
+Cache reads stay separate; token volume is not currency cost. Freeze the cohort
+IDs and measurement window before comparison, exclude the current execution,
+and require at least five comparable observations per reference cohort. Missing
+usage, insufficient samples or a zero median yield N/A, never an invented index.
+Report model/runtime/instruction and verification-profile differences.
+
+Include all parent execution runs: coordination, implementation, review,
+remediation, integration and duplicate triggers, deduplicated by full run ID.
+Do not divide the headline cost by slices. Cycle time runs from first authorized
+work start to the final valid independent integrated-candidate verdict; report
+dispatch-to-return and FDP intake separately. Waiting remains in elapsed time
+and is additionally classified, not subtracted. A superseded PASS is not the end
+of a corrected execution's clock.
+
+First-pass rate is not divided by size: compare same-cohort percentage points
+and show numerator/denominator. Implementation first-pass requires independent
+exact-candidate review; investigation delivery acceptance is a separately named
+metric. Report integrated review separately. Later intake findings and rework
+remain visible even after initial review PASS. Never lower verification gates
+to improve cost or time; do not aggregate these metrics into a single score.
+
+Use at least five comparable observations in each before/after cohort and report sample
 count, range, runtime/model/instruction revisions and missing data. Evaluate all
 three KPIs together: a token reduction is not an improvement when cycle time or
 first-pass quality regresses. Select one evidenced optimization per cycle. The
@@ -221,6 +264,8 @@ fan-out; parallelism is credited only when it reduces measured wall-clock time.
 
 ```text
 Slice / canonical Backlog / scope / complexity rationale:
+KPI work category / pre-dispatch S-M-L / rationale / scope revision:
+Reference cohort IDs and window / sample count / token and cycle indices or N/A:
 Bounded-slice estimate / gate result / exception rationale or N/A:
 Base / candidate / integration candidate:
 Exact-input manifest digest / identity verification / discovery deviation:

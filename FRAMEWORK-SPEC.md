@@ -40,6 +40,7 @@ strength.
 | `FD-T3-007` | Retry and replan remain separate authority decisions. |
 | `EXEC-001` | Execution Plane schedules, executes, reviews, integrates, and reports without changing engineering authority. |
 | `EXEC-002` | Materialization creates a portable envelope without creating authority. |
+| `EXEC-003` | Independent execution lanes may progress concurrently only with explicit ownership, dependency, isolation, and aggregate-resource safety. |
 | `EVID-001` | Evidence binds exact inputs, outputs, revisions, generation method, and digests. |
 | `PORT-001` | Cross-baseline change export is exact-revision, cross-file, reference-only, and fail-closed. |
 | `FD-T4-001` | T4 independently evaluates the integrated candidate. |
@@ -383,6 +384,38 @@ Materialization MUST NOT introduce, weaken, expand, or modify authority.
 
 The exact serialized envelope schema is not frozen by this revision.
 
+### EXEC-003 — Concurrent execution lanes
+
+The Feature Delivery Plane MAY select more than one unrelated Backlog item for
+concurrent execution without combining them into one engineering contract. Each
+selection MUST be represented as a distinct execution lane with its own stable
+lane and execution identities, Backlog and requirement bindings, exact base
+revision, execution state, integration candidate, owned and excluded paths,
+dependencies, resource budget, evidence package, and closure gate.
+
+Concurrent lanes MUST satisfy all of the following before either lane mutates
+the workspace:
+
+- their mutation ownership is deterministically non-overlapping;
+- any shared input is read-only and bound to an exact revision or digest;
+- cross-lane dependencies are explicit rather than inferred from scheduling;
+- combined memory, process, service, and external-cost limits remain within the
+  project-wide resource envelope; and
+- each lane has an isolated branch or workspace and immutable evidence namespace.
+
+Unknown path overlap, an unbound shared input, an exceeded aggregate resource
+limit, or competing control-file writers MUST fail closed for the affected
+lanes. Failure or blockage in one lane MUST NOT stop an independent lane unless
+an explicit dependency, shared safety boundary, or global resource limit
+requires it.
+
+The five active control files remain singletons. One Feature Delivery Plane
+owner MUST serialize their updates and reconcile all lane transitions. The
+active Implementation Plan remains one file but MAY contain one bounded section
+per active lane; unrelated Backlog items MUST NOT be merged into one execution
+envelope merely to obtain concurrency. Human terminal approval and closure are
+evaluated independently for each Backlog item.
+
 ### EVID-001 — Evidence integrity
 
 Evidence MUST bind exact input and candidate revisions, applicable contract
@@ -498,6 +531,25 @@ Human-authority semantics, evaluator isolation, deterministic evidence, and
 exact-revision binding.
 
 ## 12. Current scope boundary
+
+`SF-BL-005` MAY perform the explicitly selected scenario-mapping feasibility
+tranche and define an execution-specific successor scoring protocol. This does
+also permit the Human-selected minimal nested-test identity and module-root
+correction under a revised Plan/envelope, preserving prior accepted outputs.
+Human-selected successor preparation MAY implement the Java METHOD-pair evaluator
+and sealed comparison-input binding with synthetic/calibration validation. This
+does not select a holdout or establish an experimental GO decision.
+User-requested reproduction of an existing frozen real-data protocol MAY run
+in a new isolated output namespace. It MUST identify the original protocol and
+MUST NOT present old-unit scores as successor METHOD-pair results.
+Human-selected real METHOD calibration MAY wire producers, independently seal
+METHOD/chain truth before generation, and compare bounded producer improvements
+with identical inputs and scoring. Exposed repositories remain calibration;
+this does not authorize formal holdout execution or a generalization claim.
+This permission does
+not amend prior experimental verdicts or authorize TYPE generation, automatic
+Product publication, or formal holdout execution without its selection gates.
+Its current mutation and execution boundary is the selected Implementation Plan.
 
 The active delivery target is `SF-BL-001`. One bounded prerequisite correction,
 `SF-BL-002`, MAY repair the preserved PKB-001 evidence pipeline before reuse.

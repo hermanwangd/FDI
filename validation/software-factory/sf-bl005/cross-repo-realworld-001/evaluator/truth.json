@@ -1,0 +1,980 @@
+{
+  "selectedScenarios": [
+    "RW-SCENARIO-001",
+    "RW-SCENARIO-002",
+    "RW-SCENARIO-003",
+    "RW-SCENARIO-004",
+    "RW-SCENARIO-005",
+    "RW-SCENARIO-006",
+    "RW-SCENARIO-007",
+    "RW-SCENARIO-008",
+    "RW-SCENARIO-009",
+    "RW-SCENARIO-010"
+  ],
+  "expectedPairs": [
+    {
+      "scenarioId": "RW-SCENARIO-001",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/api/UsersApi.java",
+        "signature": "io.spring.api.UsersApi#createUser(io.spring.application.user.RegisterParam)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-001",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/application/user/UserService.java",
+        "signature": "io.spring.application.user.UserService#createUser(io.spring.application.user.RegisterParam)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-001",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/core/user/UserRepository.java",
+        "signature": "io.spring.core.user.UserRepository#save(io.spring.core.user.User)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-001",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/application/UserQueryService.java",
+        "signature": "io.spring.application.UserQueryService#findById(java.lang.String)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-001",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/UserReadService.java",
+        "signature": "io.spring.infrastructure.mybatis.readservice.UserReadService#findById(java.lang.String)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-001",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/core/service/JwtService.java",
+        "signature": "io.spring.core.service.JwtService#toToken(io.spring.core.user.User)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-002",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/api/UsersApi.java",
+        "signature": "io.spring.api.UsersApi#userLogin(io.spring.api.LoginParam)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-002",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/core/user/UserRepository.java",
+        "signature": "io.spring.core.user.UserRepository#findByEmail(java.lang.String)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-002",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/application/UserQueryService.java",
+        "signature": "io.spring.application.UserQueryService#findById(java.lang.String)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-002",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/UserReadService.java",
+        "signature": "io.spring.infrastructure.mybatis.readservice.UserReadService#findById(java.lang.String)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-002",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/core/service/JwtService.java",
+        "signature": "io.spring.core.service.JwtService#toToken(io.spring.core.user.User)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-003",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/api/ArticlesApi.java",
+        "signature": "io.spring.api.ArticlesApi#createArticle(io.spring.application.article.NewArticleParam,io.spring.core.user.User)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-003",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/application/article/ArticleCommandService.java",
+        "signature": "io.spring.application.article.ArticleCommandService#createArticle(io.spring.application.article.NewArticleParam,io.spring.core.user.User)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-003",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/core/article/ArticleRepository.java",
+        "signature": "io.spring.core.article.ArticleRepository#save(io.spring.core.article.Article)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-003",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/application/ArticleQueryService.java",
+        "signature": "io.spring.application.ArticleQueryService#findById(java.lang.String,io.spring.core.user.User)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-003",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+        "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#findById(java.lang.String)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-004",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/api/ArticleApi.java",
+        "signature": "io.spring.api.ArticleApi#updateArticle(java.lang.String,io.spring.core.user.User,io.spring.application.article.UpdateArticleParam)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-004",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/core/article/ArticleRepository.java",
+        "signature": "io.spring.core.article.ArticleRepository#findBySlug(java.lang.String)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-004",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/core/service/AuthorizationService.java",
+        "signature": "io.spring.core.service.AuthorizationService#canWriteArticle(io.spring.core.user.User,io.spring.core.article.Article)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-004",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/application/article/ArticleCommandService.java",
+        "signature": "io.spring.application.article.ArticleCommandService#updateArticle(io.spring.core.article.Article,io.spring.application.article.UpdateArticleParam)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-004",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/core/article/Article.java",
+        "signature": "io.spring.core.article.Article#update(java.lang.String,java.lang.String,java.lang.String)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-004",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/core/article/ArticleRepository.java",
+        "signature": "io.spring.core.article.ArticleRepository#save(io.spring.core.article.Article)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-004",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/application/ArticleQueryService.java",
+        "signature": "io.spring.application.ArticleQueryService#findBySlug(java.lang.String,io.spring.core.user.User)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-004",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+        "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#findBySlug(java.lang.String)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-005",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/application/user/DuplicatedEmailValidator.java",
+        "signature": "io.spring.application.user.DuplicatedEmailValidator#isValid(java.lang.String,javax.validation.ConstraintValidatorContext)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-005",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/core/user/UserRepository.java",
+        "signature": "io.spring.core.user.UserRepository#findByEmail(java.lang.String)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-005",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/api/exception/CustomizeExceptionHandler.java",
+        "signature": "io.spring.api.exception.CustomizeExceptionHandler#handleMethodArgumentNotValid(org.springframework.web.bind.MethodArgumentNotValidException,org.springframework.http.HttpHeaders,org.springframework.http.HttpStatus,org.springframework.web.context.request.WebRequest)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-006",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/api/UsersApi.java",
+        "signature": "io.spring.api.UsersApi#userLogin(io.spring.api.LoginParam)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-006",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/core/user/UserRepository.java",
+        "signature": "io.spring.core.user.UserRepository#findByEmail(java.lang.String)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-006",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/api/exception/CustomizeExceptionHandler.java",
+        "signature": "io.spring.api.exception.CustomizeExceptionHandler#handleInvalidAuthentication(io.spring.api.exception.InvalidAuthenticationException,org.springframework.web.context.request.WebRequest)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-007",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/api/ArticleApi.java",
+        "signature": "io.spring.api.ArticleApi#updateArticle(java.lang.String,io.spring.core.user.User,io.spring.application.article.UpdateArticleParam)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-007",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/core/article/ArticleRepository.java",
+        "signature": "io.spring.core.article.ArticleRepository#findBySlug(java.lang.String)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-007",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/core/service/AuthorizationService.java",
+        "signature": "io.spring.core.service.AuthorizationService#canWriteArticle(io.spring.core.user.User,io.spring.core.article.Article)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-008",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/api/exception/CustomizeExceptionHandler.java",
+        "signature": "io.spring.api.exception.CustomizeExceptionHandler#handleMethodArgumentNotValid(org.springframework.web.bind.MethodArgumentNotValidException,org.springframework.http.HttpHeaders,org.springframework.http.HttpStatus,org.springframework.web.context.request.WebRequest)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-009",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/api/ArticlesApi.java",
+        "signature": "io.spring.api.ArticlesApi#getArticles(int,int,java.lang.String,java.lang.String,java.lang.String,io.spring.core.user.User)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-009",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/application/ArticleQueryService.java",
+        "signature": "io.spring.application.ArticleQueryService#findRecentArticles(java.lang.String,java.lang.String,java.lang.String,io.spring.application.Page,io.spring.core.user.User)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-009",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+        "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#queryArticles(java.lang.String,java.lang.String,java.lang.String,io.spring.application.Page)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-009",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+        "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#countArticle(java.lang.String,java.lang.String,java.lang.String)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-009",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+        "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#findArticles(java.util.List)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-010",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/api/ArticlesApi.java",
+        "signature": "io.spring.api.ArticlesApi#getFeed(int,int,io.spring.core.user.User)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-010",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/application/ArticleQueryService.java",
+        "signature": "io.spring.application.ArticleQueryService#findUserFeed(io.spring.core.user.User,io.spring.application.Page)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-010",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/UserRelationshipQueryService.java",
+        "signature": "io.spring.infrastructure.mybatis.readservice.UserRelationshipQueryService#followedUsers(java.lang.String)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-010",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+        "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#findArticlesOfAuthors(java.util.List,io.spring.application.Page)"
+      }
+    },
+    {
+      "scenarioId": "RW-SCENARIO-010",
+      "method": {
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+        "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+        "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#countFeedSize(java.util.List)"
+      }
+    }
+  ],
+  "chains": [
+    {
+      "scenarioId": "RW-SCENARIO-001",
+      "methods": [
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/api/UsersApi.java",
+          "signature": "io.spring.api.UsersApi#createUser(io.spring.application.user.RegisterParam)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/application/user/UserService.java",
+          "signature": "io.spring.application.user.UserService#createUser(io.spring.application.user.RegisterParam)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/core/user/UserRepository.java",
+          "signature": "io.spring.core.user.UserRepository#save(io.spring.core.user.User)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/application/UserQueryService.java",
+          "signature": "io.spring.application.UserQueryService#findById(java.lang.String)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/UserReadService.java",
+          "signature": "io.spring.infrastructure.mybatis.readservice.UserReadService#findById(java.lang.String)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/core/service/JwtService.java",
+          "signature": "io.spring.core.service.JwtService#toToken(io.spring.core.user.User)"
+        }
+      ],
+      "edges": [
+        {
+          "scenarioId": "RW-SCENARIO-001",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/UsersApi.java",
+            "signature": "io.spring.api.UsersApi#createUser(io.spring.application.user.RegisterParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/user/UserService.java",
+            "signature": "io.spring.application.user.UserService#createUser(io.spring.application.user.RegisterParam)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-001",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/user/UserService.java",
+            "signature": "io.spring.application.user.UserService#createUser(io.spring.application.user.RegisterParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/core/user/UserRepository.java",
+            "signature": "io.spring.core.user.UserRepository#save(io.spring.core.user.User)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-001",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/UsersApi.java",
+            "signature": "io.spring.api.UsersApi#createUser(io.spring.application.user.RegisterParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/UserQueryService.java",
+            "signature": "io.spring.application.UserQueryService#findById(java.lang.String)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-001",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/UserQueryService.java",
+            "signature": "io.spring.application.UserQueryService#findById(java.lang.String)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/UserReadService.java",
+            "signature": "io.spring.infrastructure.mybatis.readservice.UserReadService#findById(java.lang.String)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-001",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/UsersApi.java",
+            "signature": "io.spring.api.UsersApi#createUser(io.spring.application.user.RegisterParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/core/service/JwtService.java",
+            "signature": "io.spring.core.service.JwtService#toToken(io.spring.core.user.User)"
+          }
+        }
+      ]
+    },
+    {
+      "scenarioId": "RW-SCENARIO-002",
+      "methods": [
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/api/UsersApi.java",
+          "signature": "io.spring.api.UsersApi#userLogin(io.spring.api.LoginParam)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/core/user/UserRepository.java",
+          "signature": "io.spring.core.user.UserRepository#findByEmail(java.lang.String)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/application/UserQueryService.java",
+          "signature": "io.spring.application.UserQueryService#findById(java.lang.String)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/UserReadService.java",
+          "signature": "io.spring.infrastructure.mybatis.readservice.UserReadService#findById(java.lang.String)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/core/service/JwtService.java",
+          "signature": "io.spring.core.service.JwtService#toToken(io.spring.core.user.User)"
+        }
+      ],
+      "edges": [
+        {
+          "scenarioId": "RW-SCENARIO-002",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/UsersApi.java",
+            "signature": "io.spring.api.UsersApi#userLogin(io.spring.api.LoginParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/core/user/UserRepository.java",
+            "signature": "io.spring.core.user.UserRepository#findByEmail(java.lang.String)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-002",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/UsersApi.java",
+            "signature": "io.spring.api.UsersApi#userLogin(io.spring.api.LoginParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/UserQueryService.java",
+            "signature": "io.spring.application.UserQueryService#findById(java.lang.String)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-002",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/UserQueryService.java",
+            "signature": "io.spring.application.UserQueryService#findById(java.lang.String)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/UserReadService.java",
+            "signature": "io.spring.infrastructure.mybatis.readservice.UserReadService#findById(java.lang.String)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-002",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/UsersApi.java",
+            "signature": "io.spring.api.UsersApi#userLogin(io.spring.api.LoginParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/core/service/JwtService.java",
+            "signature": "io.spring.core.service.JwtService#toToken(io.spring.core.user.User)"
+          }
+        }
+      ]
+    },
+    {
+      "scenarioId": "RW-SCENARIO-003",
+      "methods": [
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/api/ArticlesApi.java",
+          "signature": "io.spring.api.ArticlesApi#createArticle(io.spring.application.article.NewArticleParam,io.spring.core.user.User)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/application/article/ArticleCommandService.java",
+          "signature": "io.spring.application.article.ArticleCommandService#createArticle(io.spring.application.article.NewArticleParam,io.spring.core.user.User)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/core/article/ArticleRepository.java",
+          "signature": "io.spring.core.article.ArticleRepository#save(io.spring.core.article.Article)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/application/ArticleQueryService.java",
+          "signature": "io.spring.application.ArticleQueryService#findById(java.lang.String,io.spring.core.user.User)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+          "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#findById(java.lang.String)"
+        }
+      ],
+      "edges": [
+        {
+          "scenarioId": "RW-SCENARIO-003",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/ArticlesApi.java",
+            "signature": "io.spring.api.ArticlesApi#createArticle(io.spring.application.article.NewArticleParam,io.spring.core.user.User)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/article/ArticleCommandService.java",
+            "signature": "io.spring.application.article.ArticleCommandService#createArticle(io.spring.application.article.NewArticleParam,io.spring.core.user.User)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-003",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/article/ArticleCommandService.java",
+            "signature": "io.spring.application.article.ArticleCommandService#createArticle(io.spring.application.article.NewArticleParam,io.spring.core.user.User)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/core/article/ArticleRepository.java",
+            "signature": "io.spring.core.article.ArticleRepository#save(io.spring.core.article.Article)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-003",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/ArticlesApi.java",
+            "signature": "io.spring.api.ArticlesApi#createArticle(io.spring.application.article.NewArticleParam,io.spring.core.user.User)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/ArticleQueryService.java",
+            "signature": "io.spring.application.ArticleQueryService#findById(java.lang.String,io.spring.core.user.User)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-003",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/ArticleQueryService.java",
+            "signature": "io.spring.application.ArticleQueryService#findById(java.lang.String,io.spring.core.user.User)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+            "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#findById(java.lang.String)"
+          }
+        }
+      ]
+    },
+    {
+      "scenarioId": "RW-SCENARIO-004",
+      "methods": [
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/api/ArticleApi.java",
+          "signature": "io.spring.api.ArticleApi#updateArticle(java.lang.String,io.spring.core.user.User,io.spring.application.article.UpdateArticleParam)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/core/article/ArticleRepository.java",
+          "signature": "io.spring.core.article.ArticleRepository#findBySlug(java.lang.String)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/core/service/AuthorizationService.java",
+          "signature": "io.spring.core.service.AuthorizationService#canWriteArticle(io.spring.core.user.User,io.spring.core.article.Article)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/application/article/ArticleCommandService.java",
+          "signature": "io.spring.application.article.ArticleCommandService#updateArticle(io.spring.core.article.Article,io.spring.application.article.UpdateArticleParam)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/core/article/Article.java",
+          "signature": "io.spring.core.article.Article#update(java.lang.String,java.lang.String,java.lang.String)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/core/article/ArticleRepository.java",
+          "signature": "io.spring.core.article.ArticleRepository#save(io.spring.core.article.Article)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/application/ArticleQueryService.java",
+          "signature": "io.spring.application.ArticleQueryService#findBySlug(java.lang.String,io.spring.core.user.User)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+          "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#findBySlug(java.lang.String)"
+        }
+      ],
+      "edges": [
+        {
+          "scenarioId": "RW-SCENARIO-004",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/ArticleApi.java",
+            "signature": "io.spring.api.ArticleApi#updateArticle(java.lang.String,io.spring.core.user.User,io.spring.application.article.UpdateArticleParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/core/article/ArticleRepository.java",
+            "signature": "io.spring.core.article.ArticleRepository#findBySlug(java.lang.String)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-004",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/ArticleApi.java",
+            "signature": "io.spring.api.ArticleApi#updateArticle(java.lang.String,io.spring.core.user.User,io.spring.application.article.UpdateArticleParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/core/service/AuthorizationService.java",
+            "signature": "io.spring.core.service.AuthorizationService#canWriteArticle(io.spring.core.user.User,io.spring.core.article.Article)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-004",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/ArticleApi.java",
+            "signature": "io.spring.api.ArticleApi#updateArticle(java.lang.String,io.spring.core.user.User,io.spring.application.article.UpdateArticleParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/article/ArticleCommandService.java",
+            "signature": "io.spring.application.article.ArticleCommandService#updateArticle(io.spring.core.article.Article,io.spring.application.article.UpdateArticleParam)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-004",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/article/ArticleCommandService.java",
+            "signature": "io.spring.application.article.ArticleCommandService#updateArticle(io.spring.core.article.Article,io.spring.application.article.UpdateArticleParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/core/article/Article.java",
+            "signature": "io.spring.core.article.Article#update(java.lang.String,java.lang.String,java.lang.String)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-004",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/article/ArticleCommandService.java",
+            "signature": "io.spring.application.article.ArticleCommandService#updateArticle(io.spring.core.article.Article,io.spring.application.article.UpdateArticleParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/core/article/ArticleRepository.java",
+            "signature": "io.spring.core.article.ArticleRepository#save(io.spring.core.article.Article)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-004",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/ArticleApi.java",
+            "signature": "io.spring.api.ArticleApi#updateArticle(java.lang.String,io.spring.core.user.User,io.spring.application.article.UpdateArticleParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/ArticleQueryService.java",
+            "signature": "io.spring.application.ArticleQueryService#findBySlug(java.lang.String,io.spring.core.user.User)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-004",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/ArticleQueryService.java",
+            "signature": "io.spring.application.ArticleQueryService#findBySlug(java.lang.String,io.spring.core.user.User)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+            "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#findBySlug(java.lang.String)"
+          }
+        }
+      ]
+    },
+    {
+      "scenarioId": "RW-SCENARIO-005",
+      "methods": [
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/application/user/DuplicatedEmailValidator.java",
+          "signature": "io.spring.application.user.DuplicatedEmailValidator#isValid(java.lang.String,javax.validation.ConstraintValidatorContext)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/core/user/UserRepository.java",
+          "signature": "io.spring.core.user.UserRepository#findByEmail(java.lang.String)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/api/exception/CustomizeExceptionHandler.java",
+          "signature": "io.spring.api.exception.CustomizeExceptionHandler#handleMethodArgumentNotValid(org.springframework.web.bind.MethodArgumentNotValidException,org.springframework.http.HttpHeaders,org.springframework.http.HttpStatus,org.springframework.web.context.request.WebRequest)"
+        }
+      ],
+      "edges": [
+        {
+          "scenarioId": "RW-SCENARIO-005",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/user/DuplicatedEmailValidator.java",
+            "signature": "io.spring.application.user.DuplicatedEmailValidator#isValid(java.lang.String,javax.validation.ConstraintValidatorContext)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/core/user/UserRepository.java",
+            "signature": "io.spring.core.user.UserRepository#findByEmail(java.lang.String)"
+          }
+        }
+      ]
+    },
+    {
+      "scenarioId": "RW-SCENARIO-006",
+      "methods": [
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/api/UsersApi.java",
+          "signature": "io.spring.api.UsersApi#userLogin(io.spring.api.LoginParam)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/core/user/UserRepository.java",
+          "signature": "io.spring.core.user.UserRepository#findByEmail(java.lang.String)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/api/exception/CustomizeExceptionHandler.java",
+          "signature": "io.spring.api.exception.CustomizeExceptionHandler#handleInvalidAuthentication(io.spring.api.exception.InvalidAuthenticationException,org.springframework.web.context.request.WebRequest)"
+        }
+      ],
+      "edges": [
+        {
+          "scenarioId": "RW-SCENARIO-006",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/UsersApi.java",
+            "signature": "io.spring.api.UsersApi#userLogin(io.spring.api.LoginParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/core/user/UserRepository.java",
+            "signature": "io.spring.core.user.UserRepository#findByEmail(java.lang.String)"
+          }
+        }
+      ]
+    },
+    {
+      "scenarioId": "RW-SCENARIO-007",
+      "methods": [
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/api/ArticleApi.java",
+          "signature": "io.spring.api.ArticleApi#updateArticle(java.lang.String,io.spring.core.user.User,io.spring.application.article.UpdateArticleParam)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/core/article/ArticleRepository.java",
+          "signature": "io.spring.core.article.ArticleRepository#findBySlug(java.lang.String)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/core/service/AuthorizationService.java",
+          "signature": "io.spring.core.service.AuthorizationService#canWriteArticle(io.spring.core.user.User,io.spring.core.article.Article)"
+        }
+      ],
+      "edges": [
+        {
+          "scenarioId": "RW-SCENARIO-007",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/ArticleApi.java",
+            "signature": "io.spring.api.ArticleApi#updateArticle(java.lang.String,io.spring.core.user.User,io.spring.application.article.UpdateArticleParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/core/article/ArticleRepository.java",
+            "signature": "io.spring.core.article.ArticleRepository#findBySlug(java.lang.String)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-007",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/ArticleApi.java",
+            "signature": "io.spring.api.ArticleApi#updateArticle(java.lang.String,io.spring.core.user.User,io.spring.application.article.UpdateArticleParam)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/core/service/AuthorizationService.java",
+            "signature": "io.spring.core.service.AuthorizationService#canWriteArticle(io.spring.core.user.User,io.spring.core.article.Article)"
+          }
+        }
+      ]
+    },
+    {
+      "scenarioId": "RW-SCENARIO-009",
+      "methods": [
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/api/ArticlesApi.java",
+          "signature": "io.spring.api.ArticlesApi#getArticles(int,int,java.lang.String,java.lang.String,java.lang.String,io.spring.core.user.User)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/application/ArticleQueryService.java",
+          "signature": "io.spring.application.ArticleQueryService#findRecentArticles(java.lang.String,java.lang.String,java.lang.String,io.spring.application.Page,io.spring.core.user.User)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+          "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#queryArticles(java.lang.String,java.lang.String,java.lang.String,io.spring.application.Page)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+          "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#countArticle(java.lang.String,java.lang.String,java.lang.String)"
+        },
+        {
+          "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+          "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#findArticles(java.util.List)"
+        }
+      ],
+      "edges": [
+        {
+          "scenarioId": "RW-SCENARIO-009",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/api/ArticlesApi.java",
+            "signature": "io.spring.api.ArticlesApi#getArticles(int,int,java.lang.String,java.lang.String,java.lang.String,io.spring.core.user.User)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/ArticleQueryService.java",
+            "signature": "io.spring.application.ArticleQueryService#findRecentArticles(java.lang.String,java.lang.String,java.lang.String,io.spring.application.Page,io.spring.core.user.User)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-009",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/ArticleQueryService.java",
+            "signature": "io.spring.application.ArticleQueryService#findRecentArticles(java.lang.String,java.lang.String,java.lang.String,io.spring.application.Page,io.spring.core.user.User)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+            "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#queryArticles(java.lang.String,java.lang.String,java.lang.String,io.spring.application.Page)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-009",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/ArticleQueryService.java",
+            "signature": "io.spring.application.ArticleQueryService#findRecentArticles(java.lang.String,java.lang.String,java.lang.String,io.spring.application.Page,io.spring.core.user.User)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+            "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#countArticle(java.lang.String,java.lang.String,java.lang.String)"
+          }
+        },
+        {
+          "scenarioId": "RW-SCENARIO-009",
+          "from": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/application/ArticleQueryService.java",
+            "signature": "io.spring.application.ArticleQueryService#findRecentArticles(java.lang.String,java.lang.String,java.lang.String,io.spring.application.Page,io.spring.core.user.User)"
+          },
+          "to": {
+            "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+            "path": "src/main/java/io/spring/infrastructure/mybatis/readservice/ArticleReadService.java",
+            "signature": "io.spring.infrastructure.mybatis.readservice.ArticleReadService#findArticles(java.util.List)"
+          }
+        }
+      ]
+    }
+  ]
+}
