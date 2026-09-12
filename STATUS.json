@@ -8,35 +8,37 @@
   "decision": "NOT_RUN",
   "active_backlog_item": "SF-BL-005",
   "active_implementation_plan": "IMPLEMENTATION-PLAN.md#current-selection",
-  "selected_backlog_items": [
-    "SF-BL-005"
-  ],
+  "selected_backlog_items": ["SF-BL-005"],
   "active_execution": {
-    "execution_id": "SF-BL-005-CROSSREPO-UNSUPPORTED-ACTION-002",
-    "base_commit": "e461e06018fd983c7392eb5c48ee26d7008ba5ca",
-    "selected_backlog_items": [
-      "SF-BL-005"
-    ],
+    "execution_id": "SF-BL-005-CROSSREPO-REALWORLD-002",
+    "base_commit": "6a19bc04488c5d936baa1b9434402cd58af82404",
+    "selected_backlog_items": ["SF-BL-005"],
     "execution_state": "READY_FOR_COORDINATOR",
     "integration_candidate": null
   },
-  "next_action": "Delivery Coordinator executes the selected mapper-only remediation, independent review and combined verification; return one evidence package without editing active controls or rerunning RealWorld.",
+  "next_action": "Delivery Coordinator executes the materialized RealWorld revised-calibration envelope: generation, independent proof, frozen scoring, independent receipt and evidence return without editing controls.",
   "blocking_dependency": null,
+  "latest_completed_execution": {
+    "execution_id": "SF-BL-005-CROSSREPO-UNSUPPORTED-ACTION-002",
+    "integrated_candidate": "ec604f1fb6d1f774f4268f70af63e0850357ff74",
+    "durable_replay_commit": "6a19bc04488c5d936baa1b9434402cd58af82404",
+    "review": "HERM-483 PASS",
+    "verification": "MAVEN_1397_0_PYTEST_63_0",
+    "state": "EXECUTION_COMPLETE"
+  },
   "metric_goal": {
-    "status": "VERIFIED",
-    "scope": "PETCLINIC_CALIBRATION_ONLY_NOT_CROSS_REPOSITORY_VALIDATION",
+    "status": "SELECTED_FOR_REVISED_CROSS_REPOSITORY_CALIBRATION",
+    "scope": "REALWORLD_REVISED_AFTER_FIRST_RUN_FAILURE_NOT_FORMAL_HOLDOUT",
     "recall_strictly_greater_than": 0.60,
-    "precision_strictly_greater_than": 0.80,
-    "actual_recall": 0.70,
-    "actual_precision": 0.8484848484848485,
-    "gold_pair_count": 40,
-    "dataset_kind": "CALIBRATION",
-    "evidence": "validation/software-factory/sf-bl005/method-quality-007/receipt-review.md"
+    "precision_strictly_greater_than": 0.80
   },
   "latest_calibration": {
     "execution_id": "SF-BL-005-METHOD-QUALITY-007",
     "assessment": "INCONCLUSIVE",
     "engineering_recommendation": "REVISE",
+    "actual_recall": 0.70,
+    "actual_precision": 0.8484848484848485,
+    "scope": "PETCLINIC_CALIBRATION_ONLY_NOT_CROSS_REPOSITORY_VALIDATION",
     "evidence": "validation/software-factory/sf-bl005/method-quality-007/RESULTS.md"
   },
   "latest_cross_repository_attempt": {
