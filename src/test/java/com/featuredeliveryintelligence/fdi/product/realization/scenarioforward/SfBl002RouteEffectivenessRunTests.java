@@ -1,5 +1,8 @@
 package com.featuredeliveryintelligence.fdi.product.realization.scenarioforward;
 
+import com.featuredeliveryintelligence.fdi.product.realization.route.HttpBehaviorExtractionResult;
+import com.featuredeliveryintelligence.fdi.product.realization.route.ScenarioComponentProposal;
+import com.featuredeliveryintelligence.fdi.product.realization.route.SpringRouteHandlerIndex;
 import com.featuredeliveryintelligence.fdi.shared.RuntimeContractException;
 import com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioForwardRequestReader;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -1228,6 +1231,136 @@ class SfBl002RouteEffectivenessRunTests {
         return SfBl002RouteEffectivenessRun.generate(root, checkout, output,
                 sealedMap(root), gitRevision(checkout));
     }
+
+    // ---- SF-BL-005-CROSSREPO-GATE-CONTAINMENT-003: gate-site containment ----
+
+    @Test void unsupportedActionTermPassesThroughEvidenceStrengthGateUnchanged() throws Exception {
+        RouteAwareScenarioMapper.ScenarioIntent authenticate = new RouteAwareScenarioMapper.ScenarioIntent(
+                "S-AUTH", "CAP-1", "AUTHENTICATE", "user", List.of(), List.of("login"));
+        RouteAwareScenarioMapper.ScenarioIntent create = new RouteAwareScenarioMapper.ScenarioIntent(
+                "S-CREATE", "CAP-1", "CREATE", "owner", List.of(), List.of());
+        List<RouteAwareScenarioMapper.ScenarioIntent> intents = List.of(authenticate, create);
+        GateFixture fixture = gateFixture();
+        RouteAwareScenarioMapper.MappingResult mapping = RouteAwareScenarioMapper.map(
+                new RouteAwareScenarioMapper.MappingInput(fixture.revision(), intents,
+                        fixture.observations(), fixture.routeIndex(), List.of(), List.of(), List.of()));
+
+        RouteAwareScenarioMapper.MappingResult gated = SfBl002RouteEffectivenessRun.applyEvidenceStrengthGate(
+                mapping, JSON.createObjectNode(), intents, fixture.observations(), fixture.routeIndex());
+
+        assertEquals(2, gated.proposals().size());
+        ScenarioComponentProposal authenticateOut = gated.proposals().get(0);
+        assertEquals("S-AUTH", authenticateOut.scenarioId());
+        assertEquals(ScenarioComponentProposal.Outcome.UNRESOLVED, authenticateOut.outcome());
+        assertTrue(authenticateOut.components().isEmpty(), "unsupported scenario must keep zero components");
+        assertEquals(List.of("unsupported-action-term:AUTHENTICATE"), authenticateOut.gaps());
+        assertEquals(mapping.proposals().get(0), authenticateOut, "unsupported proposal passes through unchanged");
+        assertEquals(mapping.diagnostics(), gated.diagnostics(), "mapper diagnostics pass through unchanged");
+        ScenarioComponentProposal createOut = gated.proposals().get(1);
+        assertEquals("S-CREATE", createOut.scenarioId());
+        assertEquals(ScenarioComponentProposal.Outcome.UNRESOLVED, createOut.outcome());
+        assertFalse(createOut.gaps().contains("unsupported-action-term:CREATE"),
+                "supported scenario must never receive an unsupported-action gap");
+    }
+
+    @Test void unsupportedScenarioNeitherLendsNorBorrowsEvidence() throws Exception {
+        RouteAwareScenarioMapper.ScenarioIntent authenticate = new RouteAwareScenarioMapper.ScenarioIntent(
+                "S-AUTH", "CAP-1", "AUTHENTICATE", "user", List.of(), List.of("login"));
+        RouteAwareScenarioMapper.ScenarioIntent create = new RouteAwareScenarioMapper.ScenarioIntent(
+                "S-CREATE", "CAP-1", "CREATE", "owner", List.of(), List.of());
+        GateFixture fixture = gateFixture();
+
+        RouteAwareScenarioMapper.MappingResult mixed = SfBl002RouteEffectivenessRun.applyEvidenceStrengthGate(
+                RouteAwareScenarioMapper.map(new RouteAwareScenarioMapper.MappingInput(fixture.revision(),
+                        List.of(authenticate, create), fixture.observations(), fixture.routeIndex(),
+                        List.of(), List.of(), List.of())),
+                JSON.createObjectNode(), List.of(authenticate, create),
+                fixture.observations(), fixture.routeIndex());
+        RouteAwareScenarioMapper.MappingResult createOnly = SfBl002RouteEffectivenessRun.applyEvidenceStrengthGate(
+                RouteAwareScenarioMapper.map(new RouteAwareScenarioMapper.MappingInput(fixture.revision(),
+                        List.of(create), fixture.observations(), fixture.routeIndex(),
+                        List.of(), List.of(), List.of())),
+                JSON.createObjectNode(), List.of(create),
+                fixture.observations(), fixture.routeIndex());
+
+        assertEquals(1, createOnly.proposals().size());
+        assertEquals(createOnly.proposals().get(0), mixed.proposals().get(1),
+                "CREATE result must be identical whether or not the unsupported scenario is present");
+        assertEquals("S-AUTH", mixed.proposals().get(0).scenarioId());
+        assertEquals("S-CREATE", mixed.proposals().get(1).scenarioId());
+    }
+
+    @Test void componentBearingUnsupportedProposalFailsClosed() throws Exception {
+        RouteAwareScenarioMapper.ScenarioIntent authenticate = new RouteAwareScenarioMapper.ScenarioIntent(
+                "S-AUTH", "CAP-1", "AUTHENTICATE", "user", List.of(), List.of("login"));
+        ScenarioComponentProposal.Component component = new ScenarioComponentProposal.Component(
+                RouteAwareScenarioMapper.ROLE_DIRECT_REFERENCE,
+                ScenarioComponentProposal.EvidenceStrength.DIRECT_PRODUCTION_REFERENCE,
+                "com.example.App#save", List.of("T#a"), null);
+        ScenarioComponentProposal componentBearing = new ScenarioComponentProposal("S-AUTH",
+                ScenarioComponentProposal.Outcome.MAPPING_PROPOSAL, List.of(component), List.of());
+        RouteAwareScenarioMapper.MappingResult mapping = new RouteAwareScenarioMapper.MappingResult(
+                RouteAwareScenarioMapper.AUTHORITY, false, List.of(componentBearing),
+                List.of("unsupported-action:S-AUTH:AUTHENTICATE"));
+        GateFixture fixture = gateFixture();
+
+        RuntimeContractException error = assertThrows(RuntimeContractException.class, () ->
+                SfBl002RouteEffectivenessRun.applyEvidenceStrengthGate(mapping, JSON.createObjectNode(),
+                        List.of(authenticate), fixture.observations(), fixture.routeIndex()));
+        assertTrue(error.getMessage().contains("unaccepted scenario"),
+                "component-bearing proposal without signals must stay fail-closed: " + error.getMessage());
+    }
+
+    @Test void relabeledUnsupportedProposalFailsClosed() throws Exception {
+        RouteAwareScenarioMapper.ScenarioIntent authenticate = new RouteAwareScenarioMapper.ScenarioIntent(
+                "S-AUTH", "CAP-1", "AUTHENTICATE", "user", List.of(), List.of("login"));
+        ScenarioComponentProposal relabeled = new ScenarioComponentProposal("S-AUTH",
+                ScenarioComponentProposal.Outcome.UNRESOLVED, List.of(),
+                List.of("no-qualified-component:S-AUTH"));
+        RouteAwareScenarioMapper.MappingResult mapping = new RouteAwareScenarioMapper.MappingResult(
+                RouteAwareScenarioMapper.AUTHORITY, false, List.of(relabeled), List.of());
+        GateFixture fixture = gateFixture();
+
+        RuntimeContractException error = assertThrows(RuntimeContractException.class, () ->
+                SfBl002RouteEffectivenessRun.applyEvidenceStrengthGate(mapping, JSON.createObjectNode(),
+                        List.of(authenticate), fixture.observations(), fixture.routeIndex()));
+        assertTrue(error.getMessage().contains("unaccepted scenario"),
+                "relabeled unsupported proposal must stay fail-closed: " + error.getMessage());
+    }
+
+    @Test void proposalWithoutAcceptedIntentFailsClosed() throws Exception {
+        RouteAwareScenarioMapper.ScenarioIntent create = new RouteAwareScenarioMapper.ScenarioIntent(
+                "S-CREATE", "CAP-1", "CREATE", "owner", List.of(), List.of());
+        ScenarioComponentProposal foreign = new ScenarioComponentProposal("S-UNKNOWN",
+                ScenarioComponentProposal.Outcome.UNRESOLVED, List.of(),
+                List.of("unsupported-action-term:AUTHENTICATE"));
+        RouteAwareScenarioMapper.MappingResult mapping = new RouteAwareScenarioMapper.MappingResult(
+                RouteAwareScenarioMapper.AUTHORITY, false, List.of(foreign), List.of());
+        GateFixture fixture = gateFixture();
+
+        RuntimeContractException error = assertThrows(RuntimeContractException.class, () ->
+                SfBl002RouteEffectivenessRun.applyEvidenceStrengthGate(mapping, JSON.createObjectNode(),
+                        List.of(create), fixture.observations(), fixture.routeIndex()));
+        assertTrue(error.getMessage().contains("unaccepted scenario"),
+                "missing signal without a matching unsupported intent must stay fail-closed: " + error.getMessage());
+    }
+
+    private GateFixture gateFixture() throws Exception {
+        Path checkout = temp.resolve("gate-checkout");
+        write(checkout.resolve("README.md"), "synthetic gate fixture\n");
+        runGit(checkout, "init", "-q");
+        runGit(checkout, "add", "-A");
+        runGit(checkout, "-c", "user.name=FDI Test", "-c", "user.email=fdi@example.invalid",
+                "commit", "-q", "-m", "synthetic gate fixture");
+        String revision = gitRevision(checkout);
+        SpringRouteHandlerIndex routeIndex = SpringRouteHandlerIndex.build(checkout, List.of());
+        HttpBehaviorExtractionResult observations =
+                new HttpBehaviorExtractionResult(revision, List.of(), List.of());
+        return new GateFixture(revision, routeIndex, observations);
+    }
+
+    private record GateFixture(String revision, SpringRouteHandlerIndex routeIndex,
+            HttpBehaviorExtractionResult observations) { }
 
     private static Map<String, String> sealedMap(Path root) throws Exception {
         Map<String, String> sealed = new LinkedHashMap<>();

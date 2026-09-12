@@ -561,6 +561,15 @@ public final class SfBl002RouteEffectivenessRun {
      * the deterministic {@code evidence-strength-gate:operated-subject-mismatch:<identity>}
      * or {@code evidence-strength-gate:action-http-method-conflict:<identity>} gap
      * and never proposed; a scenario left without components emits {@code UNRESOLVED}.
+     *
+     * <p>An intent whose action term classifies to no {@code ActionFamily} (for
+     * example {@code AUTHENTICATE}) receives no {@code ScenarioSignals} and no
+     * {@code RevalidationIntent}: it can neither lend nor borrow evidence, and the
+     * exact mapper-produced {@code UNRESOLVED} proposal (zero components, the
+     * deterministic {@code unsupported-action-term:<action>} gap) passes through
+     * the gate unchanged and in order. A proposal without signals that is not that
+     * exact unsupported proposal — component-bearing, relabeled, or unknown —
+     * remains fail-closed.
      */
     static RouteAwareScenarioMapper.MappingResult applyEvidenceStrengthGate(
             RouteAwareScenarioMapper.MappingResult mapping, JsonNode evidence,
@@ -571,9 +580,20 @@ public final class SfBl002RouteEffectivenessRun {
         Map<String, BehaviorEvidencePolicy.ScenarioSignals> signalsByScenario = new LinkedHashMap<>();
         List<RevalidationIntent> allRevalidationIntents = new ArrayList<>();
         Map<String, RevalidationIntent> revalidationByScenario = new LinkedHashMap<>();
+        Map<String, RouteAwareScenarioMapper.ScenarioIntent> intentsByScenario = new LinkedHashMap<>();
         for (RouteAwareScenarioMapper.ScenarioIntent intent : intents) {
-            BehaviorEvidencePolicy.ActionFamily family = BehaviorEvidencePolicy.classifyAction(intent.action())
-                    .orElseThrow(() -> fail("unsupported scenario action term: " + intent.action()));
+            intentsByScenario.put(intent.scenarioId(), intent);
+            BehaviorEvidencePolicy.ActionFamily family =
+                    BehaviorEvidencePolicy.classifyAction(intent.action()).orElse(null);
+            if (family == null) {
+                // Unsupported action term (for example AUTHENTICATE): the mapper
+                // already emitted one honest UNRESOLVED proposal for this intent.
+                // The gate creates no ScenarioSignals and no RevalidationIntent, so
+                // the scenario can neither lend nor borrow evidence; the proposal
+                // loop below passes the exact mapper-produced proposal through
+                // unchanged. Unsupported terms are never classified here.
+                continue;
+            }
             BehaviorEvidencePolicy.ScenarioSignals signals = new BehaviorEvidencePolicy.ScenarioSignals(
                     intent.scenarioId(), family, intent.entity(), intent.conditions(), intent.aliases());
             signalsByScenario.put(intent.scenarioId(), signals);
@@ -591,7 +611,18 @@ public final class SfBl002RouteEffectivenessRun {
         List<ScenarioComponentProposal> gated = new ArrayList<>();
         for (ScenarioComponentProposal proposal : mapping.proposals()) {
             BehaviorEvidencePolicy.ScenarioSignals signals = signalsByScenario.get(proposal.scenarioId());
-            if (signals == null) throw fail("gate encountered unaccepted scenario: " + proposal.scenarioId());
+            if (signals == null) {
+                // No signals exist only for an unsupported action term. Only the
+                // exact mapper-produced UNRESOLVED proposal (zero components, the
+                // deterministic unsupported-action-term gap) passes through
+                // unchanged; anything else — a component-bearing, relabeled, or
+                // unknown scenario — stays fail-closed.
+                if (isMapperUnsupportedProposal(proposal, intentsByScenario)) {
+                    gated.add(proposal);
+                    continue;
+                }
+                throw fail("gate encountered unaccepted scenario: " + proposal.scenarioId());
+            }
             List<ScenarioComponentProposal.Component> components = new ArrayList<>();
             List<String> gaps = new ArrayList<>(proposal.gaps());
             for (ScenarioComponentProposal.Component component : proposal.components()) {
@@ -636,6 +667,24 @@ public final class SfBl002RouteEffectivenessRun {
         }
         return new RouteAwareScenarioMapper.MappingResult(
                 RouteAwareScenarioMapper.AUTHORITY, false, gated, mapping.diagnostics());
+    }
+
+    /**
+     * True only for the exact mapper-produced proposal of an unsupported action
+     * term: the intent classifies to no {@code ActionFamily} and the proposal is
+     * {@code UNRESOLVED} with zero components and exactly the deterministic
+     * {@code unsupported-action-term:<action>} gap the mapper emits. Every other
+     * proposal without gate signals stays fail-closed in the proposal loop.
+     */
+    private static boolean isMapperUnsupportedProposal(ScenarioComponentProposal proposal,
+            Map<String, RouteAwareScenarioMapper.ScenarioIntent> intentsByScenario) {
+        RouteAwareScenarioMapper.ScenarioIntent intent = intentsByScenario.get(proposal.scenarioId());
+        if (intent == null || BehaviorEvidencePolicy.classifyAction(intent.action()).isPresent()) {
+            return false;
+        }
+        return proposal.outcome() == ScenarioComponentProposal.Outcome.UNRESOLVED
+                && proposal.components().isEmpty()
+                && proposal.gaps().equals(List.of("unsupported-action-term:" + intent.action()));
     }
 
     /**
