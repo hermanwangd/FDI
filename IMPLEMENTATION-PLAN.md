@@ -6,7 +6,8 @@
 
 State: DISPATCH_READY. Human selection: 2026-09-12.
 Backlog SF-BL-005; requirements AUTH-002, PK-004, EVID-001, TECH-001.
-Construction base / bound Spec revision: 0e7e827eb9c41df6804ffa56ea0f0ac7e2eb3355.
+Construction base: 0e7e827eb9c41df6804ffa56ea0f0ac7e2eb3355.
+Bound Spec revision: 1d49e06fcd63fa2047119e045f8b1c3bc5f5c435.
 Only feasibility is executable now; successor implementation and formal holdout
 comparison require a revised envelope after evidence intake.
 
