@@ -2,206 +2,150 @@
 
 ## Current selection
 
-### SF-BL-002-ROUTE-EFFECTIVENESS-005
+### SF-BL-005-FEASIBILITY-001
 
-**State:** `ENGINEERING_READY` — accepted intake; Human terminal closure pending.
+State: DISPATCH_READY. Human selection: 2026-09-12.
+Backlog SF-BL-005; requirements AUTH-002, PK-004, EVID-001, TECH-001.
+Construction base / bound Spec revision: 0e7e827eb9c41df6804ffa56ea0f0ac7e2eb3355.
+Only feasibility is executable now; successor implementation and formal holdout
+comparison require a revised envelope after evidence intake.
 
-**Goal:** Replace token-only mapping with exact route-to-handler evidence and
-conservative qualification, then produce an immutable thresholded `-003` run.
+Source: https://github.com/MPfria02/Library_Management_System.git
+Revision: 99af0cb66c70b9bd98c16e3b0c22dc015debb779.
+Disposable feasibility checkout authorized; final holdout selection is not.
+Source Java 17 / Boot 3.5.5; FDI Java 17 / Boot 3.4.1 remains unchanged.
 
-**Architecture:** JavaParser extracts test HTTP observations and a same-revision
-Spring route index. Only exact bindings or corroborated direct references pass;
-evaluation starts after generation seals.
+## Execution DAG and ownership
 
-**Authority and revision binding:**
+A and B are parallel peers, distinct managed worktrees; then C integration,
+then D independent review. Coordinator creates all four child skeletons before
+starting peers and routes only. No per-slice Human confirmation.
+Evidence root: validation/software-factory/sf-bl005/feasibility-001/.
+Each slice owns only its named subdirectory with report.md and manifest.json
+(D uses verdict.md instead). No framework source changes.
 
-- Backlog: `SF-BL-002`
-- Requirements: `AUTH-002`, `PK-004`, `EVID-001`, `TECH-001`
-- Execution ID: `SF-BL-002-ROUTE-EFFECTIVENESS-005`
-- Construction base: `18d2a1f94894e9ada7c928988ee6604a7018f688`
-- Spec revision: commit `af8ef6e457634c04bee0e4fb48378c144ced36d1`,
-  `FRAMEWORK-SPEC.md` blob `08187dd37d7ddbe4dd94a1c792e12788ee3bc28a`
-- Design: `docs/superpowers/specs/2026-09-10-sf-bl002-route-aware-correction-design.md`
-- Source input: `https://github.com/spring-projects/spring-petclinic.git` at
-  `818c4136ea971c21674525f9053de0d9c7ad8cfe`
-- Frozen input SHA-256 pins: `governing_inputs` in
-  `validation/software-factory/sf-bl002/execution-envelope-005.json` at
-  `631edaca5855543bc9276f515455501b182494de`; all remain mandatory.
+### A — Candidate feasibility (candidate/)
 
-Evaluator truth is excluded from generation. Product semantics, Graphify runtime,
-active controls, `validation/pkb001/**`, and `*-001`/`*-002` are read-only.
+Inspect build scripts, then clone exact source into a fresh disposable directory.
+Verify revision/cleanliness and record snapshot/file digests. Do not move managed
+worktree HEAD or edit upstream source. Task-local build outputs are allowed.
+From backend/ with Java 17 and MAVEN_OPTS=-Xmx2g, run mvn test and separately
+mvn -Dtest='*IT' test; record effective selections, reports and actual test counts.
+A command exit 0 alone cannot prove IT coverage. At most one Maven fork.
+Docker must already be available; no daemon installation/start or host setting
+changes. Task-owned isolated disposable containers only, no state reuse across
+attempts. Check effective reuse settings; block IT if isolation cannot be ensured.
+Network only for pinned public source and required build/image dependencies;
+no company credentials or production endpoints. Max 20 minutes per build/probe.
+Aggregate task memory <8 GB; inspect usage before heavy work, stop if unsafe.
 
-Path shorthand below: `main:` means `src/main/java/com/featuredeliveryintelligence/fdi/`;
-`test:` means `src/test/java/com/featuredeliveryintelligence/fdi/`.
+Inventory routes, module roots, nested/parameterized/helper test shapes. Probe
+existing HTTP extractor via existing Java APIs on representative tests. A temporary
+Java invocation harness outside tracked source is allowed; preserve its bytes,
+digest and command in task-local evidence. Do not implement missing functionality.
+Report numerator/denominator and unsupported shapes; inability to invoke is a
+blocker, not zero coverage.
+Inspect installed Graphify behind the existing adapter, then only verified runtime
+commands on the exact checkout into task-local output. No assumed API, reinstall,
+provider upgrade or shared-index overwrite. No evaluator truth or new proposals.
+Return FEASIBLE/BLOCKED/CHANGE_REQUIRED with commands, digests, counts, skips,
+source cleanliness, runtime identity and measured resources (or UNKNOWN).
 
-Focused-test command: `MAVEN_OPTS='-Xmx2g' ./mvnw -q -Dtest=<Focused TDD value> test`.
-Within shorthand paths, `r/` = `product/realization/route/` and
-`s/` = `product/realization/scenarioforward/`.
+### B — Framework portability / scoring audit (framework/)
 
-## Execution DAG and mutation ownership
+Read exact-base runner, evaluator, extractor, index and tests. No gold or
+gold-derived analysis. Identify fixed revision/path/digest/schema/vocabulary and
+module-root assumptions; return exact file/method references, minimal shared
+parameterization boundaries, byte-parity commands and estimates. Distinguish
+adapters from inference changes. Check frozen rules below with synthetic counting
+examples; contradictions return PLAN_CHANGE_REQUIRED, never silent reinterpretation.
+No Maven/Docker work in B while A runs. No executable mutations.
 
-```text
-Task 1 contracts/fixtures
-  ├─ Task 2A extractor ─┐
-  ├─ Task 2B index ─────┴─ Task 3 policy ─┐
-  └─ Task 2C evaluator ───────────────────┴─ Task 4 run ─ Task 5 integration
-```
+### C — Combined evidence integration (integration/)
 
-Tasks 2A, 2B, and 2C are parallel-eligible after Task 1; their files are
-disjoint. Task 3 requires 2A/2B; Task 4 requires Task 3/2C. Unknown overlap is
-`PLAN_CONFLICT`.
+Depends on A+B handoffs. Correctly evidenced environment blocks are valid findings,
+not runtime PASS. Integrate A then B byte-preserving; create owner/digest manifest,
+discrepancy report and next bounded recommendation. Verify diff paths against
+ownership and no changes outside the evidence root. No source remediation.
 
-### Task 1 — Contracts and synthetic fixtures
+### D — Independent review (review/)
 
-**Create:**
+Depends on C exact candidate. Actor must differ from producers and integrator.
+Use a separate export; recompute counts/digests, inspect source revision,
+commands, runtime isolation, scope and resource evidence. Missing runtime checks
+stay BLOCKED/UNKNOWN, not PASS. Verdict PASS/FAIL/INCONCLUSIVE; return to FDP.
+No parent closure, implementation or later tranche auto-dispatch.
 
-- `main:r/HttpBehaviorObservation.java`
-- `main:r/HttpBehaviorExtractionResult.java`
-- `main:r/RouteHandler.java`
-- `main:r/RouteResolution.java`
-- `main:r/ScenarioComponentProposal.java`
-- `test:r/RouteContractTests.java`
-- `src/test/resources/scenarioforward/sf-bl002/route-aware/RouteFixtureController.java`
-- `src/test/resources/scenarioforward/sf-bl002/route-aware/RouteFixtureTests.java`
+Each slice <=5 owned files / <=60 planned calls, preflight <=15 calls.
+Manifests bind input revision/digest, authority, allowed phase, evaluator-visible
+false and mutation paths. Raw large logs stay task-local with digest and retrieval
+pointer; no secrets. Record all run IDs, timing, usage/cache completeness,
+first-review outcome and blockers. FDP analyzes post-delivery KPIs.
+Operational routing: validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md.
 
-New artifacts use `software-factory.sf-bl002.*.v0.3`. Resolution is
-`RESOLVED | UNRESOLVED | AMBIGUOUS`; proof strength is
-`EXACT_ROUTE_HANDLER | DIRECT_PRODUCTION_REFERENCE | GRAPH_TRACE_SUPPORT`.
-Reject blank identity, unsafe paths, invalid methods/routes, unordered evidence,
-and proposals without qualified components. Fixtures cover mapping composition,
-queries, variables, dynamic paths, ambiguity, positive behavior, and rejection.
+## Frozen scoring contract — SFBL005-METHOD-PAIR-001
 
-**Focused TDD:** `RouteContractTests`.
+Applies to successor comparison, not old artifacts/current evaluator.
+Unit: (accepted scenario ID, canonical source revision, repository-relative path,
+METHOD qualified signature including overload parameters). Gold/proposals use the
+same unit. Unresolvable identity normalization cannot be guessed.
+Exact duplicate claims collapse once (report duplicate count); same method across
+scenarios is a different pair. Role is diagnostic, not a way to multiply TP.
+Gold necessary pairs and directed chain edges are independently authored/sealed
+before generation. No producer-defined denominator. Capability without sealed
+crosswalk is NOT_COMPARABLE. TYPE unsupported is reported separately, not hidden.
 
-### Task 2A — HTTP behavior observation extractor
+TP: unique expected proposed pair whose scenario/evidence proof revalidates.
+FP: every other parseable proposed pair, including wrong subject or weak proof;
+do not remove invalid-proof claims from precision denominator.
+FN: each expected pair without valid TP; wrong claims can cause both FP and FN.
+UNRESOLVED contributes abstention and FN where a pair is expected.
+Schema/digest/isolation failure invalidates run; emit no quality score.
+precision=TP/(TP+FP); recall=TP/(TP+FN); F1=2TP/(2TP+FP+FN).
+Zero denominator is undefined, never silently zero/one. Report raw counts.
+Scenario coverage: selected scenarios with >=1 TP / all selected scenarios.
+Complete-chain coverage: scenarios with all sealed necessary methods/edges
+supported / selected scenarios requiring nonempty chains. Missing gold chain is
+unavailable, never vacuous success. Structure != observed execution; mocks and
+redirects cannot prove downstream execution.
 
-**Create:**
+For valid paired runs under the same inputs, extractor and new evaluator:
+GO requires precision >=0.70 AND >= baseline precision, recall > baseline recall,
+F1 > baseline F1, scenario and complete-chain coverage >= baseline, and all
+engineering/isolation gates PASS. Otherwise valid comparison is REVISE.
+Undefined mandatory metrics or insufficient data are INCONCLUSIVE; integrity
+failure invalidates the comparison. STOP requires FDP recommendation and Human
+decision. No rounding before comparison; no claim of statistical generalization.
+Exact holdout, sample/stratum counts and cost budget are still required Human
+pre-comparison gates, sealed in a successor envelope before any scoring run.
 
-- `main:testbehavior/http/HttpBehaviorObservationExtractor.java`
-- `test:testbehavior/http/HttpBehaviorObservationExtractorTests.java`
+## Improvement order (not dispatched)
 
-Expose `HttpBehaviorExtractionResult extract(Path checkout, List<Path>
-testFiles)`. Recover bounded MockMvc/RestTemplate routes, normalize queries and
-path variables, retain provenance, and preserve unsupported gaps. External
-library calls remain external; ordering is stable.
+1. Shared parameterization; original Petclinic outputs stay byte-identical.
+2. Extend verified handler chains to justified internal methods.
+3. Improve scenario/test binding (setup vs operation vs assertion), then detail
+   and negative-flow evidence. No names-only or wholesale graph inference.
+4. Freeze original/improved candidates; same extractor/evaluator; seal then score;
+   independent result review after code review; FDP intake then Human closure.
+Exposure followed by tuning retires the dataset from holdout.
+No TYPE generation or SF-BL-003 refactor implied.
 
-**Focused TDD:** `HttpBehaviorObservationExtractorTests`.
+## Verification and exclusions
 
-### Task 2B — Spring route-handler index
+Evidence-only tranche: manifest/source/scope verification and combined
+python3 -m pytest -q tests/test_prototype_baseline.py.
+Any needed executable change is PLAN_CHANGE_REQUIRED; successor requires full
+Java regression, parity and fresh review.
+Do not mutate controls, AGENTS.md, src/, tests/, contracts/, validation/pkb001/,
+validation/software-factory/sf-bl002/ or provider installation.
+No gold access, no product publication, main merge/push or parent closure.
 
-**Create:**
+## Pending prior delivery — not closed
 
-- `main:r/SpringRouteHandlerIndex.java`
-- `test:r/SpringRouteHandlerIndexTests.java`
-
-Expose `SpringRouteHandlerIndex build(Path checkout, List<Path>
-productionFiles)` and `RouteResolution resolve(String httpMethod, String
-normalizedRouteTemplate)`. Compose class/method mappings. Unique exact match
-resolves; zero is `UNRESOLVED`; multiple are `AMBIGUOUS`; never guess.
-
-**Focused TDD:** `SpringRouteHandlerIndexTests`.
-
-### Task 2C — Evaluator decision enforcement
-
-**Create:**
-
-- `main:s/SfBl002RouteEffectivenessEvaluation.java`
-- `test:s/SfBl002RouteEffectivenessEvaluationTests.java`
-
-Revalidate proof after non-evaluator sealing. Compute trace coverage, exact
-counts, precision/recall/F1, route/proof counts, and failures.
-`GO` requires trace `>=6/10`, precision `>=0.70`, recall `>0.0833333333`, and F1
-`>0.1290322581`; otherwise return `REVISE`. Boundary equality, undefined ratios,
-pre-seal evaluator access, and forged credit must fail tests.
-
-**Focused TDD:** `SfBl002RouteEffectivenessEvaluationTests`.
-
-### Task 3 — Behavior policy and proposal generation
-
-**Create:**
-
-- `main:s/BehaviorEvidencePolicy.java`
-- `main:s/RouteAwareScenarioMapper.java`
-- `main:s/SfBl002RouteEffectivenessRun.java`
-- `test:s/BehaviorEvidencePolicyTests.java`
-- `test:s/RouteAwareScenarioMapperTests.java`
-- `test:s/SfBl002RouteEffectivenessRunTests.java`
-
-Implement only the approved action families and proof paths. One token or HTTP
-verb never qualifies; reject requires same-test negative evidence. Graphify is
-diagnostic without independent proof. Emit ordered components/gaps,
-`PROPOSAL_ONLY`, and `semantic_publication_allowed=false`.
-
-**Focused TDD:** `BehaviorEvidencePolicyTests,RouteAwareScenarioMapperTests,SfBl002RouteEffectivenessRunTests`.
-
-### Task 4 — Exact-revision immutable run
-
-**Create only:**
-
-- `validation/software-factory/sf-bl002/http-behavior-observations-003.json`
-- `validation/software-factory/sf-bl002/route-handler-index-003.json`
-- `validation/software-factory/sf-bl002/scenario-mapping-proposal-003.json`
-- `validation/software-factory/sf-bl002/scenario-mapping-proposal-evidence-003.json`
-- `validation/software-factory/sf-bl002/hierarchical-evaluation-003.json`
-- `validation/software-factory/sf-bl002/hierarchical-evaluation-evidence-003.json`
-
-`SFBL002_PETCLINIC_ROOT` must resolve in the execution envelope. Preflight and
-production invocation are:
-
-```bash
-test "$(git -C "$SFBL002_PETCLINIC_ROOT" rev-parse HEAD)" = 818c4136ea971c21674525f9053de0d9c7ad8cfe
-MAVEN_OPTS='-Xmx2g' ./mvnw -q -DskipTests package dependency:build-classpath -Dmdep.outputFile=target/sf-bl002-classpath.txt
-java -cp "target/classes:$(<target/sf-bl002-classpath.txt)" com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002RouteEffectivenessRun "$PWD" "$SFBL002_PETCLINIC_ROOT" "$PWD"
-java -cp "target/classes:$(<target/sf-bl002-classpath.txt)" com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002RouteEffectivenessEvaluation "$PWD" "$PWD"
-```
-
-All consumed files must match frozen digests. Changed pre-existing outputs fail;
-identical bytes are idempotent. Replay in two temporary roots and require equal
-SHA-256 outputs before repository publication.
-
-### Task 5 — Combined integration, review, and evidence return
-
-Run focused tests, then:
-
-```bash
-MAVEN_OPTS='-Xmx2g' ./mvnw -q test
-python3 -m pytest -q
-git diff --exit-code 18d2a1f94894e9ada7c928988ee6604a7018f688 -- validation/pkb001 'validation/software-factory/sf-bl002/*-001.json' 'validation/software-factory/sf-bl002/*-002.json' validation/software-factory/sf-bl002/test-behavior-evidence.json ':(exclude)validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md' ':(exclude)validation/pkb001/operations/INSTRUCTION-PROJECTIONS-DRAFT.md'
-git diff --exit-code 2877007af6f6f4ebcc23a393c0d2424292cb6f0e -- validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md validation/pkb001/operations/INSTRUCTION-PROJECTIONS-DRAFT.md
-```
-
-Both checks are mandatory: only the two named ops files use `2877007`;
-all other protected paths retain `18d2a1f`. No directory-wide waiver,
-superseded instructions, ancestry change, or threshold change is allowed.
-
-The fresh combined candidate must include the reviewed subject correction
-`ce8e078efd94e4f69a6e271c5e29786caf378252`, evaluator
-`57496334a8589699ed6029f202f5bd20d83dca79`, and pipeline acceptance tests
-`c2f5656c129f9d78c010914f3bc680cdfe0a3909`. Record a per-path final-owner/blob
-manifest including other required accepted dependencies; an older merge must
-not overwrite a newer reviewed correction. `8adf3d27a4408b371dc760836c392aed19ad8ae5`
-is diagnostic only and is not an accepted integration candidate.
-Run full Java/Python regression and the pipeline tests with required source
-checkout available (zero skips), then fresh independent combined review.
-Slice verdicts/diagnostic GO cannot replace these gates. Changed outputs require
-a fresh immutable run identity and post-integration evaluation.
-
-Require zero failures/errors/skips, immutable old evidence, deterministic
-`-003` replay, and independent exact-candidate review for leakage, route/proof
-correctness, immutability, and authority. Return one evidence package with SHA,
-paths, review/tests/digests, limitations, cycle/token/tool KPIs, first-pass
-result, and computed `GO | REVISE`. Do not edit controls or claim `VERIFIED`.
-
-## Acceptance and stop conditions
-
-Integration candidacy requires all engineering gates plus evaluator `GO`.
-`REVISE` is evidence, not acceptance. Source/digest mismatch, leakage, guessed
-handler, weak credit, publication, old-artifact mutation, scope breach, or
-unverifiable review fails closed. Terminal closure remains Human-only.
-
-## Verified delivery ledger
-
-- `SF-BL-002-SCENARIO-EFFECTIVENESS-004`: `9f83c8a3877bdb4a98c4e1fcf1a09947741c573c`;
-  `1109/1109`; `REVISE`; `validation/software-factory/sf-bl002/remediation-evidence.json`.
-- `SF-BL-004-CHANGE-REFERENCE-001`: `c1643d9a516db5a0167c4321eff92e20ce2a4660`;
-  `1151/1151`; `VERIFIED`; `validation/software-factory/sf-bl004/change-reference-001-evidence.json`.
+SF-BL-002 remains IN_PROGRESS pending Human terminal closure, with no active work.
+Retained construction instructions:
+0e7e827eb9c41df6804ffa56ea0f0ac7e2eb3355:IMPLEMENTATION-PLAN.md.
+Acceptance: validation/software-factory/sf-bl002/acceptance-005.md;
+reviewed a4f37d318ed361d1d5134d8647b9b37e75758049, integrated
+880ab99c5d3b4e68e2cafa57243963cf7ab9a424; Java 1327/0, Python 63; bounded GO.
+This selection does not change its closure status or historical scoring.

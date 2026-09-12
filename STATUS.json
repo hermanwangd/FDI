@@ -1,26 +1,26 @@
 {
-  "current_focus": "SF-BL-002",
+  "current_focus": "SF-BL-005",
   "phase": "software_factory_vnext",
   "framework_spec": "FRAMEWORK-SPEC.md",
   "backlog": "BACKLOG.md",
   "implementation_plan": "IMPLEMENTATION-PLAN.md",
   "baseline_status": "ACTIVE",
-  "decision": "GO",
-  "active_backlog_item": "SF-BL-002",
+  "decision": "NOT_RUN",
+  "active_backlog_item": "SF-BL-005",
   "active_implementation_plan": "IMPLEMENTATION-PLAN.md#current-selection",
   "selected_backlog_items": [
-    "SF-BL-002"
+    "SF-BL-005"
   ],
   "active_execution": {
-    "execution_id": "SF-BL-002-ROUTE-EFFECTIVENESS-005",
-    "base_commit": "3e583d0d13d95e0ef66cc3b80d118b5ef31c688e",
+    "execution_id": "SF-BL-005-FEASIBILITY-001",
+    "base_commit": "0e7e827eb9c41df6804ffa56ea0f0ac7e2eb3355",
     "selected_backlog_items": [
-      "SF-BL-002"
+      "SF-BL-005"
     ],
-    "execution_state": "AWAITING_HUMAN_TERMINAL_CLOSURE",
-    "integration_candidate": "a4f37d318ed361d1d5134d8647b9b37e75758049"
+    "execution_state": "DISPATCH_READY",
+    "integration_candidate": null
   },
-  "next_action": "Review validation/software-factory/sf-bl002/acceptance-005.md and obtain Human terminal-closure decision. Keep SF-BL-002 selected; do not auto-close or start another backlog item.",
+  "next_action": "Execution Plane runs parallel feasibility A/B, combined evidence C and independent review D under the Plan; no implementation or holdout scoring yet.",
   "blocking_dependency": null,
   "pkb001_foundation": {
     "status": "PRESERVED_IMMUTABLE_HISTORY",
@@ -33,5 +33,11 @@
   "framework_language_target": "JAVA_17_SPRING_BOOT_3_4_1",
   "external_graphify_runtime": "PYTHON_MCP_PROVIDER_OUTSIDE_FRAMEWORK",
   "execution_plane_runtime": "MULTICA_CURRENT_BINDING_NOT_DOMAIN_AUTHORITY",
-  "archived_documents_are_authority": false
+  "archived_documents_are_authority": false,
+  "pending_human_closure": [
+    {
+      "backlog_id": "SF-BL-002",
+      "evidence": "validation/software-factory/sf-bl002/acceptance-005.md"
+    }
+  ]
 }

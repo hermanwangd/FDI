@@ -499,6 +499,12 @@ exact-revision binding.
 
 ## 12. Current scope boundary
 
+`SF-BL-005` MAY perform the explicitly selected scenario-mapping feasibility
+tranche and define an execution-specific successor scoring protocol. This does
+not amend prior experimental verdicts or authorize TYPE generation, automatic
+Product publication, or formal holdout execution without its selection gates.
+Its current mutation and execution boundary is the selected Implementation Plan.
+
 The active delivery target is `SF-BL-001`. One bounded prerequisite correction,
 `SF-BL-002`, MAY repair the preserved PKB-001 evidence pipeline before reuse.
 That correction MUST keep reverse inference proposal-only, MUST distinguish
