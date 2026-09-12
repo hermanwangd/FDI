@@ -2,7 +2,11 @@
 
 ## Current selection
 
-### SF-BL-005-CROSSREPO-REALWORLD-002
+Two independent lanes are selected. They share only the five read-only active
+controls and the project-wide resource ceiling. Their owned paths do not
+overlap; control updates remain serialized by one Feature Delivery Plane owner.
+
+### Lane `calibration` — SF-BL-005-CROSSREPO-REALWORLD-002
 
 > Execution Plane must use `executing-plans`, coordinate distinct generation,
 > proof, scoring, receipt-review and integration actors, and return one delivery
@@ -114,3 +118,56 @@ After independent receipt PASS, the Execution Plane returns the exact candidate,
 artifact digests, results, limitations, actor/run identities and resource/KPI
 evidence. Feature Delivery Plane reconciles the result and asks Human Authority
 separately before formal holdout selection or terminal SF-BL-005 closure.
+
+### Lane `company-ai-docs` — SF-BL-006-COMPANY-AI-SHARE-001
+
+**Goal:** turn `docs/company-ai-learning/` into a reviewable company-AI learning
+release without allowing learner sessions to retrieve evaluator answers.
+
+**Base:** `4fc285f515e65473d4d3120b335629825a6a810b`; Backlog: `SF-BL-006`;
+requirements: `AUTH-001`, `AUTH-003`, `EXEC-003`, `EVID-001`.
+
+**Owned paths:** `AGENTS.md`, `PROJECT-OVERVIEW.md`, `BACKLOG.md`,
+`IMPLEMENTATION-PLAN.md`, `STATUS.json`, `docs/company-ai-learning/**`.
+Schema-consumer verification may modify `tests/test_prototype_baseline.py`,
+`tests/test_pkb001_python_framework_inventory.py`, and
+`tests/test_pkb001_execution_classification.py`.
+The Feature Delivery Plane alone updates controls. The documentation worker may
+modify only `docs/company-ai-learning/**`. All source, test, calibration,
+runtime, archive, existing validation, and other test paths are excluded.
+
+#### Ordered tasks
+
+1. Migrate active-control wording and `STATUS.json` from one
+   `active_execution` object to `active_executions[]`; retain one serialized FDP
+   writer, per-lane closure, deterministic path-overlap checks, isolated
+   workspaces, and an aggregate memory ceiling below 8 GB.
+2. Split release membership without duplicating rule sources:
+   learner material contains README, COMMON, PM, FDP, EP, ADOPTION,
+   LEARNING-RECORD and PR-REVIEW; learner test input is a separate fixture;
+   CASES, EVALUATION and FIXED-RUBRIC are evaluator-only and must not be indexed
+   or uploaded into a learner knowledge base.
+3. Update README with the exact upload boundaries, company data classification,
+   authorized recipient/environment fields, owner approval reference, and the
+   rule that UNBOUND classification blocks external upload. Remove the source
+   commit and vendor/runtime names that are unnecessary for recipient use.
+4. Normalize Simplified-Chinese remnants to Traditional Chinese without
+   changing authority semantics.
+5. Generate deterministic learner and evaluator manifests containing package
+   ID, role, status, relative paths, byte counts and SHA-256. Build two separate
+   archives outside the repository and produce a top-level checksum file.
+6. Verify zero cross-package answer leakage, no missing Markdown links, no
+   absolute personal paths or credential-like values, manifest byte/hash
+   equality, archive path safety, and deterministic rebuild equality.
+
+**Acceptance:** learner and evaluator archives are physically separate; every
+included byte is manifest-bound; learner contents contain no answer rubric or
+case solutions; sharing remains blocked until company classification and owner
+approval fields are bound; all limitations remain explicit; `git diff --check`
+and the package verification commands pass. This lane does not claim company
+runtime validation, install anything, upload anything, or modify Product truth.
+
+**Failure routing:** answer leakage, unsafe archive paths, digest mismatch or
+secret-like content is `PLAN_CONFLICT`; missing company classification or owner
+approval is `BLOCKED_USER_APPROVAL` for external sharing but does not prevent
+local package construction and verification.

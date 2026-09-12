@@ -6,17 +6,28 @@
   "implementation_plan": "IMPLEMENTATION-PLAN.md",
   "baseline_status": "ACTIVE",
   "decision": "NOT_RUN",
-  "active_backlog_item": "SF-BL-005",
+  "active_backlog_items": ["SF-BL-005", "SF-BL-006"],
   "active_implementation_plan": "IMPLEMENTATION-PLAN.md#current-selection",
-  "selected_backlog_items": ["SF-BL-005"],
-  "active_execution": {
-    "execution_id": "SF-BL-005-CROSSREPO-REALWORLD-002",
-    "base_commit": "6a19bc04488c5d936baa1b9434402cd58af82404",
-    "selected_backlog_items": ["SF-BL-005"],
-    "execution_state": "READY_FOR_COORDINATOR",
-    "integration_candidate": null
-  },
-  "next_action": "Delivery Coordinator executes the materialized RealWorld revised-calibration envelope: generation, independent proof, frozen scoring, independent receipt and evidence return without editing controls.",
+  "selected_backlog_items": ["SF-BL-005", "SF-BL-006"],
+  "active_executions": [
+    {
+      "lane_id": "calibration",
+      "execution_id": "SF-BL-005-CROSSREPO-REALWORLD-002",
+      "base_commit": "6a19bc04488c5d936baa1b9434402cd58af82404",
+      "selected_backlog_items": ["SF-BL-005"],
+      "execution_state": "READY_FOR_COORDINATOR",
+      "integration_candidate": null
+    },
+    {
+      "lane_id": "company-ai-docs",
+      "execution_id": "SF-BL-006-COMPANY-AI-SHARE-001",
+      "base_commit": "4fc285f515e65473d4d3120b335629825a6a810b",
+      "selected_backlog_items": ["SF-BL-006"],
+      "execution_state": "PLANNED_AWAITING_EXECUTION",
+      "integration_candidate": null
+    }
+  ],
+  "next_action": "Execute the independent calibration and company-ai-docs lanes within their non-overlapping ownership and aggregate resource limits; serialize all active-control updates through one Feature Delivery Plane owner.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-CROSSREPO-UNSUPPORTED-ACTION-002",
