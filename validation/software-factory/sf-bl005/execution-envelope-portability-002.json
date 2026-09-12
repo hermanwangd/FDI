@@ -1,0 +1,147 @@
+{
+  "execution_id": "SF-BL-005-PORTABILITY-002",
+  "status": "DISPATCH_READY",
+  "materialized_from_control_commit": "4409cdca6ac2ad593b82f8aa94a56fa0571497e9",
+  "construction_base": "31524d2d0c38749c707a199dd0f960b6ed689777",
+  "spec_revision": "31524d2d0c38749c707a199dd0f960b6ed689777",
+  "selected_backlog_items": [
+    "SF-BL-005"
+  ],
+  "requirements": [
+    "AUTH-002",
+    "PK-004",
+    "EVID-001",
+    "TECH-001"
+  ],
+  "plan": "IMPLEMENTATION-PLAN.md#current-selection",
+  "governing_inputs": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "aac96ac43a36a5401c979cd72c762caa8aa7f12572af987e9836e7cd75e9e7c6",
+      "revision": "4409cdca6ac2ad593b82f8aa94a56fa0571497e9",
+      "mutation_allowed": false,
+      "evaluator_visible": false
+    },
+    {
+      "path": "PROJECT-OVERVIEW.md",
+      "sha256": "4cb9c41e0ebd572fdb5bfc31cff166d069181ca4f3a887c15eee4ce7d77e5f2a",
+      "revision": "4409cdca6ac2ad593b82f8aa94a56fa0571497e9",
+      "mutation_allowed": false,
+      "evaluator_visible": false
+    },
+    {
+      "path": "FRAMEWORK-SPEC.md",
+      "sha256": "9daf5c52e09d3903c078e4379ffb69b92a58c17c81b324b1d33db74cd941b927",
+      "revision": "4409cdca6ac2ad593b82f8aa94a56fa0571497e9",
+      "mutation_allowed": false,
+      "evaluator_visible": false
+    },
+    {
+      "path": "BACKLOG.md",
+      "sha256": "4cd998afbc63098028d6cf0cba2c7d63605e0f2e48260549c4eb8b1980dd80d5",
+      "revision": "4409cdca6ac2ad593b82f8aa94a56fa0571497e9",
+      "mutation_allowed": false,
+      "evaluator_visible": false
+    },
+    {
+      "path": "IMPLEMENTATION-PLAN.md",
+      "sha256": "4ce7e8cee91aff98634e09b800cedeff93f94ece716e70fa758297b893452d1f",
+      "revision": "4409cdca6ac2ad593b82f8aa94a56fa0571497e9",
+      "mutation_allowed": false,
+      "evaluator_visible": false
+    },
+    {
+      "path": "STATUS.json",
+      "sha256": "6da2d6ac817120ecc9f55b16ec729e5f62d18a97ab954eae3ea5f25117ed411e",
+      "revision": "4409cdca6ac2ad593b82f8aa94a56fa0571497e9",
+      "mutation_allowed": false,
+      "evaluator_visible": false
+    },
+    {
+      "path": "JAVA-CODING-GUIDELINES.md",
+      "sha256": "06011e21515ea11447d968e94cba2497b8ac0935fb4b3936ff099da31268a28f",
+      "revision": "4409cdca6ac2ad593b82f8aa94a56fa0571497e9",
+      "mutation_allowed": false,
+      "evaluator_visible": false
+    },
+    {
+      "path": "validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md",
+      "sha256": "a6d0b9de5cd5af06d61c495dd388325d9ccdf695cfed4ba28000d8e79f568f8e",
+      "revision": "4409cdca6ac2ad593b82f8aa94a56fa0571497e9",
+      "mutation_allowed": false,
+      "evaluator_visible": false
+    }
+  ],
+  "dag": [
+    {
+      "id": "A",
+      "depends_on": [],
+      "owns": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/testbehavior/extractor/JavaParserTestBehaviorExtractor.java",
+        "src/test/java/com/featuredeliveryintelligence/fdi/testbehavior/extractor/JavaParserTestBehaviorExtractorTests.java",
+        "src/test/java/com/featuredeliveryintelligence/fdi/testbehavior/cli/NestedTestIdentityCliTests.java",
+        "validation/software-factory/sf-bl005/portability-002/a/report.md",
+        "validation/software-factory/sf-bl005/portability-002/a/manifest.json"
+      ]
+    },
+    {
+      "id": "B",
+      "depends_on": [],
+      "owns": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/directtrace/ProductionSourcePathResolver.java",
+        "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/directtrace/ProductionSourcePathResolverTests.java",
+        "src/test/java/com/featuredeliveryintelligence/fdi/testbehavior/cli/ModuleRootCliTests.java",
+        "validation/software-factory/sf-bl005/portability-002/b/report.md",
+        "validation/software-factory/sf-bl005/portability-002/b/manifest.json"
+      ]
+    },
+    {
+      "id": "C",
+      "depends_on": [
+        "A",
+        "B"
+      ],
+      "owns": [
+        "validation/software-factory/sf-bl005/portability-002/c/report.md",
+        "validation/software-factory/sf-bl005/portability-002/c/manifest.json"
+      ],
+      "integration": "Replay only accepted A/B owned paths; no new code"
+    },
+    {
+      "id": "D",
+      "depends_on": [
+        "C"
+      ],
+      "owns": [
+        "validation/software-factory/sf-bl005/portability-002/d/verdict.md",
+        "validation/software-factory/sf-bl005/portability-002/d/manifest.json"
+      ],
+      "independent": true
+    }
+  ],
+  "kpi": {
+    "category": "feature/fix",
+    "size": "M",
+    "rationale": "Two module boundaries and integrated verification; no scored experiment"
+  },
+  "constraints": {
+    "no_evaluator_truth": true,
+    "no_holdout_scoring": true,
+    "no_parent_closure": true,
+    "no_push": true,
+    "controls_read_only": true,
+    "no_graphify_changes": true,
+    "no_source_repository_build": true,
+    "aggregate_memory_gb_below": 8,
+    "max_heavy_jobs": 1,
+    "maven_heap": "2g",
+    "hard_command_timeout_seconds": 1200,
+    "exclude_committed_paths": [
+      ".multica/",
+      "docs/company-ai-learning/",
+      "validation/pkb001/",
+      "validation/software-factory/sf-bl002/"
+    ]
+  },
+  "routing_key": "sfbl005-portability-002-controller-v1"
+}
