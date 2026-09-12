@@ -10,24 +10,34 @@
   "active_implementation_plan": "IMPLEMENTATION-PLAN.md#current-selection",
   "selected_backlog_items": ["SF-BL-005"],
   "active_execution": {
-    "execution_id": "SF-BL-005-CROSSREPO-REALWORLD-002",
-    "base_commit": "6a19bc04488c5d936baa1b9434402cd58af82404",
+    "execution_id": "SF-BL-005-CROSSREPO-GATE-CONTAINMENT-003",
+    "base_commit": "203d62204cbdda50275ed363019a1e6890ce5109",
     "selected_backlog_items": ["SF-BL-005"],
     "execution_state": "READY_FOR_COORDINATOR",
     "integration_candidate": null
   },
-  "next_action": "Delivery Coordinator executes the materialized RealWorld revised-calibration envelope: generation, independent proof, frozen scoring, independent receipt and evidence return without editing controls.",
+  "next_action": "Delivery Coordinator executes the bounded gate-site containment correction, fresh independent review and combined verification; return evidence to Feature Delivery Plane without rerunning RealWorld or editing controls.",
   "blocking_dependency": null,
+  "paused_execution": {
+    "execution_id": "SF-BL-005-CROSSREPO-REALWORLD-002",
+    "controller": "HERM-485",
+    "blocked_stage": "HERM-486",
+    "decision_issue": "HERM-490",
+    "state": "PLAN_CONFLICT_GATE_SITE_UNSUPPORTED_ACTION_THROW",
+    "downstream_stages": ["HERM-487", "HERM-488", "HERM-489"],
+    "outputs_created": false,
+    "resume_requirement": "fresh reviewed remediation candidate plus revised active Plan and execution envelope"
+  },
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-CROSSREPO-UNSUPPORTED-ACTION-002",
     "integrated_candidate": "ec604f1fb6d1f774f4268f70af63e0850357ff74",
     "durable_replay_commit": "6a19bc04488c5d936baa1b9434402cd58af82404",
-    "review": "HERM-483 PASS",
+    "review": "HERM-483 PASS_WITH_LATER_GATE_SITE_COVERAGE_GAP",
     "verification": "MAVEN_1397_0_PYTEST_63_0",
-    "state": "EXECUTION_COMPLETE"
+    "state": "IMPLEMENTATION_COMPLETE_REMEDIATION_INCOMPLETE_FOR_REALWORLD"
   },
   "metric_goal": {
-    "status": "SELECTED_FOR_REVISED_CROSS_REPOSITORY_CALIBRATION",
+    "status": "PAUSED_PENDING_GATE_CONTAINMENT",
     "scope": "REALWORLD_REVISED_AFTER_FIRST_RUN_FAILURE_NOT_FORMAL_HOLDOUT",
     "recall_strictly_greater_than": 0.60,
     "precision_strictly_greater_than": 0.80
@@ -42,12 +52,12 @@
     "evidence": "validation/software-factory/sf-bl005/method-quality-007/RESULTS.md"
   },
   "latest_cross_repository_attempt": {
-    "execution_id": "SF-BL-005-CROSSREPO-REALWORLD-001",
+    "execution_id": "SF-BL-005-CROSSREPO-REALWORLD-002",
     "repository_id": "realworld",
-    "generation_status": "FAILED_UNSUPPORTED_SCENARIO_ACTION",
+    "generation_status": "BLOCKED_PRE_SEAL_PLAN_CONFLICT",
     "scoring_status": "NOT_RUN",
     "metrics_available": false,
-    "evidence": "validation/software-factory/sf-bl005/cross-repo-realworld-001/RESULTS.md"
+    "evidence": "HERM-486"
   },
   "pkb001_foundation": {
     "status": "PRESERVED_IMMUTABLE_HISTORY",

@@ -2,115 +2,96 @@
 
 ## Current selection
 
-### SF-BL-005-CROSSREPO-REALWORLD-002
+### SF-BL-005-CROSSREPO-GATE-CONTAINMENT-003
 
-> Execution Plane must use `executing-plans`, coordinate distinct generation,
-> proof, scoring, receipt-review and integration actors, and return one delivery
-> evidence package. Active controls are read-only to every Execution Plane actor.
+> Execution Plane implements this bounded two-path correction with TDD, obtains
+> a fresh independent exact-candidate review, performs combined verification and
+> returns one delivery evidence package. Active controls are read-only.
 
-**Goal:** Rerun the frozen RealWorld cross-repository calibration once with the
-reviewed unsupported-action containment, so nine supported scenarios can proceed
-while `RW-SCENARIO-002` remains an honest `UNRESOLVED` result.
+**Goal:** Preserve mapper-produced `UNRESOLVED` proposals for unsupported
+scenario actions when the downstream evidence-strength gate builds its signal
+indexes, so unsupported scenarios do not abort otherwise supported scenarios.
 
-**Classification:** `CALIBRATION / REVISED_AFTER_FIRST_RUN_FAILURE`. This is not
-a first-use run, formal holdout, Product publication, generalization claim or
-parent closure.
+This is a corrective prerequisite for the selected RealWorld revised
+calibration. It does not execute generation or scoring. Backlog: `SF-BL-005`;
+requirements: `AUTH-002`, `PK-004`, `EVID-001`, `TECH-001`; source:
+HERM-486 `PLAN_CONFLICT` and Human authorization on HERM-490. Construction base:
+`203d62204cbdda50275ed363019a1e6890ce5109`.
 
-Backlog: `SF-BL-005`; requirements: `AUTH-002`, `PK-004`, `EVID-001`,
-`SF-EVAL-001`, `TECH-001`. Construction base:
-`6a19bc04488c5d936baa1b9434402cd58af82404`, containing the reviewed mapper
-delta from candidate `ec604f1fb6d1f774f4268f70af63e0850357ff74`.
-Controlling design:
-`validation/software-factory/sf-bl005/cross-repo-realworld-001/SECOND-RUN-DESIGN.md`
-at SHA-256 `1bd839198d48647abf4d1484ea0acd69154ba2f277f243168357ea5b7af88ce8`.
+## Root cause and architecture
 
-## Frozen inputs and boundaries
+`RouteAwareScenarioMapper.mapScenario` already returns one ordered
+`UNRESOLVED` proposal for an absent `ActionFamily`. The downstream
+`SfBl002RouteEffectivenessRun.applyEvidenceStrengthGate` independently calls
+`BehaviorEvidencePolicy.classifyAction(...).orElseThrow(...)` while constructing
+gate signals, so the same unsupported scenario still aborts the run.
 
-- RealWorld source revision: `ee17e31aafe733d98c4853c8b9a74d7f2f6c924a`.
-- Ten scenarios SHA-256: `c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31`.
-- Evaluator truth SHA-256: `75a67c802ccd9ac5afa38e3d86331dcd698053b242b801d52f98a49e809adf1f`.
-- Producer input manifest SHA-256: `381e681d12868ce03f93721c085c51e0a4f3dc62bf1d90c8853f99d158472e35`.
-- Graph SHA-256: `2c554b8b0e35922b7be423978e6bcf9b9e139607c09299ef8ccb3c84409b0857`.
-- Reuse existing Graphify/test-behavior evidence; no reindexing or extraction.
-- All first-run artifacts and all existing validation evidence are immutable.
-- The six first-run algorithm files and `BehaviorEvidencePolicy` must remain
-  byte-identical. No matching, classification, proof or scorer tuning.
-- Producer/generation actors cannot access evaluator truth, expected pairs,
-  missing-pair lists or evaluator judgments.
-- No merge, push, deployment, publication, paid service, database, Docker,
-  upstream RealWorld test run, additional rerun or parent closure.
+Change only the gate signal-index construction: when classification is absent,
+do not create `ScenarioSignals` or `RevalidationIntent` for that scenario. Keep
+the mapper proposal and its existing gap/diagnostic unchanged. The later proposal
+loop must recognize that this exact case is an already-unresolved unsupported
+scenario and pass it through unchanged. A missing signal for a supported or
+component-bearing proposal remains fail-closed.
 
-## New immutable output namespace
+## Mutation boundary
 
-Only these new outputs may be created under
-`validation/software-factory/sf-bl005/cross-repo-realworld-001/`:
+Owned paths only:
 
-- `generation-realworld-002/**`
-- `evaluator/proofs-002.json`
-- `comparison-manifest-002.json`
-- `comparison-002.json`
-- `receipt-002.md`
-- `RESULTS-002.md`
+- `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SfBl002RouteEffectivenessRun.java`
+- `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SfBl002RouteEffectivenessRunTests.java`
 
-Any pre-existing target path is `PLAN_CONFLICT`; never overwrite it.
+Everything else is read-only, including `RouteAwareScenarioMapper`,
+`BehaviorEvidencePolicy`, the six frozen method-calibration algorithms, RealWorld
+inputs/truth/evidence, active controls and all existing validation artifacts.
+Unknown overlap is `PLAN_CONFLICT`.
 
-## Ordered execution DAG
+## Acceptance and negative cases
 
-1. **Preflight and runtime seal:** verify construction-base ancestry, mapper
-   candidate provenance, frozen hashes and output nonexistence; run full Java and
-   Python regression; build and digest the new runtime JAR.
-2. **Generation:** use unchanged public inputs and create
-   `generation-realworld-002`; seal baseline/improved outputs. Preserve scenario
-   order. `AUTHENTICATE` must remain `UNRESOLVED`, with no component and the exact
-   deterministic gap/diagnostic. Arbitrary runtime/integrity failures fail closed.
-3. **Independent proof ledger:** only after generation is sealed, a distinct
-   actor may read evaluator truth and author `evaluator/proofs-002.json` without
-   editing producer output.
-4. **Scoring:** bind sealed producer/proof/truth digests in
-   `comparison-manifest-002.json`; run the unchanged `SFBL005-METHOD-PAIR-001`
-   scorer once and write `comparison-002.json`.
-5. **Independent receipt:** a separately attributable reviewer recomputes counts,
-   hashes and decision from the exact sealed tuple and writes `receipt-002.md`.
-6. **Integration:** reconcile the complete evidence and write `RESULTS-002.md`;
-   return one package to Feature Delivery Plane without editing controls.
+- With ordered `[AUTHENTICATE, CREATE]`, `applyEvidenceStrengthGate` returns the
+  unsupported AUTHENTICATE proposal unchanged (`UNRESOLVED`, zero components,
+  exact `unsupported-action-term:AUTHENTICATE` gap) and gates CREATE normally in
+  the same order.
+- Unsupported proposals do not enter `allSignals`, `signalsByScenario`,
+  `allRevalidationIntents`, or `revalidationByScenario`; they cannot lend or
+  borrow evidence and do not change supported-scenario results.
+- A missing signal for a supported action, any component-bearing unsupported
+  proposal, malformed intent, schema/digest failure, unrelated exception or
+  output collision remains fail-closed. Do not catch arbitrary exceptions.
 
-Stages are sequential because generation sealing controls evaluator visibility.
-No parallel proof, scoring or review before its predecessor is terminal.
+Do not add AUTHENTICATE classification, relabel/drop/substitute scenarios,
+change mapper output, tune evidence selection or scoring, or weaken existing
+gate rules.
 
-## Acceptance and decision
+## TDD and delivery sequence
 
-- All ten scenarios are retained in original order; unsupported scenarios remain
-  in the denominator and contribute FN for every expected gold pair.
-- Report TP, FP, FN, duplicates, proposed pairs, selected scenarios,
-  unsupported/unresolved scenarios, precision, recall, F1, scenario coverage and
-  complete-chain coverage. Undefined metrics remain null with a reason.
-- Raw, unrounded precision must be strictly greater than `0.80`; raw, unrounded
-  recall must be strictly greater than `0.60`.
-- Valid metrics below either target produce `REVISE`; integrity failure produces
-  `INVALID`; unavailable mandatory metrics produce `INCONCLUSIVE`.
-- Passing thresholds supports a calibration recommendation only. It does not
-  authorize formal holdout, Product truth, another run or SF-BL-005 closure.
+1. Add focused gate-level tests proving the current AUTHENTICATE throw as RED,
+   mixed-scenario order/pass-through, no evidence borrowing, and fail-closed
+   malformed/component-bearing negatives.
+2. Implement the smallest gate-only branch consistent with the architecture.
+3. Run focused tests, the full Java package, Python controls and diff checks.
+4. Commit one two-path candidate. Obtain fresh independent review bound to the
+   exact candidate; remediate and re-review automatically if needed.
+5. Perform combined verification and return exact candidate, changed paths,
+   RED/GREEN evidence, test totals, limitations, actor/run identities and KPIs.
 
 ## Verification and resources
 
-Use Java 17. Run one heavy process at a time, aggregate below 8 GB, Maven heap and
-fork at 2 GB, producer at 1 GB, evaluator at 512 MB, and a 20-minute bound per
-command. Required preflight includes:
+Use Java 17 and one heavy JVM at a time. Keep aggregate memory below 8 GB,
+Maven heap/fork at 2 GB, and every Maven command below 20 minutes:
 
 ```text
+MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -Dtest=SfBl002RouteEffectivenessRunTests test
 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g package
 python3 -m pytest -q
 git diff --check
 ```
 
-The execution envelope materializes exact paths, digests, actor ownership,
-commands and fail-closed transitions. Any required identity mismatch is
-`PLAN_CONFLICT`; missing runtime/source access is `PLAN_BLOCKED`; required
-semantic or scope change is `PLAN_CHANGE_REQUIRED`.
+## Completion and continuation boundary
 
-## Completion boundary
-
-After independent receipt PASS, the Execution Plane returns the exact candidate,
-artifact digests, results, limitations, actor/run identities and resource/KPI
-evidence. Feature Delivery Plane reconciles the result and asks Human Authority
-separately before formal holdout selection or terminal SF-BL-005 closure.
+An independently reviewed and combined-verified candidate is
+`ENGINEERING_READY` for Feature Delivery Plane intake only. Feature Delivery
+Plane must replay the accepted candidate into the durable branch, revise the
+RealWorld plan/envelope with its exact base and fresh control digests, and only
+then re-attempt stage 1. No merge, push, RealWorld generation, scoring, formal
+holdout, Product publication, deployment or SF-BL-005 closure is authorized by
+this selection.
