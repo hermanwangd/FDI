@@ -1,0 +1,170 @@
+{
+  "run_id": "SF-BL-005-PETCLINIC-REPLAY-004",
+  "run_kind": "REAL_SOURCE_EXISTING_PROTOCOL_REPRODUCTION",
+  "dataset_kind": "CALIBRATION_ALREADY_EXPOSED",
+  "replayed_protocol": "SF-BL-002-ROUTE-EFFECTIVENESS-005",
+  "framework_code_base": "981b6323c66f8a1117a9eb61c083afcb4771105a",
+  "framework_source_unchanged": true,
+  "source_revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "source_clean_before_and_after": true,
+  "source_checkout": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/sfbl002-petclinic-818c413",
+  "java_runtime": "17.0.20.1",
+  "packaged_jar_sha256": "f81e34011dfebae34405ae1abc5bdc2e9a7a6c6da98dd0d38ec5526f684ec776",
+  "build": {
+    "command": "./mvnw -q -DskipTests package",
+    "exit_code": 0,
+    "unit_tests_rerun": false
+  },
+  "execution": {
+    "producer": {
+      "entrypoint": "SfBl002RouteEffectivenessRun.main",
+      "exit_code": 0,
+      "start_observed": {
+        "current_time": "2026-09-12 07:20:53 UTC"
+      },
+      "completion_observed": {
+        "current_time": "2026-09-12 07:21:28 UTC"
+      }
+    },
+    "evaluator": {
+      "entrypoint": "SfBl002RouteEffectivenessEvaluation.main",
+      "exit_code": 0,
+      "start_observed": {
+        "current_time": "2026-09-12 07:21:49 UTC"
+      },
+      "completion_observed": {
+        "current_time": "2026-09-12 07:22:02 UTC"
+      }
+    },
+    "timing_note": "Observation timestamps include orchestration delay; not instrumented process runtimes.",
+    "jvm_max_heap": "2 GiB",
+    "concurrent_experiment_jvms": 1,
+    "per_command_deadline_seconds": 1200
+  },
+  "producer_input_sha256": {
+    "validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json": "3c5da364196f1bbec17aabdbf2923c65f2bc0d90b2e9788bac8427219d554a3f",
+    "validation/software-factory/sf-bl002/scenario-search-intent-acceptance-manifest-002.json": "8772b2a1b4cbb485f0ebce793be734bbd8414aaf318e6033bab7225b1e03fd1b",
+    "validation/software-factory/sf-bl002/test-behavior-evidence.json": "6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2",
+    "validation/pkb001/artifacts/petclinic-graph-818c413.json": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+    "validation/pkb001/runtime/graphify-petclinic-live-evidence.json": "fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8"
+  },
+  "evaluator_input_sha256": {
+    "validation/pkb001/evaluator/petclinic-818c413/gold-mappings.json": "4d22799e4d7597e0bbc302c9db3cd0510f70cc946cb5de5909ded9c4b1b112d1",
+    "validation/pkb001/evaluator/petclinic-818c413/ground-truth-seal.json": "7290fd4aec80cbdd5cea52b30f9da5323e455843948746fc53208eecf6e2a55a",
+    "validation/pkb001/evaluator/petclinic-818c413/gold-mappings-v2.json": "22292caf3b8f55ff418b0716dce32da19e93974555ef597da1705674b467c385",
+    "validation/pkb001/evaluator/petclinic-818c413/ground-truth-seal-v2.json": "2b343bc780b1f7a785bd5595ff932cb4dd447a859d3db955958b0215e7342ce0"
+  },
+  "artifacts": [
+    {
+      "path": "producer/http-behavior-observations-003.json",
+      "original_protocol_path": "validation/software-factory/sf-bl002/http-behavior-observations-003.json",
+      "sha256": "1262c61dad3b985171f62e7feef61a20eda4f66057af2f8faf81ad47aeef01c0",
+      "prior_sha256": "1262c61dad3b985171f62e7feef61a20eda4f66057af2f8faf81ad47aeef01c0",
+      "byte_identical": true
+    },
+    {
+      "path": "producer/route-handler-index-003.json",
+      "original_protocol_path": "validation/software-factory/sf-bl002/route-handler-index-003.json",
+      "sha256": "352f8d3e799ef6ed7ea59f8695460cf928642934417d3194ad5dd0defaa50150",
+      "prior_sha256": "352f8d3e799ef6ed7ea59f8695460cf928642934417d3194ad5dd0defaa50150",
+      "byte_identical": true
+    },
+    {
+      "path": "producer/scenario-mapping-proposal-003.json",
+      "original_protocol_path": "validation/software-factory/sf-bl002/scenario-mapping-proposal-003.json",
+      "sha256": "5365c5d1296a00b633156db318c30dd83d3166651ea3464130b378462fbc145d",
+      "prior_sha256": "5365c5d1296a00b633156db318c30dd83d3166651ea3464130b378462fbc145d",
+      "byte_identical": true
+    },
+    {
+      "path": "producer/scenario-mapping-proposal-evidence-003.json",
+      "original_protocol_path": "validation/software-factory/sf-bl002/scenario-mapping-proposal-evidence-003.json",
+      "sha256": "b0486489f98f4abc55f58159c17820ae74c08dc7482a834aff018026c4d23838",
+      "prior_sha256": "d3fee9cc7456c4466d746259ce1d7076252c732103b98a75531b44471a1839f0",
+      "byte_identical": false
+    },
+    {
+      "path": "evaluator/hierarchical-evaluation-003.json",
+      "original_protocol_path": "validation/software-factory/sf-bl002/hierarchical-evaluation-003.json",
+      "sha256": "ee57b9299b2fb110968a32f3cbd554461e17a1035c444e9f0e5bfcf79c73dc33",
+      "prior_sha256": "ee57b9299b2fb110968a32f3cbd554461e17a1035c444e9f0e5bfcf79c73dc33",
+      "byte_identical": true
+    },
+    {
+      "path": "evaluator/hierarchical-evaluation-evidence-003.json",
+      "original_protocol_path": "validation/software-factory/sf-bl002/hierarchical-evaluation-evidence-003.json",
+      "sha256": "06a35b6442c4994f0422d37653ef39e27834ae5337cc84dffdc8aaa452107217",
+      "prior_sha256": "702aafe9a24f37e17afb6288265b73283fd3e2b5ce904f61a9166e9aaf31f671",
+      "byte_identical": false
+    }
+  ],
+  "reproduction_result": "METRICS_AND_PRIMARY_ARTIFACTS_REPRODUCED",
+  "metadata_differences": [
+    "Producer evidence java_runtime changed from preserved 23.0.2 to actual 17.0.20.1.",
+    "Evaluator evidence binds the new producer-evidence digest; no other differences."
+  ],
+  "original_inputs_outputs_unchanged": true,
+  "replayed_metrics": {
+    "scenario_trace_coverage": {
+      "covered": 9,
+      "denominator": 10,
+      "ratio": 0.9
+    },
+    "exact_component": {
+      "matched": 7,
+      "proposed": 8,
+      "expected": 24,
+      "precision": {
+        "defined": true,
+        "value": 0.875
+      },
+      "recall": {
+        "defined": true,
+        "value": 0.2916666666666667
+      },
+      "f1": {
+        "defined": true,
+        "value": 0.43750000000000006
+      }
+    },
+    "mapping_counts": {
+      "mapping_proposals": 9,
+      "unresolved": 1,
+      "recomputed_from_revalidated_proof": true
+    },
+    "route_resolution": {
+      "resolved": 41,
+      "unresolved": 0,
+      "ambiguous": 2,
+      "observations": 43,
+      "handlers": 17
+    }
+  },
+  "legacy_protocol_decision": "GO",
+  "successor_method_pair_decision": "NOT_RUN",
+  "new_method_metrics_available": false,
+  "complete_method_chain_coverage": null,
+  "limitations": [
+    "This reruns Forward scenario-to-realization mapping, not Reverse capability discovery.",
+    "Reuses the exact sealed Graphify graph and runtime evidence; no new Graphify process/index.",
+    "Extracts observations from real code/tests; does not execute upstream application tests.",
+    "Existing component-based scores are not scenario-METHOD-pair scores.",
+    "No new unseen holdout, independently sealed METHOD gold/ledger, generic producer wiring or effectiveness improvement is claimed.",
+    "Producer workspace excluded evaluator files; evaluation staged only after generation exited. This is not an OS sandbox proof.",
+    "Raw legacy GO is not a new SF-BL-005 experimental GO or Human closure."
+  ],
+  "new_coordinator_dispatch": false,
+  "verification": {
+    "control_tests": {
+      "passed": 63,
+      "failed": 0,
+      "command": "python3 -m pytest -q"
+    },
+    "full_java_tests_rerun": false,
+    "byte_identical_artifacts": 4,
+    "metadata_only_differences_verified": true,
+    "source_and_old_evidence_diff_empty": true,
+    "independent_new_run_review": "NOT_PERFORMED",
+    "reason": "Executed existing reviewed code without source changes; this is an operational reproduction, not a new implementation or new-protocol acceptance."
+  }
+}

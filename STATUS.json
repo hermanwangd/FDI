@@ -12,16 +12,16 @@
     "SF-BL-005"
   ],
   "active_execution": {
-    "execution_id": "SF-BL-005-METHOD-EVALUATOR-003",
-    "base_commit": "b32261bd99190190390553a814ab0f56e47fee72",
+    "execution_id": "SF-BL-005-PETCLINIC-REPLAY-004",
+    "base_commit": "981b6323c66f8a1117a9eb61c083afcb4771105a",
     "selected_backlog_items": [
       "SF-BL-005"
     ],
-    "execution_state": "LOCAL_REVIEW_PASSED",
-    "integration_candidate": "e7bcfad400d4618b3e22570cdb7c2948f2f74a77"
+    "execution_state": "REAL_DATA_REPLAY_COMPLETE",
+    "integration_candidate": null
   },
-  "next_action": "Java METHOD evaluator and comparison-input binding passed independent review; receive the bounded PORTABILITY-002 correction, then continue direct local generic production-runner integration. No holdout scoring or new dispatch.",
-  "blocking_dependency": null,
+  "next_action": "Petclinic real-data replay reproduced the legacy metrics. For successor METHOD scoring, implement real producer binding and obtain independently sealed real METHOD/chain truth and proof ledger; no new experimental GO.",
+  "blocking_dependency": "Successor real METHOD scoring inputs and production-runner wiring are not yet available; see validation/software-factory/sf-bl005/petclinic-replay-004/RESULTS.md.",
   "pkb001_foundation": {
     "status": "PRESERVED_IMMUTABLE_HISTORY",
     "bounded_decision": "REVISE",

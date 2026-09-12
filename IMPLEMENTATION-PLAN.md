@@ -2,6 +2,40 @@
 
 ## Current selection
 
+### SF-BL-005-PETCLINIC-REPLAY-004
+
+User requested a real-data rerun. Execute directly, without a Coordinator task.
+Completed: legacy metrics and four primary artifact bytes reproduced; two
+evidence metadata differences reflect Java 17 instead of the old Java 23 run.
+Evidence: validation/software-factory/sf-bl005/petclinic-replay-004/RESULTS.md.
+Base/bound Spec: 981b6323c66f8a1117a9eb61c083afcb4771105a plus the
+co-delivered section 12 reproducibility permission. Requirements AUTH-002,
+PK-004, EVID-001, TECH-001; parent SF-BL-005 remains IN_PROGRESS.
+This is reproduction of frozen SF-BL-002-ROUTE-EFFECTIVENESS-005, not a
+METHOD-PAIR-001 experiment, new holdout, producer improvement or new GO claim.
+
+Own only validation/software-factory/sf-bl005/petclinic-replay-004/** and
+fresh disposable runtime directories. No Java/source/old-artifact mutations.
+FDP maintains these controls. Rebuild the existing Java application, verify real
+Petclinic checkout 818c4136ea971c21674525f9053de0d9c7ad8cfe clean, and snapshot
+the five producer inputs named by SfBl002RouteEffectivenessRun.sealedInputs().
+Withhold evaluator inputs from producer workspace. Execute that class's public
+main with producer-input root, exact source checkout and a fresh output root.
+Seal output hashes, terminate producer, then stage existing sealed evaluator
+inputs and run SfBl002RouteEffectivenessEvaluation in a separate Java process.
+Retain original internal schema/execution identities for byte comparison; the
+new outer run identity and manifest distinguish this invocation. Never relabel
+old-unit results as METHOD-pair results. Use existing frozen Graphify evidence;
+do not claim a fresh Graphify runtime/index or upstream application test run.
+Save new outputs, timings, hashes, computed metrics, raw threshold decision and
+comparison with preserved outputs. Acceptance is digest/byte reproducibility,
+not beating the old score. Old evaluator's GO remains historical-protocol only.
+Resource limits below apply; one JVM <=2 GiB, each command <=20 minutes.
+Do not modify code to force a match or invent missing METHOD gold/proof ledger.
+Missing prerequisites for the newer experiment must be reported separately.
+
+## Reviewed scorer increment
+
 ### SF-BL-005-METHOD-EVALUATOR-003
 
 Human selected direct local implementation; no new Coordinator dispatch.
