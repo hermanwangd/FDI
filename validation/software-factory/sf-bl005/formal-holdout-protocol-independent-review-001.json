@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "SF-INDEPENDENT-PROTOCOL-REVIEW-001",
+  "protocolId": "SF-BL-005-FORMAL-HOLDOUT-PROTOCOL-001",
+  "protocolRevision": 1,
+  "protocolSha256": "2ab508f80fa9585edc540275bc2e520d0591cdbe2912749c3010fac87f7e8a42",
+  "reviewer": "/root/formal_holdout_protocol_review2",
+  "result": "PASS",
+  "findings": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 0
+  },
+  "priorReviewHistory": [
+    {
+      "result": "FAIL",
+      "p0": 0,
+      "p1": 6,
+      "p2": 2,
+      "disposition": "REMEDIATED"
+    },
+    {
+      "result": "FAIL",
+      "p0": 0,
+      "p1": 3,
+      "p2": 2,
+      "disposition": "REMEDIATED"
+    }
+  ],
+  "verified": [
+    "immutable prepared protocol bytes are frozen only by a later external seal receipt",
+    "pre-dispatch, one-shot execution, post-execution classification, and G6 phases have non-circular transitions",
+    "canonical pair scoring is exhaustive and distinct from ordered complete-chain coverage",
+    "post-dispatch missing evidence and integrity failures are fail-closed",
+    "at least two previously unused repositories, strict per-repository precision and recall, non-masking aggregation, one-shot evidence preservation, and memory below 8 GB remain required",
+    "no repository, revision, scenario, sample, or gold identity is disclosed",
+    "formal holdout PASS does not substitute for G6 Human Authority"
+  ],
+  "boundary": "Protocol specification review only. H0 final candidate, H1 scorer, H2 contamination ledger, external protocol seal, repository selection, truth, execution envelope, Human dispatch, formal holdout execution, and company-readiness decision remain absent or unauthorized."
+}

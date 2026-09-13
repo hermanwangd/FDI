@@ -1,0 +1,331 @@
+{
+  "schemaVersion": "SF-FORMAL-HOLDOUT-PROTOCOL-001",
+  "protocolId": "SF-BL-005-FORMAL-HOLDOUT-PROTOCOL-001",
+  "protocolRevision": 1,
+  "documentState": "PREPARED_POLICY_NOT_EXECUTABLE",
+  "authority": {
+    "protocolPreparationAuthorized": true,
+    "repositorySelectionAuthorized": false,
+    "holdoutExecutionAuthorized": false,
+    "candidateMutationAuthorized": false,
+    "thresholdMutationAuthorized": false,
+    "productPublicationAuthorized": false,
+    "deploymentAuthorized": false,
+    "parentClosureAuthorized": false
+  },
+  "nonDisclosureBoundary": {
+    "repositoryNamesPresent": false,
+    "repositoryUrlsPresent": false,
+    "repositoryRevisionsPresent": false,
+    "scenarioIdentitiesPresent": false,
+    "goldLabelsPresent": false,
+    "selectionArtifactCreated": false,
+    "rule": "Repository selection occurs only after this policy and the final candidate/scorer/contamination bundle are sealed. Selection identities remain evaluator-only until producer source reveal; truth remains unavailable to producer and implementation actors for the entire execution."
+  },
+  "phaseStateMachine": [
+    {
+      "order": 1,
+      "phase": "PROTOCOL_SEAL",
+      "allowedReaders": ["humanAuthority", "implementationActor", "holdoutCustodian", "truthAuthor", "proofAuthor", "scorerExecutor", "independentReviewer"],
+      "inputs": ["protocol JSON", "H0 final-candidate receipt", "H1 scorer receipt", "H2 contamination-ledger receipt"],
+      "outputs": ["external protocol seal receipt with effectiveState FROZEN_NOT_SELECTED, full integration commit, Git blob ID, protocol SHA-256, schema version, threshold-subobject SHA-256, UTC timestamp, and H0-H2 receipt SHA-256 values"],
+      "transitionPredicate": "All inputs resolve and independently verify. The external receipt freezes these exact PREPARED_POLICY_NOT_EXECUTABLE bytes and derives effectiveState FROZEN_NOT_SELECTED without modifying this protocol document; any later protocol-byte change requires a new protocol revision and seal."
+    },
+    {
+      "order": 2,
+      "phase": "HUMAN_SELECTION",
+      "allowedReaders": ["humanAuthority", "holdoutCustodian"],
+      "inputs": ["sealed eligibility policy", "sealed contamination ledger", "candidate metadata without gold"],
+      "outputs": ["evaluator-only selection receipt"],
+      "transitionPredicate": "Human selects at least two eligible repositories only after PROTOCOL_SEAL; no replacement is permitted after this receipt is sealed."
+    },
+    {
+      "order": 3,
+      "phase": "SNAPSHOT_ELIGIBILITY_AND_TRUTH_SEAL",
+      "allowedReaders": ["holdoutCustodian", "truthAuthor", "independentReviewer"],
+      "inputs": ["selection receipt", "exact repository snapshots"],
+      "outputs": ["snapshot and eligibility receipts", "scenario set", "evaluator-only truth", "digest manifest"],
+      "transitionPredicate": "Every repository passes eligibility and sample gates; truth and scenarios are sealed before producer generation."
+    },
+    {
+      "order": 4,
+      "phase": "PRODUCER_SOURCE_REVEAL_AND_GENERATION",
+      "allowedReaders": ["producer"],
+      "inputs": ["selected source/test snapshots", "sealed scenarios", "approved structural evidence", "sealed final candidate/runtime", "protocol without truth or expected-pair data"],
+      "outputs": ["producer artifacts", "ordered command ledger", "nonempty logs", "producer-output seal"],
+      "transitionPredicate": "Explicit Human holdout dispatch and H4 envelope preflight PASS; producer cannot read truth, proof, or scorer outputs."
+    },
+    {
+      "order": 5,
+      "phase": "PROOF_REVEAL_AND_AUTHORING",
+      "allowedReaders": ["proofAuthor"],
+      "inputs": ["sealed producer outputs", "sealed evaluator truth", "sealed source snapshots"],
+      "outputs": ["proof ledger", "proof-ledger seal"],
+      "transitionPredicate": "All producer outputs are sealed and generation is terminal; proof author cannot remove or edit producer claims."
+    },
+    {
+      "order": 6,
+      "phase": "SCORING",
+      "allowedReaders": ["scorerExecutor"],
+      "inputs": ["sealed truth", "sealed producer outputs", "sealed proof ledger", "sealed scorer"],
+      "outputs": ["raw counts", "metrics", "coverage", "failure taxonomy", "scorer-output seal"],
+      "transitionPredicate": "All input digests match; scorer runs once and cannot mutate any input."
+    },
+    {
+      "order": 7,
+      "phase": "INDEPENDENT_REVIEW_AND_FDP_RECEIPT",
+      "allowedReaders": ["independentReviewer", "fdpOwner", "closureVerifier"],
+      "inputs": ["complete preReviewEvidenceBundle produced by phases 1 through 6"],
+      "outputs": ["independent recomputation and exact-run review", "provisional result classification", "FDP receipt bound to the provisional classification", "closure-verifier receipt", "final sealed holdout result"],
+      "transitionPredicate": "In order: reviewer verifies every digest, phase transition, count, metric, and coverage result and derives the provisional classification; FDP records that classification and exact evidence revision; a closure verifier checks the review and FDP receipt digests and seals the identical final classification."
+    },
+    {
+      "order": 8,
+      "phase": "G6_HUMAN_DECISION",
+      "allowedReaders": ["humanAuthority"],
+      "inputs": ["formal holdout result", "complete G0-G5 evidence bundle"],
+      "outputs": ["separate Human GO, REVISE, or STOP company-readiness decision"],
+      "transitionPredicate": "Occurs only after the holdout result and does not alter that result."
+    }
+  ],
+  "prerequisiteGates": [
+    {
+      "id": "HP_PROTOCOL_SEAL",
+      "required": [
+        "full 40-character integration commit containing the exact protocol bytes",
+        "Git blob ID and SHA-256 of the protocol",
+        "schema version, protocol revision, UTC seal timestamp, and threshold-subobject SHA-256",
+        "H0, H1, and H2 receipt paths and SHA-256 values",
+        "independent seal review with P0, P1, and P2 all zero"
+      ],
+      "transition": "External receipt derives FROZEN_NOT_SELECTED from immutable PREPARED_POLICY_NOT_EXECUTABLE document bytes",
+      "currentState": "MISSING"
+    },
+    {
+      "id": "H0_FINAL_CANDIDATE",
+      "required": [
+        "full 40-character candidate commit",
+        "candidate tree digest",
+        "Java 17 runtime JAR SHA-256",
+        "all producer source and configuration SHA-256 values",
+        "Java 17 targeted and full regression with zero failures, errors, and skips",
+        "Python regression with zero failures",
+        "exact-candidate independent code review with P0, P1, and P2 all zero"
+      ],
+      "currentState": "UNBOUND"
+    },
+    {
+      "id": "H1_SCORER",
+      "required": [
+        "scorer source commit and source SHA-256",
+        "scorer binary SHA-256",
+        "pair identity, deduplication, TP, FP, FN, abstention, zero-denominator, and complete-chain conformance vectors",
+        "independent recomputation implementation and SHA-256",
+        "no gold-derived tuning after seal"
+      ],
+      "currentState": "UNBOUND"
+    },
+    {
+      "id": "H2_CONTAMINATION_LEDGER",
+      "required": [
+        "immutable inventory of every repository lineage, functional corpus, scenario set, truth set, and source/test content used for development, diagnostics, calibration, or candidate inspection",
+        "lineage and near-duplicate checks",
+        "unknown overlap treated as not proven independent"
+      ],
+      "currentState": "MISSING"
+    },
+    {
+      "id": "H3_SELECTION_AND_TRUTH",
+      "required": [
+        "Human-selected repositories after H0-H2 and protocol seal",
+        "license or company-use permission",
+        "exact full revisions and snapshot digests",
+        "evaluator-only selection receipt",
+        "evaluator-only truth sealed before producer generation"
+      ],
+      "currentState": "NOT_SELECTED"
+    },
+    {
+      "id": "H4_EXECUTION_ENVELOPE",
+      "required": [
+        "new immutable execution ID and namespace",
+        "exact input, runtime, scorer, budget, stopping-rule, and role bindings",
+        "single-attempt command ledger with start, end, attempt, argv, exit code, and log SHA-256",
+        "independent envelope preflight with P0, P1, and P2 all zero",
+        "explicit Human holdout dispatch"
+      ],
+      "currentState": "MISSING"
+    }
+  ],
+  "repositoryEligibility": {
+    "minimumRepositories": 2,
+    "requirements": [
+      "no repository, fork, same-lineage corpus, or functionally duplicated scenario set recorded in the contamination ledger",
+      "no use in implementation, debugging, diagnostic, calibration, prompt design, threshold choice, or scorer development",
+      "non-PetClinic lineage",
+      "materially distinct frameworks, domains, or test/assertion styles across the selected repositories",
+      "exact revision, complete snapshot digest, module roots, build/test commands, license or company-use permission, and bounded execution cost verified before dispatch",
+      "Graphify and test-behavior evidence generated from each exact selected snapshot",
+      "producer-facing evidence contains no evaluator labels or gold-derived hints"
+    ],
+    "publicPretrainingLimitation": "Public-source eligibility establishes no project-specific exposure or tuning; it cannot prove that a foundation model never encountered public code during pretraining, and the final report must state this limitation.",
+    "ineligibleDispositionBeforeSelectionSeal": "The custodian may remove an ineligible metadata candidate and rebuild the candidate pool before Human selection; no holdout identity has yet been created.",
+    "ineligibleDispositionAfterSelectionSeal": "Any eligibility failure invalidates and permanently retires the entire selected holdout set. No repository or scenario replacement is permitted."
+  },
+  "sampleContract": {
+    "minimumScenariosPerRepository": 10,
+    "minimumExpectedPairsPerRepository": 20,
+    "requiredCoveragePerRepository": [
+      "positive mutation",
+      "positive retrieval",
+      "update or query",
+      "negative guard",
+      "wrong entity or ambiguity",
+      "insufficient evidence or unresolved",
+      "necessary downstream production chain"
+    ],
+    "samplingUnit": "feature or delivery group",
+    "prohibitedSampling": [
+      "randomly splitting test methods from one feature group across development and holdout",
+      "dropping unsupported, unresolved, negative, duplicate, or failed scenarios after result inspection",
+      "substituting synthetic examples for natural repository holdout evidence"
+    ],
+    "insufficientSampleDisposition": "INCONCLUSIVE"
+  },
+  "measurementContract": {
+    "unit": "source-backed scenario to production METHOD pair",
+    "canonicalPairSchema": {
+      "encoding": "UTF-8 canonical JSON with lexicographically sorted object keys, no insignificant whitespace, and arrays preserved in declared order",
+      "fieldsInIdentityOrder": ["repositorySnapshotSha256", "scenarioId", "fullyQualifiedDeclaringType", "methodName", "parameterTypes", "returnType"],
+      "typeNormalization": "JVM binary name for declaring and reference types; primitive keyword for primitives; array dimensions preserved; generic arguments erased consistently for both proposal and gold",
+      "constructorNormalization": "methodName is <init> and returnType is void",
+      "overloadRule": "parameterTypes is an ordered array and is always present, including an empty array; overloads remain distinct",
+      "digest": "SHA-256 of the canonical JSON bytes"
+    },
+    "truePositive": "one proposed canonical pair exactly matches one sealed necessary gold pair and its evidence independently satisfies the frozen evidence and role policy",
+    "falsePositive": "a proposed pair is absent from gold, has wrong entity/action/role/polarity/condition, is ambiguous, lacks supporting evidence, or duplicates credit already assigned",
+    "falseNegative": "a sealed necessary gold pair receives no valid one-to-one proposed match; an abstention does not remove it",
+    "classificationExhaustiveness": "Within each repository and scenario, every proposed canonical pair is classified exactly once as TP or FP, and every sealed necessary gold pair is classified exactly once as matched or FN. Pair classification is complete before chain coverage is computed.",
+    "duplicatePolicy": "At most one TP credit per gold pair. Every additional duplicate proposal is an FP.",
+    "abstentionPolicy": "UNRESOLVED remains in scenario and gold denominators; necessary unmatched pairs are FN and abstentions are reported separately by reason.",
+    "zeroDenominatorPolicy": "Return null with a machine-readable reason; never coerce to zero or one.",
+    "scenarioValidity": "Every sealed selected scenario must have a unique canonical ID, repository snapshot binding, test/source provenance, one coverage stratum, and a sealed truth disposition. Missing or duplicate identity, bad provenance, schema failure, or digest failure makes the execution INVALID.",
+    "completeChainPolicy": {
+      "identity": "repositorySnapshotSha256 plus scenarioId plus the evaluator-sealed ordered array of canonical pair digests; chain order is not part of canonical pair identity and is used only for chain coverage",
+      "requiredEdge": "Each adjacent ordered METHOD pair must have evaluator-sealed source-backed call, dispatch, data-flow, or explicit necessary-method evidence under the frozen evidence policy.",
+      "complete": "Using the already classified one-to-one pair match set, every necessary pair and every required edge for the scenario is matched in evaluator-sealed chain order; extra unsupported pairs remain FP but do not erase correctly matched pair-level TPs.",
+      "unsupportedOrUnresolved": "Record an abstention reason and retain every necessary unmatched pair as FN; never remove the scenario or its truth from denominators."
+    },
+    "coverage": {
+      "scenarioCoverage": "count of valid selected scenarios with at least one valid proposed pair divided by all sealed selected scenarios",
+      "completeChainCoverage": "count of sealed selected scenarios whose complete necessary chain is matched divided by all sealed selected scenarios requiring a nonempty chain",
+      "unavailableDenominator": "Return null with a machine-readable reason and classify INCONCLUSIVE only when eligibility/sample evidence was unavailable before execution; after execution, missing mandatory truth or malformed source/schema/digest evidence is INVALID.",
+      "passRequirement": "Both coverage values and their raw numerators and denominators must be available for every repository; unavailable mandatory coverage prevents PASS."
+    },
+    "precision": "TP/(TP+FP)",
+    "recall": "TP/(TP+FN)",
+    "f1": "2*precision*recall/(precision+recall)",
+    "thresholds": {
+      "precisionStrictlyGreaterThan": 0.8,
+      "recallStrictlyGreaterThan": 0.6,
+      "roundingForDecision": false
+    },
+    "confidenceIntervals": "Report two-sided 95 percent Wilson intervals for precision and recall from unrounded counts; intervals are descriptive and do not replace the strict point-estimate gates.",
+    "aggregation": {
+      "primaryDecision": "Every repository must independently exceed both strict thresholds.",
+      "requiredReports": [
+        "per-repository raw TP, FP, FN and metrics",
+        "micro aggregate from summed raw counts",
+        "equal-weight macro average across repositories",
+        "scenario coverage and complete-chain coverage",
+        "abstentions, duplicates, unsupported inputs, invalid scenarios, and execution failures"
+      ],
+      "nonMaskingRule": "No aggregate can hide or waive a repository that fails or has unavailable precision or recall."
+    }
+  },
+  "roleIsolation": {
+    "roles": {
+      "humanAuthority": "Selects the sealed holdout and separately authorizes the one-shot execution; makes the terminal company-readiness decision.",
+      "implementationActor": "Freezes the final candidate before selection and has no selection or truth access.",
+      "producer": "Reads only approved source, test, scenario, structural evidence, runtime, and protocol inputs; never reads truth, proof ledger, expected pairs, or evaluator judgments.",
+      "holdoutCustodian": "Maintains the contamination ledger and evaluator-only selection artifact; does not implement or run the producer.",
+      "truthAuthor": "Authors truth from the sealed selected snapshots before generation and cannot alter producer artifacts.",
+      "proofAuthor": "Receives sealed producer outputs only after generation completion and writes evidence-to-gold decisions without filtering producer claims.",
+      "scorerExecutor": "Runs the sealed scorer exactly once after proof seal and cannot mutate truth, producer outputs, or proof ledger.",
+      "independentReviewer": "Recomputes manifests, counts, metrics, isolation, and the provisional decision from exact artifacts and was not an implementation, producer, truth, proof, or original scorer-execution actor.",
+      "fdpOwner": "Records the provisional classification and exact evidence revision without changing either.",
+      "closureVerifier": "Verifies the independent review and FDP receipt digests and seals the identical final holdout result; it cannot change the classification."
+    },
+    "physicalControls": [
+      "separate worktrees and output roots",
+      "separate sessions and credentials",
+      "evaluator truth store unreadable by implementation and producer actors",
+      "producer outputs sealed before evaluator reveal",
+      "all cross-role transfers use digest manifests and receiver read-back"
+    ]
+  },
+  "executionPolicy": {
+    "attempts": 1,
+    "phaseGroups": {
+      "preDispatchPhases": [1, 2, 3],
+      "oneShotExecutionPhases": [4, 5, 6],
+      "postExecutionClassificationPhase": 7,
+      "postHoldoutCompanyDecisionPhase": 8,
+      "attemptScope": "The single-attempt execution and command ledger apply only to phases 4 through 6. Phase 7 verifies and classifies that immutable attempt. Phase 8 is outside the holdout execution and outside its command ledger."
+    },
+    "retryPolicy": "No retry under the same holdout identity. Infrastructure or integrity failure invalidates and retires the selected set after preserving all evidence.",
+    "stoppingRule": "Complete pre-dispatch phases 1 through 3 before Human dispatch; run one-shot phases 4 through 6 without skipping or reordering; then run classification phase 7. Stop the one-shot execution immediately on nonzero exit, digest mismatch, isolation breach, output collision, resource violation, missing mandatory artifact or metric, or protocol deviation. Phase 8 is a later company-readiness decision.",
+    "resourceLimits": {
+      "aggregateMemoryGbStrictlyBelow": 8,
+      "heavyJvmConcurrency": 1,
+      "mavenHeapGbMaximum": 2,
+      "producerHeapGbMaximum": 1,
+      "evaluatorHeapMbMaximum": 512
+    },
+    "immutability": [
+      "all writable paths in the new immutable phase 4 through 7 execution namespace must be absent before phase 4; sealed read-only inputs and pre-dispatch receipts are outside that namespace",
+      "all failures, partial outputs, logs, ledgers, and manifests are preserved",
+      "no overwrite, repair, relabel, scenario replacement, threshold change, gold change, or score suppression",
+      "any post-result candidate, scorer, protocol, selection, scenario, truth, or threshold change permanently retires the selected data from formal holdout use"
+    ]
+  },
+  "requiredOutputBundle": {
+    "preReviewEvidenceBundle": [
+      "selection receipt digest and independently verified reveal history",
+      "contamination-ledger digest",
+      "candidate, runtime, producer, scorer, protocol, source snapshot, scenario, truth, and proof digests",
+      "role and filesystem isolation receipt",
+      "phase-transition receipt",
+      "ordered command ledger and nonempty logs",
+      "sealed producer outputs for the final candidate for every repository",
+      "proof ledger and scorer outputs",
+      "per-repository and aggregate raw counts, metrics, confidence intervals, coverage, abstentions, duplicates, unsupported inputs, and failures"
+    ],
+    "classificationClosureBundle": [
+      "independent recomputation and exact-run review with P0, P1, and P2 all zero",
+      "provisional result classification bound to the reviewed evidence digest",
+      "FDP receipt containing schema version, execution ID, exact evidence revision, identical result classification, acceptance status, and receipt SHA-256",
+      "closure-verifier receipt binding the review and FDP receipt digests",
+      "final sealed holdout result"
+    ],
+    "preResultClosureRule": "Every preReviewEvidenceBundle item must exist and match its recorded digest before review. Phase 7 then creates and verifies every classificationClosureBundle item in order before the final result is sealed. Any post-dispatch missing item, digest mismatch, recomputation mismatch, or integrity failure is INVALID.",
+    "postHoldoutG6": [
+      "complete G0-G5 evidence bundle",
+      "separate Human GO, REVISE, or STOP company-readiness decision"
+    ]
+  },
+  "decisionPolicy": {
+    "precedence": ["INVALID", "INCONCLUSIVE", "REVISE", "PASS"],
+    "classificationTable": {
+      "preExecutionEligibilityOrSampleUnavailable": "INCONCLUSIVE; do not dispatch",
+      "postDispatchIntegrityOrMandatoryArtifactOrMetricFailure": "INVALID; preserve evidence and retire the selected set",
+      "validMetricsBelowThreshold": "REVISE",
+      "validCompleteBundleAboveThreshold": "PASS"
+    },
+    "PASS": "Every preReviewEvidenceBundle and classificationClosureBundle item is complete and verified, all integrity and mandatory coverage gates pass, every repository has available unrounded precision greater than 0.80 and recall greater than 0.60, and independent review has P0, P1, and P2 all zero.",
+    "REVISE": "Integrity is valid but at least one repository fails either strict metric threshold.",
+    "INCONCLUSIVE": "Before dispatch, mandatory eligibility, sample, permission, candidate, scorer, contamination, selection, truth, envelope, or review-preparation evidence is unavailable without an integrity breach. After dispatch, unavailable mandatory artifacts or metrics are INVALID.",
+    "INVALID": "Any isolation, digest, role, attempt, ordering, immutability, or protocol-integrity rule fails.",
+    "companyReadinessBoundary": "A formal holdout PASS is necessary but does not itself authorize deployment, publication, Product truth, or company use. Human Authority must review the complete G0-G5 bundle and issue the G6 terminal decision."
+  }
+}
