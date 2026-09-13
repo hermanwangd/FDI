@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "executionId": "SF-BL-005-PARALLEL-INVESTIGATIONS-001",
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "branch": "codex/sf-bl002-route-aware-correction",
+  "constructionBase": "86e96e8d317b9b7ebfc435f54918d62ae157a431",
+  "controlCommit": "8f18785ceef6e6120f6d367a39517202a3d2a233",
+  "specRevision": "d109fde995dfae982b8e0c708367cdd9e7e4cb9d",
+  "backlogItems": [
+    "SF-BL-005"
+  ],
+  "requirementIds": [
+    "AUTH-002",
+    "PK-004",
+    "EVID-001",
+    "TECH-001"
+  ],
+  "controls": {
+    "AGENTS.md": "aac96ac43a36a5401c979cd72c762caa8aa7f12572af987e9836e7cd75e9e7c6",
+    "PROJECT-OVERVIEW.md": "4cb9c41e0ebd572fdb5bfc31cff166d069181ca4f3a887c15eee4ce7d77e5f2a",
+    "FRAMEWORK-SPEC.md": "7f635656dd1288c5ca33e3984acb7d41251c180d3b42a5d3e790557957c39c16",
+    "BACKLOG.md": "099d178634db712aa521a8153991d3b7150dc824caa11f59612a18b1f1f07b33",
+    "IMPLEMENTATION-PLAN.md": "f9f0aac3a6b988e478eb8d412d1502091ff25eea3f49b9f1f20cb809a3f2ee31",
+    "STATUS.json": "396c61041571601e54b079ca90fc52ba0d7a12791ca57936b506bd4b92160bfb"
+  },
+  "stages": [
+    {
+      "id": "RECOVERY",
+      "stage": 1,
+      "owner": "Validation Steward",
+      "dependsOn": [],
+      "ownedPaths": [
+        "validation/software-factory/sf-bl005/parallel-investigations-001/recovery.md"
+      ],
+      "inputs": [
+        {
+          "path": "validation/software-factory/sf-bl005/fdp-reconciliation-realworld-003.md",
+          "revision": "8f18785ceef6e6120f6d367a39517202a3d2a233",
+          "sha256": "de2835001016cfa8c1c81042b9b60e6b12b8a4f30ec41f5917cdafdc33d93353",
+          "authority": "supporting evidence only",
+          "mutationAllowed": false,
+          "evaluatorVisible": false
+        },
+        {
+          "path": "validation/pkb001/operations/MULTICA-SLICE-OPTIMIZATION.md",
+          "revision": "8f18785ceef6e6120f6d367a39517202a3d2a233",
+          "sha256": "a6d0b9de5cd5af06d61c495dd388325d9ccdf695cfed4ba28000d8e79f568f8e",
+          "authority": "supporting evidence only",
+          "mutationAllowed": false,
+          "evaluatorVisible": false
+        }
+      ],
+      "acceptance": [
+        "Fact/inference/proposal labels with pinned evidence references",
+        "Decision table for missing bytes, wrong hash, duplicate trigger, unknown scorer outcome, runtime loss, output collision",
+        "Recommend minimum lifecycle change; no runtime verification claim from document review"
+      ]
+    },
+    {
+      "id": "SYNTAX",
+      "stage": 1,
+      "owner": "Delivery Engineer",
+      "dependsOn": [],
+      "ownedPaths": [
+        "validation/software-factory/sf-bl005/parallel-investigations-001/test-syntax.md"
+      ],
+      "inputs": [
+        {
+          "path": "validation/software-factory/sf-bl005/parallel-investigations-001/public-inputs.json",
+          "revision": "8f18785ceef6e6120f6d367a39517202a3d2a233",
+          "sha256": "7be2562d867623e1e400caaf256be8503e9b69d62840ae04efc6e7f88cc5ab58",
+          "authority": "supporting evidence only",
+          "mutationAllowed": false,
+          "evaluatorVisible": false
+        },
+        {
+          "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelector.java",
+          "revision": "8f18785ceef6e6120f6d367a39517202a3d2a233",
+          "sha256": "7d640948f7cc6be00800e1df7c4c3cbf9015b12bed7a4c3f8e7d50420b0a7fd2",
+          "authority": "supporting evidence only",
+          "mutationAllowed": false,
+          "evaluatorVisible": false
+        }
+      ],
+      "publicInputs": "All 23 files enumerated by the digest-pinned public-inputs.json; verify each hash before reading",
+      "acceptance": [
+        "Account for all 23 files including helpers; list dialect groups and pinned source line examples",
+        "Request/assertion binding, error cases and ambiguous forms; separate observed from synthetic proposals",
+        "Smallest adapter syntax proposal without code changes or claimed measured selector loss counts"
+      ]
+    },
+    {
+      "id": "REVIEW",
+      "stage": 2,
+      "owner": "Independent Adjudicator",
+      "dependsOn": [
+        "RECOVERY",
+        "SYNTAX"
+      ],
+      "ownedPaths": [
+        "validation/software-factory/sf-bl005/parallel-investigations-001/review.md"
+      ],
+      "inputs": "Exact durable report commits, preceding pinned inputs and report attachment digests",
+      "acceptance": [
+        "Independently verify both reports and owned-path diffs, source identities and acceptance",
+        "PASS/FAIL/INCONCLUSIVE separately per report with exact commit/hash binding"
+      ]
+    }
+  ],
+  "parallelSafety": {
+    "requireDistinctManagedWorktrees": true,
+    "ownedPathsDisjoint": true,
+    "noSharedOutput": true,
+    "existingExecution": "SF-BL-005-SELECTOR-DIAGNOSTICS-001 remains pinned to original envelope; do not change its assignments/controls",
+    "coordinatorConcurrency": 1
+  },
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "maxToolCallsPerInvestigation": 40,
+    "reportMaxBytes": 10000,
+    "heavyProcessesAllowed": false
+  },
+  "handoff": [
+    "Commit only owned report; attach exact report bytes and manifest",
+    "Receiver retrieves and checks SHA-256 before advancing or cleaning up",
+    "Lost evidence blocks; no silent regeneration or output renaming",
+    "No active-control edits; report PLAN_BLOCKED/PLAN_CONFLICT/PLAN_CHANGE_REQUIRED"
+  ],
+  "prohibited": [
+    "Executable source edits",
+    "Changing operational guidance",
+    "Evaluator truth or scoring artifact access by syntax actor",
+    "RealWorld test execution, Maven, calibration/scoring, Docker",
+    "Merge/push/deploy/publication/closure",
+    "Modifying HERM-500 or its descendants"
+  ],
+  "verification": [
+    "Verify input digests and all 23 public file hashes",
+    "Report owned-path diff and git diff --check",
+    "Independent exact-report review; no runtime compliance claims"
+  ],
+  "kpi": {
+    "category": "INVESTIGATION",
+    "size": "S per report",
+    "cohort": "N/A",
+    "required": "all attributable runs, token/cache separation, elapsed/wait, duplicates and report acceptance; no fabricated cost"
+  }
+}
