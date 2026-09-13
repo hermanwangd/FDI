@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "SF-ENVELOPE-PREFLIGHT-001",
+  "executionId": "SF-BL-005-FORMAL-HOLDOUT-SCORER-001",
+  "envelopeRevision": 1,
+  "envelopeSha256": "0c1828b9f62f32567009c109c0969d182a5e28f4183853c737546957a700062d",
+  "reviewer": "/root/diagnostic_002_preflight",
+  "result": "FAIL_PLAN_CONFLICT",
+  "findings": {
+    "p0": 0,
+    "p1": 4,
+    "p2": 1
+  },
+  "priorReviewedRevision": {
+    "envelopeSha256": "43fee5cb41698f94478c83d2ea84b4603ccfdefade2fc52b0466335fa99864ce",
+    "result": "FAIL_PLAN_CONFLICT",
+    "findings": {
+      "p0": 0,
+      "p1": 4,
+      "p2": 1
+    },
+    "closedByCurrentRevision": [
+      "Python launcher and interpreter identity",
+      "declared actor write-path overlap",
+      "Wilson formula, operation order, precision and serialization",
+      "candidate epoch and ISO timestamp derivation"
+    ]
+  },
+  "openFindings": [
+    {
+      "id": "P1-CANDIDATE-GUARD-NOT-EXECUTABLE",
+      "required": "Materialize and independently test an exact allowlist/denylist candidate guard; no prose appended to shell argv."
+    },
+    {
+      "id": "P1-VECTOR-SOURCE-PARITY-PSEUDOCOMMANDS",
+      "required": "Materialize exact synthetic vector/golden bundle plus vector guard, source-manifest generator and Java/Python parity runner with fixed CLI argv and digests before an executable envelope revision."
+    },
+    {
+      "id": "P1-LEDGER-WRITER-UNOWNED",
+      "required": "Assign a distinct evidence actor and exact paths for START/END attempt-1 ledger, logs and stage receipts; implement fail-stop ordering verification."
+    },
+    {
+      "id": "P1-INDEPENDENT-REVIEWS-SELF_ATTESTABLE",
+      "required": "Use distinct vector and post-merge receipt reviewers with separately owned review artifacts and schemas."
+    },
+    {
+      "id": "P2-RED-FAILURE-NOT-SPECIFIC",
+      "required": "RED stage must match exact expected missing-implementation failure signatures and reject unrelated compile, configuration, runtime or regression failures."
+    }
+  ],
+  "verified": [
+    "base, tree, controls and three frozen inputs match",
+    "target branch and output namespace are absent",
+    "implementation, dispatch, holdout and legacy mutation authority remain false",
+    "Java 17 and Python launcher/interpreter bindings match the current host",
+    "declared actor write paths are disjoint",
+    "Wilson arithmetic and sequential offline build timestamp derivation are specified",
+    "no implementation, calibration or formal holdout execution occurred"
+  ],
+  "disposition": "Do not dispatch. Preserve this draft and failure evidence; prepare exact synthetic vectors/golden and checked verification tools before issuing a new envelope revision.",
+  "implementationAuthorized": false,
+  "dispatchAuthorized": false,
+  "formalHoldoutAuthorized": false
+}

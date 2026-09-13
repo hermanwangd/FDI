@@ -12,6 +12,8 @@ H2 preparation now has a 473-entry exact committed-evidence manifest and a conse
 
 H1 audit proves that the existing `SFBL005-METHOD-PAIR-001` calibration scorer cannot be relabeled for formal holdout use. Its identity, duplicate, evidence-disposition, scenario-validity, chain, coverage, multi-repository, confidence-interval, and independent-recomputation semantics differ from the frozen protocol. Gap analysis `validation/software-factory/sf-bl005/formal-holdout-scorer-gap-001.json` passed independent review with P0/P1/P2 zero. H1 remains unbound; a separately authorized versioned scorer envelope is required and the legacy scorer stays immutable.
 
+The first H1 implementation-envelope draft is retained with independent `FAIL_PLAN_CONFLICT` evidence. Runtime identity, actor path overlap, Wilson arithmetic and build timestamp derivation were closed, but candidate/vector/source/parity commands, ledger ownership, independent vector/receipt reviews and specific RED failure evidence are not yet executable. Prepare and review exact synthetic vectors/golden plus checked verification tools before issuing a new envelope revision. No H1 implementation or dispatch is authorized.
+
 
 Human Authority selected a four-step sequential SF-BL-005 experiment on
 2026-09-13. The order is mandatory because the first RealWorld diagnostic is
