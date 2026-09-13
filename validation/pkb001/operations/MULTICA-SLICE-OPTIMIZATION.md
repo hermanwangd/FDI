@@ -329,6 +329,25 @@ One missed target creates one primary corrective action per improvement cycle.
 Additional observations remain recorded but do not trigger unrelated process
 changes until the primary action is measured.
 
+### KPI alert rules
+
+Send one actionable alert on a state transition, not on every polling cycle:
+
+- **Immediate:** independent `FAIL` or actionable `INCONCLUSIVE`, red E2E,
+  genuine stuck, duplicate dispatch, unplanned Human recovery, or terminal
+  delivery with missing evidence, unclassified failures or runtime mismatch.
+- **Warning:** first transition into yellow E2E, or usage still unreported after
+  its run becomes terminal.
+- **Quiet:** unchanged state, healthy active work, declared dependency waiting,
+  or a long-running process that continues to produce valid progress.
+
+Route the alert to the metric owner and improvement owner. Include execution ID,
+KPI, measured value, target, cause, evidence and next action. Deduplicate by
+`execution_id + KPI + state + evidence revision`; notify again only when severity
+changes, new evidence changes the diagnosis, user action becomes necessary, or
+the abnormal condition resolves. Monitoring reports facts and never changes
+scope, acceptance gates or authority.
+
 | KPI | Definition | Current baseline (HERM-273 through HERM-282) | Next target | First optimization action when abnormal |
 |---|---|---|---|---|
 | token cost | Sum input and output across every run; report cache-read separately because its provider cost differs. | 32 runs; 2,333,118 input+output and 60,464,384 cache-read tokens, collected 2026-09-06. | Coordinator share at or below 20%, with zero duplicate-trigger runs. | Remove duplicate triggers and repeated context loading before reducing verification. |

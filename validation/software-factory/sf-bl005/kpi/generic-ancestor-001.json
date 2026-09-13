@@ -39,6 +39,15 @@
     "unplanned_intervention_count": 0,
     "human_wait_seconds": 0
   },
+  "improvement": {
+    "metric": "quality.first_pass",
+    "cause": "MULTILEVEL_GENERIC_ANCESTOR_INCORRECTLY_RESOLVED",
+    "metric_owner": "Feature Delivery Plane",
+    "improvement_owner": "Delivery Engineer",
+    "corrective_action": "Reject generic substitution unless the receiver itself has the supported direct generic parent and add the non-generic intermediary regression.",
+    "status": "IN_PROGRESS",
+    "evidence": "HERM-514"
+  },
   "stages": [],
   "runs": []
 }
