@@ -92,7 +92,7 @@ format.
 ## Selection boundary
 
 Improvement source candidate `ceca0e38d4930ea1db31cb2635b941b21273609b`
-is selected for user-authorized integration. BOXING-002 measured recall 0.775
+was integrated at `3ffe374`; BOXING-002 measured recall 0.775
 and precision 0.8611111111111112 under unchanged gold/scorer.
 Evidence: `validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md`.
 This exposed calibration does not establish overall GO or parent closure;
@@ -103,10 +103,13 @@ Repository selection, retrieval, training-material access, Graphify indexing,
 Product Context acceptance, A/P execution, and terminal closure occur only at
 their defined authority gates. `SF-BL-005` is selected for the bounded
 remediation planning under `IMPLEMENTATION-PLAN.md`. REALWORLD-003
-returned with envelope deviations and remains unaccepted. The bounded recovery,
-selector-diagnostic and adapter plan is prepared; the two-path selector diagnostic slice is selected for dispatch under a fresh
-envelope. Two disjoint supporting investigations (handoff recovery and public test syntax)
-are also selected under the Plan. Adapter changes and calibration rerun remain unselected. `SF-BL-002` remains `IN_PROGRESS`, engineering accepted
+returned with envelope deviations and remains unaccepted. The selector is integrated at `758e086382e6023d6e4d389299a46bd696aa3857` with bounded
+review remediation; Java 1440/1440 and Python 63/63. Evidence:
+`validation/software-factory/sf-bl005/selector-diagnostics-001/intake.json`. Investigation observations are received with
+limitations; original reports and PASS records remain preserved. The 41/40
+SYNTAX tool-call deviation is not waived; read-back does not authorize cleanup.
+Engineering intake does not require a new Human gate.
+Adapter changes and calibration rerun remain unselected. `SF-BL-002` remains `IN_PROGRESS`, engineering accepted
 but pending Human terminal closure, with no work dispatched. `SF-BL-001` and
 `SF-BL-003` remain unselected; `SF-BL-004` is `VERIFIED` and unselected.
 

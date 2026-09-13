@@ -4,11 +4,25 @@
 
 ### SF-BL-005 remediation planning
 
-Status: SELECTOR_DIAGNOSTICS_SELECTED. The user authorized the bounded
-diagnostic implementation and exact-envelope dispatch. Execution ID:
-SF-BL-005-SELECTOR-DIAGNOSTICS-001. Only stage 2 diagnostic code and stage 4
-review/verification are selected; adapter implementation and calibration are not.
-Stage 1 handoff constraints below are mandatory for this execution.
+Status: LOCAL_INTEGRATION_VERIFIED. Integrated code:
+758e086382e6023d6e4d389299a46bd696aa3857. Java 1440/1440; Python 63/63.
+Evidence: validation/software-factory/sf-bl005/selector-diagnostics-001/intake.json.
+No rerun or new implementation is selected. User selected receipt correction and
+local integration on 2026-09-13. Execution: SF-BL-005-SELECTOR-DIAGNOSTICS-001.
+Receiving base: 3ffe374ce106f3a2f9e13e5f7d20097e418172d2; incoming candidate:
+e6ff2c67a82c0a670cc21ea2bb808c1939acb8f3. Preserve original envelope and failures.
+Only the two selector code/test paths may change; bounded review remediation
+restores legacy no-diagnostic allocation and caps explicit diagnostics at 100000
+pairs, rejecting before allocation with DIAGNOSTIC_PAIR_LIMIT_EXCEEDED.
+This is a diagnostic resource bound, not a selection/filter threshold.
+TDD: reject 100001 pairs, accept 100000; legacy path stays usable above this
+diagnostic limit without reading rejected-pair diagnostic-only identities.
+FDP owns BACKLOG/Plan/Status and supporting receipt under
+validation/software-factory/sf-bl005/selector-diagnostics-001/.
+Import original recovery/syntax/review report bytes without rewriting them.
+Independent integrated review and the full verification profile below are
+required. No external dispatch, push, cleanup, adapter or calibration is selected.
+Stage 1 handoff constraints below remain mandatory.
 Backlog: SF-BL-005. Requirements: AUTH-002, PK-004, EVID-001, SF-EVAL-001,
 TECH-001. Exact source base: d89626981975f2c258e438f25880ac258efe1920.
 Spec revision: d109fde995dfae982b8e0c708367cdd9e7e4cb9d.
@@ -108,48 +122,25 @@ negative cases, review verdict, limitations, attempts/rework and token/cycle KPI
 PASS establishes ENGINEERING_READY_FOR_FDP_INTAKE only. It promises no recall
 improvement and does not select RealWorld rerun, holdout, publication or closure.
 
-## Parallel supporting investigations selected
+## Parallel supporting investigations — intake
 
 Execution SF-BL-005-PARALLEL-INVESTIGATIONS-001; base
-86e96e8d317b9b7ebfc435f54918d62ae157a431; same Spec and requirement bindings.
-This selection runs alongside SELECTOR-DIAGNOSTICS-001, which retains its
-original control/envelope binding. Neither investigation modifies its code.
+86e96e8d317b9b7ebfc435f54918d62ae157a431. No new report production is selected.
+Original report bytes under validation/software-factory/sf-bl005/parallel-investigations-001/:
+recovery.md at c900a18b6fb672348840fa1aa0d73dee8b28ed05;
+test-syntax.md at 37f8a8918b921babfac4ec523662a4122297d40d;
+review.md at e8f843bff0e719c22c8fb2adc3222d185ecec538.
+Original construction instructions remain in the Plan at receiving base.
 
-One coordinator creates two stage-1 peers in distinct managed worktrees, then
-one independent stage-2 evidence review after both reports persist. No builds,
-Java processes, calibration, scorer, Docker, network research or evaluator truth.
-Aggregate memory below 8 GB; each investigation <=40 tool calls, report <=10 KB.
-Inputs and output paths are frozen in execution-envelope-parallel-investigations-001.json.
-Reports are proposals only; active controls remain FDP-owned.
-
-A: Handoff recovery investigation. Own only
-validation/software-factory/sf-bl005/parallel-investigations-001/recovery.md.
-Read the pinned FDP reconciliation and operational guidance. Produce an
-observed-fact/inference table, loss-to-recovery decision table, receiver read-back
-criteria and minimal recommended lifecycle change. Cover missing bytes, wrong
-hash, duplicate trigger, unknown scorer outcome, runtime loss and output collision.
-Do not reproduce losses, clean worktrees or change operational instructions.
-Acceptance: every finding names its pinned source; all six negative cases have
-explicit stop/recovery/owner rules; source-hash equality never substitutes for
-binary-hash equality. Review is document consistency checking, not runtime proof.
-
-B: Public test syntax inventory. Own only
-validation/software-factory/sf-bl005/parallel-investigations-001/test-syntax.md.
-Read only the pinned public-tests bundle and existing selector source. Inventory
-all bundled Java test files, group request/assertion dialects and list source
-file/line examples with request-to-assertion binding. Include negative/error cases,
-multiple requests and helper/lambda/variable-status ambiguities where observed;
-label proposed synthetic cases separately. Report unknowns explicitly.
-Acceptance: examined-file count equals the public manifest; examples resolve to
-pinned source lines; distinguish AST/library syntax from observation labels.
-Recommend a smallest adapter subset without code, threshold changes or predicted
-recall. This is syntax inspection, not the selector execution's diagnostic output measurement.
-
-Reviewer owns only parallel-investigations-001/review.md under the same prefix.
-Verify both exact report commits, input digests, owned-path diffs and report
-acceptance; no reviewer edits to producer reports. Coordinator returns the two
-reports plus review verdict and actual run/time/token/duplicate records. Preserve
-reports as commits and attachments; receiver verifies bytes before cleanup.
+FDP disposition: accept the pinned observations as supporting evidence, not the
+entire recovery recommendation or a full-envelope PASS. Read-back is necessary,
+not sufficient authority for cleanup; it cannot independently prevent all six
+loss cases. Runtime substitution requires a fresh authorized run, never an
+exact-original-runtime claim. SYNTAX self-reported 41 calls against the maximum
+40: retain the deviation; no retrospective waiver or compliant-run claim.
+Original independent PASS records remain unchanged historical evidence.
+FDP receipt/reconciliation is an engineering step, not Human parent closure.
+No new governance/runtime lifecycle framework is introduced.
 
 ## Lane company-ai-docs — SF-BL-006-COMPANY-AI-SHARE-001
 

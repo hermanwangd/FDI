@@ -1,0 +1,684 @@
+{
+  "schema": "SELECTOR-INTEGRATION-EVIDENCE-001",
+  "receivingBase": "3ffe374ce106f3a2f9e13e5f7d20097e418172d2",
+  "originalCandidate": "e6ff2c67a82c0a670cc21ea2bb808c1939acb8f3",
+  "originalHandoff": {
+    "issue": "HERM-504",
+    "comment": "01a09841-90eb-725a-8c27-c852871113af",
+    "run": "01a0983a-c531-7cf7-af66-be793d36ee32",
+    "manifestFormat": "SHA256 SIZE_BYTES FILENAME; comment headers ignored",
+    "artifactReadback": "13/13 length and SHA-256 verified",
+    "retainedDirectory": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/selector-intake-001/original",
+    "attachments": [
+      {
+        "id": "01a09841-7a04-7704-9365-7d65a844172f",
+        "filename": "verification-tests.log",
+        "bytes": 0
+      },
+      {
+        "id": "01a09841-7ad9-73f0-980b-fe6498855d73",
+        "filename": "verification-tests.exit",
+        "bytes": 2
+      },
+      {
+        "id": "01a09841-7bb6-70f4-9e77-0bd59ddfb4cf",
+        "filename": "com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.ScenarioEvidenceSelectorTests.txt",
+        "bytes": 457
+      },
+      {
+        "id": "01a09841-7c77-7bfe-ac21-81d2b39edc3b",
+        "filename": "com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.MethodCalibrationRunTests.txt",
+        "bytes": 448
+      },
+      {
+        "id": "01a09841-7d4a-7a74-8a08-e257ad61b5f0",
+        "filename": "com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.QualifiedCalibrationProducerTests.txt",
+        "bytes": 464
+      },
+      {
+        "id": "01a09841-7e22-7d37-87bc-8516fef544b3",
+        "filename": "package.log",
+        "bytes": 2205
+      },
+      {
+        "id": "01a09841-7ee1-73eb-8a08-1c868babf49d",
+        "filename": "package.exit",
+        "bytes": 2
+      },
+      {
+        "id": "01a09841-7f9e-7425-8ea7-4ad66b128b05",
+        "filename": "pytest.log",
+        "bytes": 9298
+      },
+      {
+        "id": "01a09841-8062-7e99-8377-4c5b04bafcb6",
+        "filename": "pytest.exit",
+        "bytes": 2
+      },
+      {
+        "id": "01a09841-811f-75bb-bec3-cd33221a7c88",
+        "filename": "git-diff-check.log",
+        "bytes": 0
+      },
+      {
+        "id": "01a09841-81dc-7c8e-acb9-2dce85f1b867",
+        "filename": "git-diff-check.exit",
+        "bytes": 2
+      },
+      {
+        "id": "01a09841-829c-721f-818e-738275a17c99",
+        "filename": "fixture-matrix.json",
+        "bytes": 4865
+      },
+      {
+        "id": "01a09841-8e44-748f-9c76-ddadd3d26cb1",
+        "filename": "fdi-0.4.8.3.jar",
+        "bytes": 23307014
+      },
+      {
+        "id": "01a09841-9024-7b39-b789-3aa5bdc1274f",
+        "filename": "digest-manifest.txt",
+        "bytes": 1576
+      }
+    ],
+    "historicalVerification": {
+      "java": 1408,
+      "pythonPassed": 60,
+      "pythonFailed": 3,
+      "disposition": "Original failures retained; receiving baseline fixed control decision and Plan size; fresh integration verification required"
+    }
+  },
+  "investigations": {
+    "directory": "validation/software-factory/sf-bl005/parallel-investigations-001",
+    "recovery": {
+      "commit": "c900a18b6fb672348840fa1aa0d73dee8b28ed05",
+      "sha256": "2a373cd9f4eded9754b6b3751a74e3bfc810831fb567a149512776ccdd6c0fbd"
+    },
+    "syntax": {
+      "commit": "37f8a8918b921babfac4ec523662a4122297d40d",
+      "sha256": "f3fe14ca26e7bd86fa3dd70d2d667a33ef7615ab00dff200c32a2b4cc8605c4e"
+    },
+    "review": {
+      "commit": "e8f843bff0e719c22c8fb2adc3222d185ecec538",
+      "sha256": "6161b3a4155900244a618a009aabac12a2f48f40b635b3c3cc5ef51f5d20bb2b"
+    },
+    "disposition": [
+      "Accept pinned observations as evidence only; original report bytes unchanged.",
+      "Do not adopt read-back as standalone cleanup authorization.",
+      "Read-back alone cannot prevent duplicate triggers, unknown scorer outcomes, runtime loss or all six cases.",
+      "A replacement runtime only supports a fresh authorized run, never original-binary verification.",
+      "SYNTAX reported 41 tool calls against maximum 40; no waiver or full-envelope-compliance claim.",
+      "Engineering receipt and control reconciliation belong to FDP, not a new Human gate; parent closure remains Human-owned."
+    ]
+  },
+  "remediation": {
+    "reviewer": "/root/evaluator_review",
+    "finding": "Legacy select allocated all pair diagnostics and newly required observationRef on rejected pairs.",
+    "scope": "Two selector paths only; no selection rule changes.",
+    "diagnosticPairLimit": 100000,
+    "limitBehavior": "Explicit diagnostic requests fail before pair allocation; legacy selection unaffected.",
+    "red": {
+      "tests": 16,
+      "failures": 1,
+      "errors": 1,
+      "log": ".fdi-work/selector-intake-001/red.log"
+    },
+    "green": {
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "log": ".fdi-work/selector-intake-001/green.log"
+    },
+    "review": {
+      "verdict": "PASS",
+      "reviewer": "/root/evaluator_review",
+      "sourceSha256": "b7d1cbe33944b433712238a495fb30701f3bdd6bba688c06687dd67516fb47bc",
+      "testSha256": "2d4f24b3c337ba4d0acf0c3a9814841d56883deb22f5d0ea81dd451dbd7ec7b7"
+    }
+  },
+  "verification": {
+    "java": {
+      "tests": 1440,
+      "suites": 122,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit": 0
+    },
+    "python": {
+      "tests": 63,
+      "exit": 0
+    },
+    "diffCheck": "PASS",
+    "javaVersion": "17.0.20.1",
+    "mavenHeapGb": 2,
+    "forkHeapGb": 2,
+    "calibrationRerun": false
+  },
+  "limitations": [
+    "No adapter, calibration, deployment, push, cleanup or parent closure.",
+    "No new recall improvement measured.",
+    "Original historical Python failures are preserved; final verification applies only to the integrated tree."
+  ],
+  "integratedCodeCommit": "758e086382e6023d6e4d389299a46bd696aa3857",
+  "retainedIntegratedRuntime": {
+    "path": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/selector-intake-001/integrated-fdi.jar",
+    "sha256": "b76c4ffe2eed8c764df14c44ddaee8355eb0be901046d861438f334ecc17ad96",
+    "scope": "New integration runtime; not a substitute for the original producer runtime."
+  },
+  "retainedEvidence": {
+    ".fdi-work/selector-intake-001/pytest.log": {
+      "bytes": 100,
+      "sha256": "11ed8b13563dbbf8fdb6aaeea0bb7e65640fc92edb5c6763b9f4565dd74e910e"
+    },
+    ".fdi-work/selector-intake-001/red.log": {
+      "bytes": 3593,
+      "sha256": "bb570c37174a8d388761cc0438ed2abcb238ad49cba0e5746ea8db0b08dc0caa"
+    },
+    ".fdi-work/selector-intake-001/green.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".fdi-work/selector-intake-001/package.log": {
+      "bytes": 2141,
+      "sha256": "48c842200d5aefe94570365f4ff8d1f3a9f678a4dcac60a9d35f102e7e8c2a2b"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002ScenarioEffectivenessEvaluationTests.xml": {
+      "bytes": 22859,
+      "sha256": "5d478fc221af0687183d881d90cb6ca0c2dd36705c21c02417e9af845732d1b5"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.deliveryhistory.DeliveryHistoryCharacterizationTests.xml": {
+      "bytes": 22425,
+      "sha256": "14be41675dfc393c3848ff120228ff440ae45b47a67dc0ab28ccf7e88813e496"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.ReviewRegressionTests.xml": {
+      "bytes": 20875,
+      "sha256": "0faf53bd16104c08ce8fcc6ef7103cdd37521ca2335459ad182a670d14e8a712"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.semantics.ScenarioProposalContractsTests.xml": {
+      "bytes": 21721,
+      "sha256": "d287d6c75b08dba42f4d317b3b9e6c44c3242232904df21e1840829956d77c38"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.testbehavior.extractor.JavaParserTestBehaviorExtractorTests.xml": {
+      "bytes": 22809,
+      "sha256": "8a6f7a3a7053b58b84583532ab8f951b1557b945c8e40e905d26cafa92459c7a"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.ScenarioMappingSchemaV04Tests.xml": {
+      "bytes": 20978,
+      "sha256": "7069dbe6cf6ce87fad0eb570e25fa21b0f11f79f694750d2385b3a56a8f4f6e1"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.testbehavior.api.TestBehaviorErrorVocabularyTests.xml": {
+      "bytes": 21166,
+      "sha256": "c6627d123bf1cdd1dfe731b2204fe9c2528f4d393993ab470b7b1ffffd5ca027"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.ScenarioGroundedForwardMapperTests.xml": {
+      "bytes": 21305,
+      "sha256": "4998c37764ca170c6a523e83dcb670382f52d6fa9af5de19d053dcc8e88d6fbe"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.liveverifier.GraphifyLiveVerifierCliTests.xml": {
+      "bytes": 21202,
+      "sha256": "a353e251615f3aa2e952b30c715d5cbebf779b1f25d6399e0617eff05d59678c"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.testbehavior.validation.TestBehaviorEvidenceValidatorTests.xml": {
+      "bytes": 25296,
+      "sha256": "345350a3145a7d4188371771f741c910a3a7296281ee9a69eb0e47c3562a8369"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.structural.graphify.GraphifyBindingAttestorFailClosedTests.xml": {
+      "bytes": 21819,
+      "sha256": "7a897873fe27ff215c95a7fc8c5f3d35abd756ad97e417870e3801a764daf8dc"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.blindevaluation.BlindEvaluationCliTests.xml": {
+      "bytes": 22194,
+      "sha256": "d663fc68a0f6518caf7ffec821964dd4b83f31ab57c9436e32d7db12734c9734"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.evaluation.HierarchicalForwardEvaluationGeneratorTests.xml": {
+      "bytes": 20937,
+      "sha256": "94ef2e71da0e8037de229a68a519bf61146a715f393ced5c1ba2b436f4e86052"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.application.HumanReviewPacketCliTests.xml": {
+      "bytes": 21458,
+      "sha256": "b462df0098519276cbb9f8052d786a0737ef60e18acef515a6620c6dc1d67bf3"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.evaluation.ReverseSealedPackageTests.xml": {
+      "bytes": 22004,
+      "sha256": "c78d92e6d91fc870ab36312bd2f2ae6dd874eef4f4bbd2e30bccd877ee6d1f7f"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002HierarchicalEvaluationTests.xml": {
+      "bytes": 21477,
+      "sha256": "6b2d7b28d2045da843b712c36aa7a114543cd4a824a5f14f62fcc7ed332bc310"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.StructuralComponentIdentityTests.xml": {
+      "bytes": 21589,
+      "sha256": "9ce6e4ab833ae593ba874a4a61417fc1b79007244c1c22b219afbbda4c147bea"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.blindevaluation.BlindEvaluationParityTests.xml": {
+      "bytes": 21906,
+      "sha256": "f6bec0125ae700122042e480c24b620c551c4f13840200ac968b07946fa8fccd"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.deliveryhistory.PythonJsonTests.xml": {
+      "bytes": 21809,
+      "sha256": "0d5421c25280ede414987b6772c4eb69877f1d71196bfcd400035ef9145ffe51"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioForwardCharacterizationTests.xml": {
+      "bytes": 28098,
+      "sha256": "235c909b904165a1418e57ac791df35d80453f8c0eae0fdfd4dd9523446b3323"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.application.MethodPairCompareCliTests.xml": {
+      "bytes": 21006,
+      "sha256": "2244c8f80cb228e34d1bd29c2b77612ea8d1b63701f7a89d9c967de8e71abce7"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.application.GraphifyRuntimeProbeCliTests.xml": {
+      "bytes": 22198,
+      "sha256": "7a4ac64f771c216014476d2fabe28659138a162821c5fd14e5f8b7564e685ec2"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.runtimeprobe.GraphifyRuntimeProbeCharacterizationTests.xml": {
+      "bytes": 24841,
+      "sha256": "5372ebb2891e75ed0fb4901bfe17cb21505558a397bf6242ff63127d2df09b9a"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.acquisition.AcquisitionValidatorCharacterizationTests.xml": {
+      "bytes": 29327,
+      "sha256": "bd8fb1685da2e5254f6f84bb571cc949a33010a68f2d6268d3a1faac765979d2"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.route.SpringRouteHandlerIndexTests.xml": {
+      "bytes": 23518,
+      "sha256": "3df6d3b4c5ff896da4d3c6e14ebb453e0ad6f1efe645ee45ddc00083dcbc79d9"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.input.testbehavior.TestBehaviorEvidenceAdapterTests.xml": {
+      "bytes": 24159,
+      "sha256": "f5f079e733fb9c47effbe57c08b76c8a1ea9bb83e1f9d4e405fc448aacade8f8"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.proposal.ScenarioProposalTests.xml": {
+      "bytes": 21019,
+      "sha256": "0f8a10e6f00dde73f63d5da4d12a4a0427b5777f0927b1cc260b78457b993e79"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.RouteAwareScenarioMapperTests.xml": {
+      "bytes": 23410,
+      "sha256": "849b5e960b9ffc5c075849068fd4637229d30e832ed5a43dbbf242b86e285c76"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.codebaseline.CodeBaselineCharacterizationTests.xml": {
+      "bytes": 24166,
+      "sha256": "68e1a67a59b1680357e717d5de638fe73ac55cf30fd04154b848e880cfb35c45"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.experimentrunner.ExperimentRunnerCharacterizationTests.xml": {
+      "bytes": 26384,
+      "sha256": "53e454507585ab5f2cb9810af8b3c35093a02e110cb24a05c44287b8260ae818"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.cli.ReverseProposalCliTests.xml": {
+      "bytes": 21183,
+      "sha256": "bd20055782b99da54c0d15540fbc848a384851a4002dfc717ec1f3e19480178d"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.task7.Task7ThirdReviewAdjudicationTests.xml": {
+      "bytes": 23254,
+      "sha256": "7621a635eb0ae20f704c99350ae126e075e86145ed9fc1209d7c54ab8aa5dd6d"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.methodpair.CandidateStageEvaluationRunTests.xml": {
+      "bytes": 21187,
+      "sha256": "32cf1958c4cf97b91e4ac6950ab7338a09874d5b11aab18b01bb22eaba66d5d6"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.ScenarioRealizationProposalTests.xml": {
+      "bytes": 23160,
+      "sha256": "c7b9e3fee01dd33273c76328b6216a7ec24d6267c26476e99b993236e79475ca"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.task7.Task7EvaluationCharacterizationTests.xml": {
+      "bytes": 22015,
+      "sha256": "c564a83a35458aa2238caf5ddb8d1924b8c22aad6283e08f4eeb232086b887e6"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.route.RouteContractTests.xml": {
+      "bytes": 24557,
+      "sha256": "83248aff10111ec18a89c9ea01bb9ebb95d28bf56a7b9ea8cc640ad08f6f4685"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.ScenarioSearchIntentMatcherTests.xml": {
+      "bytes": 23345,
+      "sha256": "c86798bc283b8e3db5124a1472388cde62d0295a41e7d306e0aff77abf61fba9"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.CandidateTraceTests.xml": {
+      "bytes": 21632,
+      "sha256": "6fa6a42e36ac307f77b33ad19db0548465414742f877a98f4817540d1c596446"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioForwardRequestReaderTests.xml": {
+      "bytes": 22938,
+      "sha256": "3b5bf1189da45641733787ff3a2d452c292dc6060e4acd9529d65f4bd6b306be"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.componentcompare.ComponentCompareTests.xml": {
+      "bytes": 28549,
+      "sha256": "97ab6c41bcd398da6fd3d107322892dfc77da07ed1c91e830799c2cb4b3bf3f5"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.application.DeliveryHistoryCliTests.xml": {
+      "bytes": 22791,
+      "sha256": "8c507f4d5e524d49078244cc11e724f377c819de140f9c2be01dd736c9f08ae7"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SliceFInputVerifierTests.xml": {
+      "bytes": 20658,
+      "sha256": "0759b8648679a68713798f7fb1dd59d0d8cb6af3129e3d9e2eadf0121f1b921d"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.methodpair.MethodPairScorerTests.xml": {
+      "bytes": 21399,
+      "sha256": "bcf88dd6d43c92e167412dd4feee96e52d80fe86c4b011a8a1b89bbe5b39ac84"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.evaluation.ReverseProposalComparatorTests.xml": {
+      "bytes": 21641,
+      "sha256": "0720ca101371ea6a9b8d6ae64d8fc8d5d7e4002b7f7f7496cdcb854f2bea85b0"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SliceGEvaluatorComparisonTests.xml": {
+      "bytes": 21834,
+      "sha256": "0aa252e23f1048b94a1710e5518219b5a359cf2e703840bd565cf55b71eb0851"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SliceFScenarioMappingArtifactTests.xml": {
+      "bytes": 20688,
+      "sha256": "f547110a48a404dbe656c9f0354f37fb79b2fbbf1ec4888f1783a1cd6fa366a9"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.RuntimeMigrationTests.xml": {
+      "bytes": 21232,
+      "sha256": "7e615dbf1049a640101921fe62be9537205a352152458606b4f6bed1b6f1a423"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.structural.graphify.GraphifyAdapterFailClosedTests.xml": {
+      "bytes": 21612,
+      "sha256": "3f1a39433b9bf3e689c460ec359249bd29d973267b55f258bd8c456823caf4a4"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.graphexpansion.GraphifyProductionExpansionTests.xml": {
+      "bytes": 21702,
+      "sha256": "d74a9bc4106c6d3919d84381ca163202cecaffc86dab4b7032cc9fdef78f6a22"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.application.FdiApplicationTests.xml": {
+      "bytes": 22228,
+      "sha256": "77413f1d6c3bba4235825f966245be9ef8dc72a461c9dd2b610f0801eff80c50"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.evaluation.HierarchicalForwardEvaluationTests.xml": {
+      "bytes": 21946,
+      "sha256": "26ba2c35652ef89c45ac0dfdee667a2cbc637c3b51cca5c28e98134eef77cacf"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.QualifiedSourceCallsTests.xml": {
+      "bytes": 23875,
+      "sha256": "faff6a68d82ef6b3ac9fead2e671d93a5ba1430e110fb02041e79fd4c70bc622"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.ReverseFailureVocabularyTests.xml": {
+      "bytes": 21011,
+      "sha256": "f652f8e175c6763c88f738a198129a6fd8d855f506f6653599c356359ef19314"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.application.ScenarioForwardCliTests.xml": {
+      "bytes": 21339,
+      "sha256": "a8b41bb607ec99a2c29bdf6fb2ca1d6cd9f12424de421de270023c83247f9bf0"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002ScenarioEffectivenessRunTests.xml": {
+      "bytes": 22882,
+      "sha256": "0902650f4c69666044422674c68ec430ef24354b7070584f9a5903ad663fcc68"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.QualifiedCalibrationProducerTests.xml": {
+      "bytes": 20485,
+      "sha256": "05de8ad689e0a49b43f0a2719421cc74d7385be862d4532aad747c169290200c"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.humanreviewpacket.HumanReviewPacketTests.xml": {
+      "bytes": 21235,
+      "sha256": "690b88f3c7ba6fa303e0c90b4245ed7261c7a8924523b265da1890a1042b9493"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.testbehavior.api.TestBehaviorContractTests.xml": {
+      "bytes": 22268,
+      "sha256": "71e3d8107f717241c27967b5968bfd70f42b8cb4b82c02638dad3e95a327617b"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002RouteEffectivenessFullPipelineAcceptanceTests.xml": {
+      "bytes": 22112,
+      "sha256": "3ae1709fc679ab0118afb4f6e854b17a2be1f94f9b19c82299667df97935e0d9"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.blindreview.BlindReviewCharacterizationTests.xml": {
+      "bytes": 23326,
+      "sha256": "0a306426f83a5ce157166c0f749f75cbde0343a2be492f6f4fe6aa06bbab3123"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.methodpair.CandidateStageScorerTests.xml": {
+      "bytes": 20645,
+      "sha256": "7f54a7a0815daca73d257803833ce76b4b2e7304cc1f6a016e0fa0fbb059f42d"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.deliveryhistory.PyTimestampTests.xml": {
+      "bytes": 21494,
+      "sha256": "aedacf6cf83bce97d618abca7f2d83eacd09ec9f84be949df3810c080c5b906e"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioAcceptedSemanticsRevisionFourArtifactTests.xml": {
+      "bytes": 20758,
+      "sha256": "0ca9e8196bf0167315f2671c341baa49121bb04f941f8a9ddfd17ad040762926"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.methodpair.MethodPairComparisonRunnerTests.xml": {
+      "bytes": 22900,
+      "sha256": "48832bbb53c27125fa4f929b6a415d9d13389e10dbd11f491e13816663d0d425"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.codebaseline.PythonJsonTests.xml": {
+      "bytes": 21119,
+      "sha256": "57be168d70bbb400edb3d1680166e208f36a2ec9730eaa9eb8e783a597ed7242"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.scenarioreview.ScenarioReviewCharacterizationTests.xml": {
+      "bytes": 28339,
+      "sha256": "15fe3f386e595910a394445251412ed40c2ea563037dbd0d6e0980a24ff2267a"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.ScenarioObservationAssignmentGeneratorTests.xml": {
+      "bytes": 22702,
+      "sha256": "ee61210c045ed53ae2aa663ec472e52a9cee28c414a74c33f0bedc39fcb27826"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.generator.ReverseProposalGenerationIntegrationTests.xml": {
+      "bytes": 21023,
+      "sha256": "5f174745ec65004090ac6faeba2d8150556e182f5847d5e264dd7ab0de03f7cd"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.ScenarioMappingContractV04Tests.xml": {
+      "bytes": 21337,
+      "sha256": "10cd248f294e8fded2b3b5545c44bf106c853f19eed8c52998bfbeb55952071e"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.proposal.CapabilityProposalTests.xml": {
+      "bytes": 21805,
+      "sha256": "162571447039967c0a396442a32528080a838cd07dcc2b92d3d952ad5fbbbc60"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.portability.changereference.ChangeClassifierTests.xml": {
+      "bytes": 21272,
+      "sha256": "95a90a254167f78a35634af710f71c3839573da448341b6a83ffab32425b6a2e"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.blindevaluation.BlindEvaluationTests.xml": {
+      "bytes": 23728,
+      "sha256": "5a9b84f14f57f6dfc0143215dd2e66db8d59d3166757409f48d016c6ddf482c9"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.portability.changereference.ProjectChangeReferenceIntegrationTests.xml": {
+      "bytes": 20484,
+      "sha256": "a6dff4ade84db1e9761451f3ff76d39bd219c44c74148b3c6c57789c10d87e63"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.scenarioreview.ScenarioReviewRevisionTwoArtifactTests.xml": {
+      "bytes": 20959,
+      "sha256": "44e57aaa66bc15433c445a489205a65c2b3ed18f0aa820fa05cbc8f8a41b5213"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.generator.ReverseQualityMatrixTests.xml": {
+      "bytes": 21446,
+      "sha256": "009f9d0e134c95cb61f810bc097ceb2e2110da946f50ae20e3641def0ba4b281"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.liveverifier.StdioMcpClientHandshakeTests.xml": {
+      "bytes": 22315,
+      "sha256": "11fb75d9be56079dd55baa9d3a8c54e01af37f412ccd798d9251a17108ecb3b7"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.nextrun.NextRunGateCharacterizationTests.xml": {
+      "bytes": 35853,
+      "sha256": "02c91089bbb645d913800b989c7a163d0826c7954aa2ef67e264283614884b20"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.testbehavior.cli.TestBehaviorExtractCliTests.xml": {
+      "bytes": 21310,
+      "sha256": "640bce2669c079d9c048338cfea8c9dc54cd00f466c227fd1398d581c8593a82"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.application.ProjectChangeReferenceCliTests.xml": {
+      "bytes": 21732,
+      "sha256": "079b0f7904ec435439f7425c29df259721a511859b475940474a332cbd8a4382"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002RouteEffectivenessRunTests.xml": {
+      "bytes": 26567,
+      "sha256": "96ff12c7b453e1a3da65c645770d7277f449a1513c7e082e591f277eaf380282"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.ScenarioForwardParityTests.xml": {
+      "bytes": 25870,
+      "sha256": "4c807160a30d644f95b26b4cbb79dc34fa32f372a8cf2c7b510559cd8d5d9f88"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.RealizationProposalTests.xml": {
+      "bytes": 22415,
+      "sha256": "8dfb56b20a95971614a6a211b3161d88429d35f39a77a13e98e04c0c1b9aebb6"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.application.BlindReviewCliTests.xml": {
+      "bytes": 21472,
+      "sha256": "14e14c3006da982179ae7b5d3495e1d320e67b8caa5a87ad716207f0fe25a19d"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002RouteEffectivenessEvaluationTests.xml": {
+      "bytes": 28335,
+      "sha256": "9903f3e05fc15e10dc6e49b94a671d6a076b25cf63e612835189bb4e54da5599"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.PackageArchitectureTests.xml": {
+      "bytes": 20504,
+      "sha256": "dfe7dc60fc13a2cda53f1c351ad592eacb5e03376e61c9ca1cd70bd4dd01f2af"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.application.NextRunGateCliTests.xml": {
+      "bytes": 21464,
+      "sha256": "b18c89145ed1fe016f3241d151bde906e626b02e3ae3b5b80ed949f02e896483"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.portability.changereference.ChangeExtractorTests.xml": {
+      "bytes": 22108,
+      "sha256": "534ebc31bf8779b1997ddc172d40548e45091dc24d1508d9c0f3d3c84c810261"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.application.ExperimentRunnerCliTests.xml": {
+      "bytes": 22474,
+      "sha256": "52021cc67c5db37001ebf5373e5afb21c47e5be9e1068024e39e30c2d40715d2"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.CrossRepositoryMethodRunTests.xml": {
+      "bytes": 20828,
+      "sha256": "fa855fd2a363182d39c63e1cc24fb25da627e743a1dd07c376432f38bf20ed95"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.testbehavior.http.HttpBehaviorObservationExtractorTests.xml": {
+      "bytes": 23962,
+      "sha256": "87283570b71d6b7557bf3ba17e7b03d41730d6a59e3842b1dd097f3e3298353a"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.readiness.Phase0ReadinessCliTests.xml": {
+      "bytes": 22561,
+      "sha256": "24c9a9bbbb8eaf76f567d44cb138cef5276d9880fdb1949777246c21a8e7d84c"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002ScenarioMappingRunTests.xml": {
+      "bytes": 22492,
+      "sha256": "21db19e25d68e2fa79deb7dcdf825edaab4ab7f5c6fe3bfdcc9f8ec862f948f5"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.application.CodeBaselineCliTests.xml": {
+      "bytes": 21513,
+      "sha256": "8c0bd7de9134ab52b4f6097ee601c8cc6e1cac92a31f6e259751a0262f2c213d"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.CrossRepositoryManifestTests.xml": {
+      "bytes": 21077,
+      "sha256": "50dcc0e9679ea4020b9a9026026ae054ae487a09386b6b59c262e23537720d0a"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.ScenarioEvidenceSelectorTests.xml": {
+      "bytes": 23483,
+      "sha256": "60e965e77ff1ae6e629c61a736d97727fd5e6b6d56fbd9a641c5ce1ee8bfeb23"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.MethodCalibrationRunTests.xml": {
+      "bytes": 20994,
+      "sha256": "8bc267d90652b4fb728655b398c03b4869210685e599440d6f614e06ae4721f2"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.liveverifier.CrossRepositoryGraphifyEvidenceTests.xml": {
+      "bytes": 21655,
+      "sha256": "a9a81bcd45805ffd1024812e86ba2545626f4f3ebd6f2b99cc57bdee47834743"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.ScenarioSearchIntentProposalGeneratorTests.xml": {
+      "bytes": 22191,
+      "sha256": "16ce8c934f0007e45009ce280133ba51919bd5870b13f9ef2d8e45ff1e656d86"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.proposal.ReverseProposalPackageTests.xml": {
+      "bytes": 21369,
+      "sha256": "5cba35564c760ae2e7a2beb8985435134a61779abf2e73dfc0cdba47ee8bad80"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.readiness.Phase0ReadinessCharacterizationTests.xml": {
+      "bytes": 23525,
+      "sha256": "ede9ea4ce22229a3451df0fe5e678e0b2e1e02d308bfcf38b39c25c403294698"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.application.AcquisitionCliTests.xml": {
+      "bytes": 21633,
+      "sha256": "04ef03e9dbae479a0e0c23c728aebf6713083f1488381c26cba58ad7f89097b0"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.generator.DeterministicReverseProposalGeneratorTests.xml": {
+      "bytes": 23190,
+      "sha256": "995a05502bc24aa3120ff8dc2094a91ae4f2e37d27b92864215f699383205171"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioForwardGateTests.xml": {
+      "bytes": 24861,
+      "sha256": "8f6dd792e41f62433a3e3cbdeaf0d888d71cc7daaba86664f2e24142fb243e30"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.SourceMethodIndexTests.xml": {
+      "bytes": 21569,
+      "sha256": "380aa36536b27196ed1458e78feb956e197d768c1233cbb77ca38cada7130382"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.portability.changereference.GitChangeSourceTests.xml": {
+      "bytes": 20931,
+      "sha256": "4262186768364fdda078767131212903a94389e892b3ad0673d4d74eebedb628"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.portability.changereference.ReferencePackageWriterTests.xml": {
+      "bytes": 22614,
+      "sha256": "82065e1c182a00b827862b6672aaea30cdca1f740081b97bb70199f5fdf29a5f"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.input.deliveryhistory.DeliveryHistoryInputAdapterTests.xml": {
+      "bytes": 24192,
+      "sha256": "a626f559db8e6306568e0255bbbe1981f8b1555a52a73251b40ff943889aa664"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.evaluation.ReverseEvaluationIntegrationTests.xml": {
+      "bytes": 20659,
+      "sha256": "2c95c529d47675e992a6039fa674ee8349440101fc5c5203b1579b34e355555a"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.RedirectEvidenceAssociationTests.xml": {
+      "bytes": 20487,
+      "sha256": "d0c8837d7124c845f8f03a431f2658b6e4af857d3f3f8f86e8965eadfabe656a"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.application.Task7EvaluateCliTests.xml": {
+      "bytes": 21041,
+      "sha256": "d290d7a218142fe29e012965ff91e98eb57150f1aa496447bd04c703db0d0cf9"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.liveverifier.StdioMcpClientTests.xml": {
+      "bytes": 20988,
+      "sha256": "c8c0566e10388c1828d07f5175e272cb29b06fad992f9c0e6a8d138f8c65fe39"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.CalibrationProducerTests.xml": {
+      "bytes": 20642,
+      "sha256": "0730f9ff52608a832d560f43d76227c2ef7ff56c4631d2f012c7d58b1942b28a"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.input.structural.StructuralEvidenceAdapterTests.xml": {
+      "bytes": 23982,
+      "sha256": "6789eacbccb3cc78c92f642dba0b64abbe01e2ba5aaee3d4002d142cf19fac8e"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.validation.liveverifier.GraphifyLiveVerifierTests.xml": {
+      "bytes": 24321,
+      "sha256": "c17fc67a1f66987470484e3fefdd9903b28af6ebc153ce18a8e387da06289164"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.BehaviorEvidencePolicyTests.xml": {
+      "bytes": 25885,
+      "sha256": "8d2ea6e17c0b8a82b37930140bb529f28910195eeb63a233800508acd3e46232"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.proposal.ScenarioTextValidatorTests.xml": {
+      "bytes": 21654,
+      "sha256": "0e7c77d3f6efaa8988ee50bbc7b369390d3d1dc048dff9fb583eaf2057543cc9"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.directtrace.DirectTestTraceAdapterTests.xml": {
+      "bytes": 21459,
+      "sha256": "33263b1b149f1c87ee35ef0dfa10236631171088de02a363d69923df7f837af1"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.evaluation.ReverseEvaluatorTruthTests.xml": {
+      "bytes": 21535,
+      "sha256": "7f50de4dce824a111ea50249e8a0381b3656bfd1402e26e5b92be99a0e984591"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.ReverseJsonTests.xml": {
+      "bytes": 20798,
+      "sha256": "8dff8de2e185910bbb60acb97c3eb004094e7f1d21a38b75bc0e9250922c15cd"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.reverse.evidence.ReverseEvidenceBundleTests.xml": {
+      "bytes": 22488,
+      "sha256": "4376421117be0b342a4f817adb3a15220946fba82641e686cc73c96570e06872"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.product.realization.evaluation.ProviderNeutralEvaluatorTruthTests.xml": {
+      "bytes": 21718,
+      "sha256": "ed965abebc74f5da2012baaa393d16e204ee30f74c662900e98aacc6657d7b58"
+    },
+    ".fdi-work/selector-intake-001/surefire-reports/TEST-com.featuredeliveryintelligence.fdi.application.ScenarioReviewCliTests.xml": {
+      "bytes": 21932,
+      "sha256": "534b733616d010c1597a38eaf070068acf61c92c115de2b8c892d0c2751db73c"
+    },
+    ".fdi-work/selector-intake-001/original/digest-manifest.txt": {
+      "bytes": 1576,
+      "sha256": "51856b8041c14c3991f89b25e4413e5728da2951f8623ea139437cf891b3bb3b"
+    }
+  },
+  "readbackAttempts": {
+    "failedManifestParsing": 2,
+    "successfulVerification": 1,
+    "explanation": "First used two-column shasum parser on three-column manifest; second failed on comment header. Final parser checked all13 byte lengths/digests; no artifact mutation or regeneration."
+  }
+}
