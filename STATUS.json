@@ -39,7 +39,7 @@
   },
   "selected_next_execution": {
     "execution_id": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
-    "state": "PRODUCER_PREFLIGHT_PASS_PENDING_INDEPENDENT_PREFLIGHT_NOT_DISPATCHED",
+    "state": "INDEPENDENT_PREFLIGHT_PASS_NOT_DISPATCHED",
     "analysis_unit": "9_DISTINCT_ROUTE_ABSENT_OBSERVATIONS",
     "source_pair_count": 90,
     "scenario_repetition": 10,
@@ -49,12 +49,13 @@
     "envelope_commit": "2f3181fddad7f5ee4cb160d781efd278fb2ed2b4",
     "envelope_main_replay": "f2f22ce092bb09f663b7731342b7153777904c10",
     "envelope_sha256": "73eb5c1a522151d5921946d391fe2d1ef60dd795f1f83ca04addaf903d3d814c",
-    "producer_preflight": "PASS_PENDING_INDEPENDENT_PREFLIGHT",
+    "producer_preflight": "PASS",
     "producer_preflight_evidence": "validation/software-factory/sf-bl005/envelope-preflight-route-coverage-analysis-001.json",
-    "independent_preflight": "PENDING",
+    "independent_preflight": "PASS",
     "dispatch_authorized": false,
     "calibration_authorized": false,
-    "parent_closure": false
+    "parent_closure": false,
+    "independent_preflight_reviewer_run": "01a09a4c-e3c4-7698-af2e-14ba05d64362"
   },
   "metric_goal": {
     "status": "NOT_MET_DIAGNOSTIC_ONLY",
@@ -312,7 +313,7 @@
     "design_artifact": "docs/superpowers/specs/2026-09-13-continuous-system-improvement-design.md",
     "review_evidence": "validation/software-factory/sf-bl007/design-review-001.md",
     "reviewed_candidate": "f755640a8f7bef006b42f1dad792e723d21eb195",
-    "implementation_selected": false,
+    "implementation_selected": true,
     "execution_envelope": "validation/software-factory/sf-bl007/execution-envelope-implementation-001.json",
     "implementation_candidate": "775b7728934df6ec00f6cf097e0fc47f75a5f726",
     "implementation_review": "validation/software-factory/sf-bl007/implementation-001-review.md",
