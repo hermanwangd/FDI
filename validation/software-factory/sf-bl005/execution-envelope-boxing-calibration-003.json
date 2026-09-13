@@ -165,7 +165,7 @@
         "mkdir -p validation/software-factory/sf-bl005/boxing-calibration-003/evaluator",
         "cp validation/software-factory/sf-bl005/boxing-calibration-002/evaluator/truth.json validation/software-factory/sf-bl005/boxing-calibration-003/evaluator/truth.json",
         "cp validation/software-factory/sf-bl005/boxing-calibration-002/evaluator/proofs.json validation/software-factory/sf-bl005/boxing-calibration-003/evaluator/proofs.json",
-        "python3 -c <bound canonical manifest writer> > validation/software-factory/sf-bl005/boxing-calibration-003/comparison-manifest.json",
+        "python3 -c 'import json,pathlib; e=json.loads(pathlib.Path(\"validation/software-factory/sf-bl005/execution-envelope-boxing-calibration-003.json\").read_text()); d=e[\"stages\"][1][\"comparisonManifestDocument\"]; pathlib.Path(\"validation/software-factory/sf-bl005/boxing-calibration-003/comparison-manifest.json\").write_text(json.dumps(d,sort_keys=True,indent=2)+\"\\n\")'",
         "test \"$(shasum -a 256 validation/software-factory/sf-bl005/boxing-calibration-003/comparison-manifest.json | awk {print\\ $1})\" = 730cf38b4f139806f3c753363cf8a8832b4ae959f0bea717389a0f259d4c55d4"
       ]
     },
