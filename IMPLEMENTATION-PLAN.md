@@ -158,3 +158,5 @@ evidence, not a forecast; template/property gaps remain separate and unselected.
 Prior intake and SF-BL-006 boundaries remain in STATUS.json and Plan at
 2248420436c6fd6c35fe36bbb4db738c43500ce3. Preserve all prior evidence,
 envelope bindings and approval limits. One FDP writer serializes controls.
+
+Retained execution IDs: SF-BL-005-SELECTOR-DIAGNOSTICS-001, SF-BL-005-PARALLEL-INVESTIGATIONS-001, SF-BL-006-COMPANY-AI-SHARE-001.
