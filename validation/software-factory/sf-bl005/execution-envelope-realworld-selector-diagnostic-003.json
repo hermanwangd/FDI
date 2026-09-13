@@ -39,6 +39,24 @@
       "sourcePath": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json",
       "sourceSha256": "068ebd262b3c8a292bf59d267466a725a32ff37df77cee4974771a946e1db48b"
     },
+    "handlerMaterialization": {
+      "handlerCount": 19,
+      "handlerTransform": "For each payload.handlers item in existing order, split handlerRef on the first two ASCII spaces into productionIdentity, comma-separated httpMethods, and normalizedRouteTemplate; emit keys handlerRef,httpMethods,normalizedRouteTemplate,productionIdentity,sourceLocation,sourceDigest with source fields copied byte-for-value.",
+      "input": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json",
+      "inputSha256": "068ebd262b3c8a292bf59d267466a725a32ff37df77cee4974771a946e1db48b",
+      "outputBundlePath": "handlers.json",
+      "outputSha256": "9b18b6ed556e55aed9db77dee4dc032aa951216af37231f9619095a46ad34053",
+      "referenceCommand": "python3 -c 'import json,pathlib; s=json.loads(pathlib.Path(\"validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json\").read_text()); hs=[]; [(lambda a,h: hs.append({\"handlerRef\":h[\"handlerRef\"],\"httpMethods\":a[1].split(\",\"),\"normalizedRouteTemplate\":a[2],\"productionIdentity\":a[0],\"sourceLocation\":h[\"sourceLocation\"],\"sourceDigest\":h[\"sourceDigest\"]}))(h[\"handlerRef\"].split(\" \",2),h) for h in s[\"payload\"][\"handlers\"]]; d={\"schema_version\":\"software-factory.sf-bl002-route-handler-index.v0.3\",\"execution_id\":\"SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003\",\"authority\":\"PROPOSAL_ONLY\",\"semantic_publication_allowed\":False,\"source_revision\":s[\"sourceRevision\"],\"generation_method\":\"SpringRouteHandlerIndex.verifyFrozenRealWorldPutDeleteCoverage\",\"handlers\":hs}; pathlib.Path(\".fdi-work/sf-bl005-realworld-selector-diagnostic-003/bundle/handlers.json\").write_text(json.dumps(d,sort_keys=True,indent=2)+\"\\n\")'",
+      "serialization": "Python json.dumps(document, sort_keys=True, indent=2) encoded UTF-8 plus exactly one LF; no other whitespace or escaping customization.",
+      "topLevelMetadata": {
+        "authority": "PROPOSAL_ONLY",
+        "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003",
+        "generation_method": "SpringRouteHandlerIndex.verifyFrozenRealWorldPutDeleteCoverage",
+        "schema_version": "software-factory.sf-bl002-route-handler-index.v0.3",
+        "semantic_publication_allowed": false,
+        "source_revision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+      }
+    },
     "preparation": {
       "path": "validation/software-factory/sf-bl005/selector-diagnostics-001/realworld-preparation.json",
       "sha256": "db05c417f4f539c8a9e1f3cbff067bdc52f7a6ff379e725f6dc10b03bc6d0bac"
@@ -96,14 +114,16 @@
     "validation/software-factory/sf-bl005/realworld-selector-diagnostic-003/**"
   ],
   "priorIndependentPreflight": {
+    "candidate": "4b83148c884baecb79efaba69241331514c8b45e",
     "findings": {
       "p0": 0,
       "p1": 2,
-      "p2": 0
+      "p2": 1
     },
     "remediated": [
-      "scratch authorization exactly matches runner paths",
-      "acceptance binds replan manifest SHA"
+      "runner commands and acceptance now bind diagnostic-003 manifest SHA",
+      "19-handler materialization binds exact metadata, field transform, order, and canonical serialization",
+      "unrelated diagnostic-002 provenance removed"
     ],
     "result": "FAIL_PLAN_CONFLICT",
     "reviewer": "/root/diagnostic_002_preflight"
@@ -133,7 +153,7 @@
       "target/fdi-0.4.8.3.jar",
       "org.springframework.boot.loader.launch.PropertiesLauncher",
       "validation/software-factory/sf-bl005/realworld-selector-diagnostic-003/input-manifest.json",
-      "2f5c524ecc35534dbf8ed0259f41fbea6f37cf3071b1a77fd894dc307b88418d",
+      "f9faa2a776390320f8c37fef061fc6519d4026f43c528effe4ea95207f86aa48",
       ".fdi-work/sf-bl005-realworld-selector-diagnostic-003/bundle",
       "validation/software-factory/sf-bl005/realworld-selector-diagnostic-003/run-1"
     ],
@@ -146,7 +166,7 @@
       "target/fdi-0.4.8.3.jar",
       "org.springframework.boot.loader.launch.PropertiesLauncher",
       "validation/software-factory/sf-bl005/realworld-selector-diagnostic-003/input-manifest.json",
-      "2f5c524ecc35534dbf8ed0259f41fbea6f37cf3071b1a77fd894dc307b88418d",
+      "f9faa2a776390320f8c37fef061fc6519d4026f43c528effe4ea95207f86aa48",
       ".fdi-work/sf-bl005-realworld-selector-diagnostic-003/bundle",
       ".fdi-work/sf-bl005-realworld-selector-diagnostic-003/run-2"
     ]
@@ -179,8 +199,8 @@
         "all full revisions, ancestry and digests resolve exactly",
         "durable and scratch paths do not pre-exist",
         "materialized inventory is 10 intents, 11 observations, 19 handlers and 23 test files",
-        "materialized manifest differs from template only in executionId and frameworkRevision and its SHA-256 is passed exactly to both runs",
-        "materialized manifest canonical SHA-256 equals 2f5c524ecc35534dbf8ed0259f41fbea6f37cf3071b1a77fd894dc307b88418d and both runner commands pass its path and digest",
+        "materialized manifest is built from the baseline manifest with executionId, frameworkRevision, and handlers[0].sha256 changed exactly as bound and its SHA-256 is passed exactly to both runs",
+        "materialized manifest canonical SHA-256 equals f9faa2a776390320f8c37fef061fc6519d4026f43c528effe4ea95207f86aa48 and both runner commands pass its path and digest",
         "handlers.json is deterministically derived from the bound remediation verifier report; legacy 14-handler bytes are forbidden",
         "derived handlers SHA-256 and count 19 match the envelope before both runs"
       ],
