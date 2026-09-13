@@ -58,10 +58,16 @@ class CsiValidateCliTests {
     private static String validRecord() {
         return """
                 {"recommendation_id":"CSI-REC-001","disposition":"RECOMMENDED_NOT_SELECTED","tag":"CODE",
-                 "origin_evidence":[{"identity":"review-1","origin_type":"INDEPENDENT_REVIEW","durable_ref":"validation/review.md"}],
+                 "origin_evidence":[{"identity":"review-1","origin_type":"INDEPENDENT_REVIEW","durable_ref":"provider:review/run-1"}],
                  "candidate_revision":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","execution_identity":"N/A: review finding",
                  "verdict_identity":"review-1:FAIL","affected_requirement":"EVID-001","insufficiency":"unsafe resolution",
-                 "proposed_control":"fail closed","affected_kpis":[],"revision_route":"SF-BL-005:T3"}
+                 "proposed_control":"fail closed","revision_route":"SF-BL-005:T3",
+                 "duplicate_key":"f660ea817c56d8cc89d7eb186856840c32aad8a484eb7fdf3bd991f6e8a6ad89",
+                 "affected_kpis":[{"metric":"review_escape","status":"UNKNOWN","value":null,"numerator":null,
+                  "denominator":null,"sample_count":0,"minimum_sample_count":2,"window_start":"2026-09-13T00:00:00Z",
+                  "window_end":"2026-09-13T01:00:00Z","category":"CODE","size_band":"S",
+                  "measurement_revision":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "source_evidence":"provider:review/run-1","baseline_identity":null}]}
                 """;
     }
 

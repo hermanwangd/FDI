@@ -8,6 +8,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.Normalizer;
+import java.time.Instant;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,11 +23,18 @@ public final class CsiRecommendationValidator {
     private static final Set<String> TAGS = Set.of("CODE", "DELIVERY", "PK", "MIXED", "UNKNOWN");
     private static final Set<String> KPI_STATUSES = Set.of("OBSERVED", "UNKNOWN", "N/A", "INSUFFICIENT_SAMPLE");
     private static final Pattern FULL_REVISION = Pattern.compile("[0-9a-f]{40}");
+    private static final Pattern SHA256 = Pattern.compile("[0-9a-f]{64}");
+    private static final Pattern PROVIDER_REF = Pattern.compile("provider:[a-zA-Z0-9._/-]+/[a-zA-Z0-9._:-]+");
+    private static final Pattern REPOSITORY_REF = Pattern.compile("sha256:[0-9a-f]{64}:[^/\\s][^\\s]*");
     private static final Set<String> AUTHORITY_FIELDS = Set.of(
             "dispatch_authorized", "implementation_authorized", "mutation_authorized",
             "product_truth", "closure_authorized");
 
     public CsiValidationReport validate(JsonNode record) {
+        return validate(record, null);
+    }
+
+    public CsiValidationReport validate(JsonNode record, JsonNode priorRecord) {
         List<String> invalid = new ArrayList<>();
         List<String> blocked = new ArrayList<>();
         if (!(record instanceof ObjectNode object)) {
@@ -45,13 +54,21 @@ public final class CsiRecommendationValidator {
         requiredText(object, "verdict_identity", invalid);
         validateCandidate(object, invalid);
         validateEvidence(object.path("origin_evidence"), invalid, blocked);
+        validateAppendOnlyEvidence(object.path("origin_evidence"), priorRecord, invalid);
         validateHandoff(object.get("handoff"), invalid, blocked);
         validateKpis(object.path("affected_kpis"), invalid);
+        if ("UNKNOWN".equals(object.path("tag").asText())
+                && (!("RECOMMENDED_NOT_SELECTED".equals(object.path("disposition").asText()))
+                || !("UNKNOWN".equals(object.path("revision_route").asText())))) {
+            invalid.add("UNKNOWN tag must remain RECOMMENDED_NOT_SELECTED with revision_route UNKNOWN");
+        }
 
         String key = "";
         if (!affected.isBlank() && !insufficiency.isBlank() && !control.isBlank() && !route.isBlank()) {
             key = duplicateKey(affected, insufficiency, control, route);
-            if (object.has("duplicate_key") && !key.equals(object.path("duplicate_key").asText())) {
+            if (!object.hasNonNull("duplicate_key") || object.path("duplicate_key").asText().isBlank()) {
+                invalid.add("duplicate_key is required");
+            } else if (!key.equals(object.path("duplicate_key").asText())) {
                 invalid.add("duplicate_key does not match canonical semantic fields");
             }
         }
@@ -99,7 +116,26 @@ public final class CsiRecommendationValidator {
             if (identity.isBlank()) invalid.add("origin_evidence[" + i + "].identity is required");
             else if (!identities.add(identity)) invalid.add("origin_evidence identities must be unique");
             if (text(item, "origin_type").isBlank()) invalid.add("origin_evidence[" + i + "].origin_type is required");
-            if (text(item, "durable_ref").isBlank()) blocked.add("origin_evidence[" + i + "].durable_ref is missing");
+            String durableRef = text(item, "durable_ref");
+            if (durableRef.isBlank()) blocked.add("origin_evidence[" + i + "].durable_ref is missing");
+            else if (!PROVIDER_REF.matcher(durableRef).matches() && !REPOSITORY_REF.matcher(durableRef).matches()) {
+                invalid.add("origin_evidence[" + i + "].durable_ref is not immutable");
+            }
+        }
+    }
+
+    private static void validateAppendOnlyEvidence(JsonNode current, JsonNode priorRecord, List<String> invalid) {
+        if (priorRecord == null) return;
+        JsonNode prior = priorRecord.path("origin_evidence");
+        if (!prior.isArray() || !current.isArray() || current.size() < prior.size()) {
+            invalid.add("origin_evidence must preserve the prior append-only prefix");
+            return;
+        }
+        for (int i = 0; i < prior.size(); i++) {
+            if (!prior.get(i).equals(current.get(i))) {
+                invalid.add("origin_evidence must preserve the prior append-only prefix");
+                return;
+            }
         }
     }
 
@@ -110,10 +146,19 @@ public final class CsiRecommendationValidator {
             invalid.add("handoff.gate must be READY_FOR_REVIEW or REVIEW_COMPLETE");
             return;
         }
-        for (String field : List.of("base_revision", "candidate_revision", "envelope_identity",
-                "command_log", "digest_manifest", "token_accounting")) {
+        for (String field : List.of("envelope_identity", "command_log", "digest_manifest", "token_accounting")) {
             if (text(handoff, field).isBlank()) blocked.add(gate + " requires " + field);
         }
+        for (String field : List.of("base_revision", "candidate_revision")) {
+            if (!FULL_REVISION.matcher(text(handoff, field)).matches()) {
+                invalid.add("handoff." + field + " must be a full 40-character Git revision");
+            }
+        }
+        if (!handoff.path("command_exit_status").canConvertToInt()) {
+            invalid.add("handoff.command_exit_status must be an integer");
+        }
+        validateDigestArray(handoff.path("input_artifact_digests"), "handoff.input_artifact_digests", invalid);
+        validateDigestArray(handoff.path("output_artifact_digests"), "handoff.output_artifact_digests", invalid);
         if (!handoff.path("attempt_count").canConvertToInt() || handoff.path("attempt_count").asInt() < 1) {
             invalid.add("handoff.attempt_count must be at least 1");
         }
@@ -129,8 +174,8 @@ public final class CsiRecommendationValidator {
     }
 
     private static void validateKpis(JsonNode samples, List<String> invalid) {
-        if (!samples.isArray()) {
-            invalid.add("affected_kpis must be an array");
+        if (!samples.isArray() || samples.isEmpty()) {
+            invalid.add("affected_kpis must be a non-empty array");
             return;
         }
         for (int i = 0; i < samples.size(); i++) {
@@ -143,23 +188,73 @@ public final class CsiRecommendationValidator {
                     "measurement_revision", "source_evidence")) {
                 if (text(sample, field).isBlank()) invalid.add(prefix + "." + field + " is required");
             }
+            for (String field : List.of("value", "numerator", "denominator", "baseline_identity")) {
+                if (!sample.has(field)) invalid.add(prefix + "." + field + " field is required");
+            }
             if (!sample.path("sample_count").canConvertToInt() || sample.path("sample_count").asInt() < 0) {
                 invalid.add(prefix + ".sample_count must be non-negative");
             }
-            if ("UNKNOWN".equals(status) && !sample.path("value").isNull()) {
-                invalid.add(prefix + " UNKNOWN requires null value");
+            if (!sample.path("minimum_sample_count").canConvertToInt()
+                    || sample.path("minimum_sample_count").asInt() < 1) {
+                invalid.add(prefix + ".minimum_sample_count must be at least 1");
+            }
+            validateKpiRevisionAndSource(sample, prefix, invalid);
+            validateWindow(sample, prefix, invalid);
+            boolean sparse = sample.path("sample_count").asInt() < sample.path("minimum_sample_count").asInt();
+            boolean baselineMissing = sample.path("baseline_identity").isNull()
+                    || text(sample, "baseline_identity").isBlank();
+            if ((sparse || baselineMissing) && "OBSERVED".equals(status)) {
+                invalid.add(prefix + " sparse or baseline-less sample must be INSUFFICIENT_SAMPLE");
+            }
+            if (Set.of("UNKNOWN", "N/A", "INSUFFICIENT_SAMPLE").contains(status)) {
+                for (String field : List.of("value", "numerator", "denominator")) {
+                    if (!sample.path(field).isNull()) invalid.add(prefix + " " + status + " requires null " + field);
+                }
             }
             if ("N/A".equals(status) && text(sample, "reason").isBlank()) {
                 invalid.add(prefix + " N/A requires reason");
             }
-            if ("OBSERVED".equals(status) && sample.path("value").isNull()) {
-                invalid.add(prefix + " OBSERVED requires value");
+            if ("OBSERVED".equals(status)) {
+                for (String field : List.of("value", "numerator", "denominator")) {
+                    if (!sample.path(field).isNumber()) invalid.add(prefix + " OBSERVED requires numeric " + field);
+                }
+                if (sample.path("denominator").isNumber() && sample.path("denominator").asDouble() <= 0) {
+                    invalid.add(prefix + ".denominator must be positive");
+                }
             }
-            if ("INSUFFICIENT_SAMPLE".equals(status)
-                    && !sample.path("baseline_identity").isNull()
-                    && text(sample, "baseline_identity").isBlank()) {
-                invalid.add(prefix + ".baseline_identity must be null or non-empty");
+        }
+    }
+
+    private static void validateDigestArray(JsonNode values, String field, List<String> invalid) {
+        if (!values.isArray() || values.isEmpty()) {
+            invalid.add(field + " must be a non-empty digest array");
+            return;
+        }
+        for (JsonNode value : values) {
+            if (!value.isTextual() || !SHA256.matcher(value.asText()).matches()) {
+                invalid.add(field + " entries must be SHA-256 digests");
+                return;
             }
+        }
+    }
+
+    private static void validateKpiRevisionAndSource(JsonNode sample, String prefix, List<String> invalid) {
+        if (!FULL_REVISION.matcher(text(sample, "measurement_revision")).matches()) {
+            invalid.add(prefix + ".measurement_revision must be a full 40-character Git revision");
+        }
+        String source = text(sample, "source_evidence");
+        if (!PROVIDER_REF.matcher(source).matches() && !REPOSITORY_REF.matcher(source).matches()) {
+            invalid.add(prefix + ".source_evidence is not immutable");
+        }
+    }
+
+    private static void validateWindow(JsonNode sample, String prefix, List<String> invalid) {
+        try {
+            Instant start = Instant.parse(text(sample, "window_start"));
+            Instant end = Instant.parse(text(sample, "window_end"));
+            if (start.isAfter(end)) invalid.add(prefix + " window_start must not follow window_end");
+        } catch (DateTimeParseException failure) {
+            invalid.add(prefix + " window must use ISO-8601 instants");
         }
     }
 

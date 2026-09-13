@@ -15,7 +15,7 @@ import java.util.Map;
 
 public final class CsiValidateCli {
     private static final String COMMAND = "csi-validate";
-    private static final String USAGE = "usage: csi-validate --input <path> --report <new-path>";
+    private static final String USAGE = "usage: csi-validate --input <path> [--prior <path>] --report <new-path>";
     private static final ObjectMapper JSON = new ObjectMapper();
 
     private CsiValidateCli() { }
@@ -36,7 +36,9 @@ public final class CsiValidateCli {
         CsiValidationReport report;
         try {
             JsonNode input = JSON.readTree(Files.readAllBytes(Path.of(options.get("--input"))));
-            report = new CsiRecommendationValidator().validate(input);
+            JsonNode prior = options.containsKey("--prior")
+                    ? JSON.readTree(Files.readAllBytes(Path.of(options.get("--prior")))) : null;
+            report = new CsiRecommendationValidator().validate(input, prior);
         } catch (IOException | RuntimeException failure) {
             report = new CsiValidationReport("INVALID", "", "", java.util.List.of("input is not readable JSON"));
         }
@@ -54,7 +56,7 @@ public final class CsiValidateCli {
     }
 
     private static Map<String, String> parse(String[] args) {
-        if (args == null || args.length != 5 || !COMMAND.equals(args[0])) {
+        if (args == null || (args.length != 5 && args.length != 7) || !COMMAND.equals(args[0])) {
             throw new IllegalArgumentException("both --input and --report are required");
         }
         Map<String, String> options = new HashMap<>();
@@ -63,13 +65,13 @@ public final class CsiValidateCli {
                 throw new IllegalArgumentException("invalid or duplicate option: " + args[i]);
             }
         }
-        if (!options.keySet().equals(SetHolder.OPTIONS)) {
+        if (!options.containsKey("--input") || !options.containsKey("--report")) {
             throw new IllegalArgumentException("both --input and --report are required");
         }
         return options;
     }
 
     private static final class SetHolder {
-        private static final java.util.Set<String> OPTIONS = java.util.Set.of("--input", "--report");
+        private static final java.util.Set<String> OPTIONS = java.util.Set.of("--input", "--prior", "--report");
     }
 }

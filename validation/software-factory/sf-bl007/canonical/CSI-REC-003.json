@@ -15,6 +15,24 @@
   "affected_requirement": "EVID-001",
   "insufficiency": "Passing claims were not reconstructable because candidate-bound command logs, digest manifest, and receiver readback were missing.",
   "proposed_control": "Require retained command logs, digest manifest, and independent receiver readback before review completion.",
-  "affected_kpis": [],
-  "revision_route": "SF-BL-007"
+  "affected_kpis": [
+    {
+      "metric": "evidence_completeness",
+      "status": "UNKNOWN",
+      "value": null,
+      "numerator": null,
+      "denominator": null,
+      "sample_count": 0,
+      "minimum_sample_count": 2,
+      "window_start": "2026-09-12T00:00:00Z",
+      "window_end": "2026-09-13T00:00:00Z",
+      "category": "DELIVERY",
+      "size_band": "S",
+      "measurement_revision": "52d216401a78dc99d7e471aaa4b68e9fdc0d458a",
+      "source_evidence": "sha256:ce3dfd73b8f0c0689db5d92375bed4624f7ed7d20423e7b8916b6c3cda9b3194:BACKLOG.md",
+      "baseline_identity": null
+    }
+  ],
+  "revision_route": "SF-BL-007",
+  "duplicate_key": "d0328e37a0bcec934da4238eea5ece093c7c7f7cb20026f2d153ff02ccb7b2ef"
 }
