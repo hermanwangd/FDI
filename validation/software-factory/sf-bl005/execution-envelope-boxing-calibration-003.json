@@ -42,7 +42,34 @@
         "validation/software-factory/sf-bl002/scenario-search-intent-acceptance-manifest-002.json": "8772b2a1b4cbb485f0ebce793be734bbd8414aaf318e6033bab7225b1e03fd1b",
         "validation/software-factory/sf-bl002/test-behavior-evidence.json": "6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2"
       },
-      "path": ".worktrees/candidate-stage-trace/validation/software-factory/sf-bl005/cross-repo-realworld-001/producer-inputs",
+      "materialization": [
+        {
+          "command": "mkdir -p .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/pkb001/artifacts && git show 2180ec5af317968ecbc81a7e411be431af80d14a:validation/pkb001/artifacts/petclinic-graph-818c413.json > .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/pkb001/artifacts/petclinic-graph-818c413.json",
+          "path": "validation/pkb001/artifacts/petclinic-graph-818c413.json",
+          "revision": "2180ec5af317968ecbc81a7e411be431af80d14a"
+        },
+        {
+          "command": "mkdir -p .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/pkb001/runtime && git show 5eb6dd91265dd6ecfb49c74038099f56f34e1ccd:validation/pkb001/runtime/graphify-petclinic-live-evidence.json > .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/pkb001/runtime/graphify-petclinic-live-evidence.json",
+          "path": "validation/pkb001/runtime/graphify-petclinic-live-evidence.json",
+          "revision": "5eb6dd91265dd6ecfb49c74038099f56f34e1ccd"
+        },
+        {
+          "command": "mkdir -p .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/software-factory/sf-bl002 && git show ec4c62e46272354e9b625ec0f6129e46234278f0:validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json > .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json",
+          "path": "validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json",
+          "revision": "ec4c62e46272354e9b625ec0f6129e46234278f0"
+        },
+        {
+          "command": "mkdir -p .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/software-factory/sf-bl002 && git show be2a5742e270659bd2f24fd578b7142d00c8232a:validation/software-factory/sf-bl002/scenario-search-intent-acceptance-manifest-002.json > .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/software-factory/sf-bl002/scenario-search-intent-acceptance-manifest-002.json",
+          "path": "validation/software-factory/sf-bl002/scenario-search-intent-acceptance-manifest-002.json",
+          "revision": "be2a5742e270659bd2f24fd578b7142d00c8232a"
+        },
+        {
+          "command": "mkdir -p .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/software-factory/sf-bl002 && git show 8791b2117a01625ce87afd4cb03a3397f62f1403:validation/software-factory/sf-bl002/test-behavior-evidence.json > .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/software-factory/sf-bl002/test-behavior-evidence.json",
+          "path": "validation/software-factory/sf-bl002/test-behavior-evidence.json",
+          "revision": "8791b2117a01625ce87afd4cb03a3397f62f1403"
+        }
+      ],
+      "path": ".fdi-work/sf-bl005-boxing-calibration-003/producer-inputs",
       "snapshotSha256": "41a7f9fc60bf9f0de938a5c2f4fd29e33f8258a060d0826f4240baa180e6fa37"
     },
     "proofs": {
@@ -65,6 +92,20 @@
   "ownedPaths": [
     "validation/software-factory/sf-bl005/boxing-calibration-003/**"
   ],
+  "priorIndependentPreflight": {
+    "candidate": "f3b06efcffaa948bf3e38f2a145db052c166b22e",
+    "findings": {
+      "p0": 0,
+      "p1": 2,
+      "p2": 0
+    },
+    "remediated": [
+      "five frozen producer bytes now materialize from exact Git revisions",
+      "producer/evaluator commands and materialization are concrete; runtime generation SHA is computed from exact produced bytes"
+    ],
+    "result": "FAIL_PLAN_CONFLICT",
+    "reviewer": "/root/diagnostic_002_preflight"
+  },
   "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
   "resourceLimits": {
     "aggregateMemoryGbLessThan": 8,
@@ -76,19 +117,57 @@
   "stages": [
     {
       "authority": "NO_EVALUATOR_INPUT_ACCESS",
-      "command": "java -Xmx1g -Dloader.main=com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.JdkBoxingCalibrationRun -cp <runtime> org.springframework.boot.loader.launch.PropertiesLauncher <five-input-root> <exact-source-root> validation/software-factory/sf-bl005/boxing-calibration-003/producer",
+      "command": "/opt/homebrew/opt/openjdk@17/bin/java -Xmx1g -Dloader.main=com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.JdkBoxingCalibrationRun -cp /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/retained-runtimes/candidate-improvements/33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab.jar org.springframework.boot.loader.launch.PropertiesLauncher .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/sfbl002-petclinic-818c413 validation/software-factory/sf-bl005/boxing-calibration-003/producer",
       "id": "PRODUCER"
     },
     {
       "authority": "SEPARATE_EVALUATOR",
       "commands": [
-        "java -Xmx512m -jar <runtime> method-pair-compare --manifest validation/software-factory/sf-bl005/boxing-calibration-003/comparison-manifest.json --manifest-sha256 730cf38b4f139806f3c753363cf8a8832b4ae959f0bea717389a0f259d4c55d4 --output validation/software-factory/sf-bl005/boxing-calibration-003/comparison.json",
-        "java -Xmx512m -Dloader.main=com.featuredeliveryintelligence.fdi.product.realization.methodpair.CandidateStageEvaluationRun -cp <runtime> org.springframework.boot.loader.launch.PropertiesLauncher . <generation> <generation-sha> <manifest> 730cf38b4f139806f3c753363cf8a8832b4ae959f0bea717389a0f259d4c55d4 <stage-output>"
+        "/opt/homebrew/opt/openjdk@17/bin/java -Xmx512m -jar /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/retained-runtimes/candidate-improvements/33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab.jar method-pair-compare --manifest validation/software-factory/sf-bl005/boxing-calibration-003/comparison-manifest.json --manifest-sha256 730cf38b4f139806f3c753363cf8a8832b4ae959f0bea717389a0f259d4c55d4 --output validation/software-factory/sf-bl005/boxing-calibration-003/comparison.json",
+        "GEN_SHA=$(shasum -a 256 validation/software-factory/sf-bl005/boxing-calibration-003/producer/generation.json | awk {print\\ $1}); /opt/homebrew/opt/openjdk@17/bin/java -Xmx512m -Dloader.main=com.featuredeliveryintelligence.fdi.product.realization.methodpair.CandidateStageEvaluationRun -cp /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/retained-runtimes/candidate-improvements/33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab.jar org.springframework.boot.loader.launch.PropertiesLauncher . validation/software-factory/sf-bl005/boxing-calibration-003/producer/generation.json \"$GEN_SHA\" validation/software-factory/sf-bl005/boxing-calibration-003/comparison-manifest.json 730cf38b4f139806f3c753363cf8a8832b4ae959f0bea717389a0f259d4c55d4 validation/software-factory/sf-bl005/boxing-calibration-003/evaluator/stages"
       ],
+      "comparisonManifestDocument": {
+        "baseline": {
+          "path": "producer/baseline.json",
+          "sha256": "4d56a13edb7167ab94461e5a5ea496687634858a800df1bc774e7120b37187e5"
+        },
+        "binding": {
+          "extractorSha256": "33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab",
+          "inputSnapshotSha256": "41a7f9fc60bf9f0de938a5c2f4fd29e33f8258a060d0826f4240baa180e6fa37",
+          "productionRoots": [
+            "src/main/java"
+          ],
+          "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+          "testRoots": [
+            "src/test/java"
+          ]
+        },
+        "datasetKind": "CALIBRATION",
+        "improved": {
+          "path": "producer/improved.json",
+          "sha256": "823a07e84ead932634faaa07bf3c911faa65d2774594561ca2daeb2dec38625c"
+        },
+        "proofs": {
+          "path": "evaluator/proofs.json",
+          "sha256": "8dd7494b7b0f0fec9d07c51bdba1c590bda1061cd6c78c3c34df88739c896c68"
+        },
+        "schemaVersion": "SFBL005-METHOD-PAIR-001",
+        "truth": {
+          "path": "evaluator/truth.json",
+          "sha256": "39aa27459305c05a4c983b0c414c60b39ec3e460491b9edb5da49c620bc2de2c"
+        }
+      },
       "dependsOn": [
         "PRODUCER"
       ],
-      "id": "EVALUATOR"
+      "id": "EVALUATOR",
+      "materializationCommands": [
+        "mkdir -p validation/software-factory/sf-bl005/boxing-calibration-003/evaluator",
+        "cp validation/software-factory/sf-bl005/boxing-calibration-002/evaluator/truth.json validation/software-factory/sf-bl005/boxing-calibration-003/evaluator/truth.json",
+        "cp validation/software-factory/sf-bl005/boxing-calibration-002/evaluator/proofs.json validation/software-factory/sf-bl005/boxing-calibration-003/evaluator/proofs.json",
+        "python3 -c <bound canonical manifest writer> > validation/software-factory/sf-bl005/boxing-calibration-003/comparison-manifest.json",
+        "test \"$(shasum -a 256 validation/software-factory/sf-bl005/boxing-calibration-003/comparison-manifest.json | awk {print\\ $1})\" = 730cf38b4f139806f3c753363cf8a8832b4ae959f0bea717389a0f259d4c55d4"
+      ]
     },
     {
       "dependsOn": [

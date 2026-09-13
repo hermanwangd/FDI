@@ -1,7 +1,9 @@
 {
   "calibrationAuthorized": true,
   "checks": {
+    "commandsContainNoUnboundPlaceholders": true,
     "controlsExact": true,
+    "fiveInputsMaterializeFromExactGitRevisions": true,
     "fiveProducerInputsBound": true,
     "manifestCanonicalShaBound": true,
     "memoryBelow8Gb": true,
@@ -14,8 +16,14 @@
   "controlCommit": "a56d005fd3727d78e9c88a1d6f8e705e0af0093e",
   "dispatchAuthorized": true,
   "envelopeRevision": 1,
-  "envelopeSha256": "34adc664d72744d3d7b7d337188ca1f6817f90d82beae02db88b18f4ff60090a",
+  "envelopeSha256": "2d0558c6eb4f6d4c6318853dfef035d86aebe25350efd614060287d63e266c1b",
   "executionId": "SF-BL-005-BOXING-CALIBRATION-003",
-  "result": "PASS_PENDING_FRESH_INDEPENDENT_PREFLIGHT",
+  "priorIndependentPreflight": {
+    "p0": 0,
+    "p1": 2,
+    "p2": 0,
+    "result": "FAIL_PLAN_CONFLICT"
+  },
+  "result": "PASS_PENDING_FRESH_INDEPENDENT_PREFLIGHT_AFTER_REMEDIATION",
   "schemaVersion": "SF-ENVELOPE-PREFLIGHT-001"
 }
