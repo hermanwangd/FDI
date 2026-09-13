@@ -294,6 +294,41 @@ prevent a successful-delivery claim even when time is green. Preserve the
 pre-dispatch size; a material authorized scope change receives a dated size
 revision instead of retrospective resizing.
 
+### KPI ownership and improvement
+
+Every KPI has a **metric owner**, accountable for complete and reproducible
+measurement, and an **improvement owner**, accountable for correcting the cause
+when the target is missed. Assign responsibility by delivery role, never by a
+particular agent or orchestration product.
+
+| KPI area | Metric owner | Improvement owner |
+|---|---|---|
+| Delivery E2E and target status | Feature Delivery Plane | Feature Delivery Plane |
+| Queue, handoff, stuck and duplicate dispatch | Execution Coordinator | Execution Coordinator |
+| Token consumption | Execution Coordinator | The stage owner causing the abnormal usage |
+| Implementation first-pass quality | Feature Delivery Plane | Delivery Engineer |
+| Review escape or missed finding | Feature Delivery Plane | Independent Reviewer |
+| Test and runtime compliance | Verification Owner | Verification Owner |
+| Evidence completeness and digest read-back | Evidence Receiver | The stage owner producing the missing or invalid evidence |
+| Unplanned Human intervention | Feature Delivery Plane | The role whose process caused the intervention |
+
+A reviewer must not weaken review to improve first-pass rate. Human Authority
+owns planned authority decisions, not engineering-flow defects.
+
+For every yellow, red, or delivery-blocking quality result:
+
+1. Record the exact KPI, scope, measured value, target and evidence.
+2. Classify the cause as execution, dependency, quality, evidence, environment,
+   authority or measurement.
+3. Assign one improvement owner and one bounded corrective action.
+4. Execute through the existing envelope when in scope; otherwise return to FDP
+   for replan or Human Authority for a genuine authority decision.
+5. Remeasure the same KPI without removing required tests, review or evidence.
+
+One missed target creates one primary corrective action per improvement cycle.
+Additional observations remain recorded but do not trigger unrelated process
+changes until the primary action is measured.
+
 | KPI | Definition | Current baseline (HERM-273 through HERM-282) | Next target | First optimization action when abnormal |
 |---|---|---|---|---|
 | token cost | Sum input and output across every run; report cache-read separately because its provider cost differs. | 32 runs; 2,333,118 input+output and 60,464,384 cache-read tokens, collected 2026-09-06. | Coordinator share at or below 20%, with zero duplicate-trigger runs. | Remove duplicate triggers and repeated context loading before reducing verification. |
