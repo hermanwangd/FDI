@@ -1,5 +1,5 @@
 {
-  "current_focus": "SF-BL-007",
+  "current_focus": "SF-BL-005",
   "phase": "software_factory_vnext",
   "framework_spec": "FRAMEWORK-SPEC.md",
   "backlog": "BACKLOG.md",
@@ -10,18 +10,17 @@
   "active_implementation_plan": "IMPLEMENTATION-PLAN.md#current-selection",
   "selected_backlog_items": [
     "SF-BL-005",
-    "SF-BL-006",
-    "SF-BL-007"
+    "SF-BL-006"
   ],
-  "next_action": "Human decides whether to select a bounded SF-BL-007 implementation proposal from the independently reviewed process design; no implementation envelope or dispatch exists.",
+  "next_action": "CSI is complete. No CSI execution is active; any recommendation remediation requires a new Human selection and exact envelope. SF-BL-005 route analysis remains independently preflighted but not dispatched.",
   "blocking_dependency": null,
   "latest_completed_execution": {
-    "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
-    "reviewed_candidate": "476cf3fdd888a5e45d888fa17c2ee65fd97c9f82",
-    "durable_replay_commit": "0aa05658bdd4415936bf0fd31c10ea3a32f6d656",
-    "review": "INDEPENDENT_REVIEW_PASS",
-    "verification": "TARGETED_JAVA_70_70_FULL_JAVA_1468_1468_PYTEST_63_63_REPEAT_BYTES_IDENTICAL",
-    "state": "DIAGNOSTIC_COMPLETE_REVIEW_PASS_FDP_RECONCILED"
+    "execution_id": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-IMPLEMENTATION-001",
+    "reviewed_candidate": "775b7728934df6ec00f6cf097e0fc47f75a5f726",
+    "review": "TWO_AXIS_INDEPENDENT_REVIEW_PASS",
+    "verification": "JAVA_17_PACKAGE_1491_1491_PYTEST_63_63_CLI_GOLDEN_REPORTS",
+    "evidence": "validation/software-factory/sf-bl007/implementation-001-evidence.json",
+    "state": "VERIFIED_HUMAN_CLOSED"
   },
   "latest_selector_diagnostic": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
@@ -40,7 +39,7 @@
   },
   "selected_next_execution": {
     "execution_id": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
-    "state": "PRODUCER_PREFLIGHT_PASS_PENDING_INDEPENDENT_PREFLIGHT_NOT_DISPATCHED",
+    "state": "INDEPENDENT_PREFLIGHT_PASS_NOT_DISPATCHED",
     "analysis_unit": "9_DISTINCT_ROUTE_ABSENT_OBSERVATIONS",
     "source_pair_count": 90,
     "scenario_repetition": 10,
@@ -50,12 +49,13 @@
     "envelope_commit": "2f3181fddad7f5ee4cb160d781efd278fb2ed2b4",
     "envelope_main_replay": "f2f22ce092bb09f663b7731342b7153777904c10",
     "envelope_sha256": "73eb5c1a522151d5921946d391fe2d1ef60dd795f1f83ca04addaf903d3d814c",
-    "producer_preflight": "PASS_PENDING_INDEPENDENT_PREFLIGHT",
+    "producer_preflight": "PASS",
     "producer_preflight_evidence": "validation/software-factory/sf-bl005/envelope-preflight-route-coverage-analysis-001.json",
-    "independent_preflight": "PENDING",
+    "independent_preflight": "PASS",
     "dispatch_authorized": false,
     "calibration_authorized": false,
-    "parent_closure": false
+    "parent_closure": false,
+    "independent_preflight_reviewer_run": "01a09a4c-e3c4-7698-af2e-14ba05d64362"
   },
   "metric_goal": {
     "status": "NOT_MET_DIAGNOSTIC_ONLY",
@@ -120,8 +120,7 @@
   },
   "active_backlog_items": [
     "SF-BL-005",
-    "SF-BL-006",
-    "SF-BL-007"
+    "SF-BL-006"
   ],
   "active_executions": [
     {
@@ -223,16 +222,6 @@
       ],
       "execution_state": "PARKED_AFTER_STAGE_2_FAIL",
       "integration_candidate": "8e835b427bd5f6b242b38d00e714d902298366c1"
-    },
-    {
-      "lane_id": "continuous-system-improvement-design",
-      "execution_id": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-DESIGN-001",
-      "base_commit": "3e163683857fe09913436a3b3881c1b4c3dba5ce",
-      "selected_backlog_items": [
-        "SF-BL-007"
-      ],
-      "execution_state": "DESIGN_REVIEWED_NOT_IMPLEMENTATION_SELECTED",
-      "integration_candidate": "f755640a8f7bef006b42f1dad792e723d21eb195"
     }
   ],
   "mapping_improvement_intake": {
@@ -307,7 +296,7 @@
   },
   "system_improvement_intake": {
     "backlog_id": "SF-BL-007",
-    "state": "DESIGN_REVIEWED_NOT_IMPLEMENTATION_SELECTED",
+    "state": "VERIFIED_HUMAN_CLOSED",
     "recommendation_count": 4,
     "tags": {
       "CODE": 2,
@@ -318,21 +307,18 @@
     },
     "effectiveness": "INSUFFICIENT_SAMPLE",
     "implementation_plan_exists": true,
-    "execution_envelope_exists": false,
+    "execution_envelope_exists": true,
     "dispatch_authorized": false,
     "automatic_product_truth_publication": false,
     "design_artifact": "docs/superpowers/specs/2026-09-13-continuous-system-improvement-design.md",
     "review_evidence": "validation/software-factory/sf-bl007/design-review-001.md",
-    "reviewed_candidate": "f755640a8f7bef006b42f1dad792e723d21eb195"
+    "reviewed_candidate": "f755640a8f7bef006b42f1dad792e723d21eb195",
+    "implementation_selected": true,
+    "execution_envelope": "validation/software-factory/sf-bl007/execution-envelope-implementation-001.json",
+    "implementation_candidate": "775b7728934df6ec00f6cf097e0fc47f75a5f726",
+    "implementation_review": "validation/software-factory/sf-bl007/implementation-001-review.md",
+    "implementation_evidence": "validation/software-factory/sf-bl007/implementation-001-evidence.json",
+    "parent_closure": true
   },
-  "proposed_next_execution": {
-    "execution_id": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-DESIGN-001",
-    "state": "DESIGN_REVIEWED_NOT_IMPLEMENTATION_SELECTED",
-    "allowed_output": "NONE_PENDING_HUMAN_SELECTION",
-    "implementation_envelope_authorized": false,
-    "dispatch_authorized": false,
-    "code_change_authorized": false,
-    "agent_or_automation_change_authorized": false,
-    "parent_closure": false
-  }
+  "proposed_next_execution": null
 }

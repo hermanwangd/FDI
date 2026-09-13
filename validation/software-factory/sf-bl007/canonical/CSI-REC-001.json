@@ -1,0 +1,38 @@
+{
+  "recommendation_id": "CSI-REC-001",
+  "disposition": "RECOMMENDED_NOT_SELECTED",
+  "tag": "CODE",
+  "origin_evidence": [
+    {
+      "identity": "01a09a1e-11cb-7da1-879d-3f437b460622",
+      "origin_type": "INDEPENDENT_REVIEW",
+      "durable_ref": "provider:codex-run/01a09a1e-11cb-7da1-879d-3f437b460622"
+    }
+  ],
+  "candidate_revision": "8e835b427bd5f6b242b38d00e714d902298366c1",
+  "execution_identity": "N/A: finding arose in independent review",
+  "verdict_identity": "01a09a1e-11cb-7da1-879d-3f437b460622:FAIL",
+  "affected_requirement": "PK-004,EVID-001",
+  "insufficiency": "Local exact match returns before the ambiguity guard, allowing an unsafe resolution.",
+  "proposed_control": "Add a fail-closed characterization and preserve ambiguity checks ahead of successful return.",
+  "affected_kpis": [
+    {
+      "metric": "review_escape",
+      "status": "UNKNOWN",
+      "value": null,
+      "numerator": null,
+      "denominator": null,
+      "sample_count": 0,
+      "minimum_sample_count": 2,
+      "window_start": "2026-09-12T00:00:00Z",
+      "window_end": "2026-09-13T00:00:00Z",
+      "category": "CODE",
+      "size_band": "S",
+      "measurement_revision": "52d216401a78dc99d7e471aaa4b68e9fdc0d458a",
+      "source_evidence": "sha256:ce3dfd73b8f0c0689db5d92375bed4624f7ed7d20423e7b8916b6c3cda9b3194:BACKLOG.md",
+      "baseline_identity": null
+    }
+  ],
+  "revision_route": "SF-BL-005:T3",
+  "duplicate_key": "e3445f109f9bd1ebfee767566f713b50a788d4b40f5a5b8bd373b2de2bdddd8b"
+}

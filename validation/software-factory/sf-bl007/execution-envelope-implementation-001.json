@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "executionId": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-IMPLEMENTATION-001",
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "branch": "codex/sf-bl007-implementation",
+  "constructionBase": "6a0e266fa65f0496bdbd1f52f9a96bdd59a26836",
+  "controlCommit": "52d216401a78dc99d7e471aaa4b68e9fdc0d458a",
+  "specRevision": "f755640a8f7bef006b42f1dad792e723d21eb195",
+  "backlogItems": [
+    "SF-BL-007"
+  ],
+  "requirementIds": [
+    "CSI-001",
+    "AUTH-001",
+    "AUTH-002",
+    "AUTH-003",
+    "PK-005",
+    "FD-T3-007",
+    "FD-T4-001",
+    "FD-T4-002",
+    "FD-T4-003",
+    "EVID-001",
+    "EXEC-001"
+  ],
+  "controls": {
+    "AGENTS.md": "a70a2d4da9f9dd8add3ca2ab3d794125a08525bdb53cca4426d60f9a9a091c12",
+    "PROJECT-OVERVIEW.md": "e5ceb9b4baf8a5b5a9d557dd78f673221c8ecea182ba782457fc76e08172e4c0",
+    "FRAMEWORK-SPEC.md": "1c78425291c7ff16d39760fcef41ff275076d1cf5b3aa973bcabe1b8c3f5930a",
+    "BACKLOG.md": "ce3dfd73b8f0c0689db5d92375bed4624f7ed7d20423e7b8916b6c3cda9b3194",
+    "IMPLEMENTATION-PLAN.md": "747cba148537b28151e0e3194da1149ba060bb88981e62cb118a0d3365249cb3",
+    "STATUS.json": "74703900f578c936d223d2a662fc57eb6aa542997aeb610510715db52e2de2db"
+  },
+  "ownedPaths": [
+    "src/main/java/com/featuredeliveryintelligence/fdi/validation/csi/CsiRecommendationValidator.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/validation/csi/CsiValidationReport.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/application/CsiValidateCli.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/application/FdiApplication.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/validation/csi/CsiRecommendationValidatorTests.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/application/CsiValidateCliTests.java",
+    "validation/software-factory/sf-bl007/canonical/CSI-REC-001.json",
+    "validation/software-factory/sf-bl007/canonical/CSI-REC-002.json",
+    "validation/software-factory/sf-bl007/canonical/CSI-REC-003.json",
+    "validation/software-factory/sf-bl007/canonical/CSI-REC-004.json",
+    "validation/software-factory/sf-bl007/implementation-001-evidence.json",
+    "validation/software-factory/sf-bl007/implementation-001-review.md",
+    "BACKLOG.md",
+    "IMPLEMENTATION-PLAN.md",
+    "STATUS.json"
+  ],
+  "inputs": [
+    {
+      "path": "docs/superpowers/specs/2026-09-13-continuous-system-improvement-design.md",
+      "sha256": "5139a213c12e202881f7b7dc3ce77bed5c268d5359c92d273c1ec98804a2c9e6",
+      "revision": "52d216401a78dc99d7e471aaa4b68e9fdc0d458a",
+      "contract": "Independently reviewed CSI process design",
+      "mutationAllowed": false
+    },
+    {
+      "path": "validation/software-factory/sf-bl007/design-review-001.md",
+      "sha256": "2f14d153160363c6e884169007caced864961cbc33d27bccb81caff5a5928f41",
+      "revision": "52d216401a78dc99d7e471aaa4b68e9fdc0d458a",
+      "contract": "Design review PASS evidence",
+      "mutationAllowed": false
+    }
+  ],
+  "acceptance": [
+    "Canonical recommendation validation is fail-closed and preserves append-only origin observations",
+    "Semantic duplicate key is deterministic and excludes evidence identities",
+    "READY_FOR_REVIEW and REVIEW_COMPLETE are separate non-circular gates",
+    "KPI samples preserve UNKNOWN, N/A, INSUFFICIENT_SAMPLE and validate comparability fields",
+    "Four fixed recommendations are materialized without invented provenance; incomplete records remain BLOCKED",
+    "Packaged CLI writes deterministic exclusive-create reports",
+    "No recommendation remediation, parallel lifecycle, Product truth publication, deployment, agent or automation change"
+  ],
+  "stages": [
+    {
+      "id": "IMPLEMENTATION",
+      "owner": "Delivery Engineer",
+      "dependsOn": []
+    },
+    {
+      "id": "INDEPENDENT_REVIEW",
+      "owner": "Independent Reviewer",
+      "dependsOn": [
+        "IMPLEMENTATION"
+      ]
+    },
+    {
+      "id": "COMBINED_VERIFICATION",
+      "owner": "Delivery Engineer",
+      "dependsOn": [
+        "INDEPENDENT_REVIEW"
+      ]
+    },
+    {
+      "id": "HUMAN_CLOSURE",
+      "owner": "Human Authority",
+      "dependsOn": [
+        "COMBINED_VERIFICATION"
+      ]
+    }
+  ],
+  "verification": [
+    "MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -Dtest=CsiRecommendationValidatorTests,CsiValidateCliTests test",
+    "MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g package",
+    "python3 -m pytest -q",
+    "python3 -m json.tool <each canonical/evidence JSON>",
+    "git diff --check"
+  ],
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "oneHeavyProcessAtATime": true,
+    "mavenHeapGb": 2,
+    "mavenForkGb": 2,
+    "commandTimeoutSeconds": 1200
+  },
+  "prohibited": [
+    "Implement CSI-REC-001 or CSI-REC-002 remediation",
+    "Dispatch SF-BL-005 route analysis",
+    "Create a service, database, agent, Skill, or automation",
+    "Publish Product truth",
+    "Deploy",
+    "Modify files outside ownedPaths",
+    "Close SF-BL-007 without Human Authority"
+  ],
+  "failureRouting": {
+    "missingLegacyEvidence": "BLOCKED_RECORD",
+    "identityOrScopeConflict": "PLAN_CONFLICT",
+    "requiredContractChange": "PLAN_CHANGE_REQUIRED"
+  }
+}
