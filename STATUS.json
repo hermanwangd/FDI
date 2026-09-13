@@ -12,7 +12,7 @@
     "SF-BL-005",
     "SF-BL-006"
   ],
-  "next_action": "Materialize and preflight the exact envelope for SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001. Implementation dispatch, calibration, scoring, formal holdout, and parent closure remain unauthorized.",
+  "next_action": "Commission an independent exact-envelope preflight for SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001. Implementation dispatch remains unauthorized pending that review and a separate Human decision.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
@@ -40,18 +40,25 @@
   },
   "selected_next_execution": {
     "execution_id": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
-    "state": "ENVELOPE_PREPARATION_SELECTED_NOT_DISPATCHED",
+    "state": "ENVELOPE_MATERIALIZED_PRODUCER_PREFLIGHT_PASS_PENDING_INDEPENDENT_PREFLIGHT",
     "objective": "Add statically recoverable PutMapping and DeleteMapping support to SpringRouteHandlerIndex without changing route normalization or selector behavior.",
     "selection_authority": "Human selection option 1 on 2026-09-13",
     "selection_scope": "ENVELOPE_CREATION_AND_LEDGER_RECONCILIATION_ONLY",
-    "construction_base": "7ed2d2e04ba7c9d5cc90d83dacd57318ad56d865",
+    "construction_base": "9bbcb7da3ecb61810947fdee566e2d842d9d0a5b",
     "code_change_authorized": false,
     "envelope_creation_authorized": true,
     "dispatch_authorized": false,
     "calibration_authorized": false,
     "formal_holdout_authorized": false,
     "parent_closure": false,
-    "originating_evidence": "validation/software-factory/sf-bl005/route-coverage-analysis-001/"
+    "originating_evidence": "validation/software-factory/sf-bl005/route-coverage-analysis-001/",
+    "envelope_control_commit": "9bbcb7da3ecb61810947fdee566e2d842d9d0a5b",
+    "envelope_integrated_commit": "6783580f248b0c0a07430be6646755a8d0f3d0ab",
+    "envelope_path": "validation/software-factory/sf-bl005/execution-envelope-route-handler-extractor-remediation-001.json",
+    "envelope_sha256": "6d5934253bc1c5084f3bf6a4ac056c7323359105713c09cea8cf0bb0220fbcf6",
+    "producer_preflight": "PASS",
+    "producer_preflight_evidence": "validation/software-factory/sf-bl005/envelope-preflight-route-handler-extractor-remediation-001.json",
+    "independent_preflight": "PENDING"
   },
   "metric_goal": {
     "status": "NOT_MET_DIAGNOSTIC_ONLY",
@@ -122,11 +129,11 @@
     {
       "lane_id": "route-handler-extractor-remediation",
       "execution_id": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
-      "base_commit": "7ed2d2e04ba7c9d5cc90d83dacd57318ad56d865",
+      "base_commit": "9bbcb7da3ecb61810947fdee566e2d842d9d0a5b",
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "ENVELOPE_PREPARATION_SELECTED_NOT_DISPATCHED",
+      "execution_state": "ENVELOPE_MATERIALIZED_PRODUCER_PREFLIGHT_PASS_PENDING_INDEPENDENT_PREFLIGHT",
       "integration_candidate": null
     }
   ],

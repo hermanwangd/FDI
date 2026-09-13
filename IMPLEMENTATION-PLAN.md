@@ -4,7 +4,10 @@
 
 Active Backlog items are `SF-BL-005` and `SF-BL-006`; current focus is
 `SF-BL-005`. Human Authority selected envelope creation and ledger reconciliation
-for `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001`. This selection does not dispatch implementation.
+for `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001`. This selection does not dispatch implementation. The exact envelope is integrated
+at `6783580f248b0c0a07430be6646755a8d0f3d0ab` with SHA-256
+`6d5934253bc1c5084f3bf6a4ac056c7323359105713c09cea8cf0bb0220fbcf6`;
+producer preflight passed and independent preflight is pending.
 
 The bounded objective is to extend `SpringRouteHandlerIndex` static extraction
 for method-level `@PutMapping` and `@DeleteMapping`, including annotations with
@@ -22,7 +25,7 @@ holdout, Product truth, deployment, and parent closure.
 
 ### Current execution ledger
 
-- `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001` — `ENVELOPE_PREPARATION_SELECTED_NOT_DISPATCHED`
+- `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001` — `ENVELOPE_MATERIALIZED_PRODUCER_PREFLIGHT_PASS_PENDING_INDEPENDENT_PREFLIGHT`
 
 ### Completed execution ledger
 
