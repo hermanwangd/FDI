@@ -6,6 +6,8 @@
 
 Detailed evidence and the ordered follow-ups are in `validation/software-factory/sf-bl005/rejection-analysis-002/RESULTS.md`. Envelope revision 1 SHA `2829333b3f3b61815e749b1905c634a39141c8effed57e365ae20fca282162c9` passed fresh independent preflight with P0/P1/P2 zero and was integrated at `c61ceea6ffb1e5657075b5555bf115461e7a90a9`. Implementation dispatch remains false pending Human Authority. Company readiness criteria are defined in `validation/software-factory/sf-bl005/production-readiness-criteria-001.md`.
 
+Formal holdout policy preparation may proceed without selecting data. `validation/software-factory/sf-bl005/formal-holdout-protocol-001.json` revision 1 is `PREPARED_POLICY_NOT_EXECUTABLE` and independently reviewed with P0/P1/P2 zero. It contains no repository, revision, scenario, sample, or gold identity. It cannot be externally sealed until its H0 final-candidate, H1 scorer, and H2 contamination-ledger receipts exist, and it grants no selection or execution authority.
+
 
 Human Authority selected a four-step sequential SF-BL-005 experiment on
 2026-09-13. The order is mandatory because the first RealWorld diagnostic is
