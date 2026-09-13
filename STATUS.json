@@ -12,7 +12,7 @@
     "SF-BL-005",
     "SF-BL-006"
   ],
-  "next_action": "Prepare a bounded ROUTE_ABSENT analysis proposal for Human selection; do not execute it or authorize calibration from this diagnostic.",
+  "next_action": "Human Authority selects or rejects SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001; do not create an execution envelope or dispatch before selection.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
@@ -35,6 +35,19 @@
     "seed_parity": true,
     "diagnostic_only": true,
     "evidence": "validation/software-factory/sf-bl005/realworld-selector-diagnostic-001/",
+    "parent_closure": false
+  },
+  "proposed_next_execution": {
+    "execution_id": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
+    "state": "DESIGN_APPROVED_AWAITING_HUMAN_SELECTION",
+    "analysis_unit": "9_DISTINCT_ROUTE_ABSENT_OBSERVATIONS",
+    "source_pair_count": 90,
+    "scenario_repetition": 10,
+    "allowed_output": "DETERMINISTIC_COVERAGE_MATRIX_AND_BOUNDED_REMEDIATION_RECOMMENDATION",
+    "code_change_authorized": false,
+    "envelope_creation_authorized": false,
+    "dispatch_authorized": false,
+    "calibration_authorized": false,
     "parent_closure": false
   },
   "metric_goal": {

@@ -126,6 +126,41 @@ The completed diagnostic did not identify external ancestry as its dominant
 class. FDP therefore routes only to a bounded `ROUTE_ABSENT` proposal. No such
 proposal or execution is authorized by this Plan.
 
+## Proposed next selection — route coverage analysis
+
+Proposed execution: `SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001`.
+State: `DESIGN_APPROVED_AWAITING_HUMAN_SELECTION`.
+
+The 90 `ROUTE_ABSENT` pairs are the Cartesian repetition of 9 distinct
+observations across 10 scenarios. The analysis unit is therefore the distinct
+observation, not the scenario-observation pair. This avoids repeating the same
+root-cause work ten times and avoids prematurely changing selector behavior.
+
+If selected, FDP must first create and independently preflight a new exact
+envelope. The envelope permits only read-only inspection of the 9 observations,
+their bound HTTP methods/routes, the frozen handler input, and exact-revision
+production route declarations. For each observation the analysis must record:
+
+1. observation identity, HTTP method, normalized route, and source provenance;
+2. matching frozen handler candidates, if any;
+3. exact production route declaration evidence, if any;
+4. exactly one classification: `INPUT_OMISSION`,
+   `UNSUPPORTED_STATIC_EXTRACTION`, `NORMALIZATION_MISMATCH`,
+   `NO_PRODUCTION_HANDLER`, or `UNRESOLVED`;
+5. the smallest source-backed remediation surface, or explicit abstention.
+
+Acceptance requires 9/9 observations to be present exactly once, deterministic
+classification and byte-identical repeat output, complete source/digest
+bindings, no unresolved P0-P2 independent-review finding, and honest
+`UNRESOLVED` where evidence is insufficient. Output is a diagnostic coverage
+matrix and recommendation only.
+
+The proposed execution excludes code/test/config changes, extractor or selector
+changes, threshold relaxation, input mutation, evaluator/scorer/gold access,
+recall/precision calculation, calibration, formal holdout, Product truth,
+publication, deployment, and parent closure. Design approval is not execution
+authorization.
+
 ## Exclusions and resource boundary
 
 Do not modify source, tests, matching algorithms, active controls, prior
