@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "executionId": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
+  "envelopeRevision": 1,
+  "classification": "READ_ONLY_DIAGNOSTIC_ANALYSIS_NO_SCORING",
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "targetBranch": "codex/sf-bl005-route-coverage-analysis-001",
+  "constructionBase": "be3eb8f7e6855fb5addf38c095a7cb5729e5b969",
+  "controlCommit": "a105eb7ee95b67157cdda1a7239695340074d522",
+  "backlogItems": ["SF-BL-005"],
+  "requirementIds": ["AUTH-002", "PK-004", "EVID-001", "TECH-001"],
+  "controls": {
+    "AGENTS.md": "a70a2d4da9f9dd8add3ca2ab3d794125a08525bdb53cca4426d60f9a9a091c12",
+    "PROJECT-OVERVIEW.md": "e5ceb9b4baf8a5b5a9d557dd78f673221c8ecea182ba782457fc76e08172e4c0",
+    "FRAMEWORK-SPEC.md": "1c78425291c7ff16d39760fcef41ff275076d1cf5b3aa973bcabe1b8c3f5930a",
+    "BACKLOG.md": "4b1ca80ad188eafc67e4f827ead3e2abab801c2cfa0b5a86ba58fd6d80db9df6",
+    "IMPLEMENTATION-PLAN.md": "28cad913cb5916fef6da8ce03c44dce3b59d66c1d03d57a185fce21d76645fc8",
+    "STATUS.json": "0846d229503c657d159d65d38abb9cbdf511466b7b8847c9cbca9bc5133796aa"
+  },
+  "frozenInputs": {
+    "sourceRepository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31",
+    "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+    "sourceTree": "3938658872ad216fe45033f4698c66febd80be76",
+    "productionSourceSubtree": {
+      "path": "src/main/java",
+      "tree": "393afbd6c7e5dab2352ef896b5866348d6d822a3",
+      "files": 93,
+      "readPolicy": "READ_ONLY_EXACT_REVISION"
+    },
+    "observations": {
+      "revision": "5f07244f3c201563949b9f44992c6e1113117146",
+      "path": "validation/software-factory/sf-bl005/cross-repo-realworld-001/generation-realworld-002/seed/validation/software-factory/sf-bl002/http-behavior-observations-003.json",
+      "sha256": "71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd",
+      "totalCount": 11
+    },
+    "handlers": {
+      "revision": "5f07244f3c201563949b9f44992c6e1113117146",
+      "path": "validation/software-factory/sf-bl005/cross-repo-realworld-001/generation-realworld-002/seed/validation/software-factory/sf-bl002/route-handler-index-003.json",
+      "sha256": "bacddebfeb65b663f784efbf8f293092e05ed6f95b2a0c4135893377cacf2f0b",
+      "totalCount": 14
+    },
+    "selectorDiagnostics": {
+      "path": "validation/software-factory/sf-bl005/realworld-selector-diagnostic-001/run-1/diagnostics.json",
+      "sha256": "e870d138c75a5afa17138f616b6e37a536969bc989b7e77bfbf2c9d2ec245b44",
+      "executionReceiptSha256": "a10e492d46d07295b2e3701a83c0eb31a7b110aae40f4c21a937a523bbb62417",
+      "independentReviewSha256": "a95110c44e0b8dcb50fc244ba1fd6a9e8f5e858afc2f66562cd46682e4c425c5"
+    },
+    "routeAbsentObservationRefs": [
+      "http-behavior-observation-00001",
+      "http-behavior-observation-00002",
+      "http-behavior-observation-00003",
+      "http-behavior-observation-00004",
+      "http-behavior-observation-00005",
+      "http-behavior-observation-00008",
+      "http-behavior-observation-00009",
+      "http-behavior-observation-00010",
+      "http-behavior-observation-00011"
+    ],
+    "analysisUnitCount": 9,
+    "sourcePairCount": 90,
+    "scenarioRepetition": 10,
+    "accessPolicy": "ALLOWLIST_ONLY_NO_EVALUATOR_TRUTH_GOLD_PROOFS_DIAGNOSES_OR_SCORER"
+  },
+  "ownedPaths": [
+    "validation/software-factory/sf-bl005/route-coverage-analysis-001/**"
+  ],
+  "outputContract": {
+    "coverageMatrix": "validation/software-factory/sf-bl005/route-coverage-analysis-001/coverage-matrix.json",
+    "executionReceipt": "validation/software-factory/sf-bl005/route-coverage-analysis-001/execution-receipt.json",
+    "requiredObservationFields": [
+      "observationRef",
+      "httpMethod",
+      "normalizedRouteTemplate",
+      "testSourcePath",
+      "sourceLocation",
+      "frozenHandlerCandidates",
+      "productionRouteEvidence",
+      "classification",
+      "recommendation"
+    ],
+    "classificationEnum": [
+      "INPUT_OMISSION",
+      "UNSUPPORTED_STATIC_EXTRACTION",
+      "NORMALIZATION_MISMATCH",
+      "NO_PRODUCTION_HANDLER",
+      "UNRESOLVED"
+    ],
+    "canonicalSerialization": "UTF-8 JSON, recursively sorted keys, two-space indentation, one trailing newline",
+    "recommendationBoundary": "Smallest source-backed remediation surface or explicit abstention; proposal only"
+  },
+  "stages": [
+    {
+      "id": "PREFLIGHT",
+      "acceptance": [
+        "all full revisions, Git objects, trees, paths, counts and SHA-256 values resolve exactly",
+        "source checkout is clean at the exact source revision",
+        "owned output namespace does not pre-exist",
+        "exactly 9 unique ROUTE_ABSENT observation refs account for exactly 90 pairs across 10 scenarios"
+      ]
+    },
+    {
+      "id": "READ_ONLY_CLASSIFICATION",
+      "dependsOn": ["PREFLIGHT"],
+      "acceptance": [
+        "each of the 9 bound observations appears exactly once",
+        "each row binds the exact observation, frozen handler candidates and exact-revision production route evidence",
+        "each row uses exactly one allowed classification",
+        "insufficient evidence remains UNRESOLVED",
+        "canonical reserialization is byte-identical"
+      ]
+    },
+    {
+      "id": "INDEPENDENT_REVIEW",
+      "dependsOn": ["READ_ONLY_CLASSIFICATION"],
+      "acceptance": [
+        "separately attributable reviewer names the exact candidate and recomputes all input and output bindings",
+        "reviewer verifies every classification against source evidence without evaluator or scorer access",
+        "no unresolved P0-P2 finding"
+      ]
+    },
+    {
+      "id": "FDP_RETURN",
+      "dependsOn": ["INDEPENDENT_REVIEW"],
+      "acceptance": [
+        "return only a bounded remediation proposal or abstention",
+        "no implementation, calibration or parent-closure authority is claimed"
+      ]
+    }
+  ],
+  "verificationCommands": [
+    "python3 -m json.tool validation/software-factory/sf-bl005/route-coverage-analysis-001/coverage-matrix.json >/dev/null",
+    "python3 -m json.tool validation/software-factory/sf-bl005/route-coverage-analysis-001/execution-receipt.json >/dev/null",
+    "python3 -m pytest -q",
+    "git diff --check"
+  ],
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "oneHeavyJvmAtATime": true,
+    "heavyJvmRequired": false,
+    "maximumAnalysisProcesses": 2,
+    "commandTimeoutSeconds": 1200
+  },
+  "excluded": [
+    "source, test, configuration, extractor, selector, matching algorithm, active-control, frozen-input or prior-evidence mutation",
+    "evaluator truth, gold, proofs, diagnoses, scorer, recall or precision",
+    "threshold relaxation, Graphify reindex, upstream RealWorld tests, database or Docker",
+    "calibration, formal holdout, Product truth, publication, deployment or parent closure",
+    "dispatch without a separate Human decision",
+    "automatic retry, overwrite or cleanup outside the owned new namespace"
+  ],
+  "failureRouting": {
+    "missingDependencyOrAccess": "PLAN_BLOCKED",
+    "identityDigestTreeCountNamespaceOrIsolationMismatch": "PLAN_CONFLICT",
+    "scopeClassificationContractOrBehaviorChange": "PLAN_CHANGE_REQUIRED",
+    "insufficientSourceEvidence": "UNRESOLVED",
+    "insufficientValidExecutionEvidence": "INCONCLUSIVE"
+  }
+}
