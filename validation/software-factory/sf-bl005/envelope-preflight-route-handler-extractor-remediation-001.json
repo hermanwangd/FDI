@@ -1,11 +1,13 @@
 {
   "checks": {
-    "activeStatusReconciliationRequiredAfterIntegration": true,
+    "activeStatusReconciliationRequiredAfterIntegration": false,
     "allMavenCommandsBindMandatoryVerifierProperties": true,
     "canonicalOutputByteRoundTripRequired": true,
+    "codeChangeAndDispatchAuthorizationConsistent": true,
     "constructionBaseIsControlCommit": true,
     "controlCommitResolves": true,
     "controlFilesExact": true,
+    "currentControlsSelectRevision4": true,
     "evidenceNamespaceAbsentBeforeMaterialization": true,
     "frozenInputDigestsExact": true,
     "frozenSourceCheckoutClean": true,
@@ -22,11 +24,11 @@
     "targetBranchAbsent": true,
     "workItemDependenciesAcyclic": true
   },
-  "controlCommit": "9bbcb7da3ecb61810947fdee566e2d842d9d0a5b",
-  "dispatchAuthorized": false,
+  "controlCommit": "b7d080da45a50c11e205b6fa870204d5e8ca5bb5",
+  "dispatchAuthorized": true,
   "envelopePath": "validation/software-factory/sf-bl005/execution-envelope-route-handler-extractor-remediation-001.json",
-  "envelopeRevision": 3,
-  "envelopeSha256": "ef3ec0c27363418de71d50ed9ff7e10fa0cda477c05171ab5ece458be32719f0",
+  "envelopeRevision": 4,
+  "envelopeSha256": "07c211104b1f59fb4593c94d71b305f99d0e67c996a886bd40bf1ca470d7cc8a",
   "executionId": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
   "priorIndependentPreflight": {
     "latestFindings": {
@@ -38,6 +40,6 @@
     "reviewer": "/root/route_extractor_envelope_preflight"
   },
   "producer": "FDP_SERIALIZED_OWNER",
-  "result": "PASS_PENDING_REVISION_3_INTEGRATION_STATUS_RECONCILIATION_AND_FRESH_INDEPENDENT_PREFLIGHT",
+  "result": "PASS_PENDING_FRESH_INDEPENDENT_PREFLIGHT",
   "schemaVersion": "SF-ENVELOPE-PREFLIGHT-001"
 }

@@ -33,16 +33,16 @@
     ]
   },
   "classification": "BOUNDED_T3_IMPLEMENTATION_REMEDIATION",
-  "constructionBase": "9bbcb7da3ecb61810947fdee566e2d842d9d0a5b",
-  "controlCommit": "9bbcb7da3ecb61810947fdee566e2d842d9d0a5b",
+  "constructionBase": "b7d080da45a50c11e205b6fa870204d5e8ca5bb5",
+  "controlCommit": "b7d080da45a50c11e205b6fa870204d5e8ca5bb5",
   "controls": {
     "AGENTS.md": "a70a2d4da9f9dd8add3ca2ab3d794125a08525bdb53cca4426d60f9a9a091c12",
-    "BACKLOG.md": "8721db6b79b394d6661ee58f1c88574ee1ca4a82ef45e292cdf04cf607a38923",
+    "BACKLOG.md": "e794ea2627a1a5aaa994cd0e987ee0ce396c2878700f6786f39fdd3a2cad05bb",
     "FRAMEWORK-SPEC.md": "1c78425291c7ff16d39760fcef41ff275076d1cf5b3aa973bcabe1b8c3f5930a",
-    "IMPLEMENTATION-PLAN.md": "2fa43bba31594de7ccdeff51ec29d8f04af6b8a6515670e73382c8e855b95de4",
+    "IMPLEMENTATION-PLAN.md": "ca839399dce1de9db8e7b2896c3cf0a5de08711086863b66d1335fd271c5645a",
     "JAVA-CODING-GUIDELINES.md": "06011e21515ea11447d968e94cba2497b8ac0935fb4b3936ff099da31268a28f",
     "PROJECT-OVERVIEW.md": "e5ceb9b4baf8a5b5a9d557dd78f673221c8ecea182ba782457fc76e08172e4c0",
-    "STATUS.json": "bb5eb2029f2df8ed36a8712c1c62346cc1c08a41b2333c7ac6a4539b7694c48f"
+    "STATUS.json": "6db0b4e084fea19b188bdc8f48b61ff2fa6cfe6e76fdf55c8abf6926f7d539a0"
   },
   "dependencies": [
     {
@@ -54,7 +54,7 @@
       "successorRef": "SF-BL-005-RHE-001-W3"
     }
   ],
-  "envelopeRevision": 3,
+  "envelopeRevision": 4,
   "excluded": [
     "all five active control files and AGENTS.md",
     "all source and test paths outside the two exact Java files",
@@ -110,7 +110,7 @@
     "calibration": false,
     "deployment": false,
     "formalHoldout": false,
-    "implementationDispatch": "SEPARATE_HUMAN_DECISION_REQUIRED_AFTER_INDEPENDENT_PREFLIGHT",
+    "implementationDispatch": "AUTHORIZED_BY_HUMAN_ORDERED_SELECTION_1_2_3_ON_2026_09_13",
     "parentClosure": false,
     "productTruth": false,
     "publication": false
@@ -196,14 +196,22 @@
       {
         "priority": "P1",
         "resolution": "After revision 3 integration, reconcile active STATUS to the new exact envelope commit/SHA before fresh independent preflight."
+      },
+      {
+        "priority": "P1",
+        "resolution": "Reconcile code_change_authorized and dispatch_authorized to true for this bounded Java implementation."
+      },
+      {
+        "priority": "P1",
+        "resolution": "Reconcile current STATUS, IMPLEMENTATION-PLAN, and BACKLOG to revision 4 and mark earlier revision-3/envelope-only directives historical before rebinding."
       }
     ],
     "freshIndependentPreflightRequired": true,
     "priorReviewer": "/root/route_extractor_envelope_preflight",
-    "priorVerdict": "TWO_CONSECUTIVE_FAIL_PLAN_CONFLICT"
+    "priorVerdict": "REVISION_4_FIRST_PREFLIGHT_FAIL_P1_2_CONTROL_CONFLICT_RECONCILED_AT_B7D080DA"
   },
   "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
-  "sourceTree": "63ef6a44f4ab97df26e422a172f0134b1e29cf6a",
+  "sourceTree": "d81b139d415f2fc2a124cebe972d9d55141a9cf9",
   "targetBranch": "codex/sf-bl005-route-handler-extractor-remediation-001",
   "verificationCommands": [
     "git show 5f07244f3c201563949b9f44992c6e1113117146:validation/software-factory/sf-bl005/cross-repo-realworld-001/generation-realworld-002/seed/validation/software-factory/sf-bl002/http-behavior-observations-003.json > validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json",
