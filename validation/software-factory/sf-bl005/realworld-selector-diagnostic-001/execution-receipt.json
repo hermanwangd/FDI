@@ -1,0 +1,121 @@
+{
+  "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
+  "recorded_at": "2026-09-13T08:35:34Z",
+  "result": "DIAGNOSTIC_COMPLETE_PENDING_INDEPENDENT_REVIEW",
+  "execution_base": "e29992d86ce0895e691c6cca64dd214d38bde50e",
+  "envelope_commit": "84388e90f8f807d1511061224035a153c6098e48",
+  "envelope_sha256": "85ae752c773a48817075ca56415760ff255d6d2c36b4743a9f40eba77e402228",
+  "control_commit": "c252dee7f6bcb24ca75e9fa789469116c9f1c2a7",
+  "raw_artifacts_commit": "7337a7b1822b50fc5fcc1b162b67bda05e6e1072",
+  "runner_input_manifest_sha256": "023e0fdd412e9de11ccd1a83a9b248fc48365c1196493c2ddd354e7b62cce12b",
+  "materialization": {
+    "source_revision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+    "source_checkout_clean": true,
+    "files": 26,
+    "role_files": 3,
+    "public_test_files": 23,
+    "symlinks": 0,
+    "all_digests_verified": true
+  },
+  "runtime": {
+    "java_home": "/opt/homebrew/opt/openjdk@17",
+    "java_version": "17.0.20.1",
+    "spring_boot_version": "3.4.1",
+    "jar_bytes": 23358871,
+    "jar_sha256": "716d0848e97fd4a994b65f6250477592089230fca618ee935493ea2376f28e3a",
+    "java_version_log": "java-version.log",
+    "java_version_log_sha256": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39"
+  },
+  "verification": {
+    "targeted_java": {
+      "tests": 70,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "log": "targeted-java.log",
+      "log_sha256": "dc9e8fcf4c5b9bfca1b52f3548dd3880de191228729438c866de6dfd4d779c25"
+    },
+    "full_java_package": {
+      "tests": 1468,
+      "suites": 123,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "log": "full-java-package.log",
+      "log_sha256": "19a64df5c0c9165deba322b2ae5595bd21391bc5a82e55caea75bad6f4f9e80f"
+    },
+    "python_regression": {
+      "tests": 63,
+      "failures": 0,
+      "exit_code": 0,
+      "log": "python-regression.log",
+      "log_sha256": "e43919631345543edecba89d4355f8a8a0ae29567f6452b0f09311cf1b7f63aa"
+    },
+    "git_diff_check_exit_code": 0
+  },
+  "runner_execution": {
+    "runs": 2,
+    "exit_codes": [0, 0],
+    "console_summaries": [
+      "SELECTOR-DIAGNOSTIC SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001 scenarios=10 evaluated=110 accepted=0 SEALED",
+      "SELECTOR-DIAGNOSTIC SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001 scenarios=10 evaluated=110 accepted=0 SEALED"
+    ],
+    "java_io_tmpdirs": [
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-001/private-tmp/run-1",
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-001/private-tmp/run-2"
+    ],
+    "private_tmp_parents_precreated": true,
+    "private_tmp_parents_empty_after_runs": true,
+    "cleanup_authority": "Only runner-created selector-diagnostic-* children beneath the two bound private temp parents",
+    "diagnostics_byte_identical": true,
+    "seals_byte_identical": true,
+    "runtime_byte_identical": true
+  },
+  "outputs": {
+    "run_1_diagnostics": {
+      "path": "run-1/diagnostics.json",
+      "bytes": 16646,
+      "sha256": "e870d138c75a5afa17138f616b6e37a536969bc989b7e77bfbf2c9d2ec245b44"
+    },
+    "run_1_seal": {
+      "path": "run-1/seal.json",
+      "bytes": 4047,
+      "sha256": "35c2cd048f4bbe01302c0b2d7ce31ba69505e2e837d8feb5ff502d440af3f938"
+    },
+    "run_2_diagnostics": {
+      "path": "run-2-diagnostics.json",
+      "bytes": 16646,
+      "sha256": "e870d138c75a5afa17138f616b6e37a536969bc989b7e77bfbf2c9d2ec245b44"
+    },
+    "run_2_seal": {
+      "path": "run-2-seal.json",
+      "bytes": 4047,
+      "sha256": "35c2cd048f4bbe01302c0b2d7ce31ba69505e2e837d8feb5ff502d440af3f938"
+    }
+  },
+  "diagnostic": {
+    "scenarios": 10,
+    "evaluated": 110,
+    "accepted": 0,
+    "rejected": 110,
+    "seed_parity": true,
+    "seeds": 0,
+    "first_rejection_counts": {
+      "ROUTE_ABSENT": 90,
+      "ENTITY_MISMATCH": 20
+    },
+    "dominant_first_rejection": "ROUTE_ABSENT"
+  },
+  "authority_boundary": {
+    "diagnostic_only": true,
+    "evaluator_truth_accessed": false,
+    "scorer_executed": false,
+    "recall_precision_calculated": false,
+    "calibration_authorized": false,
+    "formal_holdout_authorized": false,
+    "product_truth_published": false,
+    "parent_closure": false
+  }
+}
