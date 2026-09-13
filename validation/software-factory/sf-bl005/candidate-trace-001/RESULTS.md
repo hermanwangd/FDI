@@ -3,8 +3,9 @@
 ## Scope
 
 Branch-local diagnostic implementation selected by the user on 2026-09-13.
-No real calibration rerun, evaluator truth access, scoring change, semantic
-publication, merge, push, or parent closure was performed.
+Initial slice: no real calibration rerun, evaluator truth access, scoring
+change, semantic publication, merge, push, or parent closure. The user goal
+subsequently selected diagnostic continuation; see the execution record below.
 
 `CandidateTraceCalibrationRun` is an opt-in successor to the existing qualified
 Petclinic CLI. Arguments remain `<five-input-root> <exact-source-root>
@@ -69,8 +70,25 @@ Reviewer verified ancestry and diff whitespace, read the applicable controls
 and coding guidance, and did not produce/integrate this candidate or access
 evaluator-only artifacts. Maven verification was performed by the producer.
 
-Remaining verification limitation: no successful end-to-end real CLI sidecar
+Initial verification limitation: no successful end-to-end real CLI sidecar
 generation was executed; only entry-point refusal cases and producer unit
 behavior were exercised. Full evaluator classification is not implemented in
 this producer-only slice. No new candidate recall/precision is available.
 No token or complete workflow cycle-time measurement was collected.
+
+## Authorized goal continuation: real trace generation
+
+The persistent improvement-actions goal selected the diagnostic run. The Java
+17 CLI completed with exit 0 in new `producer/`; no old directory was reused.
+Source checkout was clean at `818c4136ea971c21674525f9053de0d9c7ad8cfe`.
+Only the existing sealed five-input allowlist was consumed. Runtime JAR SHA:
+`1c41ce0aed3acb808c5f063da8dfff348687c984b24b0f0c82b0ab6e512c34cc`.
+Generation manifest SHA:
+`44feeb2a82d54ede5198b0be738386c83dcf2a5f024d16cf1ba95e55d651f572`.
+
+All eight output digests passed verification. The new improved proposal object
+exactly equals 007's improved proposal object. Trace contains 380 events:
+28 CANDIDATE, 101 FILTERED, 54 RETAINED, 197 UNRESOLVED. These are event counts,
+not deduplicated pair metrics. No DEPTH_FRONTIER event occurred. This rules out
+observed depth-frontier termination in this run, not all possible retrieval
+coverage limitations. Independent evaluator classification is the next stage.

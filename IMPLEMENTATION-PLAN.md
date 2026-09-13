@@ -36,7 +36,30 @@ The trace is post-seed-selection: it cannot by itself prove why an upstream
 scenario was not selected or assign a missing gold pair to an unresolved call.
 Depth frontier is not proof that a particular missing pair was truncated.
 Candidate recall/precision require a separate evaluator join; no gold data is
-added to producer inputs. No real calibration rerun is selected by this slice.
+added to producer inputs.
+
+## Goal continuation: improvement actions
+
+User goal `完成實現improvement actions` selects the following continuation on
+2026-09-13, based on `f86a01eaec132b69f205269f556dae19aa9c0dcd`:
+
+1. Execute the reviewed trace producer once against existing sealed Petclinic
+   inputs and exact source `818c4136ea971c21674525f9053de0d9c7ad8cfe`, writing
+   only a new `candidate-trace-001/producer/` namespace. No overwrite.
+2. Verify all generation digests and exact proposal parity with 007 (ignoring
+   runtime binding only). Preserve old results and thresholds.
+3. Implement Java evaluator-only candidate metrics and conservative exclusive
+   FN classification using synthetic cases first. Read gold only in a distinct
+   evaluator actor after generation sealing. Return aggregate categories and
+   synthetic/generalizable recommendations, not gold pairs, to the producer.
+4. Select and implement source-based improvement from diagnostic evidence;
+   re-run in a separate immutable namespace and independently compare metrics
+   under unchanged gold/scorer. Do not claim improvement without results.
+
+Evaluator Java/tests under `methodpair/` are additionally owned. Active controls
+may be reconciled locally by Feature Delivery. Existing frozen experiments,
+Graphify runtime, canonical checkout and evaluator truth remain excluded from
+mutation. New outputs remain exposed calibration, not holdout or Product truth.
 
 Use Java 17; Maven heap/fork at 2 GB, one heavy process at a time and aggregate
 below 8 GB. Verify focused methodcalibration tests, full Maven `package`,
