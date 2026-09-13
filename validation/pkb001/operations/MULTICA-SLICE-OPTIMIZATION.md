@@ -202,6 +202,68 @@ run ID. Record source, collection time and completeness. Missing usage is unknow
 not zero. Compare the same role and similar scope, and never trade away required
 tests or independent review to improve a metric.
 
+Report KPI from largest to smallest scope: `E2E delivery -> stage -> run`. The
+headline E2E row shows five dimensions only: time, token cost, quality, flow and
+completeness/human intervention. Drill into stages and individual runs only to
+explain an abnormal headline value. A run duration is never reported as E2E
+delivery time.
+
+- **Time:** E2E lead time, stage lead time and run duration.
+- **Token cost:** input and output tokens; cache-read remains separate.
+- **Quality:** confirmed errors, test failures, rework and first-pass result.
+- **Flow:** dependency wait, stuck count and stuck duration. Dependency waiting
+  is not stuck while its declared predecessor is making valid progress.
+- **Completeness and human intervention:** missing evidence or usage, plus
+  planned Human gates and unplanned manual intervention reported separately.
+
+Use `null` with an explicit missing entry for unfinished or unreported values;
+never substitute zero. Count expected negative-test rejection separately from
+product or code errors. Deduplicate every aggregation by full run ID, and keep
+coordination runs distinct from retries.
+
+Compact machine-readable record:
+
+```json
+{
+  "execution_id": "SF-BL-NNN-EXECUTION-NNN",
+  "as_of": "2026-09-13T00:00:00Z",
+  "status": "IN_PROGRESS",
+  "e2e": {"lead_time_seconds": null, "elapsed_seconds": 0},
+  "cost": {
+    "input_tokens": null,
+    "output_tokens": null,
+    "cache_read_tokens": null,
+    "usage_complete": false
+  },
+  "quality": {
+    "error_count": 0,
+    "test_failure_count": 0,
+    "rework_count": 0,
+    "first_pass": null
+  },
+  "flow": {
+    "stuck_count": 0,
+    "stuck_seconds": 0,
+    "dependency_wait_seconds": 0
+  },
+  "completeness": {
+    "missing_count": 2,
+    "missing": ["final_verdict", "token_usage"]
+  },
+  "human": {
+    "planned_gate_count": 0,
+    "unplanned_intervention_count": 0,
+    "human_wait_seconds": 0
+  },
+  "stages": [],
+  "runs": []
+}
+```
+
+`stages` and `runs` are drill-down arrays using the same dimensions. Record a
+final E2E lead time only after the governing acceptance point is reached; before
+then report elapsed time and leave lead time `null`.
+
 | KPI | Definition | Current baseline (HERM-273 through HERM-282) | Next target | First optimization action when abnormal |
 |---|---|---|---|---|
 | token cost | Sum input and output across every run; report cache-read separately because its provider cost differs. | 32 runs; 2,333,118 input+output and 60,464,384 cache-read tokens, collected 2026-09-06. | Coordinator share at or below 20%, with zero duplicate-trigger runs. | Remove duplicate triggers and repeated context loading before reducing verification. |
