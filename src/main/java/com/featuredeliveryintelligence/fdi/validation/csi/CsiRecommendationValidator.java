@@ -142,6 +142,11 @@ public final class CsiRecommendationValidator {
             invalid.add("prior duplicate_key does not match its semantic fields");
             return;
         }
+        for (String field : List.of("tag", "candidate_revision", "execution_identity", "verdict_identity")) {
+            if (!priorRecord.path(field).equals(currentRecord.path(field))) {
+                invalid.add("update cannot rewrite immutable field: " + field);
+            }
+        }
         JsonNode current = currentRecord.path("origin_evidence");
         JsonNode prior = priorRecord.path("origin_evidence");
         validateArrayPrefix(current, prior, "origin_evidence", invalid);

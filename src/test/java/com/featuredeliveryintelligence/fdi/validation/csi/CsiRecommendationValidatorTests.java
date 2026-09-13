@@ -223,6 +223,18 @@ class CsiRecommendationValidatorTests {
     }
 
     @Test
+    void updateCannotRewritePriorProvenanceOrClassification() {
+        for (String field : java.util.List.of("tag", "candidate_revision", "execution_identity", "verdict_identity")) {
+            ObjectNode prior = validRecord("evidence-1", durable("validation/a.json"));
+            ObjectNode current = prior.deepCopy();
+            current.put(field, "tag".equals(field) ? "DELIVERY" : "changed");
+            CsiValidationReport report = new CsiRecommendationValidator().validate(current, prior);
+            assertEquals("INVALID", report.status(), field);
+            assertTrue(report.issues().contains("update cannot rewrite immutable field: " + field), field);
+        }
+    }
+
+    @Test
     void handoffMustMatchExternallyBoundRevisionsAndImmutableEvidenceRefs() {
         ObjectNode record = validRecord("evidence-1", durable("validation/a.json"));
         ObjectNode handoff = handoff("READY_FOR_REVIEW", false);
