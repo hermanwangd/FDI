@@ -321,3 +321,48 @@ def test_rejects_occurrence_counts_that_conserve_totals_but_misclassify_exact_ma
     paths = arrange_semantic(tmp_path, "OCCURRENCE_SCORING", given, oracle)
     mutate_expected(paths, lambda value: value.update(counts={"tp": 0, "fp": 1, "fn": 1, "duplicateCount": 0}))
     assert_semantic_rejection(paths, "occurrence scoring oracle mismatch")
+
+
+def canonical_pair(source_path=None, parameter_types=None):
+    value = {"repositorySnapshotSha256": "a" * 64, "scenarioId": "SYN-1", "fullyQualifiedDeclaringType": "invalid.conformance.Service", "methodName": "run", "parameterTypes": parameter_types or [], "returnType": "void"}
+    if source_path is not None: value["sourcePath"] = source_path
+    return value
+
+
+def canonical_output(pair):
+    identity = {key: value for key, value in pair.items() if key != "sourcePath"}
+    raw = json.dumps(identity, sort_keys=True, separators=(",", ":"))
+    return {"result": "VALID", "canonicalBytes": raw, "pairDigest": sha(raw.encode())}
+
+
+def test_rejects_canonical_relation_not_derived_from_candidate_identities(tmp_path):
+    candidates = [canonical_pair("synthetic/A.java"), canonical_pair("synthetic/B.java")]
+    paths = arrange_semantic(tmp_path, "CANONICAL_IDENTITY", lambda _: {"candidates": candidates}, lambda _: {"result": "VALID", "relation": "IDENTICAL_PAIR_IDENTITY", "canonicalOutputs": [canonical_output(x) for x in candidates]})
+    mutate_expected(paths, lambda value: value.update(relation="DISTINCT_PAIR_IDENTITY"))
+    assert_semantic_rejection(paths, "canonical relation mismatch")
+
+
+def test_rejects_arbitrary_invalid_canonical_case_result(tmp_path):
+    candidates = [canonical_pair(parameter_types=["java.util.List"]), canonical_pair(parameter_types=["java.util.List<java.lang.String>"])]
+    def oracle(_):
+        return {"result": "MIXED", "caseResults": ["VALID", "INVALID_NON_ERASED_GENERIC"], "canonicalOutputs": [canonical_output(candidates[0]), {"result": "INVALID_NON_ERASED_GENERIC"}]}
+    paths = arrange_semantic(tmp_path, "CANONICAL_IDENTITY", lambda _: {"candidates": candidates}, oracle)
+    mutate_expected(paths, lambda value: (value["canonicalOutputs"][1].update(result="ARBITRARY"), value.update(caseResults=["VALID", "ARBITRARY"])))
+    assert_semantic_rejection(paths, "canonical case result mismatch")
+
+
+def test_rejects_chain_complete_not_recomputed_from_pairs_and_edges(tmp_path):
+    a, b = "a" * 64, "b" * 64
+    given = lambda _: {"chainRequired": True, "orderedGoldPairDigests": [a, b], "truthEdges": [[a, b]], "proposalPairDigests": [a, b], "proposalEdges": [[a, b]]}
+    oracle = lambda _: {"result": "VALID", "reasonCodes": [], "chainComplete": True, "counts": {"tp": 2, "fp": 0, "fn": 0, "duplicateCount": 0}}
+    paths = arrange_semantic(tmp_path, "CHAIN_SCORING", given, oracle)
+    mutate_expected(paths, lambda value: value.update(chainComplete=False))
+    assert_semantic_rejection(paths, "chainComplete mismatch")
+
+
+def test_rejects_scenario_coverage_not_recomputed_from_valid_proposals(tmp_path):
+    given = lambda _: {"goldCount": 0, "proposalOccurrences": [{"pairDigest": "a" * 64, "structurallyValid": True}], "scenarioCount": 1}
+    oracle = lambda _: {"result": "VALID", "counts": {"tp": 0, "fp": 1, "fn": 0, "duplicateCount": 0}, "scenarioCoverage": {"covered": 1, "total": 1}}
+    paths = arrange_semantic(tmp_path, "EMPTY_AND_ABSTENTION", given, oracle)
+    mutate_expected(paths, lambda value: value.update(scenarioCoverage={"covered": 0, "total": 1}))
+    assert_semantic_rejection(paths, "empty/abstention oracle mismatch")

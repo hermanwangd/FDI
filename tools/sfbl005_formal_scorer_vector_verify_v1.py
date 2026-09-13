@@ -167,11 +167,18 @@ def _validate_canonical(given: dict[str, Any], oracle: dict[str, Any]) -> None:
     outputs = oracle.get("canonicalOutputs")
     if not isinstance(outputs, list) or len(outputs) != len(candidates):
         raise VerificationError("CANONICAL_IDENTITY canonicalOutputs must align with candidates")
+    case_results = []
+    canonical_identities = []
     for candidate, output in zip(candidates, outputs):
         allowed_candidate = IDENTITY_FIELDS | {"sourcePath"}
         if not IDENTITY_FIELDS <= set(candidate) or not set(candidate) <= allowed_candidate:
             raise VerificationError("canonical candidate identity fields are invalid")
-        if output.get("result") != "VALID":
+        invalid_generic = any(isinstance(item, str) and ("<" in item or ">" in item) for item in candidate["parameterTypes"])
+        expected_result = "INVALID_NON_ERASED_GENERIC" if invalid_generic else "VALID"
+        case_results.append(expected_result)
+        if output.get("result") != expected_result:
+            raise VerificationError("canonical case result mismatch")
+        if expected_result != "VALID":
             if set(output) != {"result"}:
                 raise VerificationError("invalid canonical output has extra fields")
             continue
@@ -183,11 +190,35 @@ def _validate_canonical(given: dict[str, Any], oracle: dict[str, Any]) -> None:
         except (json.JSONDecodeError, VerificationError) as exc:
             raise VerificationError("canonicalBytes must be canonical JSON") from exc
         expected_identity = {key: candidate[key] for key in IDENTITY_FIELDS}
+        canonical_identities.append(expected_identity)
         expected_bytes = json.dumps(expected_identity, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
         if identity != expected_identity or output["canonicalBytes"] != expected_bytes:
             raise VerificationError("canonical JSON does not equal candidate identity fields")
         if output["pairDigest"] != _digest(output["canonicalBytes"].encode("utf-8")):
             raise VerificationError("canonical pairDigest mismatch")
+    expected_overall = "MIXED" if any(item != "VALID" for item in case_results) else "VALID"
+    if oracle.get("result") != expected_overall:
+        raise VerificationError("canonical overall result mismatch")
+    base_keys = {"ruleId", "polarity", "result", "canonicalOutputs"}
+    if expected_overall == "MIXED":
+        expected_keys = base_keys | {"caseResults"}
+        if oracle.get("caseResults") != case_results:
+            raise VerificationError("canonical case result mismatch")
+    elif len(candidates) > 1:
+        expected_keys = base_keys | {"relation"}
+        relation = "IDENTICAL_PAIR_IDENTITY" if canonical_identities[0] == canonical_identities[1] else "DISTINCT_PAIR_IDENTITY"
+        if oracle.get("relation") != relation:
+            raise VerificationError("canonical relation mismatch")
+    elif candidates[0]["methodName"] == "<init>":
+        expected_keys = base_keys | {"methodName", "returnType"}
+        if oracle.get("methodName") != "<init>" or oracle.get("returnType") != "void":
+            raise VerificationError("canonical constructor oracle mismatch")
+    else:
+        expected_keys = base_keys | {"normalizedParameterTypes"}
+        if oracle.get("normalizedParameterTypes") != candidates[0]["parameterTypes"]:
+            raise VerificationError("canonical normalized parameter types mismatch")
+    if set(oracle) != expected_keys:
+        raise VerificationError(f"CANONICAL_IDENTITY oracle fields must be exactly {sorted(expected_keys)}")
 
 
 def _validate_count_operation(operation: str, given: dict[str, Any], oracle: dict[str, Any]) -> None:
@@ -310,6 +341,10 @@ def _validate_chain(given: dict[str, Any], oracle: dict[str, Any]) -> None:
     expected = {"tp": tp, "fp": len(proposed) - tp, "fn": len(gold) - tp, "duplicateCount": 0}
     if counts != expected or reason is not None:
         raise VerificationError("CHAIN_SCORING counts or truth edges mismatch")
+    required_edges = [list(pair) for pair in zip(gold, gold[1:])]
+    expected_complete = None if not given["chainRequired"] else all(digest in proposed for digest in gold) and all(edge in given["proposalEdges"] for edge in required_edges)
+    if oracle.get("chainComplete") is not expected_complete:
+        raise VerificationError("chainComplete mismatch")
 
 
 def _validate_repository(given: dict[str, Any], oracle: dict[str, Any]) -> None:
@@ -457,6 +492,22 @@ def _validate_empty(given: dict[str, Any], oracle: dict[str, Any]) -> None:
             _fixed(oracle[metric], f"EMPTY_AND_ABSTENTION {metric}")
             if oracle[metric] is None and not oracle.get(f"{metric}Reason"):
                 raise VerificationError(f"null {metric} requires reason")
+    common = {"ruleId", "polarity", "result", "counts"}
+    if "abstention" in given:
+        expected_keys = common | {"reasonCode", "scenarioDenominator"}
+        if oracle.get("reasonCode") != given["abstention"] or oracle.get("scenarioDenominator") != given["scenarioCount"] or oracle.get("result") != "VALID":
+            raise VerificationError("empty/abstention oracle mismatch")
+    elif given["goldCount"] > 0 and not given["proposalOccurrences"]:
+        expected_keys = common | {"precision", "precisionReason", "recall"}
+        if oracle.get("precision") is not None or oracle.get("precisionReason") != "NO_PROPOSED_PAIRS" or oracle.get("recall") != "0.000000000000" or oracle.get("result") != "INVALID":
+            raise VerificationError("empty/abstention oracle mismatch")
+    else:
+        expected_keys = common | {"scenarioCoverage"}
+        covered = 1 if any(isinstance(item, dict) and item.get("structurallyValid") is True for item in given["proposalOccurrences"]) else 0
+        if oracle.get("scenarioCoverage") != {"covered": covered, "total": given["scenarioCount"]} or oracle.get("result") != "VALID":
+            raise VerificationError("empty/abstention oracle mismatch")
+    if set(oracle) != expected_keys:
+        raise VerificationError(f"EMPTY_AND_ABSTENTION oracle fields must be exactly {sorted(expected_keys)}")
 
 
 def _validate_semantics(operation: str, given: dict[str, Any], oracle: dict[str, Any]) -> None:
