@@ -3,11 +3,11 @@
 ## Current selection
 
 Human-selected Backlog item: `SF-BL-005`.
-Selected execution: `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001`.
-Objective: run the integrated selector diagnostic against the frozen public
-RealWorld inputs and measure deterministic first-rejection reasons. This is a
-diagnostic-only execution, not calibration, scoring, Product truth, formal
-holdout, publication, deployment or parent closure.
+Selected execution: `SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001`.
+Current authority: construct and preflight an exact read-only envelope only.
+Dispatch remains unauthorized. The objective is to classify the 9 distinct
+route-absent observations without changing extractor, selector, inputs, or
+matching behavior.
 
 Execution state: `COMPLETE_INDEPENDENT_REVIEW_PASS_FDP_RECONCILED`.
 Durable evidence:
@@ -123,21 +123,23 @@ rejection class. Either route needs a new selection and envelope. Missing valid
 evidence is `INCONCLUSIVE`; no diagnostic result authorizes calibration.
 
 The completed diagnostic did not identify external ancestry as its dominant
-class. FDP therefore routes only to a bounded `ROUTE_ABSENT` proposal. No such
-proposal or execution is authorized by this Plan.
+class. FDP therefore routes only to a bounded `ROUTE_ABSENT` proposal. Human
+Authority selected envelope construction and preflight for that proposal;
+dispatch remains unauthorized.
 
-## Proposed next selection — route coverage analysis
+## Selected next execution — route coverage analysis
 
-Proposed execution: `SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001`.
-State: `DESIGN_APPROVED_AWAITING_HUMAN_SELECTION`.
+Selected execution: `SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001`.
+State: `HUMAN_SELECTED_ENVELOPE_CONSTRUCTION_AUTHORIZED_NOT_DISPATCHED`.
 
 The 90 `ROUTE_ABSENT` pairs are the Cartesian repetition of 9 distinct
 observations across 10 scenarios. The analysis unit is therefore the distinct
 observation, not the scenario-observation pair. This avoids repeating the same
 root-cause work ten times and avoids prematurely changing selector behavior.
 
-If selected, FDP must first create and independently preflight a new exact
-envelope. The envelope permits only read-only inspection of the 9 observations,
+FDP must first create and preflight a new exact envelope. An independently
+attributable preflight remains required before dispatch. The envelope permits
+only read-only inspection of the 9 observations,
 their bound HTTP methods/routes, the frozen handler input, and exact-revision
 production route declarations. For each observation the analysis must record:
 
@@ -158,8 +160,8 @@ matrix and recommendation only.
 The proposed execution excludes code/test/config changes, extractor or selector
 changes, threshold relaxation, input mutation, evaluator/scorer/gold access,
 recall/precision calculation, calibration, formal holdout, Product truth,
-publication, deployment, and parent closure. Design approval is not execution
-authorization.
+publication, deployment, and parent closure. The current selection authorizes
+envelope construction and preflight, not dispatch.
 
 ## Exclusions and resource boundary
 
@@ -184,3 +186,5 @@ diagnostic unless the envelope explicitly names a read-only artifact:
 - `SF-BL-005-REALWORLD-DIAGNOSTIC-PREP-001`
 - `SF-BL-005-SELECTOR-RUNNER-001`
 - `SF-BL-005-RUNNER-ANCESTOR-INTEGRATION-001`
+- `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001`
+- `SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001`
