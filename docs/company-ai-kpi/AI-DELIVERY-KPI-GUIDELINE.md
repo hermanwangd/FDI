@@ -41,6 +41,9 @@ Delivery E2E
 所有 attempts（包含 failed 與 cancelled）以完整 `run_id` 恰計一次。每筆量測記錄
 資料來源、採集時間與完整度；stage 及 E2E 僅由所列 runs 與明確等待區間彙總，不能
 以缺漏資料推算。若來源修訂，增加 `evidence_revision` 並用同一規則重新計算。
+每個 AI run 另記錄當時實際使用的 model provider、model ID，以及 runtime 有提供時的
+model revision；不得以目前預設 model 回填歷史 run。無法取得時填 `null` 並列入
+`missing`，因為不同 model 的時間、成本與品質不可直接混為同一基準。
 
 ## 暫行目標
 
@@ -137,8 +140,8 @@ Reviewer 不得為提高 first-pass 而降低審查標準。Human Authority 負�
     "dependency_wait_seconds": 600
   },
   "completeness": {
-    "missing_count": 2,
-    "missing": ["final_verdict", "token_usage"]
+    "missing_count": 3,
+    "missing": ["final_verdict", "token_usage", "model_revision"]
   },
   "human": {
     "planned_gate_count": 0,
@@ -161,6 +164,11 @@ Reviewer 不得為提高 first-pass 而降低審查標準。Human Authority 負�
       "run_id": "RUN-EXAMPLE-001",
       "stage": "IMPLEMENTATION",
       "status": "IN_PROGRESS",
+      "model": {
+        "provider": "SYNTHETIC-PROVIDER",
+        "id": "SYNTHETIC-MODEL",
+        "revision": null
+      },
       "started_at": "2030-01-01T00:05:00Z",
       "ended_at": null,
       "source": "authorized-runtime-record",
