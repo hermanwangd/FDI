@@ -130,28 +130,16 @@ Propose at most one parser/index adapter and synthetic fixture tests; unknown or
 incomplete overload sets stay unresolved. Artifact format and availability are
 not yet verified, so this slice is not execution-ready.
 
-### Combined integration after both accepted slices
+### Combined integration and FDP intake
 
-Execution SF-BL-005-RUNNER-ANCESTOR-INTEGRATION-001, selected pending exact
-candidate bindings. Reuse runner's existing execution and independent verdict.
-After runner and generic slices return accepted exact candidates, FDP materializes
-a fresh envelope with both SHAs, receiving base and union of six owned paths.
-Execution Plane integrates code only, obtains a fresh independent integrated
-review and full Java17/Python regression. No controller may guess candidate SHAs
-or integrate active controls. Preserve other lanes and all immutable evidence.
-If integration changes reviewed code, review the resulting exact candidate anew.
-FDP alone receives/replays accepted code and reconciles controls. This is not
-parent closure. No actual RealWorld run or calibration is selected.
-
-Exact candidate `5248a12aa0ee1b760aa1c3bae9ba3f261f907b40` subsequently
-passed the envelope-bound Java 17 targeted `70/70`, full package `1468/1468`,
-Python `63/63`, Git diff, and twice-repeated packaged synthetic runner checks.
-The two sealed runner outputs are byte-identical and retain the exact runtime
-JAR digest. Evidence:
-`validation/software-factory/sf-bl005/runner-ancestor-integration-001/verification.json`.
-The runtime blocker is resolved; FDP intake and durable replay remain pending.
-This verification does not integrate the candidate or authorize RealWorld,
-calibration, holdout, publication, deployment, or parent closure.
+Execution `SF-BL-005-RUNNER-ANCESTOR-INTEGRATION-001`.
+FDP replayed exact candidate `5248a12aa0ee1b760aa1c3bae9ba3f261f907b40`
+as `8c294063d6696a567bbd1c29552e0fd6925e0f73`; all six owned blobs match
+the reviewed candidate. Java 17 targeted/full package and Python regression
+passed, and independent intake review returned PASS. Durable intake evidence:
+`validation/software-factory/sf-bl005/runner-ancestor-integration-001/intake.json`.
+This establishes `ENGINEERING_READY`, not parent closure. RealWorld,
+calibration, holdout, publication and deployment remain unselected.
 
 ### Validation checkpoint
 

@@ -1,0 +1,73 @@
+{
+  "execution_id": "SF-BL-005-RUNNER-ANCESTOR-INTEGRATION-001",
+  "intake_kind": "FDP_EXACT_CANDIDATE_DURABLE_REPLAY",
+  "recorded_at": "2026-09-13T07:50:42Z",
+  "result": "INTEGRATED_ENGINEERING_READY",
+  "receiving_base": "82581d000f9a065d9cfb5dc6f25029fffccbbaf0",
+  "original_candidate": "5248a12aa0ee1b760aa1c3bae9ba3f261f907b40",
+  "durable_replay_commit": "8c294063d6696a567bbd1c29552e0fd6925e0f73",
+  "envelope": "validation/software-factory/sf-bl005/execution-envelope-runner-ancestor-integration-001.json",
+  "pre_intake_verification": "validation/software-factory/sf-bl005/runner-ancestor-integration-001/verification.json",
+  "replay_method": "git cherry-pick of the original candidate commit onto the current main baseline",
+  "owned_path_replay": {
+    "state": "EXACT_BLOB_PARITY",
+    "paths": {
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SelectorDiagnosticRun.java": "96b1efbad0c8eee6c06a44e3e93cd3e74e5436825cdd5bfc8ef90130b9164d29",
+      "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SelectorDiagnosticRunTests.java": "670e550ce922ad86d1718d543a5bc704eb23b15a2ab73c1323ca18e99a11509d",
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SourceMethodIndex.java": "730f5d5dd3d24914e2c2b74e4d801e42900bf479cbb93c463f069aa40dc9e62c",
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedSourceCalls.java": "b0b170d25969358e2e4bb80f180df40dc640b02f68894cb08406a04f2e4b7b6f",
+      "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SourceMethodIndexTests.java": "f98eb808a4259eab8e91719ce5dd15e29fe2fdf6c0704c3fa1288a867f6897ad",
+      "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedSourceCallsTests.java": "7f574fae51c7968a87022084d71ba74b89bd8a2847e21e2ba34ef3dd8cc46af2"
+    }
+  },
+  "verification": {
+    "runtime": {
+      "java_home": "/opt/homebrew/opt/openjdk@17",
+      "java_version": "17.0.20.1",
+      "spring_boot_version": "3.4.1"
+    },
+    "targeted_java": {
+      "tests": 70,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    "full_java_package": {
+      "tests": 1468,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    "python_regression": {
+      "tests": 63,
+      "failures": 0,
+      "exit_code": 0
+    },
+    "git_diff_check": {
+      "exit_code": 0
+    },
+    "maven_heap_gb": 2,
+    "fork_heap_gb": 2,
+    "fork_count": 1
+  },
+  "independent_review": {
+    "state": "PASS",
+    "reviewer_run": "/root/java17_intake_review",
+    "prior_attempt": "FAIL_CONTROL_RECONCILIATION_ONLY",
+    "code_correctness_findings": 0,
+    "scope_findings": 0,
+    "control_findings": 0,
+    "reviewed_replay_commit": "8c294063d6696a567bbd1c29552e0fd6925e0f73"
+  },
+  "authority_boundary": {
+    "engineering_intake_only": true,
+    "realworld_execution_authorized": false,
+    "calibration_authorized": false,
+    "formal_holdout_authorized": false,
+    "publication_authorized": false,
+    "deployment_authorized": false,
+    "parent_closure": false
+  }
+}

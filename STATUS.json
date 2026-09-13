@@ -12,7 +12,7 @@
     "SF-BL-005",
     "SF-BL-006"
   ],
-  "next_action": "FDP intake the verified combined candidate 5248a12aa0ee1b760aa1c3bae9ba3f261f907b40 using validation/software-factory/sf-bl005/runner-ancestor-integration-001/verification.json; durable replay or further routing remains a separate reconciliation decision.",
+  "next_action": "Await Human selection of the next bounded SF-BL-005 action; RealWorld diagnostic execution, calibration and formal holdout remain unselected.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-CROSSREPO-GATE-CONTAINMENT-003",
@@ -155,8 +155,8 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "VERIFICATION_PASS_PENDING_FDP_INTAKE",
-      "integration_candidate": "5248a12aa0ee1b760aa1c3bae9ba3f261f907b40"
+      "execution_state": "INTEGRATED_ENGINEERING_READY",
+      "integration_candidate": "8c294063d6696a567bbd1c29552e0fd6925e0f73"
     }
   ],
   "mapping_improvement_intake": {
@@ -164,6 +164,16 @@
     "state": "INTEGRATED_ENGINEERING_READY",
     "verification": "JAVA_17_PACKAGE_PASS_PYTEST_63_63",
     "evidence": "validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md",
+    "parent_closure": false
+  },
+  "runner_ancestor_intake": {
+    "state": "INTEGRATED_ENGINEERING_READY",
+    "receiving_base": "82581d000f9a065d9cfb5dc6f25029fffccbbaf0",
+    "original_candidate": "5248a12aa0ee1b760aa1c3bae9ba3f261f907b40",
+    "durable_replay_commit": "8c294063d6696a567bbd1c29552e0fd6925e0f73",
+    "owned_path_replay": "6_OF_6_EXACT_BLOB_PARITY",
+    "verification": "JAVA17_TARGETED_70_70_FULL_1468_1468_PYTEST_63_63_INDEPENDENT_REVIEW_PASS",
+    "evidence": "validation/software-factory/sf-bl005/runner-ancestor-integration-001/intake.json",
     "parent_closure": false
   },
   "selector_intake": {
