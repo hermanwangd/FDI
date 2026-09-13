@@ -1,0 +1,675 @@
+{
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "executionId": "SF-BL-005-FORMAL-HOLDOUT-SCORER-001",
+  "envelopeRevision": 1,
+  "classification": "FORMAL_H1_SCORER_VERSIONED_IMPLEMENTATION_PLAN_ONLY",
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "constructionBase": "6205a336ffc044365e8f4c29b9a40450d278f689",
+  "controlCommit": "6205a336ffc044365e8f4c29b9a40450d278f689",
+  "sourceTree": "2497d018378319f709b6a3f864fd8a6e9d22ec7d",
+  "targetBranch": "codex/sf-bl005-formal-holdout-scorer-001",
+  "targetNamespace": "validation/software-factory/sf-bl005/formal-holdout-scorer-001",
+  "authority": {
+    "envelopePreparationAuthorized": true,
+    "implementationAuthorized": false,
+    "dispatchAuthorized": false,
+    "legacyScorerMutationAuthorized": false,
+    "realRepositoryAccessAuthorized": false,
+    "holdoutSelectionAuthorized": false,
+    "holdoutExecutionAuthorized": false,
+    "thresholdMutationAuthorized": false,
+    "productTruthAuthorized": false,
+    "deploymentAuthorized": false,
+    "publicationAuthorized": false,
+    "parentClosureAuthorized": false
+  },
+  "controls": {
+    "AGENTS.md": "a70a2d4da9f9dd8add3ca2ab3d794125a08525bdb53cca4426d60f9a9a091c12",
+    "BACKLOG.md": "4243b3204e91ebdef3eec1c29f86d0e72f35a2bcdd0157fb93f14be40b3baf2a",
+    "FRAMEWORK-SPEC.md": "1c78425291c7ff16d39760fcef41ff275076d1cf5b3aa973bcabe1b8c3f5930a",
+    "IMPLEMENTATION-PLAN.md": "a5eb3d6983852a2ba9043d23afd882ccb19201e80c6864f538779335a36dd142",
+    "JAVA-CODING-GUIDELINES.md": "06011e21515ea11447d968e94cba2497b8ac0935fb4b3936ff099da31268a28f",
+    "PROJECT-OVERVIEW.md": "e5ceb9b4baf8a5b5a9d557dd78f673221c8ecea182ba782457fc76e08172e4c0",
+    "STATUS.json": "d958d7d3d172d5d8ced3d2ac15a513fed43c20d4a7ce356e0af849ab21d4a53d"
+  },
+  "frozenInputs": {
+    "formalProtocol": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-protocol-001.json",
+      "sha256": "2ab508f80fa9585edc540275bc2e520d0591cdbe2912749c3010fac87f7e8a42"
+    },
+    "gapAnalysis": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-gap-001.json",
+      "sha256": "b0d55388c056ac47997ffdd68519bd235a42ab67b847c6a1f6e9894bddc11911"
+    },
+    "gapReview": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-gap-independent-review-001.json",
+      "sha256": "8776fdf9600fc4c4554284b2728365e9e82962e7199387b0bc35f11346a6d7d4"
+    },
+    "legacyCalibrationContract": "SFBL005-METHOD-PAIR-001"
+  },
+  "contract": {
+    "id": "SFBL005-FORMAL-HOLDOUT-SCORER-001",
+    "datasetClass": "FORMAL_HOLDOUT",
+    "provisionalOnly": true,
+    "canonicalJson": "UTF-8; recursively lexicographic object keys; no insignificant whitespace or BOM; arrays retain declared order; one terminal LF only for artifact files; pair digest excludes terminal LF and is SHA-256 of canonical pair object bytes",
+    "canonicalPairFields": [
+      "repositorySnapshotSha256",
+      "scenarioId",
+      "fullyQualifiedDeclaringType",
+      "methodName",
+      "parameterTypes",
+      "returnType"
+    ],
+    "identityRules": [
+      "source path, line, evidence reference, entity, action, role, polarity and condition are excluded from pair identity",
+      "declaring/reference types use JVM binary names",
+      "primitive keywords retained",
+      "array dimensions retained",
+      "generic arguments must already be erased; scorer rejects noncanonical values",
+      "constructors use <init> and void",
+      "parameter order and return type are identity-significant"
+    ],
+    "occurrenceRules": [
+      "proposal occurrenceIndex must be contiguous zero-based artifact array order",
+      "proof binds exactly one occurrenceId and pairDigest",
+      "missing, duplicate or orphan proof is INVALID",
+      "first fully valid occurrence can match one gold pair; later same-pair occurrences are FP_DUPLICATE",
+      "disposition-invalid occurrence never consumes gold credit"
+    ],
+    "dispositionFacets": [
+      "entity",
+      "action",
+      "assertionRole",
+      "polarity",
+      "businessCondition",
+      "ambiguity",
+      "evidenceSufficiency"
+    ],
+    "scenarioValidity": [
+      "unique canonical ID",
+      "repository snapshot binding",
+      "test provenance SHA-256",
+      "source provenance SHA-256",
+      "exactly one coverage stratum",
+      "sealed truth disposition",
+      "foreign repository references forbidden"
+    ],
+    "chainRules": [
+      "chainRequired true ordered digests exactly cover necessary gold set without duplicate",
+      "truth edges exactly equal N-1 adjacent ordered edges",
+      "omitted, extra, reversed or nonadjacent truth edge is INVALID",
+      "chainRequired false has no chain or edge and is excluded from denominator",
+      "pair classification precedes chain coverage",
+      "extra unsupported proposal is FP but cannot erase a matched necessary chain"
+    ],
+    "metricRules": [
+      "every proposal occurrence exactly TP or FP",
+      "every gold pair exactly MATCHED or FN",
+      "scenario coverage counts valid scenarios with any structurally valid proposal occurrence",
+      "UNRESOLVED and unsupported preserve scenario/gold denominators and FN",
+      "zero denominator returns null plus reason code",
+      "post-dispatch mandatory null metric or malformed evidence is INVALID"
+    ],
+    "repositoryRules": [
+      "per-repository raw counts and metrics required",
+      "micro uses summed raw counts",
+      "macro uses equal repository weight and is null if any repository metric unavailable",
+      "every repository independently must pass; aggregate cannot mask failure"
+    ],
+    "thresholdDecision": [
+      "precision uses integer comparison 5*TP > 4*(TP+FP)",
+      "recall uses integer comparison 5*TP > 3*(TP+FN)",
+      "no rounded decimal participates in decision",
+      "scorer emits provisional classification only"
+    ],
+    "wilson": {
+      "confidence": "0.95",
+      "zDecimal": "1.959963984540054",
+      "decimalPrecision": 50,
+      "rounding": "HALF_EVEN",
+      "outputScale": 12,
+      "outputFormat": "fixed decimal string with exactly 12 fractional digits; HALF_EVEN; null plus reason when n is zero",
+      "arithmetic": "Java BigDecimal and Python Decimal only. Create x,n,z from exact decimal strings/integers under precision 50 HALF_EVEN. Apply MathContext/context to every multiply, add, subtract, divide and sqrt in the stated parenthesized order.",
+      "formulaSteps": [
+        "p=x/n",
+        "z2=z*z",
+        "den=1+z2/n",
+        "center=(p+z2/(2*n))/den",
+        "variance=p*(1-p)/n+z2/(4*n*n)",
+        "half=z*sqrt(variance)/den",
+        "lower=center-half",
+        "upper=center+half"
+      ],
+      "sqrt": "Java BigDecimal.sqrt(MathContext(50,HALF_EVEN)) and Python Decimal.sqrt(Context(prec=50,rounding=ROUND_HALF_EVEN))",
+      "serialization": "Quantize lower and upper only after all formula steps to scale 12 HALF_EVEN. Do not use binary float at any stage.",
+      "decisionBoundary": "Wilson intervals are descriptive and never participate in strict threshold decisions."
+    },
+    "outputOrder": [
+      "repositorySnapshotSha256",
+      "scenarioId",
+      "occurrenceIndex",
+      "pairDigest"
+    ]
+  },
+  "conformanceContract": {
+    "syntheticOnly": true,
+    "forbiddenIdentitySources": [
+      "real repository names",
+      "real repository URLs",
+      "real revisions",
+      "real scenarios",
+      "real truth",
+      "holdout selection artifacts"
+    ],
+    "syntheticNamespace": "conformance.invalid",
+    "fakeDigestAlphabet": "fixed 64-hex constants only",
+    "vectors": {
+      "C01_PATH_EXCLUDED": "same canonical method with different source path has identical pair bytes and digest",
+      "C02_SNAPSHOT_DISTINCT": "same scenario and signature under different repository snapshot has distinct digest",
+      "C03_OVERLOAD_ORDER": "ordered parameter types distinguish overloads",
+      "C04_PRIMITIVE_REFERENCE_ARRAY": "primitive, reference, and multidimensional array normalization matches frozen JVM names",
+      "C05_GENERIC_ERASURE": "erased generic type is accepted and non-erased input is INVALID",
+      "C06_CONSTRUCTOR": "constructor uses methodName <init> and returnType void",
+      "C07_RETURN_TYPE": "return type participates in pair identity",
+      "S01_SINGLE_TP": "one valid exact occurrence yields TP1 FP0 FN0",
+      "S02_WRONG_PAIR": "one valid non-gold occurrence and one unmatched gold yield TP0 FP1 FN1",
+      "S03_DUPLICATE_FP": "three identical valid occurrences yield TP1 FP2 FN0 and duplicateCount2",
+      "S04_INVALID_THEN_VALID": "first disposition-invalid occurrence yields FP and does not consume gold; second valid occurrence yields TP",
+      "D01_ENTITY": "wrong entity yields FP1 FN1",
+      "D02_ACTION": "wrong action yields FP1 FN1",
+      "D03_ROLE": "wrong role yields FP1 FN1",
+      "D04_POLARITY": "wrong assertion polarity yields FP1 FN1",
+      "D05_CONDITION": "wrong business condition yields FP1 FN1",
+      "D06_AMBIGUITY": "ambiguous evidence yields FP1 FN1",
+      "D07_SUFFICIENCY": "insufficient evidence yields FP1 FN1",
+      "D08_MISSING_PROOF": "missing proof is INVALID",
+      "D09_DUPLICATE_PROOF": "duplicate proof is INVALID",
+      "D10_ORPHAN_PROOF": "orphan proof is INVALID",
+      "D11_PROOF_DIGEST": "proof digest mismatch is INVALID",
+      "V01_DUPLICATE_SCENARIO": "duplicate canonical scenario ID is INVALID",
+      "V02_WRONG_SNAPSHOT": "scenario or pair bound to wrong snapshot is INVALID",
+      "V03_MISSING_TEST_PROVENANCE": "missing test provenance digest is INVALID",
+      "V04_MISSING_SOURCE_PROVENANCE": "missing source provenance digest is INVALID",
+      "V05_STRATUM_CARDINALITY": "missing or multiple coverage strata is INVALID",
+      "V06_MISSING_TRUTH_DISPOSITION": "missing sealed truth disposition is INVALID",
+      "V07_MALFORMED_SCHEMA": "unknown/missing field or malformed canonical value is INVALID",
+      "V08_ARTIFACT_DIGEST": "any mandatory artifact digest mismatch is INVALID",
+      "V09_CROSS_REPOSITORY_REFERENCE": "foreign repository pair/proof/chain reference is INVALID",
+      "Z01_EMPTY_PROPOSAL": "nonempty gold and empty proposal yields TP0 FP0 FNn, precision null NO_PROPOSED_PAIRS, recall0, provisional INVALID post-dispatch",
+      "Z02_FP_SCENARIO_COVERAGE": "one structurally valid non-gold proposal yields scenario coverage 1/1",
+      "A01_UNRESOLVED": "UNRESOLVED retains scenario denominator and necessary FN with reason",
+      "A02_UNSUPPORTED": "unsupported retains scenario denominator and necessary FN with reason",
+      "CH01_COMPLETE": "all ordered necessary pairs and adjacent edges matched yields complete chain",
+      "CH02_MISSING_PROPOSED_EDGE": "valid truth with unmatched required proposal edge yields incomplete chain without changing pair counts",
+      "CH03_MISSING_PAIR": "missing necessary pair yields FN and incomplete chain",
+      "CH04_NOT_APPLICABLE": "chainRequired false requires no chain/edges and is excluded from chain denominator",
+      "CH05_OMITTED_TRUTH_EDGE": "omitted adjacent truth edge is INVALID",
+      "CH06_EXTRA_TRUTH_EDGE": "extra truth edge is INVALID",
+      "CH07_REVERSED_EDGE": "reversed truth edge is INVALID",
+      "CH08_NONADJACENT_EDGE": "non-adjacent truth edge is INVALID",
+      "CH09_EXTRA_PROPOSAL": "extra unsupported pair is FP while fully matched necessary chain remains complete",
+      "R01_TWO_REPOSITORY_PASS": "both repositories strictly exceed precision .80 and recall .60",
+      "R02_NON_MASKING": "micro aggregate passes but one repository fails; provisional classification REVISE",
+      "R03_PRECISION_BOUNDARY": "precision exactly .80 is REVISE",
+      "R04_RECALL_BOUNDARY": "recall exactly .60 is REVISE",
+      "R05_REPOSITORY_NULL": "mandatory per-repository metric null after dispatch is INVALID",
+      "R06_MACRO_EQUAL_WEIGHT": "macro is equal repository weight and differs from micro on unequal sample sizes",
+      "W01_WILSON_ZERO": "Wilson reference for 0/n",
+      "W02_WILSON_ONE": "Wilson reference for 1/n",
+      "W03_WILSON_EIGHT_TEN": "Wilson reference for 8/10",
+      "P01_REPEATABILITY": "each implementation emits byte-identical canonical output on two runs",
+      "P02_CROSS_IMPLEMENTATION": "Java and clean-room Python output bytes equal each other and sealed golden output for all vectors"
+    },
+    "coverageRule": "Every frozen protocol scoring rule requires at least one positive and one negative vector; missing coverage is PLAN_CONFLICT and implementation cannot start.",
+    "goldenRule": "Golden expected bytes/digests are materialized and independently reviewed before production implementation; neither scorer may generate or update golden outputs."
+  },
+  "actorIsolation": {
+    "vectorAuthor": {
+      "writes": [
+        "contracts/sfbl005-formal-holdout-scorer-v1.schema.json",
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/vector-manifest.json",
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/inputs/**",
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/expected/**",
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/vector-review.json"
+      ],
+      "forbidden": [
+        "production scorer code",
+        "Python recomputer code",
+        "real or holdout data"
+      ]
+    },
+    "javaImplementer": {
+      "writes": [
+        "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/**",
+        "src/main/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCli.java",
+        "src/main/java/com/featuredeliveryintelligence/fdi/application/FdiApplication.java",
+        "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/**",
+        "src/test/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCliTests.java"
+      ],
+      "reads": [
+        "frozen schema",
+        "synthetic vectors",
+        "golden outputs"
+      ],
+      "forbidden": [
+        "tools/sfbl005_formal_holdout_recompute_v1.py",
+        "real or holdout data",
+        "legacy methodpair mutation"
+      ]
+    },
+    "pythonRecomputer": {
+      "writes": [
+        "tools/sfbl005_formal_holdout_recompute_v1.py",
+        "tests/test_sfbl005_formal_holdout_recompute_v1.py"
+      ],
+      "reads": [
+        "frozen schema",
+        "synthetic vectors",
+        "golden outputs"
+      ],
+      "forbidden": [
+        "Java scorer source",
+        "Java generated output",
+        "real or holdout data"
+      ]
+    },
+    "independentReviewer": {
+      "writes": [
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/independent-review.json"
+      ],
+      "mustNotBe": [
+        "vectorAuthor",
+        "javaImplementer",
+        "pythonRecomputer",
+        "executionVerifier",
+        "buildVerifier",
+        "receiptIntegrator",
+        "postMergeReceiptAuthor"
+      ]
+    },
+    "executionVerifier": {
+      "writes": [
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/java-run-1.json",
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/java-run-2.json",
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/python-run-1.json",
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/python-run-2.json",
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/parity-receipt.json",
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/test-receipt.json"
+      ],
+      "forbidden": [
+        "implementation or test source changes",
+        "schema/vector/golden changes",
+        "real or holdout data"
+      ]
+    },
+    "buildVerifier": {
+      "writes": [
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/source-binary-reproducibility-receipt.json"
+      ],
+      "forbidden": [
+        "source changes",
+        "parallel builds",
+        "network",
+        "real or holdout data"
+      ]
+    },
+    "receiptIntegrator": {
+      "writes": [
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/h1-scorer-receipt-candidate.json"
+      ],
+      "forbidden": [
+        "implementation, vector, golden, result or review changes",
+        "claiming H1 BOUND before post-merge external receipt"
+      ]
+    },
+    "postMergeReceiptAuthor": {
+      "writes": [
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/h1-scorer-receipt.json"
+      ],
+      "requires": "Exact merged implementation commit and independent read-back; separate control-only branch and review.",
+      "forbidden": [
+        "all implementation, test, vector, result and historical paths",
+        "claiming dispatch or holdout authority"
+      ]
+    }
+  },
+  "ownedPaths": [
+    "contracts/sfbl005-formal-holdout-scorer-v1.schema.json",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/**",
+    "src/main/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCli.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/application/FdiApplication.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/**",
+    "src/test/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCliTests.java",
+    "tools/sfbl005_formal_holdout_recompute_v1.py",
+    "tests/test_sfbl005_formal_holdout_recompute_v1.py",
+    "validation/software-factory/sf-bl005/formal-holdout-scorer-001/**"
+  ],
+  "legacyMustRemainByteIdentical": [
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/**",
+    "src/main/java/com/featuredeliveryintelligence/fdi/application/MethodPairCompareCli.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/**",
+    "src/test/java/com/featuredeliveryintelligence/fdi/application/MethodPairCompareCliTests.java",
+    "validation/software-factory/sf-bl005/method-calibration-005/**",
+    "validation/software-factory/sf-bl005/method-quality-006/**",
+    "validation/software-factory/sf-bl005/method-quality-007/**",
+    "validation/software-factory/sf-bl005/boxing-calibration-001/**",
+    "validation/software-factory/sf-bl005/boxing-calibration-002/**",
+    "validation/software-factory/sf-bl005/boxing-calibration-003/**"
+  ],
+  "stages": [
+    {
+      "order": 0,
+      "id": "ENVELOPE_PREFLIGHT",
+      "required": "Exact envelope materialization and independent review P0/P1/P2 zero; no implementation."
+    },
+    {
+      "order": 1,
+      "id": "VECTOR_SEAL",
+      "required": "Vector author materializes schema, all synthetic inputs, expected canonical bytes/digests and expected outputs; independent vector review PASS before scorer code."
+    },
+    {
+      "order": 2,
+      "id": "RED",
+      "required": "New Java and Python conformance tests fail for missing implementations; retain logs."
+    },
+    {
+      "order": 3,
+      "id": "JAVA_CANONICAL_VALIDATION",
+      "required": "Implement versioned model, canonical identity, artifact IO and fail-closed scenario/truth/proof validation."
+    },
+    {
+      "order": 4,
+      "id": "JAVA_SCORING",
+      "required": "Implement exhaustive occurrences, dispositions, chain and coverage after pair classification."
+    },
+    {
+      "order": 5,
+      "id": "JAVA_METRICS_CLI",
+      "required": "Implement per-repository/micro/macro metrics, Wilson, strict decisions, canonical report and CLI collision behavior."
+    },
+    {
+      "order": 6,
+      "id": "PYTHON_CLEAN_ROOM",
+      "required": "Separate actor implements stdlib-only recomputer without Java source or output access."
+    },
+    {
+      "order": 7,
+      "id": "VECTOR_PARITY",
+      "required": "Each scorer twice; each run byte-identical to its first and to sealed golden; Java and Python bytes identical for all vectors."
+    },
+    {
+      "order": 8,
+      "id": "JAVA17_TARGETED",
+      "required": "Focused formal scorer and CLI tests pass with zero failures/errors/skips."
+    },
+    {
+      "order": 9,
+      "id": "JAVA17_FULL",
+      "required": "Full Maven package pass with zero failures/errors/skips."
+    },
+    {
+      "order": 10,
+      "id": "PYTHON_FULL",
+      "required": "Full Python regression passes including clean-room conformance."
+    },
+    {
+      "order": 11,
+      "id": "BINARY_REPRODUCIBILITY",
+      "required": "Two clean isolated Java17 builds from exact candidate and identical settings produce identical whole-JAR SHA-256; source-set manifest binds every production input."
+    },
+    {
+      "order": 12,
+      "id": "INDEPENDENT_REVIEW",
+      "required": "Exact-candidate code, security and protocol review P0/P1/P2 zero plus mutation tests."
+    },
+    {
+      "order": 13,
+      "id": "H1_RECEIPT_AFTER_MERGE",
+      "required": "External receipt after merge/read-back binds full merge commit, source manifest SHA, reproducible JAR SHA, Python recomputer SHA, vector manifest SHA, protocol SHA and review SHA. H1 remains unbound before this receipt."
+    }
+  ],
+  "verificationCommands": [
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -o -q -DargLine=-Xmx1g -DforkCount=1 -DreuseForks=true -Dtest='FormalHoldout*Tests,FormalHoldoutScoreCliTests' test",
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -o -q -DargLine=-Xmx1g -DforkCount=1 -DreuseForks=true package",
+    "/usr/bin/python3 -m pytest -q",
+    "/usr/bin/python3 tools/sfbl005_formal_holdout_recompute_v1.py --vectors validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/vectors.json --output validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/python-results.json",
+    "git diff --check"
+  ],
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "oneHeavyJvmAtATime": true,
+    "mavenHeapGb": 2,
+    "testForkHeapGb": 1,
+    "scorerHeapMb": 512,
+    "pythonProcesses": 1,
+    "parallelMavenBuilds": 0,
+    "commandTimeoutMinutes": 20
+  },
+  "failureRouting": {
+    "controlOrScopeMismatch": "PLAN_CONFLICT",
+    "missingJava17OrFrozenVectorSeal": "PLAN_BLOCKED",
+    "contractChangeRequired": "PLAN_CHANGE_REQUIRED",
+    "testParityBuildOrReviewFailure": "FAILED_EXECUTION_PRESERVE_ALL_EVIDENCE",
+    "holdoutDataDetected": "SECURITY_BOUNDARY_FAILURE_STOP_AND_PRESERVE"
+  },
+  "prohibited": [
+    "any read of a formal holdout candidate, selection, scenario, truth, proof or result",
+    "any real repository identity in vectors",
+    "any edit/import/reuse of legacy methodpair implementation or historical calibration outputs",
+    "any path-based canonical pair identity",
+    "set deduplication before occurrence classification",
+    "any golden generated or updated by a scorer",
+    "shared scoring/canonicalization/Wilson implementation between Java and Python",
+    "floating-point threshold decisions",
+    "aggregate masking or null coercion",
+    "treating post-dispatch malformed evidence as INCONCLUSIVE",
+    "parallel heavy JVMs, network, Docker, database or Java other than 17",
+    "merge, deployment, publication, Product truth, formal holdout execution or parent closure"
+  ],
+  "acceptance": [
+    "all nine H1 gaps covered by code and at least one positive and negative sealed vector",
+    "legacy paths byte-identical to control commit",
+    "all vector expected outputs and digests frozen before production implementation",
+    "Java/Python repeatability and byte parity across every vector",
+    "Java17 targeted/full, Python full and two clean whole-JAR builds pass",
+    "exact-candidate independent review P0/P1/P2 zero",
+    "external post-merge H1 receipt exists before H1 becomes BOUND",
+    "no real/holdout identity or data accessed",
+    "every stage has exact schema-valid attempt-1 receipt, nonempty log, input/output digests and strict ordered ledger; no prose-only completion"
+  ],
+  "status": "ENVELOPE_PREPARED_AWAITING_INDEPENDENT_PREFLIGHT_AND_HUMAN_IMPLEMENTATION_DISPATCH",
+  "runtimeBindings": {
+    "java17": {
+      "command": "/opt/homebrew/opt/openjdk@17/bin/java",
+      "realPath": "/opt/homebrew/Cellar/openjdk@17/17.0.20.1/libexec/openjdk.jdk/Contents/Home/bin/java",
+      "version": "17.0.20.1+0",
+      "binarySha256": "4ac51957da9d64cc468d4ce67fc2f53644edc5585f8c4c92ce08ea30ee71db8a"
+    },
+    "python": {
+      "launcherPath": "/usr/bin/python3",
+      "launcherSha256": "0f534e4beb14b610b15eedbb4352c5b305a5795a05527632c8f82c83317f833a",
+      "sysExecutable": "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "interpreterRealPath": "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+      "interpreterSha256": "8e598855de9a6648bc670d5fe7a3a653f1fa967b74373ed7c4ca16fbc40c0de1",
+      "version": "3.9.6",
+      "libraries": "standard library only",
+      "verificationCommand": "test \"$(shasum -a 256 /usr/bin/python3 | awk '{print $1}')\" = 0f534e4beb14b610b15eedbb4352c5b305a5795a05527632c8f82c83317f833a && test \"$(/usr/bin/python3 -c 'import os,sys; print(os.path.realpath(sys.executable))')\" = /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 && test \"$(shasum -a 256 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9 | awk '{print $1}')\" = 8e598855de9a6648bc670d5fe7a3a653f1fa967b74373ed7c4ca16fbc40c0de1 && test \"$(/usr/bin/python3 --version 2>&1)\" = 'Python 3.9.6'"
+    },
+    "executionRule": "Fresh preflight must re-read and match every path, version, and SHA-256; mismatch is PLAN_BLOCKED, never substituted."
+  },
+  "buildReproducibilityProtocol": {
+    "candidateBinding": "full 40-character implementation candidate commit after code completion",
+    "materialization": "Two absent isolated directories, each populated from the exact candidate Git tree without untracked files.",
+    "order": "Build A completes before Build B starts; no parallel Maven or heavy JVM.",
+    "command": "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g SOURCE_DATE_EPOCH=\"$CANDIDATE_EPOCH\" ./mvnw -o -q -DargLine=-Xmx1g -DforkCount=1 -DreuseForks=true -Dproject.build.outputTimestamp=\"$CANDIDATE_ISO\" clean package",
+    "verification": [
+      "both commands exit 0",
+      "test counts and zero failures/errors/skips match",
+      "whole executable JAR SHA-256 values are identical",
+      "source tree and runtime binary SHA-256 values match envelope/candidate receipt",
+      "all commands, attempts, exits, timestamps and log SHA-256 values retained"
+    ],
+    "failure": "Any difference is FAILED_EXECUTION; pom or build-plugin changes require a new envelope revision and review.",
+    "candidateVariableCommand": "CANDIDATE=$(git rev-parse --verify '<candidate-full-sha>^{commit}'); test ${#CANDIDATE} -eq 40",
+    "epochCommand": "CANDIDATE_EPOCH=$(git show -s --format=%ct \"$CANDIDATE\"); case \"$CANDIDATE_EPOCH\" in *[!0-9]*|'') exit 1;; esac",
+    "isoCommand": "CANDIDATE_ISO=$(date -u -r \"$CANDIDATE_EPOCH\" +%Y-%m-%dT%H:%M:%SZ); test \"$(date -u -j -f %Y-%m-%dT%H:%M:%SZ \"$CANDIDATE_ISO\" +%s)\" = \"$CANDIDATE_EPOCH\""
+  },
+  "artifactSchemas": {
+    "vectorManifest": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/vector-manifest.json",
+      "requiredFields": [
+        "schemaVersion",
+        "contractId",
+        "protocolSha256",
+        "vectorCatalogSha256",
+        "entries",
+        "coverage",
+        "canonicalSha256"
+      ],
+      "entryFields": [
+        "vectorId",
+        "ruleIds",
+        "inputPath",
+        "inputSha256",
+        "expectedPath",
+        "expectedSha256"
+      ],
+      "rules": [
+        "one entry for every conformanceContract vector ID",
+        "no extra vector ID",
+        "paths unique and within conformance/inputs or conformance/expected",
+        "coverage maps every scoring rule ID to at least one positive and one negative vector"
+      ]
+    },
+    "stageReceipt": {
+      "requiredFields": [
+        "schemaVersion",
+        "executionId",
+        "stageOrder",
+        "stageId",
+        "candidateCommit",
+        "attempt",
+        "startedAtUtc",
+        "endedAtUtc",
+        "argv",
+        "exitCode",
+        "logPath",
+        "logSha256",
+        "inputDigests",
+        "outputDigests",
+        "result"
+      ],
+      "rules": [
+        "attempt exactly 1",
+        "nonempty log",
+        "orders strictly increasing",
+        "nonzero exit stops downstream"
+      ]
+    },
+    "sourceSetManifest": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/source-set-manifest.json",
+      "requiredFields": [
+        "schemaVersion",
+        "candidateCommit",
+        "candidateTree",
+        "entryCount",
+        "entries",
+        "canonicalSha256"
+      ],
+      "entryFields": [
+        "path",
+        "gitBlobId",
+        "mode",
+        "sha256",
+        "bytes"
+      ],
+      "scope": "every regular file in exact candidate Git tree; no untracked file"
+    },
+    "parityReceipt": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/parity-receipt.json",
+      "requiredFields": [
+        "schemaVersion",
+        "candidateCommit",
+        "vectorManifestSha256",
+        "javaRun1Sha256",
+        "javaRun2Sha256",
+        "pythonRun1Sha256",
+        "pythonRun2Sha256",
+        "goldenAggregateSha256",
+        "byteIdentical",
+        "vectorCount",
+        "result"
+      ]
+    },
+    "independentReview": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/independent-review.json",
+      "requiredFields": [
+        "schemaVersion",
+        "candidateCommit",
+        "sourceSetManifestSha256",
+        "jarSha256",
+        "pythonRecomputerSha256",
+        "vectorManifestSha256",
+        "parityReceiptSha256",
+        "findings",
+        "result",
+        "boundary"
+      ],
+      "rules": [
+        "findings P0/P1/P2 each zero",
+        "reviewer distinct from all producer actors"
+      ]
+    },
+    "postMergeH1Receipt": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/h1-scorer-receipt.json",
+      "requiredFields": [
+        "schemaVersion",
+        "contractId",
+        "mergeCommit",
+        "mergeTree",
+        "sourceSetManifestSha256",
+        "reproducibleJarSha256",
+        "pythonRecomputerSha256",
+        "vectorManifestSha256",
+        "parityReceiptSha256",
+        "protocolSha256",
+        "independentReviewSha256",
+        "noGoldDerivedTuning",
+        "effectiveH1State",
+        "receiptSha256"
+      ],
+      "rules": [
+        "merge commit full 40 hex and contains exact reviewed candidate tree or documented reviewed integration-only delta",
+        "effectiveH1State exactly BOUND_NOT_DISPATCH_AUTHORITY",
+        "canonical receipt digest independently read back"
+      ]
+    }
+  },
+  "stageExecutionProtocol": {
+    "ledgerPath": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/command-ledger.jsonl",
+    "logDirectory": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/logs",
+    "canonicalization": "Each receipt is compact UTF-8 sorted-key JSON plus LF; SHA-256 exact bytes. Ledger is append-only, output path absent before first stage, one START and one END per stage.",
+    "candidateCheck": "CANDIDATE=<40hex>; test \"$(git rev-parse --verify \"$CANDIDATE^{commit}\")\" = \"$CANDIDATE\"; test \"$(git status --porcelain --untracked-files=no)\" = ''; git diff --name-only 6205a336ffc044365e8f4c29b9a40450d278f689...\"$CANDIDATE\" must match only ownedPaths and must not match legacyMustRemainByteIdentical",
+    "vectorSealCommands": [
+      "/usr/bin/python3 -m json.tool contracts/sfbl005-formal-holdout-scorer-v1.schema.json >/dev/null",
+      "/usr/bin/python3 -m json.tool validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/vector-manifest.json >/dev/null",
+      "for every sorted vector entry: assert exact input/expected SHA-256, absent real identity tokens, unique IDs/paths, exact catalog equality and positive/negative rule coverage; write vector-review.json before any production source path exists"
+    ],
+    "redCommands": [
+      "test ! -e src/main/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/FormalHoldoutScorer.java",
+      "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -o -q -DargLine=-Xmx1g -DforkCount=1 -DreuseForks=true -Dtest='FormalHoldout*Tests,FormalHoldoutScoreCliTests' test; test $? -ne 0",
+      "/usr/bin/python3 -m pytest -q tests/test_sfbl005_formal_holdout_recompute_v1.py; test $? -ne 0"
+    ],
+    "sourceManifestCommand": "git ls-tree -r \"$CANDIDATE\" | while read mode type blob path; do test \"$type\" = blob; git cat-file blob \"$blob\" > <scratch-file>; record path/blob/mode/SHA-256/byte-count; done; canonical sort by UTF-8 path; assert entry count equals git ls-tree count; write source-set-manifest.json",
+    "parityCommands": [
+      "run Java scorer independently twice from frozen vector manifest into absent java-run-1.json/java-run-2.json",
+      "run /usr/bin/python3 clean-room recomputer independently twice into absent python-run-1.json/python-run-2.json",
+      "cmp all four files and sealed expected aggregate byte-for-byte; write parity-receipt.json only if all comparisons pass"
+    ],
+    "reviewAndReceiptOrder": [
+      "independent-review.json is written only after stages 1-11 and exact candidate read-back",
+      "premerge h1-scorer-receipt-candidate.json may bind candidate but effectiveH1State remains UNBOUND",
+      "after merge, a distinct actor materializes h1-scorer-receipt.json on a new control-only branch, verifies reviewed tree/delta and all digests, sets BOUND_NOT_DISPATCH_AUTHORITY, obtains independent receipt review, then merges/read-backs"
+    ]
+  }
+}
