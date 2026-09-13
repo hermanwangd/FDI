@@ -12,7 +12,7 @@
     "SF-BL-005",
     "SF-BL-006"
   ],
-  "next_action": "Construct and preflight the exact read-only envelope for SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001; do not dispatch before separately authorized.",
+  "next_action": "FDP issues and independently preflights the fresh follow-up integration envelope, then dispatches its three-stage execution.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
@@ -205,6 +205,16 @@
       ],
       "execution_state": "ENVELOPE_CONSTRUCTION_AUTHORIZED_NOT_DISPATCHED",
       "integration_candidate": null
+    },
+    {
+      "lane_id": "generic-ancestor-followup-integration",
+      "execution_id": "SF-BL-005-GENERIC-ANCESTOR-FOLLOWUP-INTEGRATION-001",
+      "base_commit": "bc783b1f89c6146233423d9a3571c4ad15be608b",
+      "selected_backlog_items": [
+        "SF-BL-005"
+      ],
+      "execution_state": "SELECTED_ENVELOPE_PENDING",
+      "integration_candidate": null
     }
   ],
   "mapping_improvement_intake": {
@@ -261,5 +271,16 @@
     "implementation_authorized": true,
     "diagnostic_execution_authorized": true,
     "calibration_authorized": false
+  },
+  "proposed_next_execution": {
+    "execution_id": "SF-BL-005-GENERIC-ANCESTOR-FOLLOWUP-INTEGRATION-001",
+    "state": "HUMAN_SELECTED_ENVELOPE_PENDING",
+    "allowed_output": "EXACT_COMBINED_CANDIDATE_WITH_INDEPENDENT_REVIEW_AND_VERIFICATION",
+    "code_change_authorized": true,
+    "owned_paths": "FOUR_GENERIC_ANCESTOR_SOURCE_TEST_PATHS",
+    "python_change_authorized": false,
+    "realworld_authorized": false,
+    "calibration_authorized": false,
+    "parent_closure": false
   }
 }
