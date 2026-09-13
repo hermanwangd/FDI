@@ -1,11 +1,14 @@
 {
   "calibrationAuthorized": false,
   "checks": {
+    "allMaterializationFailStop": true,
     "commandAttemptExitAndLogDigestsRequired": true,
     "controlsExact": true,
     "embeddedAndOuterIdentityExplicit": true,
+    "everyStepLogContainsRecordedArgv": true,
     "failed003EvidenceImmutableAndBound": true,
     "fiveInputsExactGitMaterialization": true,
+    "manifestAndEvaluatorInputsInsideRecordedStep": true,
     "memoryBelow8Gb": true,
     "newTargetAndNamespaceAbsent": true,
     "producerEvaluatorIsolationOrdered": true,
@@ -16,8 +19,14 @@
   "controlCommit": "8d80f45cb4dd871d4cb3256bb77fda5ee777506b",
   "dispatchAuthorized": false,
   "envelopeRevision": 1,
-  "envelopeSha256": "d80cb1ce128b9a0dc203c3e2f33b59b006848ab1d25e0717a4273e27f688f8df",
+  "envelopeSha256": "f8caebd3d74f34a005c6dc37c15b406fbc076d5998e283fcc7f906fc37dffca6",
   "executionId": "SF-BL-005-BOXING-CALIBRATION-003-REPLAN-001",
+  "priorIndependentPreflight": {
+    "p0": 0,
+    "p1": 3,
+    "p2": 0,
+    "result": "FAIL_PLAN_CONFLICT"
+  },
   "result": "PASS_PENDING_FRESH_INDEPENDENT_PREFLIGHT_AND_HUMAN_DISPATCH",
   "schemaVersion": "SF-ENVELOPE-PREFLIGHT-001"
 }
