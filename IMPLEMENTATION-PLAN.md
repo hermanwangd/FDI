@@ -46,6 +46,9 @@ The fresh envelope must bind the control commit created by this selection,
 the construction base, Spec revision, all frozen input revisions and digests,
 the 23-file allowlist, output ownership, exclusions and resource limits.
 All revisions must resolve to full commits before dispatch.
+Revision 2 is bound at commit `84388e90f8f807d1511061224035a153c6098e48`;
+independent preflight PASS is recorded in
+`validation/software-factory/sf-bl005/envelope-preflight-realworld-selector-diagnostic-001-r2.json`.
 
 Execution uses an isolated worktree and a new namespace:
 `validation/software-factory/sf-bl005/realworld-selector-diagnostic-001/`.
