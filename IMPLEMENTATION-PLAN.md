@@ -162,10 +162,22 @@ label proposed synthetic cases separately. Report unknowns explicitly.
 Acceptance: examined-file count equals the public manifest; examples resolve to
 pinned source lines; distinguish AST/library syntax from observation labels.
 Recommend a smallest adapter subset without code, threshold changes or predicted
-recall. This is syntax inspection, not HERM-500 diagnostic output measurement.
+recall. This is syntax inspection, not the selector execution's diagnostic output measurement.
 
 Reviewer owns only parallel-investigations-001/review.md under the same prefix.
 Verify both exact report commits, input digests, owned-path diffs and report
 acceptance; no reviewer edits to producer reports. Coordinator returns the two
 reports plus review verdict and actual run/time/token/duplicate records. Preserve
 reports as commits and attachments; receiver verifies bytes before cleanup.
+
+## Lane company-ai-docs — SF-BL-006-COMPANY-AI-SHARE-001
+
+Base: 4fc285f515e65473d4d3120b335629825a6a810b. Requirements: AUTH-001,
+AUTH-003, EXEC-003, EVID-001. Learner email delivery is complete; evaluator
+material remains withheld. Evidence: docs/company-ai-learning/RELEASE-VERIFICATION.json.
+The original construction plan remains at remote merge 10d52b3ca1b1fdbeca9db178a933cfee3ee70593.
+No new document mutation, upload, installation, adoption, or terminal closure is
+selected. Bind the exact company AI environment and its applicable approval
+before downstream action. This blocked lane does not block the selector or
+supporting investigations. One FDP writer serializes all active controls;
+existing exact execution envelopes and resource limits remain unchanged.

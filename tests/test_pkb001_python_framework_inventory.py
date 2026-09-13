@@ -415,7 +415,7 @@ def test_python_framework_inventory_characterizes_the_migration_boundary():
         if consumer["migration_state"] != "MIGRATED_TO_JAVA"
     )
     status = json.loads((ROOT / "STATUS.json").read_text())
-    assert status["active_backlog_item"] not in {"PKB-BL-026", "PKB-BL-027"}
+    assert not ({"PKB-BL-026", "PKB-BL-027"} & set(status["active_backlog_items"]))
     assert status["pkb001_foundation"]["status"] == "PRESERVED_IMMUTABLE_HISTORY"
 
     external = inventory["external_runtimes"]
