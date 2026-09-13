@@ -22,7 +22,9 @@ Graphify runtime, source snapshots, or the canonical checkout.
    pairs, and actual depth frontier. Unknown targets remain null. Keep full
    source revision/path/signature identity and seed evidence references.
 3. Add an opt-in trace entry point. Bind sidecar output to existing generation
-   input/runtime hashes. Existing entry points and output bytes remain unchanged.
+   input/runtime hashes. Existing entry points omit the trace; proposal content
+   remains identical with the same binding. Rebuilding changes runtime hashes;
+   historical output bytes remain immutable.
 4. Test determinism, no proposal changes, filtering, unresolved calls, depth
    frontier versus actual method-count failure, and trace resource bounds.
 5. Inspect existing 007 public artifacts for diagnostic sufficiency. Never
