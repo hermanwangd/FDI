@@ -2,6 +2,11 @@
 
 ## Current selection
 
+`SF-BL-005-RESTASSURED-STATUS-DIALECT-001` is selected for exact-envelope creation. The bounded change recognizes a single literal `statusCode(int)` only on the same supported RestAssured MockMvc request chain after existing request, route, ambiguity, entity, and action gates. It must not infer business conditions from a generic 4xx response. Source-backed expected diagnostic impact is unsupported dialect 12→0 and accepted 0→1; these are diagnostic expectations, not recall or precision.
+
+Detailed evidence and the ordered follow-ups are in `validation/software-factory/sf-bl005/rejection-analysis-002/RESULTS.md`. Implementation dispatch remains false until exact-envelope independent preflight and Human authority.
+
+
 Human Authority selected a four-step sequential SF-BL-005 experiment on
 2026-09-13. The order is mandatory because the first RealWorld diagnostic is
 the unmodified baseline and the later runs measure the integrated remediation.
@@ -9,7 +14,7 @@ the unmodified baseline and the later runs measure the integrated remediation.
 1. `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001` — reproduce the frozen diagnostic in a new namespace with the current pre-remediation runtime; diagnostic-only, no scorer.
 2. `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001` — COMPLETE at integrated commit `fbcbff200d442591a20753d8632c9997433a685e`; Java 17 1493/1493, Python 63/63, independent review PASS.
 3. `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003` — COMPLETE at integrated commit `5ce6bbcac538c0e22086da30f3b646a2a30bb7db`; ROUTE_ABSENT 90→0, but 110/110 pairs remain rejected.
-4. `SF-BL-005-BOXING-CALIBRATION-003` — SELECTED; rerun the exposed PetClinic calibration with frozen inputs and evaluator separation; this is not formal holdout.
+4. `SF-BL-005-BOXING-CALIBRATION-003` — FAILED evidence review at integrated commit `7463f5c744ac975f0e335a8006777bda88b4b470`; numeric outputs reproduced BOXING-002, but command-attempt and ordering evidence was not durable. Replan remains required.
 
 Every stage requires its own exact envelope, isolated output namespace, valid
 preflight and immutable evidence. A failed or blocked predecessor prevents its
@@ -18,7 +23,8 @@ publication, formal holdout, threshold changes or parent closure.
 
 ### Current execution ledger
 
-- `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001` — `ENVELOPE_REBASE_SELECTED_FOR_DISPATCH`
+- `SF-BL-005-RESTASSURED-STATUS-DIALECT-001` — `ENVELOPE_CREATION_SELECTED`; implementation and dispatch are not yet authorized.
+- `SF-BL-005-BOXING-CALIBRATION-003` — `FAILED_EVIDENCE_PRESERVED_REPLAN_REQUIRED`; not accepted as completed calibration.
 
 ### Latest completed baseline
 
