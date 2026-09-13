@@ -4,7 +4,9 @@
     "producer output baseline/improved digests match frozen calibration-002 values",
     "truth and proofs bytes copied only after producer completes",
     "comparison and stage evaluation commands succeed once",
-    "metrics arithmetic and artifacts independently reviewed"
+    "metrics arithmetic and artifacts independently reviewed",
+    "producer generation.json retains embedded protocol identity SF-BL-005-BOXING-CALIBRATION-002 exactly; 003 outer receipt explicitly binds it as a replay subexecution and does not relabel or rewrite producer evidence",
+    "no claim that the retained runtime natively emits BOXING-CALIBRATION-003 identity"
   ],
   "classification": "EXPOSED_PETCLINIC_CALIBRATION_NOT_HOLDOUT",
   "constructionBase": "a56d005fd3727d78e9c88a1d6f8e705e0af0093e",
@@ -93,18 +95,32 @@
     "validation/software-factory/sf-bl005/boxing-calibration-003/**"
   ],
   "priorIndependentPreflight": {
-    "candidate": "f3b06efcffaa948bf3e38f2a145db052c166b22e",
+    "candidate": "08fae3a610d4e370595f0f5246faa04b4556a735",
     "findings": {
       "p0": 0,
-      "p1": 2,
+      "p1": 1,
       "p2": 0
     },
     "remediated": [
-      "five frozen producer bytes now materialize from exact Git revisions",
-      "producer/evaluator commands and materialization are concrete; runtime generation SHA is computed from exact produced bytes"
+      "embedded BOXING-002 producer identity is explicitly preserved as a frozen-protocol replay subexecution under an outer BOXING-003 receipt; no identity rewriting or native-003 claim"
     ],
     "result": "FAIL_PLAN_CONFLICT",
     "reviewer": "/root/diagnostic_002_preflight"
+  },
+  "producerReplayIdentity": {
+    "embeddedProducerExecutionId": "SF-BL-005-BOXING-CALIBRATION-002",
+    "noIdentityRewrite": true,
+    "outerExecutionId": "SF-BL-005-BOXING-CALIBRATION-003",
+    "reason": "The exact retained, previously reviewed runtime hard-codes its producer protocol identity; changing it would require an unauthorized code/runtime change. The producer artifact is a deterministic frozen-protocol replay subexecution, not represented as newly generated 003-native producer evidence.",
+    "receiptMustBind": [
+      "outer execution id 003",
+      "embedded producer execution id 002",
+      "exact runtime SHA",
+      "generation SHA",
+      "new output namespace",
+      "evaluator commands and results"
+    ],
+    "requiredOuterReceipt": "validation/software-factory/sf-bl005/boxing-calibration-003/execution-receipt.json"
   },
   "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
   "resourceLimits": {
