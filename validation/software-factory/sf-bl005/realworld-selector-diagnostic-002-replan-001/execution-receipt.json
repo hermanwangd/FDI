@@ -1,0 +1,72 @@
+{
+  "authorityBoundary": {
+    "calibration": false,
+    "diagnosticOnly": true,
+    "evaluatorTruthAccessed": false,
+    "formalHoldout": false,
+    "parentClosure": false,
+    "scorerExecuted": false
+  },
+  "diagnostic": {
+    "accepted": 0,
+    "evaluated": 110,
+    "firstRejectionCounts": {
+      "ACCEPTED": 0,
+      "ACTION_MISMATCH": 0,
+      "ASSERTION_POLARITY": 0,
+      "ENTITY_MISMATCH": 20,
+      "REQUEST_AMBIGUOUS": 0,
+      "ROUTE_ABSENT": 90,
+      "ROUTE_AMBIGUOUS": 0,
+      "TEST_IDENTITY": 0,
+      "UNMET_CONDITION": 0,
+      "UNSUPPORTED_ASSERTION_DIALECT": 0
+    },
+    "rejected": 110,
+    "scenarios": 10
+  },
+  "envelopeIntegratedCommit": "26bd8e2e655823864018077fa8f341c1f107542c",
+  "envelopeRevision": 2,
+  "envelopeSha256": "ebae023653712e76eae1c4e9cd950e28fdcaaf82112b68e5398bf87cd2e5f551",
+  "executionBase": "d067c77376b4fb213ac6dd04897feba156909289",
+  "executionId": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001",
+  "independentPreflight": "PASS",
+  "manifestSha256": "2f5c524ecc35534dbf8ed0259f41fbea6f37cf3071b1a77fd894dc307b88418d",
+  "materialization": {
+    "files": 26,
+    "firstPass": true
+  },
+  "outputs": {
+    "run-1/diagnostics.json": {
+      "bytes": 16657,
+      "sha256": "bf26766423917394cc4476d648cf249117af2d141b4d1fcda1b3c8b2a3176288"
+    },
+    "run-1/seal.json": {
+      "bytes": 4058,
+      "sha256": "61d4a727a442eddc72bfc6d4d8de81ad5de61408b2b0ed7aacbac05f5f35705a"
+    },
+    "run-2-diagnostics.json": {
+      "bytes": 16657,
+      "sha256": "bf26766423917394cc4476d648cf249117af2d141b4d1fcda1b3c8b2a3176288"
+    },
+    "run-2-seal.json": {
+      "bytes": 4058,
+      "sha256": "61d4a727a442eddc72bfc6d4d8de81ad5de61408b2b0ed7aacbac05f5f35705a"
+    }
+  },
+  "result": "DIAGNOSTIC_COMPLETE_PENDING_INDEPENDENT_REVIEW",
+  "runs": {
+    "count": 2,
+    "diagnosticsByteIdentical": true,
+    "sealsByteIdentical": true
+  },
+  "runtimeJarSha256": "917e61b824c48eb6242e20b287eb62e8470e905f6bb50ff7fea0373ae3eeab39",
+  "schemaVersion": "SF-EXECUTION-RECEIPT-001",
+  "verification": {
+    "fullJavaPackageExitCode": 0,
+    "gitDiffCheckExitCode": 0,
+    "pythonRegressionExitCode": 0,
+    "pythonResult": "63_PASSED",
+    "targetedJavaExitCode": 0
+  }
+}
