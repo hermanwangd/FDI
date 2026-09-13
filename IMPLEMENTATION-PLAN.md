@@ -153,28 +153,14 @@ Any future calibration uses identical frozen inputs/gold/scorer in a new
 namespace with independent proof review. Current 31/5/9 TP/FP/FN is calibration
 evidence, not a forecast; template/property gaps remain separate and unselected.
 
-## Prior selected lanes and continuation constraints
+## Preserved lanes
 
-SF-BL-005-SELECTOR-DIAGNOSTICS-001: integrated code
-758e086382e6023d6e4d389299a46bd696aa3857, receipt fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c.
-Java 1440/1440, Python 63/63; independent integrated review PASS.
-Evidence: validation/software-factory/sf-bl005/selector-diagnostics-001/intake.json.
-Original construction details at the framework base remain historical execution
-bindings; no further code work under that envelope is selected.
-
-SF-BL-005-PARALLEL-INVESTIGATIONS-001: observations received with limitations.
-Original recovery/syntax/review reports remain unchanged under
-validation/software-factory/sf-bl005/parallel-investigations-001/.
-SYNTAX 41/40 calls remains a deviation, not waived. Read-back is necessary but
-not cleanup authorization or proof against every loss case; runtime replacement
-does not verify a lost original runtime. Engineering receipt belongs to FDP,
-not a new Human gate. Parent closure remains Human-owned.
-
-SF-BL-006-COMPANY-AI-SHARE-001: learner delivery complete; downstream company AI
-environment and approval remain unbound. No upload, installation, adoption or
-terminal closure selected. Original plan at 10d52b3ca1b1fdbeca9db178a933cfee3ee70593;
-evidence docs/company-ai-learning/RELEASE-VERIFICATION.json.
-
-No historical metric/receipt is rewritten. One FDP writer serializes controls.
-Independent diagnostic and resolution preparation may proceed separately;
-implementation requires proven disjoint ownership and aggregate resource safety.
+Prior selector diagnostics are integrated at 758e086382e6023d6e4d389299a46bd696aa3857;
+receipt fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c. Evidence:
+validation/software-factory/sf-bl005/selector-diagnostics-001/intake.json.
+Parallel investigation observations retain documented limitations and immutable
+reports; no cleanup authorization or retrospective compliance waiver.
+SF-BL-006 learner delivery remains complete, with downstream company AI approval
+unbound; no upload, adoption or closure selected. Details: Plan at
+2248420436c6fd6c35fe36bbb4db738c43500ce3 and STATUS.json.
+One FDP writer serializes controls. Preserve all existing envelope bindings.
