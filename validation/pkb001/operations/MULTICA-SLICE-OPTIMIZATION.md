@@ -264,6 +264,36 @@ Compact machine-readable record:
 final E2E lead time only after the governing acceptance point is reached; before
 then report elapsed time and leave lead time `null`.
 
+### Provisional S/M/L delivery targets
+
+Keep two clocks distinct. **Delivery E2E** runs from explicit work selection to
+FDP acceptance of complete delivery evidence. **Execution cycle time** retains
+the narrower definition in the core KPI table below: first authorized
+implementation start to the final valid independent integrated-candidate
+verdict. Never substitute one clock for the other.
+
+Until each category/size cohort contains at least five comparable completed
+deliveries, use these as provisional management targets rather than measured
+baselines:
+
+| Size | Provisional Delivery E2E target |
+|---|---|
+| S | At or below 45 minutes. |
+| M | At or below 2 hours. |
+| L | At or below 8 hours. |
+
+Classify time as green at or below target, yellow above target through 1.5 times
+target, and red above 1.5 times target. A genuine stuck condition or unplanned
+Human recovery also makes the delivery red. Planned Human Authority and declared
+dependency waiting remain in Delivery E2E and are additionally reported by
+cause; neither is automatically stuck.
+
+Time color never establishes delivery success. Missing required evidence,
+unclassified test failures, candidate-attributable failures, or runtime mismatch
+prevent a successful-delivery claim even when time is green. Preserve the
+pre-dispatch size; a material authorized scope change receives a dated size
+revision instead of retrospective resizing.
+
 | KPI | Definition | Current baseline (HERM-273 through HERM-282) | Next target | First optimization action when abnormal |
 |---|---|---|---|---|
 | token cost | Sum input and output across every run; report cache-read separately because its provider cost differs. | 32 runs; 2,333,118 input+output and 60,464,384 cache-read tokens, collected 2026-09-06. | Coordinator share at or below 20%, with zero duplicate-trigger runs. | Remove duplicate triggers and repeated context loading before reducing verification. |
