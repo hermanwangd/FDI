@@ -13,7 +13,7 @@
     "PROJECT-OVERVIEW.md": "e5ceb9b4baf8a5b5a9d557dd78f673221c8ecea182ba782457fc76e08172e4c0",
     "STATUS.json": "86e661fdd908eae3b982aa13c9a6627ac00f673eca52a8fee50d59ceb3d43549"
   },
-  "envelopeRevision": 1,
+  "envelopeRevision": 2,
   "excluded": [
     "source, test, matching-algorithm, active-control, frozen-input or prior-evidence mutation",
     "cleanup outside runner-owned selector-diagnostic-* private temp children",
@@ -70,8 +70,12 @@
     ],
     "runnerInputManifest": {
       "materializedPath": "validation/software-factory/sf-bl005/realworld-selector-diagnostic-002/input-manifest.json",
+      "materializedSha256": "1d242a8ee25ff37f6e75f64dd176113a55aae3b1a2df972e5a85953831e2bec9",
       "recordShape": "SELECTOR-DIAGNOSTIC-INPUT-001",
-      "requiredChange": "executionId only",
+      "requiredChanges": {
+        "executionId": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002",
+        "frameworkRevision": "9eef86c108ae6984f115dab493ab722caaf19585"
+      },
       "templatePath": "validation/software-factory/sf-bl005/selector-diagnostic-input-realworld-001-r2.json",
       "templateSha256": "023e0fdd412e9de11ccd1a83a9b248fc48365c1196493c2ddd354e7b62cce12b"
     },
@@ -82,6 +86,19 @@
   "ownedPaths": [
     "validation/software-factory/sf-bl005/realworld-selector-diagnostic-002/**"
   ],
+  "priorIndependentPreflight": {
+    "findings": {
+      "p0": 0,
+      "p1": 2,
+      "p2": 0
+    },
+    "remediation": [
+      "runner commands use materialized manifest path and exact digest",
+      "materialized frameworkRevision binds actual execution runtime base"
+    ],
+    "result": "FAIL_PLAN_CONFLICT",
+    "reviewer": "/root/diagnostic_002_preflight"
+  },
   "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
   "requirementIds": [
     "AUTH-002",
@@ -106,8 +123,8 @@
       "-cp",
       "target/fdi-0.4.8.3.jar",
       "org.springframework.boot.loader.launch.PropertiesLauncher",
-      "validation/software-factory/sf-bl005/selector-diagnostic-input-realworld-001-r2.json",
-      "<MATERIALIZED_MANIFEST_SHA256>",
+      "validation/software-factory/sf-bl005/realworld-selector-diagnostic-002/input-manifest.json",
+      "1d242a8ee25ff37f6e75f64dd176113a55aae3b1a2df972e5a85953831e2bec9",
       ".fdi-work/sf-bl005-realworld-selector-diagnostic-002/bundle",
       "validation/software-factory/sf-bl005/realworld-selector-diagnostic-002/run-1"
     ],
@@ -119,8 +136,8 @@
       "-cp",
       "target/fdi-0.4.8.3.jar",
       "org.springframework.boot.loader.launch.PropertiesLauncher",
-      "validation/software-factory/sf-bl005/selector-diagnostic-input-realworld-001-r2.json",
-      "<MATERIALIZED_MANIFEST_SHA256>",
+      "validation/software-factory/sf-bl005/realworld-selector-diagnostic-002/input-manifest.json",
+      "1d242a8ee25ff37f6e75f64dd176113a55aae3b1a2df972e5a85953831e2bec9",
       ".fdi-work/sf-bl005-realworld-selector-diagnostic-002/bundle",
       ".fdi-work/sf-bl005-realworld-selector-diagnostic-002/run-2"
     ]
@@ -153,7 +170,8 @@
         "all full revisions, ancestry and digests resolve exactly",
         "durable and scratch paths do not pre-exist",
         "materialized inventory is 10 intents, 11 observations, 14 handlers and 23 test files",
-        "materialized manifest differs from template only in executionId and its SHA-256 is passed exactly to both runs"
+        "materialized manifest differs from template only in executionId and frameworkRevision and its SHA-256 is passed exactly to both runs",
+        "materialized manifest canonical SHA-256 equals 1d242a8ee25ff37f6e75f64dd176113a55aae3b1a2df972e5a85953831e2bec9 and both runner commands pass its path and digest"
       ],
       "id": "PREFLIGHT_AND_MATERIALIZE"
     },
