@@ -6,11 +6,14 @@ Active Backlog items are `SF-BL-005` and `SF-BL-006`; current focus is
 `SF-BL-005`. Completion of `SF-BL-007` does not select or dispatch another
 execution.
 
-`SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001` has an exact read-only envelope and
-separately attributable producer and independent preflight `PASS`. Its unit is
-9 distinct observations accounting for 90 repeated `ROUTE_ABSENT` pairs.
-Analysis dispatch, source/test changes, calibration, scoring, formal holdout,
-Product truth, and parent closure remain unauthorized.
+`SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001` completed its authorized read-only
+analysis and FDP return at integrated commit `8b758f79e677de0fce6d39afbe4b32aae228e41d`.
+All 9 distinct observations, accounting for 90 repeated `ROUTE_ABSENT` pairs,
+classify as `UNSUPPORTED_STATIC_EXTRACTION`; independent review passed with no
+P0-P2 findings. The returned proposal limits remediation to composing class-level
+routes with method-level PUT/DELETE mappings in the static handler extractor.
+Implementation, source/test changes, calibration, scoring, formal holdout,
+Product truth, and parent closure require new Human authority.
 
 - Envelope control commit: `2f3181fddad7f5ee4cb160d781efd278fb2ed2b4`
 - Envelope SHA-256:
@@ -18,7 +21,8 @@ Product truth, and parent closure remain unauthorized.
 - Producer evidence:
   `validation/software-factory/sf-bl005/envelope-preflight-route-coverage-analysis-001.json`
 - Independent reviewer run: `01a09a4c-e3c4-7698-af2e-14ba05d64362`
-- State: `INDEPENDENT_PREFLIGHT_PASS_NOT_DISPATCHED`
+- State: `ANALYSIS_COMPLETE_FDP_RETURNED`
+- Evidence: `validation/software-factory/sf-bl005/route-coverage-analysis-001/`
 
 The generic-ancestor follow-up candidate
 `8e835b427bd5f6b242b38d00e714d902298366c1` remains
@@ -46,8 +50,8 @@ delivery. Neither lane receives new authority from this Plan update.
   rewritten as success.
 - Missing metrics remain `UNKNOWN`; incomparable samples remain
   `INSUFFICIENT_SAMPLE`.
-- Route analysis requires a new Human dispatch decision despite both preflight
-  results passing.
+- Route analysis is complete. Its extractor remediation proposal requires a new
+  Human selection and exact envelope before implementation.
 - `CSI-REC-001` through `CSI-REC-004` remain recommendations. Their
   canonical records do not authorize remediation.
 - Aggregate commands stay below 8 GB and heavy JVM work runs sequentially with

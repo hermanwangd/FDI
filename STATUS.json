@@ -12,15 +12,16 @@
     "SF-BL-005",
     "SF-BL-006"
   ],
-  "next_action": "CSI is complete. No CSI execution is active; any recommendation remediation requires a new Human selection and exact envelope. SF-BL-005 route analysis remains independently preflighted but not dispatched.",
+  "next_action": "Route coverage analysis completed and returned a bounded extractor remediation proposal. No implementation, calibration, scoring, formal holdout, or parent closure is authorized; the remediation requires a new Human selection and exact envelope.",
   "blocking_dependency": null,
   "latest_completed_execution": {
-    "execution_id": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-IMPLEMENTATION-001",
-    "reviewed_candidate": "775b7728934df6ec00f6cf097e0fc47f75a5f726",
-    "review": "TWO_AXIS_INDEPENDENT_REVIEW_PASS",
-    "verification": "JAVA_17_PACKAGE_1491_1491_PYTEST_63_63_CLI_GOLDEN_REPORTS",
-    "evidence": "validation/software-factory/sf-bl007/implementation-001-evidence.json",
-    "state": "VERIFIED_HUMAN_CLOSED"
+    "execution_id": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
+    "reviewed_candidate": "376969264390241f015cfa8a8c25080d75760bad",
+    "integrated_commit": "8b758f79e677de0fce6d39afbe4b32aae228e41d",
+    "review": "INDEPENDENT_REVIEW_PASS_P0_P2_ZERO",
+    "verification": "PYTEST_63_63_CANONICAL_JSON_INPUT_BINDINGS_SOURCE_ROUTES",
+    "evidence": "validation/software-factory/sf-bl005/route-coverage-analysis-001/execution-receipt.json",
+    "state": "ANALYSIS_COMPLETE_FDP_RETURNED"
   },
   "latest_selector_diagnostic": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
@@ -39,7 +40,7 @@
   },
   "selected_next_execution": {
     "execution_id": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
-    "state": "INDEPENDENT_PREFLIGHT_PASS_NOT_DISPATCHED",
+    "state": "ANALYSIS_COMPLETE_FDP_RETURNED",
     "analysis_unit": "9_DISTINCT_ROUTE_ABSENT_OBSERVATIONS",
     "source_pair_count": 90,
     "scenario_repetition": 10,
@@ -52,10 +53,19 @@
     "producer_preflight": "PASS",
     "producer_preflight_evidence": "validation/software-factory/sf-bl005/envelope-preflight-route-coverage-analysis-001.json",
     "independent_preflight": "PASS",
-    "dispatch_authorized": false,
+    "dispatch_authorized": true,
     "calibration_authorized": false,
     "parent_closure": false,
-    "independent_preflight_reviewer_run": "01a09a4c-e3c4-7698-af2e-14ba05d64362"
+    "independent_preflight_reviewer_run": "01a09a4c-e3c4-7698-af2e-14ba05d64362",
+    "dispatch_authority": "Human selection option 1 on 2026-09-13",
+    "analysis_integrated_commit": "8b758f79e677de0fce6d39afbe4b32aae228e41d",
+    "independent_review": "PASS",
+    "reviewed_candidate": "376969264390241f015cfa8a8c25080d75760bad",
+    "classification_counts": {
+      "UNSUPPORTED_STATIC_EXTRACTION": 9
+    },
+    "remediation_authorized": false,
+    "evidence": "validation/software-factory/sf-bl005/route-coverage-analysis-001/"
   },
   "metric_goal": {
     "status": "NOT_MET_DIAGNOSTIC_ONLY",
@@ -210,8 +220,8 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "INDEPENDENT_PREFLIGHT_PASS_NOT_DISPATCHED",
-      "integration_candidate": "b705312051eb4498fceed9be8378b10c53240ae5"
+      "execution_state": "ANALYSIS_COMPLETE_FDP_RETURNED",
+      "integration_candidate": "8b758f79e677de0fce6d39afbe4b32aae228e41d"
     },
     {
       "lane_id": "generic-ancestor-followup-integration",
