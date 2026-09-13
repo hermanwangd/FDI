@@ -2,61 +2,43 @@
 
 ## Current selection
 
-Active Backlog items are `SF-BL-005` and `SF-BL-006`; current focus is
-`SF-BL-005`. Human Authority selected envelope creation and ledger reconciliation
-for `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001`. This selection does not dispatch implementation. After two independent `PLAN_CONFLICT` preflights, remediated envelope revision 3
-is integrated at `5c308a046c99c84d3c58fba94a626ae95d3e88e5` with SHA-256
-`ef3ec0c27363418de71d50ed9ff7e10fa0cda477c05171ab5ece458be32719f0`.
-Producer and fresh independent preflight passed with P0/P1/P2 findings all zero.
-Implementation remains undispatched pending a separate Human decision.
+Human Authority selected a four-step sequential SF-BL-005 experiment on
+2026-09-13. The order is mandatory because the first RealWorld diagnostic is
+the unmodified baseline and the later runs measure the integrated remediation.
 
-The bounded objective is to extend `SpringRouteHandlerIndex` static extraction
-for method-level `@PutMapping` and `@DeleteMapping`, including annotations with
-no method path and with one literal method path. It must preserve existing
-class-level composition, `@RequestMapping`, GET/POST behavior, route
-normalization, ambiguity handling, exact-revision provenance, and proposal-only
-semantics.
+1. `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002` — reproduce the frozen diagnostic in a new namespace with the current pre-remediation runtime; diagnostic-only, no scorer.
+2. `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001` — execute envelope revision 3, already producer/independent-preflighted; add only PutMapping/DeleteMapping static extraction.
+3. `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003` — reproduce the same frozen RealWorld diagnostic against the integrated remediation in another new namespace.
+4. `SF-BL-005-BOXING-CALIBRATION-003` — rerun the exposed PetClinic calibration with frozen inputs and evaluator separation; this is not formal holdout.
 
-The execution envelope must bind the exact control/base revision, the reviewed
-route-coverage analysis, the two Java change surfaces, focused negative and
-regression tests, an isolated evidence namespace, Java 17, independent review,
-full regression, and a memory limit below 8 GB. It must exclude selector,
-scorer, evaluator/gold, frozen evidence, calibration, RealWorld scoring, formal
-holdout, Product truth, deployment, and parent closure.
+Every stage requires its own exact envelope, isolated output namespace, valid
+preflight and immutable evidence. A failed or blocked predecessor prevents its
+successors from starting. No stage authorizes Product truth, deployment,
+publication, formal holdout, threshold changes or parent closure.
 
 ### Current execution ledger
 
-- `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001` — `INDEPENDENT_PREFLIGHT_PASS_NOT_DISPATCHED`
+- `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002` — `ENVELOPE_PREPARATION_SELECTED`
 
-### Completed execution ledger
+### Queued dependent executions
 
-- `SF-BL-005-SELECTOR-DIAGNOSTICS-001` — `INTEGRATED_ENGINEERING_READY`
-- `SF-BL-005-PARALLEL-INVESTIGATIONS-001` — `OBSERVATIONS_RECEIVED_WITH_LIMITATIONS`
-- `SF-BL-005-GENERIC-ANCESTOR-001` — `FRESH_INDEPENDENT_REVIEW_PASS`
-- `SF-BL-005-REALWORLD-DIAGNOSTIC-PREP-001` — superseded by completed diagnostic execution
-- `SF-BL-005-SELECTOR-RUNNER-001` — `INDEPENDENT_REVIEW_COMPLETE_WITH_LIMITATIONS`
-- `SF-BL-005-RUNNER-ANCESTOR-INTEGRATION-001` — `INTEGRATED_ENGINEERING_READY`
-- `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001` — `DIAGNOSTIC_COMPLETE_REVIEW_PASS_FDP_RECONCILED`
-- `SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001` — `ANALYSIS_COMPLETE_FDP_RETURNED`
+- `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001` — waits for baseline completion
+- `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003` — waits for remediation integration
+- `SF-BL-005-BOXING-CALIBRATION-003` — waits for post-remediation diagnostic
 
-### Parked or blocked execution ledger
+### Parked execution ledger
 
-- `SF-BL-005-GENERIC-ANCESTOR-FOLLOWUP-INTEGRATION-001` — `PARKED_AFTER_STAGE_2_FAIL`; not integrated and Stage 3 not triggered
-- `SF-BL-006-COMPANY-AI-SHARE-001` — learner delivery complete; downstream company environment remains `BLOCKED_USER_APPROVAL`
+- `SF-BL-005-GENERIC-ANCESTOR-FOLLOWUP-INTEGRATION-001` — `PARKED_AFTER_STAGE_2_FAIL`; not integrated
+- `SF-BL-006-COMPANY-AI-SHARE-001` — `BLOCKED_USER_APPROVAL`
 
 ## Continuation constraints
 
-- One FDP reconciliation owner serializes all five active-control changes.
-- Existing execution evidence stays immutable; no failed or blocked state is
-  rewritten as success.
-- Envelope creation is authorized; implementation dispatch requires a separate
-  Human decision after producer and independent preflight pass.
-- Missing metrics remain `UNKNOWN`; incomparable samples remain
-  `INSUFFICIENT_SAMPLE`.
-- `CSI-REC-001` through `CSI-REC-004` remain recommendations and are outside
-  this route-extractor execution.
-- Aggregate commands stay below 8 GB and heavy JVM work runs sequentially with
-  a 2 GB Maven heap unless the envelope is stricter.
+- One FDP owner serializes active-control changes.
+- The three experiment namespaces must be new and must not overwrite earlier evidence.
+- Baseline and post-remediation RealWorld diagnostics must use identical frozen role inputs and scenario count.
+- PetClinic is exposed calibration only; metrics cannot establish generalization or parent closure.
+- Missing metrics remain `UNKNOWN`; incomparable samples remain `INSUFFICIENT_SAMPLE`.
+- Java 17 commands use at most 2 GB Maven heap; one heavy JVM runs at a time and aggregate memory stays below 8 GB.
 
 ## Verified-delivery ledger
 

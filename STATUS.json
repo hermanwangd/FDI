@@ -12,7 +12,7 @@
     "SF-BL-005",
     "SF-BL-006"
   ],
-  "next_action": "Await a separate Human decision to dispatch SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001. Envelope revision 3 producer and independent preflights passed; no implementation has run.",
+  "next_action": "Materialize, independently preflight, and execute SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002 before SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001; then run SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003 and SF-BL-005-BOXING-CALIBRATION-003 in sequence.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
@@ -39,44 +39,19 @@
     "parent_closure": false
   },
   "selected_next_execution": {
-    "execution_id": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
-    "state": "INDEPENDENT_PREFLIGHT_PASS_NOT_DISPATCHED",
-    "objective": "Add statically recoverable PutMapping and DeleteMapping support to SpringRouteHandlerIndex without changing route normalization or selector behavior.",
-    "selection_authority": "Human selection option 1 on 2026-09-13",
-    "selection_scope": "ENVELOPE_CREATION_AND_LEDGER_RECONCILIATION_ONLY",
-    "construction_base": "9bbcb7da3ecb61810947fdee566e2d842d9d0a5b",
+    "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002",
+    "state": "ENVELOPE_PREPARATION_SELECTED",
+    "objective": "Reproduce the frozen pre-remediation RealWorld selector diagnostic in a new namespace.",
+    "selection_authority": "Human selected options 1, 2, and 3 on 2026-09-13",
+    "construction_base": "da947f999abeee15f4a86ed2df90ded9775b5f8c",
     "code_change_authorized": false,
     "envelope_creation_authorized": true,
-    "dispatch_authorized": false,
+    "dispatch_authorized": true,
+    "scoring_authorized": false,
     "calibration_authorized": false,
     "formal_holdout_authorized": false,
     "parent_closure": false,
-    "originating_evidence": "validation/software-factory/sf-bl005/route-coverage-analysis-001/",
-    "envelope_control_commit": "9bbcb7da3ecb61810947fdee566e2d842d9d0a5b",
-    "envelope_integrated_commit": "5c308a046c99c84d3c58fba94a626ae95d3e88e5",
-    "envelope_path": "validation/software-factory/sf-bl005/execution-envelope-route-handler-extractor-remediation-001.json",
-    "envelope_sha256": "ef3ec0c27363418de71d50ed9ff7e10fa0cda477c05171ab5ece458be32719f0",
-    "producer_preflight": "PASS_REVISION_3",
-    "producer_preflight_evidence": "validation/software-factory/sf-bl005/envelope-preflight-route-handler-extractor-remediation-001.json",
-    "independent_preflight": "PASS",
-    "envelope_revision": 3,
-    "prior_independent_preflights": {
-      "count": 2,
-      "result": "FAIL_PLAN_CONFLICT",
-      "latest_findings": {
-        "p0": 0,
-        "p1": 2,
-        "p2": 1
-      }
-    },
-    "independent_preflight_reviewer": "/root/route_extractor_envelope_preflight",
-    "independent_preflight_evidence": "validation/software-factory/sf-bl005/envelope-independent-preflight-route-handler-extractor-remediation-001.json",
-    "independent_preflight_evidence_sha256": "10a827e25b9077cd3674bd3634afc13ceb222c7bb8e3691dce00709d3cae8410",
-    "independent_findings": {
-      "p0": 0,
-      "p1": 0,
-      "p2": 0
-    }
+    "dependencies": []
   },
   "metric_goal": {
     "status": "NOT_MET_DIAGNOSTIC_ONLY",
@@ -145,13 +120,13 @@
   ],
   "active_executions": [
     {
-      "lane_id": "route-handler-extractor-remediation",
-      "execution_id": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
-      "base_commit": "9bbcb7da3ecb61810947fdee566e2d842d9d0a5b",
+      "lane_id": "realworld-diagnostic-baseline-rerun",
+      "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002",
+      "base_commit": "da947f999abeee15f4a86ed2df90ded9775b5f8c",
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "INDEPENDENT_PREFLIGHT_PASS_NOT_DISPATCHED",
+      "execution_state": "ENVELOPE_PREPARATION_SELECTED",
       "integration_candidate": null
     }
   ],
@@ -251,5 +226,31 @@
     "implementation_evidence": "validation/software-factory/sf-bl007/implementation-001-evidence.json",
     "parent_closure": true
   },
-  "proposed_next_execution": null
+  "proposed_next_execution": null,
+  "authorized_execution_sequence": [
+    {
+      "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002",
+      "order": 1,
+      "authority": "ENVELOPE_AND_DISPATCH",
+      "depends_on": null
+    },
+    {
+      "execution_id": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
+      "order": 2,
+      "authority": "IMPLEMENTATION_DISPATCH",
+      "depends_on": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002"
+    },
+    {
+      "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003",
+      "order": 3,
+      "authority": "ENVELOPE_AND_DISPATCH",
+      "depends_on": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001"
+    },
+    {
+      "execution_id": "SF-BL-005-BOXING-CALIBRATION-003",
+      "order": 4,
+      "authority": "EXPOSED_CALIBRATION_ENVELOPE_AND_DISPATCH",
+      "depends_on": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003"
+    }
+  ]
 }
