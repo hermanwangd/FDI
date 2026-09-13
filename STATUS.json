@@ -12,7 +12,7 @@
     "SF-BL-005",
     "SF-BL-006"
   ],
-  "next_action": "FDP issues and independently preflights the fresh follow-up integration envelope, then dispatches its three-stage execution.",
+  "next_action": "Dispatch the preflighted three-stage follow-up integration execution; no other lane is selected.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
@@ -213,7 +213,7 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "SELECTED_ENVELOPE_PENDING",
+      "execution_state": "ENVELOPE_PREFLIGHT_PASS_DISPATCH_READY",
       "integration_candidate": null
     }
   ],
@@ -274,7 +274,7 @@
   },
   "proposed_next_execution": {
     "execution_id": "SF-BL-005-GENERIC-ANCESTOR-FOLLOWUP-INTEGRATION-001",
-    "state": "HUMAN_SELECTED_ENVELOPE_PENDING",
+    "state": "ENVELOPE_PREFLIGHT_PASS_DISPATCH_READY",
     "allowed_output": "EXACT_COMBINED_CANDIDATE_WITH_INDEPENDENT_REVIEW_AND_VERIFICATION",
     "code_change_authorized": true,
     "owned_paths": "FOUR_GENERIC_ANCESTOR_SOURCE_TEST_PATHS",

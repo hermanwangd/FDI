@@ -1,0 +1,177 @@
+{
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "executionId": "SF-BL-005-GENERIC-ANCESTOR-FOLLOWUP-INTEGRATION-001",
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "branch": "codex/sf-bl005-generic-ancestor-followup-integration-001",
+  "constructionBase": "bc783b1f89c6146233423d9a3571c4ad15be608b",
+  "controlCommit": "12ea59eb9ef2cb225c166583ce6ddd3841e4fd41",
+  "specRevision": "4ac27198c6060e7978ed0b7f5ee0406225e31e4c",
+  "backlogItems": [
+    "SF-BL-005"
+  ],
+  "requirementIds": [
+    "AUTH-002",
+    "PK-004",
+    "EVID-001",
+    "TECH-001"
+  ],
+  "controls": {
+    "AGENTS.md": "a70a2d4da9f9dd8add3ca2ab3d794125a08525bdb53cca4426d60f9a9a091c12",
+    "PROJECT-OVERVIEW.md": "e5ceb9b4baf8a5b5a9d557dd78f673221c8ecea182ba782457fc76e08172e4c0",
+    "FRAMEWORK-SPEC.md": "1c78425291c7ff16d39760fcef41ff275076d1cf5b3aa973bcabe1b8c3f5930a",
+    "BACKLOG.md": "4b1ca80ad188eafc67e4f827ead3e2abab801c2cfa0b5a86ba58fd6d80db9df6",
+    "IMPLEMENTATION-PLAN.md": "271fdfa56072773bc8f6696225df41fcccde13b05759e004456b998ba8358f3d",
+    "STATUS.json": "ede1ac9cd5249967bbac16b7b53f0727e55ac9a40104ae2fdcfec73f35e5dc86"
+  },
+  "acceptedInputs": {
+    "integratedBaseline": {
+      "revision": "bc783b1f89c6146233423d9a3571c4ad15be608b",
+      "contains": "8c294063d6696a567bbd1c29552e0fd6925e0f73",
+      "contract": "preserve runner, public-only generic declarations, and all accepted later behavior"
+    },
+    "reviewedFollowup": {
+      "revision": "7eb9932522c60d6c62cfb6c4e0c930421f570c4a",
+      "reviewRun": "01a09985-6552-7813-b422-fc94a28b506c",
+      "stage3RepairRun": "01a099c9-d886-7c4e-9c2c-68984ebcb9b1",
+      "manifestSha256": "e17cf74bbb9152480b29d7772d96549f50b61350e55621f729558e61ac71163f",
+      "receiverRows": "15/15 PASS",
+      "contract": "apply behavioral delta only; whole-file replacement prohibited"
+    }
+  },
+  "inputs": [
+    {
+      "role": "integrated-baseline",
+      "revision": "bc783b1f89c6146233423d9a3571c4ad15be608b",
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SourceMethodIndex.java",
+      "sha256": "730f5d5dd3d24914e2c2b74e4d801e42900bf479cbb93c463f069aa40dc9e62c",
+      "mutationAllowed": true
+    },
+    {
+      "role": "integrated-baseline",
+      "revision": "bc783b1f89c6146233423d9a3571c4ad15be608b",
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedSourceCalls.java",
+      "sha256": "b0b170d25969358e2e4bb80f180df40dc640b02f68894cb08406a04f2e4b7b6f",
+      "mutationAllowed": true
+    },
+    {
+      "role": "integrated-baseline",
+      "revision": "bc783b1f89c6146233423d9a3571c4ad15be608b",
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SourceMethodIndexTests.java",
+      "sha256": "f98eb808a4259eab8e91719ce5dd15e29fe2fdf6c0704c3fa1288a867f6897ad",
+      "mutationAllowed": true
+    },
+    {
+      "role": "integrated-baseline",
+      "revision": "bc783b1f89c6146233423d9a3571c4ad15be608b",
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedSourceCallsTests.java",
+      "sha256": "7f574fae51c7968a87022084d71ba74b89bd8a2847e21e2ba34ef3dd8cc46af2",
+      "mutationAllowed": true
+    },
+    {
+      "role": "reviewed-followup",
+      "revision": "7eb9932522c60d6c62cfb6c4e0c930421f570c4a",
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SourceMethodIndex.java",
+      "sha256": "21523e913189a144ce9ccdda0625afa299f0c10f30d46128c3468720d448fdfa",
+      "mutationAllowed": false
+    },
+    {
+      "role": "reviewed-followup",
+      "revision": "7eb9932522c60d6c62cfb6c4e0c930421f570c4a",
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedSourceCalls.java",
+      "sha256": "30d280333d1eabc691b34824fe67b571c2529a773166937791e953971040aa00",
+      "mutationAllowed": false
+    },
+    {
+      "role": "reviewed-followup",
+      "revision": "7eb9932522c60d6c62cfb6c4e0c930421f570c4a",
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SourceMethodIndexTests.java",
+      "sha256": "522e778f783c2123f3da2090bc6df1d58de1a0216e8fb105c71829346776cbca",
+      "mutationAllowed": false
+    },
+    {
+      "role": "reviewed-followup",
+      "revision": "7eb9932522c60d6c62cfb6c4e0c930421f570c4a",
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedSourceCallsTests.java",
+      "sha256": "5d4554d9923cfb0279f4ba63900a8fcd896f35490253f90effadebeab342b777",
+      "mutationAllowed": false
+    }
+  ],
+  "ownedPaths": [
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SourceMethodIndex.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedSourceCalls.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SourceMethodIndexTests.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedSourceCallsTests.java"
+  ],
+  "scope": "Apply the smallest reviewed fail-closed delta from 7eb9932522c60d6c62cfb6c4e0c930421f570c4a to the current integrated baseline while retaining its public-accessibility guard; independently review and verify the exact combined candidate.",
+  "acceptance": [
+    "Generic-parent declarations remain public-only; private and inaccessible declarations remain unresolved.",
+    "Same-name child method-generic declarations remain unresolved.",
+    "Same-name, same-arity child declarations with unknown parameter types remain unresolved.",
+    "Parameterized generic declaration arguments such as List<T> are not flattened to raw names and remain unresolved.",
+    "Direct concrete generic-parent opt-in, declaration identity, substituted invocation types, legacy parity, runner behavior, and all existing negative guards remain green.",
+    "Fresh independent exact-candidate review has no unresolved P0-P2 finding.",
+    "Java 17 targeted and full package, Python regression, and git diff check pass.",
+    "All evidence is attached with exact candidate binding, digest manifest, and receiver readback."
+  ],
+  "negativeCases": [
+    "private or inaccessible generic-parent method",
+    "child method-generic declaration",
+    "child same-arity unknown-parameter declaration",
+    "parameterized generic declaration argument",
+    "raw, wildcard, unbound, nested, multilevel, ambiguous overload, varargs, Object member, or unknown ancestry"
+  ],
+  "stages": [
+    {
+      "id": "INTEGRATION",
+      "owner": "Delivery Engineer",
+      "dependsOn": []
+    },
+    {
+      "id": "REVIEW",
+      "owner": "Independent Adjudicator",
+      "dependsOn": [
+        "INTEGRATION"
+      ]
+    },
+    {
+      "id": "VERIFICATION",
+      "owner": "Delivery Engineer",
+      "dependsOn": [
+        "REVIEW"
+      ]
+    }
+  ],
+  "verification": [
+    "MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dtest=SelectorDiagnosticRunTests,SourceMethodIndexTests,QualifiedSourceCallsTests,ScenarioEvidenceSelectorTests,QualifiedCalibrationProducerTests test",
+    "MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true package",
+    "python3 -m pytest -q",
+    "git diff --check"
+  ],
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "oneHeavyJvm": true,
+    "mavenHeapGb": 2,
+    "forkHeapGb": 2,
+    "commandTimeoutSeconds": 1200
+  },
+  "excluded": [
+    "whole-file replacement from reviewed follow-up",
+    "Python modification or addition",
+    "runner modification",
+    "active control modification by Execution Plane",
+    "RealWorld execution",
+    "calibration or scoring",
+    "external signature expansion",
+    "dependency change",
+    "cleanup",
+    "push",
+    "publication",
+    "deployment",
+    "parent closure"
+  ],
+  "failureRouting": [
+    "PLAN_BLOCKED for missing Java 17 runtime or dependency",
+    "PLAN_CONFLICT for revision, digest, provenance, ownership, or current-control mismatch",
+    "PLAN_CHANGE_REQUIRED for public API, scope, architecture, or acceptance expansion"
+  ]
+}
