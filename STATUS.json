@@ -11,15 +11,16 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Create and independently preflight the post-remediation RealWorld selector diagnostic 003 envelope with regenerated 19-handler input, then run twice.",
+  "next_action": "Create and preflight BOXING-CALIBRATION-003, then rerun producer and evaluator with frozen inputs in a new namespace.",
   "blocking_dependency": null,
   "latest_completed_execution": {
-    "execution_id": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
-    "integrated_commit": "fbcbff200d442591a20753d8632c9997433a685e",
+    "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003",
+    "integrated_commit": "5ce6bbcac538c0e22086da30f3b646a2a30bb7db",
     "review": "INDEPENDENT_REVIEW_PASS_P0_P2_ZERO",
-    "verification": "JAVA17_PACKAGE_1493_1493_PYTEST_63_63_REALWORLD_VERIFIER_19_HANDLERS_11_OF_11",
-    "state": "IMPLEMENTATION_COMPLETE_FDP_RETURNED",
-    "evidence": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/integration/delivery-evidence.json"
+    "verification": "JAVA17_PACKAGE_1493_1493_PYTEST_63_63_TWO_RUN_BYTE_PARITY",
+    "result": "ROUTE_ABSENT_0_ENTITY_MISMATCH_73_ACTION_MISMATCH_25_UNSUPPORTED_ASSERTION_DIALECT_12",
+    "state": "DIAGNOSTIC_COMPLETE_FDP_RETURNED",
+    "evidence": "validation/software-factory/sf-bl005/realworld-selector-diagnostic-003/execution-receipt.json"
   },
   "latest_selector_diagnostic": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
@@ -37,18 +38,18 @@
     "parent_closure": false
   },
   "selected_next_execution": {
-    "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003",
+    "execution_id": "SF-BL-005-BOXING-CALIBRATION-003",
     "state": "ENVELOPE_CREATION_SELECTED_FOR_DISPATCH",
-    "objective": "Repeat the frozen RealWorld selector diagnostic with the remediated extractor-derived 19-handler input.",
+    "objective": "Repeat the exposed PetClinic boxing calibration with the exact frozen source, five producer inputs, evaluator truth, proofs, and scoring policy in a new namespace.",
     "selection_authority": "Human selected ordered options 1, 2, and 3 on 2026-09-13",
-    "construction_base": "fbcbff200d442591a20753d8632c9997433a685e",
+    "construction_base": "5ce6bbcac538c0e22086da30f3b646a2a30bb7db",
     "code_change_authorized": false,
     "envelope_creation_authorized": true,
     "dispatch_authorized": true,
-    "calibration_authorized": false,
+    "calibration_authorized": true,
     "formal_holdout_authorized": false,
     "parent_closure": false,
-    "dependency": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001_COMPLETE"
+    "dependency": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003_COMPLETE"
   },
   "metric_goal": {
     "status": "NOT_MET_DIAGNOSTIC_ONLY",
@@ -116,9 +117,9 @@
   ],
   "active_executions": [
     {
-      "lane_id": "realworld-selector-diagnostic-003",
-      "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003",
-      "base_commit": "fbcbff200d442591a20753d8632c9997433a685e",
+      "lane_id": "boxing-calibration-003",
+      "execution_id": "SF-BL-005-BOXING-CALIBRATION-003",
+      "base_commit": "5ce6bbcac538c0e22086da30f3b646a2a30bb7db",
       "selected_backlog_items": [
         "SF-BL-005"
       ],

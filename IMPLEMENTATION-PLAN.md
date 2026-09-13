@@ -8,8 +8,8 @@ the unmodified baseline and the later runs measure the integrated remediation.
 
 1. `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001` — reproduce the frozen diagnostic in a new namespace with the current pre-remediation runtime; diagnostic-only, no scorer.
 2. `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001` — COMPLETE at integrated commit `fbcbff200d442591a20753d8632c9997433a685e`; Java 17 1493/1493, Python 63/63, independent review PASS.
-3. `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003` — SELECTED; reproduce the same frozen RealWorld diagnostic against the integrated remediation using a regenerated, extractor-backed 19-handler input in another new namespace.
-4. `SF-BL-005-BOXING-CALIBRATION-003` — rerun the exposed PetClinic calibration with frozen inputs and evaluator separation; this is not formal holdout.
+3. `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003` — COMPLETE at integrated commit `5ce6bbcac538c0e22086da30f3b646a2a30bb7db`; ROUTE_ABSENT 90→0, but 110/110 pairs remain rejected.
+4. `SF-BL-005-BOXING-CALIBRATION-003` — SELECTED; rerun the exposed PetClinic calibration with frozen inputs and evaluator separation; this is not formal holdout.
 
 Every stage requires its own exact envelope, isolated output namespace, valid
 preflight and immutable evidence. A failed or blocked predecessor prevents its
