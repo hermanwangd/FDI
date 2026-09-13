@@ -1,6 +1,7 @@
 # 公司 AI 軟體交付 KPI 指引
 
-版本日期：2026-09-13。
+文件 owner：公司本地 Delivery Governance Owner（正式採用時綁定具名 owner）。
+版本：`0.1`。版本日期：2026-09-13。生效日：`PENDING_LOCAL_APPROVAL`。
 狀態：`REFERENCE_ONLY / LOCAL_ADOPTION_REQUIRED`
 
 本文件是可提供公司 AI 閱讀的通用參考，不是公司專案 authority、個人績效制度或
@@ -36,6 +37,10 @@ Delivery E2E
 
 未完成或未回報使用 `null` 並列入 `missing`，不得填零。預期負面測試、程式缺陷、
 環境錯誤與既有 baseline 問題分開計數。
+
+所有 attempts（包含 failed 與 cancelled）以完整 `run_id` 恰計一次。每筆量測記錄
+資料來源、採集時間與完整度；stage 及 E2E 僅由所列 runs 與明確等待區間彙總，不能
+以缺漏資料推算。若來源修訂，增加 `evidence_revision` 並用同一規則重新計算。
 
 ## 暫行目標
 
@@ -98,8 +103,16 @@ Reviewer 不得為提高 first-pass 而降低審查標準。Human Authority 負�
   "execution_id": "DELIVERY-EXAMPLE-001",
   "category": "FEATURE_IMPLEMENTATION",
   "size": "M",
+  "started_at": "2030-01-01T00:00:00Z",
   "as_of": "2030-01-01T01:00:00Z",
+  "accepted_at": null,
   "status": "IN_PROGRESS",
+  "measurement": {
+    "source": "authorized-delivery-record",
+    "collected_at": "2030-01-01T01:00:00Z",
+    "evidence_revision": "SYNTHETIC-REVISION-002",
+    "complete": false
+  },
   "e2e": {
     "target_seconds": 7200,
     "target_state": "GREEN",
@@ -132,9 +145,36 @@ Reviewer 不得為提高 first-pass 而降低審查標準。Human Authority 負�
     "unplanned_intervention_count": 0,
     "human_wait_seconds": 0
   },
+  "stages": [
+    {
+      "stage": "IMPLEMENTATION",
+      "started_at": "2030-01-01T00:05:00Z",
+      "ended_at": null,
+      "elapsed_seconds": 3300,
+      "metric_owner": "execution-coordinator",
+      "improvement_owner": "delivery-engineer",
+      "run_ids": ["RUN-EXAMPLE-001"]
+    }
+  ],
+  "runs": [
+    {
+      "run_id": "RUN-EXAMPLE-001",
+      "stage": "IMPLEMENTATION",
+      "status": "IN_PROGRESS",
+      "started_at": "2030-01-01T00:05:00Z",
+      "ended_at": null,
+      "source": "authorized-runtime-record",
+      "collected_at": "2030-01-01T01:00:00Z",
+      "complete": false
+    }
+  ],
   "monitor": {
+    "id": "MONITOR-EXAMPLE-001",
     "cadence": "PT5M",
-    "deduplication_key": "execution+kpi+state+evidence_revision",
+    "destination": "AUTHORIZED-CHANNEL-PLACEHOLDER",
+    "metric_owner": "delivery-governance-owner",
+    "improvement_owner": "execution-coordinator",
+    "deduplication_key": "DELIVERY-EXAMPLE-001+e2e+GREEN+SYNTHETIC-REVISION-002",
     "state": "ACTIVE"
   }
 }
@@ -149,3 +189,9 @@ Reviewer 不得為提高 first-pass 而降低審查標準。Human Authority 負�
 
 分享前由公司本地 data owner 確認允許的接收者、AI 環境、保存期限及禁止用途。
 若這些條件未綁定，本文件只能做本地唯讀審查，不得上傳或發送。
+
+閱讀與本地唯讀評估不代表採用。傳送或上傳前，data owner 必須建立可稽核的分享
+紀錄，綁定本文件版本、內容 digest、接收者／AI 環境、資料分類、保存期限、禁止用途
+及 approval reference。正式採用還必須透過公司既有 PR／變更流程，由獲授權 Human
+批准 exact reviewed head；批准後內容若改變，必須重新審核。紀錄位置沿用公司既有
+系統，不因本指引建立新的 governance repository 或 authority。
