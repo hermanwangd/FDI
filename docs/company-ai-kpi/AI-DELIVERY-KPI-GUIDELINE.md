@@ -4,9 +4,10 @@
 版本：`0.1`。版本日期：2026-09-13。生效日：`PENDING_LOCAL_APPROVAL`。
 狀態：`REFERENCE_ONLY / LOCAL_ADOPTION_REQUIRED`
 
-本文件是可提供公司 AI 閱讀的通用參考，不是公司專案 authority、個人績效制度或
-自動執法設定。正式採用前，必須由公司本地 owner 依資料分類、角色、工具能力、
-驗收流程與授權規則審核；本文件不得覆蓋公司既有 instructions、Spec、Plan 或政策。
+本文件是可提供已核准公司內部 AI 唯讀評估的通用參考，不是公司專案 authority、
+個人績效制度或自動執法設定。只提供本文件且不附公司資料時，不必先完成正式採用；
+正式採用前，仍必須由公司本地 owner 依資料分類、角色、工具能力、驗收流程與授權
+規則審核。本文件不得覆蓋公司既有 instructions、Spec、Plan 或政策。
 
 ## 目的與邊界
 
@@ -195,11 +196,12 @@ Reviewer 不得為提高 first-pass 而降低審查標準。Human Authority 負�
 - 不應放入通用 AI 教材：原始 prompt、source code、本機路徑、帳號、個人資料、
   secrets、未公開缺陷、真實 execution/run ID、附件 digest 或個人績效推論。
 
-分享前由公司本地 data owner 確認允許的接收者、AI 環境、保存期限及禁止用途。
-若這些條件未綁定，本文件只能做本地唯讀審查，不得上傳或發送。
+只包含本指引及完全虛構範例時，可直接傳至公司已核准的內部 AI 作唯讀評估；這不
+代表正式採用，也不授權 AI 修改公司規則。若要附加公司資料，或傳至尚未核准的 AI
+環境，必須先由公司本地 data owner 確認接收者、AI 環境、資料分類、保存期限及禁止
+用途；未完成確認時不得進行該項傳送。
 
-閱讀與本地唯讀評估不代表採用。傳送或上傳前，data owner 必須建立可稽核的分享
-紀錄，綁定本文件版本、內容 digest、接收者／AI 環境、資料分類、保存期限、禁止用途
-及 approval reference。正式採用還必須透過公司既有 PR／變更流程，由獲授權 Human
-批准 exact reviewed head；批准後內容若改變，必須重新審核。紀錄位置沿用公司既有
+正式採用時，owner 必須建立可稽核的採用紀錄，綁定本文件版本、內容 digest、適用
+環境、禁止用途及 approval reference，並透過公司既有 PR／變更流程，由獲授權 Human
+批准 exact reviewed head。批准後內容若改變，必須重新審核。紀錄位置沿用公司既有
 系統，不因本指引建立新的 governance repository 或 authority。
