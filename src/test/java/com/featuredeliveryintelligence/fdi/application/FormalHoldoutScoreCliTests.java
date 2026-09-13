@@ -143,6 +143,10 @@ class FormalHoldoutScoreCliTests {
         assertThatThrownBy(() -> score("REPOSITORY_DECISION", "{\"repositories\":[]}", "NEGATIVE")).hasMessageContaining("nonempty");
         assertThatThrownBy(() -> score("REPOSITORY_DECISION", "{\"repositories\":[{\"fn\":-1,\"fp\":0,\"repositoryId\":\"r1\",\"tp\":1}]}", "NEGATIVE")).hasMessageContaining("nonnegative");
         assertThatThrownBy(() -> score("REPOSITORY_DECISION", "{\"repositories\":[{\"fn\":0,\"fp\":0,\"repositoryId\":\"r1\",\"tp\":1},{\"fn\":0,\"fp\":0,\"repositoryId\":\"r1\",\"tp\":1}]}", "NEGATIVE")).hasMessageContaining("duplicate repositoryId");
+
+        JsonNode large = score("REPOSITORY_DECISION", "{\"repositories\":[{\"fn\":9223372036854775807,\"fp\":9223372036854775807,\"repositoryId\":\"r1\",\"tp\":9223372036854775807},{\"fn\":9223372036854775807,\"fp\":9223372036854775807,\"repositoryId\":\"r2\",\"tp\":9223372036854775807}]}", "NEGATIVE");
+        assertThat(large.path("aggregate").path("microPrecision").asText()).isEqualTo("0.500000000000");
+        assertThat(large.path("repositories").path(0).path("tp").bigIntegerValue()).isEqualTo(new java.math.BigInteger("9223372036854775807"));
     }
 
     @Test
@@ -232,6 +236,10 @@ class FormalHoldoutScoreCliTests {
         assertThatThrownBy(() -> runCli(wrongSchema, inputs, temp.resolve("wrong-schema-out.json"))).hasMessageContaining("schemaVersion");
         Path wrongRule = temp.resolve("wrong-rule.json"); Files.writeString(wrongRule, manifestJson("V1","v.json",sha,"CHAIN_SCORING","POSITIVE"));
         assertThatThrownBy(() -> runCli(wrongRule, inputs, temp.resolve("wrong-rule-out.json"))).hasMessageContaining("ruleId");
+        Path numericRule = temp.resolve("numeric-rule.json"); Files.writeString(numericRule, manifestJson("V1","v.json",sha,"WILSON_INTERVAL","POSITIVE").replace("\"ruleId\":\"WILSON_INTERVAL\"", "\"ruleId\":1"));
+        assertThatThrownBy(() -> runCli(numericRule, inputs, temp.resolve("numeric-rule-out.json"))).hasMessageContaining("ruleId");
+        Path numericPath = temp.resolve("numeric-path.json"); Files.writeString(numericPath, manifestJson("V1","v.json",sha,"WILSON_INTERVAL","POSITIVE").replace("\"path\":\"v.json\"", "\"path\":1"));
+        assertThatThrownBy(() -> runCli(numericPath, inputs, temp.resolve("numeric-path-out.json"))).hasMessageContaining("path");
     }
 
     @Test

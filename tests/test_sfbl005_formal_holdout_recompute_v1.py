@@ -149,6 +149,12 @@ def test_cli_rejects_duplicate_json_keys_unknown_manifest_schema_and_symlink_man
     output = tmp_path / "unknown.json"
     cmd = [sys.executable, str(SCRIPT), "--manifest", str(manifest), "--inputs-root", str(inputs), "--output", str(output)]
     assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
+    manifest.write_text('{"schemaVersion":"x","schemaVersion":"y","vectors":[]}\n')
+    assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
+    real = tmp_path / "real-manifest"
+    real.write_text('{"schemaVersion":"SFBL005-FORMAL-SCORER-VECTOR-MANIFEST-001","vectors":[]}\n')
+    manifest.unlink(); manifest.symlink_to(real)
+    assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
 
 def test_malformed_operation_inputs_fail_closed():
     m = load_module(); a = "a" * 64
@@ -248,8 +254,25 @@ def test_cli_rejects_duplicate_vector_ids_and_input_paths(tmp_path):
     manifest.write_text(json.dumps(value)); output = tmp_path / "out.json"
     cmd = [sys.executable, str(SCRIPT), "--manifest", str(manifest), "--inputs-root", str(inputs), "--output", str(output)]
     assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
-    manifest.write_text('{"schemaVersion":"x","schemaVersion":"y","vectors":[]}\n')
-    assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
-    real = tmp_path / "real-manifest"; real.write_text('{"schemaVersion":"SFBL005-FORMAL-SCORER-VECTOR-MANIFEST-001","vectors":[]}\n')
-    manifest.unlink(); manifest.symlink_to(real)
-    assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
+
+def test_canonical_candidates_requires_exactly_two_items():
+    m = load_module(); a = "a" * 64
+    candidate = {"fullyQualifiedDeclaringType": "invalid.conformance.Service", "methodName": "run",
+        "parameterTypes": [], "repositorySnapshotSha256": a, "returnType": "void", "scenarioId": "DEV"}
+    for candidates in ([candidate], [candidate, candidate, candidate]):
+        value = m.evaluate(case("DEV-C", "CANONICAL_IDENTITY", {"candidates": candidates}))
+        assert value["result"] == "INVALID" and value["reasonCodes"] == ["MALFORMED_GIVEN"]
+    assert m.evaluate(case("DEV-C", "CANONICAL_IDENTITY", {"candidates": [candidate, candidate]}))["result"] == "VALID"
+
+def test_chain_counts_duplicate_pairs_and_requires_exact_proposal_edges():
+    m = load_module(); a, b, c = "a" * 64, "b" * 64, "c" * 64
+    duplicate = m.evaluate(case("DEV-CH-DUP", "CHAIN_SCORING", {"chainRequired": True,
+        "orderedGoldPairDigests": [a, b], "proposalEdges": [[a, b]],
+        "proposalPairDigests": [a, a, b], "truthEdges": [[a, b]]}))
+    assert duplicate["counts"] == {"duplicateCount": 1, "fn": 0, "fp": 1, "tp": 2}
+    assert duplicate["chainComplete"] is True
+    extra_edge = m.evaluate(case("DEV-CH-EDGE", "CHAIN_SCORING", {"chainRequired": True,
+        "orderedGoldPairDigests": [a, b, c], "proposalEdges": [[a, b], [b, c], [a, c]],
+        "proposalPairDigests": [a, b, c], "truthEdges": [[a, b], [b, c]]}))
+    assert extra_edge["counts"] == {"duplicateCount": 0, "fn": 0, "fp": 0, "tp": 3}
+    assert extra_edge["chainComplete"] is False

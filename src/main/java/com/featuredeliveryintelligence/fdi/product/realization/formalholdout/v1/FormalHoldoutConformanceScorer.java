@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
@@ -205,23 +206,22 @@ public final class FormalHoldoutConformanceScorer {
 
     private ObjectNode repositoryDecision(JsonNode g) {
         if(g.path("repositories").isEmpty())throw new IllegalArgumentException("repositories must be nonempty");
-        ArrayNode reposOut=JSON.createArrayNode(); BigDecimal mp=BigDecimal.ZERO,mr=BigDecimal.ZERO; int stp=0,sfp=0,sfn=0; boolean all=true, anyPrecisionNull=false, anyRecallNull=false;
+        ArrayNode reposOut=JSON.createArrayNode(); BigDecimal mp=BigDecimal.ZERO,mr=BigDecimal.ZERO; BigInteger stp=BigInteger.ZERO,sfp=BigInteger.ZERO,sfn=BigInteger.ZERO; boolean all=true, anyPrecisionNull=false, anyRecallNull=false;
         Set<String> repositoryIds=new HashSet<>();
         for(JsonNode r:g.path("repositories")) {
-            int tp=r.path("tp").asInt(), fp=r.path("fp").asInt(), fn=r.path("fn").asInt(); stp+=tp;sfp+=fp;sfn+=fn;
-            if(tp<0||fp<0||fn<0)throw new IllegalArgumentException("repository counts must be nonnegative");
+            BigInteger tp=r.get("tp").bigIntegerValue(), fp=r.get("fp").bigIntegerValue(), fn=r.get("fn").bigIntegerValue(); stp=stp.add(tp);sfp=sfp.add(fp);sfn=sfn.add(fn);
             String repositoryId=r.path("repositoryId").asText();if(repositoryId.isBlank())throw new IllegalArgumentException("repositoryId required");if(!repositoryIds.add(repositoryId))throw new IllegalArgumentException("duplicate repositoryId: "+repositoryId);
             ObjectNode x=JSON.createObjectNode(); x.put("fn",fn);x.put("fp",fp);
-            BigDecimal p=tp+fp==0?null:ratio(tp,tp+fp), recall=tp+fn==0?null:ratio(tp,tp+fn);
+            BigInteger proposed=tp.add(fp),gold=tp.add(fn);BigDecimal p=proposed.signum()==0?null:ratio(tp,proposed), recall=gold.signum()==0?null:ratio(tp,gold);
             if(p==null){x.putNull("precision");x.put("precisionReason","NO_PROPOSED_PAIRS");anyPrecisionNull=true;}else{x.put("precision",fmt(p));mp=mp.add(p,MC);}
             if(recall==null){x.putNull("recall");x.put("recallReason","NO_GOLD_PAIRS");anyRecallNull=true;}else{x.put("recall",fmt(recall));mr=mr.add(recall,MC);}
-            x.put("repositoryId",r.path("repositoryId").asText()); boolean pass=p!=null&&recall!=null&&p.compareTo(new BigDecimal("0.80"))>0&&recall.compareTo(new BigDecimal("0.60"))>0; x.put("strictPass",pass);x.put("tp",tp);all&=pass;reposOut.add(canonical(x));
+            x.put("repositoryId",r.get("repositoryId").textValue()); boolean pass=p!=null&&recall!=null&&p.compareTo(new BigDecimal("0.80"))>0&&recall.compareTo(new BigDecimal("0.60"))>0; x.put("strictPass",pass);x.put("tp",tp);all&=pass;reposOut.add(canonical(x));
         }
         int n=g.path("repositories").size(); ObjectNode agg=JSON.createObjectNode();
         if(anyPrecisionNull){agg.putNull("macroPrecision");agg.put("macroPrecisionReason","NO_PROPOSED_PAIRS");}else agg.put("macroPrecision",fmt(mp.divide(BigDecimal.valueOf(n),MC)));
         if(anyRecallNull){agg.putNull("macroRecall");agg.put("macroRecallReason","NO_GOLD_PAIRS");}else agg.put("macroRecall",fmt(mr.divide(BigDecimal.valueOf(n),MC)));
-        if(stp+sfp==0){agg.putNull("microPrecision");agg.put("microPrecisionReason","NO_PROPOSED_PAIRS");}else agg.put("microPrecision",fmt(ratio(stp,stp+sfp)));
-        if(stp+sfn==0){agg.putNull("microRecall");agg.put("microRecallReason","NO_GOLD_PAIRS");}else agg.put("microRecall",fmt(ratio(stp,stp+sfn)));
+        if(stp.add(sfp).signum()==0){agg.putNull("microPrecision");agg.put("microPrecisionReason","NO_PROPOSED_PAIRS");}else agg.put("microPrecision",fmt(ratio(stp,stp.add(sfp))));
+        if(stp.add(sfn).signum()==0){agg.putNull("microRecall");agg.put("microRecallReason","NO_GOLD_PAIRS");}else agg.put("microRecall",fmt(ratio(stp,stp.add(sfn))));
         boolean mandatoryNull=anyPrecisionNull||anyRecallNull;
         ObjectNode o=JSON.createObjectNode();o.set("aggregate",canonical(agg));o.put("provisionalClassification",mandatoryNull?"INVALID":all?"PASS":"REVISE");o.set("repositories",reposOut);o.put("result",mandatoryNull?"INVALID":"VALID");return o;
     }
@@ -247,6 +247,7 @@ public final class FormalHoldoutConformanceScorer {
     private static ObjectNode baseCounts(String result,int tp,int fp,int fn,int dup){ObjectNode o=JSON.createObjectNode();o.set("counts",counts(tp,fp,fn,dup));o.put("result",result);return o;}
     private static ObjectNode counts(int tp,int fp,int fn,int dup){ObjectNode c=JSON.createObjectNode();c.put("duplicateCount",dup);c.put("fn",fn);c.put("fp",fp);c.put("tp",tp);return c;}
     private static BigDecimal ratio(int a,int b){return BigDecimal.valueOf(a).divide(BigDecimal.valueOf(b),MC);}
+    private static BigDecimal ratio(BigInteger a,BigInteger b){return new BigDecimal(a).divide(new BigDecimal(b),MC);}
     private static String fmt(BigDecimal x){return x.setScale(12,RoundingMode.HALF_EVEN).toPlainString();}
     private static ArrayNode strings(List<String> xs){ArrayNode a=JSON.createArrayNode();xs.forEach(a::add);return a;}
     private static Set<String> textSet(JsonNode a){return new HashSet<>(textList(a));}
@@ -301,7 +302,7 @@ public final class FormalHoldoutConformanceScorer {
         case "PROVENANCE_INTEGRITY"->{text(g,"artifactSha256",false);stringArray(g,"coverageStrata");text(g,"expectedArtifactSha256",false);bool(g,"foreignRepositoryReference");text(g,"pairRepositorySnapshotSha256",false);text(g,"repositorySnapshotSha256",false);text(g,"scenarioId",false);if(g.has("scenarioIds"))stringArray(g,"scenarioIds");text(g,"sourceProvenanceSha256",true);text(g,"testProvenanceSha256",true);text(g,"truthDisposition",true);}
         case "EMPTY_AND_ABSTENTION"->{if(g.has("abstention"))text(g,"abstention",false);nonnegative(g,"goldCount");array(g,"proposalOccurrences");for(JsonNode p:g.get("proposalOccurrences")){if(!p.isObject())throw new IllegalArgumentException("proposalOccurrences items must be objects");p.fieldNames().forEachRemaining(k->{if(!Set.of("pairDigest","structurallyValid").contains(k))throw new IllegalArgumentException("unknown proposalOccurrences field: "+k);});text(p,"pairDigest",false);if(p.has("structurallyValid"))bool(p,"structurallyValid");}nonnegative(g,"scenarioCount");}
         case "CHAIN_SCORING"->{bool(g,"chainRequired");stringArray(g,"orderedGoldPairDigests");edgeArray(g,"proposalEdges");stringArray(g,"proposalPairDigests");edgeArray(g,"truthEdges");}
-        case "REPOSITORY_DECISION"->{array(g,"repositories");for(JsonNode r:g.get("repositories")){exactObject(r,Set.of("fn","fp","repositoryId","tp"),"repository");nonnegative(r,"fn");nonnegative(r,"fp");text(r,"repositoryId",false);nonnegative(r,"tp");}}
+        case "REPOSITORY_DECISION"->{array(g,"repositories");for(JsonNode r:g.get("repositories")){exactObject(r,Set.of("fn","fp","repositoryId","tp"),"repository");nonnegativeBig(r,"fn");nonnegativeBig(r,"fp");text(r,"repositoryId",false);nonnegativeBig(r,"tp");}}
         case "WILSON_INTERVAL"->{nonnegative(g,"n");nonnegative(g,"precision");text(g,"rounding",false);nonnegative(g,"scale");nonnegative(g,"x");text(g,"zDecimal",false);}
         case "DETERMINISM_AND_PARITY"->{for(String k:List.of("goldenBytes","javaRun1Bytes","javaRun2Bytes","pythonRun1Bytes","pythonRun2Bytes"))text(g,k,false);}
         default->throw new IllegalArgumentException("unknown operation: "+op);
@@ -314,6 +315,7 @@ public final class FormalHoldoutConformanceScorer {
     private static void bool(JsonNode n,String k){if(!n.has(k)||!n.get(k).isBoolean())throw new IllegalArgumentException(k+" must be boolean");}
     private static void integer(JsonNode n,String k){if(!n.has(k)||!n.get(k).isIntegralNumber()||!n.get(k).canConvertToInt())throw new IllegalArgumentException(k+" must be int");}
     private static void nonnegative(JsonNode n,String k){integer(n,k);if(n.get(k).intValue()<0)throw new IllegalArgumentException(k+" must be nonnegative");}
+    private static void nonnegativeBig(JsonNode n,String k){if(!n.has(k)||!n.get(k).isIntegralNumber())throw new IllegalArgumentException(k+" must be integer");if(n.get(k).bigIntegerValue().signum()<0)throw new IllegalArgumentException(k+" must be nonnegative");}
     private static void text(JsonNode n,String k,boolean nullable){if(!n.has(k))throw new IllegalArgumentException("missing "+k);if(n.get(k).isNull()&&nullable)return;if(!n.get(k).isTextual()||n.get(k).asText().isBlank())throw new IllegalArgumentException(k+" must be string");}
     private static void exactObject(JsonNode n,Set<String> keys,String label){exactObject(n,keys,keys,label);}
     private static void exactObject(JsonNode n,Set<String> allowed,Set<String> required,String label){if(!n.isObject())throw new IllegalArgumentException(label+" must be object");n.fieldNames().forEachRemaining(k->{if(!allowed.contains(k))throw new IllegalArgumentException("unknown "+label+" field: "+k);});for(String k:required)if(!n.has(k))throw new IllegalArgumentException("missing "+label+" field: "+k);}

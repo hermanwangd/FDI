@@ -49,6 +49,16 @@ def _read_regular(path, label):
     finally:
         os.close(descriptor)
 
+def _read_regular_at(directory_descriptor, name, label):
+    descriptor = os.open(name, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0), dir_fd=directory_descriptor)
+    try:
+        if not stat.S_ISREG(os.fstat(descriptor).st_mode):
+            raise ValueError(f"{label} must be a regular file")
+        with os.fdopen(descriptor, "rb", closefd=False) as stream:
+            return stream.read()
+    finally:
+        os.close(descriptor)
+
 
 def _canonical_identity(candidate):
     pair = {key: candidate[key] for key in PAIR_FIELDS}
@@ -203,10 +213,12 @@ def _chain(given):
         return {"chainComplete": None, "reasonCodes": [reason], "result": "INVALID"}
     proposals = given["proposalPairDigests"]
     matched = sum(1 for digest in ordered if digest in proposals)
-    extra = sum(1 for digest in proposals if digest not in ordered)
-    complete = matched == len(ordered) and all(edge in given["proposalEdges"] for edge in required)
-    return {"chainComplete": complete, "counts": {"duplicateCount": 0, "fn": len(ordered) - matched,
-            "fp": extra, "tp": matched}, "reasonCodes": [], "result": "VALID"}
+    duplicates = len(proposals) - len(set(proposals))
+    extra = len(proposals) - matched
+    complete = matched == len(ordered) and given["proposalEdges"] == required
+    return {"chainComplete": complete, "counts": {"duplicateCount": duplicates,
+            "fn": len(ordered) - matched, "fp": extra, "tp": matched},
+            "reasonCodes": [], "result": "VALID"}
 
 
 def _ratio(num, den):
@@ -317,7 +329,8 @@ def _valid_given(operation, given):
     if operation == "CANONICAL_IDENTITY":
         if set(given) not in ({"candidate"}, {"candidates"}): return False
         candidates = given.get("candidates", [given.get("candidate")])
-        if not isinstance(candidates, list) or not candidates: return False
+        required_count = 2 if "candidates" in given else 1
+        if not isinstance(candidates, list) or len(candidates) != required_count: return False
         for item in candidates:
             if not isinstance(item, dict) or set(item) not in (set(PAIR_FIELDS), set(PAIR_FIELDS) | {"sourcePath"}): return False
             if not all(isinstance(item[k], str) for k in PAIR_FIELDS if k != "parameterTypes"): return False
@@ -428,9 +441,15 @@ def run(manifest_path, inputs_root, output_path):
     root = inputs_root.resolve(strict=True)
     if not root.is_dir():
         raise ValueError("inputs root must be a directory")
+    root_descriptor = os.open(inputs_root, os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) |
+                              getattr(os, "O_NOFOLLOW", 0))
+    if not stat.S_ISDIR(os.fstat(root_descriptor).st_mode):
+        os.close(root_descriptor)
+        raise ValueError("inputs root must be a directory")
     results = []
     seen_ids, seen_inputs = set(), set()
-    for ordinal, vector in enumerate(manifest["vectors"], start=1):
+    try:
+      for ordinal, vector in enumerate(manifest["vectors"], start=1):
         if (not isinstance(vector, dict) or set(vector) != {"coverage", "expected", "id", "input"}
                 or not isinstance(vector["input"], dict) or set(vector["input"]) != {"path", "sha256"}
                 or not isinstance(vector["expected"], dict) or set(vector["expected"]) != {"path", "sha256"}):
@@ -454,7 +473,7 @@ def run(manifest_path, inputs_root, output_path):
         path = unresolved.resolve(strict=True)
         if path.parent != root or not path.is_file():
             raise ValueError("unsafe input path")
-        raw = _read_regular(path, "input")
+        raw = _read_regular_at(root_descriptor, relative.name, "input")
         if hashlib.sha256(raw).hexdigest() != vector["input"]["sha256"]:
             raise ValueError(f"input digest mismatch: {vector['id']}")
         case = strict_json(raw)
@@ -476,6 +495,8 @@ def run(manifest_path, inputs_root, output_path):
             raise ValueError(f"coverage cardinality mismatch: {vector['id']}")
         results.append({"oracle": evaluate(case, coverage[0]["ruleId"], coverage[0]["polarity"]),
                         "vectorId": vector["id"]})
+    finally:
+        os.close(root_descriptor)
     document = {"manifestSha256": hashlib.sha256(manifest_raw).hexdigest(),
                 "results": results, "schemaVersion": SCHEMA}
     flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
