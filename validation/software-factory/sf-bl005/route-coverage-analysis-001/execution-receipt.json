@@ -1,0 +1,35 @@
+{
+  "authority": "PROPOSAL_ONLY",
+  "candidate": {
+    "baseRevision": "8b403ec0e4ac68452694ca662434cdaf0e7fb1d1",
+    "coverageMatrixSha256": "c657cd1f1ae5c71d3e9e8757efafd1d8ce97e587b98dcba82250e35ec98e8139",
+    "ownedNamespace": "validation/software-factory/sf-bl005/route-coverage-analysis-001"
+  },
+  "executionId": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
+  "inputBindings": {
+    "diagnosticsSha256": "e870d138c75a5afa17138f616b6e37a536969bc989b7e77bfbf2c9d2ec245b44",
+    "envelopeSha256": "73eb5c1a522151d5921946d391fe2d1ef60dd795f1f83ca04addaf903d3d814c",
+    "handlersRevision": "5f07244f3c201563949b9f44992c6e1113117146",
+    "handlersSha256": "bacddebfeb65b663f784efbf8f293092e05ed6f95b2a0c4135893377cacf2f0b",
+    "observationsRevision": "5f07244f3c201563949b9f44992c6e1113117146",
+    "observationsSha256": "71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd",
+    "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+    "sourceSubtree": "393afbd6c7e5dab2352ef896b5866348d6d822a3",
+    "sourceTree": "3938658872ad216fe45033f4698c66febd80be76"
+  },
+  "result": {
+    "classificationCounts": {
+      "UNSUPPORTED_STATIC_EXTRACTION": 9
+    },
+    "recommendation": "Extend only the route-handler static extractor to compose class-level paths with method-level PUT and DELETE mappings; rerun bounded verification before any broader execution.",
+    "status": "ANALYSIS_COMPLETE_PENDING_INDEPENDENT_REVIEW"
+  },
+  "schemaVersion": "SF-EXECUTION-RECEIPT-001",
+  "scopeAssertions": {
+    "evaluatorAccessed": false,
+    "goldAccessed": false,
+    "productionSourceModified": false,
+    "scorerAccessed": false,
+    "selectorModified": false
+  }
+}
