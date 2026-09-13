@@ -1,0 +1,48 @@
+{
+  "execution_id": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
+  "preflight_kind": "PRODUCER_EXACT_ENVELOPE_PREFLIGHT",
+  "recorded_at": "2026-09-13T09:00:00Z",
+  "result": "PASS_PENDING_INDEPENDENT_PREFLIGHT",
+  "envelope_commit": "2f3181fddad7f5ee4cb160d781efd278fb2ed2b4",
+  "control_commit": "a105eb7ee95b67157cdda1a7239695340074d522",
+  "envelope": {
+    "path": "validation/software-factory/sf-bl005/execution-envelope-route-coverage-analysis-001.json",
+    "sha256": "73eb5c1a522151d5921946d391fe2d1ef60dd795f1f83ca04addaf903d3d814c"
+  },
+  "verified": {
+    "control_digests": 6,
+    "framework_git_objects": 2,
+    "external_source_revision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+    "external_source_repository_boundary_explicit": true,
+    "external_source_checkout_clean": true,
+    "external_source_tree": "3938658872ad216fe45033f4698c66febd80be76",
+    "production_source_subtree": "393afbd6c7e5dab2352ef896b5866348d6d822a3",
+    "production_source_files": 93,
+    "observations": 11,
+    "handlers": 14,
+    "route_absent_pairs": 90,
+    "route_absent_observations": 9,
+    "scenarios": 10,
+    "route_absent_refs_match_envelope": true,
+    "owned_namespace_absent": true,
+    "read_only_scope": true,
+    "resource_limits_below_8gb": true,
+    "dispatch_authorized": false,
+    "diagnostic_only_exclusions_intact": true
+  },
+  "repository_boundary": {
+    "software_factory_contains_historical_input_revision": true,
+    "software_factory_contains_external_source_revision": false,
+    "external_source_revision_resolves_in_bound_source_repository": true,
+    "cross_repository_ancestry_claimed": false
+  },
+  "execution_performed": false,
+  "limitations": [
+    "INDEPENDENT_PREFLIGHT_NOT_YET_RECORDED",
+    "ENVELOPE_NOT_DISPATCHED",
+    "NO_COVERAGE_MATRIX_OR_CLASSIFICATION_OUTPUT",
+    "NO_CODE_OR_MATCHING_BEHAVIOR_CHANGE",
+    "NO_SCORING_OR_CALIBRATION",
+    "NO_PARENT_CLOSURE"
+  ]
+}
