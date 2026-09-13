@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "executionId": "SF-BL-005-SELECTOR-DIAGNOSTICS-001",
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "branch": "codex/sf-bl002-route-aware-correction",
+  "constructionBase": "d89626981975f2c258e438f25880ac258efe1920",
+  "controlCommit": "30a354eac8ef49bc06ad2438025462ab56351c6b",
+  "specRevision": "d109fde995dfae982b8e0c708367cdd9e7e4cb9d",
+  "backlogItems": [
+    "SF-BL-005"
+  ],
+  "requirementIds": [
+    "AUTH-002",
+    "PK-004",
+    "EVID-001",
+    "TECH-001"
+  ],
+  "controls": {
+    "AGENTS.md": "aac96ac43a36a5401c979cd72c762caa8aa7f12572af987e9836e7cd75e9e7c6",
+    "PROJECT-OVERVIEW.md": "4cb9c41e0ebd572fdb5bfc31cff166d069181ca4f3a887c15eee4ce7d77e5f2a",
+    "FRAMEWORK-SPEC.md": "7f635656dd1288c5ca33e3984acb7d41251c180d3b42a5d3e790557957c39c16",
+    "BACKLOG.md": "a0ac0a47ab3c775fc0f4fc07e7a28d9aefd69cf4baa6e082dcc633443e3ecb87",
+    "IMPLEMENTATION-PLAN.md": "bc983b7c5f71bd0bdde8e78e0d94097da873e79011d602009acc6557993f6b4b",
+    "STATUS.json": "0c959b57ba5a7587cc200fc20bd7338dcc7b812bd5f36788b547e630d24a9ff5"
+  },
+  "ownedPaths": [
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelector.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelectorTests.java"
+  ],
+  "inputs": [
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelector.java",
+      "sha256": "7d640948f7cc6be00800e1df7c4c3cbf9015b12bed7a4c3f8e7d50420b0a7fd2",
+      "revision": "30a354eac8ef49bc06ad2438025462ab56351c6b",
+      "contract": "Existing Java selector and characterization fixtures",
+      "authority": "supporting implementation",
+      "phase": "implementation/review/verification",
+      "evaluatorVisible": false,
+      "mutationAllowed": true
+    },
+    {
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelectorTests.java",
+      "sha256": "bf9720bf55b5a7e06fe12851b1655b90a1a8f6edcbbf0e0c73bcfa284e21aeb9",
+      "revision": "30a354eac8ef49bc06ad2438025462ab56351c6b",
+      "contract": "Existing Java selector and characterization fixtures",
+      "authority": "supporting implementation",
+      "phase": "implementation/review/verification",
+      "evaluatorVisible": false,
+      "mutationAllowed": true
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/MethodCalibrationRun.java",
+      "sha256": "9346c1f72b27fc82d5633a6dc91bc54a00d51eaf37c5c470a0bc9d703b791877",
+      "revision": "30a354eac8ef49bc06ad2438025462ab56351c6b",
+      "contract": "Existing Java selector and characterization fixtures",
+      "authority": "supporting implementation",
+      "phase": "implementation/review/verification",
+      "evaluatorVisible": false,
+      "mutationAllowed": false
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedCalibrationProducer.java",
+      "sha256": "40fe9f2f533036075342e8e0135453fb3261ce41edd43cdd7527138b33824d7e",
+      "revision": "30a354eac8ef49bc06ad2438025462ab56351c6b",
+      "contract": "Existing Java selector and characterization fixtures",
+      "authority": "supporting implementation",
+      "phase": "implementation/review/verification",
+      "evaluatorVisible": false,
+      "mutationAllowed": false
+    },
+    {
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/MethodCalibrationRunTests.java",
+      "sha256": "211d50770211017b6df77f03ee411c5ed4234e31723ada2c2f30d2f5074c450d",
+      "revision": "30a354eac8ef49bc06ad2438025462ab56351c6b",
+      "contract": "Existing Java selector and characterization fixtures",
+      "authority": "supporting implementation",
+      "phase": "implementation/review/verification",
+      "evaluatorVisible": false,
+      "mutationAllowed": false
+    },
+    {
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedCalibrationProducerTests.java",
+      "sha256": "98ff5b8c3c99275b70d3f3de495ec6d0e4e8acf325abd31e82b32ffec0f349ea",
+      "revision": "30a354eac8ef49bc06ad2438025462ab56351c6b",
+      "contract": "Existing Java selector and characterization fixtures",
+      "authority": "supporting implementation",
+      "phase": "implementation/review/verification",
+      "evaluatorVisible": false,
+      "mutationAllowed": false
+    }
+  ],
+  "acceptance": [
+    "Typed package-local diagnostics with one deterministic first rejection or acceptance per evaluated scenario/observation pair",
+    "Counts reconcile; scenarios without observations explicitly represented",
+    "Existing seed order and producer outputs identical with and without diagnostics",
+    "Malformed inputs still throw; no selection rule, assertion dialect or action classification changes",
+    "Synthetic/existing fixture matrix covers route absence/ambiguity, entity, action, test identity, request ambiguity, dialect, polarity and condition failures; freeze matrix in implementation handoff for review"
+  ],
+  "stages": [
+    {
+      "id": "IMPLEMENTATION",
+      "owner": "Delivery Engineer",
+      "dependsOn": []
+    },
+    {
+      "id": "INDEPENDENT_REVIEW",
+      "owner": "Independent Adjudicator",
+      "dependsOn": [
+        "IMPLEMENTATION"
+      ]
+    },
+    {
+      "id": "COMBINED_VERIFICATION",
+      "owner": "Delivery Engineer",
+      "dependsOn": [
+        "INDEPENDENT_REVIEW"
+      ]
+    }
+  ],
+  "verification": [
+    "MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -Dtest=ScenarioEvidenceSelectorTests,MethodCalibrationRunTests,QualifiedCalibrationProducerTests test",
+    "MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g package",
+    "python3 -m pytest -q",
+    "git diff --check"
+  ],
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "oneHeavyProcessAtATime": true,
+    "mavenHeapGb": 2,
+    "mavenForkGb": 2,
+    "commandTimeoutSeconds": 1200,
+    "maxCodeTestDeltaLines": 500,
+    "maxToolCalls": 60
+  },
+  "runtime": "Java 17 required: record absolute executable and version; stop if unavailable",
+  "handoff": [
+    "Commit exactly owned paths in managed branch; preserve starting HEAD ancestry",
+    "Store logs, test reports, fixture matrix, exact JAR bytes and digest manifest as durable issue attachments before handoff",
+    "Receiver retrieves and verifies every attachment digest before stage advance or cleanup",
+    "Lost bytes: restore identical verified copy only; otherwise PLAN_BLOCKED; do not silently rebuild evidence",
+    "Reviewer separately attributable and bound to exact candidate; no active-control mutation"
+  ],
+  "prohibited": [
+    "REST Assured adapter implementation",
+    "RealWorld/evaluator data access",
+    "Calibration generation/scoring",
+    "Threshold or semantics changes",
+    "Python code additions",
+    "Active control edits",
+    "Merge/push/deploy/publication/parent closure"
+  ],
+  "failureRouting": {
+    "missingDependencyOrEvidence": "PLAN_BLOCKED",
+    "identityOrScopeConflict": "PLAN_CONFLICT",
+    "requiredContractChange": "PLAN_CHANGE_REQUIRED"
+  },
+  "kpi": {
+    "category": "FEATURE_IMPLEMENTATION",
+    "size": "S",
+    "rationale": "Two-file additive diagnostic interface with parity tests",
+    "referenceCohort": "N/A; no frozen comparable cohort",
+    "include": "all run IDs including coordination, retries and duplicates; separate cache tokens; no invented currency cost"
+  }
+}

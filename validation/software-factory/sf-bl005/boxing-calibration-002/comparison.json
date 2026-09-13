@@ -1,0 +1,78 @@
+{
+  "schemaVersion" : "SFBL005-METHOD-PAIR-001",
+  "datasetKind" : "CALIBRATION",
+  "manifestSha256" : "31bc579b5a20ab76b08380c0810cf63b8f2f43e4a44ff1836c96d3f94988056e",
+  "binding" : {
+    "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "productionRoots" : [ "src/main/java" ],
+    "testRoots" : [ "src/test/java" ],
+    "inputSnapshotSha256" : "41a7f9fc60bf9f0de938a5c2f4fd29e33f8258a060d0826f4240baa180e6fa37",
+    "extractorSha256" : "33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab"
+  },
+  "inputs" : {
+    "schemaVersion" : "SFBL005-METHOD-PAIR-001",
+    "datasetKind" : "CALIBRATION",
+    "binding" : {
+      "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "productionRoots" : [ "src/main/java" ],
+      "testRoots" : [ "src/test/java" ],
+      "inputSnapshotSha256" : "41a7f9fc60bf9f0de938a5c2f4fd29e33f8258a060d0826f4240baa180e6fa37",
+      "extractorSha256" : "33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab"
+    },
+    "baseline" : {
+      "path" : "producer/baseline.json",
+      "sha256" : "4d56a13edb7167ab94461e5a5ea496687634858a800df1bc774e7120b37187e5"
+    },
+    "improved" : {
+      "path" : "producer/improved.json",
+      "sha256" : "823a07e84ead932634faaa07bf3c911faa65d2774594561ca2daeb2dec38625c"
+    },
+    "truth" : {
+      "path" : "evaluator/truth.json",
+      "sha256" : "39aa27459305c05a4c983b0c414c60b39ec3e460491b9edb5da49c620bc2de2c"
+    },
+    "proofs" : {
+      "path" : "evaluator/proofs.json",
+      "sha256" : "8dd7494b7b0f0fec9d07c51bdba1c590bda1061cd6c78c3c34df88739c896c68"
+    }
+  },
+  "readiness" : "SCORING_MECHANICS_ONLY",
+  "experimentDecision" : "NOT_RUN",
+  "limitations" : [ "PROOF_LEDGER_REQUIRES_INDEPENDENT_SOURCE_REVIEW", "PROCESS_ISOLATION_NOT_ESTABLISHED_BY_DIGESTS", "NO_HOLDOUT_OR_PRODUCT_TRUTH_AUTHORITY" ],
+  "baseline" : {
+    "truePositives" : 11,
+    "falsePositives" : 8,
+    "falseNegatives" : 29,
+    "duplicatePairs" : 0,
+    "abstentions" : 1,
+    "unsupportedTypeClaims" : 0,
+    "coveredScenarios" : 7,
+    "selectedScenarios" : 10,
+    "completeChains" : 0,
+    "requiredChains" : 9,
+    "missingChainDefinitions" : 1,
+    "precision" : 0.5789473684210527,
+    "recall" : 0.275,
+    "f1" : 0.3728813559322034,
+    "scenarioCoverage" : 0.7,
+    "chainCoverage" : null
+  },
+  "improved" : {
+    "truePositives" : 31,
+    "falsePositives" : 5,
+    "falseNegatives" : 9,
+    "duplicatePairs" : 21,
+    "abstentions" : 1,
+    "unsupportedTypeClaims" : 0,
+    "coveredScenarios" : 9,
+    "selectedScenarios" : 10,
+    "completeChains" : 2,
+    "requiredChains" : 9,
+    "missingChainDefinitions" : 1,
+    "precision" : 0.8611111111111112,
+    "recall" : 0.775,
+    "f1" : 0.8157894736842105,
+    "scenarioCoverage" : 0.9,
+    "chainCoverage" : null
+  }
+}

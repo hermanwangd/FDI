@@ -1,0 +1,106 @@
+{
+  "schema_version": "software-factory.sf-bl002-acceptance-synthetic-truth.v1",
+  "description": "Synthetic evaluator truth for the SF-BL-002-005 full-pipeline acceptance tests (HERM-466). Authored from the sealed accepted intents and the public exact-revision Petclinic checkout; it is NOT evaluator truth and never enters the producer input path. Capability IDs intentionally use a PET-CAP vocabulary disjoint from the HYP-CAPABILITY intent vocabulary: capability identity is not a scoring leg, so exact credit must remain identity-based.",
+  "gold_sha256": "51d7a90c2f4b481e6a3c05d8791b2e6f4a8c097d1e5b36480d2f6a91c3b50742",
+  "seal_sha256": "62e8ab1d3a5c592f7b4d16e9882c3f7a5b9d1a475e2c4d869e4b5fa2d3e0c184",
+  "gold_input_key": "sfbl002-acceptance-synthetic-gold",
+  "seal_input_key": "sfbl002-acceptance-synthetic-seal",
+  "expected": [
+    {
+      "capabilityId": "PET-CAP-01",
+      "componentRef": "SYN-REF-processFindForm",
+      "providerNodeId": "syn-node-owner-controller-process-find-form",
+      "identity": {
+        "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+        "granularity": "METHOD",
+        "containingType": "org.springframework.samples.petclinic.owner.OwnerController",
+        "qualifiedSymbol": "org.springframework.samples.petclinic.owner.OwnerController#processFindForm"
+      }
+    },
+    {
+      "capabilityId": "PET-CAP-02",
+      "componentRef": "SYN-REF-processCreationForm",
+      "providerNodeId": "syn-node-owner-controller-process-creation-form",
+      "identity": {
+        "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+        "granularity": "METHOD",
+        "containingType": "org.springframework.samples.petclinic.owner.OwnerController",
+        "qualifiedSymbol": "org.springframework.samples.petclinic.owner.OwnerController#processCreationForm"
+      }
+    },
+    {
+      "capabilityId": "PET-CAP-02",
+      "componentRef": "SYN-REF-processUpdateOwnerForm",
+      "providerNodeId": "syn-node-owner-controller-process-update-owner-form",
+      "identity": {
+        "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+        "granularity": "METHOD",
+        "containingType": "org.springframework.samples.petclinic.owner.OwnerController",
+        "qualifiedSymbol": "org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm"
+      }
+    },
+    {
+      "capabilityId": "PET-CAP-03",
+      "componentRef": "SYN-REF-pet-processCreationForm",
+      "providerNodeId": "syn-node-pet-controller-process-creation-form",
+      "identity": {
+        "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+        "granularity": "METHOD",
+        "containingType": "org.springframework.samples.petclinic.owner.PetController",
+        "qualifiedSymbol": "org.springframework.samples.petclinic.owner.PetController#processCreationForm"
+      }
+    },
+    {
+      "capabilityId": "PET-CAP-03",
+      "componentRef": "SYN-REF-pet-processUpdateForm",
+      "providerNodeId": "syn-node-pet-controller-process-update-form",
+      "identity": {
+        "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+        "granularity": "METHOD",
+        "containingType": "org.springframework.samples.petclinic.owner.PetController",
+        "qualifiedSymbol": "org.springframework.samples.petclinic.owner.PetController#processUpdateForm"
+      }
+    },
+    {
+      "capabilityId": "PET-CAP-04",
+      "componentRef": "SYN-REF-processNewVisitForm",
+      "providerNodeId": "syn-node-visit-controller-process-new-visit-form",
+      "identity": {
+        "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath": "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java",
+        "granularity": "METHOD",
+        "containingType": "org.springframework.samples.petclinic.owner.VisitController",
+        "qualifiedSymbol": "org.springframework.samples.petclinic.owner.VisitController#processNewVisitForm"
+      }
+    },
+    {
+      "capabilityId": "PET-CAP-05",
+      "componentRef": "SYN-REF-showResourcesVetList",
+      "providerNodeId": "syn-node-vet-controller-show-resources-vet-list",
+      "identity": {
+        "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+        "granularity": "METHOD",
+        "containingType": "org.springframework.samples.petclinic.vet.VetController",
+        "qualifiedSymbol": "org.springframework.samples.petclinic.vet.VetController#showResourcesVetList"
+      }
+    },
+    {
+      "capabilityId": "PET-CAP-05",
+      "componentRef": "SYN-REF-showVetList",
+      "providerNodeId": "syn-node-vet-controller-show-vet-list",
+      "identity": {
+        "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+        "sourcePath": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+        "granularity": "METHOD",
+        "containingType": "org.springframework.samples.petclinic.vet.VetController",
+        "qualifiedSymbol": "org.springframework.samples.petclinic.vet.VetController#showVetList"
+      }
+    }
+  ]
+}

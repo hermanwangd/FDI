@@ -1,0 +1,93 @@
+{
+  "execution_id": "SF-BL-005-METHOD-EVALUATOR-003",
+  "base_commit": "b32261bd99190190390553a814ab0f56e47fee72",
+  "verification_date": "2026-09-12",
+  "verification_kind": "IMPLEMENTER_LOCAL_VERIFICATION",
+  "framework_runtime": "Java 17 / Spring Boot 3.4.1",
+  "java": {
+    "suites": 108,
+    "tests": 1349,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "new_tests": 22,
+    "command": "./mvnw -q -DargLine=-Xmx2g package"
+  },
+  "python_control_regression": {
+    "tests": 63,
+    "failed": 0,
+    "command": "python3 -m pytest -q"
+  },
+  "package": {
+    "command": "./mvnw -q -DargLine=-Xmx2g package",
+    "exit_code": 0,
+    "note": "Full test and package lifecycle after review remediation; zero skipped tests."
+  },
+  "source_fixture": {
+    "path": ".fdi-work/sfbl002-petclinic-818c413",
+    "revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe"
+  },
+  "resources": {
+    "maven_heap": "2 GiB",
+    "test_fork_heap": "2 GiB",
+    "test_cli_child_heap": "256 MiB",
+    "heavy_test_concurrency": 1,
+    "hard_command_deadline_seconds": 1200
+  },
+  "tdd": {
+    "initial_scorer_red": "New scorer API absent at test compilation; then 6 scoring tests green.",
+    "runner_red": "6 assertion failures and 3 missing-output errors against empty runner.",
+    "cli_and_coercion_red": "5 assertion failures; fixed numeric-to-string coercion and application command dispatch.",
+    "final_focused_tests_passed": 22,
+    "review_remediation_red": "Valid demo.Evaluator#score(int) rejected by inherited producer vocabulary filter; reproduced before replacing only the evaluator structural boundary."
+  },
+  "preservation": {
+    "pkb001_tracked_diff": "EMPTY",
+    "sfbl002_tracked_diff": "EMPTY",
+    "inflight_extractor_resolver_tracked_diff": "EMPTY",
+    "new_coordinator_dispatch": false
+  },
+  "limitations": [
+    "SCORING_MECHANICS_ONLY",
+    "NOT_A_NEW_REAL_REPOSITORY_EXPERIMENT",
+    "NO_FORMAL_HOLDOUT_EXECUTION",
+    "PROOF_LEDGER_SOURCE_REVIEW_AND_PROCESS_ISOLATION_ARE_EXTERNAL_GATES"
+  ],
+  "tested_source_sha256": {
+    "src/main/java/com/featuredeliveryintelligence/fdi/application/FdiApplication.java": "5ccbc28d630d129ed705e564c292a40a66bfdd5f37a1a105ec00cc65bc44bc57",
+    "src/main/java/com/featuredeliveryintelligence/fdi/application/MethodPairCompareCli.java": "1d9077db15c78123eb466d7bf7761f11512cb5e208360c1de05d627254af19e6",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairArtifactIO.java": "0ab143cdc6387fdc2d26796c9c32407c6f3826b46e9bbdd5c1e48433e9287f44",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairComparisonRunner.java": "f27d3d54a96b24e2d8692bcfe5385acb40b86228e2916f4acaf70ab41d014e49",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairData.java": "52145068432a13e264f3025cb6f35df7bf55c50c6ec9b3233da1c4f3c6431233",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairScorer.java": "88c07dcbfa56eb822648846358d54ac61e46acf9af26e60fca298e8e679bd031",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairValidation.java": "f83800c607af327999f16aea52e73ebd4f2811e0d11e7ff1a926cd2e0c77a180",
+    "src/test/java/com/featuredeliveryintelligence/fdi/application/MethodPairCompareCliTests.java": "35fdecac37888fb0cbf0376210a0c60b1b8f89d738ea427b11cb721161da8705",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairComparisonRunnerTests.java": "c9d7470174d37c3a2b3a1654c1ad5586731d26180c438eb6dddf9f67a5b4ea20",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairScorerTests.java": "2e011876fdf59a2dc7159f71ab19d3302c061982efcdadc5e309674d591a7e2f"
+  },
+  "initial_independent_review": {
+    "reviewer_run": "/root/method_pair_review",
+    "candidate": "f8d04d01a4b62661f85471fabf88110c82f55b0a",
+    "verdict": "REVISE",
+    "finding": "P2: evaluator inherited producer vocabulary exclusions; legitimate Evaluator method identities rejected.",
+    "remediation": "Resolved in e7bcfad400d4618b3e22570cdb7c2948f2f74a77; legacy producer validator unchanged. New positive identity and negative preservation regressions pass."
+  },
+  "final_independent_review": {
+    "reviewer_run": "/root/method_pair_review",
+    "candidate": "e7bcfad400d4618b3e22570cdb7c2948f2f74a77",
+    "verdict": "PASS",
+    "open_actionable_findings": 0,
+    "performed": [
+      "Read-only review of exact three-file remediation and full candidate scope",
+      "22 focused Java tests passed",
+      "10 recorded source hashes verified",
+      "Full candidate diff whitespace check"
+    ],
+    "inspected_not_rerun": [
+      "108 Java suite reports: 1349 tests, 0 failures/errors/skips",
+      "Full package lifecycle producer evidence"
+    ],
+    "previous_review_performed": "63 Python control tests passed; remediation changes no Python files",
+    "scope": "Scoring mechanics and sealed comparison-input binding only; not source-proof adjudication, process isolation, production migration or holdout readiness."
+  }
+}

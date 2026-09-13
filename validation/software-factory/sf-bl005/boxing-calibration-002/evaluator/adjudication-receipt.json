@@ -1,0 +1,61 @@
+{
+  "reviewer": "/root/trace_review",
+  "role": "EVALUATOR_NOT_PRODUCER",
+  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "generationSha256": "7ccf8c5b2d3b9659c3ec316c239be42fd2789d63a2550d336bd298eda73cdd8e",
+  "runtimeJar": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/retained-runtimes/candidate-improvements/33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab.jar",
+  "runtimeJarSha256": "33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab",
+  "workingDirectory": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.worktrees/candidate-stage-trace",
+  "commands": [
+    {
+      "command": "/opt/homebrew/Cellar/openjdk@17/17.0.20.1/libexec/openjdk.jdk/Contents/Home/bin/java -Xmx512m -jar /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/retained-runtimes/candidate-improvements/33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab.jar method-pair-compare --manifest validation/software-factory/sf-bl005/boxing-calibration-002/comparison-manifest.json --manifest-sha256 31bc579b5a20ab76b08380c0810cf63b8f2f43e4a44ff1836c96d3f94988056e --output validation/software-factory/sf-bl005/boxing-calibration-002/comparison.json",
+      "attempts": 1,
+      "exitCode": 0
+    },
+    {
+      "command": "/opt/homebrew/Cellar/openjdk@17/17.0.20.1/libexec/openjdk.jdk/Contents/Home/bin/java -Xmx512m -Dloader.main=com.featuredeliveryintelligence.fdi.product.realization.methodpair.CandidateStageEvaluationRun -cp /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/retained-runtimes/candidate-improvements/33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab.jar org.springframework.boot.loader.launch.PropertiesLauncher . validation/software-factory/sf-bl005/boxing-calibration-002/producer/generation.json 7ccf8c5b2d3b9659c3ec316c239be42fd2789d63a2550d336bd298eda73cdd8e validation/software-factory/sf-bl005/boxing-calibration-002/comparison-manifest.json 31bc579b5a20ab76b08380c0810cf63b8f2f43e4a44ff1836c96d3f94988056e validation/software-factory/sf-bl005/boxing-calibration-002/evaluator/stages",
+      "attempts": 1,
+      "exitCode": 0
+    }
+  ],
+  "proofAdjudication": {
+    "baselineProposalsEqualHistorical007": true,
+    "oldImprovedClaimsAndReferencesAllRetained": true,
+    "newMethodClaimsReviewed": 3,
+    "newEdgeClaimsReviewed": 3,
+    "newProofsAccepted": 6,
+    "sourceCheckoutClean": true,
+    "sourceProofBasis": "Direct successful-branch call accepts primitive argument by boxing to unique source wrapper parameter; target source body directly invokes the two downstream source methods with exact declared parameter types. These are static call proofs, not observed execution.",
+    "truthByteSha256": "39aa27459305c05a4c983b0c414c60b39ec3e460491b9edb5da49c620bc2de2c",
+    "truthModified": false
+  },
+  "artifacts": {
+    "manifestSha256": "31bc579b5a20ab76b08380c0810cf63b8f2f43e4a44ff1836c96d3f94988056e",
+    "proofsSha256": "8dd7494b7b0f0fec9d07c51bdba1c590bda1061cd6c78c3c34df88739c896c68",
+    "comparisonSha256": "5b16acc9016aaac6c0337ade5936cf5a61dbd530080ed5f5d8ce6210b90e1490",
+    "stageAggregateSha256": "661e9467b46854e3eb0e8f8cfead059084eee0a3373fc2d483271cfbf8c37b1a"
+  },
+  "result": {
+    "truePositives": 31,
+    "falsePositives": 5,
+    "falseNegatives": 9,
+    "precision": 0.8611111111111112,
+    "recall": 0.775,
+    "f1": 0.8157894736842105,
+    "precisionDeltaVs007": 0.012626262626262652,
+    "recallDeltaVs007": 0.07500000000000007,
+    "traceOnlyUnknownFN": 9
+  },
+  "manualRemainingSourceCategories": {
+    "externalGenericAncestorBoxingResolutionConservativelyUnresolved": 6,
+    "templatePropertyRenderingOutsideStaticJavaTraversal": 3
+  },
+  "decision": "BOUNDED_CALIBRATION_IMPROVEMENT_NOT_GENERALIZATION",
+  "limitations": [
+    "UNCHANGED_FROZEN_TRUTH_AND_SCORER",
+    "NO_GOLD_IDENTITIES_SHARED_WITH_PRODUCER",
+    "CHAIN_COVERAGE_UNAVAILABLE_ONE_DEFINITION_MISSING",
+    "STATIC_PROOF_NOT_OBSERVED_EXECUTION",
+    "INDEPENDENT_RECEIPT_REVIEW_PENDING"
+  ]
+}

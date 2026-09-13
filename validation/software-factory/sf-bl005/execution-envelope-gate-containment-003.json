@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "executionId": "SF-BL-005-CROSSREPO-GATE-CONTAINMENT-003",
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "branch": "codex/sf-bl002-route-aware-correction",
+  "constructionBase": "203d62204cbdda50275ed363019a1e6890ce5109",
+  "controlCommit": "1baed5aec78cc5a42a06f0e97283d662eff963b4",
+  "authorization": {
+    "source": "Human Authority option 1 on HERM-490",
+    "scope": "Feature Delivery replan, bounded gate-site remediation, fresh independent review and revised RealWorld envelope after acceptance"
+  },
+  "backlogItems": ["SF-BL-005"],
+  "requirementIds": ["AUTH-002", "PK-004", "EVID-001", "TECH-001"],
+  "controls": {
+    "AGENTS.md": "aac96ac43a36a5401c979cd72c762caa8aa7f12572af987e9836e7cd75e9e7c6",
+    "PROJECT-OVERVIEW.md": "4cb9c41e0ebd572fdb5bfc31cff166d069181ca4f3a887c15eee4ce7d77e5f2a",
+    "FRAMEWORK-SPEC.md": "7f635656dd1288c5ca33e3984acb7d41251c180d3b42a5d3e790557957c39c16",
+    "BACKLOG.md": "c7b216ead8b3e2ce513e9cb7ab183d4ce6a19b98e57932529445fb9bba0e94de",
+    "IMPLEMENTATION-PLAN.md": "b4615c35823b47f273638142532f06fadb9d2cb4862ace3cfe547001e12cfe42",
+    "STATUS.json": "faa1b2bf89b1c6835b1fa0bca5c2d0b4ad0523b2492af408101f9014883c24e4"
+  },
+  "rootCause": {
+    "sourceIssue": "HERM-486",
+    "decisionIssue": "HERM-490",
+    "failure": "RuntimeContractException: unsupported scenario action term: AUTHENTICATE",
+    "site": "SfBl002RouteEffectivenessRun.applyEvidenceStrengthGate",
+    "cause": "the gate independently reclassifies every intent and throws before preserving the mapper-produced unsupported UNRESOLVED proposal"
+  },
+  "ownedPaths": [
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SfBl002RouteEffectivenessRun.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SfBl002RouteEffectivenessRunTests.java"
+  ],
+  "readOnlyPaths": [
+    "AGENTS.md",
+    "PROJECT-OVERVIEW.md",
+    "FRAMEWORK-SPEC.md",
+    "BACKLOG.md",
+    "IMPLEMENTATION-PLAN.md",
+    "STATUS.json",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/RouteAwareScenarioMapper.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/BehaviorEvidencePolicy.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/**",
+    "validation/software-factory/sf-bl005/cross-repo-realworld-001/**"
+  ],
+  "requiredBehavior": [
+    "unsupported actions do not create ScenarioSignals or RevalidationIntent entries",
+    "mapper-produced unsupported UNRESOLVED proposals pass through the gate unchanged and preserve order",
+    "unsupported proposals cannot lend or borrow evidence",
+    "supported proposals continue through every existing evidence-strength gate",
+    "missing signals for supported actions or component-bearing unsupported proposals fail closed",
+    "malformed intent, schema, digest, output collision and unrelated exceptions remain fail closed"
+  ],
+  "negativeCases": [
+    "do not classify AUTHENTICATE",
+    "do not relabel, drop or substitute scenarios",
+    "do not catch arbitrary exceptions",
+    "do not modify mapper output",
+    "do not tune evidence selection, proof or scoring",
+    "do not generate or score RealWorld"
+  ],
+  "stages": [
+    {
+      "id": "IMPLEMENTATION",
+      "owner": {"name": "Delivery Engineer", "id": "72747183-d22b-4266-b4a3-d7343da64945"},
+      "dependsOn": [],
+      "outputs": ["one exact two-path candidate", "RED and GREEN evidence"]
+    },
+    {
+      "id": "INDEPENDENT_REVIEW",
+      "owner": {"name": "Independent Adjudicator", "id": "bae95d27-dc8e-4491-9766-37320b8ecc11"},
+      "dependsOn": ["IMPLEMENTATION"],
+      "outputs": ["PASS, FAIL or INCONCLUSIVE verdict bound to exact candidate"]
+    },
+    {
+      "id": "COMBINED_VERIFICATION",
+      "owner": {"name": "Delivery Engineer", "id": "72747183-d22b-4266-b4a3-d7343da64945"},
+      "dependsOn": ["INDEPENDENT_REVIEW"],
+      "outputs": ["delivery evidence package for Feature Delivery Plane"]
+    }
+  ],
+  "verification": [
+    "MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -Dtest=SfBl002RouteEffectivenessRunTests test",
+    "MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g package",
+    "python3 -m pytest -q",
+    "git diff --check"
+  ],
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "oneHeavyJvmAtATime": true,
+    "mavenHeapGb": 2,
+    "mavenForkGb": 2,
+    "commandTimeoutSeconds": 1200
+  },
+  "completionBoundary": {
+    "result": "ENGINEERING_READY_FOR_FDP_INTAKE_ONLY",
+    "next": "Feature Delivery Plane replays accepted candidate, revises RealWorld plan and materializes a fresh exact envelope",
+    "prohibited": ["merge", "push", "RealWorld generation", "scoring", "formal holdout", "Product publication", "deployment", "SF-BL-005 closure"]
+  },
+  "failureRouting": {
+    "missingDependencyOrAccess": "PLAN_BLOCKED",
+    "scopeContractIdentityOrAncestryConflict": "PLAN_CONFLICT",
+    "semanticApiAcceptanceOrAdditionalPathChange": "PLAN_CHANGE_REQUIRED"
+  }
+}

@@ -178,5 +178,5 @@ def test_removed_next_run_python_consumer_is_not_active_plan_work():
     assert 'tooling/validation/pkb001_next_run_gate.py' not in plan
     assert 'tests/test_pkb001_next_run_gate.py' not in plan
     status = json.loads((ROOT / 'STATUS.json').read_text())
-    assert status['active_backlog_item'] != 'PKB-BL-026'
+    assert 'PKB-BL-026' not in status['active_backlog_items']
     assert status['pkb001_foundation']['status'] == 'PRESERVED_IMMUTABLE_HISTORY'

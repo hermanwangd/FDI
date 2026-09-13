@@ -1,0 +1,128 @@
+{
+  "schema_version" : "software-factory.sf-bl002-route-handler-index.v0.3",
+  "execution_id" : "SF-BL-002-ROUTE-EFFECTIVENESS-005",
+  "authority" : "PROPOSAL_ONLY",
+  "semantic_publication_allowed" : false,
+  "source_revision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "generation_method" : "SfBl002RouteEffectivenessRun.generate",
+  "handlers" : [ {
+    "handlerRef" : "org.springframework.samples.petclinic.owner.OwnerController#initCreationForm GET /owners/new",
+    "httpMethods" : [ "GET" ],
+    "normalizedRouteTemplate" : "/owners/new",
+    "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#initCreationForm",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:72",
+    "sourceDigest" : "f1f61c17a818e0a0643bf3cd9bb3eaf32d6e019b3dac4f5dfd4890dc1221d16e"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.owner.OwnerController#initFindForm GET /owners/find",
+    "httpMethods" : [ "GET" ],
+    "normalizedRouteTemplate" : "/owners/find",
+    "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#initFindForm",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:89",
+    "sourceDigest" : "f1f61c17a818e0a0643bf3cd9bb3eaf32d6e019b3dac4f5dfd4890dc1221d16e"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.owner.OwnerController#initUpdateOwnerForm GET /owners/{ownerId}/edit",
+    "httpMethods" : [ "GET" ],
+    "normalizedRouteTemplate" : "/owners/{ownerId}/edit",
+    "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#initUpdateOwnerForm",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:139",
+    "sourceDigest" : "f1f61c17a818e0a0643bf3cd9bb3eaf32d6e019b3dac4f5dfd4890dc1221d16e"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.owner.OwnerController#processCreationForm POST /owners/new",
+    "httpMethods" : [ "POST" ],
+    "normalizedRouteTemplate" : "/owners/new",
+    "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#processCreationForm",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:77",
+    "sourceDigest" : "f1f61c17a818e0a0643bf3cd9bb3eaf32d6e019b3dac4f5dfd4890dc1221d16e"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.owner.OwnerController#processFindForm GET /owners",
+    "httpMethods" : [ "GET" ],
+    "normalizedRouteTemplate" : "/owners",
+    "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#processFindForm",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:94",
+    "sourceDigest" : "f1f61c17a818e0a0643bf3cd9bb3eaf32d6e019b3dac4f5dfd4890dc1221d16e"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm POST /owners/{ownerId}/edit",
+    "httpMethods" : [ "POST" ],
+    "normalizedRouteTemplate" : "/owners/{ownerId}/edit",
+    "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:144",
+    "sourceDigest" : "f1f61c17a818e0a0643bf3cd9bb3eaf32d6e019b3dac4f5dfd4890dc1221d16e"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner GET /owners/{ownerId}",
+    "httpMethods" : [ "GET" ],
+    "normalizedRouteTemplate" : "/owners/{ownerId}",
+    "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java:169",
+    "sourceDigest" : "f1f61c17a818e0a0643bf3cd9bb3eaf32d6e019b3dac4f5dfd4890dc1221d16e"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.owner.PetController#initCreationForm GET /owners/{ownerId}/pets/new",
+    "httpMethods" : [ "GET" ],
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/new",
+    "productionIdentity" : "org.springframework.samples.petclinic.owner.PetController#initCreationForm",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:100",
+    "sourceDigest" : "1a8a8097ff334b85d3a62c4df79ec52c2dbee8777925970e140081cff7e7c25e"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.owner.PetController#initUpdateForm GET /owners/{ownerId}/pets/{petId}/edit",
+    "httpMethods" : [ "GET" ],
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/{petId}/edit",
+    "productionIdentity" : "org.springframework.samples.petclinic.owner.PetController#initUpdateForm",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:139",
+    "sourceDigest" : "1a8a8097ff334b85d3a62c4df79ec52c2dbee8777925970e140081cff7e7c25e"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.owner.PetController#processCreationForm POST /owners/{ownerId}/pets/new",
+    "httpMethods" : [ "POST" ],
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/new",
+    "productionIdentity" : "org.springframework.samples.petclinic.owner.PetController#processCreationForm",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:107",
+    "sourceDigest" : "1a8a8097ff334b85d3a62c4df79ec52c2dbee8777925970e140081cff7e7c25e"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.owner.PetController#processUpdateForm POST /owners/{ownerId}/pets/{petId}/edit",
+    "httpMethods" : [ "POST" ],
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/{petId}/edit",
+    "productionIdentity" : "org.springframework.samples.petclinic.owner.PetController#processUpdateForm",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/owner/PetController.java:144",
+    "sourceDigest" : "1a8a8097ff334b85d3a62c4df79ec52c2dbee8777925970e140081cff7e7c25e"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.owner.VisitController#initNewVisitForm GET /owners/{ownerId}/pets/{petId}/visits/new",
+    "httpMethods" : [ "GET" ],
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/{petId}/visits/new",
+    "productionIdentity" : "org.springframework.samples.petclinic.owner.VisitController#initNewVisitForm",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:90",
+    "sourceDigest" : "b7c8f9cb7b2b2b5827d85787d1f18c95762a0213760013cef9d0a9e1c2c0f8d8"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.owner.VisitController#processNewVisitForm POST /owners/{ownerId}/pets/{petId}/visits/new",
+    "httpMethods" : [ "POST" ],
+    "normalizedRouteTemplate" : "/owners/{ownerId}/pets/{petId}/visits/new",
+    "productionIdentity" : "org.springframework.samples.petclinic.owner.VisitController#processNewVisitForm",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/owner/VisitController.java:97",
+    "sourceDigest" : "b7c8f9cb7b2b2b5827d85787d1f18c95762a0213760013cef9d0a9e1c2c0f8d8"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.system.CrashController#triggerException GET /oups",
+    "httpMethods" : [ "GET" ],
+    "normalizedRouteTemplate" : "/oups",
+    "productionIdentity" : "org.springframework.samples.petclinic.system.CrashController#triggerException",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/system/CrashController.java:31",
+    "sourceDigest" : "d7c003dc6357596eefa345eff63ecf3909a50238e030e3c93f09426e537ba517"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.system.WelcomeController#welcome GET /",
+    "httpMethods" : [ "GET" ],
+    "normalizedRouteTemplate" : "/",
+    "productionIdentity" : "org.springframework.samples.petclinic.system.WelcomeController#welcome",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java:25",
+    "sourceDigest" : "cfdffa794c8ec7a0c634a7d39d39f9abc1dd2ddc4b4d7a591b341136015a6f66"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.vet.VetController#showResourcesVetList GET /vets",
+    "httpMethods" : [ "GET" ],
+    "normalizedRouteTemplate" : "/vets",
+    "productionIdentity" : "org.springframework.samples.petclinic.vet.VetController#showResourcesVetList",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:65",
+    "sourceDigest" : "8a0d285d35e59e61ec98e650506b0b19d0142d75a0886268dd139530f3efb8b8"
+  }, {
+    "handlerRef" : "org.springframework.samples.petclinic.vet.VetController#showVetList GET /vets.html",
+    "httpMethods" : [ "GET" ],
+    "normalizedRouteTemplate" : "/vets.html",
+    "productionIdentity" : "org.springframework.samples.petclinic.vet.VetController#showVetList",
+    "sourceLocation" : "src/main/java/org/springframework/samples/petclinic/vet/VetController.java:44",
+    "sourceDigest" : "8a0d285d35e59e61ec98e650506b0b19d0142d75a0886268dd139530f3efb8b8"
+  } ]
+}

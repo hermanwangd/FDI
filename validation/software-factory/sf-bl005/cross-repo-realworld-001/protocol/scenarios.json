@@ -1,0 +1,289 @@
+{
+  "schemaVersion": "SFBL005-CROSSREPO-SCENARIOS-001",
+  "authority": "APPROVED_EXPERIMENT_TOPIC_RETRIEVAL_AIDS_ONLY",
+  "semanticPublicationAllowed": false,
+  "datasetKind": "CALIBRATION",
+  "exposureClass": "FIRST_CROSS_REPOSITORY_RUN",
+  "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+  "frozenAt": "2026-09-12T09:40:32Z",
+  "frozenBeforeTargetImplementationInspection": true,
+  "selectionBasis": "Ten topics and strata fixed by IMPLEMENTATION-PLAN.md#current-selection before target inspection; no substitutions.",
+  "publicReferences": [
+    {
+      "url": "https://docs.realworld.show/specifications/backend/endpoints/",
+      "sections": [
+        "Authentication",
+        "Registration",
+        "Create Article",
+        "Update Article",
+        "List Articles",
+        "Feed Articles"
+      ]
+    },
+    {
+      "url": "https://docs.realworld.show/specifications/backend/error-handling/",
+      "sections": [
+        "Errors and Status Codes"
+      ]
+    }
+  ],
+  "interpretationNotes": [
+    "Duplicate email, incorrect password and owner permission are the approved rejection topics instantiated using documented validation and authorization outcomes; no implementation symbols or expected methods establish their meaning.",
+    "The invalid-article topic is fixed to missing required title before inspecting source.",
+    "The unauthorized-update topic is fixed to an authenticated non-owner before inspecting source.",
+    "Actions, conditions, aliases and guardTokens are lexical retrieval aids only and do not establish Product truth."
+  ],
+  "records": [
+    {
+      "scenarioId": "RW-SCENARIO-001",
+      "capabilityId": "RW-CAPABILITY-ACCOUNT",
+      "stratum": "SUCCESS",
+      "action": "CREATE",
+      "entity": "USER",
+      "title": "Valid registration",
+      "given": [
+        "An unused email and username are available."
+      ],
+      "when": "Submit those details with a valid password.",
+      "then": [
+        "A new account is returned with an authentication token."
+      ],
+      "conditions": [
+        "valid-registration"
+      ],
+      "aliases": [
+        "register user",
+        "create user",
+        "sign up"
+      ],
+      "guardTokens": []
+    },
+    {
+      "scenarioId": "RW-SCENARIO-002",
+      "capabilityId": "RW-CAPABILITY-ACCOUNT",
+      "stratum": "SUCCESS",
+      "action": "AUTHENTICATE",
+      "entity": "USER",
+      "title": "Valid login",
+      "given": [
+        "An account exists."
+      ],
+      "when": "Submit its email and correct password.",
+      "then": [
+        "The matching user and authentication token are returned."
+      ],
+      "conditions": [
+        "valid-credentials"
+      ],
+      "aliases": [
+        "login user",
+        "authenticate user",
+        "sign in"
+      ],
+      "guardTokens": []
+    },
+    {
+      "scenarioId": "RW-SCENARIO-003",
+      "capabilityId": "RW-CAPABILITY-ARTICLE",
+      "stratum": "SUCCESS",
+      "action": "CREATE",
+      "entity": "ARTICLE",
+      "title": "Article creation",
+      "given": [
+        "The user is authenticated."
+      ],
+      "when": "Submit a title, description and body.",
+      "then": [
+        "The new article is returned."
+      ],
+      "conditions": [
+        "authenticated",
+        "valid-content"
+      ],
+      "aliases": [
+        "create article",
+        "new article"
+      ],
+      "guardTokens": []
+    },
+    {
+      "scenarioId": "RW-SCENARIO-004",
+      "capabilityId": "RW-CAPABILITY-ARTICLE",
+      "stratum": "SUCCESS",
+      "action": "UPDATE",
+      "entity": "ARTICLE",
+      "title": "Own-article update",
+      "given": [
+        "The authenticated user owns an article."
+      ],
+      "when": "Submit changed article content.",
+      "then": [
+        "The returned article contains the changes."
+      ],
+      "conditions": [
+        "own-article",
+        "valid-content"
+      ],
+      "aliases": [
+        "update article",
+        "edit article"
+      ],
+      "guardTokens": []
+    },
+    {
+      "scenarioId": "RW-SCENARIO-005",
+      "capabilityId": "RW-CAPABILITY-ACCOUNT",
+      "stratum": "REJECTION",
+      "action": "REJECT",
+      "entity": "USER",
+      "title": "Duplicate-email rejection",
+      "given": [
+        "An account already uses an email."
+      ],
+      "when": "Register another account with that email.",
+      "then": [
+        "Registration fails with validation feedback."
+      ],
+      "conditions": [
+        "duplicate-email"
+      ],
+      "aliases": [
+        "register user",
+        "create user"
+      ],
+      "guardTokens": [
+        "duplicate",
+        "email"
+      ]
+    },
+    {
+      "scenarioId": "RW-SCENARIO-006",
+      "capabilityId": "RW-CAPABILITY-ACCOUNT",
+      "stratum": "REJECTION",
+      "action": "REJECT",
+      "entity": "USER",
+      "title": "Invalid-password rejection",
+      "given": [
+        "An account exists."
+      ],
+      "when": "Attempt login with an incorrect password.",
+      "then": [
+        "Authentication fails."
+      ],
+      "conditions": [
+        "invalid-password"
+      ],
+      "aliases": [
+        "login user",
+        "authenticate user"
+      ],
+      "guardTokens": [
+        "password",
+        "invalid"
+      ]
+    },
+    {
+      "scenarioId": "RW-SCENARIO-007",
+      "capabilityId": "RW-CAPABILITY-ARTICLE",
+      "stratum": "REJECTION",
+      "action": "REJECT",
+      "entity": "ARTICLE",
+      "title": "Unauthorized article-update rejection",
+      "given": [
+        "An authenticated user does not own an article."
+      ],
+      "when": "Attempt to change that article.",
+      "then": [
+        "The change is forbidden."
+      ],
+      "conditions": [
+        "non-owner"
+      ],
+      "aliases": [
+        "update article",
+        "edit article"
+      ],
+      "guardTokens": [
+        "forbidden",
+        "author"
+      ]
+    },
+    {
+      "scenarioId": "RW-SCENARIO-008",
+      "capabilityId": "RW-CAPABILITY-ARTICLE",
+      "stratum": "REJECTION",
+      "action": "REJECT",
+      "entity": "ARTICLE",
+      "title": "Invalid article rejection",
+      "given": [
+        "The user is authenticated."
+      ],
+      "when": "Create an article without its required title.",
+      "then": [
+        "Creation fails with validation feedback."
+      ],
+      "conditions": [
+        "missing-title"
+      ],
+      "aliases": [
+        "create article",
+        "new article"
+      ],
+      "guardTokens": [
+        "title",
+        "invalid"
+      ]
+    },
+    {
+      "scenarioId": "RW-SCENARIO-009",
+      "capabilityId": "RW-CAPABILITY-ARTICLE",
+      "stratum": "PAGINATION",
+      "action": "BROWSE",
+      "entity": "ARTICLE",
+      "title": "Paginated article listing",
+      "given": [
+        "Several articles exist."
+      ],
+      "when": "Request a limit and offset.",
+      "then": [
+        "The corresponding latest-first article batch is returned."
+      ],
+      "conditions": [
+        "paged-results",
+        "limit",
+        "offset"
+      ],
+      "aliases": [
+        "list article",
+        "browse article"
+      ],
+      "guardTokens": []
+    },
+    {
+      "scenarioId": "RW-SCENARIO-010",
+      "capabilityId": "RW-CAPABILITY-FEED",
+      "stratum": "PAGINATION",
+      "action": "BROWSE",
+      "entity": "FEED",
+      "title": "Paginated following feed",
+      "given": [
+        "The authenticated user follows authors with articles."
+      ],
+      "when": "Request a feed limit and offset.",
+      "then": [
+        "A latest-first batch from followed authors is returned."
+      ],
+      "conditions": [
+        "paged-results",
+        "following",
+        "limit",
+        "offset"
+      ],
+      "aliases": [
+        "feed article",
+        "following feed"
+      ],
+      "guardTokens": []
+    }
+  ]
+}

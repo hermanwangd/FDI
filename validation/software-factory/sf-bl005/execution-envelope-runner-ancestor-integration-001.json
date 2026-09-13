@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "executionId": "SF-BL-005-RUNNER-ANCESTOR-INTEGRATION-001",
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "branch": "codex/sf-bl005-runner-ancestor-integration-002",
+  "receivingBase": "82581d000f9a065d9cfb5dc6f25029fffccbbaf0",
+  "controlCommit": "82581d000f9a065d9cfb5dc6f25029fffccbbaf0",
+  "specRevision": "4fc285f515e65473d4d3120b335629825a6a810b",
+  "backlogItems": ["SF-BL-005"],
+  "requirementIds": ["AUTH-002", "PK-004", "EVID-001", "TECH-001"],
+  "controls": {
+    "AGENTS.md": "a70a2d4da9f9dd8add3ca2ab3d794125a08525bdb53cca4426d60f9a9a091c12",
+    "PROJECT-OVERVIEW.md": "65b071af3331b1a69f429b392f813a33da2019171703f6b88a64faedea09c5ef",
+    "FRAMEWORK-SPEC.md": "714b43929f3a4eae45a6a816641215439a284ea555a984f6c50ce9ea68699567",
+    "BACKLOG.md": "ae2494051e89ced727c9927c8fdfcd88005b31677358e904b718d1459b4096da",
+    "IMPLEMENTATION-PLAN.md": "bbe4ca4c697d27f12b8252e0f9ff00cb10081302f356c6a581da20550cdf220b",
+    "STATUS.json": "a2d7bad789a1347d0a7a9d02a0b9c72d0025fb952dba37710a8dbe8237d40ae0"
+  },
+  "acceptedInputs": [
+    {
+      "executionId": "SF-BL-005-SELECTOR-RUNNER-001",
+      "candidate": "143abdf72084e78ef42bd16b0f8272a36d1910c8",
+      "review": "INDEPENDENT_REVIEW_COMPLETE_WITH_RECORDED_LIMITATIONS"
+    },
+    {
+      "executionId": "SF-BL-005-GENERIC-ANCESTOR-001",
+      "candidate": "0b8073622db0d121c22976bcb2af038d0971a824",
+      "review": "FRESH_INDEPENDENT_PASS_32_OF_32"
+    }
+  ],
+  "ownedPaths": [
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SelectorDiagnosticRun.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SelectorDiagnosticRunTests.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SourceMethodIndex.java",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedSourceCalls.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SourceMethodIndexTests.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedSourceCallsTests.java"
+  ],
+  "inputDigests": {
+    "143abdf72084e78ef42bd16b0f8272a36d1910c8:SelectorDiagnosticRun.java": "631d3ba4f35c6560fedcc7930e0ea0a6d14913166958a0f4432ce7e6c7375669",
+    "143abdf72084e78ef42bd16b0f8272a36d1910c8:SelectorDiagnosticRunTests.java": "bdb33d53fbe5b3c00abc8905ecbc345ef69c22b6f492e7893213897c64849801",
+    "0b8073622db0d121c22976bcb2af038d0971a824:SourceMethodIndex.java": "e19927de6a09939db414a93d267b7fb0e2d21350dffcc03022e62977da79331d",
+    "0b8073622db0d121c22976bcb2af038d0971a824:QualifiedSourceCalls.java": "b0b170d25969358e2e4bb80f180df40dc640b02f68894cb08406a04f2e4b7b6f",
+    "0b8073622db0d121c22976bcb2af038d0971a824:SourceMethodIndexTests.java": "f98eb808a4259eab8e91719ce5dd15e29fe2fdf6c0704c3fa1288a867f6897ad",
+    "0b8073622db0d121c22976bcb2af038d0971a824:QualifiedSourceCallsTests.java": "cd3aea7465fe2172873589d9ff78ee41e67b9d7aefc8730f2087f6e4c0857198"
+  },
+  "scope": "Integrate the two exact accepted inputs, remediate only review findings within owned paths, independently review the exact combined candidate, and run full regression.",
+  "acceptance": [
+    "Integrated owned-path bytes retain both accepted input behaviors and record exact provenance without claiming Git ancestry.",
+    "Runner parses only bytes whose digests it verified in its private copy; mutation between source verification and copy fails closed.",
+    "Each intents, observations, and handlers role has exactly one manifest file; additional role files fail closed.",
+    "Generic ancestor resolution accepts only safely inheritable public declarations; inaccessible declarations remain unresolved.",
+    "Fresh independent review has no unresolved P0-P2 findings.",
+    "Java 17 targeted and full package, Python regression, packaged synthetic runner smoke, and git diff check pass."
+  ],
+  "negativeCases": [
+    "source bytes change between verification and private-copy consumption",
+    "multiple files in a manifest role",
+    "private or package-inaccessible generic-parent method",
+    "raw, wildcard, nested, unbound, multilevel, method-generic, ambiguous overload, varargs or unknown ancestry"
+  ],
+  "verification": [
+    "MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dtest=SelectorDiagnosticRunTests,SourceMethodIndexTests,QualifiedSourceCallsTests,ScenarioEvidenceSelectorTests,QualifiedCalibrationProducerTests test",
+    "MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true package",
+    "python3 -m pytest -q",
+    "git diff --check",
+    "Packaged Java 17 runner main on synthetic manifest only; verify retained runtime digest and byte-identical sealed outputs"
+  ],
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "oneHeavyJvm": true,
+    "mavenHeapGb": 2,
+    "forkHeapGb": 2,
+    "commandTimeoutSeconds": 1200
+  },
+  "excluded": [
+    "active control modification by Execution Plane",
+    "RealWorld input execution",
+    "calibration or scoring",
+    "external dependency signature Slice B",
+    "adapter, publication, deployment, cleanup or parent closure"
+  ],
+  "failureRouting": [
+    "PLAN_BLOCKED for unavailable Java 17 runtime or other dependency",
+    "PLAN_CONFLICT for binding, provenance or ownership mismatch",
+    "PLAN_CHANGE_REQUIRED for public API, scope or accessibility-model expansion"
+  ]
+}

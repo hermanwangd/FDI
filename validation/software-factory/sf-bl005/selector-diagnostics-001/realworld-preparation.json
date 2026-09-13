@@ -1,0 +1,47 @@
+{
+  "schema": "SELECTOR-DIAGNOSTIC-PREPARATION-001",
+  "state": "INPUTS_VERIFIED_RUNNER_NOT_IMPLEMENTED",
+  "frameworkBase": "fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c",
+  "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+  "sourceCheckout": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31",
+  "sourceCheckoutClean": true,
+  "publicManifest": {
+    "path": "validation/software-factory/sf-bl005/parallel-investigations-001/public-inputs.json",
+    "sha256": "7be2562d867623e1e400caaf256be8503e9b69d62840ae04efc6e7f88cc5ab58",
+    "verifiedFiles": 23,
+    "sourceFilesMatched": 23
+  },
+  "inputs": [
+    {
+      "role": "observations",
+      "gitRevision": "5f07244f3c201563949b9f44992c6e1113117146",
+      "path": "validation/software-factory/sf-bl005/cross-repo-realworld-001/generation-realworld-002/seed/validation/software-factory/sf-bl002/http-behavior-observations-003.json",
+      "sha256": "71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd",
+      "count": 11
+    },
+    {
+      "role": "handlers",
+      "gitRevision": "5f07244f3c201563949b9f44992c6e1113117146",
+      "path": "validation/software-factory/sf-bl005/cross-repo-realworld-001/generation-realworld-002/seed/validation/software-factory/sf-bl002/route-handler-index-003.json",
+      "sha256": "bacddebfeb65b663f784efbf8f293092e05ed6f95b2a0c4135893377cacf2f0b",
+      "count": 14
+    },
+    {
+      "role": "intents",
+      "gitRevision": "fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c",
+      "path": "validation/software-factory/sf-bl005/cross-repo-realworld-001/producer-inputs/validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json",
+      "sha256": "1ccc62730b762b1d3e1a8e28adcce8a8a836d6df3d6f1a97f0922ca6c6d7b7fe",
+      "count": 10
+    }
+  ],
+  "scenarioObservationPairs": 110,
+  "selectorPairLimit": 100000,
+  "observedTestFiles": 5,
+  "readPolicy": "Only these pinned inputs and public-test source files; no evaluator truth, proofs, diagnoses or scorer.",
+  "historicalInputLimit": "Observed producer bytes are diagnostic inputs only. REALWORLD-003 acceptance remains WITHHELD; no retrospective approval.",
+  "blockers": [
+    "No standalone sealed selector diagnostic CLI exists; MethodCalibrationRun regenerates artifacts and must not be used as a shortcut."
+  ],
+  "executionAuthorized": false,
+  "calibrationAuthorized": false
+}

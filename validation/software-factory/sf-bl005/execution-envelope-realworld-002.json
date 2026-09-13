@@ -1,0 +1,157 @@
+{
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "executionId": "SF-BL-005-CROSSREPO-REALWORLD-002",
+  "classification": "CALIBRATION_REVISED_AFTER_FIRST_RUN_FAILURE",
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "branch": "codex/sf-bl002-route-aware-correction",
+  "constructionBase": "6a19bc04488c5d936baa1b9434402cd58af82404",
+  "controlCommit": "56793c831d315f0813e1c96ace33bdf0d364aeae",
+  "reviewedSourceCandidate": "ec604f1fb6d1f774f4268f70af63e0850357ff74",
+  "backlogItems": ["SF-BL-005"],
+  "requirementIds": ["AUTH-002", "PK-004", "EVID-001", "SF-EVAL-001", "TECH-001"],
+  "controls": {
+    "AGENTS.md": "aac96ac43a36a5401c979cd72c762caa8aa7f12572af987e9836e7cd75e9e7c6",
+    "PROJECT-OVERVIEW.md": "4cb9c41e0ebd572fdb5bfc31cff166d069181ca4f3a887c15eee4ce7d77e5f2a",
+    "FRAMEWORK-SPEC.md": "7f635656dd1288c5ca33e3984acb7d41251c180d3b42a5d3e790557957c39c16",
+    "BACKLOG.md": "ae041a42416ae9adf1f10d20f6a2f4278f2f61d4d6135a6ee0e7499598b0aa23",
+    "IMPLEMENTATION-PLAN.md": "ad9175da863e2e11f174f2dde6c3d2a77bce0e6e20cc09a28df48fed3f4ffe57",
+    "STATUS.json": "e5a95dbd38e54e8253a5324e6df2bdcfe689f1dfda6a51e18faefa3b6249343d"
+  },
+  "design": {
+    "path": "validation/software-factory/sf-bl005/cross-repo-realworld-001/SECOND-RUN-DESIGN.md",
+    "sha256": "1bd839198d48647abf4d1484ea0acd69154ba2f277f243168357ea5b7af88ce8"
+  },
+  "frozenInputs": {
+    "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+    "inputManifestPath": "validation/software-factory/sf-bl005/cross-repo-realworld-001/protocol/input-manifest.json",
+    "inputManifestSha256": "381e681d12868ce03f93721c085c51e0a4f3dc62bf1d90c8853f99d158472e35",
+    "scenariosSha256": "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31",
+    "evaluatorTruthSha256": "75a67c802ccd9ac5afa38e3d86331dcd698053b242b801d52f98a49e809adf1f",
+    "graphSha256": "2c554b8b0e35922b7be423978e6bcf9b9e139607c09299ef8ccb3c84409b0857",
+    "graphifyEvidence": "validation/software-factory/sf-bl005/cross-repo-realworld-001/graphify-003/runtime-evidence.json",
+    "testBehaviorEvidence": "validation/software-factory/sf-bl005/cross-repo-realworld-001/producer-inputs/validation/software-factory/sf-bl002/test-behavior-evidence.json",
+    "testBehaviorEvidenceSha256": "785c172756033a0bca032ffa6b2a81c152dd586f0a6a3a4d9dd0d92107b2ed26",
+    "testBehaviorCompleteness": "INCOMPLETE_20_FILES_68_METHODS",
+    "behaviorEvidencePolicy": {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/BehaviorEvidencePolicy.java",
+      "sha256": "1fa4c13077d074b5cdb32578e9fa8d55a8f4053f07faeb3738b2ea8b4fb09f5b"
+    },
+    "frozenAlgorithms": {
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/CalibrationProducer.java": "5c39f46e3f2723480f06734995dc319dee883f31dd13db2b1921814b9d8ca22f",
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedCalibrationProducer.java": "40fe9f2f533036075342e8e0135453fb3261ce41edd43cdd7527138b33824d7e",
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedSourceCalls.java": "aefec0f53c14f3bcf4f214ab3d895f7fe18b234fdd6238fdb0345679979c4537",
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/RedirectEvidenceAssociation.java": "1fb62286ba02b02043c72d379ea9d39d95400e78b968049aeb5278ea2e1205e3",
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelector.java": "7d640948f7cc6be00800e1df7c4c3cbf9015b12bed7a4c3f8e7d50420b0a7fd2",
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SourceMethodIndex.java": "f8fa542a804dfe5033733bc6cc24a10ca6e973359b0682bd29405d78dabd049b"
+    }
+  },
+  "actors": {
+    "coordinator": {"name": "Delivery Coordinator", "id": "4305a761-e7d4-46d8-be4e-464dce67d1d9"},
+    "generation": {"name": "Delivery Engineer", "id": "72747183-d22b-4266-b4a3-d7343da64945"},
+    "proofAndScoring": {"name": "Validation Steward", "id": "618ffa8c-9cf5-483a-a689-3311b50982f0"},
+    "receiptReview": {"name": "Independent Adjudicator", "id": "bae95d27-dc8e-4491-9766-37320b8ecc11"}
+  },
+  "stages": [
+    {
+      "id": "PREFLIGHT_GENERATION",
+      "owner": "generation",
+      "dependsOn": [],
+      "outputs": ["generation-realworld-002/**"],
+      "rules": [
+        "verify control and frozen-input digests before reading producer inputs",
+        "fail if any new output path already exists",
+        "run full Java and Python regression before generation",
+        "build and digest a new runtime JAR from constructionBase",
+        "producer cannot access evaluator truth",
+        "retain all ten scenarios in original order",
+        "RW-SCENARIO-002 AUTHENTICATE remains UNRESOLVED with no components",
+        "seal producer outputs before handoff"
+      ]
+    },
+    {
+      "id": "PROOF_AND_SCORING",
+      "owner": "proofAndScoring",
+      "dependsOn": ["PREFLIGHT_GENERATION"],
+      "outputs": ["evaluator/proofs-002.json", "comparison-manifest-002.json", "comparison-002.json"],
+      "rules": [
+        "open evaluator truth only after producer output seal",
+        "do not edit or filter producer claims",
+        "bind producer, proof and truth digests",
+        "run unchanged SFBL005-METHOD-PAIR-001 scorer exactly once"
+      ]
+    },
+    {
+      "id": "INDEPENDENT_RECEIPT",
+      "owner": "receiptReview",
+      "dependsOn": ["PROOF_AND_SCORING"],
+      "outputs": ["receipt-002.md"],
+      "rules": [
+        "recompute hashes, counts, metrics and decision from exact sealed tuple",
+        "reviewer must be distinct from generation, proof and integration actors",
+        "verdict is PASS, FAIL or INCONCLUSIVE"
+      ]
+    },
+    {
+      "id": "EVIDENCE_INTEGRATION",
+      "owner": "coordinator",
+      "dependsOn": ["INDEPENDENT_RECEIPT"],
+      "outputs": ["RESULTS-002.md", "delivery evidence package"],
+      "rules": [
+        "no novel code, algorithm, control or sealed-artifact mutation",
+        "return evidence to Feature Delivery Plane",
+        "do not close SF-BL-005"
+      ]
+    }
+  ],
+  "generationCommand": [
+    "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/bin/java",
+    "-Xmx1g",
+    "-Dloader.main=com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.CrossRepositoryMethodRun",
+    "-cp", "target/fdi-0.4.8.3.jar",
+    "org.springframework.boot.loader.launch.PropertiesLauncher",
+    "validation/software-factory/sf-bl005/cross-repo-realworld-001/protocol/input-manifest.json",
+    "381e681d12868ce03f93721c085c51e0a4f3dc62bf1d90c8853f99d158472e35",
+    "validation/software-factory/sf-bl005/cross-repo-realworld-001/producer-inputs",
+    ".fdi-work/realworld-ee17e31",
+    "validation/software-factory/sf-bl005/cross-repo-realworld-001/generation-realworld-002"
+  ],
+  "scoringCommandTemplate": [
+    "java", "-Xmx512m", "-jar", "target/fdi-0.4.8.3.jar", "method-pair-compare",
+    "--manifest", "ABSOLUTE_COMPARISON_MANIFEST_002",
+    "--manifest-sha256", "COMPUTED_PINNED_MANIFEST_SHA256",
+    "--output", "ABSOLUTE_COMPARISON_002"
+  ],
+  "decisionRules": {
+    "precision": "raw value strictly greater than 0.80",
+    "recall": "raw value strictly greater than 0.60",
+    "belowEitherTarget": "REVISE",
+    "integrityFailure": "INVALID",
+    "mandatoryMetricUnavailable": "INCONCLUSIVE",
+    "thresholdPass": "CALIBRATION_RECOMMENDATION_ONLY"
+  },
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "oneHeavyProcessAtATime": true,
+    "mavenHeapGb": 2,
+    "mavenForkGb": 2,
+    "producerHeapGb": 1,
+    "evaluatorHeapMb": 512,
+    "commandTimeoutSeconds": 1200
+  },
+  "prohibited": [
+    "modify active controls",
+    "modify first-run or existing evidence",
+    "change BehaviorEvidencePolicy or any matching/proof/scoring algorithm",
+    "reindex Graphify or rerun test-behavior extraction",
+    "rerun upstream RealWorld tests, database or Docker",
+    "additional calibration rerun",
+    "formal holdout",
+    "merge or push",
+    "Product publication, deployment or SF-BL-005 closure"
+  ],
+  "failureRouting": {
+    "missingDependencyOrAccess": "PLAN_BLOCKED",
+    "identityDigestAncestryOutputCollisionOrIsolationConflict": "PLAN_CONFLICT",
+    "semanticScopeApiOrAcceptanceChange": "PLAN_CHANGE_REQUIRED"
+  }
+}

@@ -9,9 +9,13 @@ then writes one bounded `IMPLEMENTATION-PLAN.md` and execution envelope.
 | Backlog ID | Type | Requirement binding | Outcome | Status | Dependency / evidence |
 |---|---|---|---|---|---|
 | `SF-BL-001` | `FEATURE` | `AUTH-*`, `PK-*`, `FD-T1-*`–`FD-T4-*`, `EXEC-*`, `EVID-*`, `SF-EVAL-001`, `TECH-001` | Build accepted Product Context from one exact-revision SVSPC repository and training material; deliver the same SPC Chart Management Feature through isolated Code Only and Product Knowledge T1–T4 arms; compare correctness, first-pass outcome, rework, cycle time, token/tool cost, and bootstrap cost. | `BLOCKED_DEPENDENCY` | First obtain an auditable read-only Azure DevOps repository listing for `organization=tsmcid`, `project=ENGCIM`, name prefix `SVSPC`. No repository is selected yet. |
-| `SF-BL-002` | `BUG` | `AUTH-002`, `PK-004`, `EVID-001`, `TECH-001`; source: immutable PKB-BL-007/011 `REVISE` evidence | Recover only mechanically provable production references and produce useful evaluator-blind scenario-to-realization proposals without treating external/test-helper calls, retrieval aids, or proposals as Product truth. | `IN_PROGRESS` | Execution `SF-BL-002-SCENARIO-EFFECTIVENESS-004` integrated at `9f83c8a3877bdb4a98c4e1fcf1a09947741c573c`; engineering verification passed `1109/1109`, determinism and independent review passed, and prior evidence remained immutable. Experimental result is `REVISE`: trace `7/10`, exact match `2/24`, precision `0.2857`, recall `0.0833`, F1 `0.1290`, below the `0.70` precision gate. Evidence: `validation/software-factory/sf-bl002/remediation-evidence.json` and `hierarchical-evaluation-002.json`. Do not close; a bounded correction must be selected and planned first. |
+| `SF-BL-002` | `BUG` | `AUTH-002`, `PK-004`, `EVID-001`, `TECH-001`; source: immutable PKB-BL-007/011 `REVISE` evidence | Recover only mechanically provable production references and produce useful evaluator-blind scenario-to-realization proposals without treating external/test-helper calls, retrieval aids, or proposals as Product truth. | `IN_PROGRESS` | Prior execution `SF-BL-002-SCENARIO-EFFECTIVENESS-004` produced `REVISE`: trace `7/10`, exact match `2/24`, precision `0.2857`, recall `0.0833`, F1 `0.1290`. Correction `SF-BL-002-ROUTE-EFFECTIVENESS-005` returned reviewed candidate `a4f37d318ed361d1d5134d8647b9b37e75758049` with `GO`; acceptance evidence: `validation/software-factory/sf-bl002/acceptance-005.md`. Terminal closure awaits Human Authority. Existing evidence remains immutable. |
 | `SF-BL-003` | `TECH_DEBT` | `PK-004`, `EVID-001`, `TECH-001`; source: `SF-BL-002` independent code-quality review | Reduce change coupling in the scenario evidence pipeline by consolidating sealed artifact I/O and adapter validation, removing the public unsealed test seam, separating assignment responsibilities, and centralizing immutable run identities without changing accepted behavior. | `BLOCKED_DEPENDENCY` | Do not select until the `SF-BL-002` effectiveness successor is independently verified. Behavior-preserving work requires byte-identical outputs; legitimate output changes require a new immutable run identity. |
 | `SF-BL-004` | `FEATURE` | `AUTH-003`, `EVID-001`, `PORT-001`, `TECH-001` | Build a deterministic Java exporter that turns an exact external commit range into bounded, cross-file code/document/control/contract/configuration/Skill/evidence change references for deliberate adoption by a company AI with no shared Git baseline. | `VERIFIED` | Human Authority confirmed terminal closure on `2026-09-10`. Integrated candidate `c1643d9a516db5a0167c4321eff92e20ce2a4660`; Java 17 regression `1151/1151` with zero failures/errors/skips; deterministic golden package and independent evidence-only review passed. Evidence: `validation/software-factory/sf-bl004/change-reference-001-evidence.json`. Result is `ENGINEERING_READY`, not deployed or published. |
+| `SF-BL-005` | `FEATURE` | `AUTH-002`, `PK-004`, `EVID-001`, `SF-EVAL-001`, `TECH-001`; source: SF-BL-002 post-acceptance analysis | Align scenario-mapping scoring units, strengthen evidence-backed METHOD realization chains, and compare baseline/improved producers on isolated unseen data under one frozen protocol. Keep TYPE limitations explicit and outputs proposal-only. | `IN_PROGRESS` | `SF-BL-005-CROSSREPO-GATE-CONTAINMENT-003` returned independently reviewed candidate `2c69c62d7c5b9fd33f11c90b52b7a8f0d1bc4ce8`, replayed durably as `1cbfbac252b8c48567ecfdeac43fa87fcbddb643`; focused Java `31/31`, full Java `1402/1402`. `SF-BL-005-CROSSREPO-REALWORLD-003` returned diagnostic recall 0 in both arms; FDP acceptance withheld for envelope deviations. Reconciliation: `validation/software-factory/sf-bl005/fdp-reconciliation-realworld-003.md`. First-run evidence remains immutable. Plan: `IMPLEMENTATION-PLAN.md#current-selection`. Petclinic007 metrics are not generalization or parent closure. Formal holdout remains gated. |
+
+| `SF-BL-006` | `DOCUMENTATION` | `AUTH-001`, `AUTH-003`, `EXEC-003`, `EVID-001`; source: Human-authorized company-AI sharing review | Produce a bounded company-AI workflow learning package with physical learner/evaluator isolation, explicit sharing classification, deterministic file manifests, and no claim of runtime validation. | `BLOCKED_USER_APPROVAL` | Learner archive delivery to the bound email recipient is complete; evaluator-only material was withheld. Evidence: `docs/company-ai-learning/RELEASE-VERIFICATION.json`. Downstream AI upload, installation, adoption and terminal closure remain blocked until the exact company environment and applicable approval are bound. This lane is independent of calibration. |
+| `SF-BL-007` | `FEATURE` | `CSI-001`, `AUTH-001`–`AUTH-003`, `PK-005`, `FD-T3-007`, `FD-T4-001`–`FD-T4-003`, `EVID-001`, `EXEC-001` | Provide a reusable, evidence-bound method for converting verified delivery findings into bounded system-improvement recommendations and routing authorized changes through existing Software Factory controls, without creating a parallel lifecycle or automatic Product truth. | `READY` | Eligible for Human selection but not authorized to execute. No implementation, Plan, envelope, runtime binding, or active-execution lane exists. Historical SF-BL-005 findings may be used as read-only design evidence but are not a normative dependency or implementation scope. |
 
 `SF-BL-001` is one parent item. Its gates and capability list are acceptance
 structure, not child Backlog items.
@@ -88,10 +92,35 @@ format.
 
 ## Selection boundary
 
+Improvement source candidate `ceca0e38d4930ea1db31cb2635b941b21273609b`
+was integrated at `3ffe374`; BOXING-002 measured recall 0.775
+and precision 0.8611111111111112 under unchanged gold/scorer.
+Evidence: `validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md`.
+This exposed calibration does not establish overall GO or parent closure;
+the following canonical selections remain active.
+
 The Azure DevOps listing is read-only discovery, not repository selection.
 Repository selection, retrieval, training-material access, Graphify indexing,
 Product Context acceptance, A/P execution, and terminal closure occur only at
-their defined authority gates. No Backlog item is currently selected.
-`SF-BL-002` remains `IN_PROGRESS / REVISE` but has no active correction
-execution; `SF-BL-001` and `SF-BL-003` remain unselected; `SF-BL-004` is
-`VERIFIED` and unselected.
+their defined authority gates. `SF-BL-005` is selected for the bounded
+remediation planning under `IMPLEMENTATION-PLAN.md`. REALWORLD-003
+returned with envelope deviations and remains unaccepted. The selector is integrated at `758e086382e6023d6e4d389299a46bd696aa3857` with bounded
+review remediation; Java 1440/1440 and Python 63/63. Evidence:
+`validation/software-factory/sf-bl005/selector-diagnostics-001/intake.json`. Investigation observations are received with
+limitations; original reports and PASS records remain preserved. The 41/40
+SYNTAX tool-call deviation is not waived; read-back does not authorize cleanup.
+Engineering intake does not require a new Human gate.
+Adapter changes and calibration rerun remain unselected. `SF-BL-002` remains `IN_PROGRESS`, engineering accepted
+but pending Human terminal closure, with no work dispatched. `SF-BL-001` and
+`SF-BL-003` remain unselected; `SF-BL-004` is `VERIFIED` and unselected.
+
+The independent `SF-BL-006` company-AI lane retains its delivered learner package and downstream approval boundary; see the company-ai-docs lane in the Plan.
+
+User-selected follow-up preparation: source-backed generic ancestor resolution plan
+and frozen public-input RealWorld selector diagnosis. See IMPLEMENTATION-PLAN.md#current-selection.
+Preparation is complete; runner implementation and diagnostic/calibration execution
+remain unselected. External dependency signature availability remains unverified.
+
+Selected prerequisite: SF-BL-005-SELECTOR-RUNNER-001, two-file sealed Java diagnostic runner under IMPLEMENTATION-PLAN.md. Actual RealWorld diagnostics and calibration remain unselected.
+
+Selected continuation: source-backed generic ancestor Slice A and exact runner/ancestor combined integration review under the active Plan. External signatures and actual diagnostic/calibration execution remain unselected.

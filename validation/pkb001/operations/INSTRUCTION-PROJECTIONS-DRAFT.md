@@ -188,6 +188,23 @@ Before every routing mutation reread affected state and check equivalent active,
 queued, retrying or coalesced work. Use one trigger per transition; after an
 ambiguous response query existing state before retrying.
 
+Choose the specialist start mode before creating or activating its issue. If
+issue creation includes the specialist assignee, that assignment is the sole
+start trigger; the Coordinator MUST NOT post a structured mention to the same
+specialist, activate the same assignment again, or rerun it. If the issue is
+created unassigned, one structured specialist mention is the sole start trigger;
+do not also assign, activate, or rerun it. Immediately query and record the
+resulting run before another routing mutation. "Assignment plus mention" is two
+triggers and is prohibited.
+
+At specialist-run intake, compare the stable key with earlier runs by the same
+specialist role and any exact-candidate verdict already recorded. When an
+earlier equivalent run is queued, running or completed, or the exact verdict
+already exists, classify the later attempt as `COALESCED_DUPLICATE`: do no
+implementation or review, emit no second verdict or Coordinator mention, and
+stop after recording the duplicate. This replay guard supplements, but does not
+replace, exclusive-trigger dispatch at the source.
+
 For review, key by execution, slice, exact candidate, integration/replay base
 and reviewer role. Record the pending key on the controller before create;
 search matching issues across all statuses/pages. Reuse/reconcile matches,
@@ -233,6 +250,11 @@ confirmation is introduced within an approved execution envelope.
 ```text
 Verify the assigned code revision, owned paths, acceptance criteria,
 required inputs, and deployed workflow release.
+At run intake, resolve the stable routing key and inspect earlier runs by the
+same specialist role. If an equivalent earlier run is queued, running or
+completed, classify this later attempt as COALESCED_DUPLICATE: make no
+repository changes, emit no delivery handoff or Coordinator mention, record the
+duplicate attempt, and stop.
 Resolve full commit identities and required ancestry in the actual checkout.
 Before any mutation record daemon starting commit/branch and verify worktree
 identity, assigned ownership and isolation from other active writable runs.
@@ -293,6 +315,11 @@ Do not self-approve closure. User-facing final responses remain English.
 
 ```text
 Review the exact candidate against the assigned acceptance criteria.
+At run intake, resolve the stable review key and inspect earlier runs by the
+same reviewer role plus existing exact-candidate verdicts. If an equivalent
+earlier run is queued, running or completed, or its verdict already exists,
+classify this later attempt as COALESCED_DUPLICATE: perform no review, emit no
+second verdict or Coordinator mention, record the duplicate attempt, and stop.
 Use a distinct attributable run, actor and context from every producer/integrator;
 do not inherit hidden producer reasoning. Pin base/candidate, evidence digests,
 acceptance, reviewer identity and verification environment. Read only required

@@ -1,0 +1,62 @@
+{
+  "binding" : {
+    "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "productionRoots" : [ "src/main/java" ],
+    "testRoots" : [ "src/test/java" ],
+    "inputSnapshotSha256" : "41a7f9fc60bf9f0de938a5c2f4fd29e33f8258a060d0826f4240baa180e6fa37",
+    "extractorSha256" : "b10ff6376ec0285b5cddeef284136e6e445173fe09bdccec6d63d0782dfe9dcb"
+  },
+  "generationSha256" : "806f8814b5b4f5c0c6536d520980ecfb8577e419f008a5bf463d7b64637c4936",
+  "historicalManifestSha256" : "fa67470061d4d4e02b54b629a035debfdb8e874364361f02a142d62c4d807511",
+  "limitations" : [ "CALIBRATION_ONLY", "POST_SEED_SELECTION_NOT_FULL_RETRIEVAL", "NO_SOURCE_PROOF_READJUDICATION", "UNKNOWN_IS_NOT_PROVEN_RETRIEVAL_FAILURE" ],
+  "metrics" : {
+    "goldPairs" : 40,
+    "candidatePairs" : 59,
+    "candidateGoldPairs" : 28,
+    "finalPairs" : 33,
+    "truePositives" : 28,
+    "falsePositives" : 5,
+    "falseNegatives" : 12,
+    "candidateRecall" : {
+      "numerator" : 28,
+      "denominator" : 40,
+      "value" : 0.7,
+      "reason" : null
+    },
+    "candidatePrecision" : {
+      "numerator" : 28,
+      "denominator" : 59,
+      "value" : 0.4745762711864407,
+      "reason" : null
+    },
+    "finalRecall" : {
+      "numerator" : 28,
+      "denominator" : 40,
+      "value" : 0.7,
+      "reason" : null
+    },
+    "finalPrecision" : {
+      "numerator" : 28,
+      "denominator" : 33,
+      "value" : 0.8484848484848485,
+      "reason" : null
+    },
+    "retention" : {
+      "numerator" : 28,
+      "denominator" : 28,
+      "value" : 1.0,
+      "reason" : null
+    },
+    "fnReasons" : {
+      "BUDGET_TRUNCATED" : 0,
+      "FILTERED_OUT" : 0,
+      "NOT_RETRIEVED" : 0,
+      "PROOF_INSUFFICIENT" : 0,
+      "RESOLUTION_FAILED" : 0,
+      "UNKNOWN" : 12,
+      "UNSUPPORTED_BEHAVIOR" : 0
+    }
+  },
+  "proofReuse" : "SAME_ARTIFACT_DIGEST_BOUND_LEDGER",
+  "schema" : "CANDIDATE-STAGE-EVALUATION-001"
+}

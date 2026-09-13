@@ -1,0 +1,13 @@
+{
+  "scope": "MECHANICAL_PROPOSAL_CONTRACT_NOT_PRODUCT_SEMANTIC_ACCURACY",
+  "cases": [
+    {"id":"feature-creation","capabilities":["Shipment"],"scenarios":["Ship parcel"],"deliveryGapCount":2},
+    {"id":"refactor-only","capabilities":[],"scenarios":[],"deliveryGapCount":3},
+    {"id":"misleading-parent","capabilities":["Shipment"],"scenarios":["Ship parcel"],"deliveryGapCount":2},
+    {"id":"composite-delivery","capabilities":["Invoice","Shipment"],"scenarios":["Issue invoice","Ship parcel"],"deliveryGapCount":2},
+    {"id":"feature-across-deliveries","capabilities":["Shipment"],"scenarios":["Ship parcel"],"deliveryGapCount":4},
+    {"id":"authorization-denial","capabilities":["Shipment"],"scenarios":["Reject unauthorized shipment"],"deliveryGapCount":2},
+    {"id":"history-source-conflict","capabilities":["Shipment"],"scenarios":["Ship parcel"],"deliveryGapCount":2,"limitation":"CONFLICT_DETECTION_NOT_IMPLEMENTED_HISTORY_MESSAGE_DOES_NOT_OVERRIDE_TEST_WORDING"},
+    {"id":"non-http-entry","capabilities":["Scheduled shipment"],"scenarios":["Schedule shipment"],"deliveryGapCount":2}
+  ]
+}

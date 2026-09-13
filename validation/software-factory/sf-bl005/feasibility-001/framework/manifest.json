@@ -1,0 +1,98 @@
+{
+  "slice": "B",
+  "execution_id": "SF-BL-005-FEASIBILITY-001",
+  "issue": "HERM-471",
+  "issue_id": "01a09320-9a34-7453-883d-0076f307a293",
+  "routing_key": "sfbl005-feasibility-001-slice-B-v1",
+  "actor": "Change Surface Investigator b856fa99-4390-424f-921c-bb15ab2c7310",
+  "run": {
+    "date": "2026-09-12",
+    "runs": 1,
+    "maven_executed": false,
+    "docker_executed": false,
+    "managed_head_preserved": true,
+    "usage": {
+      "input_tokens": "UNKNOWN",
+      "output_tokens": "UNKNOWN",
+      "cache_read_tokens": "UNKNOWN"
+    },
+    "timing_minutes_approx": 10,
+    "call_budget": { "planned_cap": 60, "preflight_cap": 15 }
+  },
+  "verified_inputs": [
+    { "path": "AGENTS.md", "sha256": "aac96ac43a36a5401c979cd72c762caa8aa7f12572af987e9836e7cd75e9e7c6", "revision": "932cf2d5a56697f58a0959bdf9def97be6f4e299", "authority": "operating_instructions", "verified": true, "evaluator_visible": false, "mutation_allowed": false },
+    { "path": "PROJECT-OVERVIEW.md", "sha256": "4cb9c41e0ebd572fdb5bfc31cff166d069181ca4f3a887c15eee4ce7d77e5f2a", "revision": "932cf2d5a56697f58a0959bdf9def97be6f4e299", "authority": "active_control", "verified": true, "evaluator_visible": false, "mutation_allowed": false },
+    { "path": "FRAMEWORK-SPEC.md", "sha256": "0d70de2b7c1b1cb938a00c99c965851d49cc62a466801e0b22e5965246a94344", "revision": "932cf2d5a56697f58a0959bdf9def97be6f4e299", "authority": "active_control", "verified": true, "evaluator_visible": false, "mutation_allowed": false },
+    { "path": "BACKLOG.md", "sha256": "dd156c5189e00f9b5e9a7fc486989c9c0e1cf128b89a965f2677e5669023a54b", "revision": "932cf2d5a56697f58a0959bdf9def97be6f4e299", "authority": "active_control", "verified": true, "evaluator_visible": false, "mutation_allowed": false },
+    { "path": "IMPLEMENTATION-PLAN.md", "sha256": "7bf42b8cef6d587afd2113f26c269c14acbcac416299f955b1dfba8f9ef470ef", "revision": "932cf2d5a56697f58a0959bdf9def97be6f4e299", "authority": "active_control", "verified": true, "evaluator_visible": false, "mutation_allowed": false },
+    { "path": "STATUS.json", "sha256": "40bf3a9fa5809584d106720590751a7820184c8e4f83dd0d229b710be9d61da6", "revision": "932cf2d5a56697f58a0959bdf9def97be6f4e299", "authority": "active_control", "verified": true, "evaluator_visible": false, "mutation_allowed": false },
+    { "path": "validation/software-factory/sf-bl005/execution-envelope-feasibility-001.json", "sha256": "d1b6ac8bcbcb2fbcb9534e7f3b4a6d839663623673901873f188a5679677056e", "revision": "72c1798d451b106eb7bf2f2c5ecd9e68d13a042f", "authority": "execution_envelope", "verified": true, "evaluator_visible": false, "mutation_allowed": false },
+    { "path": "construction base", "sha256": null, "revision": "0e7e827eb9c41df6804ffa56ea0f0ac7e2eb3355", "authority": "implementation_evidence", "verified": true, "note": "ancestor of 932cf2d via git merge-base --is-ancestor", "evaluator_visible": false, "mutation_allowed": false },
+    { "path": "bound Spec revision", "sha256": null, "revision": "1d49e06fcd63fa2047119e045f8b1c3bc5f5c435", "authority": "spec_binding", "verified": true, "evaluator_visible": false, "mutation_allowed": false }
+  ],
+  "owned_paths": [
+    "validation/software-factory/sf-bl005/feasibility-001/framework/report.md",
+    "validation/software-factory/sf-bl005/feasibility-001/framework/manifest.json"
+  ],
+  "mutated_paths": [
+    "validation/software-factory/sf-bl005/feasibility-001/framework/report.md",
+    "validation/software-factory/sf-bl005/feasibility-001/framework/manifest.json"
+  ],
+  "excluded_context": [
+    "validation/software-factory/sf-bl005/feasibility-001/candidate/ (slice A, concurrent)",
+    "validation/software-factory/sf-bl005/feasibility-001/integration/ (slice C)",
+    "validation/software-factory/sf-bl005/feasibility-001/review/ (slice D)",
+    "evaluator truth, gold, ground-truth seals, holdout scoring"
+  ],
+  "findings_digest": {
+    "revision_pins": [
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SliceGEvaluatorComparison.java:20",
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/directtrace/SfBl002TestBehaviorEvidence.java:31-34",
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SfBl002RouteEffectivenessRun.java:53-81",
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/directtrace/DirectTestTraceAdapter.java:27,31",
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/evaluation/ProviderNeutralEvaluatorTruth.java:13-17"
+    ],
+    "digest_sealed_inputs": [
+      "SliceGEvaluatorComparison.java:23-37 PRE_EVALUATOR (15 entries)",
+      "SfBl002RouteEffectivenessRun.java:68-80 sealed sha256 constants"
+    ],
+    "schema_vocabulary_pins": [
+      "HttpBehaviorExtractionResult.java:22 v0.3",
+      "SfBl002RouteEffectivenessRun.java:55-57 v0.3",
+      "ScenarioMappingContractV04.java:16 v0.4",
+      "HttpBehaviorObservationExtractor.java:78-106 Spring test-client vocabulary",
+      "SliceGEvaluatorComparison.java:94-95,116 hardcoded unresolved/baseline/capability-count"
+    ],
+    "module_root_assumptions": [
+      "ProductionSourcePathResolver.java:40 hardcoded src/main/java/ prefix",
+      "SfBl002RouteEffectivenessRun.java:280 requires src/test/ prefix",
+      "ProviderNeutralEvaluatorTruthGenerator.java:91 substring src/main/java/",
+      "gap: feasibility source backend/ module root requires mapping adapter A3"
+    ],
+    "already_parameterized": [
+      "HttpBehaviorObservationExtractor.extract(checkout, testFiles)",
+      "SpringRouteHandlerIndex explicit file entries",
+      "SfBl002RouteEffectivenessRun main(repo-root, source-checkout-root, output-root)"
+    ],
+    "adapters": ["A1 sealed digest manifest", "A2 revision/repository-id", "A3 module-root mapping", "A4 schema versions/output paths", "A5 report literals"],
+    "inference_changes": ["N1 method-pair TP/FP/FN/UNRESOLVED core", "N2 duplicate collapse vs current throw", "N3 role diagnostic-only vs current PRIMARY-only credit", "N4 GO/REVISE/INCONCLUSIVE gate"],
+    "scoring_rule_check": "SFBL005-METHOD-PAIR-001 consistent under natural reading; synthetic examples S1-S8 in report.md; no PLAN_CHANGE_REQUIRED; ambiguities R1 (UNRESOLVED vs FP wording) and R2 (scenario coverage needs sealed pairs per scenario) flagged"
+  },
+  "verdict": "FEASIBLE",
+  "plan_change_required": false,
+  "blockers": [],
+  "unresolved_risks": ["R1 UNRESOLVED/FP wording", "R2 coverage requires sealed expected pairs per selected scenario", "R3 TP proof-revalidation criterion not operationalized in frozen rules"],
+  "first_review_outcome": "UNKNOWN",
+  "evidence_pointer": "validation/software-factory/sf-bl005/feasibility-001/framework/report.md",
+  "slice_E_correction": {
+    "issue": "HERM-474",
+    "slice_routing_key": "sfbl005-feasibility-001-intake-evidence-correction-v1",
+    "corrected_utc": "2026-09-12T04:25Z",
+    "correction": "S1 metrics arithmetic in report.md §4: TP=1 FP=1 FN=3; P=0.500 R=0.250 F1=1/3 (~0.333), superseding the pre-correction FN=2 / R=0.333 / F1=0.400; pair-by-pair FN enumeration recorded in report.md §4",
+    "corrected_file": {
+      "path": "validation/software-factory/sf-bl005/feasibility-001/framework/report.md",
+      "sha256": "7e08a0530889bd09c8270493dba26320ae42f3e7d550d88dd36762354f9524e9",
+      "supersedes_slice_B_byte_preservation_digest": "6f14ae4cc8721de35fe76cb1b27e149e497bbc3411f777a3d59626aebec417f5 (recorded in integration/manifest.json integrated_files)"
+    }
+  }
+}

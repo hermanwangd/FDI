@@ -1,0 +1,179 @@
+{
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "executionId": "SF-BL-005-SELECTOR-RUNNER-001",
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "branch": "codex/sf-bl002-route-aware-correction",
+  "constructionBase": "d5938e80b64d86b9b8875f73bd65d0e2d38ee75e",
+  "controlCommit": "3bb10d26375acd42dc777518fbdbc887f6db0bad",
+  "specRevision": "4fc285f515e65473d4d3120b335629825a6a810b",
+  "backlogItems": [
+    "SF-BL-005"
+  ],
+  "requirementIds": [
+    "AUTH-002",
+    "PK-004",
+    "EVID-001",
+    "TECH-001"
+  ],
+  "controls": {
+    "AGENTS.md": "a70a2d4da9f9dd8add3ca2ab3d794125a08525bdb53cca4426d60f9a9a091c12",
+    "PROJECT-OVERVIEW.md": "65b071af3331b1a69f429b392f813a33da2019171703f6b88a64faedea09c5ef",
+    "FRAMEWORK-SPEC.md": "714b43929f3a4eae45a6a816641215439a284ea555a984f6c50ce9ea68699567",
+    "BACKLOG.md": "a4ed06ade9ba6a8571932a7d57b2a1bf787a1320f8b086baf406ec664b1c0477",
+    "IMPLEMENTATION-PLAN.md": "e2e62bf817fe8973e3a9b792ed265cb769bc716020bebd85aa7f25979f6c5ac0",
+    "STATUS.json": "7ead6422cccdadfab64b5c0951ec16f9556026cac1c2be1ba70d85f8a15ac019"
+  },
+  "ownedPaths": [
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SelectorDiagnosticRun.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SelectorDiagnosticRunTests.java"
+  ],
+  "inputs": [
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelector.java",
+      "revision": "3bb10d26375acd42dc777518fbdbc887f6db0bad",
+      "sha256": "b7d1cbe33944b433712238a495fb30701f3bdd6bba688c06687dd67516fb47bc",
+      "contract": "Existing selector/IO/Java build guidance",
+      "authority": "supporting only",
+      "phase": "implementation/review/verification",
+      "evaluatorVisible": false,
+      "mutationAllowed": false
+    },
+    {
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelectorTests.java",
+      "revision": "3bb10d26375acd42dc777518fbdbc887f6db0bad",
+      "sha256": "2d4f24b3c337ba4d0acf0c3a9814841d56883deb22f5d0ea81dd451dbd7ec7b7",
+      "contract": "Existing selector/IO/Java build guidance",
+      "authority": "supporting only",
+      "phase": "implementation/review/verification",
+      "evaluatorVisible": false,
+      "mutationAllowed": false
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/MethodCalibrationRun.java",
+      "revision": "3bb10d26375acd42dc777518fbdbc887f6db0bad",
+      "sha256": "0e5bdbb4c5bcdd4d0485daff6adcdb7658d41bb5225ce9ef8347a020b3a1ae5d",
+      "contract": "Existing selector/IO/Java build guidance",
+      "authority": "supporting only",
+      "phase": "implementation/review/verification",
+      "evaluatorVisible": false,
+      "mutationAllowed": false
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairArtifactIO.java",
+      "revision": "3bb10d26375acd42dc777518fbdbc887f6db0bad",
+      "sha256": "0ab143cdc6387fdc2d26796c9c32407c6f3826b46e9bbdd5c1e48433e9287f44",
+      "contract": "Existing selector/IO/Java build guidance",
+      "authority": "supporting only",
+      "phase": "implementation/review/verification",
+      "evaluatorVisible": false,
+      "mutationAllowed": false
+    },
+    {
+      "path": "pom.xml",
+      "revision": "3bb10d26375acd42dc777518fbdbc887f6db0bad",
+      "sha256": "64540338ad342a958461b0842394bcb18711a9e4e924cb6c064fb7eac4a5eff5",
+      "contract": "Existing selector/IO/Java build guidance",
+      "authority": "supporting only",
+      "phase": "implementation/review/verification",
+      "evaluatorVisible": false,
+      "mutationAllowed": false
+    },
+    {
+      "path": "JAVA-CODING-GUIDELINES.md",
+      "revision": "3bb10d26375acd42dc777518fbdbc887f6db0bad",
+      "sha256": "06011e21515ea11447d968e94cba2497b8ac0935fb4b3936ff099da31268a28f",
+      "contract": "Existing selector/IO/Java build guidance",
+      "authority": "supporting only",
+      "phase": "implementation/review/verification",
+      "evaluatorVisible": false,
+      "mutationAllowed": false
+    }
+  ],
+  "contract": "Exact four-argument manifest/bundle/unused-output runner contract in selected Plan; no invention of broader API",
+  "acceptance": [
+    "Deterministic diagnostics, counts and ordered seeds match existing selector",
+    "Exact input allowlist; invalid hash/path/symlink/unlisted source/unknown field/limit/collision fail closed",
+    "Packaged Java17 synthetic smoke; exact JAR retained, seal last; partial output cannot be accepted",
+    "No selector rule change; no RealWorld run; no producer or scorer invocation"
+  ],
+  "characterizationMatrix": [
+    "valid synthetic single pair",
+    "empty observations",
+    "legacy/diagnostic seed parity",
+    "wrong manifest/input hash",
+    "missing and unexpected file",
+    "absolute/traversal/duplicate path",
+    "symlink including parent component",
+    "unlisted observation source",
+    "unknown manifest fields",
+    "100001 pairs rejected",
+    "size/file-count limits",
+    "existing output and interrupted unsealed output",
+    "repeat independent outputs identical",
+    "public main rejects non-JAR runtime"
+  ],
+  "stages": [
+    {
+      "id": "IMPLEMENTATION",
+      "owner": "Delivery Engineer",
+      "dependsOn": []
+    },
+    {
+      "id": "REVIEW",
+      "owner": "Independent Adjudicator",
+      "dependsOn": [
+        "IMPLEMENTATION"
+      ]
+    },
+    {
+      "id": "COMBINED_VERIFICATION",
+      "owner": "Delivery Engineer",
+      "dependsOn": [
+        "REVIEW"
+      ]
+    }
+  ],
+  "verification": [
+    "MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -Dtest=SelectorDiagnosticRunTests,ScenarioEvidenceSelectorTests test",
+    "MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g package",
+    "python3 -m pytest -q",
+    "git diff --check",
+    "Packaged runner main on synthetic manifest only; assert retained runtime hash and deterministic sealed outputs"
+  ],
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "oneHeavyJvm": true,
+    "mavenHeapGb": 2,
+    "forkHeapGb": 2,
+    "commandTimeoutSeconds": 1200,
+    "maxToolCalls": 60,
+    "estimatedCodeTestDelta": 500
+  },
+  "handoff": [
+    "Commit owned paths on managed branch without moving original HEAD",
+    "Durable attachments: exact jar, logs, fixture matrix and digest manifest",
+    "Receiver downloads/verifies byte lengths and SHA256 before advancing; no cleanup authorization",
+    "Independent review exact candidate by distinct actor; fresh review after remediation",
+    "All failed checks block; controls read-only, no failure waivers"
+  ],
+  "prohibited": [
+    "RealWorld/evaluator access or execution",
+    "Calibration/scoring",
+    "Selector or helper mutation",
+    "Ancestor resolution",
+    "New Python",
+    "Active control edits",
+    "Merge/push/deploy/cleanup/parent closure"
+  ],
+  "failureRouting": [
+    "PLAN_BLOCKED for missing dependency or bytes",
+    "PLAN_CONFLICT for binding or ownership conflict",
+    "PLAN_CHANGE_REQUIRED for contract expansion"
+  ],
+  "kpi": {
+    "category": "FEATURE_IMPLEMENTATION",
+    "size": "M",
+    "referenceCohort": "N/A",
+    "required": "all run IDs, input/output/cache separate, elapsed/wait/retries and exact review first-pass"
+  }
+}

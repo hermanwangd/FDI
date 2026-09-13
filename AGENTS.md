@@ -120,12 +120,19 @@ Only the Feature Delivery Plane may modify:
 If more than one Feature Delivery Plane actor attempts to update project truth
 for the same execution, stop with `CONTEXT_CONFLICT`.
 
-When work is selected, `STATUS.json.active_execution` records project execution
-state only: stable `execution_id`, exact `base_commit`,
-`selected_backlog_items`, `execution_state`, and
-`integration_candidate`. It must not store software, model, worker,
-coordinator, issue, mention, or orchestration identity. With no selected work,
-`active_execution` is `null`.
+When work is selected, `STATUS.json.active_executions` records one entry per
+independent execution lane. Every entry contains only a stable `lane_id`,
+`execution_id`, exact `base_commit`, `selected_backlog_items`,
+`execution_state`, and `integration_candidate`. It must not store software,
+model, worker, coordinator, issue, mention, or orchestration identity. With no
+selected work, `active_executions` is an empty array.
+
+Independent lanes may progress concurrently only under `EXEC-003`. Each lane
+has its own envelope, workspace, mutation ownership, resource budget, evidence,
+and closure gate. Their owned paths must be deterministically non-overlapping;
+shared inputs are exact-versioned and read-only. One Feature Delivery Plane
+owner serializes all changes to the five active controls. Aggregate execution
+must remain below the project-wide resource limit.
 
 ### Execution envelope
 
@@ -286,22 +293,24 @@ agent needs to execute or verify the selected work. Keep the file at or below
 10 KB by default; exceeding that budget requires a concrete reason tied to the
 currently selected work.
 
-- **No selected work:** the Feature Delivery Plane states that no implementation slice is selected and retains
+- **No selected work:** the Feature Delivery Plane states that no implementation lane is selected and retains
   only a compact verified-delivery ledger and continuation constraints, and set
   `STATUS.json.active_implementation_plan` plus its plan anchor to `null`.
-- **Selection:** the Feature Delivery Plane replaces the current-selection section with one bounded plan
+- **Selection:** the Feature Delivery Plane adds or replaces one bounded lane section
   bound to its Backlog ID, requirement ID, exact Spec revision, base commit,
   owned files, exclusions, acceptance criteria, TDD sequence, verification
-  commands, and commit/removal boundaries. Update the Backlog active-plan link
-  and `STATUS.json` in the same change.
+  commands, and commit/removal boundaries. Unrelated lanes remain separate in
+  the same file. Update the Backlog active-plan link and `STATUS.json` in the
+  same change.
 - **Execution:** the Feature Delivery Plane updates only material plan state, blockers, changed decisions,
   and evidence references. Do not paste command output or repeat requirement and
   backlog prose. Test results belong in concise evidence summaries or supporting
   artifacts.
-- **Completion:** after Human Authority confirms terminal closure, the Feature Delivery Plane replaces construction detail with a short ledger entry containing
+- **Completion:** after Human Authority confirms terminal closure, the Feature Delivery Plane replaces that lane's construction detail with a short ledger entry containing
   the delivered behavior, exact commit, verification summary, and evidence path.
-  Clear the active-plan link and anchor; update Backlog status/maturity and
-  `STATUS.json` together. Git history preserves removed planning detail.
+  Remove only that lane from active selections; update its Backlog
+  status/maturity and `STATUS.json` together. Clear the overall plan anchor only
+  when no active lanes remain. Git history preserves removed planning detail.
 
 Only the Feature Delivery Plane may edit `IMPLEMENTATION-PLAN.md`. The
 Execution Plane reports slice progress, integration state, and review evidence

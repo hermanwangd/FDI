@@ -1,0 +1,126 @@
+{
+  "execution_id": "SF-BL-005-FEASIBILITY-001",
+  "slice": "C",
+  "slice_routing_key": "sfbl005-feasibility-001-slice-C-v1",
+  "parent_controller_routing_key": "sfbl005-feasibility-001-controller-v1",
+  "issue": "HERM-472",
+  "issue_id": "01a09320-baf4-7eef-8fcc-86cf97ecf713",
+  "actor": "Delivery Engineer 72747183-d22b-4266-b4a3-d7343da64945",
+  "verdict": "INTEGRATED_FEASIBLE_NO_DISCREPANCIES",
+  "feasibility_only": true,
+  "prepared_utc": "2026-09-12T02:00:00Z",
+  "repository_pins": {
+    "local_repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+    "dispatch_commit": "72c1798d451b106eb7bf2f2c5ecd9e68d13a042f",
+    "control_commit": "932cf2d5a56697f58a0959bdf9def97be6f4e299",
+    "construction_base": "0e7e827eb9c41df6804ffa56ea0f0ac7e2eb3355",
+    "spec_revision": "1d49e06fcd63fa2047119e045f8b1c3bc5f5c435",
+    "managed_worktree_starting_commit": "616d4f9510c34f33c68268f5b476c917eaa47ce7",
+    "managed_branch": "agent/delivery-engineer/herm-472",
+    "ancestry_verified": true,
+    "input_digests_verified": true
+  },
+  "input_identities_verified": [
+    {"path": "AGENTS.md", "sha256": "aac96ac43a36a5401c979cd72c762caa8aa7f12572af987e9836e7cd75e9e7c6", "revision": "932cf2d5a56697f58a0959bdf9def97be6f4e299", "verified": true},
+    {"path": "PROJECT-OVERVIEW.md", "sha256": "4cb9c41e0ebd572fdb5bfc31cff166d069181ca4f3a887c15eee4ce7d77e5f2a", "revision": "932cf2d5a56697f58a0959bdf9def97be6f4e299", "verified": true},
+    {"path": "FRAMEWORK-SPEC.md", "sha256": "0d70de2b7c1b1cb938a00c99c965851d49cc62a466801e0b22e5965246a94344", "revision": "932cf2d5a56697f58a0959bdf9def97be6f4e299", "verified": true},
+    {"path": "BACKLOG.md", "sha256": "dd156c5189e00f9b5e9a7fc486989c9c0e1cf128b89a965f2677e5669023a54b", "revision": "932cf2d5a56697f58a0959bdf9def97be6f4e299", "verified": true},
+    {"path": "IMPLEMENTATION-PLAN.md", "sha256": "7bf42b8cef6d587afd2113f26c269c14acbcac416299f955b1dfba8f9ef470ef", "revision": "932cf2d5a56697f58a0959bdf9def97be6f4e299", "verified": true},
+    {"path": "STATUS.json", "sha256": "40bf3a9fa5809584d106720590751a7820184c8e4f83dd0d229b710be9d61da6", "revision": "932cf2d5a56697f58a0959bdf9def97be6f4e299", "verified": true},
+    {"path": "validation/software-factory/sf-bl005/execution-envelope-feasibility-001.json", "sha256": "d1b6ac8bcbcb2fbcb9534e7f3b4a6d839663623673901873f188a5679677056e", "revision": "72c1798d451b106eb7bf2f2c5ecd9e68d13a042f", "verified": true}
+  ],
+  "producer_handoffs": {
+    "dependency_gate": "slice A (HERM-470) and slice B (HERM-471) handoffs posted and Coordinator-intake-accepted before start",
+    "slice_A": {"issue": "HERM-470", "verdict": "FEASIBLE", "evidence_commit": "c3e688b", "parent_baseline": "932af61e51f3b1c568f5023dd610d050faa6fd1b", "branch": "agent/delivery-engineer/herm-470"},
+    "slice_B": {"issue": "HERM-471", "verdict": "FEASIBLE", "evidence_commit": "2b28194", "parent_baseline": "3d975f7", "branch": "agent/change-surface-investigator/herm-471"}
+  },
+  "integrated_files": [
+    {"path": "validation/software-factory/sf-bl005/feasibility-001/candidate/report.md", "source_commit": "c3e688b", "sha256": "5024a8809026bf84a1f89902672442eb9bc2950f8dccba36b52ad85e868abc1b", "byte_preservation": "git diff --cached c3e688b empty; sha256 matches slice A handoff; SUPERSEDED by slice E correction (2026-09-12, HERM-474): corrected digest recorded here"},
+    {"path": "validation/software-factory/sf-bl005/feasibility-001/candidate/manifest.json", "source_commit": "c3e688b", "sha256": "980340f206cc6c90af642a7805b12fa7865d4403c2975ac7a7ce88afcaf6471c", "byte_preservation": "git diff --cached c3e688b empty; sha256 matches slice A handoff; SUPERSEDED by slice E correction (2026-09-12, HERM-474): corrected digest recorded here"},
+    {"path": "validation/software-factory/sf-bl005/feasibility-001/framework/report.md", "source_commit": "2b28194", "sha256": "6f14ae4cc8721de35fe76cb1b27e149e497bbc3411f777a3d59626aebec417f5", "byte_preservation": "git diff --cached 2b28194 empty"},
+    {"path": "validation/software-factory/sf-bl005/feasibility-001/framework/manifest.json", "source_commit": "2b28194", "sha256": "4254443b68fbc6ae29a301241341c5b5c8a762919cd2060fff1d23386c90fa57", "byte_preservation": "git diff --cached 2b28194 empty"}
+  ],
+  "owned_paths": [
+    "validation/software-factory/sf-bl005/feasibility-001/integration/report.md",
+    "validation/software-factory/sf-bl005/feasibility-001/integration/manifest.json"
+  ],
+  "evidence_root_check": "combined diff paths limited to validation/software-factory/sf-bl005/feasibility-001/; nothing outside the evidence root changed; uncommitted daemon-injected AGENTS.md runtime block predates this run and is not part of the candidate",
+  "verification": {
+    "command": "python3 -m pytest -q tests/test_prototype_baseline.py",
+    "managed_worktree_result": "2 failed, 13 passed, exit 1",
+    "root_cause": "daemon-injected uncommitted AGENTS.md MULTICA-RUNTIME block contains 'mention://agent/', asserted absent at tests/test_prototype_baseline.py:210; tracked AGENTS.md at HEAD contains zero occurrences",
+    "clean_tracked_export_result": "15 passed, exit 0 (git archive HEAD export)",
+    "classification": "environment/worktree artifact, not a code regression; no executable change made or requested (would be PLAN_CHANGE_REQUIRED)"
+  },
+  "discrepancies": "none between slice A and slice B; 7 consolidated bounded findings in integration/report.md section 5",
+  "next_bounded_recommendation": "start slice D (HERM-473) independent review of the exact integration candidate; carry findings 3, 4, 6 into successor-envelope drafting",
+  "changed_paths": [
+    "validation/software-factory/sf-bl005/feasibility-001/candidate/report.md",
+    "validation/software-factory/sf-bl005/feasibility-001/candidate/manifest.json",
+    "validation/software-factory/sf-bl005/feasibility-001/framework/report.md",
+    "validation/software-factory/sf-bl005/feasibility-001/framework/manifest.json",
+    "validation/software-factory/sf-bl005/feasibility-001/integration/report.md",
+    "validation/software-factory/sf-bl005/feasibility-001/integration/manifest.json"
+  ],
+  "usage": {
+    "source": "multica issue usage on HERM-470/471/472/473 and controller HERM-469; refreshed 2026-09-12 (slice E), supersedes prior UNKNOWN",
+    "slices_A_to_D": {
+      "input_tokens": 499193,
+      "output_tokens": 114392,
+      "cache_read_tokens": 14682624,
+      "cache_write_tokens": 0,
+      "terminal_runs": "8/8 metered",
+      "unreported_runs": 0
+    },
+    "controller_HERM_469": {
+      "input_tokens": 199156,
+      "output_tokens": 37890,
+      "cache_read_tokens": 3506688,
+      "cache_write_tokens": 0,
+      "terminal_runs": "4/4 metered",
+      "unreported_runs": 0
+    },
+    "total_including_controller": {
+      "input_tokens": 698349,
+      "output_tokens": 152282,
+      "cache_read_tokens": 18189312,
+      "cache_write_tokens": 0,
+      "terminal_runs": "12/12 metered",
+      "unreported_runs": 0
+    },
+    "na_values": "none — every terminal run reported usage; all attempts counted"
+  },
+  "timing_minutes_approx": 20,
+  "blockers": [],
+  "first_review_outcome": "PASS — slice D (HERM-473) reviewed exact candidate 9f88378e2234aab671a7d84e0c0f9facf000c40d at 2026-09-12T01:54Z; findings routed to slice E evidence-only correction (HERM-474)",
+  "slice_E_correction": {
+    "issue": "HERM-474",
+    "slice_routing_key": "sfbl005-feasibility-001-intake-evidence-correction-v1",
+    "corrected_utc": "2026-09-12T04:15Z",
+    "reviewed_candidate": "9f88378e2234aab671a7d84e0c0f9facf000c40d",
+    "replay": "candidate tip not reachable in slice E worktree; evidence commits 4b6770b + 9f88378 cherry-picked onto slice E starting commit 5f6b951a2c22c4763e94c9a5b61cdfc0f80fd264; corrected candidate SHA named in the HERM-474 handoff",
+    "corrected_paths": [
+      "validation/software-factory/sf-bl005/feasibility-001/candidate/report.md",
+      "validation/software-factory/sf-bl005/feasibility-001/candidate/manifest.json",
+      "validation/software-factory/sf-bl005/feasibility-001/integration/report.md",
+      "validation/software-factory/sf-bl005/feasibility-001/integration/manifest.json"
+    ],
+    "timing_evidence": {
+      "full_IT_probe": {
+        "started_utc": "2026-09-12T01:04:10.552Z",
+        "killed_utc": "2026-09-12T01:29:10.702Z",
+        "elapsed_min": 25.003,
+        "harness_timeout_ms": 1500000,
+        "cap_20min_violation": true,
+        "record_sha256": "6730383b763556ea8024f1c97c4a45263a774ee4914952ce3ad0a077f1673932"
+      },
+      "per_class_probe": {
+        "wall_time_s": 10.589,
+        "record_utc": "2026-09-12T01:30:23.549Z/2026-09-12T01:30:35.287Z",
+        "record_sha256": "5d7e5c2bacc08ffb31976db0fd859f18b3d1d97c76e9e2bf0170883748e10c48"
+      },
+      "limitation": "records are runtime-local agent session files; slice A task-local .multica/task-local raw logs (incl. killed-run surefire XMLs) destroyed with the slice A worktree; values recorded here as the durable form"
+    },
+    "kpi_source": "multica issue usage (see usage block)"
+  }
+}

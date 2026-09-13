@@ -1,0 +1,183 @@
+[ {
+  "scenarioId" : "HYP-SCENARIO-001",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#processFindForm",
+  "observationRef" : "http-behavior-observation-00011",
+  "action" : "FIND",
+  "conditions" : [ "last-name-criteria", "paged-results", "detail-view", "multi-result" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-001",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#processFindForm",
+  "observationRef" : "http-behavior-observation-00012",
+  "action" : "FIND",
+  "conditions" : [ "last-name-criteria", "paged-results", "detail-view", "multi-result" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-002",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#processFindForm",
+  "observationRef" : "http-behavior-observation-00012",
+  "action" : "FIND",
+  "conditions" : [ "last-name-criteria", "normalized-input" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-003",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#processCreationForm",
+  "observationRef" : "http-behavior-observation-00007",
+  "action" : "CREATE",
+  "conditions" : [ "contact-details", "post-operation-view" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-004",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm",
+  "observationRef" : "http-behavior-observation-00016",
+  "action" : "UPDATE",
+  "conditions" : [ "contact-details", "post-operation-view" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-004",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm",
+  "observationRef" : "http-behavior-observation-00017",
+  "action" : "UPDATE",
+  "conditions" : [ "contact-details", "post-operation-view" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-004",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm",
+  "observationRef" : "http-behavior-observation-00020",
+  "action" : "UPDATE",
+  "conditions" : [ "contact-details", "post-operation-view" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-005",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.PetController#processCreationForm",
+  "observationRef" : "http-behavior-observation-00022",
+  "action" : "CREATE",
+  "conditions" : [ "post-operation-view" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-006",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.PetController#processCreationForm",
+  "observationRef" : "http-behavior-observation-00024",
+  "action" : "REJECT",
+  "conditions" : [ "duplicate-name-guard" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-006",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.PetController#processCreationForm",
+  "observationRef" : "http-behavior-observation-00027",
+  "action" : "REJECT",
+  "conditions" : [ "duplicate-name-guard" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-006",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.PetController#processUpdateForm",
+  "observationRef" : "http-behavior-observation-00031",
+  "action" : "REJECT",
+  "conditions" : [ "duplicate-name-guard" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-006",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.PetController#processUpdateForm",
+  "observationRef" : "http-behavior-observation-00034",
+  "action" : "REJECT",
+  "conditions" : [ "duplicate-name-guard" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-011",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.PetController#processUpdateForm",
+  "observationRef" : "http-behavior-observation-00029",
+  "action" : "UPDATE",
+  "conditions" : [ "post-operation-view" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-011",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.PetController#processUpdateForm",
+  "observationRef" : "http-behavior-observation-00030",
+  "action" : "UPDATE",
+  "conditions" : [ "post-operation-view" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-007",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.VisitController#processNewVisitForm",
+  "observationRef" : "http-behavior-observation-00036",
+  "action" : "CREATE",
+  "conditions" : [ "post-operation-view" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-009",
+  "productionIdentity" : "org.springframework.samples.petclinic.vet.VetController#showVetList",
+  "observationRef" : "http-behavior-observation-00042",
+  "action" : "BROWSE",
+  "conditions" : [ "paged-results", "multi-result", "specialty-listed" ],
+  "role" : "EXACT_ROUTE_HANDLER"
+}, {
+  "scenarioId" : "HYP-SCENARIO-001",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner",
+  "observationRef" : "redirect:org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)|origin-test:http-behavior-observation-00011|get-test:http-behavior-observation-00019",
+  "action" : "FIND",
+  "conditions" : [ ],
+  "role" : "REDIRECT_TARGET_ASSOCIATION"
+}, {
+  "scenarioId" : "HYP-SCENARIO-001",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner",
+  "observationRef" : "redirect:org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)|origin-test:http-behavior-observation-00012|get-test:http-behavior-observation-00019",
+  "action" : "FIND",
+  "conditions" : [ ],
+  "role" : "REDIRECT_TARGET_ASSOCIATION"
+}, {
+  "scenarioId" : "HYP-SCENARIO-003",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner",
+  "observationRef" : "redirect:org.springframework.samples.petclinic.owner.OwnerController#processCreationForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)|origin-test:http-behavior-observation-00007|get-test:http-behavior-observation-00019",
+  "action" : "FIND",
+  "conditions" : [ ],
+  "role" : "REDIRECT_TARGET_ASSOCIATION"
+}, {
+  "scenarioId" : "HYP-SCENARIO-004",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner",
+  "observationRef" : "redirect:org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,int,org.springframework.web.servlet.mvc.support.RedirectAttributes)|origin-test:http-behavior-observation-00016|get-test:http-behavior-observation-00019",
+  "action" : "FIND",
+  "conditions" : [ ],
+  "role" : "REDIRECT_TARGET_ASSOCIATION"
+}, {
+  "scenarioId" : "HYP-SCENARIO-004",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner",
+  "observationRef" : "redirect:org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,int,org.springframework.web.servlet.mvc.support.RedirectAttributes)|origin-test:http-behavior-observation-00017|get-test:http-behavior-observation-00019",
+  "action" : "FIND",
+  "conditions" : [ ],
+  "role" : "REDIRECT_TARGET_ASSOCIATION"
+}, {
+  "scenarioId" : "HYP-SCENARIO-004",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner",
+  "observationRef" : "redirect:org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,int,org.springframework.web.servlet.mvc.support.RedirectAttributes)|origin-test:http-behavior-observation-00020|get-test:http-behavior-observation-00019",
+  "action" : "FIND",
+  "conditions" : [ ],
+  "role" : "REDIRECT_TARGET_ASSOCIATION"
+}, {
+  "scenarioId" : "HYP-SCENARIO-005",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner",
+  "observationRef" : "redirect:org.springframework.samples.petclinic.owner.PetController#processCreationForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)|origin-test:http-behavior-observation-00022|get-test:http-behavior-observation-00019",
+  "action" : "FIND",
+  "conditions" : [ ],
+  "role" : "REDIRECT_TARGET_ASSOCIATION"
+}, {
+  "scenarioId" : "HYP-SCENARIO-011",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner",
+  "observationRef" : "redirect:org.springframework.samples.petclinic.owner.PetController#processUpdateForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)|origin-test:http-behavior-observation-00029|get-test:http-behavior-observation-00019",
+  "action" : "FIND",
+  "conditions" : [ ],
+  "role" : "REDIRECT_TARGET_ASSOCIATION"
+}, {
+  "scenarioId" : "HYP-SCENARIO-011",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner",
+  "observationRef" : "redirect:org.springframework.samples.petclinic.owner.PetController#processUpdateForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)|origin-test:http-behavior-observation-00030|get-test:http-behavior-observation-00019",
+  "action" : "FIND",
+  "conditions" : [ ],
+  "role" : "REDIRECT_TARGET_ASSOCIATION"
+}, {
+  "scenarioId" : "HYP-SCENARIO-007",
+  "productionIdentity" : "org.springframework.samples.petclinic.owner.OwnerController#showOwner",
+  "observationRef" : "redirect:org.springframework.samples.petclinic.owner.VisitController#processNewVisitForm(org.springframework.samples.petclinic.owner.Owner,int,org.springframework.samples.petclinic.owner.Visit,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)|origin-test:http-behavior-observation-00036|get-test:http-behavior-observation-00019",
+  "action" : "FIND",
+  "conditions" : [ ],
+  "role" : "REDIRECT_TARGET_ASSOCIATION"
+} ]

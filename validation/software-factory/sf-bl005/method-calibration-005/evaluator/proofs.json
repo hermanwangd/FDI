@@ -1,0 +1,314 @@
+{
+  "baseline": {
+    "proposalsSha256": "e79bd365a8b14ae181219b13bbca43624c49fcbb4ccebfe455afe1a4bc49c786",
+    "methods": [
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-003",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#processCreationForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)"
+          }
+        },
+        "evidenceRef": "seed:http-behavior-observation-00007"
+      },
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-004",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,int,org.springframework.web.servlet.mvc.support.RedirectAttributes)"
+          }
+        },
+        "evidenceRef": "seed:http-behavior-observation-00016"
+      },
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-005",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+            "signature": "org.springframework.samples.petclinic.owner.PetController#processCreationForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)"
+          }
+        },
+        "evidenceRef": "seed:http-behavior-observation-00022"
+      },
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-011",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+            "signature": "org.springframework.samples.petclinic.owner.PetController#processUpdateForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)"
+          }
+        },
+        "evidenceRef": "seed:http-behavior-observation-00029"
+      },
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-009",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+            "signature": "org.springframework.samples.petclinic.vet.VetController#showVetList(int,org.springframework.ui.Model)"
+          }
+        },
+        "evidenceRef": "seed:http-behavior-observation-00042"
+      }
+    ],
+    "edges": []
+  },
+  "improved": {
+    "proposalsSha256": "03e885ec096e278cf85314ac6a46f294a6e233264cb73e3b094a16d1d6b035d9",
+    "methods": [
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-001",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#addPaginationModel(int,org.springframework.ui.Model,org.springframework.data.domain.Page)"
+          }
+        },
+        "evidenceRef": "static-call:org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)->org.springframework.samples.petclinic.owner.OwnerController#addPaginationModel(int,org.springframework.ui.Model,org.springframework.data.domain.Page)"
+      },
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-001",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#findPaginatedForOwnersLastName(int,java.lang.String)"
+          }
+        },
+        "evidenceRef": "static-call:org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)->org.springframework.samples.petclinic.owner.OwnerController#findPaginatedForOwnersLastName(int,java.lang.String)"
+      },
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-002",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#addPaginationModel(int,org.springframework.ui.Model,org.springframework.data.domain.Page)"
+          }
+        },
+        "evidenceRef": "static-call:org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)->org.springframework.samples.petclinic.owner.OwnerController#addPaginationModel(int,org.springframework.ui.Model,org.springframework.data.domain.Page)"
+      },
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-002",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#findPaginatedForOwnersLastName(int,java.lang.String)"
+          }
+        },
+        "evidenceRef": "static-call:org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)->org.springframework.samples.petclinic.owner.OwnerController#findPaginatedForOwnersLastName(int,java.lang.String)"
+      },
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-003",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#processCreationForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)"
+          }
+        },
+        "evidenceRef": "seed:http-behavior-observation-00007"
+      },
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-004",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#processUpdateOwnerForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,int,org.springframework.web.servlet.mvc.support.RedirectAttributes)"
+          }
+        },
+        "evidenceRef": "seed:http-behavior-observation-00016"
+      },
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-005",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+            "signature": "org.springframework.samples.petclinic.owner.PetController#processCreationForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)"
+          }
+        },
+        "evidenceRef": "seed:http-behavior-observation-00022"
+      },
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-011",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+            "signature": "org.springframework.samples.petclinic.owner.PetController#processUpdateForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)"
+          }
+        },
+        "evidenceRef": "seed:http-behavior-observation-00029"
+      },
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-011",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+            "signature": "org.springframework.samples.petclinic.owner.PetController#updatePetDetails(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet)"
+          }
+        },
+        "evidenceRef": "static-call:org.springframework.samples.petclinic.owner.PetController#processUpdateForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)->org.springframework.samples.petclinic.owner.PetController#updatePetDetails(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet)"
+      },
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-009",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+            "signature": "org.springframework.samples.petclinic.vet.VetController#showVetList(int,org.springframework.ui.Model)"
+          }
+        },
+        "evidenceRef": "seed:http-behavior-observation-00042"
+      },
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-009",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+            "signature": "org.springframework.samples.petclinic.vet.VetController#addPaginationModel(int,org.springframework.data.domain.Page,org.springframework.ui.Model)"
+          }
+        },
+        "evidenceRef": "static-call:org.springframework.samples.petclinic.vet.VetController#showVetList(int,org.springframework.ui.Model)->org.springframework.samples.petclinic.vet.VetController#addPaginationModel(int,org.springframework.data.domain.Page,org.springframework.ui.Model)"
+      },
+      {
+        "pair": {
+          "scenarioId": "HYP-SCENARIO-009",
+          "method": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+            "signature": "org.springframework.samples.petclinic.vet.VetController#findPaginated(int)"
+          }
+        },
+        "evidenceRef": "static-call:org.springframework.samples.petclinic.vet.VetController#showVetList(int,org.springframework.ui.Model)->org.springframework.samples.petclinic.vet.VetController#findPaginated(int)"
+      }
+    ],
+    "edges": [
+      {
+        "edge": {
+          "scenarioId": "HYP-SCENARIO-001",
+          "from": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)"
+          },
+          "to": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#addPaginationModel(int,org.springframework.ui.Model,org.springframework.data.domain.Page)"
+          }
+        },
+        "evidenceRef": "static-call:org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)->org.springframework.samples.petclinic.owner.OwnerController#addPaginationModel(int,org.springframework.ui.Model,org.springframework.data.domain.Page)"
+      },
+      {
+        "edge": {
+          "scenarioId": "HYP-SCENARIO-001",
+          "from": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)"
+          },
+          "to": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#findPaginatedForOwnersLastName(int,java.lang.String)"
+          }
+        },
+        "evidenceRef": "static-call:org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)->org.springframework.samples.petclinic.owner.OwnerController#findPaginatedForOwnersLastName(int,java.lang.String)"
+      },
+      {
+        "edge": {
+          "scenarioId": "HYP-SCENARIO-002",
+          "from": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)"
+          },
+          "to": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#addPaginationModel(int,org.springframework.ui.Model,org.springframework.data.domain.Page)"
+          }
+        },
+        "evidenceRef": "static-call:org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)->org.springframework.samples.petclinic.owner.OwnerController#addPaginationModel(int,org.springframework.ui.Model,org.springframework.data.domain.Page)"
+      },
+      {
+        "edge": {
+          "scenarioId": "HYP-SCENARIO-002",
+          "from": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)"
+          },
+          "to": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java",
+            "signature": "org.springframework.samples.petclinic.owner.OwnerController#findPaginatedForOwnersLastName(int,java.lang.String)"
+          }
+        },
+        "evidenceRef": "static-call:org.springframework.samples.petclinic.owner.OwnerController#processFindForm(int,org.springframework.samples.petclinic.owner.Owner,org.springframework.validation.BindingResult,org.springframework.ui.Model)->org.springframework.samples.petclinic.owner.OwnerController#findPaginatedForOwnersLastName(int,java.lang.String)"
+      },
+      {
+        "edge": {
+          "scenarioId": "HYP-SCENARIO-011",
+          "from": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+            "signature": "org.springframework.samples.petclinic.owner.PetController#processUpdateForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)"
+          },
+          "to": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/owner/PetController.java",
+            "signature": "org.springframework.samples.petclinic.owner.PetController#updatePetDetails(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet)"
+          }
+        },
+        "evidenceRef": "static-call:org.springframework.samples.petclinic.owner.PetController#processUpdateForm(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet,org.springframework.validation.BindingResult,org.springframework.web.servlet.mvc.support.RedirectAttributes)->org.springframework.samples.petclinic.owner.PetController#updatePetDetails(org.springframework.samples.petclinic.owner.Owner,org.springframework.samples.petclinic.owner.Pet)"
+      },
+      {
+        "edge": {
+          "scenarioId": "HYP-SCENARIO-009",
+          "from": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+            "signature": "org.springframework.samples.petclinic.vet.VetController#showVetList(int,org.springframework.ui.Model)"
+          },
+          "to": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+            "signature": "org.springframework.samples.petclinic.vet.VetController#addPaginationModel(int,org.springframework.data.domain.Page,org.springframework.ui.Model)"
+          }
+        },
+        "evidenceRef": "static-call:org.springframework.samples.petclinic.vet.VetController#showVetList(int,org.springframework.ui.Model)->org.springframework.samples.petclinic.vet.VetController#addPaginationModel(int,org.springframework.data.domain.Page,org.springframework.ui.Model)"
+      },
+      {
+        "edge": {
+          "scenarioId": "HYP-SCENARIO-009",
+          "from": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+            "signature": "org.springframework.samples.petclinic.vet.VetController#showVetList(int,org.springframework.ui.Model)"
+          },
+          "to": {
+            "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+            "path": "src/main/java/org/springframework/samples/petclinic/vet/VetController.java",
+            "signature": "org.springframework.samples.petclinic.vet.VetController#findPaginated(int)"
+          }
+        },
+        "evidenceRef": "static-call:org.springframework.samples.petclinic.vet.VetController#showVetList(int,org.springframework.ui.Model)->org.springframework.samples.petclinic.vet.VetController#findPaginated(int)"
+      }
+    ]
+  }
+}

@@ -41,6 +41,23 @@ analysis only.
   active/queued/retrying runs. Use exactly one trigger: assignment, mention or
   rerun. After an ambiguous response, query existing runs before retrying.
   These are instruction-level safeguards, not atomic programmatic deduplication.
+- Choose the specialist start mode before creating or activating its issue.
+  If issue creation includes the specialist assignee, that assignment is the
+  sole start trigger; the Coordinator MUST NOT post a structured mention to the
+  same specialist, activate the same assignment again, or rerun it. If the issue
+  is created unassigned, one structured specialist mention is the sole start
+  trigger; do not also assign, activate, or rerun it. Immediately after either
+  trigger, query the issue's runs and record the observed run identity before
+  another routing mutation. The phrase "assignment plus mention" is always two
+  triggers and is prohibited.
+- At specialist-run intake, compare the current stable routing/review key with
+  earlier runs by the same specialist role and with any exact-candidate verdict
+  already recorded on the issue. If an earlier equivalent run is queued,
+  running, or completed, or the exact verdict already exists, classify the
+  later attempt as `COALESCED_DUPLICATE`: perform no implementation or review,
+  emit no second verdict or Coordinator mention, and stop after recording the
+  duplicate attempt. This intake guard limits damage from runtime replay; it
+  does not replace source-side exclusive-trigger dispatch.
 - Resolve every envelope revision with `git rev-parse --verify '<sha>^{commit}'`
   before issue creation and record the resulting full 40-character SHA. The
   assigned checkout repeats the check and verifies required ancestry before
@@ -125,7 +142,9 @@ analysis only.
   Coordinator mention in the exact-candidate verdict and no reassignment. The
   Coordinator claims the issue with a non-starting assignment only after its run
   begins. This avoids both duplicate triggers and the assignment/task-completion
-  race for implementation and review handoffs.
+  race for implementation and review handoffs. That verdict handoff is distinct
+  from the Coordinator's earlier specialist start trigger; it does not authorize
+  assignment plus a reviewer mention when review begins.
 - Preserve the managed worktree's starting commit ancestry and assigned branch.
   Replay/cherry-pick recovery changes onto it; bind verification to the new SHA.
 - Review exact candidates in a separate export for Git-independent tests, or an
@@ -183,6 +202,180 @@ run ID. Record source, collection time and completeness. Missing usage is unknow
 not zero. Compare the same role and similar scope, and never trade away required
 tests or independent review to improve a metric.
 
+Report KPI from largest to smallest scope: `E2E delivery -> stage -> run`. The
+headline E2E row shows five dimensions only: time, token cost, quality, flow and
+completeness/human intervention. Drill into stages and individual runs only to
+explain an abnormal headline value. A run duration is never reported as E2E
+delivery time.
+
+- **Time:** E2E lead time, stage lead time and run duration.
+- **Token cost:** input and output tokens; cache-read remains separate.
+- **Quality:** confirmed errors, test failures, rework and first-pass result.
+- **Flow:** dependency wait, stuck count and stuck duration. Dependency waiting
+  is not stuck while its declared predecessor is making valid progress.
+- **Completeness and human intervention:** missing evidence or usage, plus
+  planned Human gates and unplanned manual intervention reported separately.
+
+Use `null` with an explicit missing entry for unfinished or unreported values;
+never substitute zero. Count expected negative-test rejection separately from
+product or code errors. Deduplicate every aggregation by full run ID, and keep
+coordination runs distinct from retries.
+
+Compact machine-readable record:
+
+```json
+{
+  "execution_id": "SF-BL-NNN-EXECUTION-NNN",
+  "category": "FEATURE_IMPLEMENTATION",
+  "size": "M",
+  "as_of": "2026-09-13T00:00:00Z",
+  "status": "IN_PROGRESS",
+  "e2e": {
+    "target_seconds": 7200,
+    "target_state": "GREEN",
+    "lead_time_seconds": null,
+    "elapsed_seconds": 0
+  },
+  "cost": {
+    "input_tokens": null,
+    "output_tokens": null,
+    "cache_read_tokens": null,
+    "usage_complete": false
+  },
+  "quality": {
+    "error_count": 0,
+    "test_failure_count": 0,
+    "rework_count": 0,
+    "first_pass": null
+  },
+  "flow": {
+    "stuck_count": 0,
+    "stuck_seconds": 0,
+    "dependency_wait_seconds": 0
+  },
+  "completeness": {
+    "missing_count": 2,
+    "missing": ["final_verdict", "token_usage"]
+  },
+  "human": {
+    "planned_gate_count": 0,
+    "unplanned_intervention_count": 0,
+    "human_wait_seconds": 0
+  },
+  "monitor": {
+    "id": "execution-scoped-monitor-id",
+    "cadence": "PT5M",
+    "destination": "owning-thread",
+    "deduplication_key": "execution_id+kpi+state+evidence_revision",
+    "state": "ACTIVE"
+  },
+  "stages": [],
+  "runs": []
+}
+```
+
+`stages` and `runs` are drill-down arrays using the same dimensions. Record a
+final E2E lead time only after the governing acceptance point is reached; before
+then report elapsed time and leave lead time `null`.
+
+### Provisional S/M/L delivery targets
+
+Keep two clocks distinct. **Delivery E2E** runs from explicit work selection to
+FDP acceptance of complete delivery evidence. **Execution cycle time** retains
+the narrower definition in the core KPI table below: first authorized
+implementation start to the final valid independent integrated-candidate
+verdict. Never substitute one clock for the other.
+
+Until each category/size cohort contains at least five comparable completed
+deliveries, use these as provisional management targets rather than measured
+baselines:
+
+| Size | Provisional Delivery E2E target |
+|---|---|
+| S | At or below 45 minutes. |
+| M | At or below 2 hours. |
+| L | At or below 8 hours. |
+
+Classify time as green at or below target, yellow above target through 1.5 times
+target, and red above 1.5 times target. A genuine stuck condition or unplanned
+Human recovery also makes the delivery red. Planned Human Authority and declared
+dependency waiting remain in Delivery E2E and are additionally reported by
+cause; neither is automatically stuck.
+
+Time color never establishes delivery success. Missing required evidence,
+unclassified test failures, candidate-attributable failures, or runtime mismatch
+prevent a successful-delivery claim even when time is green. Preserve the
+pre-dispatch size; a material authorized scope change receives a dated size
+revision instead of retrospective resizing.
+
+### KPI ownership and improvement
+
+Every KPI has a **metric owner**, accountable for complete and reproducible
+measurement, and an **improvement owner**, accountable for correcting the cause
+when the target is missed. Assign responsibility by delivery role, never by a
+particular agent or orchestration product.
+
+| KPI area | Metric owner | Improvement owner |
+|---|---|---|
+| Delivery E2E and target status | Feature Delivery Plane | Feature Delivery Plane |
+| Queue, handoff, stuck and duplicate dispatch | Execution Coordinator | Execution Coordinator |
+| Token consumption | Execution Coordinator | The stage owner causing the abnormal usage |
+| Implementation first-pass quality | Feature Delivery Plane | Delivery Engineer |
+| Review escape or missed finding | Feature Delivery Plane | Independent Reviewer |
+| Test and runtime compliance | Verification Owner | Verification Owner |
+| Evidence completeness and digest read-back | Evidence Receiver | The stage owner producing the missing or invalid evidence |
+| Unplanned Human intervention | Feature Delivery Plane | The role whose process caused the intervention |
+
+A reviewer must not weaken review to improve first-pass rate. Human Authority
+owns planned authority decisions, not engineering-flow defects.
+
+For every yellow, red, or delivery-blocking quality result:
+
+1. Record the exact KPI, scope, measured value, target and evidence.
+2. Classify the cause as execution, dependency, quality, evidence, environment,
+   authority or measurement.
+3. Assign one improvement owner and one bounded corrective action.
+4. Execute through the existing envelope when in scope; otherwise return to FDP
+   for replan or Human Authority for a genuine authority decision.
+5. Remeasure the same KPI without removing required tests, review or evidence.
+
+One missed target creates one primary corrective action per improvement cycle.
+Additional observations remain recorded but do not trigger unrelated process
+changes until the primary action is measured.
+
+### KPI alert rules
+
+Send one actionable alert on a state transition, not on every polling cycle:
+
+- **Immediate:** independent `FAIL` or actionable `INCONCLUSIVE`, red E2E,
+  genuine stuck, duplicate dispatch, unplanned Human recovery, or terminal
+  delivery with missing evidence, unclassified failures or runtime mismatch.
+- **Warning:** first transition into yellow E2E, or usage still unreported after
+  its run becomes terminal.
+- **Quiet:** unchanged state, healthy active work, declared dependency waiting,
+  or a long-running process that continues to produce valid progress.
+
+Route the alert to the metric owner and improvement owner. Include execution ID,
+KPI, measured value, target, cause, evidence and next action. Deduplicate by
+`execution_id + KPI + state + evidence revision`; notify again only when severity
+changes, new evidence changes the diagnosis, user action becomes necessary, or
+the abnormal condition resolves. Monitoring reports facts and never changes
+scope, acceptance gates or authority.
+
+For every new parent execution created after this rule, KPI monitoring is a
+pre-dispatch requirement. The controller records the execution ID, category and
+S/M/L size, Delivery E2E target, metric owners, improvement owners, monitoring
+cadence, notification destination and deduplication key before starting the first
+implementation run. Missing monitor configuration blocks dispatch; it does not
+authorize a weaker default.
+
+Use one execution-scoped monitor rather than one unbounded project poller. Start
+it when the parent execution is selected, keep it quiet under the rules above,
+and stop it only after FDP acceptance, explicit cancellation or supersession.
+Before stopping, write one final KPI snapshot with complete or explicitly missing
+values and the monitor outcome. Existing historical executions are not rewritten
+to simulate compliance with this prospective rule.
+
 | KPI | Definition | Current baseline (HERM-273 through HERM-282) | Next target | First optimization action when abnormal |
 |---|---|---|---|---|
 | token cost | Sum input and output across every run; report cache-read separately because its provider cost differs. | 32 runs; 2,333,118 input+output and 60,464,384 cache-read tokens, collected 2026-09-06. | Coordinator share at or below 20%, with zero duplicate-trigger runs. | Remove duplicate triggers and repeated context loading before reducing verification. |
@@ -191,7 +384,50 @@ tests or independent review to improve a metric.
 
 ## Comparison and decision
 
-Use at least three comparable slices in each before/after cohort and report sample
+### Size-normalized comparison
+
+Before dispatch, FDP records work category, size and a concrete sizing rationale
+in the execution brief. Categories are feature/fix, investigation/experiment,
+and documentation; these are KPI cohorts, not replacement Backlog work types.
+Size describes the independently acceptable delivery outcome, not agent count,
+slice count, file count or tokens consumed:
+
+| Size | Pre-dispatch criterion |
+|---|---|
+| S | One module, existing contract, local verification sufficient. |
+| M | Cross-module or interface change requiring integration verification. |
+| L | Cross-system, external runtime, migration or end-to-end isolation verification. |
+
+Use the highest applicable criterion. Preserve the original classification;
+authorized scope changes get a dated scope revision, never retrospective sizing
+to excuse overruns. Historical unclassified work is descriptive only, not a
+prospectively sized benchmark.
+
+Keep raw metrics. Token index = total input+output / prior same-category,
+same-size median; cycle index = elapsed time / that cohort's elapsed-time median.
+Lower than 1 means lower consumption/time, not automatically better quality.
+Cache reads stay separate; token volume is not currency cost. Freeze the cohort
+IDs and measurement window before comparison, exclude the current execution,
+and require at least five comparable observations per reference cohort. Missing
+usage, insufficient samples or a zero median yield N/A, never an invented index.
+Report model/runtime/instruction and verification-profile differences.
+
+Include all parent execution runs: coordination, implementation, review,
+remediation, integration and duplicate triggers, deduplicated by full run ID.
+Do not divide the headline cost by slices. Cycle time runs from first authorized
+work start to the final valid independent integrated-candidate verdict; report
+dispatch-to-return and FDP intake separately. Waiting remains in elapsed time
+and is additionally classified, not subtracted. A superseded PASS is not the end
+of a corrected execution's clock.
+
+First-pass rate is not divided by size: compare same-cohort percentage points
+and show numerator/denominator. Implementation first-pass requires independent
+exact-candidate review; investigation delivery acceptance is a separately named
+metric. Report integrated review separately. Later intake findings and rework
+remain visible even after initial review PASS. Never lower verification gates
+to improve cost or time; do not aggregate these metrics into a single score.
+
+Use at least five comparable observations in each before/after cohort and report sample
 count, range, runtime/model/instruction revisions and missing data. Evaluate all
 three KPIs together: a token reduction is not an improvement when cycle time or
 first-pass quality regresses. Select one evidenced optimization per cycle. The
@@ -202,11 +438,14 @@ fan-out; parallelism is credited only when it reduces measured wall-clock time.
 
 ```text
 Slice / canonical Backlog / scope / complexity rationale:
+KPI work category / pre-dispatch S-M-L / rationale / scope revision:
+Reference cohort IDs and window / sample count / token and cycle indices or N/A:
 Bounded-slice estimate / gate result / exception rationale or N/A:
 Base / candidate / integration candidate:
 Exact-input manifest digest / identity verification / discovery deviation:
 Model / runtime / instruction revision:
 Run IDs and roles / source / collected at / completeness:
+KPI monitor ID / cadence / destination / deduplication key / final state:
 Input / output / cache-read / duplicate-trigger runs:
 Start / implementation complete / review start / verdict / combined verdict:
 Cycle time / preflight time and calls / total tool calls / review-routing wait:

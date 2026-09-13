@@ -1,0 +1,14 @@
+{
+  "reviewer": "/root/trace_review",
+  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "visibility": "EVALUATOR_ONLY",
+  "sourceChecks": [
+    {"path":"src/main/java/org/springframework/samples/petclinic/owner/VisitController.java","lines":[98,108],"finding":"Selected success handler calls owner.addVisit(petId,visit); petId is int, owner and visit have exact source parameter types."},
+    {"path":"src/main/java/org/springframework/samples/petclinic/owner/Owner.java","lines":[126,173,178,182],"finding":"addVisit(Integer,Visit) is target of the boxed call; its body calls getPet(Integer), assigns the source Pet result, then calls Pet.addVisit(Visit)."},
+    {"path":"src/main/java/org/springframework/samples/petclinic/owner/Pet.java","lines":[81,82],"finding":"addVisit(Visit) is present and its body adds the visit to the collection."}
+  ],
+  "acceptedNewMethodClaims": 3,
+  "acceptedNewEdgeClaims": 3,
+  "sourceExecutionObserved": false,
+  "oldProofTupleReuse": "Exact existing pair/edge and evidence-reference tuples retained; no source snapshot change."
+}

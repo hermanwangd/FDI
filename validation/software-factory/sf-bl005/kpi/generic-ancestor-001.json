@@ -1,0 +1,63 @@
+{
+  "execution_id": "SF-BL-005-GENERIC-ANCESTOR-001",
+  "category": "FEATURE_IMPLEMENTATION",
+  "size": "M",
+  "as_of": "2026-09-13T03:39:20Z",
+  "status": "FRESH_REVIEW_IN_PROGRESS",
+  "e2e": {
+    "target_seconds": 7200,
+    "target_state": "YELLOW",
+    "lead_time_seconds": null,
+    "elapsed_seconds": 7827
+  },
+  "cost": {
+    "input_tokens": 1085365,
+    "output_tokens": 220209,
+    "cache_read_tokens": 23740416,
+    "usage_complete": false
+  },
+  "quality": {
+    "error_count": 1,
+    "test_failure_count": 0,
+    "rework_count": 1,
+    "first_pass": false
+  },
+  "flow": {
+    "stuck_count": 0,
+    "stuck_seconds": 0,
+    "dependency_wait_seconds": 2758
+  },
+  "completeness": {
+    "missing_count": 5,
+    "missing": [
+      "fresh_review_verdict",
+      "combined_verification_result",
+      "combined_integration_verdict",
+      "java_17_runtime_verification",
+      "active_coordination_run_usage"
+    ]
+  },
+  "human": {
+    "planned_gate_count": 0,
+    "unplanned_intervention_count": 0,
+    "human_wait_seconds": 0
+  },
+  "improvement": {
+    "metric": "quality.first_pass",
+    "cause": "MULTILEVEL_GENERIC_ANCESTOR_INCORRECTLY_RESOLVED",
+    "metric_owner": "Feature Delivery Plane",
+    "improvement_owner": "Delivery Engineer",
+    "corrective_action": "Reject generic substitution unless the receiver itself has the supported direct generic parent and add the non-generic intermediary regression.",
+    "status": "IN_PROGRESS",
+    "evidence": "HERM-514"
+  },
+  "monitor": {
+    "id": "generic-kpi-completion",
+    "cadence": "PT5M",
+    "destination": "owning-thread",
+    "deduplication_key": "execution_id+kpi+state+evidence_revision",
+    "state": "ACTIVE"
+  },
+  "stages": [],
+  "runs": []
+}

@@ -1,0 +1,58 @@
+{
+  "reviewer": "/root/trace_review",
+  "role": "EVALUATOR_NOT_PRODUCER",
+  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "generationSha256": "806f8814b5b4f5c0c6536d520980ecfb8577e419f008a5bf463d7b64637c4936",
+  "runtimeJarSha256": "b10ff6376ec0285b5cddeef284136e6e445173fe09bdccec6d63d0782dfe9dcb",
+  "proofAdjudication": {
+    "mode": "EXACT_UNCHANGED_CLAIMS_AND_REFERENCES_REBOUND_TO_NEW_RUNTIME_ARTIFACTS",
+    "baselineProposalsEqualHistorical007": true,
+    "improvedProposalsEqualHistorical007": true,
+    "newClaimsRequiringSourceAdjudication": 0,
+    "removedClaims": 0,
+    "allFourLedgerArraysEqualHistorical007": true,
+    "truthByteSha256": "39aa27459305c05a4c983b0c414c60b39ec3e460491b9edb5da49c620bc2de2c",
+    "truthModified": false
+  },
+  "attempts": [
+    {
+      "ordinal": 1,
+      "manifest": "comparison-manifest.json",
+      "manifestSha256": "89f5a57b5849d2fad0b667a7bb5cfdec82fa14a8a4b9ab4095e3d109c64a0639",
+      "proofs": "evaluator/proofs.json",
+      "officialScorerExit": 1,
+      "stageEvaluatorExit": 1,
+      "failure": "INVALID_INPUT_SCHEMA_TOOL_RETURN_TRUNCATION_WARNING_IN_PREPARED_LEDGER",
+      "comparisonOutputCreated": false,
+      "stageOutputCreated": false,
+      "failedInputsPreserved": true
+    },
+    {
+      "ordinal": 2,
+      "manifest": "comparison-manifest-002.json",
+      "manifestSha256": "fa67470061d4d4e02b54b629a035debfdb8e874364361f02a142d62c4d807511",
+      "proofs": "evaluator/proofs-002.json",
+      "proofsSha256": "a8fd21db2e0d56137098bf89520409b23a6e9d34ec009e58e33f4299fe6531df",
+      "preflight": "COMPLETE_JSON_PARSED_AND_ALL_LEDGER_ARRAYS_PARITY_VALIDATED",
+      "officialScorerExit": 0,
+      "stageEvaluatorExit": 0,
+      "comparisonSha256": "db58434d388da45151a944c75014ed620ae0b711fa2b66eab4f64c7a748d4b38",
+      "stageAggregateSha256": "b7dbe956dc857df7379f67af7318d7a5ab84e6a1ef9784db52398524b19a6a27"
+    }
+  ],
+  "result": {
+    "truePositives": 28,
+    "falsePositives": 5,
+    "falseNegatives": 12,
+    "precision": 0.8484848484848485,
+    "recall": 0.7,
+    "precisionDeltaVs007": 0,
+    "recallDeltaVs007": 0,
+    "candidateRecall": 0.7,
+    "candidatePrecision": 0.4745762711864407,
+    "retention": 1.0,
+    "traceOnlyUnknownFN": 12
+  },
+  "decision": "NO_MEASURED_IMPROVEMENT",
+  "limitations": ["CALIBRATION_NOT_HOLDOUT", "CHAIN_COVERAGE_UNAVAILABLE_ONE_DEFINITION_MISSING", "OFFICIAL_SCORER_RETURNS_MECHANICS_NOT_EXPERIMENT_GO", "NO_GOLD_IDENTITIES_SHARED_WITH_PRODUCER"]
+}

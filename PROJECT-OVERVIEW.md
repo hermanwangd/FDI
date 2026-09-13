@@ -57,6 +57,20 @@ Feature Delivery: T1 → T2 → T3 → T4
 - **Execution Plane** executes approved WorkItems, coordinates eligible
   parallelism, retry, review, integration, regression, and evidence assembly.
 
+The Software Factory analyzes verified independent-review, verification,
+execution, delivery, and KPI evidence to recommend bounded improvements to
+tests, delivery controls, engineering plans, or Product Knowledge. A
+recommendation creates no implementation, Product, project-truth, Backlog
+selection, or closure authority. Every resulting change follows the existing
+Human Authority, Feature Delivery, Execution, verification, and Product
+Knowledge paths.
+
+Unrelated Backlog items may execute in separate lanes when each has an exact
+envelope, isolated workspace, non-overlapping mutation ownership, independent
+evidence and closure, and a bounded share of the aggregate resource limit. The
+five active controls remain singletons maintained by one serialized Feature
+Delivery Plane owner.
+
 The current Execution Plane runtime may be Multica. Core contracts depend only
 on the role boundary, never on a vendor, model, agent, or orchestration product.
 
@@ -83,6 +97,12 @@ Graphify provides structural observations. Repository tests provide behavioral
 evidence. Git, pull requests, and delivery history provide delivery evidence.
 None establishes Product truth automatically. Reverse discovery always produces
 proposals for Human review.
+
+A delivery finding enters Product Knowledge only when it contains genuine
+Product-learning evidence. It remains an Observation or Proposal under the
+existing Product Knowledge process until Human Authority accepts it. Engineering,
+execution, orchestration, and tooling findings must not be represented as
+Product Knowledge merely to obtain an authority or publication path.
 
 PKB-001 remains immutable validation history and provides reusable Java,
 Graphify-provider, scenario, reverse-discovery, and evaluation foundations. It

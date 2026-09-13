@@ -1,0 +1,130 @@
+{
+  "execution_id": "SF-BL-005-FEASIBILITY-001",
+  "slice": "A",
+  "slice_routing_key": "sfbl005-feasibility-001-slice-A-v1",
+  "parent_controller_routing_key": "sfbl005-feasibility-001-controller-v1",
+  "issue": "HERM-470",
+  "verdict": "FEASIBLE",
+  "prepared_utc": "2026-09-12T01:31:00Z",
+  "repository_pins": {
+    "local_repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+    "dispatch_commit": "72c1798d451b106eb7bf2f2c5ecd9e68d13a042f",
+    "control_commit": "932cf2d5a56697f58a0959bdf9def97be6f4e299",
+    "construction_base": "0e7e827eb9c41df6804ffa56ea0f0ac7e2eb3355",
+    "spec_revision": "1d49e06fcd63fa2047119e045f8b1c3bc5f5c435",
+    "managed_worktree_head": "932af61e51f3b1c568f5023dd610d050faa6fd1b",
+    "managed_branch": "agent/delivery-engineer/herm-470",
+    "ancestry_verified": true,
+    "input_digests_verified": true
+  },
+  "candidate_source": {
+    "url": "https://github.com/MPfria02/Library_Management_System.git",
+    "revision": "99af0cb66c70b9bd98c16e3b0c22dc015debb779",
+    "clean": true,
+    "files": 213,
+    "file_digests_sha256": "c2cde305c0737f839a21b3efd4bbcfff59375013ea4a38a159aacdda299f5525"
+  },
+  "toolchain": {
+    "java": "OpenJDK 17.0.20.1 (Homebrew, /opt/homebrew/opt/openjdk@17)",
+    "maven": "3.9.9 (task-local, archive.apache.org, sha256 7a9cdf674fc1703d6382f5f330b3d110ea1b512b51f1652846d9e4e8a588d766)",
+    "maven_opts": "-Xmx2g",
+    "docker": "28.4.0 (pre-installed)"
+  },
+  "commands": [
+    {
+      "command": "mvn test",
+      "cwd": "backend/",
+      "exit": 1,
+      "tests": 290, "failures": 0, "errors": 1, "skipped": 0,
+      "notes": "BUILD FAILURE; BackendApplicationTests.contextLoads errors: upstream missing @ActiveProfiles(\"test\") drives Flyway to localhost:5432 Postgres. All other 289 tests pass. ~37 s."
+    },
+    {
+      "command": "mvn -Dtest='*IT' test",
+      "cwd": "backend/",
+      "exit": "TIMEOUT (>20 min cap; killed at 25 min harness bound)",
+      "tests_recorded_at_kill": 77, "failures": 0, "errors": 48, "skipped": 0,
+      "started_utc": "2026-09-12T01:04:10.552Z",
+      "killed_utc": "2026-09-12T01:29:10.702Z",
+      "elapsed_min": 25.003,
+      "harness_timeout_ms": 1500000,
+      "cap_20min_violation": true,
+      "timing_source": "preserved harness task record bash-rjcpwvw0.json, sha256 6730383b763556ea8024f1c97c4a45263a774ee4914952ce3ad0a077f1673932 (runtime-local; slice A task-local .multica/task-local logs destroyed with its worktree, raw surefire XMLs of the killed run not preserved)",
+      "notes": "BookCatalogControllerIT 29/29 pass. AuthControllerIT + UserControllerIT nested suites error on HikariPool acquisition (30 s/test) as contexts accumulate. BookAdminControllerIT, BookStatisticsControllerIT, InventoryControllerIT never started. Testcontainers isolation effective; container reaped after JVM exit."
+    },
+    {
+      "command": "mvn -Dtest='BookStatisticsControllerIT' test",
+      "cwd": "backend/",
+      "exit": 0,
+      "tests": 19, "failures": 0, "errors": 0, "skipped": 0,
+      "wall_time_s": 10.589,
+      "timing_record_utc": "2026-09-12T01:30:23.549Z/2026-09-12T01:30:35.287Z",
+      "notes": "BUILD SUCCESS in 10.6 s; tested per-class IT execution clean (BookStatisticsControllerIT only; no claim for untested IT classes)."
+    },
+    {
+      "command": "FdiApplication test-behavior-extract --repository-root <backend> --repository-id MPfria02/Library_Management_System --revision 99af0cb... --output <task-local>",
+      "exit": 0,
+      "result": "fail-closed refusal: DUPLICATE_TEST_IDENTITY (BookStatisticsControllerIT declares shouldReturn0WhenNoBooksExist in two @Nested classes; identity is file#method). No output written."
+    },
+    {
+      "command": "java -cp <harness:framework classes@72c1798 + deps> HttpProbeHarness <checkout> <all 30 test files>",
+      "exit": 0,
+      "observations": 170,
+      "distinct_literal_method_route_pairs": 73,
+      "gaps": 5,
+      "route_coverage": "36/36 declared method-level routes observed (100% after literal-to-{variable} normalization)",
+      "output_sha256": "ecff4c6dcdfff590dcbb6f3d3c1561a893db7499d634495a2eadf474a50d7113"
+    },
+    {
+      "command": "FdiApplication graphify-runtime-probe --command <.fdi-work/graphify-venv312/bin/graphify> --descriptor <task-local> --output <task-local>",
+      "exit": 0,
+      "result": "runtime described: graphifyy 0.1.14, MCP stdio, wire 1.29.1, executable sha256 4e1368411d751dac9099ae8311522e24c1d2963298912d49494bf6caff09e55b; status INTERFACE_DESCRIBED_NOT_SNAPSHOT_BOUND",
+      "output_sha256": "786d60984fab518682c7c605f60dc7946e673b9734df3cb274a98f0aefcef57b"
+    }
+  ],
+  "testcontainers_isolation": {
+    "reuse_enable": false,
+    "withReuse_in_source": "inert",
+    "ryuk_sidecar_observed": true,
+    "containers_left_after_runs": 0
+  },
+  "resources": {
+    "host_ram_gb": 16,
+    "min_free_during_probe": "~36% (~5.8 GB free before Maven; ~50% mid-IT)",
+    "maven_heap": "2 GB",
+    "aggregate_under_8gb": true
+  },
+  "task_local_evidence": {
+    "root": ".multica/task-local/",
+    "files": {
+      "lms-source-digests.txt": "c2cde305c0737f839a21b3efd4bbcfff59375013ea4a38a159aacdda299f5525",
+      "http-probe-all.txt": "ecff4c6dcdfff590dcbb6f3d3c1561a893db7499d634495a2eadf474a50d7113",
+      "routes-observed.txt": "e3b81304a5745d8521c74ff3a50ae89ce80a58cc3bc2d77202d521099579b07e",
+      "harness/HttpProbeHarness.java": "dac83db9f73586f3012b27384f038a99671de2da3f57b008e9738875c697a943",
+      "graphify-interface-descriptor.json": "eaba966800c8d284a2f4980a0e0d8fb13b006017b9fd587ed8ceec0c443ea214",
+      "graphify-runtime-probe.json": "786d60984fab518682c7c605f60dc7946e673b9734df3cb274a98f0aefcef57b"
+    },
+    "retention": "task-local disposable; digests above are the durable record; surefire reports under .multica/task-local/lms-probe/backend/target/surefire-reports"
+  },
+  "changed_paths": [
+    "validation/software-factory/sf-bl005/feasibility-001/candidate/report.md",
+    "validation/software-factory/sf-bl005/feasibility-001/candidate/manifest.json"
+  ],
+  "usage": {
+    "input_tokens": 184258,
+    "output_tokens": 48273,
+    "cache_read_tokens": 7394816,
+    "cache_write_tokens": 0,
+    "terminal_runs": "2/2 metered",
+    "unreported_runs": 0,
+    "source": "multica issue usage on HERM-470, refreshed 2026-09-12 (slice E); supersedes prior UNKNOWN"
+  },
+  "blockers": [],
+  "first_review_outcome": "UNKNOWN (no review yet; slice D pending)",
+  "limitations": [
+    "mvn test exit 1 at pinned revision due to upstream BackendApplicationTests profile defect; scoring harnesses must record effective selections, not trust exit 0.",
+    "Full-suite *IT selection does not complete within the 20-minute cap (upstream pool/context accumulation); per-class IT execution is clean.",
+    "Packaged test-behavior-extract CLI cannot ingest the candidate tree as-is (duplicate nested-class test identity); per-file API invocation works with 100% route coverage.",
+    "5 dynamic-route call sites recorded as explicit extractor gaps.",
+    "Graphify verified but not snapshot-bound to the LMS checkout."
+  ]
+}
