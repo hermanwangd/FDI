@@ -171,6 +171,41 @@ def test_cli_rejects_bad_coverage_and_symlink_output_ancestor(tmp_path):
     cmd[-1] = str(linked_parent / "out.json")
     assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
     assert not (real_parent / "out.json").exists()
+
+def test_wilson_configuration_is_exact_and_nan_fails_stably():
+    m = load_module()
+    valid = {"n": 10, "precision": 50, "rounding": "HALF_EVEN", "scale": 12,
+             "x": 8, "zDecimal": "1.959963984540054"}
+    for key, bad in (("precision", 49), ("scale", 11), ("zDecimal", "NaN"),
+                     ("zDecimal", "-1"), ("zDecimal", "1.96")):
+        malformed = dict(valid, **{key: bad})
+        value = m.evaluate(case("DEV-W", "WILSON_INTERVAL", malformed))
+        assert value == {"reasonCodes": ["MALFORMED_GIVEN"], "result": "INVALID",
+                         "ruleId": "WILSON_INTERVAL"}
+    result = m.evaluate(case("DEV-W", "WILSON_INTERVAL", valid))
+    assert result["lower"] <= result["upper"] and "NaN" not in json.dumps(result)
+
+def test_provenance_metadata_types_fail_stably():
+    m = load_module(); a = "a" * 64
+    valid = {"artifactSha256": a, "coverageStrata": ["SYNTHETIC_UNIT"],
+        "expectedArtifactSha256": a, "foreignRepositoryReference": False,
+        "pairRepositorySnapshotSha256": a, "repositorySnapshotSha256": a,
+        "scenarioId": "DEV", "sourceProvenanceSha256": a,
+        "testProvenanceSha256": a, "truthDisposition": "SEALED"}
+    for update in ({"scenarioId": ""}, {"scenarioIds": [1]}, {"truthDisposition": "ARBITRARY"},
+                   {"foreignRepositoryReference": "false"}):
+        malformed = dict(valid, **update)
+        value = m.evaluate(case("DEV-V", "PROVENANCE_INTEGRITY", malformed))
+        assert value["result"] == "INVALID" and value["reasonCodes"] == ["MALFORMED_GIVEN"]
+
+def test_cli_rejects_symlink_inputs_root(tmp_path):
+    manifest, inputs = make_bundle(tmp_path)
+    alias = tmp_path / "inputs-alias"; alias.symlink_to(inputs)
+    output = tmp_path / "out.json"
+    cmd = [sys.executable, str(SCRIPT), "--manifest", str(manifest),
+           "--inputs-root", str(alias), "--output", str(output)]
+    proc = subprocess.run(cmd, text=True, capture_output=True)
+    assert proc.returncode != 0 and not output.exists()
     manifest.write_text('{"schemaVersion":"x","schemaVersion":"y","vectors":[]}\n')
     assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
     real = tmp_path / "real-manifest"; real.write_text('{"schemaVersion":"SFBL005-FORMAL-SCORER-VECTOR-MANIFEST-001","vectors":[]}\n')

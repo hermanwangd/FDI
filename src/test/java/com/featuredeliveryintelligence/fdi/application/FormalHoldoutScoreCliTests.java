@@ -41,6 +41,8 @@ class FormalHoldoutScoreCliTests {
             {"candidate":{"fullyQualifiedDeclaringType":"invalid.example.Service","methodName":"<init>","parameterTypes":[],"repositorySnapshotSha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","returnType":"invalid.example.Service","scenarioId":"S-1"}}
             """, "NEGATIVE");
         assertThat(badConstructor.path("canonicalOutputs").path(0).path("result").asText()).isEqualTo("INVALID_CONSTRUCTOR_SIGNATURE");
+        assertThat(badConstructor.path("result").asText()).isEqualTo("INVALID");
+        assertThat(badConstructor.has("relation")).isFalse();
         assertThat(valid.path("canonicalOutputs")).hasSize(1);
     }
 
@@ -168,7 +170,7 @@ class FormalHoldoutScoreCliTests {
         Path inputs = Files.createDirectory(temp.resolve("inputs")); Files.write(inputs.resolve("v.json"), input);
         String digest = FormalHoldoutConformanceScorer.sha256(input);
         Path manifest = temp.resolve("manifest.json");
-        Files.writeString(manifest, "{\"vectors\":[{\"coverage\":[{\"polarity\":\"POSITIVE\"}],\"id\":\"V\",\"input\":{\"path\":\"v.json\",\"sha256\":\"" + digest + "\"}}]}");
+        Files.writeString(manifest, manifestJson("V", "v.json", digest, "WILSON_INTERVAL", "POSITIVE"));
         Path output = temp.resolve("result.json");
         runCli(manifest, inputs, output);
         assertThat(Files.readString(output)).endsWith("\n");
@@ -216,13 +218,17 @@ class FormalHoldoutScoreCliTests {
         Path inputs = Files.createDirectory(temp.resolve("manifest-inputs"));
         byte[] input = caseJson("WILSON_INTERVAL", "{\"n\":1,\"precision\":50,\"rounding\":\"HALF_EVEN\",\"scale\":12,\"x\":1,\"zDecimal\":\"1.959963984540054\"}").getBytes(StandardCharsets.UTF_8);
         Files.write(inputs.resolve("v.json"), input); String sha = FormalHoldoutConformanceScorer.sha256(input);
-        String vector = "{\"coverage\":[{\"polarity\":\"POSITIVE\"}],\"id\":\"V1\",\"input\":{\"path\":\"v.json\",\"sha256\":\""+sha+"\"}}";
-        Path duplicate = temp.resolve("duplicate-manifest.json"); Files.writeString(duplicate, "{\"vectors\":["+vector+","+vector+"]}");
+        String vector = vectorJson("V1", "v.json", sha, "WILSON_INTERVAL", "POSITIVE");
+        Path duplicate = temp.resolve("duplicate-manifest.json"); Files.writeString(duplicate, "{\"schemaVersion\":\"SFBL005-FORMAL-SCORER-VECTOR-MANIFEST-001\",\"vectors\":["+vector+","+vector+"]}");
         assertThatThrownBy(() -> runCli(duplicate, inputs, temp.resolve("duplicate-result.json"))).hasMessageContaining("duplicate vector id");
-        Path badPolarity = temp.resolve("polarity-manifest.json"); Files.writeString(badPolarity, "{\"vectors\":["+vector.replace("POSITIVE","MAYBE")+"]}");
+        Path badPolarity = temp.resolve("polarity-manifest.json"); Files.writeString(badPolarity, manifestJson("V1","v.json",sha,"WILSON_INTERVAL","MAYBE"));
         assertThatThrownBy(() -> runCli(badPolarity, inputs, temp.resolve("polarity-result.json"))).hasMessageContaining("polarity");
-        Path nestedUnknown = temp.resolve("nested-manifest.json"); Files.writeString(nestedUnknown, "{\"vectors\":["+vector.replace("\"polarity\":\"POSITIVE\"", "\"polarity\":\"POSITIVE\",\"extra\":1")+"]}");
+        Path nestedUnknown = temp.resolve("nested-manifest.json"); Files.writeString(nestedUnknown, manifestJson("V1","v.json",sha,"WILSON_INTERVAL","POSITIVE").replace("\"polarity\":\"POSITIVE\"", "\"polarity\":\"POSITIVE\",\"extra\":1"));
         assertThatThrownBy(() -> runCli(nestedUnknown, inputs, temp.resolve("nested-result.json"))).hasMessageContaining("unknown coverage field");
+        Path wrongSchema = temp.resolve("wrong-schema.json"); Files.writeString(wrongSchema, manifestJson("V1","v.json",sha,"WILSON_INTERVAL","POSITIVE").replace("MANIFEST-001","MANIFEST-999"));
+        assertThatThrownBy(() -> runCli(wrongSchema, inputs, temp.resolve("wrong-schema-out.json"))).hasMessageContaining("schemaVersion");
+        Path wrongRule = temp.resolve("wrong-rule.json"); Files.writeString(wrongRule, manifestJson("V1","v.json",sha,"CHAIN_SCORING","POSITIVE"));
+        assertThatThrownBy(() -> runCli(wrongRule, inputs, temp.resolve("wrong-rule-out.json"))).hasMessageContaining("ruleId");
     }
 
     @Test
@@ -245,9 +251,11 @@ class FormalHoldoutScoreCliTests {
     private static void runCli(Path manifest, Path inputs, Path output) throws Exception { FormalHoldoutScoreCli.main(new String[]{"--manifest",manifest.toString(),"--inputs-root",inputs.toString(),"--output",output.toString()}); }
     private Path writeManifest(String inputPath, String digest) throws Exception {
         Path manifest = Files.createTempFile(temp, "manifest-", ".json");
-        Files.writeString(manifest, "{\"vectors\":[{\"coverage\":[{\"polarity\":\"POSITIVE\"}],\"id\":\"V\",\"input\":{\"path\":\"" + inputPath + "\",\"sha256\":\"" + digest + "\"}}]}");
+        Files.writeString(manifest, manifestJson("V", inputPath, digest, "WILSON_INTERVAL", "POSITIVE"));
         return manifest;
     }
+    private static String manifestJson(String id,String path,String sha,String rule,String polarity){return "{\"schemaVersion\":\"SFBL005-FORMAL-SCORER-VECTOR-MANIFEST-001\",\"vectors\":["+vectorJson(id,path,sha,rule,polarity)+"]}";}
+    private static String vectorJson(String id,String path,String sha,String rule,String polarity){return "{\"coverage\":[{\"polarity\":\""+polarity+"\",\"ruleId\":\""+rule+"\"}],\"expected\":{\"path\":\"unused.json\",\"sha256\":\""+"e".repeat(64)+"\"},\"id\":\""+id+"\",\"input\":{\"path\":\""+path+"\",\"sha256\":\""+sha+"\"}}";}
     private void assertCliInputRejected(Path inputs, String content, String message) throws Exception {
         Path input = inputs.resolve("bad-" + message + ".json"); Files.writeString(input, content);
         Path manifest = writeManifest(input.getFileName().toString(), FormalHoldoutConformanceScorer.sha256(Files.readAllBytes(input)));

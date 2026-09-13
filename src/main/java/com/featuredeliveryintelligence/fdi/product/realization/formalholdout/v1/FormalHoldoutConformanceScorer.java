@@ -85,8 +85,9 @@ public final class FormalHoldoutConformanceScorer {
             o.set("caseResults", caseResults);
             o.put("result", "MIXED");
         } else {
-            o.put("result", "VALID");
-            if (candidates.size() == 2) {
+            boolean allValid = caseResults.size() > 0 && distinctText(caseResults).equals(Set.of("VALID"));
+            o.put("result", allValid ? "VALID" : "INVALID");
+            if (allValid && candidates.size() == 2 && outputs.get(0).hasNonNull("pairDigest") && outputs.get(1).hasNonNull("pairDigest")) {
                 String a = outputs.get(0).path("pairDigest").asText();
                 String b = outputs.get(1).path("pairDigest").asText();
                 o.put("relation", a.equals(b) ? "IDENTICAL_PAIR_IDENTITY" : "DISTINCT_PAIR_IDENTITY");

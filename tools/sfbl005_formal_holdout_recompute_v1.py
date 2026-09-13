@@ -32,6 +32,23 @@ def strict_json(raw):
         return value
     return json.loads(raw, object_pairs_hook=unique)
 
+def _has_symlink_ancestor(path):
+    absolute = path.absolute()
+    return any(item.is_symlink() for item in (absolute, *absolute.parents))
+
+def _read_regular(path, label):
+    if _has_symlink_ancestor(path):
+        raise ValueError(f"{label} must have no symlink ancestor")
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(path, flags)
+    try:
+        if not stat.S_ISREG(os.fstat(descriptor).st_mode):
+            raise ValueError(f"{label} must be a regular file")
+        with os.fdopen(descriptor, "rb", closefd=False) as stream:
+            return stream.read()
+    finally:
+        os.close(descriptor)
+
 
 def _canonical_identity(candidate):
     pair = {key: candidate[key] for key in PAIR_FIELDS}
@@ -314,6 +331,11 @@ def _valid_given(operation, given):
             "pairRepositorySnapshotSha256", "repositorySnapshotSha256", "scenarioId", "sourceProvenanceSha256",
             "testProvenanceSha256", "truthDisposition"}
         if not required <= set(given) or set(given) - required - {"scenarioIds", "unknownField"}: return False
+        if not isinstance(given["scenarioId"], str) or not given["scenarioId"]: return False
+        if "scenarioIds" in given and (not isinstance(given["scenarioIds"], list) or
+                not all(isinstance(x, str) and x for x in given["scenarioIds"])): return False
+        if given["truthDisposition"] not in {"SEALED", None}: return False
+        if "unknownField" in given and not isinstance(given["unknownField"], str): return False
         nullable_digests = ("sourceProvenanceSha256", "testProvenanceSha256")
         if not all(given[x] is None or _digest(given[x]) for x in nullable_digests): return False
         return (isinstance(given["coverageStrata"], list) and all(isinstance(x, str) for x in given["coverageStrata"])
@@ -343,7 +365,8 @@ def _valid_given(operation, given):
     if operation == "WILSON_INTERVAL":
         return (_exact(given, {"n", "precision", "rounding", "scale", "x", "zDecimal"})
             and all(_integer(given[x]) for x in ("n", "precision", "scale", "x"))
-            and given["rounding"] == "HALF_EVEN" and isinstance(given["zDecimal"], str))
+            and given["precision"] == 50 and given["scale"] == 12
+            and given["rounding"] == "HALF_EVEN" and given["zDecimal"] == "1.959963984540054")
     if operation == "DETERMINISM_AND_PARITY":
         return _exact(given, {"goldenBytes", "javaRun1Bytes", "javaRun2Bytes", "pythonRun1Bytes", "pythonRun2Bytes"}) and all(isinstance(x, str) for x in given.values())
     return False
@@ -375,15 +398,17 @@ def run(manifest_path, inputs_root, output_path):
     for ancestor in (absolute_output.parent, *absolute_output.parent.parents):
         if ancestor.is_symlink():
             raise ValueError("output ancestor must be non-symlink")
-    if manifest_path.is_symlink() or not manifest_path.is_file():
-        raise ValueError("manifest must be a regular non-symlink file")
-    manifest_raw = manifest_path.read_bytes()
+    manifest_raw = _read_regular(manifest_path, "manifest")
     manifest = strict_json(manifest_raw)
     if set(manifest) != {"schemaVersion", "vectors"} or manifest["schemaVersion"] != "SFBL005-FORMAL-SCORER-VECTOR-MANIFEST-001":
         raise ValueError("unknown manifest schema")
     if not isinstance(manifest["vectors"], list):
         raise ValueError("unknown manifest schema")
+    if _has_symlink_ancestor(inputs_root):
+        raise ValueError("inputs root must have no symlink ancestor")
     root = inputs_root.resolve(strict=True)
+    if not root.is_dir():
+        raise ValueError("inputs root must be a directory")
     results = []
     for vector in manifest["vectors"]:
         if (not isinstance(vector, dict) or set(vector) != {"coverage", "expected", "id", "input"}
@@ -403,7 +428,7 @@ def run(manifest_path, inputs_root, output_path):
         path = unresolved.resolve(strict=True)
         if path.parent != root or not path.is_file():
             raise ValueError("unsafe input path")
-        raw = path.read_bytes()
+        raw = _read_regular(path, "input")
         if hashlib.sha256(raw).hexdigest() != vector["input"]["sha256"]:
             raise ValueError(f"input digest mismatch: {vector['id']}")
         case = strict_json(raw)
