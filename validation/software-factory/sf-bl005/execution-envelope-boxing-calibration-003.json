@@ -1,0 +1,101 @@
+{
+  "acceptance": [
+    "new namespace absent before execution",
+    "producer output baseline/improved digests match frozen calibration-002 values",
+    "truth and proofs bytes copied only after producer completes",
+    "comparison and stage evaluation commands succeed once",
+    "metrics arithmetic and artifacts independently reviewed"
+  ],
+  "classification": "EXPOSED_PETCLINIC_CALIBRATION_NOT_HOLDOUT",
+  "constructionBase": "a56d005fd3727d78e9c88a1d6f8e705e0af0093e",
+  "controlCommit": "a56d005fd3727d78e9c88a1d6f8e705e0af0093e",
+  "controls": {
+    "AGENTS.md": "a70a2d4da9f9dd8add3ca2ab3d794125a08525bdb53cca4426d60f9a9a091c12",
+    "BACKLOG.md": "11577bc33245269ec653a907e6fb15d26926148ebd49d268ad4b3710b3189408",
+    "FRAMEWORK-SPEC.md": "1c78425291c7ff16d39760fcef41ff275076d1cf5b3aa973bcabe1b8c3f5930a",
+    "IMPLEMENTATION-PLAN.md": "9d0bea701d4056308c5ca6b6a7fd39e8d44cd2b9ced8bf8dd741bcb52f43d58e",
+    "PROJECT-OVERVIEW.md": "e5ceb9b4baf8a5b5a9d557dd78f673221c8ecea182ba782457fc76e08172e4c0",
+    "STATUS.json": "b94e9c678c2b3f1499e872794ee02c29bdffbc0e6521ad977f672e3f07b8c1b6"
+  },
+  "envelopeRevision": 1,
+  "excluded": [
+    "source/code/test/control mutation",
+    "producer access to evaluator truth or proofs",
+    "gold or threshold mutation",
+    "formal holdout, generalization, publication, deployment, parent closure"
+  ],
+  "executionId": "SF-BL-005-BOXING-CALIBRATION-003",
+  "frozenInputs": {
+    "comparisonManifest": {
+      "canonical": "sort_keys two-space UTF-8 plus LF",
+      "sha256": "730cf38b4f139806f3c753363cf8a8832b4ae959f0bea717389a0f259d4c55d4"
+    },
+    "expectedProducer": {
+      "baselineSha256": "4d56a13edb7167ab94461e5a5ea496687634858a800df1bc774e7120b37187e5",
+      "improvedSha256": "823a07e84ead932634faaa07bf3c911faa65d2774594561ca2daeb2dec38625c"
+    },
+    "producerInputRoot": {
+      "files": {
+        "validation/pkb001/artifacts/petclinic-graph-818c413.json": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+        "validation/pkb001/runtime/graphify-petclinic-live-evidence.json": "fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8",
+        "validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json": "3c5da364196f1bbec17aabdbf2923c65f2bc0d90b2e9788bac8427219d554a3f",
+        "validation/software-factory/sf-bl002/scenario-search-intent-acceptance-manifest-002.json": "8772b2a1b4cbb485f0ebce793be734bbd8414aaf318e6033bab7225b1e03fd1b",
+        "validation/software-factory/sf-bl002/test-behavior-evidence.json": "6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2"
+      },
+      "path": ".worktrees/candidate-stage-trace/validation/software-factory/sf-bl005/cross-repo-realworld-001/producer-inputs",
+      "snapshotSha256": "41a7f9fc60bf9f0de938a5c2f4fd29e33f8258a060d0826f4240baa180e6fa37"
+    },
+    "proofs": {
+      "sha256": "8dd7494b7b0f0fec9d07c51bdba1c590bda1061cd6c78c3c34df88739c896c68",
+      "sourcePath": "validation/software-factory/sf-bl005/boxing-calibration-002/evaluator/proofs.json"
+    },
+    "runtime": {
+      "path": ".fdi-work/retained-runtimes/candidate-improvements/33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab.jar",
+      "sha256": "33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab"
+    },
+    "source": {
+      "path": ".fdi-work/sfbl002-petclinic-818c413",
+      "revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe"
+    },
+    "truth": {
+      "sha256": "39aa27459305c05a4c983b0c414c60b39ec3e460491b9edb5da49c620bc2de2c",
+      "sourcePath": "validation/software-factory/sf-bl005/boxing-calibration-002/evaluator/truth.json"
+    }
+  },
+  "ownedPaths": [
+    "validation/software-factory/sf-bl005/boxing-calibration-003/**"
+  ],
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "evaluatorHeapGb": 0.5,
+    "oneHeavyJvmAtATime": true,
+    "producerHeapGb": 1
+  },
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "stages": [
+    {
+      "authority": "NO_EVALUATOR_INPUT_ACCESS",
+      "command": "java -Xmx1g -Dloader.main=com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.JdkBoxingCalibrationRun -cp <runtime> org.springframework.boot.loader.launch.PropertiesLauncher <five-input-root> <exact-source-root> validation/software-factory/sf-bl005/boxing-calibration-003/producer",
+      "id": "PRODUCER"
+    },
+    {
+      "authority": "SEPARATE_EVALUATOR",
+      "commands": [
+        "java -Xmx512m -jar <runtime> method-pair-compare --manifest validation/software-factory/sf-bl005/boxing-calibration-003/comparison-manifest.json --manifest-sha256 730cf38b4f139806f3c753363cf8a8832b4ae959f0bea717389a0f259d4c55d4 --output validation/software-factory/sf-bl005/boxing-calibration-003/comparison.json",
+        "java -Xmx512m -Dloader.main=com.featuredeliveryintelligence.fdi.product.realization.methodpair.CandidateStageEvaluationRun -cp <runtime> org.springframework.boot.loader.launch.PropertiesLauncher . <generation> <generation-sha> <manifest> 730cf38b4f139806f3c753363cf8a8832b4ae959f0bea717389a0f259d4c55d4 <stage-output>"
+      ],
+      "dependsOn": [
+        "PRODUCER"
+      ],
+      "id": "EVALUATOR"
+    },
+    {
+      "dependsOn": [
+        "EVALUATOR"
+      ],
+      "id": "INDEPENDENT_REVIEW"
+    }
+  ],
+  "targetBranch": "codex/sf-bl005-boxing-calibration-003"
+}
