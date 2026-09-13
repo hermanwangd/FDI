@@ -8,7 +8,9 @@
     "the same mandatory test consumes the directly bound 11-observation file, resolves all 11 by exact method and structural route against that 19-handler index, and writes canonical machine-readable verification output with source/input/output digests; this is diagnostic verification without selector/scorer/evaluator access",
     "focused tests and the full Java 17 package pass with zero failures, errors and skips",
     "independent review of the exact candidate has no unresolved P0-P2 finding",
-    "delivery evidence binds exact base, candidate, changed paths, commands, results, reviews, artifact digests, elapsed time and available KPI values; missing KPI values remain UNKNOWN"
+    "delivery evidence binds exact base, candidate, changed paths, commands, results, reviews, artifact digests, elapsed time and available KPI values; missing KPI values remain UNKNOWN",
+    "the mandatory verifier rejects any observations SHA/count mismatch and any RealWorld HEAD/tree/subtree/93-file mismatch before asserting handler or resolution results",
+    "canonical verification compares the exact output bytes with recursively sorted two-space JSON plus one trailing newline"
   ],
   "backlogItems": [
     "SF-BL-005"
@@ -52,7 +54,7 @@
       "successorRef": "SF-BL-005-RHE-001-W3"
     }
   ],
-  "envelopeRevision": 2,
+  "envelopeRevision": 3,
   "excluded": [
     "all five active control files and AGENTS.md",
     "all source and test paths outside the two exact Java files",
@@ -182,21 +184,35 @@
       {
         "priority": "P2",
         "resolution": "Split producer, reviewer and integrator evidence ChangeSurfaces and forbid W3 review-evidence mutation."
+      },
+      {
+        "priority": "P1",
+        "resolution": "Pass the same three mandatory verifier properties to every Maven command that can execute the non-skippable test."
+      },
+      {
+        "priority": "P2",
+        "resolution": "Verify observation SHA/count before Maven and require byte-identical canonical JSON round-trip; the test also binds RealWorld HEAD/tree/subtree/file count."
+      },
+      {
+        "priority": "P1",
+        "resolution": "After revision 3 integration, reconcile active STATUS to the new exact envelope commit/SHA before fresh independent preflight."
       }
     ],
     "freshIndependentPreflightRequired": true,
     "priorReviewer": "/root/route_extractor_envelope_preflight",
-    "priorVerdict": "FAIL_PLAN_CONFLICT"
+    "priorVerdict": "TWO_CONSECUTIVE_FAIL_PLAN_CONFLICT"
   },
   "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
   "sourceTree": "63ef6a44f4ab97df26e422a172f0134b1e29cf6a",
   "targetBranch": "codex/sf-bl005-route-handler-extractor-remediation-001",
   "verificationCommands": [
     "git show 5f07244f3c201563949b9f44992c6e1113117146:validation/software-factory/sf-bl005/cross-repo-realworld-001/generation-realworld-002/seed/validation/software-factory/sf-bl002/http-behavior-observations-003.json > validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json",
-    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dtest=SpringRouteHandlerIndexTests test",
-    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dtest=SpringRouteHandlerIndexTests#verifyFrozenRealWorldPutDeleteCoverage -Dsfbl005.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.observations.path=validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json -Dsfbl005.verification.output=validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json test",
-    "python3 -m json.tool validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json >/dev/null",
-    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true package",
+    "test \"$(shasum -a 256 validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json | awk '{print $1}')\" = 71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd",
+    "test \"$(python3 -c 'import json; print(len(json.load(open(\"validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json\"))[\"observations\"]))')\" = 11",
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dsfbl005.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.observations.path=validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json -Dsfbl005.verification.output=validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json -Dtest=SpringRouteHandlerIndexTests test",
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dsfbl005.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.observations.path=validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json -Dsfbl005.verification.output=validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json -Dtest=SpringRouteHandlerIndexTests#verifyFrozenRealWorldPutDeleteCoverage test",
+    "python3 -c 'import json,pathlib; p=pathlib.Path(\"validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json\"); d=json.loads(p.read_text(encoding=\"utf-8\")); assert p.read_bytes() == (json.dumps(d, sort_keys=True, indent=2) + \"\\n\").encode(\"utf-8\")'",
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dsfbl005.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.observations.path=validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json -Dsfbl005.verification.output=validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json package",
     "python3 -m pytest -q",
     "git diff --check"
   ],
