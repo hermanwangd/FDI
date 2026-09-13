@@ -1,0 +1,223 @@
+{
+  "backlogItems": [
+    "SF-BL-005"
+  ],
+  "classification": "DIAGNOSTIC_ONLY_NO_SCORING",
+  "constructionBase": "d067c77376b4fb213ac6dd04897feba156909289",
+  "controlCommit": "d067c77376b4fb213ac6dd04897feba156909289",
+  "controls": {
+    "AGENTS.md": "a70a2d4da9f9dd8add3ca2ab3d794125a08525bdb53cca4426d60f9a9a091c12",
+    "BACKLOG.md": "9dee8bbff56c53b8992cb8e52e6de83d8f7320a30a25a74380d3900e1ec3aecb",
+    "FRAMEWORK-SPEC.md": "1c78425291c7ff16d39760fcef41ff275076d1cf5b3aa973bcabe1b8c3f5930a",
+    "IMPLEMENTATION-PLAN.md": "125d563f46533f9534bddb6f58bda1fcdb495c59cc3f2a96e3887211af2635d7",
+    "PROJECT-OVERVIEW.md": "e5ceb9b4baf8a5b5a9d557dd78f673221c8ecea182ba782457fc76e08172e4c0",
+    "STATUS.json": "fe6a30e50afd9d54722eab9e51058e1a364a0428602cbfa667cb446f548827d4"
+  },
+  "envelopeRevision": 2,
+  "excluded": [
+    "source, test, matching-algorithm, active-control, frozen-input or prior-evidence mutation",
+    "cleanup outside runner-owned selector-diagnostic-* private temp children",
+    "evaluator truth, gold, proofs, diagnoses, scorer, recall or precision",
+    "Graphify reindex, upstream RealWorld tests, database or Docker",
+    "calibration, external-signature Slice B, formal holdout, publication, deployment or parent closure",
+    "automatic retry or overwrite",
+    "route-handler extractor remediation or any source/test change in this baseline execution"
+  ],
+  "executionId": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001",
+  "failureRouting": {
+    "identityDigestAncestryInventoryOutputOrIsolationMismatch": "PLAN_CONFLICT",
+    "insufficientValidDiagnosticEvidence": "INCONCLUSIVE",
+    "missingDependencyOrAccess": "PLAN_BLOCKED",
+    "scopeApiAcceptanceOrAlgorithmChange": "PLAN_CHANGE_REQUIRED"
+  },
+  "frozenInputs": {
+    "accessPolicy": "ALLOWLIST_ONLY_NO_EVALUATOR_TRUTH_GOLD_PROOFS_DIAGNOSES_OR_SCORER",
+    "preparation": {
+      "path": "validation/software-factory/sf-bl005/selector-diagnostics-001/realworld-preparation.json",
+      "sha256": "db05c417f4f539c8a9e1f3cbff067bdc52f7a6ff379e725f6dc10b03bc6d0bac"
+    },
+    "publicTestAllowlist": {
+      "files": 23,
+      "observationReferencedFiles": 5,
+      "path": "validation/software-factory/sf-bl005/parallel-investigations-001/public-inputs.json",
+      "sha256": "7be2562d867623e1e400caaf256be8503e9b69d62840ae04efc6e7f88cc5ab58"
+    },
+    "roles": [
+      {
+        "bundlePath": "intents.json",
+        "count": 10,
+        "revision": "fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c",
+        "role": "intents",
+        "sha256": "1ccc62730b762b1d3e1a8e28adcce8a8a836d6df3d6f1a97f0922ca6c6d7b7fe",
+        "sourcePath": "validation/software-factory/sf-bl005/cross-repo-realworld-001/producer-inputs/validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json"
+      },
+      {
+        "bundlePath": "observations.json",
+        "count": 11,
+        "revision": "5f07244f3c201563949b9f44992c6e1113117146",
+        "role": "observations",
+        "sha256": "71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd",
+        "sourcePath": "validation/software-factory/sf-bl005/cross-repo-realworld-001/generation-realworld-002/seed/validation/software-factory/sf-bl002/http-behavior-observations-003.json"
+      },
+      {
+        "bundlePath": "handlers.json",
+        "count": 14,
+        "revision": "5f07244f3c201563949b9f44992c6e1113117146",
+        "role": "handlers",
+        "sha256": "bacddebfeb65b663f784efbf8f293092e05ed6f95b2a0c4135893377cacf2f0b",
+        "sourcePath": "validation/software-factory/sf-bl005/cross-repo-realworld-001/generation-realworld-002/seed/validation/software-factory/sf-bl002/route-handler-index-003.json"
+      }
+    ],
+    "runnerInputManifest": {
+      "materializedPath": "validation/software-factory/sf-bl005/realworld-selector-diagnostic-002-replan-001/input-manifest.json",
+      "materializedSha256": "2f5c524ecc35534dbf8ed0259f41fbea6f37cf3071b1a77fd894dc307b88418d",
+      "recordShape": "SELECTOR-DIAGNOSTIC-INPUT-001",
+      "requiredChanges": {
+        "executionId": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001",
+        "frameworkRevision": "d067c77376b4fb213ac6dd04897feba156909289"
+      },
+      "templatePath": "validation/software-factory/sf-bl005/selector-diagnostic-input-realworld-001-r2.json",
+      "templateSha256": "023e0fdd412e9de11ccd1a83a9b248fc48365c1196493c2ddd354e7b62cce12b"
+    },
+    "scenarioObservationPairs": 110,
+    "selectorPairLimit": 100000,
+    "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+  },
+  "ownedPaths": [
+    "validation/software-factory/sf-bl005/realworld-selector-diagnostic-002-replan-001/**"
+  ],
+  "priorIndependentPreflight": {
+    "findings": {
+      "p0": 0,
+      "p1": 2,
+      "p2": 0
+    },
+    "remediated": [
+      "scratch authorization exactly matches runner paths",
+      "acceptance binds replan manifest SHA"
+    ],
+    "result": "FAIL_PLAN_CONFLICT",
+    "reviewer": "/root/diagnostic_002_preflight"
+  },
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "requirementIds": [
+    "AUTH-002",
+    "PK-004",
+    "EVID-001",
+    "TECH-001"
+  ],
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "commandTimeoutSeconds": 1200,
+    "forkHeapGb": 2,
+    "mavenHeapGb": 2,
+    "oneHeavyJvmAtATime": true,
+    "runnerHeapGb": 1
+  },
+  "runnerCommands": [
+    [
+      "/opt/homebrew/opt/openjdk@17/bin/java",
+      "-Xmx1g",
+      "-Djava.io.tmpdir=.fdi-work/sf-bl005-realworld-selector-diagnostic-002-replan-001/private-tmp/run-1",
+      "-Dloader.main=com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.SelectorDiagnosticRun",
+      "-cp",
+      "target/fdi-0.4.8.3.jar",
+      "org.springframework.boot.loader.launch.PropertiesLauncher",
+      "validation/software-factory/sf-bl005/realworld-selector-diagnostic-002-replan-001/input-manifest.json",
+      "2f5c524ecc35534dbf8ed0259f41fbea6f37cf3071b1a77fd894dc307b88418d",
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-002-replan-001/bundle",
+      "validation/software-factory/sf-bl005/realworld-selector-diagnostic-002-replan-001/run-1"
+    ],
+    [
+      "/opt/homebrew/opt/openjdk@17/bin/java",
+      "-Xmx1g",
+      "-Djava.io.tmpdir=.fdi-work/sf-bl005-realworld-selector-diagnostic-002-replan-001/private-tmp/run-2",
+      "-Dloader.main=com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.SelectorDiagnosticRun",
+      "-cp",
+      "target/fdi-0.4.8.3.jar",
+      "org.springframework.boot.loader.launch.PropertiesLauncher",
+      "validation/software-factory/sf-bl005/realworld-selector-diagnostic-002-replan-001/input-manifest.json",
+      "2f5c524ecc35534dbf8ed0259f41fbea6f37cf3071b1a77fd894dc307b88418d",
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-002-replan-001/bundle",
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-002-replan-001/run-2"
+    ]
+  ],
+  "runtimeCode": {
+    "currentBase": "d067c77376b4fb213ac6dd04897feba156909289",
+    "intakeEvidence": "validation/software-factory/sf-bl005/runner-ancestor-integration-001/intake.json",
+    "intakeEvidenceSha256": "67c4de7f8e51eee56b736e3f26d441a06c82c7f178edcdd6f1ac0e0b5a404a26",
+    "integratedRunnerCommit": "8c294063d6696a567bbd1c29552e0fd6925e0f73"
+  },
+  "runtimeScratch": {
+    "allowedPaths": [
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-002-replan-001/bundle/**",
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-002-replan-001/run-2/**",
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-002-replan-001/private-tmp/run-1/**",
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-002-replan-001/private-tmp/run-2/**"
+    ],
+    "precreate": [
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-002-replan-001/private-tmp/run-1",
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-002-replan-001/private-tmp/run-2"
+    ],
+    "root": ".fdi-work/sf-bl005-realworld-selector-diagnostic-002-replan-001",
+    "runnerPrivateTempLifecycle": "Each runner may create and delete only its own selector-diagnostic-* child beneath the corresponding pre-created java.io.tmpdir. Parent, shared scratch, durable evidence and pre-existing path cleanup is prohibited."
+  },
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "specRevision": "d067c77376b4fb213ac6dd04897feba156909289",
+  "stages": [
+    {
+      "acceptance": [
+        "all full revisions, ancestry and digests resolve exactly",
+        "durable and scratch paths do not pre-exist",
+        "materialized inventory is 10 intents, 11 observations, 14 handlers and 23 test files",
+        "materialized manifest differs from template only in executionId and frameworkRevision and its SHA-256 is passed exactly to both runs",
+        "materialized manifest canonical SHA-256 equals 2f5c524ecc35534dbf8ed0259f41fbea6f37cf3071b1a77fd894dc307b88418d and both runner commands pass its path and digest"
+      ],
+      "id": "PREFLIGHT_AND_MATERIALIZE"
+    },
+    {
+      "acceptance": [
+        "Java 17 targeted/full package, Python regression and git diff check pass",
+        "evaluated equals 110 and accepted plus rejected equals 110",
+        "each rejection has one deterministic first-rejection reason",
+        "legacy and diagnostic seed order/content match",
+        "diagnostics and seals are byte-identical across runs and runtime is retained"
+      ],
+      "dependsOn": [
+        "PREFLIGHT_AND_MATERIALIZE"
+      ],
+      "id": "VERIFY_AND_RUN_TWICE"
+    },
+    {
+      "acceptance": [
+        "separately attributable reviewer names exact candidate and recomputes all bindings",
+        "no unresolved P0-P2 finding"
+      ],
+      "dependsOn": [
+        "VERIFY_AND_RUN_TWICE"
+      ],
+      "id": "INDEPENDENT_REVIEW"
+    },
+    {
+      "acceptance": [
+        "report dominant first-rejection reason without scoring or active-control mutation"
+      ],
+      "dependsOn": [
+        "INDEPENDENT_REVIEW"
+      ],
+      "id": "FDP_RETURN"
+    }
+  ],
+  "supersedesFailedExecution": {
+    "evidenceCommit": "f84096ef3d0837726ef58cfe77b9b2f43c8fc509",
+    "executionId": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002",
+    "reason": "Python control-state regression; failed evidence immutable"
+  },
+  "targetBranch": "codex/sf-bl005-realworld-selector-diagnostic-002-replan-001",
+  "verificationCommands": [
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dtest=SelectorDiagnosticRunTests,SourceMethodIndexTests,QualifiedSourceCallsTests,ScenarioEvidenceSelectorTests,QualifiedCalibrationProducerTests test",
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true package",
+    "python3 -m pytest -q",
+    "git diff --check"
+  ]
+}
