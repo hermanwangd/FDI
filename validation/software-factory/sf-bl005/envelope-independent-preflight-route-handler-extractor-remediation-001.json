@@ -1,44 +1,34 @@
 {
-  "boundary": "Envelope executable; implementation not dispatched and no runtime or KPI outcome established.",
-  "envelopeRevision": 3,
-  "envelopeSha256": "ef3ec0c27363418de71d50ed9ff7e10fa0cda477c05171ab5ece458be32719f0",
+  "boundary": "Envelope revision 4 is executable for W1 only; implementation, integration, KPI improvement, calibration, holdout, publication, deployment, and parent closure are not established.",
+  "envelopeRevision": 4,
+  "envelopeSha256": "07c211104b1f59fb4593c94d71b305f99d0e67c996a886bd40bf1ca470d7cc8a",
   "executionId": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
   "findings": {
     "p0": 0,
     "p1": 0,
     "p2": 0
   },
-  "priorAttempts": [
-    {
-      "p0": 0,
-      "p1": 2,
-      "p2": 1,
-      "result": "FAIL_PLAN_CONFLICT"
-    },
-    {
-      "p0": 0,
-      "p1": 2,
-      "p2": 1,
-      "result": "FAIL_PLAN_CONFLICT"
-    }
-  ],
+  "priorAttempt": {
+    "candidate": "c45c6f56d3e82bfbc7f98049606bf0045188b6d7",
+    "p0": 0,
+    "p1": 2,
+    "p2": 0,
+    "result": "FAIL_PLAN_CONFLICT"
+  },
   "recordedBy": "FDP serialized control owner from independently attributable reviewer result",
   "result": "PASS",
-  "reviewedActiveControlCommit": "c5afe07b792744aaa0b47d4e9c43ac6caab2d09a",
-  "reviewedEnvelopeIntegratedCommit": "5c308a046c99c84d3c58fba94a626ae95d3e88e5",
+  "reviewedCandidate": "d86a933299169b7d06ebcec86db7b33e4419ede9",
+  "reviewedControlCommit": "b7d080da45a50c11e205b6fa870204d5e8ca5bb5",
   "reviewer": "/root/route_extractor_envelope_preflight",
   "schemaVersion": "SF-INDEPENDENT-ENVELOPE-PREFLIGHT-001",
   "verified": [
-    "active control binding and Git ancestry",
-    "seven control digests",
-    "two Java blobs and SHA-256 values",
-    "originating matrix and receipt SHA-256 values",
-    "direct 11-observation and 14-handler baseline bindings",
-    "RealWorld HEAD, tree, subtree, 93 Java files and clean checkout",
-    "mandatory verifier properties on every Maven invocation",
-    "observation SHA/count checks and canonical output byte comparison",
-    "acyclic W1-W2-W3 DAG and disjoint stage evidence claims",
-    "owned/excluded scope, Java 17 and sub-8 GB resource bounds",
-    "target implementation branch absent and dispatch false"
+    "consistent Human code-change and dispatch authority plus current revision-4 directive",
+    "exact Git ancestry, source tree, seven control digests, and two Java blobs and SHA-256 values",
+    "direct observation and handler-baseline bindings plus originating evidence digests",
+    "RealWorld HEAD, tree, subtree, 93 Java files, and clean checkout",
+    "mandatory verifier properties on every Maven invocation plus observation prechecks and canonical byte comparison",
+    "acyclic W1-W2-W3 DAG, disjoint stage evidence claims, and immutable reviewer evidence",
+    "bounded owned and excluded scope, Java 17, and sub-8 GB resource limits",
+    "target implementation branch and evidence namespace absent"
   ]
 }
