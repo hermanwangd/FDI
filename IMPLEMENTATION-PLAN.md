@@ -8,6 +8,8 @@ Detailed evidence and the ordered follow-ups are in `validation/software-factory
 
 Formal holdout policy preparation may proceed without selecting data. `validation/software-factory/sf-bl005/formal-holdout-protocol-001.json` revision 1 is `PREPARED_POLICY_NOT_EXECUTABLE` and independently reviewed with P0/P1/P2 zero. It contains no repository, revision, scenario, sample, or gold identity. It cannot be externally sealed until its H0 final-candidate, H1 scorer, and H2 contamination-ledger receipts exist, and it grants no selection or execution authority.
 
+H2 preparation now has a 473-entry exact committed-evidence manifest and a conservative negative exposure ledger, both independently reviewed with P0/P1/P2 zero. Global exposure remains incomplete until Human disclosure attestation covers actors, time ranges, workspaces, sessions, repositories, source/tests, scenarios, truth, and prompts. The prepared ledger is not sealed and cannot support a holdout candidate decision.
+
 
 Human Authority selected a four-step sequential SF-BL-005 experiment on
 2026-09-13. The order is mandatory because the first RealWorld diagnostic is
