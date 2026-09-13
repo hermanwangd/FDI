@@ -1,0 +1,108 @@
+{
+  "execution_id": "SF-BL-005-RUNNER-ANCESTOR-INTEGRATION-001",
+  "candidate": "5248a12aa0ee1b760aa1c3bae9ba3f261f907b40",
+  "verification_date": "2026-09-13T07:28:51Z",
+  "verification_kind": "FDP_EXACT_CANDIDATE_INTAKE_VERIFICATION",
+  "result": "PASS_PENDING_FDP_INTAKE",
+  "envelope": "validation/software-factory/sf-bl005/execution-envelope-runner-ancestor-integration-001.json",
+  "receiving_base": "82581d000f9a065d9cfb5dc6f25029fffccbbaf0",
+  "control_commit": "82581d000f9a065d9cfb5dc6f25029fffccbbaf0",
+  "spec_revision": "4fc285f515e65473d4d3120b335629825a6a810b",
+  "runtime": {
+    "java_home": "/opt/homebrew/opt/openjdk@17",
+    "java_version": "17.0.20.1",
+    "spring_boot_version": "3.4.1",
+    "java_sha256": "4ac51957da9d64cc468d4ce67fc2f53644edc5585f8c4c92ce08ea30ee71db8a",
+    "javac_sha256": "e565938fe0dba26546105392dba23850468e56d65c17fd5c375fa2ef8701e211",
+    "selection_note": "The host default java is 23.0.2; verification explicitly bound JAVA_HOME and PATH to the installed Homebrew Java 17 runtime."
+  },
+  "verification": {
+    "targeted_java": {
+      "tests": 70,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "command": "MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dtest=SelectorDiagnosticRunTests,SourceMethodIndexTests,QualifiedSourceCallsTests,ScenarioEvidenceSelectorTests,QualifiedCalibrationProducerTests test"
+    },
+    "full_java_package": {
+      "tests": 1468,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "command": "MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true package"
+    },
+    "python_regression": {
+      "tests": 63,
+      "failures": 0,
+      "exit_code": 0,
+      "command": "python3 -m pytest -q"
+    },
+    "git_diff_check": {
+      "exit_code": 0,
+      "candidate_worktree": "CLEAN_DETACHED_EXACT_CANDIDATE"
+    }
+  },
+  "candidate_owned_path_sha256": {
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SelectorDiagnosticRun.java": "96b1efbad0c8eee6c06a44e3e93cd3e74e5436825cdd5bfc8ef90130b9164d29",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SelectorDiagnosticRunTests.java": "670e550ce922ad86d1718d543a5bc704eb23b15a2ab73c1323ca18e99a11509d",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SourceMethodIndex.java": "730f5d5dd3d24914e2c2b74e4d801e42900bf479cbb93c463f069aa40dc9e62c",
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedSourceCalls.java": "b0b170d25969358e2e4bb80f180df40dc640b02f68894cb08406a04f2e4b7b6f",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SourceMethodIndexTests.java": "f98eb808a4259eab8e91719ce5dd15e29fe2fdf6c0704c3fa1288a867f6897ad",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedSourceCallsTests.java": "7f574fae51c7968a87022084d71ba74b89bd8a2847e21e2ba34ef3dd8cc46af2"
+  },
+  "packaged_runner_smoke": {
+    "runs": 2,
+    "state": "SEALED",
+    "evaluated": 2,
+    "accepted": 1,
+    "rejected": 1,
+    "seed_parity": true,
+    "byte_identical_diagnostics": true,
+    "byte_identical_seals": true,
+    "retained_runtime_byte_identical": true,
+    "manifest_sha256": "dcb40c2cd1f8c904f86442cfe6e713f0db3d4b7f6815addafd21a0d8d2033069",
+    "runtime_jar_bytes": 23358871,
+    "runtime_jar_sha256": "834f6a24204d68aa9d0d601cd2529c758171322276f610b0b21d5c3945b121ab",
+    "diagnostics_sha256": "0fcbbe2a459e226849682cd5bc9973f8fcc37076b28e354db6c4d2da78fcdba6",
+    "seal_sha256": "0d0f54585e79f025215304d4670d510bb3601af53c1a1d32ffbd644ef522389f",
+    "diagnostics": "validation/software-factory/sf-bl005/runner-ancestor-integration-001/synthetic-diagnostics.json",
+    "seal": "validation/software-factory/sf-bl005/runner-ancestor-integration-001/synthetic-seal.json",
+    "run_artifacts": [
+      {
+        "run": 1,
+        "diagnostics": "validation/software-factory/sf-bl005/runner-ancestor-integration-001/synthetic-diagnostics.json",
+        "diagnostics_bytes": 1785,
+        "diagnostics_sha256": "0fcbbe2a459e226849682cd5bc9973f8fcc37076b28e354db6c4d2da78fcdba6",
+        "seal": "validation/software-factory/sf-bl005/runner-ancestor-integration-001/synthetic-seal.json",
+        "seal_bytes": 1006,
+        "seal_sha256": "0d0f54585e79f025215304d4670d510bb3601af53c1a1d32ffbd644ef522389f"
+      },
+      {
+        "run": 2,
+        "diagnostics": "validation/software-factory/sf-bl005/runner-ancestor-integration-001/synthetic-run-2-diagnostics.json",
+        "diagnostics_bytes": 1785,
+        "diagnostics_sha256": "0fcbbe2a459e226849682cd5bc9973f8fcc37076b28e354db6c4d2da78fcdba6",
+        "seal": "validation/software-factory/sf-bl005/runner-ancestor-integration-001/synthetic-run-2-seal.json",
+        "seal_bytes": 1006,
+        "seal_sha256": "0d0f54585e79f025215304d4670d510bb3601af53c1a1d32ffbd644ef522389f"
+      }
+    ],
+    "comparison_method": "byte-for-byte cmp"
+  },
+  "resource_limits": {
+    "maven_heap_gb": 2,
+    "fork_heap_gb": 2,
+    "fork_count": 1,
+    "heavy_jvm_concurrency": 1,
+    "aggregate_memory_gb_less_than": 8
+  },
+  "limitations": [
+    "SUPPORTING_VERIFICATION_EVIDENCE_NOT_PROJECT_TRUTH",
+    "FDP_INTAKE_AND_DURABLE_REPLAY_NOT_YET_COMPLETE",
+    "NOT_REALWORLD_DIAGNOSTIC_EXECUTION",
+    "NOT_CALIBRATION_OR_FORMAL_HOLDOUT",
+    "NOT_PARENT_BACKLOG_CLOSURE"
+  ]
+}

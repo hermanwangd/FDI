@@ -1,0 +1,67 @@
+{
+  "counts" : {
+    "files" : 4,
+    "handlers" : 1,
+    "intents" : 1,
+    "observations" : 1,
+    "testFiles" : 1
+  },
+  "identity" : {
+    "executionId" : "SF-BL-005-RUNNER-ANCESTOR-INTEGRATION-001-SYNTHETIC-SMOKE",
+    "frameworkRevision" : "5248a12aa0ee1b760aa1c3bae9ba3f261f907b40",
+    "manifestSha256" : "dcb40c2cd1f8c904f86442cfe6e713f0db3d4b7f6815addafd21a0d8d2033069",
+    "sourceRevision" : "5248a12aa0ee1b760aa1c3bae9ba3f261f907b40"
+  },
+  "scenarios" : [ {
+    "accepted" : 1,
+    "evaluated" : 2,
+    "pairs" : [ {
+      "observationRef" : "obs-ok",
+      "reason" : "ACCEPTED"
+    }, {
+      "observationRef" : "obs-bad",
+      "reason" : "ASSERTION_POLARITY"
+    } ],
+    "reasonCounts" : {
+      "ACCEPTED" : 1,
+      "ACTION_MISMATCH" : 0,
+      "ASSERTION_POLARITY" : 1,
+      "ENTITY_MISMATCH" : 0,
+      "REQUEST_AMBIGUOUS" : 0,
+      "ROUTE_ABSENT" : 0,
+      "ROUTE_AMBIGUOUS" : 0,
+      "TEST_IDENTITY" : 0,
+      "UNMET_CONDITION" : 0,
+      "UNSUPPORTED_ASSERTION_DIALECT" : 0
+    },
+    "rejected" : 1,
+    "scenarioId" : "S-1"
+  } ],
+  "schema" : "SELECTOR-DIAGNOSTIC-OUTPUT-001",
+  "selection" : {
+    "accepted" : 1,
+    "evaluated" : 2,
+    "reasonCounts" : {
+      "ACCEPTED" : 1,
+      "ACTION_MISMATCH" : 0,
+      "ASSERTION_POLARITY" : 1,
+      "ENTITY_MISMATCH" : 0,
+      "REQUEST_AMBIGUOUS" : 0,
+      "ROUTE_ABSENT" : 0,
+      "ROUTE_AMBIGUOUS" : 0,
+      "TEST_IDENTITY" : 0,
+      "UNMET_CONDITION" : 0,
+      "UNSUPPORTED_ASSERTION_DIALECT" : 0
+    },
+    "rejected" : 1,
+    "seedParity" : true,
+    "seeds" : [ {
+      "action" : "CREATE",
+      "conditions" : [ ],
+      "observationRef" : "obs-ok",
+      "productionIdentity" : "demo.OrderController#create",
+      "role" : "EXACT_ROUTE_HANDLER",
+      "scenarioId" : "S-1"
+    } ]
+  }
+}

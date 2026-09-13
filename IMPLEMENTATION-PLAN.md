@@ -143,6 +143,16 @@ If integration changes reviewed code, review the resulting exact candidate anew.
 FDP alone receives/replays accepted code and reconciles controls. This is not
 parent closure. No actual RealWorld run or calibration is selected.
 
+Exact candidate `5248a12aa0ee1b760aa1c3bae9ba3f261f907b40` subsequently
+passed the envelope-bound Java 17 targeted `70/70`, full package `1468/1468`,
+Python `63/63`, Git diff, and twice-repeated packaged synthetic runner checks.
+The two sealed runner outputs are byte-identical and retain the exact runtime
+JAR digest. Evidence:
+`validation/software-factory/sf-bl005/runner-ancestor-integration-001/verification.json`.
+The runtime blocker is resolved; FDP intake and durable replay remain pending.
+This verification does not integrate the candidate or authorize RealWorld,
+calibration, holdout, publication, deployment, or parent closure.
+
 ### Validation checkpoint
 
 Each implementation slice needs a fresh exact envelope, independent reviewer and

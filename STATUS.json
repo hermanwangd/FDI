@@ -12,8 +12,8 @@
     "SF-BL-005",
     "SF-BL-006"
   ],
-  "next_action": "Provide an exact Java 17 runtime, then run the envelope-bound targeted/full package and packaged synthetic runner smoke on combined candidate 5248a12aa0ee1b760aa1c3bae9ba3f261f907b40 before FDP intake.",
-  "blocking_dependency": "JAVA_17_RUNTIME_UNAVAILABLE_ON_CURRENT_HOST",
+  "next_action": "FDP intake the verified combined candidate 5248a12aa0ee1b760aa1c3bae9ba3f261f907b40 using validation/software-factory/sf-bl005/runner-ancestor-integration-001/verification.json; durable replay or further routing remains a separate reconciliation decision.",
+  "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-CROSSREPO-GATE-CONTAINMENT-003",
     "reviewed_candidate": "2c69c62d7c5b9fd33f11c90b52b7a8f0d1bc4ce8",
@@ -151,11 +151,11 @@
     {
       "lane_id": "combined-runner-ancestor",
       "execution_id": "SF-BL-005-RUNNER-ANCESTOR-INTEGRATION-001",
-      "base_commit": "2248420436c6fd6c35fe36bbb4db738c43500ce3",
+      "base_commit": "82581d000f9a065d9cfb5dc6f25029fffccbbaf0",
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "CODE_REVIEW_PASS_PLAN_BLOCKED_JAVA17",
+      "execution_state": "VERIFICATION_PASS_PENDING_FDP_INTAKE",
       "integration_candidate": "5248a12aa0ee1b760aa1c3bae9ba3f261f907b40"
     }
   ],
