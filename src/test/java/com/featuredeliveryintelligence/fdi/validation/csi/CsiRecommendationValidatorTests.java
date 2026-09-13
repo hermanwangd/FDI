@@ -64,6 +64,14 @@ class CsiRecommendationValidatorTests {
     }
 
     @Test
+    void durableReferenceRejectsEscapingPathAndMovingProviderRef() {
+        ObjectNode escaping = validRecord("evidence-1", "sha256:" + "d".repeat(64) + ":../escape.json");
+        ObjectNode moving = validRecord("evidence-1", "provider:review/latest");
+        assertEquals("INVALID", new CsiRecommendationValidator().validate(escaping).status());
+        assertEquals("INVALID", new CsiRecommendationValidator().validate(moving).status());
+    }
+
+    @Test
     void unknownClassificationAndAuthorityBearingFieldsFailClosed() {
         ObjectNode record = validRecord("evidence-1", durable("validation/a.json"));
         record.put("tag", "SECURITY");
@@ -93,11 +101,13 @@ class CsiRecommendationValidatorTests {
     void readyForReviewDoesNotRequireReceiverReadbackButReviewCompleteDoes() {
         ObjectNode ready = validRecord("evidence-1", durable("validation/a.json"));
         ready.set("handoff", handoff("READY_FOR_REVIEW", false));
-        assertEquals("VALID", new CsiRecommendationValidator().validate(ready).status());
+        assertEquals("VALID", new CsiRecommendationValidator().validate(
+                ready, null, REVISION, REVISION).status());
 
         ObjectNode complete = validRecord("evidence-1", durable("validation/a.json"));
         complete.set("handoff", handoff("REVIEW_COMPLETE", false));
-        CsiValidationReport report = new CsiRecommendationValidator().validate(complete);
+        CsiValidationReport report = new CsiRecommendationValidator().validate(
+                complete, null, REVISION, REVISION);
         assertEquals("BLOCKED", report.status());
         assertTrue(report.issues().contains("REVIEW_COMPLETE requires receiver_readback"));
     }
@@ -109,7 +119,8 @@ class CsiRecommendationValidatorTests {
         handoff.put("base_revision", "main");
         handoff.remove("input_artifact_digests");
         record.set("handoff", handoff);
-        CsiValidationReport report = new CsiRecommendationValidator().validate(record);
+        CsiValidationReport report = new CsiRecommendationValidator().validate(
+                record, null, REVISION, REVISION);
         assertEquals("INVALID", report.status());
         assertTrue(report.issues().contains("handoff.base_revision must be a full 40-character Git revision"));
         assertTrue(report.issues().contains("handoff.input_artifact_digests must be a non-empty digest array"));
@@ -176,6 +187,32 @@ class CsiRecommendationValidatorTests {
     }
 
     @Test
+    void priorRecordMustBindSameRecommendationAndDuplicateKey() {
+        ObjectNode prior = validRecord("evidence-1", durable("validation/a.json"));
+        ObjectNode current = prior.deepCopy();
+        current.withArray("origin_evidence").add(evidence("evidence-2", "DELIVERY", durable("validation/b.json")));
+        prior.put("recommendation_id", "CSI-REC-999");
+        CsiValidationReport report = new CsiRecommendationValidator().validate(current, prior);
+        assertEquals("INVALID", report.status());
+        assertTrue(report.issues().contains("prior record must have the same recommendation_id and duplicate_key"));
+    }
+
+    @Test
+    void handoffMustMatchExternallyBoundRevisionsAndImmutableEvidenceRefs() {
+        ObjectNode record = validRecord("evidence-1", durable("validation/a.json"));
+        ObjectNode handoff = handoff("READY_FOR_REVIEW", false);
+        handoff.put("command_log", "trust me").put("digest_manifest", "manifest.txt");
+        record.set("handoff", handoff);
+        CsiValidationReport report = new CsiRecommendationValidator().validate(
+                record, null, "b".repeat(40), "c".repeat(40));
+        assertEquals("INVALID", report.status());
+        assertTrue(report.issues().contains("handoff.base_revision does not match externally bound revision"));
+        assertTrue(report.issues().contains("handoff.candidate_revision does not match externally bound revision"));
+        assertTrue(report.issues().contains("handoff.command_log is not immutable"));
+        assertTrue(report.issues().contains("handoff.digest_manifest is not immutable"));
+    }
+
+    @Test
     void fixedCanonicalRecordsValidateWithoutInventingMissingEvidence() throws Exception {
         for (int number = 1; number <= 4; number++) {
             ObjectNode record = (ObjectNode) JSON.readTree(java.nio.file.Files.readAllBytes(
@@ -224,7 +261,7 @@ class CsiRecommendationValidatorTests {
         ObjectNode handoff = JSON.createObjectNode();
         handoff.put("gate", gate).put("base_revision", REVISION).put("candidate_revision", REVISION)
                 .put("envelope_identity", "N/A: design-only handoff")
-                .put("command_log", "validation/commands.log").put("digest_manifest", "validation/manifest.sha256")
+                .put("command_log", durable("validation/commands.log")).put("digest_manifest", durable("validation/manifest.sha256"))
                 .put("command_exit_status", 0).put("attempt_count", 1).put("elapsed_ms", 10)
                 .put("token_accounting", "N/A: local tool did not expose tokens");
         handoff.putArray("input_artifact_digests").add("b".repeat(64));

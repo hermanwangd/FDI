@@ -31,10 +31,15 @@ public final class CsiRecommendationValidator {
             "product_truth", "closure_authorized");
 
     public CsiValidationReport validate(JsonNode record) {
-        return validate(record, null);
+        return validate(record, null, null, null);
     }
 
     public CsiValidationReport validate(JsonNode record, JsonNode priorRecord) {
+        return validate(record, priorRecord, null, null);
+    }
+
+    public CsiValidationReport validate(JsonNode record, JsonNode priorRecord,
+                                        String expectedBaseRevision, String expectedCandidateRevision) {
         List<String> invalid = new ArrayList<>();
         List<String> blocked = new ArrayList<>();
         if (!(record instanceof ObjectNode object)) {
@@ -54,8 +59,8 @@ public final class CsiRecommendationValidator {
         requiredText(object, "verdict_identity", invalid);
         validateCandidate(object, invalid);
         validateEvidence(object.path("origin_evidence"), invalid, blocked);
-        validateAppendOnlyEvidence(object.path("origin_evidence"), priorRecord, invalid);
-        validateHandoff(object.get("handoff"), invalid, blocked);
+        validateAppendOnlyEvidence(object, priorRecord, invalid);
+        validateHandoff(object.get("handoff"), expectedBaseRevision, expectedCandidateRevision, invalid, blocked);
         validateKpis(object.path("affected_kpis"), invalid);
         if ("UNKNOWN".equals(object.path("tag").asText())
                 && (!("RECOMMENDED_NOT_SELECTED".equals(object.path("disposition").asText()))
@@ -118,14 +123,21 @@ public final class CsiRecommendationValidator {
             if (text(item, "origin_type").isBlank()) invalid.add("origin_evidence[" + i + "].origin_type is required");
             String durableRef = text(item, "durable_ref");
             if (durableRef.isBlank()) blocked.add("origin_evidence[" + i + "].durable_ref is missing");
-            else if (!PROVIDER_REF.matcher(durableRef).matches() && !REPOSITORY_REF.matcher(durableRef).matches()) {
+            else if (!isImmutableReference(durableRef)) {
                 invalid.add("origin_evidence[" + i + "].durable_ref is not immutable");
             }
         }
     }
 
-    private static void validateAppendOnlyEvidence(JsonNode current, JsonNode priorRecord, List<String> invalid) {
+    private static void validateAppendOnlyEvidence(JsonNode currentRecord, JsonNode priorRecord, List<String> invalid) {
         if (priorRecord == null) return;
+        if (!priorRecord.isObject()
+                || !text(priorRecord, "recommendation_id").equals(text(currentRecord, "recommendation_id"))
+                || !text(priorRecord, "duplicate_key").equals(text(currentRecord, "duplicate_key"))) {
+            invalid.add("prior record must have the same recommendation_id and duplicate_key");
+            return;
+        }
+        JsonNode current = currentRecord.path("origin_evidence");
         JsonNode prior = priorRecord.path("origin_evidence");
         if (!prior.isArray() || !current.isArray() || current.size() < prior.size()) {
             invalid.add("origin_evidence must preserve the prior append-only prefix");
@@ -139,7 +151,9 @@ public final class CsiRecommendationValidator {
         }
     }
 
-    private static void validateHandoff(JsonNode handoff, List<String> invalid, List<String> blocked) {
+    private static void validateHandoff(JsonNode handoff, String expectedBaseRevision,
+                                        String expectedCandidateRevision, List<String> invalid,
+                                        List<String> blocked) {
         if (handoff == null || handoff.isNull()) return;
         String gate = text(handoff, "gate");
         if (!Set.of("READY_FOR_REVIEW", "REVIEW_COMPLETE").contains(gate)) {
@@ -152,6 +166,22 @@ public final class CsiRecommendationValidator {
         for (String field : List.of("base_revision", "candidate_revision")) {
             if (!FULL_REVISION.matcher(text(handoff, field)).matches()) {
                 invalid.add("handoff." + field + " must be a full 40-character Git revision");
+            }
+        }
+        if (expectedBaseRevision == null || expectedCandidateRevision == null) {
+            invalid.add("handoff requires externally bound base and candidate revisions");
+        } else {
+            if (!expectedBaseRevision.equals(text(handoff, "base_revision"))) {
+                invalid.add("handoff.base_revision does not match externally bound revision");
+            }
+            if (!expectedCandidateRevision.equals(text(handoff, "candidate_revision"))) {
+                invalid.add("handoff.candidate_revision does not match externally bound revision");
+            }
+        }
+        for (String field : List.of("command_log", "digest_manifest")) {
+            String reference = text(handoff, field);
+            if (!isImmutableReference(reference)) {
+                invalid.add("handoff." + field + " is not immutable");
             }
         }
         if (!handoff.path("command_exit_status").canConvertToInt()) {
@@ -243,7 +273,7 @@ public final class CsiRecommendationValidator {
             invalid.add(prefix + ".measurement_revision must be a full 40-character Git revision");
         }
         String source = text(sample, "source_evidence");
-        if (!PROVIDER_REF.matcher(source).matches() && !REPOSITORY_REF.matcher(source).matches()) {
+        if (!isImmutableReference(source)) {
             invalid.add(prefix + ".source_evidence is not immutable");
         }
     }
@@ -255,6 +285,26 @@ public final class CsiRecommendationValidator {
             if (start.isAfter(end)) invalid.add(prefix + " window_start must not follow window_end");
         } catch (DateTimeParseException failure) {
             invalid.add(prefix + " window must use ISO-8601 instants");
+        }
+    }
+
+    private static boolean isImmutableReference(String reference) {
+        if (PROVIDER_REF.matcher(reference).matches()) {
+            String leaf = reference.substring(reference.lastIndexOf('/') + 1).toLowerCase(java.util.Locale.ROOT);
+            return !Set.of("latest", "head", "main", "master", "trunk").contains(leaf);
+        }
+        if (!REPOSITORY_REF.matcher(reference).matches()) return false;
+        String pathText = reference.substring("sha256:".length() + 64 + 1);
+        try {
+            java.nio.file.Path path = java.nio.file.Path.of(pathText);
+            if (path.isAbsolute() || pathText.contains("\\")
+                    || !path.normalize().toString().equals(pathText) || !path.iterator().hasNext()) return false;
+            for (java.nio.file.Path part : path) {
+                if (".".equals(part.toString()) || "..".equals(part.toString())) return false;
+            }
+            return true;
+        } catch (RuntimeException failure) {
+            return false;
         }
     }
 

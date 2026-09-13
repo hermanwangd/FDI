@@ -15,7 +15,8 @@ import java.util.Map;
 
 public final class CsiValidateCli {
     private static final String COMMAND = "csi-validate";
-    private static final String USAGE = "usage: csi-validate --input <path> [--prior <path>] --report <new-path>";
+    private static final String USAGE = "usage: csi-validate --mode CREATE|UPDATE --input <path> "
+            + "[--prior <path>] [--expected-base <sha>] [--expected-candidate <sha>] --report <new-path>";
     private static final ObjectMapper JSON = new ObjectMapper();
 
     private CsiValidateCli() { }
@@ -38,7 +39,8 @@ public final class CsiValidateCli {
             JsonNode input = JSON.readTree(Files.readAllBytes(Path.of(options.get("--input"))));
             JsonNode prior = options.containsKey("--prior")
                     ? JSON.readTree(Files.readAllBytes(Path.of(options.get("--prior")))) : null;
-            report = new CsiRecommendationValidator().validate(input, prior);
+            report = new CsiRecommendationValidator().validate(input, prior,
+                    options.get("--expected-base"), options.get("--expected-candidate"));
         } catch (IOException | RuntimeException failure) {
             report = new CsiValidationReport("INVALID", "", "", java.util.List.of("input is not readable JSON"));
         }
@@ -56,7 +58,7 @@ public final class CsiValidateCli {
     }
 
     private static Map<String, String> parse(String[] args) {
-        if (args == null || (args.length != 5 && args.length != 7) || !COMMAND.equals(args[0])) {
+        if (args == null || args.length < 7 || args.length % 2 == 0 || !COMMAND.equals(args[0])) {
             throw new IllegalArgumentException("both --input and --report are required");
         }
         Map<String, String> options = new HashMap<>();
@@ -65,13 +67,24 @@ public final class CsiValidateCli {
                 throw new IllegalArgumentException("invalid or duplicate option: " + args[i]);
             }
         }
-        if (!options.containsKey("--input") || !options.containsKey("--report")) {
-            throw new IllegalArgumentException("both --input and --report are required");
+        if (!options.containsKey("--mode") || !options.containsKey("--input") || !options.containsKey("--report")) {
+            throw new IllegalArgumentException("--mode, --input and --report are required");
+        }
+        String mode = options.get("--mode");
+        if (!java.util.Set.of("CREATE", "UPDATE").contains(mode)) {
+            throw new IllegalArgumentException("--mode must be CREATE or UPDATE");
+        }
+        if ("UPDATE".equals(mode) && !options.containsKey("--prior")) {
+            throw new IllegalArgumentException("UPDATE requires --prior");
+        }
+        if ("CREATE".equals(mode) && options.containsKey("--prior")) {
+            throw new IllegalArgumentException("CREATE must not provide --prior");
         }
         return options;
     }
 
     private static final class SetHolder {
-        private static final java.util.Set<String> OPTIONS = java.util.Set.of("--input", "--prior", "--report");
+        private static final java.util.Set<String> OPTIONS = java.util.Set.of(
+                "--mode", "--input", "--prior", "--expected-base", "--expected-candidate", "--report");
     }
 }

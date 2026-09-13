@@ -28,12 +28,12 @@ class CsiValidateCliTests {
         Path report = temp.resolve("report.json");
         Files.writeString(input, validRecord(), StandardCharsets.UTF_8);
 
-        Result first = run(new String[]{"csi-validate", "--input", input.toString(), "--report", report.toString()});
+        Result first = run(new String[]{"csi-validate", "--mode", "CREATE", "--input", input.toString(), "--report", report.toString()});
         assertEquals(0, first.exitCode());
         byte[] bytes = Files.readAllBytes(report);
         assertTrue(new String(bytes, StandardCharsets.UTF_8).contains("\"status\" : \"VALID\""));
 
-        Result second = run(new String[]{"csi-validate", "--input", input.toString(), "--report", report.toString()});
+        Result second = run(new String[]{"csi-validate", "--mode", "CREATE", "--input", input.toString(), "--report", report.toString()});
         assertEquals(1, second.exitCode());
         assertTrue(second.stderr().contains("report already exists"));
         assertEquals(new String(bytes, StandardCharsets.UTF_8), Files.readString(report));
@@ -44,8 +44,18 @@ class CsiValidateCliTests {
         Path input = temp.resolve("bad.json");
         Path report = temp.resolve("bad-report.json");
         Files.writeString(input, "{}\n");
-        assertEquals(1, run(new String[]{"csi-validate", "--input", input.toString(), "--report", report.toString()}).exitCode());
+        assertEquals(1, run(new String[]{"csi-validate", "--mode", "CREATE", "--input", input.toString(), "--report", report.toString()}).exitCode());
         assertEquals(2, run(new String[]{"csi-validate", "--input", input.toString()}).exitCode());
+    }
+
+    @Test
+    void updateModeRequiresPriorRecord() throws Exception {
+        Path input = temp.resolve("record.json");
+        Files.writeString(input, validRecord());
+        Result result = run(new String[]{"csi-validate", "--mode", "UPDATE", "--input", input.toString(),
+                "--report", temp.resolve("report.json").toString()});
+        assertEquals(2, result.exitCode());
+        assertTrue(result.stderr().contains("UPDATE requires --prior"));
     }
 
     private static Result run(String[] args) {
