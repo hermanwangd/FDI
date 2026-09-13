@@ -4,9 +4,14 @@
 
 Human-selected Backlog item: `SF-BL-007`.
 Selected execution: `SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-DESIGN-001`.
-Current authority is limited to a process-design Plan. No implementation
-envelope, runtime dispatch, code/configuration change, agent reconfiguration,
-or automatic remediation is authorized.
+The process-design artifact at
+`docs/superpowers/specs/2026-09-13-continuous-system-improvement-design.md`
+was independently reviewed at fixed candidate
+`f755640a8f7bef006b42f1dad792e723d21eb195` with `PASS`. Current authority
+ends at reviewed design evidence. No recommendation is selected for
+implementation, and no implementation envelope, runtime dispatch,
+code/configuration change, agent reconfiguration, or automatic remediation is
+authorized.
 
 Objective: define the smallest reusable Software Factory design that converts
 verified delivery findings into evidence-bound improvement recommendations and
