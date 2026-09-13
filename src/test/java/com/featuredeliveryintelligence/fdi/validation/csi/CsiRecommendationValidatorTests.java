@@ -69,6 +69,10 @@ class CsiRecommendationValidatorTests {
         ObjectNode moving = validRecord("evidence-1", "provider:review/latest");
         assertEquals("INVALID", new CsiRecommendationValidator().validate(escaping).status());
         assertEquals("INVALID", new CsiRecommendationValidator().validate(moving).status());
+        ObjectNode nestedMoving = validRecord("evidence-1", "provider:review/latest/run-1");
+        ObjectNode qualifiedMoving = validRecord("evidence-1", "provider:github/main:build-1");
+        assertEquals("INVALID", new CsiRecommendationValidator().validate(nestedMoving).status());
+        assertEquals("INVALID", new CsiRecommendationValidator().validate(qualifiedMoving).status());
     }
 
     @Test
@@ -195,6 +199,27 @@ class CsiRecommendationValidatorTests {
         CsiValidationReport report = new CsiRecommendationValidator().validate(current, prior);
         assertEquals("INVALID", report.status());
         assertTrue(report.issues().contains("prior record must have the same recommendation_id and duplicate_key"));
+    }
+
+    @Test
+    void priorDuplicateKeyMustMatchItsOwnSemanticFields() {
+        ObjectNode prior = validRecord("evidence-1", durable("validation/a.json"));
+        ObjectNode current = prior.deepCopy();
+        current.withArray("origin_evidence").add(evidence("evidence-2", "DELIVERY", durable("validation/b.json")));
+        prior.put("insufficiency", "different historical meaning");
+        CsiValidationReport report = new CsiRecommendationValidator().validate(current, prior);
+        assertEquals("INVALID", report.status());
+        assertTrue(report.issues().contains("prior duplicate_key does not match its semantic fields"));
+    }
+
+    @Test
+    void priorKpiSamplesMustRemainAnUnchangedPrefix() {
+        ObjectNode prior = validRecord("evidence-1", durable("validation/a.json"));
+        ObjectNode current = prior.deepCopy();
+        current.withArray("affected_kpis").remove(0);
+        CsiValidationReport report = new CsiRecommendationValidator().validate(current, prior);
+        assertEquals("INVALID", report.status());
+        assertTrue(report.issues().contains("affected_kpis must preserve the prior append-only prefix"));
     }
 
     @Test

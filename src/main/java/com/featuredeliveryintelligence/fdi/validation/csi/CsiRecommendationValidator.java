@@ -129,7 +129,7 @@ public final class CsiRecommendationValidator {
         }
     }
 
-    private static void validateAppendOnlyEvidence(JsonNode currentRecord, JsonNode priorRecord, List<String> invalid) {
+    private void validateAppendOnlyEvidence(JsonNode currentRecord, JsonNode priorRecord, List<String> invalid) {
         if (priorRecord == null) return;
         if (!priorRecord.isObject()
                 || !text(priorRecord, "recommendation_id").equals(text(currentRecord, "recommendation_id"))
@@ -137,18 +137,39 @@ public final class CsiRecommendationValidator {
             invalid.add("prior record must have the same recommendation_id and duplicate_key");
             return;
         }
+        String priorCanonicalKey = canonicalKey(priorRecord);
+        if (!text(priorRecord, "duplicate_key").equals(priorCanonicalKey)) {
+            invalid.add("prior duplicate_key does not match its semantic fields");
+            return;
+        }
         JsonNode current = currentRecord.path("origin_evidence");
         JsonNode prior = priorRecord.path("origin_evidence");
+        validateArrayPrefix(current, prior, "origin_evidence", invalid);
+        validateArrayPrefix(currentRecord.path("affected_kpis"), priorRecord.path("affected_kpis"),
+                "affected_kpis", invalid);
+    }
+
+    private static void validateArrayPrefix(JsonNode current, JsonNode prior, String field,
+                                            List<String> invalid) {
         if (!prior.isArray() || !current.isArray() || current.size() < prior.size()) {
-            invalid.add("origin_evidence must preserve the prior append-only prefix");
+            invalid.add(field + " must preserve the prior append-only prefix");
             return;
         }
         for (int i = 0; i < prior.size(); i++) {
             if (!prior.get(i).equals(current.get(i))) {
-                invalid.add("origin_evidence must preserve the prior append-only prefix");
+                invalid.add(field + " must preserve the prior append-only prefix");
                 return;
             }
         }
+    }
+
+    private String canonicalKey(JsonNode record) {
+        String affected = text(record, "affected_requirement");
+        String insufficiency = text(record, "insufficiency");
+        String control = text(record, "proposed_control");
+        String route = text(record, "revision_route");
+        if (affected.isBlank() || insufficiency.isBlank() || control.isBlank() || route.isBlank()) return "";
+        return duplicateKey(affected, insufficiency, control, route);
     }
 
     private static void validateHandoff(JsonNode handoff, String expectedBaseRevision,
@@ -290,8 +311,11 @@ public final class CsiRecommendationValidator {
 
     private static boolean isImmutableReference(String reference) {
         if (PROVIDER_REF.matcher(reference).matches()) {
-            String leaf = reference.substring(reference.lastIndexOf('/') + 1).toLowerCase(java.util.Locale.ROOT);
-            return !Set.of("latest", "head", "main", "master", "trunk").contains(leaf);
+            Set<String> moving = Set.of("latest", "head", "main", "master", "trunk");
+            for (String segment : reference.substring("provider:".length()).split("[/:]")) {
+                if (moving.contains(segment.toLowerCase(java.util.Locale.ROOT))) return false;
+            }
+            return true;
         }
         if (!REPOSITORY_REF.matcher(reference).matches()) return false;
         String pathText = reference.substring("sha256:".length() + 64 + 1);
