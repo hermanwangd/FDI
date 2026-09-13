@@ -13,7 +13,7 @@
     "SF-BL-006",
     "SF-BL-007"
   ],
-  "next_action": "Human decides whether to select a bounded SF-BL-007 implementation proposal from the independently reviewed process design; no implementation envelope or dispatch exists.",
+  "next_action": "Materialize the exact SF-BL-007 implementation envelope, then execute the bounded Java validator/CLI slice with TDD and independent review.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
@@ -225,14 +225,14 @@
       "integration_candidate": "8e835b427bd5f6b242b38d00e714d902298366c1"
     },
     {
-      "lane_id": "continuous-system-improvement-design",
-      "execution_id": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-DESIGN-001",
-      "base_commit": "3e163683857fe09913436a3b3881c1b4c3dba5ce",
+      "lane_id": "continuous-system-improvement-implementation",
+      "execution_id": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-IMPLEMENTATION-001",
+      "base_commit": "6a0e266fa65f0496bdbd1f52f9a96bdd59a26836",
       "selected_backlog_items": [
         "SF-BL-007"
       ],
-      "execution_state": "DESIGN_REVIEWED_NOT_IMPLEMENTATION_SELECTED",
-      "integration_candidate": "f755640a8f7bef006b42f1dad792e723d21eb195"
+      "execution_state": "HUMAN_SELECTED_PENDING_EXACT_ENVELOPE",
+      "integration_candidate": null
     }
   ],
   "mapping_improvement_intake": {
@@ -307,7 +307,7 @@
   },
   "system_improvement_intake": {
     "backlog_id": "SF-BL-007",
-    "state": "DESIGN_REVIEWED_NOT_IMPLEMENTATION_SELECTED",
+    "state": "HUMAN_SELECTED_FOR_IMPLEMENTATION_PENDING_ENVELOPE",
     "recommendation_count": 4,
     "tags": {
       "CODE": 2,
@@ -323,15 +323,16 @@
     "automatic_product_truth_publication": false,
     "design_artifact": "docs/superpowers/specs/2026-09-13-continuous-system-improvement-design.md",
     "review_evidence": "validation/software-factory/sf-bl007/design-review-001.md",
-    "reviewed_candidate": "f755640a8f7bef006b42f1dad792e723d21eb195"
+    "reviewed_candidate": "f755640a8f7bef006b42f1dad792e723d21eb195",
+    "implementation_selected": true
   },
   "proposed_next_execution": {
-    "execution_id": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-DESIGN-001",
-    "state": "DESIGN_REVIEWED_NOT_IMPLEMENTATION_SELECTED",
-    "allowed_output": "NONE_PENDING_HUMAN_SELECTION",
-    "implementation_envelope_authorized": false,
+    "execution_id": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-IMPLEMENTATION-001",
+    "state": "HUMAN_SELECTED_PENDING_EXACT_ENVELOPE",
+    "allowed_output": "BOUNDED_CSI_VALIDATOR_CLI_RECORDS_TESTS_EVIDENCE_CONTROLS",
+    "implementation_envelope_authorized": true,
     "dispatch_authorized": false,
-    "code_change_authorized": false,
+    "code_change_authorized": true,
     "agent_or_automation_change_authorized": false,
     "parent_closure": false
   }

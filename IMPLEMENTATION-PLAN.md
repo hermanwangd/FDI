@@ -3,15 +3,41 @@
 ## Current selection
 
 Human-selected Backlog item: `SF-BL-007`.
-Selected execution: `SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-DESIGN-001`.
+Selected execution: `SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-IMPLEMENTATION-001`.
 The process-design artifact at
 `docs/superpowers/specs/2026-09-13-continuous-system-improvement-design.md`
 was independently reviewed at fixed candidate
-`f755640a8f7bef006b42f1dad792e723d21eb195` with `PASS`. Current authority
-ends at reviewed design evidence. No recommendation is selected for
-implementation, and no implementation envelope, runtime dispatch,
-code/configuration change, agent reconfiguration, or automatic remediation is
-authorized.
+`f755640a8f7bef006b42f1dad792e723d21eb195` with `PASS`. Human Authority has
+selected implementation of the bounded CSI validation capability. Authority
+is limited to the owned Java source/tests, four canonical recommendation
+records, validation evidence, and active-control synchronization declared by
+the exact execution envelope. Runtime service deployment, agent or automation
+changes, automatic remediation, Product truth publication, implementation of
+the four recommendations, and parent closure remain unauthorized.
+
+## Selected implementation
+
+The implementation provides one packaged Java 17 validation path that:
+
+1. validates the canonical recommendation record and append-only origin
+   observations;
+2. computes the semantic duplicate key from RFC 8785-compatible canonical JSON
+   with the reviewed normalization rules;
+3. validates `READY_FOR_REVIEW` and `REVIEW_COMPLETE` handoff gates;
+4. validates KPI sample states, provenance, denominators, windows, bands, and
+   baseline comparability;
+5. fails closed on unknown tags/dispositions, missing provenance, moving or
+   abbreviated revisions, duplicate evidence identities, invalid KPI states,
+   and authority-bearing fields;
+6. exposes the behavior through `csi-validate --input <path> --report <path>`
+   with deterministic report bytes and exclusive report creation; and
+7. proves the contract with golden duplicate-key vectors, negative cases, CLI
+   tests, and four canonical records for `CSI-REC-001` through `CSI-REC-004`.
+
+Acceptance requires focused tests, full Maven package, Python regression,
+JSON/digest validation, independent fixed-candidate review, and a final Human
+closure decision. Missing legacy provenance remains explicit and may make a
+record `BLOCKED`; it must not be invented to force acceptance.
 
 Objective: define the smallest reusable Software Factory design that converts
 verified delivery findings into evidence-bound improvement recommendations and
