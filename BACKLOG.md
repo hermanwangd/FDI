@@ -119,3 +119,5 @@ User-selected follow-up preparation: source-backed generic ancestor resolution p
 and frozen public-input RealWorld selector diagnosis. See IMPLEMENTATION-PLAN.md#current-selection.
 Preparation is complete; runner implementation and diagnostic/calibration execution
 remain unselected. External dependency signature availability remains unverified.
+
+Selected prerequisite: SF-BL-005-SELECTOR-RUNNER-001, two-file sealed Java diagnostic runner under IMPLEMENTATION-PLAN.md. Actual RealWorld diagnostics and calibration remain unselected.

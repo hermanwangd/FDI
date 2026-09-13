@@ -2,9 +2,10 @@
 
 ## Current selection
 
-User selection on 2026-09-13: planning external/generic ancestor resolution and
-preparing public-input RealWorld selector diagnostics. Preparation only: no
-implementation dispatch, diagnostic execution, calibration generation/scoring,
+User selection: bounded public-input selector diagnostic runner implementation.
+Execution SF-BL-005-SELECTOR-RUNNER-001. Implement and independently review
+the runner first; actual RealWorld diagnostic execution remains a subsequent
+selection. Ancestor-resolution work remains preparation only. No calibration,
 adapter, publication, cleanup or parent closure is selected.
 Framework base: fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c.
 Spec binding: FRAMEWORK-SPEC.md at this exact base. Backlog: SF-BL-005.
@@ -22,21 +23,47 @@ Pinned inputs: 10 intents, 11 observations from 5 test files, 14 handlers.
 The 110 scenario-observation pairs are below the 100000 diagnostic cap.
 This is input inventory, not measured rejection counts or recall.
 
-### Proposed implementation slice — not dispatched
+### Selected implementation slice — ready for dispatch
 
 Add package-local test coverage and a standalone sealed Java diagnostic entry
-point in product/realization/methodcalibration, likely
+point in product/realization/methodcalibration, exactly
 SelectorDiagnosticRun.java and SelectorDiagnosticRunTests.java. Use the existing
 selector unchanged; do not call MethodCalibrationRun because it regenerates
 producer outputs. Do not modify production selection gates or add REST Assured
-support here. Maximum 2-4 files if an existing safe I/O helper needs reuse;
-a broader helper refactor requires separate scope.
+support here. Exactly these two files are owned; reuse existing helpers read-only.
+A helper change requires PLAN_CHANGE_REQUIRED. Constructor/source base for this
+slice: d5938e80b64d86b9b8875f73bd65d0e2d38ee75e.
 
 Before implementation, bind a fresh exact envelope and explicit input allowlist
 from the preparation evidence. Materialize only the pinned intents,
 observations, handlers and public test files; reject missing/unexpected/symlink
 inputs, changed hashes, unresolved revisions and an existing output directory.
 Retain exact Java 17 runtime/JAR bytes and hash before execution.
+
+Implementation contract (execution-specific, not a globally frozen schema):
+`main(manifestPath, manifestSha256, bundleRoot, newOutputDirectory)`; public
+main only, package-local tests. Manifest schema `SELECTOR-DIAGNOSTIC-INPUT-001`
+contains executionId, frameworkRevision/sourceRevision (full commit strings),
+intents/observations/handlers entries {path,sha256}, and testFiles entries
+{path,sha256}. Role files are at bundle root; test paths retain src/test/java/.
+Manifest is outside bundleRoot. Only listed regular files may exist in bundle;
+reject symlinks in path components, duplicate/absolute/traversal paths and
+unknown fields. Each input <=10 MB, total <=100 MB, <=1000 files; pair cap
+100000. Resolve revision reachability in envelope preflight; standalone runner
+uses the digest-pinned provenance and must not claim live Git verification.
+
+Validate and hash all bytes before parsing or creating output. Observation
+source paths must reference allowlisted test files. Consume a private verified
+copy to avoid parsing mutable originals; temporary copy cleanup is scoped only
+to this invocation. Compare legacy/diagnostic seeds for equality and order.
+Write deterministic diagnostics.json with identity, counts, reasons, pairs and
+seeds plus seal.json with input/runtime/output SHA-256. No timestamps or absolute
+paths in deterministic payload. Require an actual regular JAR code source;
+retain its exact bytes as runtime.jar in the new output. Test fixtures may
+exercise package-local logic; actual public main requires packaged Java 17.
+Claim output directory atomically without replacement; failure leaves a partial
+output explicitly incomplete (seal written last), never auto-retry or overwrite.
+Synthetic runner smoke execution only; no RealWorld input execution in this slice.
 
 Acceptance:
 - Produce deterministic first-rejection counts and ordered per-pair records,
