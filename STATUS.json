@@ -12,7 +12,7 @@
     "SF-BL-005",
     "SF-BL-006"
   ],
-  "next_action": "Route coverage analysis completed and returned a bounded extractor remediation proposal. No implementation, calibration, scoring, formal holdout, or parent closure is authorized; the remediation requires a new Human selection and exact envelope.",
+  "next_action": "Materialize and preflight the exact envelope for SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001. Implementation dispatch, calibration, scoring, formal holdout, and parent closure remain unauthorized.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
@@ -39,33 +39,19 @@
     "parent_closure": false
   },
   "selected_next_execution": {
-    "execution_id": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
-    "state": "ANALYSIS_COMPLETE_FDP_RETURNED",
-    "analysis_unit": "9_DISTINCT_ROUTE_ABSENT_OBSERVATIONS",
-    "source_pair_count": 90,
-    "scenario_repetition": 10,
-    "allowed_output": "DETERMINISTIC_COVERAGE_MATRIX_AND_BOUNDED_REMEDIATION_RECOMMENDATION",
+    "execution_id": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
+    "state": "ENVELOPE_PREPARATION_SELECTED_NOT_DISPATCHED",
+    "objective": "Add statically recoverable PutMapping and DeleteMapping support to SpringRouteHandlerIndex without changing route normalization or selector behavior.",
+    "selection_authority": "Human selection option 1 on 2026-09-13",
+    "selection_scope": "ENVELOPE_CREATION_AND_LEDGER_RECONCILIATION_ONLY",
+    "construction_base": "7ed2d2e04ba7c9d5cc90d83dacd57318ad56d865",
     "code_change_authorized": false,
     "envelope_creation_authorized": true,
-    "envelope_commit": "2f3181fddad7f5ee4cb160d781efd278fb2ed2b4",
-    "envelope_main_replay": "f2f22ce092bb09f663b7731342b7153777904c10",
-    "envelope_sha256": "73eb5c1a522151d5921946d391fe2d1ef60dd795f1f83ca04addaf903d3d814c",
-    "producer_preflight": "PASS",
-    "producer_preflight_evidence": "validation/software-factory/sf-bl005/envelope-preflight-route-coverage-analysis-001.json",
-    "independent_preflight": "PASS",
-    "dispatch_authorized": true,
+    "dispatch_authorized": false,
     "calibration_authorized": false,
+    "formal_holdout_authorized": false,
     "parent_closure": false,
-    "independent_preflight_reviewer_run": "01a09a4c-e3c4-7698-af2e-14ba05d64362",
-    "dispatch_authority": "Human selection option 1 on 2026-09-13",
-    "analysis_integrated_commit": "8b758f79e677de0fce6d39afbe4b32aae228e41d",
-    "independent_review": "PASS",
-    "reviewed_candidate": "376969264390241f015cfa8a8c25080d75760bad",
-    "classification_counts": {
-      "UNSUPPORTED_STATIC_EXTRACTION": 9
-    },
-    "remediation_authorized": false,
-    "evidence": "validation/software-factory/sf-bl005/route-coverage-analysis-001/"
+    "originating_evidence": "validation/software-factory/sf-bl005/route-coverage-analysis-001/"
   },
   "metric_goal": {
     "status": "NOT_MET_DIAGNOSTIC_ONLY",
@@ -134,104 +120,14 @@
   ],
   "active_executions": [
     {
-      "lane_id": "selector-diagnostics",
-      "execution_id": "SF-BL-005-SELECTOR-DIAGNOSTICS-001",
-      "base_commit": "d89626981975f2c258e438f25880ac258efe1920",
+      "lane_id": "route-handler-extractor-remediation",
+      "execution_id": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
+      "base_commit": "7ed2d2e04ba7c9d5cc90d83dacd57318ad56d865",
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "INTEGRATED_ENGINEERING_READY",
-      "integration_candidate": "758e086382e6023d6e4d389299a46bd696aa3857"
-    },
-    {
-      "lane_id": "supporting-investigations",
-      "execution_id": "SF-BL-005-PARALLEL-INVESTIGATIONS-001",
-      "base_commit": "86e96e8d317b9b7ebfc435f54918d62ae157a431",
-      "selected_backlog_items": [
-        "SF-BL-005"
-      ],
-      "execution_state": "OBSERVATIONS_RECEIVED_WITH_LIMITATIONS",
-      "integration_candidate": "e8f843bff0e719c22c8fb2adc3222d185ecec538"
-    },
-    {
-      "lane_id": "company-ai-docs",
-      "execution_id": "SF-BL-006-COMPANY-AI-SHARE-001",
-      "base_commit": "4fc285f515e65473d4d3120b335629825a6a810b",
-      "selected_backlog_items": [
-        "SF-BL-006"
-      ],
-      "execution_state": "LEARNER_EMAIL_DELIVERED_DOWNSTREAM_AI_UNBOUND",
-      "integration_candidate": "d5fc328be167811fc2aa6b5dfcf956d7067c6cc0"
-    },
-    {
-      "lane_id": "ancestor-resolution-planning",
-      "execution_id": "SF-BL-005-GENERIC-ANCESTOR-001",
-      "base_commit": "2248420436c6fd6c35fe36bbb4db738c43500ce3",
-      "selected_backlog_items": [
-        "SF-BL-005"
-      ],
-      "execution_state": "FRESH_INDEPENDENT_REVIEW_PASS",
-      "integration_candidate": "0b8073622db0d121c22976bcb2af038d0971a824"
-    },
-    {
-      "lane_id": "realworld-diagnostic-preparation",
-      "execution_id": "SF-BL-005-REALWORLD-DIAGNOSTIC-PREP-001",
-      "base_commit": "fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c",
-      "selected_backlog_items": [
-        "SF-BL-005"
-      ],
-      "execution_state": "PREPARED_NOT_DISPATCHED",
+      "execution_state": "ENVELOPE_PREPARATION_SELECTED_NOT_DISPATCHED",
       "integration_candidate": null
-    },
-    {
-      "lane_id": "selector-runner",
-      "execution_id": "SF-BL-005-SELECTOR-RUNNER-001",
-      "base_commit": "d5938e80b64d86b9b8875f73bd65d0e2d38ee75e",
-      "selected_backlog_items": [
-        "SF-BL-005"
-      ],
-      "execution_state": "INDEPENDENT_REVIEW_COMPLETE_WITH_LIMITATIONS",
-      "integration_candidate": "143abdf72084e78ef42bd16b0f8272a36d1910c8"
-    },
-    {
-      "lane_id": "combined-runner-ancestor",
-      "execution_id": "SF-BL-005-RUNNER-ANCESTOR-INTEGRATION-001",
-      "base_commit": "82581d000f9a065d9cfb5dc6f25029fffccbbaf0",
-      "selected_backlog_items": [
-        "SF-BL-005"
-      ],
-      "execution_state": "INTEGRATED_ENGINEERING_READY",
-      "integration_candidate": "8c294063d6696a567bbd1c29552e0fd6925e0f73"
-    },
-    {
-      "lane_id": "realworld-selector-diagnostic",
-      "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
-      "base_commit": "7b35626d799987a5736652fa097b033af3113d95",
-      "selected_backlog_items": [
-        "SF-BL-005"
-      ],
-      "execution_state": "DIAGNOSTIC_COMPLETE_REVIEW_PASS_FDP_RECONCILED",
-      "integration_candidate": "0aa05658bdd4415936bf0fd31c10ea3a32f6d656"
-    },
-    {
-      "lane_id": "route-coverage-analysis",
-      "execution_id": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
-      "base_commit": "be3eb8f7e6855fb5addf38c095a7cb5729e5b969",
-      "selected_backlog_items": [
-        "SF-BL-005"
-      ],
-      "execution_state": "ANALYSIS_COMPLETE_FDP_RETURNED",
-      "integration_candidate": "8b758f79e677de0fce6d39afbe4b32aae228e41d"
-    },
-    {
-      "lane_id": "generic-ancestor-followup-integration",
-      "execution_id": "SF-BL-005-GENERIC-ANCESTOR-FOLLOWUP-INTEGRATION-001",
-      "base_commit": "bc783b1f89c6146233423d9a3571c4ad15be608b",
-      "selected_backlog_items": [
-        "SF-BL-005"
-      ],
-      "execution_state": "PARKED_AFTER_STAGE_2_FAIL",
-      "integration_candidate": "8e835b427bd5f6b242b38d00e714d902298366c1"
     }
   ],
   "mapping_improvement_intake": {

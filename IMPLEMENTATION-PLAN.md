@@ -3,59 +3,56 @@
 ## Current selection
 
 Active Backlog items are `SF-BL-005` and `SF-BL-006`; current focus is
-`SF-BL-005`. Completion of `SF-BL-007` does not select or dispatch another
-execution.
+`SF-BL-005`. Human Authority selected envelope creation and ledger reconciliation
+for `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001`. This selection does not dispatch implementation.
 
-`SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001` completed its authorized read-only
-analysis and FDP return at integrated commit `8b758f79e677de0fce6d39afbe4b32aae228e41d`.
-All 9 distinct observations, accounting for 90 repeated `ROUTE_ABSENT` pairs,
-classify as `UNSUPPORTED_STATIC_EXTRACTION`; independent review passed with no
-P0-P2 findings. The returned proposal limits remediation to composing class-level
-routes with method-level PUT/DELETE mappings in the static handler extractor.
-Implementation, source/test changes, calibration, scoring, formal holdout,
-Product truth, and parent closure require new Human authority.
+The bounded objective is to extend `SpringRouteHandlerIndex` static extraction
+for method-level `@PutMapping` and `@DeleteMapping`, including annotations with
+no method path and with one literal method path. It must preserve existing
+class-level composition, `@RequestMapping`, GET/POST behavior, route
+normalization, ambiguity handling, exact-revision provenance, and proposal-only
+semantics.
 
-- Envelope control commit: `2f3181fddad7f5ee4cb160d781efd278fb2ed2b4`
-- Envelope SHA-256:
-  `73eb5c1a522151d5921946d391fe2d1ef60dd795f1f83ca04addaf903d3d814c`
-- Producer evidence:
-  `validation/software-factory/sf-bl005/envelope-preflight-route-coverage-analysis-001.json`
-- Independent reviewer run: `01a09a4c-e3c4-7698-af2e-14ba05d64362`
-- State: `ANALYSIS_COMPLETE_FDP_RETURNED`
-- Evidence: `validation/software-factory/sf-bl005/route-coverage-analysis-001/`
+The execution envelope must bind the exact control/base revision, the reviewed
+route-coverage analysis, the two Java change surfaces, focused negative and
+regression tests, an isolated evidence namespace, Java 17, independent review,
+full regression, and a memory limit below 8 GB. It must exclude selector,
+scorer, evaluator/gold, frozen evidence, calibration, RealWorld scoring, formal
+holdout, Product truth, deployment, and parent closure.
 
-The generic-ancestor follow-up candidate
-`8e835b427bd5f6b242b38d00e714d902298366c1` remains
-`PARKED_AFTER_STAGE_2_FAIL`; it was not integrated and Stage 3 was not
-triggered. `SF-BL-006` remains `BLOCKED_USER_APPROVAL` after learner archive
-delivery. Neither lane receives new authority from this Plan update.
+### Current execution ledger
 
-### Active execution ledger
+- `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001` — `ENVELOPE_PREPARATION_SELECTED_NOT_DISPATCHED`
 
-- `SF-BL-005-SELECTOR-DIAGNOSTICS-001`
-- `SF-BL-005-PARALLEL-INVESTIGATIONS-001`
-- `SF-BL-006-COMPANY-AI-SHARE-001`
-- `SF-BL-005-GENERIC-ANCESTOR-001`
-- `SF-BL-005-REALWORLD-DIAGNOSTIC-PREP-001`
-- `SF-BL-005-SELECTOR-RUNNER-001`
-- `SF-BL-005-RUNNER-ANCESTOR-INTEGRATION-001`
-- `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001`
-- `SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001`
-- `SF-BL-005-GENERIC-ANCESTOR-FOLLOWUP-INTEGRATION-001`
+### Completed execution ledger
+
+- `SF-BL-005-SELECTOR-DIAGNOSTICS-001` — `INTEGRATED_ENGINEERING_READY`
+- `SF-BL-005-PARALLEL-INVESTIGATIONS-001` — `OBSERVATIONS_RECEIVED_WITH_LIMITATIONS`
+- `SF-BL-005-GENERIC-ANCESTOR-001` — `FRESH_INDEPENDENT_REVIEW_PASS`
+- `SF-BL-005-REALWORLD-DIAGNOSTIC-PREP-001` — superseded by completed diagnostic execution
+- `SF-BL-005-SELECTOR-RUNNER-001` — `INDEPENDENT_REVIEW_COMPLETE_WITH_LIMITATIONS`
+- `SF-BL-005-RUNNER-ANCESTOR-INTEGRATION-001` — `INTEGRATED_ENGINEERING_READY`
+- `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001` — `DIAGNOSTIC_COMPLETE_REVIEW_PASS_FDP_RECONCILED`
+- `SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001` — `ANALYSIS_COMPLETE_FDP_RETURNED`
+
+### Parked or blocked execution ledger
+
+- `SF-BL-005-GENERIC-ANCESTOR-FOLLOWUP-INTEGRATION-001` — `PARKED_AFTER_STAGE_2_FAIL`; not integrated and Stage 3 not triggered
+- `SF-BL-006-COMPANY-AI-SHARE-001` — learner delivery complete; downstream company environment remains `BLOCKED_USER_APPROVAL`
 
 ## Continuation constraints
 
 - One FDP reconciliation owner serializes all five active-control changes.
 - Existing execution evidence stays immutable; no failed or blocked state is
   rewritten as success.
+- Envelope creation is authorized; implementation dispatch requires a separate
+  Human decision after producer and independent preflight pass.
 - Missing metrics remain `UNKNOWN`; incomparable samples remain
   `INSUFFICIENT_SAMPLE`.
-- Route analysis is complete. Its extractor remediation proposal requires a new
-  Human selection and exact envelope before implementation.
-- `CSI-REC-001` through `CSI-REC-004` remain recommendations. Their
-  canonical records do not authorize remediation.
+- `CSI-REC-001` through `CSI-REC-004` remain recommendations and are outside
+  this route-extractor execution.
 - Aggregate commands stay below 8 GB and heavy JVM work runs sequentially with
-  a 2 GB Maven heap unless a stricter envelope applies.
+  a 2 GB Maven heap unless the envelope is stricter.
 
 ## Verified-delivery ledger
 
