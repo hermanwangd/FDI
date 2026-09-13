@@ -510,6 +510,66 @@ def _validate_empty(given: dict[str, Any], oracle: dict[str, Any]) -> None:
         raise VerificationError(f"EMPTY_AND_ABSTENTION oracle fields must be exactly {sorted(expected_keys)}")
 
 
+def _expected_common(operation: str, given: dict[str, Any]) -> tuple[str, list[str]]:
+    if operation == "CANONICAL_IDENTITY":
+        candidates = given.get("candidates", [given.get("candidate")])
+        mixed = any("<" in item or ">" in item for candidate in candidates for item in candidate["parameterTypes"])
+        return ("MIXED", ["NEGATIVE"]) if mixed else ("VALID", ["POSITIVE"])
+    if operation == "OCCURRENCE_SCORING":
+        unmatched = list(given["goldPairDigests"])
+        tp = 0
+        for occurrence in given["proposalOccurrences"]:
+            if occurrence["disposition"] == "VALID" and occurrence["pairDigest"] in unmatched:
+                unmatched.remove(occurrence["pairDigest"])
+                tp += 1
+        positive = tp > 0 or (not given["goldPairDigests"] and not given["proposalOccurrences"])
+        return "VALID", ["POSITIVE" if positive else "NEGATIVE"]
+    if operation == "DISPOSITION_EVIDENCE":
+        occurrence, proofs = given["occurrence"], given["proofs"]
+        structural_invalid = len(proofs) != 1 or (len(proofs) == 1 and (proofs[0]["occurrenceId"] != occurrence["occurrenceId"] or proofs[0]["pairDigest"] != occurrence["pairDigest"] or proofs[0]["proofDigest"] != given["sealedProofDigest"]))
+        if structural_invalid:
+            return "INVALID", ["NEGATIVE"]
+        facets = occurrence["facets"]
+        passing = facets == {"entity": "MATCH", "action": "MATCH", "assertionRole": "MATCH", "polarity": "MATCH", "businessCondition": "MATCH", "ambiguity": "UNAMBIGUOUS", "evidenceSufficiency": "SUFFICIENT"}
+        return "VALID", ["POSITIVE" if passing else "NEGATIVE"]
+    if operation == "PROVENANCE_INTEGRITY":
+        reasons = []
+        scenario_ids = given.get("scenarioIds")
+        reasons += [1] if scenario_ids is not None and len(scenario_ids) != len(set(scenario_ids)) else []
+        reasons += [1] if given["pairRepositorySnapshotSha256"] != given["repositorySnapshotSha256"] else []
+        reasons += [1] if given["testProvenanceSha256"] is None or given["sourceProvenanceSha256"] is None else []
+        reasons += [1] if len(given["coverageStrata"]) != 1 or given["truthDisposition"] is None else []
+        reasons += [1] if "unknownField" in given or given["artifactSha256"] != given["expectedArtifactSha256"] or given["foreignRepositoryReference"] is True else []
+        return ("INVALID", ["NEGATIVE"]) if reasons else ("VALID", ["POSITIVE"])
+    if operation == "EMPTY_AND_ABSTENTION":
+        covered = any(isinstance(item, dict) and item.get("structurallyValid") is True for item in given["proposalOccurrences"])
+        if given["goldCount"] > 0 and not given["proposalOccurrences"] and "abstention" not in given:
+            return "INVALID", ["NEGATIVE"]
+        return "VALID", ["POSITIVE" if covered else "NEGATIVE"]
+    if operation == "CHAIN_SCORING":
+        reason = _chain_reason(given) if given["chainRequired"] else None
+        if reason is not None:
+            return "INVALID", ["NEGATIVE"]
+        ordered = given["orderedGoldPairDigests"]
+        edges = [list(pair) for pair in zip(ordered, ordered[1:])]
+        complete = not given["chainRequired"] or (all(item in given["proposalPairDigests"] for item in ordered) and all(edge in given["proposalEdges"] for edge in edges))
+        return "VALID", ["POSITIVE" if complete else "NEGATIVE"]
+    if operation == "REPOSITORY_DECISION":
+        unavailable = any(item["tp"] + item["fp"] == 0 or item["tp"] + item["fn"] == 0 for item in given["repositories"])
+        if unavailable:
+            return "INVALID", ["NEGATIVE"]
+        passed = all(5 * item["tp"] > 4 * (item["tp"] + item["fp"]) and 5 * item["tp"] > 3 * (item["tp"] + item["fn"]) for item in given["repositories"])
+        return "VALID", ["POSITIVE" if passed else "NEGATIVE"]
+    if operation == "WILSON_INTERVAL":
+        valid = isinstance(given["x"], int) and not isinstance(given["x"], bool) and isinstance(given["n"], int) and not isinstance(given["n"], bool) and 0 <= given["x"] <= given["n"] and given["n"] > 0
+        return ("VALID", ["POSITIVE"]) if valid else ("INVALID", ["NEGATIVE"])
+    if operation == "DETERMINISM_AND_PARITY":
+        keys = ["goldenBytes", "javaRun1Bytes", "javaRun2Bytes", "pythonRun1Bytes", "pythonRun2Bytes"]
+        identical = len({given[key] for key in keys}) == 1
+        return ("PASS", ["POSITIVE"]) if identical else ("FAIL", ["NEGATIVE"])
+    raise VerificationError(f"unsupported operation: {operation}")
+
+
 def _validate_semantics(operation: str, given: dict[str, Any], oracle: dict[str, Any]) -> None:
     _validate_operation_shape(operation, given, oracle)
     if operation == "CANONICAL_IDENTITY":
@@ -530,6 +590,9 @@ def _validate_semantics(operation: str, given: dict[str, Any], oracle: dict[str,
         _validate_wilson(given, oracle)
     elif operation == "DETERMINISM_AND_PARITY":
         _validate_parity(given, oracle)
+    expected_result, expected_polarity = _expected_common(operation, given)
+    if oracle.get("ruleId") != operation or oracle.get("result") != expected_result or oracle.get("polarity") != expected_polarity:
+        raise VerificationError("oracle common fields mismatch")
 
 
 def _review_path(path: Path, manifest: Path) -> Path:

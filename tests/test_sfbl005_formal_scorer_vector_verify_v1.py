@@ -366,3 +366,38 @@ def test_rejects_scenario_coverage_not_recomputed_from_valid_proposals(tmp_path)
     paths = arrange_semantic(tmp_path, "EMPTY_AND_ABSTENTION", given, oracle)
     mutate_expected(paths, lambda value: value.update(scenarioCoverage={"covered": 0, "total": 1}))
     assert_semantic_rejection(paths, "empty/abstention oracle mismatch")
+
+
+@pytest.mark.parametrize("operation,given,oracle", [
+    ("OCCURRENCE_SCORING", lambda _: {"goldPairDigests": [], "proposalOccurrences": []}, lambda _: {"result": "VALID", "counts": {"tp": 0, "fp": 0, "fn": 0, "duplicateCount": 0}}),
+    ("CHAIN_SCORING", lambda _: {"chainRequired": False, "orderedGoldPairDigests": [], "truthEdges": [], "proposalPairDigests": [], "proposalEdges": []}, lambda _: {"result": "VALID", "reasonCodes": [], "chainComplete": None, "counts": {"tp": 0, "fp": 0, "fn": 0, "duplicateCount": 0}}),
+    ("WILSON_INTERVAL", lambda _: {"x": 0, "n": 10, "zDecimal": "1.959963984540054", "precision": 50, "rounding": "HALF_EVEN", "scale": 12}, lambda _: {"result": "VALID", "lower": "0.000000000000", "upper": "0.277532799863"}),
+])
+def test_rejects_operation_result_not_derived_from_given(tmp_path, operation, given, oracle):
+    paths = arrange_semantic(tmp_path, operation, given, oracle)
+    mutate_expected(paths, lambda value: value.update(result="ARBITRARY"))
+    assert_semantic_rejection(paths, "oracle common fields mismatch")
+
+
+def test_rejects_canonical_polarity_even_when_manifest_is_rebound_to_match(tmp_path):
+    candidates = [canonical_pair("synthetic/A.java"), canonical_pair("synthetic/B.java")]
+    paths = arrange_semantic(tmp_path, "CANONICAL_IDENTITY", lambda _: {"candidates": candidates}, lambda _: {"result": "VALID", "relation": "IDENTICAL_PAIR_IDENTITY", "canonicalOutputs": [canonical_output(x) for x in candidates]})
+    mutate_expected(paths, lambda value: value.update(polarity=["NEGATIVE"]))
+    manifest = json.loads(paths[0].read_text())
+    manifest["vectors"][0]["coverage"] = [{"ruleId": "CANONICAL_IDENTITY", "polarity": "NEGATIVE"}]
+    n_path = paths[3] / "N.json"
+    n_value = json.loads(n_path.read_text())
+    n_value["oracle"]["polarity"] = ["POSITIVE"]
+    n_data = canonical(n_value)
+    n_path.write_bytes(n_data)
+    manifest["vectors"][1]["expected"]["sha256"] = sha(n_data)
+    manifest["vectors"][1]["coverage"] = [{"ruleId": "CANONICAL_IDENTITY", "polarity": "POSITIVE"}]
+    paths[0].write_bytes(canonical(manifest))
+    assert_semantic_rejection(paths, "oracle common fields mismatch")
+
+
+@pytest.mark.parametrize("mutation", [lambda value: value.update(unverifiedExtra=True), lambda value: value.pop("counts")])
+def test_rejects_added_or_deleted_operation_oracle_key(tmp_path, mutation):
+    paths = arrange(tmp_path)
+    mutate_expected(paths, mutation)
+    assert_semantic_rejection(paths, "OCCURRENCE_SCORING oracle fields must be exactly")
