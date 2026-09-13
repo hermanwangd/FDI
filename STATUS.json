@@ -9,10 +9,9 @@
   "decision_reason": "No terminal GO/REVISE/STOP decision; calibration assessment remains INCONCLUSIVE and RealWorld acceptance remains WITHHELD.",
   "active_implementation_plan": "IMPLEMENTATION-PLAN.md#current-selection",
   "selected_backlog_items": [
-    "SF-BL-005",
-    "SF-BL-006"
+    "SF-BL-005"
   ],
-  "next_action": "Materialize, independently preflight, and execute SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002 before SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001; then run SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003 and SF-BL-005-BOXING-CALIBRATION-003 in sequence.",
+  "next_action": "Correct active backlog/execution consistency, then materialize a new exact baseline diagnostic replan; downstream remediation remains dependency-blocked.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
@@ -115,8 +114,7 @@
     "source_base": "d89626981975f2c258e438f25880ac258efe1920"
   },
   "active_backlog_items": [
-    "SF-BL-005",
-    "SF-BL-006"
+    "SF-BL-005"
   ],
   "active_executions": [
     {
@@ -252,5 +250,13 @@
       "authority": "EXPOSED_CALIBRATION_ENVELOPE_AND_DISPATCH",
       "depends_on": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003"
     }
-  ]
+  ],
+  "latest_failed_execution": {
+    "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002",
+    "candidate": "a0f7346b9dd80a5f4ca7ad27d40110a6cc749e1b",
+    "integrated_evidence_commit": "f84096ef3d0837726ef58cfe77b9b2f43c8fc509",
+    "state": "FAILED_PYTHON_CONTROL_STATE_REGRESSION",
+    "verification": "3_FAILED_60_PASSED",
+    "evidence": "validation/software-factory/sf-bl005/realworld-selector-diagnostic-002/execution-receipt.json"
+  }
 }
