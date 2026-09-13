@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "SF-BL-007-IMPLEMENTATION-EVIDENCE-001",
+  "executionId": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-IMPLEMENTATION-001",
+  "base": "6a0e266fa65f0496bdbd1f52f9a96bdd59a26836",
+  "candidate": "775b7728934df6ec00f6cf097e0fc47f75a5f726",
+  "envelopePath": "validation/software-factory/sf-bl007/execution-envelope-implementation-001.json",
+  "envelopeSha256": "b0fe5c51b023f31acbe1d5323ed6c9900660d64f252a61777d53f517dbb94d7f",
+  "reviewPath": "validation/software-factory/sf-bl007/implementation-001-review.md",
+  "reviewVerdict": "PASS",
+  "runtime": {
+    "javaExecutable": "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/bin/java",
+    "javaVersion": "17.0.20.1",
+    "mavenHeapGb": 2,
+    "testForkHeapGb": 2,
+    "cliHeapMb": 512,
+    "aggregateMemoryGbLessThan": 8
+  },
+  "commands": [
+    {
+      "command": "JAVA_HOME=<openjdk@17> MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g package",
+      "attempts": 2,
+      "successfulAttemptElapsedSeconds": 206,
+      "exitCode": 0,
+      "tests": 1491,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "note": "First Java 17 wrapper attempt reached test tail but used reserved zsh variable status and could not retain Maven exit code; it was not counted as PASS."
+    },
+    {
+      "command": "python3 -m pytest -q",
+      "attempts": 1,
+      "elapsedSeconds": 36,
+      "exitCode": 0,
+      "tests": 63,
+      "failures": 0
+    },
+    {
+      "command": "java -Xmx512m -jar target/fdi-0.4.8.3.jar csi-validate --mode CREATE --input <record> --report <new-report>",
+      "attempts": 1,
+      "elapsedSeconds": null,
+      "exitContract": "0 VALID; 1 BLOCKED or INVALID",
+      "records": {
+        "CSI-REC-001": {
+          "inputPath": "validation/software-factory/sf-bl007/canonical/CSI-REC-001.json",
+          "inputSha256": "69bbb37f4f9b597478103e059430d03fb1a0be81f2a092d51a48be4fcd90cee8",
+          "status": "VALID",
+          "exitCode": 0,
+          "duplicateKey": "e3445f109f9bd1ebfee767566f713b50a788d4b40f5a5b8bd373b2de2bdddd8b",
+          "reportSha256": "1f01a8068bdb11826b546c0871ad7c5b076b2a307b8fceda4298f79e3aa147c7"
+        },
+        "CSI-REC-002": {
+          "inputPath": "validation/software-factory/sf-bl007/canonical/CSI-REC-002.json",
+          "inputSha256": "3d2587cb1747d1b63fed890f599200c2b4bba3429a59cc4e63b942d9172c96fa",
+          "status": "VALID",
+          "exitCode": 0,
+          "duplicateKey": "a18b5472d08e3cffe7739972ca7081c34824b4084af7d59605050f61ea255cb7",
+          "reportSha256": "3d8e17c30c55eb16985bc7aad9b20f1b2e6303fd630d5b486f94919b9e1d28b5"
+        },
+        "CSI-REC-003": {
+          "inputPath": "validation/software-factory/sf-bl007/canonical/CSI-REC-003.json",
+          "inputSha256": "dd9e4a91b02d83f3c897c9a7f42657fad6fa7ec32de6cc426a58ff94f119579d",
+          "status": "BLOCKED",
+          "exitCode": 1,
+          "duplicateKey": "d0328e37a0bcec934da4238eea5ece093c7c7f7cb20026f2d153ff02ccb7b2ef",
+          "reportSha256": "3ceaa2b2716d9433b0cc8eff0d3ac681ada0894c0e8f27ee1f0ade3f07825681"
+        },
+        "CSI-REC-004": {
+          "inputPath": "validation/software-factory/sf-bl007/canonical/CSI-REC-004.json",
+          "inputSha256": "e0310561a1b956c1544bc49ed2de7e624062b23aff464d5490c9ad2627bc1be0",
+          "status": "BLOCKED",
+          "exitCode": 1,
+          "duplicateKey": "87dbc6ab332af85e83bc96782f3d644b15fa1e99c353136c6ef161fcdc752298",
+          "reportSha256": "cb6cd9f0bad3d2fbd33afc14b74fc78d4988f341a13bb055f98c20c16d5ec347"
+        }
+      }
+    },
+    {
+      "command": "git diff --check",
+      "attempts": 1,
+      "elapsedSeconds": null,
+      "exitCode": 0
+    }
+  ],
+  "artifacts": {
+    "jar": {
+      "path": "target/fdi-0.4.8.3.jar",
+      "sha256": "d7ca70b16adce8db0430134d64b351bdb65a361de2593aad2f3f996511e05607"
+    },
+    "validatorSource": {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/validation/csi/CsiRecommendationValidator.java",
+      "sha256": "134942070bc4e55c600ddb80882eca926972a4a05221bb4f70a4d50373dee4ad"
+    },
+    "cliSource": {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/application/CsiValidateCli.java",
+      "sha256": "d2e4f369668f725019dd9974f0640897c5081d4224c8e19a580329fcb4929e08"
+    }
+  },
+  "acceptance": {
+    "canonicalRecommendationValidation": "PASS",
+    "deterministicSemanticDuplicateKey": "PASS",
+    "appendOnlyOriginAndKpiHistory": "PASS",
+    "nonCircularHandoffGates": "PASS",
+    "externallyBoundHandoffRevisions": "PASS",
+    "honestKpiStates": "PASS",
+    "fourFixedRecords": "PASS_WITH_EXPECTED_BLOCKED_LEGACY_PROVENANCE",
+    "packagedCli": "PASS",
+    "authorityBoundary": "PASS"
+  },
+  "limitations": [
+    "CSI-REC-003 and CSI-REC-004 remain BLOCKED because durable legacy origin evidence is missing; no provenance was invented.",
+    "Effectiveness remains INSUFFICIENT_SAMPLE; implementation correctness does not prove KPI improvement.",
+    "No deployment, runtime service, automatic remediation, Product truth publication, agent change, or automation change was performed."
+  ],
+  "verdict": "ENGINEERING_READY"
+}
