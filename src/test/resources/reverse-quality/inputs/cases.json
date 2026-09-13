@@ -1,0 +1,13 @@
+{
+  "datasetKind": "SYNTHETIC_CONTRACT_CASES",
+  "cases": [
+    {"id":"feature-creation","paths":["src/test/java/demo/ShipmentTests.java"],"methods":[["shouldShipParcel"]],"deliveries":1,"historyMessage":"Add parcel dispatch"},
+    {"id":"refactor-only","paths":["src/main/java/demo/DispatchService.java"],"methods":[],"deliveries":1,"historyMessage":"Extract helper without changing behavior"},
+    {"id":"misleading-parent","paths":["src/test/java/organizations/ShipmentTests.java"],"methods":[["shouldShipParcel"]],"deliveries":1,"historyMessage":"Update organization shipment flow"},
+    {"id":"composite-delivery","paths":["src/test/java/demo/ShipmentTests.java","src/test/java/demo/InvoiceTests.java"],"methods":[["shouldShipParcel"],["shouldIssueInvoice"]],"deliveries":1,"historyMessage":"Dispatch parcels and issue invoices"},
+    {"id":"feature-across-deliveries","paths":["src/test/java/demo/ShipmentTests.java"],"methods":[["shouldShipParcel"]],"deliveries":2,"historyMessage":"Continue parcel dispatch"},
+    {"id":"authorization-denial","paths":["src/test/java/demo/ShipmentTests.java"],"methods":[["shouldRejectUnauthorizedShipment"]],"deliveries":1,"historyMessage":"Reject unauthorized dispatch"},
+    {"id":"history-source-conflict","paths":["src/test/java/demo/ShipmentTests.java"],"methods":[["shouldShipParcel"]],"deliveries":1,"historyMessage":"Parcel dispatch was removed"},
+    {"id":"non-http-entry","paths":["src/test/java/demo/ScheduledShipmentTests.java"],"methods":[["shouldScheduleShipment"]],"deliveries":1,"historyMessage":"Add scheduled dispatch"}
+  ]
+}
