@@ -1,0 +1,78 @@
+{
+  "assessment": "FAILED_EVIDENCE_INTEGRITY_REPLAN_REQUIRED",
+  "boundaries": {
+    "deployment": false,
+    "formalHoldout": false,
+    "generalization": false,
+    "parentClosure": false,
+    "publication": false
+  },
+  "commands": {
+    "candidateStageEvaluation": {
+      "artifactOutcome": "OUTPUT_PRESENT_AND_INTERNALLY_VALID",
+      "attempts": null,
+      "evidenceLimitation": "COMMAND_ATTEMPT_AND_EXIT_NOT_DURABLY_LOGGED",
+      "exitCode": null
+    },
+    "comparison": {
+      "artifactOutcome": "OUTPUT_PRESENT_AND_INTERNALLY_VALID",
+      "attempts": null,
+      "evidenceLimitation": "COMMAND_ATTEMPT_AND_EXIT_NOT_DURABLY_LOGGED",
+      "exitCode": null
+    },
+    "producer": {
+      "artifactOutcome": "OUTPUT_PRESENT_AND_INTERNALLY_VALID",
+      "attempts": null,
+      "evidenceLimitation": "COMMAND_ATTEMPT_AND_EXIT_NOT_DURABLY_LOGGED",
+      "exitCode": null
+    }
+  },
+  "comparisonToBoxing002": {
+    "byteStableBaseline": true,
+    "byteStableImproved": true,
+    "f1Delta": 0.0,
+    "precisionDelta": 0.0,
+    "recallDelta": 0.0
+  },
+  "embeddedProducerExecutionId": "SF-BL-005-BOXING-CALIBRATION-002",
+  "envelopeRevision": 1,
+  "envelopeSha256": "ead926a4efb0c784cc206d0ce42adf2c6fab925686f9c576dc93ce92b516c19a",
+  "executionBase": "495544062344ce868dc3afd8978b2040ad73727e",
+  "generationSha256": "a9344de419674d45003f2b5c3db4626fcc5c96cc5380dd9a1b9002fa54ed8888",
+  "identityDisposition": "FROZEN_PROTOCOL_REPLAY_SUBEXECUTION_NO_REWRITE",
+  "manifestSha256": "730cf38b4f139806f3c753363cf8a8832b4ae959f0bea717389a0f259d4c55d4",
+  "namespace": "validation/software-factory/sf-bl005/boxing-calibration-003",
+  "outerExecutionId": "SF-BL-005-BOXING-CALIBRATION-003",
+  "result": {
+    "abstentions": 1,
+    "chainCoverage": null,
+    "completeChains": 2,
+    "coveredScenarios": 9,
+    "duplicatePairs": 21,
+    "f1": 0.8157894736842105,
+    "falseNegatives": 9,
+    "falsePositives": 5,
+    "missingChainDefinitions": 1,
+    "precision": 0.8611111111111112,
+    "recall": 0.775,
+    "requiredChains": 9,
+    "scenarioCoverage": 0.9,
+    "selectedScenarios": 10,
+    "truePositives": 31,
+    "unsupportedTypeClaims": 0
+  },
+  "resultStatus": "NUMERIC_OUTPUTS_AVAILABLE_NOT_ACCEPTED_AS_COMPLETED_CALIBRATION",
+  "review": {
+    "finding": "Command logs do not substantiate exact-once attempts, exit codes, or producer-before-evaluator ordering.",
+    "findings": {
+      "p0": 0,
+      "p1": 1,
+      "p2": 0
+    },
+    "reviewedCandidate": "98d201f09fd0ba8fc689dea5a3f68ceb1cf5a242",
+    "reviewer": "/root/diagnostic_002_result_review",
+    "verdict": "FAIL"
+  },
+  "runtimeSha256": "33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab",
+  "schemaVersion": "software-factory.sf-bl005-boxing-calibration-replay.v1"
+}
