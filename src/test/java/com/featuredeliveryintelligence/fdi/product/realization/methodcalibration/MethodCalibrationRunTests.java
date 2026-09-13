@@ -36,5 +36,8 @@ class MethodCalibrationRunTests {
                 () -> CandidateTraceCalibrationRun.main(new String[] {
                         root.toString(), root.toString(), root.toString() })).getMessage());
         assertThrows(IllegalArgumentException.class, () -> CandidateTraceCalibrationRun.main(new String[0]));
+        assertEquals("OUTPUT_EXISTS", assertThrows(IllegalArgumentException.class,
+                () -> BoxingCalibrationRun.main(new String[] {
+                        root.toString(), root.toString(), root.toString() })).getMessage());
     }
 }

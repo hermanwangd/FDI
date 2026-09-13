@@ -14,11 +14,15 @@ final class QualifiedCalibrationProducer {
     }
     static CalibrationProducer.Artifact produce(CalibrationProducer.Binding binding, List<String> scenarios,
             List<ScenarioEvidenceSelector.Seed> seeds, SourceMethodIndex index, CandidateTrace trace) {
+        return produce(binding, scenarios, seeds, index, trace, false);
+    }
+    static CalibrationProducer.Artifact produce(CalibrationProducer.Binding binding, List<String> scenarios,
+            List<ScenarioEvidenceSelector.Seed> seeds, SourceMethodIndex index, CandidateTrace trace, boolean boxing) {
         Set<Claim> claims = new LinkedHashSet<>();
         Set<EdgeClaim> edges = new LinkedHashSet<>();
         Set<String> resolved = new LinkedHashSet<>();
         var scenarioMethods = new HashMap<String, Set<SourceMethodIndex.Method>>();
-        var calls = new QualifiedSourceCalls(index);
+        var calls = new QualifiedSourceCalls(index, boxing);
         for (var seed : seeds) {
             if (!scenarios.contains(seed.scenarioId())) throw new IllegalArgumentException("UNKNOWN_SCENARIO");
             var start = index.unique(seed.productionIdentity());

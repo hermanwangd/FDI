@@ -37,6 +37,10 @@ public final class MethodCalibrationRun {
     }
 
     static void run(String[] args, boolean qualified, CrossRepositoryManifest manifest, boolean traced) throws Exception {
+        run(args, qualified, manifest, traced, false);
+    }
+    static void run(String[] args, boolean qualified, CrossRepositoryManifest manifest, boolean traced, boolean boxing) throws Exception {
+        if (boxing && !traced) throw new IllegalArgumentException("BOXING_REQUIRES_TRACE");
         if (traced && (!qualified || manifest != null)) throw new IllegalArgumentException("TRACE_REQUIRES_PETCLINIC_QUALIFIED");
         if (args.length != 3) throw new IllegalArgumentException("usage: <five-input-root> <exact-source-root> <new-output-root>");
         Path output = Path.of(args[2]).toAbsolutePath().normalize();
@@ -74,7 +78,7 @@ public final class MethodCalibrationRun {
             List<String> scenarios = new ArrayList<>();
             intents.required("records").forEach(record -> scenarios.add(record.required("scenarioId").asText()));
             var trace = traced ? new CandidateTrace(binding) : null;
-            improved = QualifiedCalibrationProducer.produce(binding, scenarios, selected, index, trace);
+            improved = QualifiedCalibrationProducer.produce(binding, scenarios, selected, index, trace, boxing);
             if (trace != null) write(output.resolve("candidate-trace.json"), trace.artifact());
             write(output.resolve("selected-evidence.json"), selected);
         } else {
@@ -92,7 +96,7 @@ public final class MethodCalibrationRun {
                 outputs.put(output.relativize(path).toString(), digest(path));
         }
         write(output.resolve("generation.json"), Map.of(
-                "executionId", traced ? "SF-BL-005-CANDIDATE-TRACE-001" : manifest != null ? manifest.executionId()
+                "executionId", boxing ? "SF-BL-005-BOXING-CALIBRATION-001" : traced ? "SF-BL-005-CANDIDATE-TRACE-001" : manifest != null ? manifest.executionId()
                         : qualified ? "SF-BL-005-METHOD-QUALITY-007" : "SF-BL-005-METHOD-CALIBRATION-005", "datasetKind", "CALIBRATION",
                 "binding", binding, "inputs", sealed, "outputs", outputs,
                 "startedAt", start, "finishedAt", Instant.now().toString(),

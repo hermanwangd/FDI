@@ -65,6 +65,16 @@ class CandidateTraceTests {
         Files.writeString(path, source);
         return new SourceMethodIndex(root, List.of(path));
     }
+    @Test void boxingSuccessorRecoversTypedCallAndDownstreamWithoutChangingLegacyMode() throws Exception {
+        var index = index("package demo; class Controller {void create(int id){lookup(id);} "
+                + "void lookup(Integer id){work();} void work(){} }");
+        var trace = new CandidateTrace(binding);
+        var legacy = QualifiedCalibrationProducer.produce(binding, List.of("s1"), seeds(), index);
+        var improved = QualifiedCalibrationProducer.produce(binding, List.of("s1"), seeds(), index, trace, true);
+        assertEquals(1, legacy.proposals().methods().size());
+        assertEquals(3, improved.proposals().methods().size());
+        assertTrue(improved.proposals().methods().stream().anyMatch(c -> c.pair().method().signature().endsWith("#work()")));
+    }
     @Test void exceedingMethodBudgetFailsRatherThanReturningTruncatedProposals() throws Exception {
         StringBuilder calls = new StringBuilder();
         StringBuilder methods = new StringBuilder();

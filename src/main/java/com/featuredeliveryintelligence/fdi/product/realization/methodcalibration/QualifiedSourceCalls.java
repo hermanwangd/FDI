@@ -8,7 +8,9 @@ import java.util.*;
 
 final class QualifiedSourceCalls {
     private final SourceMethodIndex index;
-    QualifiedSourceCalls(SourceMethodIndex index) { this.index = index; }
+    private final boolean boxing;
+    QualifiedSourceCalls(SourceMethodIndex index) { this(index, false); }
+    QualifiedSourceCalls(SourceMethodIndex index, boolean boxing) { this.index = index; this.boxing = boxing; }
     String expressionType(Expression expression, SourceMethodIndex.Definition context) {
         return type(expression, context, 0);
     }
@@ -52,7 +54,52 @@ final class QualifiedSourceCalls {
         List<SourceMethodIndex.Definition> matches = new ArrayList<>();
         boolean[] unknown = {false};
         collect(receiver, call.getNameAsString(), arguments, new HashSet<>(), matches, unknown);
-        return !unknown[0] && matches.size() == 1 ? matches.get(0) : null;
+        if (unknown[0]) return null;
+        if (matches.size() == 1) return matches.get(0);
+        return boxing && matches.isEmpty() ? boxedTarget(receiver, call.getNameAsString(), arguments) : null;
+    }
+    private static final Map<String, String> BOXES = Map.of("boolean", "java.lang.Boolean", "byte", "java.lang.Byte",
+            "short", "java.lang.Short", "char", "java.lang.Character", "int", "java.lang.Integer",
+            "long", "java.lang.Long", "float", "java.lang.Float", "double", "java.lang.Double");
+
+    // JLS 15.12.2: strict invocation precedes boxing. Instead of approximating
+    // overload specificity, accept a loose match only with one visible declaration.
+    private SourceMethodIndex.Definition boxedTarget(String receiver, String name, List<String> arguments) {
+        // Object members exist even without an explicit extends clause. They may
+        // win in the strict phase (wait(long), equals(Object)); do not guess.
+        for (var method : Object.class.getDeclaredMethods())
+            if (method.getName().equals(name)) return null;
+        List<SourceMethodIndex.Definition> overloads = new ArrayList<>();
+        if (!overloads(receiver, name, arguments.size(), new HashSet<>(), overloads) || overloads.size() != 1) return null;
+        var target = overloads.get(0);
+        for (int i = 0; i < arguments.size(); i++) {
+            String argument = arguments.get(i);
+            String parameter = index.qualify(target.node().getParameter(i).getType(), target.owner());
+            if (!argument.equals(parameter) && !Objects.equals(BOXES.get(argument), parameter)
+                    && !argument.equals(BOXES.get(parameter))) return null;
+        }
+        return target;
+    }
+    private boolean overloads(String ownerName, String name, int arity, Set<String> visited,
+            List<SourceMethodIndex.Definition> result) {
+        if (!visited.add(ownerName)) return true;
+        if (visited.size() > 64) return false;
+        var owner = index.owner(ownerName);
+        if (owner == null) return false;
+        for (var method : owner.node().getMethodsByName(name)) {
+            if (method.getParameters().stream().anyMatch(Parameter::isVarArgs)) return false;
+            if (method.getParameters().size() != arity) continue;
+            var definition = index.definitions().stream().filter(d -> d.node() == method).findFirst();
+            if (definition.isEmpty()) return false;
+            result.add(definition.get());
+        }
+        var parents = new ArrayList<>(owner.node().getExtendedTypes());
+        parents.addAll(owner.node().getImplementedTypes());
+        for (var parent : parents) {
+            String qualified = index.qualify(parent, owner);
+            if (qualified == null || !overloads(qualified, name, arity, visited, result)) return false;
+        }
+        return true;
     }
     private void collect(String ownerName, String name, List<String> arguments, Set<String> visited,
             List<SourceMethodIndex.Definition> matches, boolean[] unknown) {

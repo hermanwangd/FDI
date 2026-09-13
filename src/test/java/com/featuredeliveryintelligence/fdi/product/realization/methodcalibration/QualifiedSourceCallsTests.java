@@ -147,4 +147,49 @@ class QualifiedSourceCallsTests {
                 """);
         assertTrue(signatures(index, "demo.Service#run", "FIND").isEmpty());
     }
+    @Test void optionalBoxingResolvesOnlySoleVisibleCompatibleDeclaration() throws Exception {
+        var index = index("""
+                package demo;
+                class Store { void lookup(Integer id){} }
+                class Service { Store store; void run(int id){store.lookup(id);} }
+                """);
+        var method = index.unique("demo.Service#run");
+        assertTrue(new QualifiedSourceCalls(index).calls(method, "FIND").isEmpty());
+        assertEquals(List.of("demo.Store#lookup(java.lang.Integer)"), new QualifiedSourceCalls(index, true)
+                .calls(method, "FIND").stream().map(SourceMethodIndex.Method::signature).toList());
+    }
+    @Test void boxingNeverWinsOverCompetingPrimitiveWideningOrUnknownInheritance() throws Exception {
+        var index = index("""
+                package demo;
+                class Store { void lookup(Integer id){} void lookup(long id){} }
+                class Unknown extends External {void lookup(Integer id){}}
+                class Service { Store store; Unknown unknown;
+                    void run(int id){store.lookup(id);unknown.lookup(id);} }
+                """);
+        assertTrue(new QualifiedSourceCalls(index, true).calls(index.unique("demo.Service#run"), "FIND").isEmpty());
+    }
+    @Test void exactMatchWinsAndUnboxingIsConservative() throws Exception {
+        var index = index("""
+                package demo;
+                class Store { void lookup(Integer id){} void lookup(int id){} void save(int id){} }
+                class Service { Store store; void run(int id){store.lookup(id);} void other(Integer id){store.save(id);} }
+                """);
+        var calls = new QualifiedSourceCalls(index, true);
+        assertEquals(List.of("demo.Store#lookup(int)"), calls.calls(index.unique("demo.Service#run"), "FIND")
+                .stream().map(SourceMethodIndex.Method::signature).toList());
+        assertEquals(List.of("demo.Store#save(int)"), calls.calls(index.unique("demo.Service#other"), "UPDATE")
+                .stream().map(SourceMethodIndex.Method::signature).toList());
+    }
+    @Test void implicitObjectOverloadsPreventFalseBoxingEdges() throws Exception {
+        var index = index("""
+                package demo;
+                class Store { void wait(Integer id){} public boolean equals(int id){return true;} }
+                class Service { Store store;
+                  void run(int id) throws InterruptedException {store.wait(id);}
+                  void other(Integer id){store.equals(id);} }
+                """);
+        var calls = new QualifiedSourceCalls(index, true);
+        assertTrue(calls.calls(index.unique("demo.Service#run"), "FIND").isEmpty());
+        assertTrue(calls.calls(index.unique("demo.Service#other"), "FIND").isEmpty());
+    }
 }
