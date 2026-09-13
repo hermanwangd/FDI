@@ -11,16 +11,15 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Materialize and independently preflight route-handler extractor remediation envelope revision 4 against this reconciled control commit, then execute the authorized implementation.",
+  "next_action": "Create and independently preflight the post-remediation RealWorld selector diagnostic 003 envelope with regenerated 19-handler input, then run twice.",
   "blocking_dependency": null,
   "latest_completed_execution": {
-    "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001",
-    "integrated_commit": "c9cfe65640cf36e89db77df582b70ff0ddc951bc",
+    "execution_id": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
+    "integrated_commit": "fbcbff200d442591a20753d8632c9997433a685e",
     "review": "INDEPENDENT_REVIEW_PASS_P0_P2_ZERO",
-    "verification": "JAVA17_PACKAGE_PASS_PYTEST_63_63_TWO_RUN_BYTE_PARITY",
-    "result": "ROUTE_ABSENT_90_ENTITY_MISMATCH_20",
-    "state": "DIAGNOSTIC_COMPLETE_FDP_RETURNED",
-    "evidence": "validation/software-factory/sf-bl005/realworld-selector-diagnostic-002-replan-001/execution-receipt.json"
+    "verification": "JAVA17_PACKAGE_1493_1493_PYTEST_63_63_REALWORLD_VERIFIER_19_HANDLERS_11_OF_11",
+    "state": "IMPLEMENTATION_COMPLETE_FDP_RETURNED",
+    "evidence": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/integration/delivery-evidence.json"
   },
   "latest_selector_diagnostic": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
@@ -38,20 +37,18 @@
     "parent_closure": false
   },
   "selected_next_execution": {
-    "execution_id": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
-    "state": "CONTROL_RECONCILED_FOR_ENVELOPE_REVISION_4",
-    "objective": "Add PutMapping/DeleteMapping static extraction under the existing bounded remediation contract.",
+    "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003",
+    "state": "ENVELOPE_CREATION_SELECTED_FOR_DISPATCH",
+    "objective": "Repeat the frozen RealWorld selector diagnostic with the remediated extractor-derived 19-handler input.",
     "selection_authority": "Human selected ordered options 1, 2, and 3 on 2026-09-13",
-    "construction_base": "b6ca63ff58d869ff233c1d92d87b9a69a4cbfd4a",
-    "code_change_authorized": true,
+    "construction_base": "fbcbff200d442591a20753d8632c9997433a685e",
+    "code_change_authorized": false,
     "envelope_creation_authorized": true,
     "dispatch_authorized": true,
     "calibration_authorized": false,
     "formal_holdout_authorized": false,
     "parent_closure": false,
-    "dependency": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001_COMPLETE",
-    "envelope_revision": 4,
-    "envelope_path": "validation/software-factory/sf-bl005/execution-envelope-route-handler-extractor-remediation-001.json"
+    "dependency": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001_COMPLETE"
   },
   "metric_goal": {
     "status": "NOT_MET_DIAGNOSTIC_ONLY",
@@ -119,13 +116,13 @@
   ],
   "active_executions": [
     {
-      "lane_id": "route-handler-extractor-remediation",
-      "execution_id": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
-      "base_commit": "b6ca63ff58d869ff233c1d92d87b9a69a4cbfd4a",
+      "lane_id": "realworld-selector-diagnostic-003",
+      "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003",
+      "base_commit": "fbcbff200d442591a20753d8632c9997433a685e",
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "CONTROL_RECONCILED_FOR_ENVELOPE_REVISION_4",
+      "execution_state": "ENVELOPE_CREATION_SELECTED_FOR_DISPATCH",
       "integration_candidate": null
     }
   ],
