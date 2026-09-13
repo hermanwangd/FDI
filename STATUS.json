@@ -12,7 +12,7 @@
     "SF-BL-005",
     "SF-BL-006"
   ],
-  "next_action": "Await Human selection of the next bounded SF-BL-005 action; RealWorld diagnostic execution, calibration and formal holdout remain unselected.",
+  "next_action": "Issue and independently preflight the fresh envelope for SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001; do not execute before the envelope is committed and verified.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-CROSSREPO-GATE-CONTAINMENT-003",
@@ -157,6 +157,16 @@
       ],
       "execution_state": "INTEGRATED_ENGINEERING_READY",
       "integration_candidate": "8c294063d6696a567bbd1c29552e0fd6925e0f73"
+    },
+    {
+      "lane_id": "realworld-selector-diagnostic",
+      "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
+      "base_commit": "7b35626d799987a5736652fa097b033af3113d95",
+      "selected_backlog_items": [
+        "SF-BL-005"
+      ],
+      "execution_state": "SELECTED_PENDING_EXACT_ENVELOPE",
+      "integration_candidate": null
     }
   ],
   "mapping_improvement_intake": {
@@ -208,10 +218,10 @@
   "preparation": {
     "framework_base": "fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c",
     "ancestor_resolution": "SOURCE_BACKED_SLICE_SELECTED_EXTERNAL_SIGNATURES_DEFERRED",
-    "realworld_diagnostic": "INPUTS_VERIFIED_RUNNER_NOT_IMPLEMENTED",
+    "realworld_diagnostic": "INPUTS_VERIFIED_RUNNER_INTEGRATED_EXECUTION_SELECTED_PENDING_ENVELOPE",
     "evidence": "validation/software-factory/sf-bl005/selector-diagnostics-001/realworld-preparation.json",
     "implementation_authorized": true,
-    "diagnostic_execution_authorized": false,
+    "diagnostic_execution_authorized": true,
     "calibration_authorized": false
   }
 }
