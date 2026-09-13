@@ -9,6 +9,13 @@ RealWorld inputs and measure deterministic first-rejection reasons. This is a
 diagnostic-only execution, not calibration, scoring, Product truth, formal
 holdout, publication, deployment or parent closure.
 
+Execution state: `COMPLETE_INDEPENDENT_REVIEW_PASS_FDP_RECONCILED`.
+Durable evidence:
+`validation/software-factory/sf-bl005/realworld-selector-diagnostic-001/`.
+The result is 10 scenarios, 110 evaluated pairs, 0 accepted, 90
+`ROUTE_ABSENT`, and 20 `ENTITY_MISMATCH`. The next eligible work is a new,
+separately selected proposal limited to the dominant `ROUTE_ABSENT` class.
+
 Construction base: `7b35626d799987a5736652fa097b033af3113d95`.
 Spec revision: `4ac27198c6060e7978ed0b7f5ee0406225e31e4c`.
 Requirements: `AUTH-002`, `PK-004`, `EVID-001`, `TECH-001`.
@@ -114,6 +121,10 @@ If external ancestry is the dominant remaining first-rejection reason, FDP may
 propose Slice B separately. Otherwise it proposes only the largest evidenced
 rejection class. Either route needs a new selection and envelope. Missing valid
 evidence is `INCONCLUSIVE`; no diagnostic result authorizes calibration.
+
+The completed diagnostic did not identify external ancestry as its dominant
+class. FDP therefore routes only to a bounded `ROUTE_ABSENT` proposal. No such
+proposal or execution is authorized by this Plan.
 
 ## Exclusions and resource boundary
 

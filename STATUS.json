@@ -12,15 +12,30 @@
     "SF-BL-005",
     "SF-BL-006"
   ],
-  "next_action": "Dispatch the independently preflighted revision-2 envelope for SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001 in an isolated worktree; execution has not started.",
+  "next_action": "Prepare a bounded ROUTE_ABSENT analysis proposal for Human selection; do not execute it or authorize calibration from this diagnostic.",
   "blocking_dependency": null,
   "latest_completed_execution": {
-    "execution_id": "SF-BL-005-CROSSREPO-GATE-CONTAINMENT-003",
-    "reviewed_candidate": "2c69c62d7c5b9fd33f11c90b52b7a8f0d1bc4ce8",
-    "durable_replay_commit": "1cbfbac252b8c48567ecfdeac43fa87fcbddb643",
-    "review": "HERM-493_PASS",
-    "verification": "FOCUSED_JAVA_31_31_FULL_JAVA_1402_1402_PYTEST_61_2_PREEXISTING",
-    "state": "ENGINEERING_READY_REPLAYED_FOR_REALWORLD_RETRY"
+    "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
+    "reviewed_candidate": "476cf3fdd888a5e45d888fa17c2ee65fd97c9f82",
+    "durable_replay_commit": "0aa05658bdd4415936bf0fd31c10ea3a32f6d656",
+    "review": "INDEPENDENT_REVIEW_PASS",
+    "verification": "TARGETED_JAVA_70_70_FULL_JAVA_1468_1468_PYTEST_63_63_REPEAT_BYTES_IDENTICAL",
+    "state": "DIAGNOSTIC_COMPLETE_REVIEW_PASS_FDP_RECONCILED"
+  },
+  "latest_selector_diagnostic": {
+    "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
+    "scenarios": 10,
+    "evaluated": 110,
+    "accepted": 0,
+    "rejected": 110,
+    "first_rejection_counts": {
+      "ROUTE_ABSENT": 90,
+      "ENTITY_MISMATCH": 20
+    },
+    "seed_parity": true,
+    "diagnostic_only": true,
+    "evidence": "validation/software-factory/sf-bl005/realworld-selector-diagnostic-001/",
+    "parent_closure": false
   },
   "metric_goal": {
     "status": "NOT_MET_DIAGNOSTIC_ONLY",
@@ -165,8 +180,8 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "ENVELOPE_READY_NOT_DISPATCHED",
-      "integration_candidate": null
+      "execution_state": "DIAGNOSTIC_COMPLETE_REVIEW_PASS_FDP_RECONCILED",
+      "integration_candidate": "0aa05658bdd4415936bf0fd31c10ea3a32f6d656"
     }
   ],
   "mapping_improvement_intake": {
@@ -218,7 +233,7 @@
   "preparation": {
     "framework_base": "fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c",
     "ancestor_resolution": "SOURCE_BACKED_SLICE_SELECTED_EXTERNAL_SIGNATURES_DEFERRED",
-    "realworld_diagnostic": "INPUTS_VERIFIED_RUNNER_INTEGRATED_ENVELOPE_R2_REVIEW_PASS_NOT_DISPATCHED",
+    "realworld_diagnostic": "DIAGNOSTIC_COMPLETE_REVIEW_PASS_FDP_RECONCILED_ROUTE_ABSENT_DOMINANT",
     "evidence": "validation/software-factory/sf-bl005/selector-diagnostics-001/realworld-preparation.json",
     "implementation_authorized": true,
     "diagnostic_execution_authorized": true,
