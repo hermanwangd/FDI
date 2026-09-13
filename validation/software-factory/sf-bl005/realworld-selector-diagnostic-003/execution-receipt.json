@@ -1,0 +1,85 @@
+{
+  "accepted": 0,
+  "boundaries": {
+    "calibration": false,
+    "deployment": false,
+    "formalHoldout": false,
+    "parentClosure": false,
+    "publication": false,
+    "scoring": false
+  },
+  "comparisonToPreRemediationBaseline": {
+    "acceptedDelta": 0,
+    "baselineExecution": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001",
+    "baselineRejections": {
+      "ENTITY_MISMATCH": 20,
+      "ROUTE_ABSENT": 90
+    },
+    "postRejections": {
+      "ACCEPTED": 0,
+      "ACTION_MISMATCH": 25,
+      "ASSERTION_POLARITY": 0,
+      "ENTITY_MISMATCH": 73,
+      "REQUEST_AMBIGUOUS": 0,
+      "ROUTE_ABSENT": 0,
+      "ROUTE_AMBIGUOUS": 0,
+      "TEST_IDENTITY": 0,
+      "UNMET_CONDITION": 0,
+      "UNSUPPORTED_ASSERTION_DIALECT": 12
+    },
+    "routeAbsentDelta": -90
+  },
+  "digests": {
+    "diagnostics": "79812bc498697f151a58c4bb442068c8903e212ce2320912f87adad6b056de68",
+    "runtime": "af0fe75f889b1027949fb61e6492145fbf89b94422273d8d766d0ede53f567e8",
+    "seal": "443713586e80b60a24a768a6806793e9abe604bf1d3901083d32ad4ffa89e4e3",
+    "verifier": "068ebd262b3c8a292bf59d267466a725a32ff37df77cee4974771a946e1db48b"
+  },
+  "envelopeRevision": 1,
+  "envelopeSha256": "306147ff084751ba25fb2be841414d75caca1b7ce4aa00784d94b0dbe50dc8b7",
+  "evaluated": 110,
+  "executionBase": "6819c9230977aa728d5d423ffeaa7fbd8db34267",
+  "executionId": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003",
+  "firstRejectionCounts": {
+    "ACCEPTED": 0,
+    "ACTION_MISMATCH": 25,
+    "ASSERTION_POLARITY": 0,
+    "ENTITY_MISMATCH": 73,
+    "REQUEST_AMBIGUOUS": 0,
+    "ROUTE_ABSENT": 0,
+    "ROUTE_AMBIGUOUS": 0,
+    "TEST_IDENTITY": 0,
+    "UNMET_CONDITION": 0,
+    "UNSUPPORTED_ASSERTION_DIALECT": 12
+  },
+  "frameworkRevision": "52468c4e8865bdb4c5ffb80f22a2eaf6a6370fba",
+  "handlerCount": 19,
+  "handlerInputSha256": "9b18b6ed556e55aed9db77dee4dc032aa951216af37231f9619095a46ad34053",
+  "independentReview": {
+    "findings": {
+      "p0": 0,
+      "p1": 0,
+      "p2": 0
+    },
+    "reviewedCandidate": "fbe70469d95cae02774f639225cb416e1ffb8702",
+    "reviewer": "/root/diagnostic_002_result_review",
+    "verdict": "PASS"
+  },
+  "manifestSha256": "f9faa2a776390320f8c37fef061fc6519d4026f43c528effe4ea95207f86aa48",
+  "metricAvailability": {
+    "precision": null,
+    "reason": "DIAGNOSTIC_ONLY_NO_SCORER",
+    "recall": null
+  },
+  "rejected": 110,
+  "result": "DIAGNOSTIC_COMPLETE_INDEPENDENT_REVIEW_PASS",
+  "scenarios": 10,
+  "schemaVersion": "software-factory.sf-bl005-selector-diagnostic-receipt.v1",
+  "twoRunByteParity": true,
+  "verification": {
+    "gitDiffCheck": "PASS",
+    "java17Package": "PASS_1493_TESTS",
+    "java17Targeted": "PASS",
+    "python": "PASS_63_OF_63"
+  }
+}
