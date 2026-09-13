@@ -3,123 +3,133 @@
 ## Current selection
 
 Human-selected Backlog item: `SF-BL-005`.
-Selected execution: `SF-BL-005-GENERIC-ANCESTOR-FOLLOWUP-INTEGRATION-001`.
-Objective: integrate the independently reviewed fail-closed corrections from
-generic candidate `7eb9932522c60d6c62cfb6c4e0c930421f570c4a` into the current
-integrated runner/ancestor baseline while preserving its public-accessibility
-guard and all later accepted behavior.
+Selected execution: `SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001`.
+Current authority is limited to exact-envelope construction and preflight.
+Dispatch remains unauthorized.
 
-This is a bounded engineering follow-up. It does not authorize RealWorld
-execution, calibration, scoring, Product truth, publication, deployment or
-parent closure.
+The objective is to classify the 9 distinct route-absent observations without
+changing extractor, selector, frozen inputs, thresholds, or matching behavior.
+The 90 `ROUTE_ABSENT` pairs are those 9 observations repeated across 10
+scenarios; the analysis unit is the distinct observation, not the pair.
 
-Construction base: `bc783b1f89c6146233423d9a3571c4ad15be608b`.
-Spec revision: `4ac27198c6060e7978ed0b7f5ee0406225e31e4c`.
+Construction base: `be3eb8f7e6855fb5addf38c095a7cb5729e5b969`.
+Control commit: `a105eb7ee95b67157cdda1a7239695340074d522`.
 Requirements: `AUTH-002`, `PK-004`, `EVID-001`, `TECH-001`.
-FDP owns this Plan, `BACKLOG.md`, `STATUS.json` and the fresh envelope. The
-Execution Plane treats them as read-only.
+FDP owns this Plan, `BACKLOG.md`, and `STATUS.json`; the Execution Plane treats
+them as read-only.
 
-## Accepted inputs
+## Bound envelope and preflight state
 
-- Current integrated baseline: `bc783b1f89c6146233423d9a3571c4ad15be608b`.
-  It contains combined runner/ancestor replay commit
-  `8c294063d6696a567bbd1c29552e0fd6925e0f73`, including the accepted rule
-  that generic-parent declarations must be public.
-- Follow-up generic candidate:
-  `7eb9932522c60d6c62cfb6c4e0c930421f570c4a`.
-- Independent review PASS: separately attributable run
-  `01a09985-6552-7813-b422-fc94a28b506c`.
-- Stage 3 evidence repair: separately attributable run
-  `01a099c9-d886-7c4e-9c2c-68984ebcb9b1`; final manifest
-  `e17cf74bbb9152480b29d7772d96549f50b61350e55621f729558e61ac71163f`,
-  15/15 receiver rows PASS.
+- Envelope candidate: `2f3181fddad7f5ee4cb160d781efd278fb2ed2b4`.
+- Main replay: `f2f22ce`.
+- Envelope path:
+  `validation/software-factory/sf-bl005/execution-envelope-route-coverage-analysis-001.json`.
+- Envelope SHA-256:
+  `73eb5c1a522151d5921946d391fe2d1ef60dd795f1f83ca04addaf903d3d814c`.
+- Producer preflight evidence:
+  `validation/software-factory/sf-bl005/envelope-preflight-route-coverage-analysis-001.json`.
+- Producer result: `PASS_PENDING_INDEPENDENT_PREFLIGHT`.
+- Independent preflight: `PENDING`.
+- Dispatch: `NOT_AUTHORIZED`.
 
-The follow-up candidate is not a replacement for the integrated baseline. Its
-four-file blobs omit later accepted public-accessibility work. Integration must
-apply only the reviewed behavioral delta and must not copy whole files.
+Producer preflight is not independent evidence. A separately attributable
+reviewer must recompute the envelope identity, control/input digests, external
+repository boundary, source trees, counts, output ownership, exclusions, and
+resource bounds against the exact envelope candidate before FDP may request a
+dispatch decision.
 
-## Owned paths
+## Frozen inputs
 
-- `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SourceMethodIndex.java`
-- `src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedSourceCalls.java`
-- `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/SourceMethodIndexTests.java`
-- `src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/QualifiedSourceCallsTests.java`
+- RealWorld source revision:
+  `ee17e31aafe733d98c4853c8b9a74d7f2f6c924a` in the separately bound source
+  repository, not the Software-Factory object database.
+- Production source subtree: `src/main/java`, tree
+  `393afbd6c7e5dab2352ef896b5866348d6d822a3`, 93 files.
+- Observations: 11, SHA-256
+  `71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd`.
+- Frozen handlers: 14, SHA-256
+  `bacddebfeb65b663f784efbf8f293092e05ed6f95b2a0c4135893377cacf2f0b`.
+- Selector diagnostic: 10 scenarios, 110 evaluated pairs, 90
+  `ROUTE_ABSENT`, 20 `ENTITY_MISMATCH`, independently reviewed `PASS`.
+- Analysis refs: observations `00001`–`00005` and `00008`–`00011`, exactly
+  9 unique refs accounting for all 90 `ROUTE_ABSENT` pairs.
 
-All other paths are read-only. No Python addition or modification is allowed.
+No evaluator truth, gold, proof, diagnosis, scorer, calibration output, or
+Product Semantics is an allowed input.
 
-## Execution construction
+## Execution contract if separately dispatched
 
-### Stage 1 — bounded integration
+### Stage 1 — exact input verification
 
-1. Verify the construction base, Spec revision, control commit, accepted input
-   revisions, ancestry and every envelope digest.
-2. Compare `0b8073622db0d121c22976bcb2af038d0971a824` with `7eb993…` only to
-   identify the reviewed follow-up delta. Reapply the smallest equivalent
-   change on the construction base; do not cherry-pick or replace complete
-   files.
-3. Preserve the integrated `public` generic-parent declaration requirement.
-4. Add or retain focused regressions for child method-generic declarations,
-   child declarations with unknown parameter types, and parameterized generic
-   declaration arguments such as `List<T>`.
-5. Commit one exact candidate and attach candidate-bound evidence.
+1. Verify every control, input, source-repository, tree, path, count, and digest
+   bound by the envelope.
+2. Require a clean external source checkout at the exact source revision.
+3. Require the owned output namespace to be absent.
+4. Fail closed on identity, repository-boundary, inventory, or isolation
+   mismatch.
 
-### Stage 2 — independent exact-candidate review
+### Stage 2 — read-only classification
 
-A separately attributable Independent Adjudicator reviews a clean export or
-clone of the exact candidate. It must verify the four-path boundary, retained
-public-accessibility behavior, the three follow-up fail-closed cases, legacy
-parity, and all runner/ancestor negative cases. A changed candidate invalidates
-the verdict.
+For each of the 9 observations record its identity, HTTP method, normalized
+route, test provenance, frozen handler candidates, exact production route
+evidence, one classification, and the smallest source-backed recommendation or
+explicit abstention.
 
-### Stage 3 — exact-candidate verification
+Allowed classifications are exactly:
 
-After Stage 2 PASS, rerun under `/opt/homebrew/opt/openjdk@17`:
+- `INPUT_OMISSION`
+- `UNSUPPORTED_STATIC_EXTRACTION`
+- `NORMALIZATION_MISMATCH`
+- `NO_PRODUCTION_HANDLER`
+- `UNRESOLVED`
 
-- `MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dtest=SelectorDiagnosticRunTests,SourceMethodIndexTests,QualifiedSourceCallsTests,ScenarioEvidenceSelectorTests,QualifiedCalibrationProducerTests test`
-- `MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true package`
-- `python3 -m pytest -q`
-- `git diff --check`
+Insufficient evidence remains `UNRESOLVED`. The output is a canonical,
+deterministic coverage matrix and execution receipt only.
 
-Persist report, logs, source/test snapshots, JAR, digest manifest and receiver
-readback as Multica attachments. Evidence must distinguish the scoped
-construction-base delta from wider Git history.
+### Stage 3 — independent review and FDP return
 
-## Acceptance
+A separately attributable reviewer binds the exact candidate, recomputes all
+input/output identities and checks every classification against source
+evidence. FDP may then receive a bounded remediation recommendation or
+abstention. The result creates no implementation or Product authority.
 
-- Generic-parent declarations remain public-only; private and inaccessible
-  declarations remain unresolved.
-- A same-name child method-generic declaration remains unresolved.
-- A same-name, same-arity child declaration with an unknown parameter type
-  remains unresolved.
-- Parameterized generic declaration arguments such as `List<T>` are not
-  flattened to raw names and remain unresolved.
-- Direct concrete generic-parent opt-in, declaration identity versus
-  substituted invocation types, multilevel/raw/wildcard/unbound/varargs/Object
-  guards, strict-before-boxing, ordering and traversal limits remain green.
-- The runner behavior and existing callers remain unchanged.
-- Fresh independent review has no unresolved P0-P2 finding.
-- Java 17 targeted/full package, Python regression and `git diff --check` pass.
+## Acceptance and exclusions
 
-## Exclusions and resource boundary
+Acceptance requires 9/9 observations exactly once, one allowed classification
+per row, complete provenance/digests, byte-identical canonical reserialization,
+and no unresolved P0-P2 independent-review finding.
 
-No active-control edit by the Execution Plane, runner change, RealWorld input
-execution, calibration, scoring, external signature expansion, dependency
-change, adapter, cleanup, push, publication, deployment or parent closure.
-Aggregate memory remains below 8 GB; Maven and fork heaps are each 2 GB, one
-heavy JVM runs at a time, and command timeout is at most 1200 seconds.
+No source, test, configuration, extractor, selector, matching-algorithm,
+threshold, active-control, frozen-input, or prior-evidence mutation is allowed.
+Do not run evaluator/scorer/gold, recall/precision, calibration, formal holdout,
+Graphify reindex, upstream RealWorld tests, database, Docker, publication,
+deployment, or parent closure. Aggregate memory remains below 8 GB. No heavy
+JVM is required; command timeout is at most 1200 seconds.
+
+## CSI-001 reconciliation
+
+Four verified findings are routed as recommendations to `SF-BL-007` through
+`BACKLOG.md`: two `CODE` findings from the generic candidate review and two
+`DELIVERY` findings covering missing evidence and competing active-control
+writes. They do not select `SF-BL-007`, authorize remediation, or alter this
+execution envelope.
+
+The generic follow-up candidate
+`8e835b427bd5f6b242b38d00e714d902298366c1` is
+`PARKED_AFTER_STAGE_2_FAIL`. Reviewer run
+`01a09a1e-11cb-7da1-879d-3f437b460622` found two material correctness defects;
+Stage 3 verification was not triggered and no generic candidate entered main.
+Its evidence is preserved for a future Human-selected revision route.
 
 ## Preserved execution ledger
-
-Completed earlier executions remain evidence and are not reopened:
 
 - `SF-BL-005-SELECTOR-DIAGNOSTICS-001`
 - `SF-BL-005-PARALLEL-INVESTIGATIONS-001`
 - `SF-BL-006-COMPANY-AI-SHARE-001`
-- `SF-BL-005-SELECTOR-RUNNER-001`
 - `SF-BL-005-GENERIC-ANCESTOR-001`
 - `SF-BL-005-REALWORLD-DIAGNOSTIC-PREP-001`
+- `SF-BL-005-SELECTOR-RUNNER-001`
 - `SF-BL-005-RUNNER-ANCESTOR-INTEGRATION-001`
 - `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001`
-
-The proposed `SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001` remains unselected and
-must not be dispatched during this follow-up.
+- `SF-BL-005-GENERIC-ANCESTOR-FOLLOWUP-INTEGRATION-001`
+- `SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001`
