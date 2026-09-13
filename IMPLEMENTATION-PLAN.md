@@ -18,7 +18,11 @@ publication, formal holdout, threshold changes or parent closure.
 
 ### Current execution ledger
 
-- `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001` — `ENVELOPE_PREPARATION_SELECTED`; supersedes failed diagnostic 002 evidence without overwriting it
+- `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001` — `ENVELOPE_REBASE_SELECTED_FOR_DISPATCH`
+
+### Latest completed baseline
+
+- `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001` — independent review `PASS`; `ROUTE_ABSENT=90`, `ENTITY_MISMATCH=20`
 
 ### Queued dependent executions
 
