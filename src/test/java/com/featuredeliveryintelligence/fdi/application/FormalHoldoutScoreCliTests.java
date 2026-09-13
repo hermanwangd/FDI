@@ -73,6 +73,12 @@ class FormalHoldoutScoreCliTests {
         assertThat(missingProof.path("result").asText()).isEqualTo("INVALID");
         assertThat(missingProof.has("counts")).isFalse();
         assertThat(missingProof.path("reasonCodes")).containsExactly(JSON.getNodeFactory().textNode("MISSING_PROOF"));
+
+        String validFacets = occurrence.replace("\"entity\":\"FAIL\"", "\"entity\":\"MATCH\"").replace("\"pairDigest\":\"a\"", "\"pairDigest\":\"b\"");
+        JsonNode wrongPair = score("DISPOSITION_EVIDENCE", "{\"goldPairDigest\":\"a\"," + validFacets + ",\"proofs\":[{\"occurrenceId\":\"S-1#0\",\"pairDigest\":\"b\",\"proofDigest\":\"p\"}],\"sealedProofDigest\":\"p\"}", "NEGATIVE");
+        assertThat(wrongPair.path("result").asText()).isEqualTo("VALID");
+        assertThat(wrongPair.path("reasonCodes")).containsExactly(JSON.getNodeFactory().textNode("PAIR_MISMATCH"));
+        assertThat(wrongPair.path("counts").toString()).isEqualTo("{\"duplicateCount\":0,\"fn\":1,\"fp\":1,\"tp\":0}");
     }
 
     @Test
@@ -102,6 +108,14 @@ class FormalHoldoutScoreCliTests {
         JsonNode invalid = score("CHAIN_SCORING", reversed, "NEGATIVE");
         assertThat(invalid.path("result").asText()).isEqualTo("INVALID");
         assertThat(invalid.path("reasonCodes")).containsExactly(JSON.getNodeFactory().textNode("REVERSED_TRUTH_EDGE"));
+
+        String duplicate = good.replace("\"proposalPairDigests\":[\"a\",\"b\",\"c\"]", "\"proposalPairDigests\":[\"a\",\"a\",\"b\",\"c\"]");
+        JsonNode duplicateOracle = score("CHAIN_SCORING", duplicate, "NEGATIVE");
+        assertThat(duplicateOracle.path("counts").toString()).isEqualTo("{\"duplicateCount\":1,\"fn\":0,\"fp\":1,\"tp\":3}");
+        String extraEdge = good.replace("[\"b\",\"c\"]],\"proposalPairDigests\"", "[\"b\",\"c\"],[\"a\",\"c\"]],\"proposalPairDigests\"");
+        JsonNode edgeOracle = score("CHAIN_SCORING", extraEdge, "NEGATIVE");
+        assertThat(edgeOracle.path("result").asText()).isEqualTo("VALID");
+        assertThat(edgeOracle.path("chainComplete").asBoolean()).isFalse();
     }
 
     @Test
@@ -123,6 +137,10 @@ class FormalHoldoutScoreCliTests {
 
         JsonNode rawMacro = score("REPOSITORY_DECISION", "{\"repositories\":[{\"fn\":10,\"fp\":5,\"repositoryId\":\"r1\",\"tp\":90},{\"fn\":2,\"fp\":2,\"repositoryId\":\"r2\",\"tp\":4}]}", "NEGATIVE");
         assertThat(rawMacro.path("aggregate").path("macroRecall").asText()).isEqualTo("0.783333333333");
+
+        assertThatThrownBy(() -> score("REPOSITORY_DECISION", "{\"repositories\":[]}", "NEGATIVE")).hasMessageContaining("nonempty");
+        assertThatThrownBy(() -> score("REPOSITORY_DECISION", "{\"repositories\":[{\"fn\":-1,\"fp\":0,\"repositoryId\":\"r1\",\"tp\":1}]}", "NEGATIVE")).hasMessageContaining("nonnegative");
+        assertThatThrownBy(() -> score("REPOSITORY_DECISION", "{\"repositories\":[{\"fn\":0,\"fp\":0,\"repositoryId\":\"r1\",\"tp\":1},{\"fn\":0,\"fp\":0,\"repositoryId\":\"r1\",\"tp\":1}]}", "NEGATIVE")).hasMessageContaining("duplicate repositoryId");
     }
 
     @Test
@@ -132,6 +150,7 @@ class FormalHoldoutScoreCliTests {
         assertThat(valid.path("upper").asText()).isEqualTo("0.943317848546");
         JsonNode invalid = score("WILSON_INTERVAL", "{\"n\":10,\"precision\":50,\"rounding\":\"HALF_EVEN\",\"scale\":12,\"x\":11,\"zDecimal\":\"1.959963984540054\"}", "NEGATIVE");
         assertThat(invalid.path("reasonCodes")).containsExactly(JSON.getNodeFactory().textNode("INVALID_COUNTS"));
+        assertThatThrownBy(() -> score("WILSON_INTERVAL", "{\"n\":10,\"precision\":34,\"rounding\":\"HALF_UP\",\"scale\":9,\"x\":8,\"zDecimal\":\"2\"}", "NEGATIVE")).hasMessageContaining("Wilson parameters");
     }
 
     @Test
@@ -182,6 +201,28 @@ class FormalHoldoutScoreCliTests {
 
         Path digestManifest = writeManifest("good.json", "0".repeat(64));
         assertThatThrownBy(() -> runCli(digestManifest, inputs, temp.resolve("digest-output.json"))).hasMessageContaining("digest mismatch");
+
+        Path realInputs = Files.createDirectory(temp.resolve("real-inputs")); Files.write(realInputs.resolve("good.json"), good);
+        Path inputRootLink = temp.resolve("input-root-link"); Files.createSymbolicLink(inputRootLink, realInputs);
+        Path rootLinkManifest = writeManifest("good.json", FormalHoldoutConformanceScorer.sha256(good));
+        assertThatThrownBy(() -> runCli(rootLinkManifest, inputRootLink, temp.resolve("root-link-output.json"))).hasMessageContaining("symlink");
+
+        Path realOutputParent = Files.createDirectory(temp.resolve("real-output")); Path outputParentLink = temp.resolve("output-link"); Files.createSymbolicLink(outputParentLink, realOutputParent);
+        assertThatThrownBy(() -> runCli(rootLinkManifest, inputs, outputParentLink.resolve("out.json"))).hasMessageContaining("symlink");
+    }
+
+    @Test
+    void manifestRequiresUniqueIdsAndExactNestedCoverage() throws Exception {
+        Path inputs = Files.createDirectory(temp.resolve("manifest-inputs"));
+        byte[] input = caseJson("WILSON_INTERVAL", "{\"n\":1,\"precision\":50,\"rounding\":\"HALF_EVEN\",\"scale\":12,\"x\":1,\"zDecimal\":\"1.959963984540054\"}").getBytes(StandardCharsets.UTF_8);
+        Files.write(inputs.resolve("v.json"), input); String sha = FormalHoldoutConformanceScorer.sha256(input);
+        String vector = "{\"coverage\":[{\"polarity\":\"POSITIVE\"}],\"id\":\"V1\",\"input\":{\"path\":\"v.json\",\"sha256\":\""+sha+"\"}}";
+        Path duplicate = temp.resolve("duplicate-manifest.json"); Files.writeString(duplicate, "{\"vectors\":["+vector+","+vector+"]}");
+        assertThatThrownBy(() -> runCli(duplicate, inputs, temp.resolve("duplicate-result.json"))).hasMessageContaining("duplicate vector id");
+        Path badPolarity = temp.resolve("polarity-manifest.json"); Files.writeString(badPolarity, "{\"vectors\":["+vector.replace("POSITIVE","MAYBE")+"]}");
+        assertThatThrownBy(() -> runCli(badPolarity, inputs, temp.resolve("polarity-result.json"))).hasMessageContaining("polarity");
+        Path nestedUnknown = temp.resolve("nested-manifest.json"); Files.writeString(nestedUnknown, "{\"vectors\":["+vector.replace("\"polarity\":\"POSITIVE\"", "\"polarity\":\"POSITIVE\",\"extra\":1")+"]}");
+        assertThatThrownBy(() -> runCli(nestedUnknown, inputs, temp.resolve("nested-result.json"))).hasMessageContaining("unknown coverage field");
     }
 
     @Test

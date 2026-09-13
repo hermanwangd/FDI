@@ -140,6 +140,37 @@ def test_cli_rejects_duplicate_json_keys_unknown_manifest_schema_and_symlink_man
     output = tmp_path / "unknown.json"
     cmd = [sys.executable, str(SCRIPT), "--manifest", str(manifest), "--inputs-root", str(inputs), "--output", str(output)]
     assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
+
+def test_malformed_operation_inputs_fail_closed():
+    m = load_module(); a = "a" * 64
+    generic = {"fullyQualifiedDeclaringType": "invalid.conformance.Service", "methodName": "run",
+        "parameterTypes": ["java.util.List<java.lang.String>"], "repositorySnapshotSha256": a,
+        "returnType": "void", "scenarioId": "DEV"}
+    assert m.evaluate(case("DEV-C", "CANONICAL_IDENTITY", {"candidate": generic}))["result"] == "INVALID"
+    bad_abstention = m.evaluate(case("DEV-A", "EMPTY_AND_ABSTENTION", {
+        "abstention": "ARBITRARY", "goldCount": 1, "proposalOccurrences": [], "scenarioCount": 1}))
+    assert bad_abstention == {"reasonCodes": ["MALFORMED_GIVEN"], "result": "INVALID",
+                              "ruleId": "EMPTY_AND_ABSTENTION"}
+    for repositories in ([], [{"fn": 0, "fp": 0, "repositoryId": "x", "tp": True}],
+        [{"fn": 0, "fp": 0, "repositoryId": "x", "tp": 1},
+         {"fn": 0, "fp": 0, "repositoryId": "x", "tp": 1}]):
+        value = m.evaluate(case("DEV-R", "REPOSITORY_DECISION", {"repositories": repositories}))
+        assert value["result"] == "INVALID" and value["reasonCodes"] == ["MALFORMED_GIVEN"]
+
+def test_cli_rejects_bad_coverage_and_symlink_output_ancestor(tmp_path):
+    manifest, inputs = make_bundle(tmp_path)
+    value = json.loads(manifest.read_text())
+    value["vectors"][0]["coverage"][0]["polarity"] = "MAYBE"
+    manifest.write_text(json.dumps(value))
+    output = tmp_path / "bad.json"
+    cmd = [sys.executable, str(SCRIPT), "--manifest", str(manifest), "--inputs-root", str(inputs), "--output", str(output)]
+    assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
+    value["vectors"][0]["coverage"][0]["polarity"] = "POSITIVE"
+    manifest.write_text(json.dumps(value))
+    real_parent = tmp_path / "real"; real_parent.mkdir(); linked_parent = tmp_path / "linked"; linked_parent.symlink_to(real_parent)
+    cmd[-1] = str(linked_parent / "out.json")
+    assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
+    assert not (real_parent / "out.json").exists()
     manifest.write_text('{"schemaVersion":"x","schemaVersion":"y","vectors":[]}\n')
     assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
     real = tmp_path / "real-manifest"; real.write_text('{"schemaVersion":"SFBL005-FORMAL-SCORER-VECTOR-MANIFEST-001","vectors":[]}\n')

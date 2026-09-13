@@ -146,6 +146,7 @@ public final class FormalHoldoutConformanceScorer {
         checks.put("businessCondition", "CONDITION_MISMATCH"); checks.put("entity", "ENTITY_MISMATCH");
         checks.put("polarity", "POLARITY_MISMATCH");
         List<String> reasons = new ArrayList<>();
+        if (!occurrence.path("pairDigest").asText().equals(g.path("goldPairDigest").asText())) reasons.add("PAIR_MISMATCH");
         for (var e : checks.entrySet()) if (!"MATCH".equals(f.path(e.getKey()).asText())) reasons.add(e.getValue());
         if (!"UNAMBIGUOUS".equals(f.path("ambiguity").asText())) reasons.add("AMBIGUOUS");
         if (!"SUFFICIENT".equals(f.path("evidenceSufficiency").asText())) reasons.add("INSUFFICIENT_EVIDENCE");
@@ -194,18 +195,21 @@ public final class FormalHoldoutConformanceScorer {
             invalid.add(reversed ? "REVERSED_TRUTH_EDGE" : "NONADJACENT_TRUTH_EDGE");
         }
         if (!invalid.isEmpty()) { o.putNull("chainComplete"); o.set("reasonCodes",strings(invalid)); o.put("result","INVALID"); return o; }
-        List<String> proposal = textList(g.path("proposalPairDigests"));
-        int tp=0; for(String x:proposal) if(gold.contains(x)) tp++;
-        int fp=proposal.size()-tp;
-        int fn = gold.size() - (int)new HashSet<>(proposal).stream().filter(gold::contains).count();
-        o.put("chainComplete", edges(g.path("proposalEdges")).containsAll(required) && fn==0);
-        o.set("counts",counts(tp,fp,fn,0)); o.set("reasonCodes",strings(List.of())); o.put("result","VALID"); return o;
+        List<String> proposal = textList(g.path("proposalPairDigests")); Set<String> seen=new HashSet<>();
+        int tp=0,fp=0,duplicates=0; for(String x:proposal){if(gold.contains(x)&&seen.add(x))tp++;else{fp++;if(gold.contains(x))duplicates++;}}
+        int fn = gold.size() - tp;
+        o.put("chainComplete", edges(g.path("proposalEdges")).equals(required) && fn==0);
+        o.set("counts",counts(tp,fp,fn,duplicates)); o.set("reasonCodes",strings(List.of())); o.put("result","VALID"); return o;
     }
 
     private ObjectNode repositoryDecision(JsonNode g) {
+        if(g.path("repositories").isEmpty())throw new IllegalArgumentException("repositories must be nonempty");
         ArrayNode reposOut=JSON.createArrayNode(); BigDecimal mp=BigDecimal.ZERO,mr=BigDecimal.ZERO; int stp=0,sfp=0,sfn=0; boolean all=true, anyPrecisionNull=false, anyRecallNull=false;
+        Set<String> repositoryIds=new HashSet<>();
         for(JsonNode r:g.path("repositories")) {
             int tp=r.path("tp").asInt(), fp=r.path("fp").asInt(), fn=r.path("fn").asInt(); stp+=tp;sfp+=fp;sfn+=fn;
+            if(tp<0||fp<0||fn<0)throw new IllegalArgumentException("repository counts must be nonnegative");
+            String repositoryId=r.path("repositoryId").asText();if(repositoryId.isBlank())throw new IllegalArgumentException("repositoryId required");if(!repositoryIds.add(repositoryId))throw new IllegalArgumentException("duplicate repositoryId: "+repositoryId);
             ObjectNode x=JSON.createObjectNode(); x.put("fn",fn);x.put("fp",fp);
             BigDecimal p=tp+fp==0?null:ratio(tp,tp+fp), recall=tp+fn==0?null:ratio(tp,tp+fn);
             if(p==null){x.putNull("precision");x.put("precisionReason","NO_PROPOSED_PAIRS");anyPrecisionNull=true;}else{x.put("precision",fmt(p));mp=mp.add(p,MC);}
@@ -223,11 +227,12 @@ public final class FormalHoldoutConformanceScorer {
 
     private ObjectNode wilson(JsonNode g) {
         int x=g.path("x").asInt(),n=g.path("n").asInt();ObjectNode o=JSON.createObjectNode();
+        if(g.path("precision").asInt()!=50||g.path("scale").asInt()!=12||!"HALF_EVEN".equals(g.path("rounding").asText())||!"1.959963984540054".equals(g.path("zDecimal").asText()))throw new IllegalArgumentException("invalid Wilson parameters");
         if(n<=0||x<0||x>n){o.set("reasonCodes",strings(List.of("INVALID_COUNTS")));o.put("result","INVALID");return o;}
         BigDecimal z=new BigDecimal(g.path("zDecimal").asText(),MC), bdN=BigDecimal.valueOf(n), p=BigDecimal.valueOf(x).divide(bdN,MC),z2=z.multiply(z,MC);
         BigDecimal den=BigDecimal.ONE.add(z2.divide(bdN,MC),MC);
         BigDecimal center=p.add(z2.divide(BigDecimal.valueOf(2L*n),MC),MC).divide(den,MC);
-        BigDecimal variance=p.multiply(BigDecimal.ONE.subtract(p,MC),MC).divide(bdN,MC).add(z2.divide(BigDecimal.valueOf(4L*n*n),MC),MC);
+        BigDecimal variance=p.multiply(BigDecimal.ONE.subtract(p,MC),MC).divide(bdN,MC).add(z2.divide(bdN.multiply(bdN,MC).multiply(BigDecimal.valueOf(4),MC),MC),MC);
         BigDecimal half=z.multiply(variance.sqrt(MC),MC).divide(den,MC);
         o.put("lower",fmt(center.subtract(half,MC).max(BigDecimal.ZERO)));o.put("result","VALID");o.put("upper",fmt(center.add(half,MC).min(BigDecimal.ONE)));return o;
     }

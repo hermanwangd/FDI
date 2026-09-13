@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 import re
+import stat
 import sys
 from decimal import Context, Decimal, ROUND_HALF_EVEN, localcontext
 from pathlib import Path
@@ -52,6 +53,8 @@ def _canonical(given):
                        {"canonicalBytes": item["bytes"], "pairDigest": item["sha256"], "result": "VALID"})
     if len(outputs) == 1:
         candidate = given["candidate"]
+        if outputs[0]["result"] != "VALID":
+            return {"canonicalOutputs": outputs, "result": "INVALID"}
         if candidate["methodName"] == "<init>":
             return {"canonicalOutputs": outputs, "methodName": "<init>", "result": "VALID", "returnType": "void"}
         return {"canonicalOutputs": outputs, "normalizedParameterTypes": candidate["parameterTypes"], "result": "VALID"}
@@ -267,6 +270,84 @@ RULES = {operation: rule for operation, rule in (
     ("REPOSITORY_DECISION", "REPOSITORY_DECISION"), ("WILSON_INTERVAL", "WILSON_INTERVAL"),
     ("DETERMINISM_AND_PARITY", "DETERMINISM_AND_PARITY"))}
 
+def _integer(value):
+    return isinstance(value, int) and not isinstance(value, bool) and value >= 0
+
+def _exact(value, keys):
+    return isinstance(value, dict) and set(value) == set(keys)
+
+def _valid_given(operation, given):
+    if not isinstance(given, dict):
+        return False
+    if operation == "CANONICAL_IDENTITY":
+        if set(given) not in ({"candidate"}, {"candidates"}): return False
+        candidates = given.get("candidates", [given.get("candidate")])
+        if not isinstance(candidates, list) or not candidates: return False
+        for item in candidates:
+            if not isinstance(item, dict) or set(item) not in (set(PAIR_FIELDS), set(PAIR_FIELDS) | {"sourcePath"}): return False
+            if not all(isinstance(item[k], str) for k in PAIR_FIELDS if k != "parameterTypes"): return False
+            if not isinstance(item["parameterTypes"], list) or not all(isinstance(x, str) for x in item["parameterTypes"]): return False
+            if not _digest(item["repositorySnapshotSha256"]): return False
+        return True
+    if operation == "OCCURRENCE_SCORING":
+        if not _exact(given, {"goldPairDigests", "proposalOccurrences"}): return False
+        if not isinstance(given["goldPairDigests"], list) or not all(_digest(x) for x in given["goldPairDigests"]): return False
+        return isinstance(given["proposalOccurrences"], list) and all(
+            _exact(x, {"disposition", "occurrenceIndex", "pairDigest"}) and x["disposition"] in {"VALID", "INVALID_ENTITY"}
+            and _integer(x["occurrenceIndex"]) and _digest(x["pairDigest"]) for x in given["proposalOccurrences"])
+    if operation == "DISPOSITION_EVIDENCE":
+        if not _exact(given, {"goldPairDigest", "occurrence", "proofs", "sealedProofDigest"}): return False
+        occurrence = given["occurrence"]
+        if not _exact(occurrence, {"facets", "occurrenceId", "pairDigest"}) or not _digest(occurrence["pairDigest"]): return False
+        facets = occurrence["facets"]
+        if not _exact(facets, {"entity", "action", "assertionRole", "polarity", "businessCondition", "ambiguity", "evidenceSufficiency"}): return False
+        allowed_facets = {"entity": {"MATCH", "FAIL"}, "action": {"MATCH", "FAIL"},
+            "assertionRole": {"MATCH", "FAIL"}, "polarity": {"MATCH", "FAIL"},
+            "businessCondition": {"MATCH", "FAIL"}, "ambiguity": {"UNAMBIGUOUS", "FAIL"},
+            "evidenceSufficiency": {"SUFFICIENT", "FAIL"}}
+        if any(facets[key] not in values for key, values in allowed_facets.items()): return False
+        return _digest(given["goldPairDigest"]) and _digest(given["sealedProofDigest"]) and isinstance(given["proofs"], list) and all(
+            _exact(x, {"occurrenceId", "pairDigest", "proofDigest"}) and _digest(x["pairDigest"]) and _digest(x["proofDigest"])
+            for x in given["proofs"])
+    if operation == "PROVENANCE_INTEGRITY":
+        required = {"artifactSha256", "coverageStrata", "expectedArtifactSha256", "foreignRepositoryReference",
+            "pairRepositorySnapshotSha256", "repositorySnapshotSha256", "scenarioId", "sourceProvenanceSha256",
+            "testProvenanceSha256", "truthDisposition"}
+        if not required <= set(given) or set(given) - required - {"scenarioIds", "unknownField"}: return False
+        nullable_digests = ("sourceProvenanceSha256", "testProvenanceSha256")
+        if not all(given[x] is None or _digest(given[x]) for x in nullable_digests): return False
+        return (isinstance(given["coverageStrata"], list) and all(isinstance(x, str) for x in given["coverageStrata"])
+            and isinstance(given["foreignRepositoryReference"], bool)
+            and all(_digest(given[x]) for x in ("artifactSha256", "expectedArtifactSha256", "pairRepositorySnapshotSha256", "repositorySnapshotSha256")))
+    if operation == "EMPTY_AND_ABSTENTION":
+        allowed = {"goldCount", "proposalOccurrences", "scenarioCount", "abstention"}
+        if set(given) not in ({"goldCount", "proposalOccurrences", "scenarioCount"}, allowed): return False
+        if not all(_integer(given[x]) for x in ("goldCount", "scenarioCount")) or not isinstance(given["proposalOccurrences"], list): return False
+        if not all(_exact(x, {"pairDigest", "structurallyValid"}) and _digest(x["pairDigest"])
+                   and isinstance(x["structurallyValid"], bool) for x in given["proposalOccurrences"]): return False
+        return "abstention" not in given or given["abstention"] in {"UNRESOLVED", "UNSUPPORTED"}
+    if operation == "CHAIN_SCORING":
+        if not _exact(given, {"chainRequired", "orderedGoldPairDigests", "proposalEdges", "proposalPairDigests", "truthEdges"}): return False
+        if not isinstance(given["chainRequired"], bool): return False
+        if not all(isinstance(given[x], list) for x in ("orderedGoldPairDigests", "proposalEdges", "proposalPairDigests", "truthEdges")): return False
+        if not all(_digest(x) for x in given["orderedGoldPairDigests"] + given["proposalPairDigests"]): return False
+        return all(isinstance(edge, list) and len(edge) == 2 and all(_digest(x) for x in edge)
+                   for edge in given["proposalEdges"] + given["truthEdges"])
+    if operation == "REPOSITORY_DECISION":
+        if not _exact(given, {"repositories"}) or not isinstance(given["repositories"], list) or not given["repositories"]: return False
+        ids = []
+        for item in given["repositories"]:
+            if not _exact(item, {"fn", "fp", "repositoryId", "tp"}) or not all(_integer(item[x]) for x in ("fn", "fp", "tp")) or not isinstance(item["repositoryId"], str) or not item["repositoryId"]: return False
+            ids.append(item["repositoryId"])
+        return len(ids) == len(set(ids))
+    if operation == "WILSON_INTERVAL":
+        return (_exact(given, {"n", "precision", "rounding", "scale", "x", "zDecimal"})
+            and all(_integer(given[x]) for x in ("n", "precision", "scale", "x"))
+            and given["rounding"] == "HALF_EVEN" and isinstance(given["zDecimal"], str))
+    if operation == "DETERMINISM_AND_PARITY":
+        return _exact(given, {"goldenBytes", "javaRun1Bytes", "javaRun2Bytes", "pythonRun1Bytes", "pythonRun2Bytes"}) and all(isinstance(x, str) for x in given.values())
+    return False
+
 
 def evaluate(case, rule_id=None, polarity=None):
     if case.get("schemaVersion") != "SFBL005-FORMAL-SCORER-CONFORMANCE-CASE-001":
@@ -274,6 +355,10 @@ def evaluate(case, rule_id=None, polarity=None):
     operation = case.get("operation")
     if operation not in OPERATIONS:
         return {"reasonCodes": ["UNSUPPORTED_OPERATION"], "result": "INVALID"}
+    if not _valid_given(operation, case.get("given")):
+        oracle = {"reasonCodes": ["MALFORMED_GIVEN"], "result": "INVALID", "ruleId": rule_id or RULES[operation]}
+        if polarity is not None: oracle["polarity"] = polarity
+        return oracle
     oracle = OPERATIONS[operation](case["given"])
     oracle["ruleId"] = rule_id or RULES[operation]
     if polarity is not None:
@@ -284,6 +369,12 @@ def evaluate(case, rule_id=None, polarity=None):
 def run(manifest_path, inputs_root, output_path):
     if output_path.exists() or output_path.is_symlink():
         raise ValueError("output path must be absent and non-symlink")
+    absolute_output = output_path.absolute()
+    if not absolute_output.parent.is_dir():
+        raise ValueError("output parent must already exist")
+    for ancestor in (absolute_output.parent, *absolute_output.parent.parents):
+        if ancestor.is_symlink():
+            raise ValueError("output ancestor must be non-symlink")
     if manifest_path.is_symlink() or not manifest_path.is_file():
         raise ValueError("manifest must be a regular non-symlink file")
     manifest_raw = manifest_path.read_bytes()
@@ -298,6 +389,10 @@ def run(manifest_path, inputs_root, output_path):
         if (not isinstance(vector, dict) or set(vector) != {"coverage", "expected", "id", "input"}
                 or not isinstance(vector["input"], dict) or set(vector["input"]) != {"path", "sha256"}
                 or not isinstance(vector["expected"], dict) or set(vector["expected"]) != {"path", "sha256"}):
+            raise ValueError("unknown manifest vector schema")
+        if (not isinstance(vector["id"], str) or not vector["id"]
+                or not all(isinstance(vector[x]["path"], str) and _digest(vector[x]["sha256"])
+                           for x in ("input", "expected"))):
             raise ValueError("unknown manifest vector schema")
         relative = Path(vector["input"]["path"])
         if relative.is_absolute() or len(relative.parts) != 1 or relative.name != f"{vector['id']}.json":
@@ -319,15 +414,20 @@ def run(manifest_path, inputs_root, output_path):
         if case.get("vectorId") != vector["id"]:
             raise ValueError(f"vector identity mismatch: {vector['id']}")
         coverage = vector["coverage"]
-        if len(coverage) != 1:
+        if (not isinstance(coverage, list) or len(coverage) != 1 or
+                not _exact(coverage[0], {"polarity", "ruleId"}) or
+                coverage[0]["polarity"] not in {"POSITIVE", "NEGATIVE"} or
+                coverage[0]["ruleId"] != RULES.get(case["operation"])):
             raise ValueError(f"coverage cardinality mismatch: {vector['id']}")
         results.append({"oracle": evaluate(case, coverage[0]["ruleId"], coverage[0]["polarity"]),
                         "vectorId": vector["id"]})
     document = {"manifestSha256": hashlib.sha256(manifest_raw).hexdigest(),
                 "results": results, "schemaVersion": SCHEMA}
-    output_path.parent.mkdir(parents=True, exist_ok=True)
     flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
     descriptor = os.open(output_path, flags, 0o600)
+    if not stat.S_ISREG(os.fstat(descriptor).st_mode):
+        os.close(descriptor)
+        raise ValueError("output must be regular file")
     with os.fdopen(descriptor, "wb") as stream:
         stream.write(canonical_bytes(document) + b"\n")
 
