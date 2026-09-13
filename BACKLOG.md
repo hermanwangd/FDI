@@ -95,6 +95,12 @@ does not dispatch, cancel, or mutate the canonical execution below, which is
 retained as original-checkout context, not this branch's active instruction.
 Parent `SF-BL-005` remains `IN_PROGRESS`.
 
+Branch-local improvement delivery is now ENGINEERING_READY_FOR_FDP_INTAKE:
+BOXING-002 measured recall 0.775 and precision 0.8611111111111112 under unchanged
+gold/scorer; Java 1431/1431 and independent review passed. Evidence:
+`validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md`.
+This is exposed calibration, not overall GO, merge or parent closure.
+
 The Azure DevOps listing is read-only discovery, not repository selection.
 Repository selection, retrieval, training-material access, Graphify indexing,
 Product Context acceptance, A/P execution, and terminal closure occur only at

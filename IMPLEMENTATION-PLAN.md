@@ -2,6 +2,13 @@
 
 ## Current selection
 
+Branch-local delivery is ENGINEERING_READY_FOR_FDP_INTAKE. Implementation,
+candidate metrics, two measured boxing experiments and eight reverse contract
+fixtures are verified; see
+`validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md`.
+This does not close the parent Backlog or merge this branch into canonical
+controls. The construction/continuation record below preserves the scope.
+
 ### SF-BL-005-CANDIDATE-TRACE-001
 
 User-selected diagnostic implementation (2026-09-13), branch-local to
