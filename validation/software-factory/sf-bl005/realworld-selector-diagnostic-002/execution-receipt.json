@@ -31,6 +31,17 @@
   "executionBase": "9eef86c108ae6984f115dab493ab722caaf19585",
   "executionId": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002",
   "independentPreflight": "PASS",
+  "independentReview": {
+    "candidate": "0d7be6dc421bf05e50d5deaf9e984537275e84a3",
+    "findings": {
+      "p0": 0,
+      "p1": 1,
+      "p2": 0
+    },
+    "reason": "Receipt contradicted python-regression.log; envelope requires Python regression PASS.",
+    "reviewer": "/root/diagnostic_002_result_review",
+    "verdict": "FAIL"
+  },
   "manifestSha256": "1d242a8ee25ff37f6e75f64dd176113a55aae3b1a2df972e5a85953831e2bec9",
   "materialization": {
     "files": 26,
@@ -55,7 +66,7 @@
       "sha256": "6ae9d2108ee45d2b8307d6cf799b63b9458c031588d204e991bf3e52867eaf2e"
     }
   },
-  "result": "DIAGNOSTIC_COMPLETE_PENDING_INDEPENDENT_REVIEW",
+  "result": "FAILED_PYTHON_CONTROL_STATE_REGRESSION",
   "runs": {
     "count": 2,
     "diagnosticsByteIdentical": true,
@@ -67,7 +78,8 @@
     "fullJavaPackageExitCode": 0,
     "gitDiffCheckExitCode": 0,
     "gitDiffCheckPending": false,
-    "pythonRegressionExitCode": 0,
+    "pythonRegressionExitCode": 1,
+    "pythonRegressionResult": "FAIL_3_FAILED_60_PASSED",
     "targetedJavaExitCode": 0
   }
 }

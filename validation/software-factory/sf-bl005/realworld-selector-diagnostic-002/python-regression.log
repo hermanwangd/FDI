@@ -1,0 +1,220 @@
+...........................................F.......F.....F.....          [100%]
+=================================== FAILURES ===================================
+_______________ test_five_active_truth_entries_exist_and_resolve _______________
+
+    def test_five_active_truth_entries_exist_and_resolve():
+        expected = {'PROJECT-OVERVIEW.md', 'FRAMEWORK-SPEC.md',
+                    'BACKLOG.md', 'IMPLEMENTATION-PLAN.md', 'STATUS.json'}
+        assert all((ROOT/name).is_file() for name in expected)
+        status = json.loads((ROOT/'STATUS.json').read_text())
+        assert status['framework_spec'] == 'FRAMEWORK-SPEC.md'
+        assert status['backlog'] == 'BACKLOG.md'
+        assert status['implementation_plan'] == 'IMPLEMENTATION-PLAN.md'
+        assert status['archived_documents_are_authority'] is False
+        assert status['baseline_status'] == 'ACTIVE'
+        assert status['decision'] in {None, 'NOT_RUN', 'GO', 'REVISE', 'STOP'}
+        assert status['pkb001_foundation']['automatic_product_truth_publication'] is False
+        backlog = (ROOT/status['backlog']).read_text()
+        assert f"| `{status['current_focus']}` |" in backlog
+        selected = status['selected_backlog_items']
+        active_items = status['active_backlog_items']
+        executions = status['active_executions']
+        if not active_items:
+            assert selected == []
+            assert executions == []
+            assert status['active_implementation_plan'] is None
+        else:
+            assert selected == active_items
+            assert all(f"| `{item}` |" in backlog for item in active_items)
+            assert status['active_implementation_plan'].startswith(
+                'IMPLEMENTATION-PLAN.md#'
+            )
+            assert len({execution['lane_id'] for execution in executions}) == len(executions)
+>           assert {
+                item
+                for execution in executions
+                for item in execution['selected_backlog_items']
+            } == set(selected)
+E           AssertionError: assert {'SF-BL-005'} == {'SF-BL-005', 'SF-BL-006'}
+E             
+E             Extra items in the right set:
+E             'SF-BL-006'
+E             Use -v to get more diff
+
+tests/test_prototype_baseline.py:39: AssertionError
+______________ test_control_files_keep_mutable_state_in_one_place ______________
+
+    def test_control_files_keep_mutable_state_in_one_place():
+        import re
+    
+        spec = (ROOT/'FRAMEWORK-SPEC.md').read_text()
+        backlog = (ROOT/'BACKLOG.md').read_text()
+        plan = (ROOT/'IMPLEMENTATION-PLAN.md').read_text()
+        status = json.loads((ROOT/'STATUS.json').read_text())
+    
+        assert '**Status:**' not in spec
+        assert '## Current bounded decision' not in spec
+        assert 'human review remains pending' not in spec
+        assert '## Completed five-consumer tranche' not in backlog
+        assert '## Execution order and maturity' not in backlog
+        headings = set(re.findall(r'^## .+$', backlog, re.MULTILINE))
+        assert {'## Active ledger', '## Requirement coverage',
+                '## Completion gates', '## Selection boundary'} <= headings
+        assert len(plan.encode()) < 10_000
+        assert 'HERM-' not in plan
+        assert 'tests pass' not in plan
+    
+        executions = status['active_executions']
+        if not executions:
+            assert status['active_backlog_items'] == []
+            assert status['active_implementation_plan'] is None
+        else:
+>           assert set(status['active_backlog_items']) == {
+                item
+                for execution in executions
+                for item in execution['selected_backlog_items']
+            }
+E           AssertionError: assert {'SF-BL-005', 'SF-BL-006'} == {'SF-BL-005'}
+E             
+E             Extra items in the left set:
+E             'SF-BL-006'
+E             Use -v to get more diff
+
+tests/test_prototype_baseline.py:168: AssertionError
+____________ test_default_python_suite_passes_in_clean_tracked_copy ____________
+
+tmp_path = PosixPath('/private/var/folders/f7/cxmy128d6mq88dkh76zm1v3r0000gn/T/pytest-of-herman_mbp2023/pytest-230/test_default_python_suite_pass0')
+
+    def test_default_python_suite_passes_in_clean_tracked_copy(tmp_path):
+        assert 'norecursedirs = .fdi-work' in (ROOT/'pytest.ini').read_text()
+        if (
+            os.environ.get('PKB001_CLEAN_TRACKED_COPY_CHILD') == '1'
+            or not (ROOT/'.git').exists()
+        ):
+            assert not (ROOT/'.fdi-work').exists()
+            return
+    
+        tracked = subprocess.run(
+            ['git', 'ls-files', '-z'], cwd=ROOT, check=True, capture_output=True,
+        ).stdout.split(b'\0')
+        clean_root = tmp_path/'tracked-checkout'
+        for encoded in tracked:
+            if not encoded:
+                continue
+            relative = Path(os.fsdecode(encoded))
+            source = ROOT/relative
+            target = clean_root/relative
+            if not source.exists() and not source.is_symlink():
+                continue
+            target.parent.mkdir(parents=True, exist_ok=True)
+            if source.is_symlink():
+                target.symlink_to(os.readlink(source))
+            else:
+                shutil.copy2(source, target)
+    
+        environment = os.environ.copy()
+        environment['PKB001_CLEAN_TRACKED_COPY_CHILD'] = '1'
+        completed = subprocess.run(
+            [sys.executable, '-m', 'pytest', '-q'], cwd=clean_root,
+            env=environment, text=True, capture_output=True, timeout=180,
+        )
+    
+        assert not (clean_root/'.fdi-work').exists()
+>       assert completed.returncode == 0, completed.stdout + completed.stderr
+E       AssertionError: ...........................................F.......F...........          [100%]
+E         =================================== FAILURES ===================================
+E         _______________ test_five_active_truth_entries_exist_and_resolve _______________
+E         
+E             def test_five_active_truth_entries_exist_and_resolve():
+E                 expected = {'PROJECT-OVERVIEW.md', 'FRAMEWORK-SPEC.md',
+E                             'BACKLOG.md', 'IMPLEMENTATION-PLAN.md', 'STATUS.json'}
+E                 assert all((ROOT/name).is_file() for name in expected)
+E                 status = json.loads((ROOT/'STATUS.json').read_text())
+E                 assert status['framework_spec'] == 'FRAMEWORK-SPEC.md'
+E                 assert status['backlog'] == 'BACKLOG.md'
+E                 assert status['implementation_plan'] == 'IMPLEMENTATION-PLAN.md'
+E                 assert status['archived_documents_are_authority'] is False
+E                 assert status['baseline_status'] == 'ACTIVE'
+E                 assert status['decision'] in {None, 'NOT_RUN', 'GO', 'REVISE', 'STOP'}
+E                 assert status['pkb001_foundation']['automatic_product_truth_publication'] is False
+E                 backlog = (ROOT/status['backlog']).read_text()
+E                 assert f"| `{status['current_focus']}` |" in backlog
+E                 selected = status['selected_backlog_items']
+E                 active_items = status['active_backlog_items']
+E                 executions = status['active_executions']
+E                 if not active_items:
+E                     assert selected == []
+E                     assert executions == []
+E                     assert status['active_implementation_plan'] is None
+E                 else:
+E                     assert selected == active_items
+E                     assert all(f"| `{item}` |" in backlog for item in active_items)
+E                     assert status['active_implementation_plan'].startswith(
+E                         'IMPLEMENTATION-PLAN.md#'
+E                     )
+E                     assert len({execution['lane_id'] for execution in executions}) == len(executions)
+E         >           assert {
+E                         item
+E                         for execution in executions
+E                         for item in execution['selected_backlog_items']
+E                     } == set(selected)
+E         E           AssertionError: assert {'SF-BL-005'} == {'SF-BL-005', 'SF-BL-006'}
+E         E             
+E         E             Extra items in the right set:
+E         E             'SF-BL-006'
+E         E             Use -v to get more diff
+E         
+E         tests/test_prototype_baseline.py:39: AssertionError
+E         ______________ test_control_files_keep_mutable_state_in_one_place ______________
+E         
+E             def test_control_files_keep_mutable_state_in_one_place():
+E                 import re
+E             
+E                 spec = (ROOT/'FRAMEWORK-SPEC.md').read_text()
+E                 backlog = (ROOT/'BACKLOG.md').read_text()
+E                 plan = (ROOT/'IMPLEMENTATION-PLAN.md').read_text()
+E                 status = json.loads((ROOT/'STATUS.json').read_text())
+E             
+E                 assert '**Status:**' not in spec
+E                 assert '## Current bounded decision' not in spec
+E                 assert 'human review remains pending' not in spec
+E                 assert '## Completed five-consumer tranche' not in backlog
+E                 assert '## Execution order and maturity' not in backlog
+E                 headings = set(re.findall(r'^## .+$', backlog, re.MULTILINE))
+E                 assert {'## Active ledger', '## Requirement coverage',
+E                         '## Completion gates', '## Selection boundary'} <= headings
+E                 assert len(plan.encode()) < 10_000
+E                 assert 'HERM-' not in plan
+E                 assert 'tests pass' not in plan
+E             
+E                 executions = status['active_executions']
+E                 if not executions:
+E                     assert status['active_backlog_items'] == []
+E                     assert status['active_implementation_plan'] is None
+E                 else:
+E         >           assert set(status['active_backlog_items']) == {
+E                         item
+E                         for execution in executions
+E                         for item in execution['selected_backlog_items']
+E                     }
+E         E           AssertionError: assert {'SF-BL-005', 'SF-BL-006'} == {'SF-BL-005'}
+E         E             
+E         E             Extra items in the left set:
+E         E             'SF-BL-006'
+E         E             Use -v to get more diff
+E         
+E         tests/test_prototype_baseline.py:168: AssertionError
+E         =========================== short test summary info ============================
+E         FAILED tests/test_prototype_baseline.py::test_five_active_truth_entries_exist_and_resolve
+E         FAILED tests/test_prototype_baseline.py::test_control_files_keep_mutable_state_in_one_place
+E         2 failed, 61 passed in 3.55s
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/Library/Developer/CommandLineTools/usr/bin/python3', '-m', 'pytest', '-q'], returncode=1, std..._prototype_baseline.py::test_control_files_keep_mutable_state_in_one_place\n2 failed, 61 passed in 3.55s\n', stderr='').returncode
+
+tests/test_prototype_baseline.py:337: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_prototype_baseline.py::test_five_active_truth_entries_exist_and_resolve
+FAILED tests/test_prototype_baseline.py::test_control_files_keep_mutable_state_in_one_place
+FAILED tests/test_prototype_baseline.py::test_default_python_suite_passes_in_clean_tracked_copy
+3 failed, 60 passed in 10.09s
