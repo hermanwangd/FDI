@@ -1,0 +1,367 @@
+{
+  "authority": "PROPOSAL_ONLY",
+  "classification": "READ_ONLY_DIAGNOSTIC_ANALYSIS_NO_SCORING",
+  "executionId": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
+  "observations": [
+    {
+      "classification": "UNSUPPORTED_STATIC_EXTRACTION",
+      "frozenHandlerCandidates": [
+        {
+          "handlerRef": "io.spring.api.ArticleApi#article GET /articles/{slug}",
+          "httpMethods": [
+            "GET"
+          ],
+          "normalizedRouteTemplate": "/articles/{slug}",
+          "productionIdentity": "io.spring.api.ArticleApi#article",
+          "sourceDigest": "6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+          "sourceLocation": "src/main/java/io/spring/api/ArticleApi.java:35"
+        }
+      ],
+      "httpMethod": "PUT",
+      "normalizedRouteTemplate": "/articles/{slug}",
+      "observationRef": "http-behavior-observation-00001",
+      "productionRouteEvidence": {
+        "classMapping": "@RequestMapping(path = \"/articles/{slug}\")",
+        "methodMapping": "@PutMapping",
+        "productionIdentity": "io.spring.api.ArticleApi#updateArticle",
+        "sourceFileSha256": "6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+        "sourceLocation": "src/main/java/io/spring/api/ArticleApi.java:44",
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+      },
+      "recommendation": {
+        "authority": "PROPOSAL_ONLY",
+        "change": "Compose class-level RequestMapping paths with method-level PutMapping and DeleteMapping annotations, including optional method paths, then emit one handler per HTTP method.",
+        "excluded": [
+          "selector changes",
+          "threshold changes",
+          "test changes",
+          "runtime behavior changes"
+        ],
+        "surface": "route-handler static extractor"
+      },
+      "sourceLocation": "src/test/java/io/spring/api/ArticleApiTest.java:110",
+      "testSourcePath": "src/test/java/io/spring/api/ArticleApiTest.java"
+    },
+    {
+      "classification": "UNSUPPORTED_STATIC_EXTRACTION",
+      "frozenHandlerCandidates": [
+        {
+          "handlerRef": "io.spring.api.ArticleApi#article GET /articles/{slug}",
+          "httpMethods": [
+            "GET"
+          ],
+          "normalizedRouteTemplate": "/articles/{slug}",
+          "productionIdentity": "io.spring.api.ArticleApi#article",
+          "sourceDigest": "6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+          "sourceLocation": "src/main/java/io/spring/api/ArticleApi.java:35"
+        }
+      ],
+      "httpMethod": "PUT",
+      "normalizedRouteTemplate": "/articles/{slug}",
+      "observationRef": "http-behavior-observation-00002",
+      "productionRouteEvidence": {
+        "classMapping": "@RequestMapping(path = \"/articles/{slug}\")",
+        "methodMapping": "@PutMapping",
+        "productionIdentity": "io.spring.api.ArticleApi#updateArticle",
+        "sourceFileSha256": "6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+        "sourceLocation": "src/main/java/io/spring/api/ArticleApi.java:44",
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+      },
+      "recommendation": {
+        "authority": "PROPOSAL_ONLY",
+        "change": "Compose class-level RequestMapping paths with method-level PutMapping and DeleteMapping annotations, including optional method paths, then emit one handler per HTTP method.",
+        "excluded": [
+          "selector changes",
+          "threshold changes",
+          "test changes",
+          "runtime behavior changes"
+        ],
+        "surface": "route-handler static extractor"
+      },
+      "sourceLocation": "src/test/java/io/spring/api/ArticleApiTest.java:158",
+      "testSourcePath": "src/test/java/io/spring/api/ArticleApiTest.java"
+    },
+    {
+      "classification": "UNSUPPORTED_STATIC_EXTRACTION",
+      "frozenHandlerCandidates": [
+        {
+          "handlerRef": "io.spring.api.ArticleApi#article GET /articles/{slug}",
+          "httpMethods": [
+            "GET"
+          ],
+          "normalizedRouteTemplate": "/articles/{slug}",
+          "productionIdentity": "io.spring.api.ArticleApi#article",
+          "sourceDigest": "6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+          "sourceLocation": "src/main/java/io/spring/api/ArticleApi.java:35"
+        }
+      ],
+      "httpMethod": "DELETE",
+      "normalizedRouteTemplate": "/articles/{slug}",
+      "observationRef": "http-behavior-observation-00003",
+      "productionRouteEvidence": {
+        "classMapping": "@RequestMapping(path = \"/articles/{slug}\")",
+        "methodMapping": "@DeleteMapping",
+        "productionIdentity": "io.spring.api.ArticleApi#deleteArticle",
+        "sourceFileSha256": "6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+        "sourceLocation": "src/main/java/io/spring/api/ArticleApi.java:65",
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+      },
+      "recommendation": {
+        "authority": "PROPOSAL_ONLY",
+        "change": "Compose class-level RequestMapping paths with method-level PutMapping and DeleteMapping annotations, including optional method paths, then emit one handler per HTTP method.",
+        "excluded": [
+          "selector changes",
+          "threshold changes",
+          "test changes",
+          "runtime behavior changes"
+        ],
+        "surface": "route-handler static extractor"
+      },
+      "sourceLocation": "src/test/java/io/spring/api/ArticleApiTest.java:178",
+      "testSourcePath": "src/test/java/io/spring/api/ArticleApiTest.java"
+    },
+    {
+      "classification": "UNSUPPORTED_STATIC_EXTRACTION",
+      "frozenHandlerCandidates": [
+        {
+          "handlerRef": "io.spring.api.ArticleApi#article GET /articles/{slug}",
+          "httpMethods": [
+            "GET"
+          ],
+          "normalizedRouteTemplate": "/articles/{slug}",
+          "productionIdentity": "io.spring.api.ArticleApi#article",
+          "sourceDigest": "6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+          "sourceLocation": "src/main/java/io/spring/api/ArticleApi.java:35"
+        }
+      ],
+      "httpMethod": "DELETE",
+      "normalizedRouteTemplate": "/articles/{slug}",
+      "observationRef": "http-behavior-observation-00004",
+      "productionRouteEvidence": {
+        "classMapping": "@RequestMapping(path = \"/articles/{slug}\")",
+        "methodMapping": "@DeleteMapping",
+        "productionIdentity": "io.spring.api.ArticleApi#deleteArticle",
+        "sourceFileSha256": "6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+        "sourceLocation": "src/main/java/io/spring/api/ArticleApi.java:65",
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+      },
+      "recommendation": {
+        "authority": "PROPOSAL_ONLY",
+        "change": "Compose class-level RequestMapping paths with method-level PutMapping and DeleteMapping annotations, including optional method paths, then emit one handler per HTTP method.",
+        "excluded": [
+          "selector changes",
+          "threshold changes",
+          "test changes",
+          "runtime behavior changes"
+        ],
+        "surface": "route-handler static extractor"
+      },
+      "sourceLocation": "src/test/java/io/spring/api/ArticleApiTest.java:201",
+      "testSourcePath": "src/test/java/io/spring/api/ArticleApiTest.java"
+    },
+    {
+      "classification": "UNSUPPORTED_STATIC_EXTRACTION",
+      "frozenHandlerCandidates": [
+        {
+          "handlerRef": "io.spring.api.ArticleFavoriteApi#favoriteArticle POST /articles/{slug}/favorite",
+          "httpMethods": [
+            "POST"
+          ],
+          "normalizedRouteTemplate": "/articles/{slug}/favorite",
+          "productionIdentity": "io.spring.api.ArticleFavoriteApi#favoriteArticle",
+          "sourceDigest": "d3f44c10c425e57df26755bb37188699deb8a53bc0a10124a6e27eee8c5eb6bb",
+          "sourceLocation": "src/main/java/io/spring/api/ArticleFavoriteApi.java:29"
+        }
+      ],
+      "httpMethod": "DELETE",
+      "normalizedRouteTemplate": "/articles/{slug}/favorite",
+      "observationRef": "http-behavior-observation-00005",
+      "productionRouteEvidence": {
+        "classMapping": "@RequestMapping(path = \"articles/{slug}/favorite\")",
+        "methodMapping": "@DeleteMapping",
+        "productionIdentity": "io.spring.api.ArticleFavoriteApi#unfavoriteArticle",
+        "sourceFileSha256": "d3f44c10c425e57df26755bb37188699deb8a53bc0a10124a6e27eee8c5eb6bb",
+        "sourceLocation": "src/main/java/io/spring/api/ArticleFavoriteApi.java:39",
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+      },
+      "recommendation": {
+        "authority": "PROPOSAL_ONLY",
+        "change": "Compose class-level RequestMapping paths with method-level PutMapping and DeleteMapping annotations, including optional method paths, then emit one handler per HTTP method.",
+        "excluded": [
+          "selector changes",
+          "threshold changes",
+          "test changes",
+          "runtime behavior changes"
+        ],
+        "surface": "route-handler static extractor"
+      },
+      "sourceLocation": "src/test/java/io/spring/api/ArticleFavoriteApiTest.java:93",
+      "testSourcePath": "src/test/java/io/spring/api/ArticleFavoriteApiTest.java"
+    },
+    {
+      "classification": "UNSUPPORTED_STATIC_EXTRACTION",
+      "frozenHandlerCandidates": [
+        {
+          "handlerRef": "io.spring.api.CurrentUserApi#currentUser GET /user",
+          "httpMethods": [
+            "GET"
+          ],
+          "normalizedRouteTemplate": "/user",
+          "productionIdentity": "io.spring.api.CurrentUserApi#currentUser",
+          "sourceDigest": "131deb9234c4817d67fa9e4cc40b0068ce45cec3fc4c22b9b769ed832f0ea68d",
+          "sourceLocation": "src/main/java/io/spring/api/CurrentUserApi.java:31"
+        }
+      ],
+      "httpMethod": "PUT",
+      "normalizedRouteTemplate": "/user",
+      "observationRef": "http-behavior-observation-00008",
+      "productionRouteEvidence": {
+        "classMapping": "@RequestMapping(path = \"/user\")",
+        "methodMapping": "@PutMapping",
+        "productionIdentity": "io.spring.api.CurrentUserApi#updateProfile",
+        "sourceFileSha256": "131deb9234c4817d67fa9e4cc40b0068ce45cec3fc4c22b9b769ed832f0ea68d",
+        "sourceLocation": "src/main/java/io/spring/api/CurrentUserApi.java:40",
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+      },
+      "recommendation": {
+        "authority": "PROPOSAL_ONLY",
+        "change": "Compose class-level RequestMapping paths with method-level PutMapping and DeleteMapping annotations, including optional method paths, then emit one handler per HTTP method.",
+        "excluded": [
+          "selector changes",
+          "threshold changes",
+          "test changes",
+          "runtime behavior changes"
+        ],
+        "surface": "route-handler static extractor"
+      },
+      "sourceLocation": "src/test/java/io/spring/api/CurrentUserApiTest.java:111",
+      "testSourcePath": "src/test/java/io/spring/api/CurrentUserApiTest.java"
+    },
+    {
+      "classification": "UNSUPPORTED_STATIC_EXTRACTION",
+      "frozenHandlerCandidates": [
+        {
+          "handlerRef": "io.spring.api.CurrentUserApi#currentUser GET /user",
+          "httpMethods": [
+            "GET"
+          ],
+          "normalizedRouteTemplate": "/user",
+          "productionIdentity": "io.spring.api.CurrentUserApi#currentUser",
+          "sourceDigest": "131deb9234c4817d67fa9e4cc40b0068ce45cec3fc4c22b9b769ed832f0ea68d",
+          "sourceLocation": "src/main/java/io/spring/api/CurrentUserApi.java:31"
+        }
+      ],
+      "httpMethod": "PUT",
+      "normalizedRouteTemplate": "/user",
+      "observationRef": "http-behavior-observation-00009",
+      "productionRouteEvidence": {
+        "classMapping": "@RequestMapping(path = \"/user\")",
+        "methodMapping": "@PutMapping",
+        "productionIdentity": "io.spring.api.CurrentUserApi#updateProfile",
+        "sourceFileSha256": "131deb9234c4817d67fa9e4cc40b0068ce45cec3fc4c22b9b769ed832f0ea68d",
+        "sourceLocation": "src/main/java/io/spring/api/CurrentUserApi.java:40",
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+      },
+      "recommendation": {
+        "authority": "PROPOSAL_ONLY",
+        "change": "Compose class-level RequestMapping paths with method-level PutMapping and DeleteMapping annotations, including optional method paths, then emit one handler per HTTP method.",
+        "excluded": [
+          "selector changes",
+          "threshold changes",
+          "test changes",
+          "runtime behavior changes"
+        ],
+        "surface": "route-handler static extractor"
+      },
+      "sourceLocation": "src/test/java/io/spring/api/CurrentUserApiTest.java:135",
+      "testSourcePath": "src/test/java/io/spring/api/CurrentUserApiTest.java"
+    },
+    {
+      "classification": "UNSUPPORTED_STATIC_EXTRACTION",
+      "frozenHandlerCandidates": [
+        {
+          "handlerRef": "io.spring.api.CurrentUserApi#currentUser GET /user",
+          "httpMethods": [
+            "GET"
+          ],
+          "normalizedRouteTemplate": "/user",
+          "productionIdentity": "io.spring.api.CurrentUserApi#currentUser",
+          "sourceDigest": "131deb9234c4817d67fa9e4cc40b0068ce45cec3fc4c22b9b769ed832f0ea68d",
+          "sourceLocation": "src/main/java/io/spring/api/CurrentUserApi.java:31"
+        }
+      ],
+      "httpMethod": "PUT",
+      "normalizedRouteTemplate": "/user",
+      "observationRef": "http-behavior-observation-00010",
+      "productionRouteEvidence": {
+        "classMapping": "@RequestMapping(path = \"/user\")",
+        "methodMapping": "@PutMapping",
+        "productionIdentity": "io.spring.api.CurrentUserApi#updateProfile",
+        "sourceFileSha256": "131deb9234c4817d67fa9e4cc40b0068ce45cec3fc4c22b9b769ed832f0ea68d",
+        "sourceLocation": "src/main/java/io/spring/api/CurrentUserApi.java:40",
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+      },
+      "recommendation": {
+        "authority": "PROPOSAL_ONLY",
+        "change": "Compose class-level RequestMapping paths with method-level PutMapping and DeleteMapping annotations, including optional method paths, then emit one handler per HTTP method.",
+        "excluded": [
+          "selector changes",
+          "threshold changes",
+          "test changes",
+          "runtime behavior changes"
+        ],
+        "surface": "route-handler static extractor"
+      },
+      "sourceLocation": "src/test/java/io/spring/api/CurrentUserApiTest.java:166",
+      "testSourcePath": "src/test/java/io/spring/api/CurrentUserApiTest.java"
+    },
+    {
+      "classification": "UNSUPPORTED_STATIC_EXTRACTION",
+      "frozenHandlerCandidates": [
+        {
+          "handlerRef": "io.spring.api.ProfileApi#follow POST /profiles/{username}/follow",
+          "httpMethods": [
+            "POST"
+          ],
+          "normalizedRouteTemplate": "/profiles/{username}/follow",
+          "productionIdentity": "io.spring.api.ProfileApi#follow",
+          "sourceDigest": "314dbd49f5b7c8b95763f73f960d538275a31e4ed35929b1b2e2840c0a7bbbf2",
+          "sourceLocation": "src/main/java/io/spring/api/ProfileApi.java:37"
+        }
+      ],
+      "httpMethod": "DELETE",
+      "normalizedRouteTemplate": "/profiles/{username}/follow",
+      "observationRef": "http-behavior-observation-00011",
+      "productionRouteEvidence": {
+        "classMapping": "@RequestMapping(path = \"profiles/{username}\")",
+        "methodMapping": "@DeleteMapping(path = \"follow\")",
+        "productionIdentity": "io.spring.api.ProfileApi#unfollow",
+        "sourceFileSha256": "314dbd49f5b7c8b95763f73f960d538275a31e4ed35929b1b2e2840c0a7bbbf2",
+        "sourceLocation": "src/main/java/io/spring/api/ProfileApi.java:51",
+        "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+      },
+      "recommendation": {
+        "authority": "PROPOSAL_ONLY",
+        "change": "Compose class-level RequestMapping paths with method-level PutMapping and DeleteMapping annotations, including optional method paths, then emit one handler per HTTP method.",
+        "excluded": [
+          "selector changes",
+          "threshold changes",
+          "test changes",
+          "runtime behavior changes"
+        ],
+        "surface": "route-handler static extractor"
+      },
+      "sourceLocation": "src/test/java/io/spring/api/ProfileApiTest.java:86",
+      "testSourcePath": "src/test/java/io/spring/api/ProfileApiTest.java"
+    }
+  ],
+  "schemaVersion": "SF-BL-005-ROUTE-COVERAGE-MATRIX-001",
+  "summary": {
+    "analysisUnitCount": 9,
+    "classificationCounts": {
+      "UNSUPPORTED_STATIC_EXTRACTION": 9
+    },
+    "diagnosticPairCount": 90,
+    "scenarioCount": 10
+  }
+}
