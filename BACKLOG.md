@@ -91,6 +91,13 @@ format.
 
 ## Selection boundary
 
+Improvement source candidate `ceca0e38d4930ea1db31cb2635b941b21273609b`
+is selected for user-authorized integration. BOXING-002 measured recall 0.775
+and precision 0.8611111111111112 under unchanged gold/scorer.
+Evidence: `validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md`.
+This exposed calibration does not establish overall GO or parent closure;
+the following canonical selections remain active.
+
 The Azure DevOps listing is read-only discovery, not repository selection.
 Repository selection, retrieval, training-material access, Graphify indexing,
 Product Context acceptance, A/P execution, and terminal closure occur only at

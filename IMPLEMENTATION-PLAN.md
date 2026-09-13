@@ -21,11 +21,8 @@ its output-path changes, repeated scoring, runtime substitution or receipts.
 
 ## Objective and sequence
 
-Prepare reliable handoff and identify exactly where public evidence is rejected,
-then add only request-bound REST Assured support justified by that diagnosis.
-Order: recovery contract -> behavior-preserving diagnosis -> bounded adapter ->
-independent review and combined verification. A future calibration needs its own
-fresh exact envelope. No stage may use evaluator truth to tune producer rules.
+Order: durable handoff -> behavior-preserving diagnosis -> review/verification.
+Adapter and calibration require future selection; never tune from evaluator truth.
 
 ## 1. Durable handoff and recovery contract (FDP)
 
@@ -50,11 +47,9 @@ new receipt name or changed output location is authorized implicitly. A future
 re-execution needs a new envelope and unused namespace. Preserve failed receipts.
 No exactly-once claim when a previous scorer invocation has unknown outcome.
 
-Decision proposal for a future envelope: integrity/compliance failure first;
-then missing mandatory metrics => INCONCLUSIVE; only complete valid metrics
-permit threshold REVISE or calibration recommendation. Human approval is needed
-if adopting this changes the existing acceptance semantics. Until resolved,
-report metric values and their missing reasons without a terminal metric verdict.
+Do not change acceptance semantics: report missing metrics and reasons without
+a terminal metric verdict. Future policy proposals remain in the pinned Plan
+at d517e4b3396a7c6c7dc404a5f63958c3a29a2980.
 
 ## 2. Explain selector losses without changing behavior (Java)
 
@@ -82,24 +77,10 @@ fixtures. RealWorld per-scenario diagnosis is a subsequent evidence slice with
 a separately pinned public-input manifest; do not access RealWorld or evaluator
 artifacts during this code slice. Do not claim measured RealWorld bottleneck counts.
 
-## 3. Request-bound REST Assured adapter (Java)
+## 3. Deferred adapter — not selected
 
-Dependency: stage 2 evidence reviewed; freeze the smallest supported syntax set.
-Owned files: ScenarioEvidenceSelector.java, ScenarioEvidenceSelectorTests.java;
-optional new RestAssuredAssertionAdapter.java in the same package. No new Python.
-
-TDD: first show a single REST Assured request with literal statusCode(200/201)
-is rejected by the old dialect check. Then recognize assertions tied to that
-same request chain. Return unsupported/ambiguous for unproven forms; do not infer
-success from an unrelated assertion or a method name. Preserve action/condition
-requirements; a status code alone cannot prove a domain-specific condition.
-
-Acceptance: positive supported request qualifies only after all existing gates;
-wrong/missing status, another request's assertion, multiple ambiguous requests,
-lambda/helper indirection and unproven condition cases do not qualify. Existing
-MockMvc cases retain results. No AUTHENTICATE classification, entity/action
-heuristic widening, proof/scorer changes, or threshold adjustment. Other diagnosed
-bottlenecks become separate proposals, not silent scope expansion.
+Adapter implementation and calibration rerun remain unselected. Proposed scope
+and negative cases remain in the Plan at d517e4b3396a7c6c7dc404a5f63958c3a29a2980.
 
 ## 4. Independent review and verification
 
@@ -175,9 +156,16 @@ reports as commits and attachments; receiver verifies bytes before cleanup.
 Base: 4fc285f515e65473d4d3120b335629825a6a810b. Requirements: AUTH-001,
 AUTH-003, EXEC-003, EVID-001. Learner email delivery is complete; evaluator
 material remains withheld. Evidence: docs/company-ai-learning/RELEASE-VERIFICATION.json.
-The original construction plan remains at remote merge 10d52b3ca1b1fdbeca9db178a933cfee3ee70593.
-No new document mutation, upload, installation, adoption, or terminal closure is
-selected. Bind the exact company AI environment and its applicable approval
-before downstream action. This blocked lane does not block the selector or
-supporting investigations. One FDP writer serializes all active controls;
-existing exact execution envelopes and resource limits remain unchanged.
+Construction details: Plan at 10d52b3ca1b1fdbeca9db178a933cfee3ee70593.
+No new mutation or downstream action is selected. Bind company AI environment
+and approval before upload, installation, adoption or closure. Other lanes
+remain independent; one FDP writer serializes controls and preserves envelopes.
+
+## Integrated improvement delivery
+
+User-authorized merge source: ceca0e38d4930ea1db31cb2635b941b21273609b.
+Opt-in trace, candidate evaluator, conservative JDK boxing and eight reverse
+characterization fixtures; evidence: validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md.
+Petclinic recall 0.775, precision 0.8611111111111112; exposed calibration only,
+assessment INCONCLUSIVE. This intake does not replace the selected lanes,
+rebind existing envelopes, authorize reruns, or close SF-BL-005.

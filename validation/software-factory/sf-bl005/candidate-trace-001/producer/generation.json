@@ -1,0 +1,36 @@
+{
+  "authority" : "PROPOSAL_ONLY",
+  "binding" : {
+    "sourceRevision" : "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "productionRoots" : [ "src/main/java" ],
+    "testRoots" : [ "src/test/java" ],
+    "inputSnapshotSha256" : "41a7f9fc60bf9f0de938a5c2f4fd29e33f8258a060d0826f4240baa180e6fa37",
+    "extractorSha256" : "1c41ce0aed3acb808c5f063da8dfff348687c984b24b0f0c82b0ab6e512c34cc"
+  },
+  "datasetKind" : "CALIBRATION",
+  "executionId" : "SF-BL-005-CANDIDATE-TRACE-001",
+  "expansion" : {
+    "depth" : 3,
+    "maxMethodsPerScenario" : 64
+  },
+  "finishedAt" : "2026-09-13T00:10:04.151119Z",
+  "inputs" : {
+    "validation/pkb001/artifacts/petclinic-graph-818c413.json" : "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+    "validation/pkb001/runtime/graphify-petclinic-live-evidence.json" : "fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8",
+    "validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json" : "3c5da364196f1bbec17aabdbf2923c65f2bc0d90b2e9788bac8427219d554a3f",
+    "validation/software-factory/sf-bl002/scenario-search-intent-acceptance-manifest-002.json" : "8772b2a1b4cbb485f0ebce793be734bbd8414aaf318e6033bab7225b1e03fd1b",
+    "validation/software-factory/sf-bl002/test-behavior-evidence.json" : "6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2"
+  },
+  "limitations" : [ "STATIC_CALL_NOT_OBSERVED_EXECUTION", "GRAPHIFY_SNAPSHOT_REUSED_NOT_REINDEXED", "NO_EVALUATOR_INPUTS", "NO_UPSTREAM_TEST_EXECUTION", "TOP_LEVEL_SOURCE_DECLARATIONS_ONLY" ],
+  "outputs" : {
+    "baseline.json" : "f04abaa4fb8bd7ed42597d0dcdf2d27468e5f54faac59c9e64da536223a00b11",
+    "candidate-trace.json" : "56a9757618ddc0fa2cf66fea8d1ce4817c9bf06ac8faae704acc1032968c6143",
+    "improved.json" : "1895f13c576301682f425c97754c8b8e1b979e26af5e976701306d74317c5dac",
+    "seed/validation/software-factory/sf-bl002/http-behavior-observations-003.json" : "1262c61dad3b985171f62e7feef61a20eda4f66057af2f8faf81ad47aeef01c0",
+    "seed/validation/software-factory/sf-bl002/route-handler-index-003.json" : "352f8d3e799ef6ed7ea59f8695460cf928642934417d3194ad5dd0defaa50150",
+    "seed/validation/software-factory/sf-bl002/scenario-mapping-proposal-003.json" : "5365c5d1296a00b633156db318c30dd83d3166651ea3464130b378462fbc145d",
+    "seed/validation/software-factory/sf-bl002/scenario-mapping-proposal-evidence-003.json" : "b0486489f98f4abc55f58159c17820ae74c08dc7482a834aff018026c4d23838",
+    "selected-evidence.json" : "f664e3107b7038a20049ecd52df779a601df64a6604adf0f2e66e888be10f70f"
+  },
+  "startedAt" : "2026-09-13T00:10:01.492991Z"
+}

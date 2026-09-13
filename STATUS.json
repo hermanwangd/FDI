@@ -5,7 +5,8 @@
   "backlog": "BACKLOG.md",
   "implementation_plan": "IMPLEMENTATION-PLAN.md",
   "baseline_status": "ACTIVE",
-  "decision": "INCONCLUSIVE",
+  "decision": null,
+  "decision_reason": "No terminal GO/REVISE/STOP decision; calibration assessment remains INCONCLUSIVE and RealWorld acceptance remains WITHHELD.",
   "active_implementation_plan": "IMPLEMENTATION-PLAN.md#current-selection",
   "selected_backlog_items": [
     "SF-BL-005",
@@ -28,13 +29,12 @@
     "precision_strictly_greater_than": 0.8
   },
   "latest_calibration": {
-    "execution_id": "SF-BL-005-METHOD-QUALITY-007",
+    "execution_id": "SF-BL-005-BOXING-CALIBRATION-002",
     "assessment": "INCONCLUSIVE",
-    "engineering_recommendation": "REVISE",
-    "actual_recall": 0.7,
-    "actual_precision": 0.8484848484848485,
-    "scope": "PETCLINIC_CALIBRATION_ONLY_NOT_CROSS_REPOSITORY_VALIDATION",
-    "evidence": "validation/software-factory/sf-bl005/method-quality-007/RESULTS.md"
+    "actual_recall": 0.775,
+    "actual_precision": 0.8611111111111112,
+    "scope": "EXPOSED_PETCLINIC_CALIBRATION_ONLY_NOT_HOLDOUT",
+    "evidence": "validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md"
   },
   "latest_cross_repository_attempt": {
     "execution_id": "SF-BL-005-CROSSREPO-REALWORLD-003",
@@ -118,5 +118,12 @@
       "execution_state": "LEARNER_EMAIL_DELIVERED_DOWNSTREAM_AI_UNBOUND",
       "integration_candidate": "d5fc328be167811fc2aa6b5dfcf956d7067c6cc0"
     }
-  ]
+  ],
+  "mapping_improvement_intake": {
+    "source_candidate": "ceca0e38d4930ea1db31cb2635b941b21273609b",
+    "state": "INTEGRATED_ENGINEERING_READY",
+    "verification": "JAVA_17_PACKAGE_PASS_PYTEST_63_63",
+    "evidence": "validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md",
+    "parent_closure": false
+  }
 }

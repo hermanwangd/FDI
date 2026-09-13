@@ -1,0 +1,39 @@
+{
+  "schema": "CANDIDATE-SOURCE-DIAGNOSIS-001",
+  "reviewer": "/root/trace_review",
+  "role": "INDEPENDENT_EVALUATOR_NOT_PRODUCER",
+  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "sealedGenerationSha256": "44feeb2a82d54ede5198b0be738386c83dcf2a5f024d16cf1ba95e55d651f572",
+  "aggregateSha256": "5321317137250ac5d626eab6f30425a79a82c1bffdb7efb39da5ac41b89776d1",
+  "privateDiagnosesSha256": "206b869f95f180c5d9ba30e77a55a55d7d7ef31dfc89dc102debb812de3db588",
+  "evaluatorRuntimeJarSha256": "81d3bc0da1ffc4f311dbb7a2f3d92ac75b412f884425bf5f847a2a51c92ed792",
+  "reviewedResolverSha256": "64a51bf067021670342c20a1e518dbcd391e4ac88cd5754263c95e9779bf2a96",
+  "sealedTraceOnlyReasonsRemainUnchanged": true,
+  "additionalManualSourceInspection": {
+    "directPrimitiveToWrapperResolutionGap": 7,
+    "downstreamOfBlockedPrimitiveToWrapperCall": 2,
+    "templatePropertyRenderingOutsideStaticJavaTraversal": 3,
+    "total": 12
+  },
+  "evidenceBasis": [
+    "For seven missing pairs, a recorded unresolved call occurs in an already selected method. Source argument declaration is int; the source target parameter is Integer; current resolver accepts only exact parameter-list equality.",
+    "Two further missing methods are downstream of one blocked call. Recovery is a hypothesis requiring a fresh run, not a measured result.",
+    "Three missing methods participate in property rendering from a template. Java method-call traversal does not include that invocation mechanism."
+  ],
+  "recommendation": "Implement conservative Java boxing applicability under synthetic overload and inheritance counterexamples; preserve uncertainty for incomplete visible overload sets. Do not relax filtering or increase depth without evidence.",
+  "limitations": [
+    "CALIBRATION_ONLY",
+    "MANUAL_SOURCE_CAUSE_REVIEW_NOT_A_REWRITE_OF_TRACE_ONLY_DIAGNOSES",
+    "NO_GOLD_IDENTITIES_EXPOSED_TO_PRODUCER",
+    "NO_NEW_PROPOSAL_METRICS_OR_IMPROVEMENT_CLAIM"
+  ],
+  "verification": {
+    "syntheticRed": "CandidateStageScorerTests failed compilation before the new scorer existed",
+    "focusedTests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "runtime": "JAVA_17_XMX512M",
+    "diagnosticExecutions": 1
+  }
+}
