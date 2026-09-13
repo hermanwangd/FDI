@@ -14,7 +14,7 @@ import sys
 
 FULL_COMMIT = re.compile(r"[0-9a-f]{40}\Z")
 
-ALLOW_EXACT = frozenset({
+PREP_ALLOW_EXACT = frozenset({
     "contracts/sfbl005-formal-holdout-scorer-v1.schema.json",
     "src/main/java/com/featuredeliveryintelligence/fdi/application/FdiApplication.java",
     "src/main/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCli.java",
@@ -26,11 +26,22 @@ ALLOW_EXACT = frozenset({
     "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/catalog.json",
     "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/vector-manifest.json",
 })
-ALLOW_PREFIXES = (
+PREP_ALLOW_PREFIXES = (
     "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/",
     "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/",
     "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/inputs/",
     "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/expected/",
+)
+IMPLEMENTATION_ALLOW_EXACT = frozenset({
+    "contracts/sfbl005-formal-holdout-scorer-v1.schema.json",
+    "src/main/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCli.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCliTests.java",
+    "tools/sfbl005_formal_holdout_recompute_v1.py",
+    "tests/test_sfbl005_formal_holdout_recompute_v1.py",
+})
+IMPLEMENTATION_ALLOW_PREFIXES = (
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/",
 )
 DENY_EXACT = frozenset({
     "src/main/java/com/featuredeliveryintelligence/fdi/application/MethodPairCompareCli.java",
@@ -89,11 +100,19 @@ def is_prefixed(path: str, prefixes: tuple[str, ...]) -> bool:
     return any(path.startswith(prefix) for prefix in prefixes)
 
 
-def validate_changed_paths(paths: list[str]) -> None:
+def validate_changed_paths(paths: list[str], profile: str) -> None:
+    if profile == "prep":
+        allow_exact = PREP_ALLOW_EXACT
+        allow_prefixes = PREP_ALLOW_PREFIXES
+    elif profile == "implementation":
+        allow_exact = IMPLEMENTATION_ALLOW_EXACT
+        allow_prefixes = IMPLEMENTATION_ALLOW_PREFIXES
+    else:
+        raise GuardError(f"unknown guard profile: {profile}")
     for path in paths:
         if path in DENY_EXACT or is_prefixed(path, DENY_PREFIXES):
             raise GuardError(f"legacy path changed: {path}")
-        if path not in ALLOW_EXACT and not is_prefixed(path, ALLOW_PREFIXES):
+        if path not in allow_exact and not is_prefixed(path, allow_prefixes):
             raise GuardError(f"changed path is not allowlisted: {path}")
 
 
@@ -143,6 +162,7 @@ def validate_output(repo: Path, output_arg: str) -> Path:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--profile", choices=("prep", "implementation"), default="prep")
     parser.add_argument("--base", required=True)
     parser.add_argument("--candidate", required=True)
     parser.add_argument("--source-manifest-output", required=True)
@@ -159,7 +179,7 @@ def main(argv: list[str] | None = None) -> int:
             raise GuardError("base must be an ancestor of candidate")
         if ancestor.returncode != 0:
             raise GuardError("unable to verify base ancestor relationship")
-        validate_changed_paths(changed_paths(repo, base, candidate))
+        validate_changed_paths(changed_paths(repo, base, candidate), args.profile)
         output = validate_output(repo, args.source_manifest_output)
         document = {
             "baseCommit": base,
