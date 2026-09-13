@@ -26,6 +26,15 @@ def commit_file(repo: Path, path: str, content: bytes, mode: int = 0o644) -> str
     return git(repo, "rev-parse", "HEAD").stdout.strip()
 
 
+def commit_symlink(repo: Path, path: str, target: str) -> str:
+    link = repo / path
+    link.parent.mkdir(parents=True, exist_ok=True)
+    link.symlink_to(target)
+    git(repo, "add", path)
+    git(repo, "commit", "-m", path)
+    return git(repo, "rev-parse", "HEAD").stdout.strip()
+
+
 def repo_with_base(tmp_path: Path) -> tuple[Path, str]:
     repo = tmp_path / "repo"
     repo.mkdir()
@@ -279,3 +288,83 @@ def test_base_object_guard_cannot_be_weakened_by_candidate_guard_change(tmp_path
     assert result.returncode != 0
     assert "not allowlisted" in result.stderr
     assert not output.exists()
+
+
+def test_implementation_profile_rejects_symlink_in_java_prefix(tmp_path: Path) -> None:
+    repo, base = repo_with_base(tmp_path)
+    candidate = commit_symlink(
+        repo,
+        "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/Scorer.java",
+        "../../../../../../../../README.md",
+    )
+    output = repo / "source-manifest.json"
+
+    result = run_guard(repo, base, candidate, output, profile="implementation")
+
+    assert result.returncode != 0
+    assert "mode 120000" in result.stderr
+    assert not output.exists()
+
+
+def test_implementation_profile_rejects_gitlink_in_java_prefix(tmp_path: Path) -> None:
+    repo, base = repo_with_base(tmp_path)
+    path = "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/Scorer.java"
+    git(repo, "update-index", "--add", "--cacheinfo", f"160000,{base},{path}")
+    git(repo, "commit", "-m", "gitlink")
+    candidate = git(repo, "rev-parse", "HEAD").stdout.strip()
+    output = repo / "source-manifest.json"
+
+    result = run_guard(repo, base, candidate, output, profile="implementation")
+
+    assert result.returncode != 0
+    assert "type commit" in result.stderr
+    assert not output.exists()
+
+
+def test_implementation_profile_rejects_non_java_suffix_in_java_prefix(tmp_path: Path) -> None:
+    repo, base = repo_with_base(tmp_path)
+    candidate = commit_file(
+        repo,
+        "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/payload.txt",
+        b"not Java\n",
+    )
+    output = repo / "source-manifest.json"
+
+    result = run_guard(repo, base, candidate, output, profile="implementation")
+
+    assert result.returncode != 0
+    assert "must end with .java" in result.stderr
+    assert not output.exists()
+
+
+def test_implementation_profile_enforces_exact_path_modes(tmp_path: Path) -> None:
+    cases = (
+        ("contracts/sfbl005-formal-holdout-scorer-v1.schema.json", 0o755),
+        ("src/main/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCli.java", 0o755),
+        ("tests/test_sfbl005_formal_holdout_recompute_v1.py", 0o755),
+    )
+    for index, (path, mode) in enumerate(cases):
+        case = tmp_path / str(index)
+        case.mkdir()
+        repo, base = repo_with_base(case)
+        candidate = commit_file(repo, path, b"content\n", mode=mode)
+        output = repo / "source-manifest.json"
+
+        result = run_guard(repo, base, candidate, output, profile="implementation")
+
+        assert result.returncode != 0, path
+        assert "mode 100755" in result.stderr, path
+        assert not output.exists()
+
+
+def test_implementation_profile_accepts_executable_recomputer_tool(tmp_path: Path) -> None:
+    repo, base = repo_with_base(tmp_path)
+    candidate = commit_file(
+        repo, "tools/sfbl005_formal_holdout_recompute_v1.py", b"#!/usr/bin/env python3\n", mode=0o755
+    )
+    output = repo / "source-manifest.json"
+
+    result = run_guard(repo, base, candidate, output, profile="implementation")
+
+    assert result.returncode == 0, result.stderr
+    assert output.exists()
