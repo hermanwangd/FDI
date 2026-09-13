@@ -25,6 +25,7 @@ strength.
 | `PK-003` | Product Context is exact-versioned, provenance-bound, and fail-closed. |
 | `PK-004` | Reverse discovery remains proposal-only. |
 | `PK-005` | Delivery evidence can propose learning but cannot publish Product truth. |
+| `CSI-001` | Verified delivery findings may recommend evidence-bound system improvements, but every resulting change uses existing authority, planning, execution, verification, and Product Knowledge paths. |
 | `FD-T1-001` | T1 produces immutable Product intent and Acceptance Criteria. |
 | `FD-T1-002` | Acceptance Criteria cannot be weakened within a delivery cycle. |
 | `FD-T2-001` | T2 performs System Analysis, ChangeSurface, TechnicalDesign, and DeliverySpec. |
@@ -424,6 +425,49 @@ digests. Prose claims alone cannot satisfy a mandatory gate. Provider-native
 diagnostics may remain in an evidence envelope without becoming core domain
 fields.
 
+### CSI-001 — Continuous system improvement
+
+Independent review, verification, execution, delivery, and KPI evidence MAY
+produce a system-improvement recommendation.
+
+A recommendation MUST identify its originating evidence, the affected
+requirement or expected behavior, the observed failure or insufficiency, a
+proposed prevention or earlier-detection control, affected KPIs, and a
+recommended existing revision route. Candidate, execution, review, runtime, and
+digest identities are required only when applicable; an inapplicable identity
+MUST be explicitly identified as not applicable rather than invented.
+
+`CODE`, `DELIVERY`, `PK`, `MIXED`, and `UNKNOWN` MAY be used as analytical
+tags. These tags MUST NOT establish root-cause certainty, create authority,
+dispatch work, expand scope, or determine Product meaning.
+
+The Feature Delivery Plane MUST reconcile an actionable recommendation against
+the existing T2, T3, T4, Backlog, evidence, and Product Knowledge requirements.
+A recommendation MAY identify a prospective revision route, but MUST NOT itself
+enact remediation, replan, Backlog inclusion or selection, Product Knowledge
+acceptance, or a new delivery cycle.
+
+An improvement outside an approved execution envelope MUST NOT be implemented
+until the applicable Human decision or existing project authorization has been
+obtained and the work has been selected, planned, materialized, and assigned
+through the existing delivery process.
+
+Product-learning recommendations MUST enter `PK-005` as Observations or
+Proposals. Product meaning and Acceptance Criteria changes require Human
+Authority, stop the current delivery cycle, and create a new IntentSpec and
+delivery cycle only after the Human decision.
+
+An authorized improvement MUST use the existing WorkItem, evidence, independent
+review, and T4 mechanisms. Improvement evidence SHOULD report review escape,
+recurrence, remediation elapsed time, additional runs, input/output tokens, and
+unplanned Human intervention when those values are available. Missing values
+remain unknown. Insufficient comparable observations MUST be reported as
+`INSUFFICIENT_SAMPLE` and MUST NOT be represented as measured effectiveness.
+
+This capability MUST NOT introduce a parallel finding lifecycle, correctness
+verdict, workflow runtime, terminal-closure state, or automatic Product
+Knowledge publication.
+
 ### PORT-001 — Cross-baseline change reference export
 
 When source and receiving repositories have no shared Git commit baseline, the
@@ -531,6 +575,11 @@ Human-authority semantics, evaluator isolation, deterministic evidence, and
 exact-revision binding.
 
 ## 12. Current scope boundary
+
+`CSI-001` defines a prospective Software Factory capability. It does not amend
+the scope, acceptance, ChangeClaims, execution envelopes, or required gates of
+an execution already bound to an earlier exact control revision. Implementing
+this capability requires separately authorized and selected Backlog work.
 
 `SF-BL-005` MAY perform the explicitly selected scenario-mapping feasibility
 tranche and define an execution-specific successor scoring protocol. This does
