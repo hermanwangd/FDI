@@ -1,19 +1,29 @@
 package com.featuredeliveryintelligence.fdi.product.realization.route;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.util.DefaultIndenter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.featuredeliveryintelligence.fdi.product.realization.route.HttpBehaviorObservation.HttpMethod;
 import com.featuredeliveryintelligence.fdi.product.realization.route.RouteResolution.Status;
 import com.featuredeliveryintelligence.fdi.shared.RuntimeContractException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HexFormat;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -26,6 +36,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * W1B fixture is an additional read-only parse input.
  */
 class SpringRouteHandlerIndexTests {
+
+    private static final ObjectMapper JSON = new ObjectMapper()
+            .enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS);
+
+    private static final String REALWORLD_REVISION = "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a";
+    private static final String REALWORLD_TREE = "3938658872ad216fe45033f4698c66febd80be76";
+    private static final String REALWORLD_PRODUCTION_SUBTREE = "393afbd6c7e5dab2352ef896b5866348d6d822a3";
+    private static final String OBSERVATIONS_SHA256 =
+            "71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd";
 
     @TempDir
     Path tempDir;
@@ -197,6 +216,145 @@ class SpringRouteHandlerIndexTests {
                 }
             }
             """;
+
+    private static final String PUT_DELETE_CONTROLLER = """
+            package samples.routes;
+
+            import org.springframework.web.bind.annotation.DeleteMapping;
+            import org.springframework.web.bind.annotation.PutMapping;
+            import org.springframework.web.bind.annotation.RequestMapping;
+            import org.springframework.web.bind.annotation.RestController;
+
+            @RestController
+            @RequestMapping("/items")
+            public class PutDeleteController {
+                private static final String DYNAMIC = "/dynamic";
+
+                @PutMapping
+                public String replaceAll() { return "ok"; }
+
+                @PutMapping(value = "/{itemId}")
+                public String replaceOne() { return "ok"; }
+
+                @DeleteMapping(path = "/{itemId}/history")
+                public String deleteHistory() { return "ok"; }
+
+                @DeleteMapping(DYNAMIC)
+                public String deleteDynamic() { return "ok"; }
+            }
+            """;
+
+    @Test
+    void indexesPutAndDeleteMappingsWithLiteralOrAbsentPathsOnly() throws Exception {
+        Path checkout = checkout();
+        Path source = Path.of("src/main/java/samples/routes/PutDeleteController.java");
+        writeSource(checkout, source.toString(), PUT_DELETE_CONTROLLER);
+        commitAll(checkout);
+
+        SpringRouteHandlerIndex index = SpringRouteHandlerIndex.build(checkout, List.of(source));
+
+        assertEquals(Status.RESOLVED, index.resolve("PUT", "/items").status());
+        assertEquals(Status.RESOLVED, index.resolve("PUT", "/items/42").status());
+        assertEquals(Status.RESOLVED, index.resolve("DELETE", "/items/42/history").status());
+        assertEquals(Status.UNRESOLVED, index.resolve("DELETE", "/items/dynamic").status());
+        assertEquals(3, index.handlers().size());
+    }
+
+    @Test
+    void verifyFrozenRealWorldPutDeleteCoverage() throws Exception {
+        Path checkout = requiredPathProperty("sfbl005.realworld.checkout");
+        Path observationsPath = requiredPathProperty("sfbl005.observations.path");
+        Path outputPath = requiredPathProperty("sfbl005.verification.output");
+
+        assertEquals(REALWORLD_REVISION, runGit(checkout, "rev-parse", "HEAD").trim());
+        assertEquals(REALWORLD_TREE, runGit(checkout, "rev-parse", "HEAD^{tree}").trim());
+        assertEquals(REALWORLD_PRODUCTION_SUBTREE,
+                runGit(checkout, "rev-parse", "HEAD:src/main/java").trim());
+
+        List<Path> productionFiles;
+        try (var paths = Files.walk(checkout.resolve("src/main/java"))) {
+            productionFiles = paths.filter(Files::isRegularFile)
+                    .filter(path -> path.getFileName().toString().endsWith(".java"))
+                    .map(checkout::relativize)
+                    .sorted(Comparator.comparing(Path::toString))
+                    .toList();
+        }
+        assertEquals(93, productionFiles.size());
+
+        byte[] observationBytes = Files.readAllBytes(observationsPath);
+        assertEquals(OBSERVATIONS_SHA256, sha256(observationBytes));
+        JsonNode observationDocument = JSON.readTree(observationBytes);
+        JsonNode observations = observationDocument.path("observations");
+        assertTrue(observations.isArray(), "observations must be an array");
+        assertEquals(11, observations.size());
+
+        SpringRouteHandlerIndex index = SpringRouteHandlerIndex.build(checkout, productionFiles);
+        assertEquals(19, index.handlers().size());
+        Map<String, String> expectedNewHandlers = Map.of(
+                "io.spring.api.ArticleApi#deleteArticle DELETE /articles/{slug}",
+                "src/main/java/io/spring/api/ArticleApi.java:65|6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+                "io.spring.api.ArticleApi#updateArticle PUT /articles/{slug}",
+                "src/main/java/io/spring/api/ArticleApi.java:44|6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+                "io.spring.api.ArticleFavoriteApi#unfavoriteArticle DELETE /articles/{slug}/favorite",
+                "src/main/java/io/spring/api/ArticleFavoriteApi.java:39|d3f44c10c425e57df26755bb37188699deb8a53bc0a10124a6e27eee8c5eb6bb",
+                "io.spring.api.CurrentUserApi#updateProfile PUT /user",
+                "src/main/java/io/spring/api/CurrentUserApi.java:40|131deb9234c4817d67fa9e4cc40b0068ce45cec3fc4c22b9b769ed832f0ea68d",
+                "io.spring.api.ProfileApi#unfollow DELETE /profiles/{username}/follow",
+                "src/main/java/io/spring/api/ProfileApi.java:51|314dbd49f5b7c8b95763f73f960d538275a31e4ed35929b1b2e2840c0a7bbbf2");
+        for (RouteHandler handler : index.handlers()) {
+            String expectedProvenance = expectedNewHandlers.get(handler.handlerRef());
+            if (expectedProvenance != null) {
+                assertEquals(expectedProvenance, handler.sourceLocation() + "|" + handler.sourceDigest());
+            }
+        }
+        assertEquals(5, index.handlers().stream()
+                .filter(handler -> expectedNewHandlers.containsKey(handler.handlerRef()))
+                .count());
+
+        List<Map<String, Object>> resolutions = new ArrayList<>();
+        for (JsonNode observation : observations) {
+            String observationRef = requiredText(observation, "observationRef");
+            String method = requiredText(observation, "httpMethod");
+            String route = requiredText(observation, "normalizedRouteTemplate");
+            RouteResolution resolution = index.resolve(method, route);
+            assertEquals(Status.RESOLVED, resolution.status(), observationRef);
+            assertEquals(1, resolution.candidates().size(), observationRef);
+            RouteHandler handler = resolution.candidates().get(0);
+            assertEquals(HttpMethod.valueOf(method), handler.httpMethods().get(0), observationRef);
+            resolutions.add(Map.of(
+                    "handlerRef", handler.handlerRef(),
+                    "observationRef", observationRef,
+                    "status", resolution.status().name()));
+        }
+
+        List<Map<String, Object>> handlers = index.handlers().stream()
+                .map(handler -> Map.<String, Object>of(
+                        "handlerRef", handler.handlerRef(),
+                        "sourceDigest", handler.sourceDigest(),
+                        "sourceLocation", handler.sourceLocation()))
+                .toList();
+        Map<String, Object> payload = new TreeMap<>();
+        payload.put("handlers", handlers);
+        payload.put("resolutions", resolutions);
+        byte[] canonicalPayload = canonicalJson(payload);
+
+        Map<String, Object> report = new TreeMap<>();
+        report.put("digests", Map.of(
+                "handlerAndResolutionOutputSha256", sha256(canonicalPayload),
+                "observationsSha256", sha256(observationBytes),
+                "productionSourceTree", REALWORLD_PRODUCTION_SUBTREE,
+                "sourceTree", REALWORLD_TREE));
+        report.put("handlerCount", index.handlers().size());
+        report.put("observationCount", observations.size());
+        report.put("payload", payload);
+        report.put("schemaVersion", "software-factory.sf-bl005-realworld-route-verification.v1");
+        report.put("sourceRevision", index.sourceRevision());
+        byte[] canonicalReport = canonicalJson(report);
+        Files.createDirectories(outputPath.toAbsolutePath().normalize().getParent());
+        Files.write(outputPath, canonicalReport);
+        assertEquals(new String(canonicalReport, StandardCharsets.UTF_8),
+                Files.readString(outputPath, StandardCharsets.UTF_8));
+    }
 
     @Test
     void buildResolvesComposedClassAndMethodMapping() throws Exception {
@@ -662,6 +820,46 @@ class SpringRouteHandlerIndexTests {
             return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(content));
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException(e);
+        }
+    }
+
+    private static Path requiredPathProperty(String name) {
+        String value = System.getProperty(name);
+        assertTrue(value != null && !value.isBlank(), "required system property is missing: " + name);
+        return Path.of(value).toAbsolutePath().normalize();
+    }
+
+    private static String requiredText(JsonNode object, String field) {
+        JsonNode value = object.get(field);
+        assertTrue(value != null && value.isTextual() && !value.textValue().isBlank(),
+                "required textual field is missing: " + field);
+        return value.textValue();
+    }
+
+    private static byte[] canonicalJson(Object value) throws Exception {
+        DefaultPrettyPrinter printer = new CanonicalPrettyPrinter();
+        DefaultIndenter indenter = new DefaultIndenter("  ", "\n");
+        printer.indentObjectsWith(indenter);
+        printer.indentArraysWith(indenter);
+        return (JSON.writer(printer).writeValueAsString(value) + "\n").getBytes(StandardCharsets.UTF_8);
+    }
+
+    private static final class CanonicalPrettyPrinter extends DefaultPrettyPrinter {
+        private CanonicalPrettyPrinter() {
+        }
+
+        private CanonicalPrettyPrinter(CanonicalPrettyPrinter source) {
+            super(source);
+        }
+
+        @Override
+        public DefaultPrettyPrinter createInstance() {
+            return new CanonicalPrettyPrinter(this);
+        }
+
+        @Override
+        public void writeObjectFieldValueSeparator(JsonGenerator generator) throws IOException {
+            generator.writeRaw(": ");
         }
     }
 }

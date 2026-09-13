@@ -37,8 +37,8 @@ import java.util.Set;
  * Deterministic class-plus-method Spring route-handler index over
  * exact-revision production source (SF-BL-002 Task 2B). Combines class-level
  * {@code @RequestMapping} with method-level {@code @RequestMapping},
- * {@code @GetMapping}, and {@code @PostMapping} annotations — the mapping
- * forms present at the bound revision — and emits immutable
+ * {@code @GetMapping}, {@code @PostMapping}, {@code @PutMapping}, and
+ * {@code @DeleteMapping} annotations and emits immutable
  * {@link RouteHandler} records (schema
  * {@code software-factory.sf-bl002-route-handler.v0.3}).
  *
@@ -68,7 +68,9 @@ public final class SpringRouteHandlerIndex {
     /** Method-level mapping annotations with their fixed HTTP methods, at the bound revision. */
     private static final Map<String, List<HttpMethod>> FIXED_METHOD_MAPPINGS = Map.of(
             "GetMapping", List.of(HttpMethod.GET),
-            "PostMapping", List.of(HttpMethod.POST));
+            "PostMapping", List.of(HttpMethod.POST),
+            "PutMapping", List.of(HttpMethod.PUT),
+            "DeleteMapping", List.of(HttpMethod.DELETE));
 
     private static final List<HttpMethod> ALL_METHODS = List.of(HttpMethod.values());
 
