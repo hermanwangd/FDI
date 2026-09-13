@@ -121,3 +121,5 @@ Preparation is complete; runner implementation and diagnostic/calibration execut
 remain unselected. External dependency signature availability remains unverified.
 
 Selected prerequisite: SF-BL-005-SELECTOR-RUNNER-001, two-file sealed Java diagnostic runner under IMPLEMENTATION-PLAN.md. Actual RealWorld diagnostics and calibration remain unselected.
+
+Selected continuation: source-backed generic ancestor Slice A and exact runner/ancestor combined integration review under the active Plan. External signatures and actual diagnostic/calibration execution remain unselected.

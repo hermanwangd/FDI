@@ -5,7 +5,8 @@
 User selection: bounded public-input selector diagnostic runner implementation.
 Execution SF-BL-005-SELECTOR-RUNNER-001. Implement and independently review
 the runner first; actual RealWorld diagnostic execution remains a subsequent
-selection. Ancestor-resolution work remains preparation only. No calibration,
+selection. Source-backed generic ancestor Slice A and independent combined integration
+review/full regression are also selected. One FDP writer owns all controls. No calibration,
 adapter, publication, cleanup or parent closure is selected.
 Framework base: fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c.
 Spec binding: FRAMEWORK-SPEC.md at this exact base. Backlog: SF-BL-005.
@@ -81,18 +82,30 @@ WITHHELD. Do not expand the 11 observations to all public tests silently.
 
 ## External/generic ancestor resolution plan
 
-SF-BL-005-ANCESTOR-RESOLUTION-PLAN-001. Planning only.
+SF-BL-005-GENERIC-ANCESTOR-001. Slice A selected; Slice B remains deferred.
+Construction base: 2248420436c6fd6c35fe36bbb4db738c43500ce3.
+Wait for the existing runner execution to return before implementation so heavy
+JVMs never overlap. Do not duplicate or reassign the existing runner work.
 Current SourceMethodIndex skips generic owners/methods; QualifiedSourceCalls
 abstains on unknown external ancestry. Do not simply remove either safeguard.
 
 ### Slice A — source-backed generic substitution
 
-Likely paths: SourceMethodIndex.java, QualifiedSourceCalls.java and their tests
+Exact owned paths: SourceMethodIndex.java, QualifiedSourceCalls.java and their tests
 under product/realization/methodcalibration (four files maximum).
 Begin with one directly declared generic parent with concrete type arguments
 and one uniquely applicable fixed-arity inherited declaration. Preserve
 declaration identity separately from the receiver's substituted types.
-No new public API, dependency or template parser.
+No new public API, dependency or template parser. Add an explicit package-local
+opt-in for generic resolution; existing constructors/callers remain disabled.
+Represent resolved invocation parameter/return types separately from source
+method declaration identity. Generic declaration signatures retain type-variable
+identity; never relabel Parent<T>.method(T) as a declared Parent.method(String).
+Support a non-generic child with exactly one directly declared source parent and
+concrete non-parameterized reference arguments; no multilevel substitution.
+Keep generic metadata out of legacy definitions/lookup unless explicitly opted in.
+Budget four paths, <=500 code/test changed lines and <=60 tool calls. If unsafe
+within that boundary report PLAN_CHANGE_REQUIRED instead of dropping guards.
 
 Acceptance:
 - Synthetic concrete parent binding resolves parameter and return types while
@@ -116,6 +129,19 @@ realization targets unless an explicit target contract permits them.
 Propose at most one parser/index adapter and synthetic fixture tests; unknown or
 incomplete overload sets stay unresolved. Artifact format and availability are
 not yet verified, so this slice is not execution-ready.
+
+### Combined integration after both accepted slices
+
+Execution SF-BL-005-RUNNER-ANCESTOR-INTEGRATION-001, selected pending exact
+candidate bindings. Reuse runner's existing execution and independent verdict.
+After runner and generic slices return accepted exact candidates, FDP materializes
+a fresh envelope with both SHAs, receiving base and union of six owned paths.
+Execution Plane integrates code only, obtains a fresh independent integrated
+review and full Java17/Python regression. No controller may guess candidate SHAs
+or integrate active controls. Preserve other lanes and all immutable evidence.
+If integration changes reviewed code, review the resulting exact candidate anew.
+FDP alone receives/replays accepted code and reconciles controls. This is not
+parent closure. No actual RealWorld run or calibration is selected.
 
 ### Validation checkpoint
 

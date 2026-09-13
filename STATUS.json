@@ -12,7 +12,7 @@
     "SF-BL-005",
     "SF-BL-006"
   ],
-  "next_action": "Dispatch sealed Java selector runner implementation, independent review and combined verification from exact envelope; no RealWorld execution.",
+  "next_action": "Reuse existing runner execution; queue source-backed generic opt-in slice after runner return, then bind exact combined candidate review and full regression.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-CROSSREPO-GATE-CONTAINMENT-003",
@@ -120,12 +120,12 @@
     },
     {
       "lane_id": "ancestor-resolution-planning",
-      "execution_id": "SF-BL-005-ANCESTOR-RESOLUTION-PLAN-001",
-      "base_commit": "fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c",
+      "execution_id": "SF-BL-005-GENERIC-ANCESTOR-001",
+      "base_commit": "2248420436c6fd6c35fe36bbb4db738c43500ce3",
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "PREPARED_NOT_DISPATCHED",
+      "execution_state": "WAITING_RUNNER_RETURN",
       "integration_candidate": null
     },
     {
@@ -146,6 +146,16 @@
         "SF-BL-005"
       ],
       "execution_state": "READY_FOR_COORDINATOR",
+      "integration_candidate": null
+    },
+    {
+      "lane_id": "combined-runner-ancestor",
+      "execution_id": "SF-BL-005-RUNNER-ANCESTOR-INTEGRATION-001",
+      "base_commit": "2248420436c6fd6c35fe36bbb4db738c43500ce3",
+      "selected_backlog_items": [
+        "SF-BL-005"
+      ],
+      "execution_state": "WAITING_EXACT_CANDIDATES",
       "integration_candidate": null
     }
   ],
@@ -187,10 +197,10 @@
   },
   "preparation": {
     "framework_base": "fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c",
-    "ancestor_resolution": "SOURCE_BACKED_GENERIC_SLICE_PLANNED_EXTERNAL_ARTIFACTS_UNVERIFIED",
+    "ancestor_resolution": "SOURCE_BACKED_SLICE_SELECTED_EXTERNAL_SIGNATURES_DEFERRED",
     "realworld_diagnostic": "INPUTS_VERIFIED_RUNNER_NOT_IMPLEMENTED",
     "evidence": "validation/software-factory/sf-bl005/selector-diagnostics-001/realworld-preparation.json",
-    "implementation_authorized": false,
+    "implementation_authorized": true,
     "diagnostic_execution_authorized": false,
     "calibration_authorized": false
   }
