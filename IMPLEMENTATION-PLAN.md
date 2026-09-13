@@ -2,7 +2,7 @@
 
 ## Current selection
 
-`SF-BL-005-RESTASSURED-STATUS-DIALECT-001` is selected for exact-envelope creation. The bounded change recognizes a single literal `statusCode(int)` only on the same supported RestAssured MockMvc request chain after existing request, route, ambiguity, entity, and action gates. It must not infer business conditions from a generic 4xx response. Source-backed expected diagnostic impact is unsupported dialect 12→0 and accepted 0→1; these are diagnostic expectations, not recall or precision.
+`SF-BL-005-RESTASSURED-STATUS-DIALECT-001` has an independently preflighted exact envelope and is selected for a Human implementation-dispatch decision. The bounded change recognizes a single literal `statusCode(int)` only on the same supported RestAssured MockMvc request chain after existing request, route, ambiguity, entity, and action gates. It must not infer business conditions from a generic 4xx response. Source-backed expected diagnostic impact is unsupported dialect 12→0 and accepted 0→1; these are diagnostic expectations, not recall or precision.
 
 Detailed evidence and the ordered follow-ups are in `validation/software-factory/sf-bl005/rejection-analysis-002/RESULTS.md`. Envelope revision 1 SHA `2829333b3f3b61815e749b1905c634a39141c8effed57e365ae20fca282162c9` passed fresh independent preflight with P0/P1/P2 zero and was integrated at `c61ceea6ffb1e5657075b5555bf115461e7a90a9`. Implementation dispatch remains false pending Human Authority. Company readiness criteria are defined in `validation/software-factory/sf-bl005/production-readiness-criteria-001.md`.
 
@@ -14,7 +14,7 @@ the unmodified baseline and the later runs measure the integrated remediation.
 1. `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001` — reproduce the frozen diagnostic in a new namespace with the current pre-remediation runtime; diagnostic-only, no scorer.
 2. `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001` — COMPLETE at integrated commit `fbcbff200d442591a20753d8632c9997433a685e`; Java 17 1493/1493, Python 63/63, independent review PASS.
 3. `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003` — COMPLETE at integrated commit `5ce6bbcac538c0e22086da30f3b646a2a30bb7db`; ROUTE_ABSENT 90→0, but 110/110 pairs remain rejected.
-4. `SF-BL-005-BOXING-CALIBRATION-003` — FAILED evidence review at integrated commit `7463f5c744ac975f0e335a8006777bda88b4b470`; numeric outputs reproduced BOXING-002, but command-attempt and ordering evidence was not durable. Replan remains required.
+4. `SF-BL-005-BOXING-CALIBRATION-003` — FAILED evidence review at integrated commit `7463f5c744ac975f0e335a8006777bda88b4b470`; numeric outputs reproduced BOXING-002, but command-attempt and ordering evidence was not durable. Replacement execution `SF-BL-005-BOXING-CALIBRATION-003-REPLAN-001` now has an exact envelope and independent preflight PASS at integrated commit `3f002281d46d1f805fdeb17bfe76fa7c9e3bf83f`; calibration dispatch remains false.
 
 Every stage requires its own exact envelope, isolated output namespace, valid
 preflight and immutable evidence. A failed or blocked predecessor prevents its
@@ -23,8 +23,9 @@ publication, formal holdout, threshold changes or parent closure.
 
 ### Current execution ledger
 
-- `SF-BL-005-RESTASSURED-STATUS-DIALECT-001` — `ENVELOPE_CREATION_SELECTED`; implementation and dispatch are not yet authorized.
+- `SF-BL-005-RESTASSURED-STATUS-DIALECT-001` — `ENVELOPE_PREFLIGHT_PASS_AWAITING_HUMAN_DISPATCH`; implementation and dispatch are not yet authorized.
 - `SF-BL-005-BOXING-CALIBRATION-003` — `FAILED_EVIDENCE_PRESERVED_REPLAN_REQUIRED`; not accepted as completed calibration.
+- `SF-BL-005-BOXING-CALIBRATION-003-REPLAN-001` — `ENVELOPE_PREFLIGHT_PASS_AWAITING_HUMAN_DISPATCH`; no calibration executed.
 
 ### Latest completed baseline
 
@@ -32,9 +33,7 @@ publication, formal holdout, threshold changes or parent closure.
 
 ### Queued dependent executions
 
-- `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001` — waits for baseline completion
-- `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003` — waits for remediation integration
-- `SF-BL-005-BOXING-CALIBRATION-003` — waits for post-remediation diagnostic
+- `SF-BL-005-BOXING-CALIBRATION-003-REPLAN-001` — predecessor is complete; waits only for explicit Human calibration dispatch
 
 ### Parked execution ledger
 

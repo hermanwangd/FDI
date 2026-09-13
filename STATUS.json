@@ -11,7 +11,7 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Human Authority decides whether to dispatch the exact RestAssured status dialect envelope; meanwhile production readiness remains NOT_READY under criteria 001.",
+  "next_action": "Human Authority decides whether to dispatch the exact RestAssured status dialect implementation and, separately, the independently preflighted BOXING calibration replan; production readiness remains NOT_READY.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003",
@@ -124,6 +124,16 @@
       "lane_id": "restassured-status-dialect",
       "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
       "base_commit": "c61ceea6ffb1e5657075b5555bf115461e7a90a9",
+      "selected_backlog_items": [
+        "SF-BL-005"
+      ],
+      "execution_state": "ENVELOPE_PREFLIGHT_PASS_AWAITING_HUMAN_DISPATCH",
+      "integration_candidate": null
+    },
+    {
+      "lane_id": "boxing-calibration-003-replan",
+      "execution_id": "SF-BL-005-BOXING-CALIBRATION-003-REPLAN-001",
+      "base_commit": "3f002281d46d1f805fdeb17bfe76fa7c9e3bf83f",
       "selected_backlog_items": [
         "SF-BL-005"
       ],
@@ -289,5 +299,17 @@
     },
     "formal_holdout_metrics_available": false,
     "terminal_human_decision": null
+  },
+  "latest_calibration_replan": {
+    "execution_id": "SF-BL-005-BOXING-CALIBRATION-003-REPLAN-001",
+    "envelope_integrated_commit": "3f002281d46d1f805fdeb17bfe76fa7c9e3bf83f",
+    "envelope_revision": 1,
+    "envelope_sha256": "f8caebd3d74f34a005c6dc37c15b406fbc076d5998e283fcc7f906fc37dffca6",
+    "recorded_script_sha256": "ebdf5a22ee6d907024e316b1b7658fb19f546cb65e3a93cf26b77dc26be93e6e",
+    "independent_preflight": "PASS_P0_P1_P2_ZERO",
+    "execution_state": "NOT_EXECUTED_AWAITING_HUMAN_DISPATCH",
+    "calibration_authorized": false,
+    "accepted_as_completed_calibration": false,
+    "evidence": "validation/software-factory/sf-bl005/envelope-independent-preflight-boxing-calibration-003-replan-001.json"
   }
 }
