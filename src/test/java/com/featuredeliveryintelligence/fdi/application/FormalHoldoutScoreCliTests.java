@@ -174,7 +174,7 @@ class FormalHoldoutScoreCliTests {
         Path inputs = Files.createDirectory(temp.resolve("inputs")); Files.write(inputs.resolve("v.json"), input);
         String digest = FormalHoldoutConformanceScorer.sha256(input);
         Path manifest = temp.resolve("manifest.json");
-        Files.writeString(manifest, manifestJson("V", "v.json", digest, "WILSON_INTERVAL", "POSITIVE"));
+        Files.writeString(manifest, manifestJson("V1", "v.json", digest, "WILSON_INTERVAL", "POSITIVE"));
         Path output = temp.resolve("result.json");
         runCli(manifest, inputs, output);
         assertThat(Files.readString(output)).endsWith("\n");
@@ -243,6 +243,18 @@ class FormalHoldoutScoreCliTests {
     }
 
     @Test
+    void caseMetadataMustBeExactAndBoundToManifestIdentityAndOrder() throws Exception {
+        Path inputs=Files.createDirectory(temp.resolve("metadata-inputs"));
+        String valid=caseJson("WILSON_INTERVAL","{\"n\":1,\"precision\":50,\"rounding\":\"HALF_EVEN\",\"scale\":12,\"x\":1,\"zDecimal\":\"1.959963984540054\"}");
+        assertMetadataRejected(inputs,valid.replace("\"contract\":\"developer-test\"","\"contract\":1"),"contract");
+        assertMetadataRejected(inputs,valid.replace("conformance.invalid","wrong.invalid"),"namespace");
+        assertMetadataRejected(inputs,valid.replace("\"caseOrdinal\":1","\"caseOrdinal\":2"),"caseOrdinal");
+        assertMetadataRejected(inputs,valid.replace("\"vectorId\":\"V1\"","\"vectorId\":\"OTHER\""),"vectorId");
+        assertMetadataRejected(inputs,valid.replace("SFBL005-FORMAL-SCORER-CONFORMANCE-CASE-001","BAD"),"schemaVersion");
+        assertThatThrownBy(() -> scorer.score(JSON.readTree("{\"given\":{},\"operation\":\"WILSON_INTERVAL\"}"),"NEGATIVE")).hasMessageContaining("caseOrdinal");
+    }
+
+    @Test
     void ownedJavaSourcesDoNotReadOracleFixtureDirectories() throws Exception {
         Path main = Path.of("src/main/java/com/featuredeliveryintelligence/fdi");
         Path test = Path.of("src/test/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCliTests.java");
@@ -271,11 +283,11 @@ class FormalHoldoutScoreCliTests {
     private JsonNode score(String operation, String given, String polarity) throws Exception {
         return scorer.score(JSON.readTree(caseJson(operation, given)), polarity);
     }
-    private static String caseJson(String operation, String given) { return "{\"given\":" + given + ",\"operation\":\"" + operation + "\"}"; }
+    private static String caseJson(String operation, String given) { return "{\"caseOrdinal\":1,\"contract\":\"developer-test\",\"given\":" + given + ",\"namespace\":\"conformance.invalid\",\"operation\":\"" + operation + "\",\"schemaVersion\":\"SFBL005-FORMAL-SCORER-CONFORMANCE-CASE-001\",\"vectorId\":\"V1\"}"; }
     private static void runCli(Path manifest, Path inputs, Path output) throws Exception { FormalHoldoutScoreCli.main(new String[]{"--manifest",manifest.toString(),"--inputs-root",inputs.toString(),"--output",output.toString()}); }
     private Path writeManifest(String inputPath, String digest) throws Exception {
         Path manifest = Files.createTempFile(temp, "manifest-", ".json");
-        Files.writeString(manifest, manifestJson("V", inputPath, digest, "WILSON_INTERVAL", "POSITIVE"));
+        Files.writeString(manifest, manifestJson("V1", inputPath, digest, "WILSON_INTERVAL", "POSITIVE"));
         return manifest;
     }
     private static String manifestJson(String id,String path,String sha,String rule,String polarity){return "{\"schemaVersion\":\"SFBL005-FORMAL-SCORER-VECTOR-MANIFEST-001\",\"vectors\":["+vectorJson(id,path,sha,rule,polarity)+"]}";}
@@ -285,6 +297,7 @@ class FormalHoldoutScoreCliTests {
         Path manifest = writeManifest(input.getFileName().toString(), FormalHoldoutConformanceScorer.sha256(Files.readAllBytes(input)));
         assertThatThrownBy(() -> runCli(manifest, inputs, temp.resolve("out-" + message + ".json"))).hasMessageContaining(message);
     }
+    private void assertMetadataRejected(Path inputs,String content,String field)throws Exception{Path input=inputs.resolve("bad-"+field+".json");Files.writeString(input,content);Path manifest=temp.resolve("meta-"+field+".json");Files.writeString(manifest,manifestJson("V1",input.getFileName().toString(),FormalHoldoutConformanceScorer.sha256(Files.readAllBytes(input)),"WILSON_INTERVAL","NEGATIVE"));assertThatThrownBy(()->runCli(manifest,inputs,temp.resolve("meta-out-"+field+".json"))).hasMessageContaining(field);}
     private String read(Path p) { try { return Files.readString(p); } catch (Exception e) { throw new IllegalStateException(e); } }
     private void assertMalformed(String operation,String given,String field){assertThatThrownBy(() -> score(operation,given,"NEGATIVE")).isInstanceOf(IllegalArgumentException.class).hasMessageContaining(field);}
 }

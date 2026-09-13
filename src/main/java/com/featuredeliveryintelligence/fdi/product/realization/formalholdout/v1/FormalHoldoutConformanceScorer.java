@@ -262,6 +262,12 @@ public final class FormalHoldoutConformanceScorer {
         if (!input.get("given").isObject()) throw new IllegalArgumentException("given must be object");
         Set<String> common = Set.of("caseOrdinal","contract","given","namespace","operation","schemaVersion","vectorId");
         input.fieldNames().forEachRemaining(k -> { if (!common.contains(k)) throw new IllegalArgumentException("unknown input field: "+k); });
+        if(input.size()!=common.size())throw new IllegalArgumentException("missing caseOrdinal or case metadata");
+        positiveInteger(input,"caseOrdinal");
+        text(input,"contract",false);
+        text(input,"namespace",false);if(!"conformance.invalid".equals(input.get("namespace").textValue()))throw new IllegalArgumentException("invalid namespace");
+        text(input,"schemaVersion",false);if(!"SFBL005-FORMAL-SCORER-CONFORMANCE-CASE-001".equals(input.get("schemaVersion").textValue()))throw new IllegalArgumentException("invalid case schemaVersion");
+        text(input,"vectorId",false);
         String op=input.get("operation").asText();
         Set<String> allowed = switch(op) {
             case "CANONICAL_IDENTITY" -> Set.of("candidate","candidates");
@@ -315,6 +321,7 @@ public final class FormalHoldoutConformanceScorer {
     private static void bool(JsonNode n,String k){if(!n.has(k)||!n.get(k).isBoolean())throw new IllegalArgumentException(k+" must be boolean");}
     private static void integer(JsonNode n,String k){if(!n.has(k)||!n.get(k).isIntegralNumber()||!n.get(k).canConvertToInt())throw new IllegalArgumentException(k+" must be int");}
     private static void nonnegative(JsonNode n,String k){integer(n,k);if(n.get(k).intValue()<0)throw new IllegalArgumentException(k+" must be nonnegative");}
+    private static void positiveInteger(JsonNode n,String k){integer(n,k);if(n.get(k).intValue()<1)throw new IllegalArgumentException(k+" must be positive");}
     private static void nonnegativeBig(JsonNode n,String k){if(!n.has(k)||!n.get(k).isIntegralNumber())throw new IllegalArgumentException(k+" must be integer");if(n.get(k).bigIntegerValue().signum()<0)throw new IllegalArgumentException(k+" must be nonnegative");}
     private static void text(JsonNode n,String k,boolean nullable){if(!n.has(k))throw new IllegalArgumentException("missing "+k);if(n.get(k).isNull()&&nullable)return;if(!n.get(k).isTextual()||n.get(k).asText().isBlank())throw new IllegalArgumentException(k+" must be string");}
     private static void exactObject(JsonNode n,Set<String> keys,String label){exactObject(n,keys,keys,label);}

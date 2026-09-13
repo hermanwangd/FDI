@@ -385,6 +385,7 @@ def _valid_given(operation, given):
         if not isinstance(given["chainRequired"], bool): return False
         if not all(isinstance(given[x], list) for x in ("orderedGoldPairDigests", "proposalEdges", "proposalPairDigests", "truthEdges")): return False
         if not all(_digest(x) for x in given["orderedGoldPairDigests"] + given["proposalPairDigests"]): return False
+        if len(given["orderedGoldPairDigests"]) != len(set(given["orderedGoldPairDigests"])): return False
         return all(isinstance(edge, list) and len(edge) == 2 and all(_digest(x) for x in edge)
                    for edge in given["proposalEdges"] + given["truthEdges"])
     if operation == "REPOSITORY_DECISION":
@@ -499,13 +500,35 @@ def run(manifest_path, inputs_root, output_path):
         os.close(root_descriptor)
     document = {"manifestSha256": hashlib.sha256(manifest_raw).hexdigest(),
                 "results": results, "schemaVersion": SCHEMA}
-    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
-    descriptor = os.open(output_path, flags, 0o600)
-    if not stat.S_ISREG(os.fstat(descriptor).st_mode):
-        os.close(descriptor)
-        raise ValueError("output must be regular file")
-    with os.fdopen(descriptor, "wb") as stream:
-        stream.write(canonical_bytes(document) + b"\n")
+    parent_before = os.stat(absolute_output.parent, follow_symlinks=False)
+    parent_flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | getattr(os, "O_NOFOLLOW", 0)
+    parent_descriptor = os.open(absolute_output.parent, parent_flags)
+    created = False
+    try:
+        parent_open = os.fstat(parent_descriptor)
+        if (parent_before.st_dev, parent_before.st_ino) != (parent_open.st_dev, parent_open.st_ino):
+            raise ValueError("output parent identity changed")
+        flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
+        descriptor = os.open(absolute_output.name, flags, 0o600, dir_fd=parent_descriptor)
+        created = True
+        opened = os.fstat(descriptor)
+        if not stat.S_ISREG(opened.st_mode) or opened.st_nlink != 1:
+            os.close(descriptor)
+            raise ValueError("output must be a single-link regular file")
+        with os.fdopen(descriptor, "wb") as stream:
+            stream.write(canonical_bytes(document) + b"\n")
+        parent_after = os.stat(absolute_output.parent, follow_symlinks=False)
+        if (parent_open.st_dev, parent_open.st_ino) != (parent_after.st_dev, parent_after.st_ino):
+            raise ValueError("output parent identity changed")
+    except Exception:
+        if created:
+            try:
+                os.unlink(absolute_output.name, dir_fd=parent_descriptor)
+            except OSError:
+                pass
+        raise
+    finally:
+        os.close(parent_descriptor)
 
 
 def main(argv=None):

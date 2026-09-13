@@ -276,3 +276,21 @@ def test_chain_counts_duplicate_pairs_and_requires_exact_proposal_edges():
         "proposalPairDigests": [a, b, c], "truthEdges": [[a, b], [b, c]]}))
     assert extra_edge["counts"] == {"duplicateCount": 0, "fn": 0, "fp": 0, "tp": 3}
     assert extra_edge["chainComplete"] is False
+
+def test_chain_rejects_duplicate_ordered_gold_digests_before_counting():
+    m = load_module(); a, b = "a" * 64, "b" * 64
+    value = m.evaluate(case("DEV-CH-GOLD-DUP", "CHAIN_SCORING", {"chainRequired": True,
+        "orderedGoldPairDigests": [a, a, b], "proposalEdges": [[a, a], [a, b]],
+        "proposalPairDigests": [a, b], "truthEdges": [[a, a], [a, b]]}))
+    assert value == {"reasonCodes": ["MALFORMED_GIVEN"], "result": "INVALID",
+                     "ruleId": "CHAIN_SCORING"}
+
+def test_cli_creates_output_as_regular_file_in_verified_parent(tmp_path):
+    manifest, inputs = make_bundle(tmp_path); parent = tmp_path / "execution"; parent.mkdir()
+    before = parent.stat(); output = parent / "oracle.json"
+    proc = subprocess.run([sys.executable, str(SCRIPT), "--manifest", str(manifest),
+        "--inputs-root", str(inputs), "--output", str(output)], text=True, capture_output=True)
+    assert proc.returncode == 0, proc.stderr
+    after = parent.stat(); created = output.lstat()
+    assert (before.st_dev, before.st_ino) == (after.st_dev, after.st_ino)
+    assert created.st_nlink == 1 and output.is_file() and not output.is_symlink()
