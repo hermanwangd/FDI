@@ -7,7 +7,7 @@ Human Authority selected a four-step sequential SF-BL-005 experiment on
 the unmodified baseline and the later runs measure the integrated remediation.
 
 1. `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001` — reproduce the frozen diagnostic in a new namespace with the current pre-remediation runtime; diagnostic-only, no scorer.
-2. `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001` — execute envelope revision 3, already producer/independent-preflighted; add only PutMapping/DeleteMapping static extraction.
+2. `SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001` — materialize and independently preflight envelope revision 4 against the reconciled post-baseline controls, then execute the Human-authorized PutMapping/DeleteMapping-only static extraction.
 3. `SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003` — reproduce the same frozen RealWorld diagnostic against the integrated remediation in another new namespace.
 4. `SF-BL-005-BOXING-CALIBRATION-003` — rerun the exposed PetClinic calibration with frozen inputs and evaluator separation; this is not formal holdout.
 

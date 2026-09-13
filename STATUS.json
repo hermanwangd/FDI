@@ -11,7 +11,7 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Rebase and independently preflight the route-handler extractor remediation envelope against the valid baseline integration, then execute implementation.",
+  "next_action": "Materialize and independently preflight route-handler extractor remediation envelope revision 4 against this reconciled control commit, then execute the authorized implementation.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001",
@@ -39,17 +39,19 @@
   },
   "selected_next_execution": {
     "execution_id": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
-    "state": "ENVELOPE_REBASE_SELECTED_FOR_DISPATCH",
+    "state": "CONTROL_RECONCILED_FOR_ENVELOPE_REVISION_4",
     "objective": "Add PutMapping/DeleteMapping static extraction under the existing bounded remediation contract.",
     "selection_authority": "Human selected ordered options 1, 2, and 3 on 2026-09-13",
-    "construction_base": "c9cfe65640cf36e89db77df582b70ff0ddc951bc",
-    "code_change_authorized": false,
+    "construction_base": "b6ca63ff58d869ff233c1d92d87b9a69a4cbfd4a",
+    "code_change_authorized": true,
     "envelope_creation_authorized": true,
     "dispatch_authorized": true,
     "calibration_authorized": false,
     "formal_holdout_authorized": false,
     "parent_closure": false,
-    "dependency": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001_COMPLETE"
+    "dependency": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001_COMPLETE",
+    "envelope_revision": 4,
+    "envelope_path": "validation/software-factory/sf-bl005/execution-envelope-route-handler-extractor-remediation-001.json"
   },
   "metric_goal": {
     "status": "NOT_MET_DIAGNOSTIC_ONLY",
@@ -119,11 +121,11 @@
     {
       "lane_id": "route-handler-extractor-remediation",
       "execution_id": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
-      "base_commit": "c9cfe65640cf36e89db77df582b70ff0ddc951bc",
+      "base_commit": "b6ca63ff58d869ff233c1d92d87b9a69a4cbfd4a",
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "ENVELOPE_REBASE_SELECTED_FOR_DISPATCH",
+      "execution_state": "CONTROL_RECONCILED_FOR_ENVELOPE_REVISION_4",
       "integration_candidate": null
     }
   ],
