@@ -12,7 +12,7 @@
     "SF-BL-005",
     "SF-BL-006"
   ],
-  "next_action": "Run a fresh independent preflight against exact envelope revision 3 at 5c308a046c99c84d3c58fba94a626ae95d3e88e5. Implementation dispatch remains unauthorized.",
+  "next_action": "Await a separate Human decision to dispatch SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001. Envelope revision 3 producer and independent preflights passed; no implementation has run.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
@@ -40,7 +40,7 @@
   },
   "selected_next_execution": {
     "execution_id": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
-    "state": "ENVELOPE_R3_MATERIALIZED_PRODUCER_PREFLIGHT_PASS_PENDING_FRESH_INDEPENDENT_PREFLIGHT",
+    "state": "INDEPENDENT_PREFLIGHT_PASS_NOT_DISPATCHED",
     "objective": "Add statically recoverable PutMapping and DeleteMapping support to SpringRouteHandlerIndex without changing route normalization or selector behavior.",
     "selection_authority": "Human selection option 1 on 2026-09-13",
     "selection_scope": "ENVELOPE_CREATION_AND_LEDGER_RECONCILIATION_ONLY",
@@ -58,7 +58,7 @@
     "envelope_sha256": "ef3ec0c27363418de71d50ed9ff7e10fa0cda477c05171ab5ece458be32719f0",
     "producer_preflight": "PASS_REVISION_3",
     "producer_preflight_evidence": "validation/software-factory/sf-bl005/envelope-preflight-route-handler-extractor-remediation-001.json",
-    "independent_preflight": "PENDING_FRESH_AFTER_TWO_PLAN_CONFLICTS",
+    "independent_preflight": "PASS",
     "envelope_revision": 3,
     "prior_independent_preflights": {
       "count": 2,
@@ -68,6 +68,14 @@
         "p1": 2,
         "p2": 1
       }
+    },
+    "independent_preflight_reviewer": "/root/route_extractor_envelope_preflight",
+    "independent_preflight_evidence": "validation/software-factory/sf-bl005/envelope-independent-preflight-route-handler-extractor-remediation-001.json",
+    "independent_preflight_evidence_sha256": "10a827e25b9077cd3674bd3634afc13ceb222c7bb8e3691dce00709d3cae8410",
+    "independent_findings": {
+      "p0": 0,
+      "p1": 0,
+      "p2": 0
     }
   },
   "metric_goal": {
@@ -143,7 +151,7 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "ENVELOPE_R3_MATERIALIZED_PRODUCER_PREFLIGHT_PASS_PENDING_FRESH_INDEPENDENT_PREFLIGHT",
+      "execution_state": "INDEPENDENT_PREFLIGHT_PASS_NOT_DISPATCHED",
       "integration_candidate": null
     }
   ],
