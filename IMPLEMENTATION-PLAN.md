@@ -11,9 +11,13 @@ was independently reviewed at fixed candidate
 selected implementation of the bounded CSI validation capability. Authority
 is limited to the owned Java source/tests, four canonical recommendation
 records, validation evidence, and active-control synchronization declared by
-the exact execution envelope. Runtime service deployment, agent or automation
-changes, automatic remediation, Product truth publication, implementation of
-the four recommendations, and parent closure remain unauthorized.
+the exact execution envelope. Candidate
+`775b7728934df6ec00f6cf097e0fc47f75a5f726` passed two-axis independent review
+and Java 17/Python combined verification. Human Authority's instruction to
+complete CSI supplies terminal closure for this bounded capability. Runtime
+service deployment, agent or automation changes, automatic remediation,
+Product truth publication, and implementation of the four recommendations
+remain unauthorized.
 
 ## Selected implementation
 
@@ -29,15 +33,20 @@ The implementation provides one packaged Java 17 validation path that:
 5. fails closed on unknown tags/dispositions, missing provenance, moving or
    abbreviated revisions, duplicate evidence identities, invalid KPI states,
    and authority-bearing fields;
-6. exposes the behavior through `csi-validate --input <path> --report <path>`
-   with deterministic report bytes and exclusive report creation; and
+6. exposes the behavior through
+   `csi-validate --mode CREATE|UPDATE --input <path> [--prior <path>]`
+   `[--expected-base <sha>] [--expected-candidate <sha>] --report <path>` with
+   deterministic report bytes, mandatory prior state for updates, and
+   exclusive report creation; and
 7. proves the contract with golden duplicate-key vectors, negative cases, CLI
    tests, and four canonical records for `CSI-REC-001` through `CSI-REC-004`.
 
-Acceptance requires focused tests, full Maven package, Python regression,
-JSON/digest validation, independent fixed-candidate review, and a final Human
-closure decision. Missing legacy provenance remains explicit and may make a
-record `BLOCKED`; it must not be invented to force acceptance.
+Acceptance completed with focused tests, Java 17 full Maven package, Python
+regression, JSON/digest validation, independent fixed-candidate review, and
+Human closure. Evidence:
+`validation/software-factory/sf-bl007/implementation-001-evidence.json`.
+Missing legacy provenance remains explicit and makes a record `BLOCKED`; it
+was not invented to force acceptance.
 
 Objective: define the smallest reusable Software Factory design that converts
 verified delivery findings into evidence-bound improvement recommendations and
@@ -118,17 +127,17 @@ A future design artifact, if separately authorized, must specify:
   recommendations that imply unauthorized scope expansion.
 - Receives fresh independent review before any implementation proposal.
 
-## Explicit exclusions
+## Implementation outcome and exclusions
 
-This selection does not authorize creation or execution of an implementation
-envelope; source, test, build, dependency, agent, Skill, automation, permission,
-or infrastructure changes; remediation of the two code findings; route coverage
-analysis dispatch; calibration, scoring, formal holdout, Product truth,
-publication, deployment, cleanup, or parent closure.
+The bounded envelope, Java source/tests, canonical records, review, evidence,
+and control synchronization are complete. The execution did not remediate the
+two code findings; dispatch route-coverage analysis; run calibration, scoring,
+or formal holdout; change dependencies, agents, Skills, automations,
+permissions, or infrastructure; publish Product truth; or deploy a service.
 
-Any future design-artifact production, implementation, or rollout requires a
-separate Human selection and exact envelope. Aggregate commands remain below
-8 GB memory and avoid heavy JVM work.
+Any future CSI implementation change or recommendation remediation requires a
+new Human selection and exact envelope. Aggregate commands remain below 8 GB
+memory and avoid concurrent heavy JVM work.
 
 ## Preserved execution ledger
 

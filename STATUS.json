@@ -1,5 +1,5 @@
 {
-  "current_focus": "SF-BL-007",
+  "current_focus": "SF-BL-005",
   "phase": "software_factory_vnext",
   "framework_spec": "FRAMEWORK-SPEC.md",
   "backlog": "BACKLOG.md",
@@ -10,18 +10,17 @@
   "active_implementation_plan": "IMPLEMENTATION-PLAN.md#current-selection",
   "selected_backlog_items": [
     "SF-BL-005",
-    "SF-BL-006",
-    "SF-BL-007"
+    "SF-BL-006"
   ],
-  "next_action": "Materialize the exact SF-BL-007 implementation envelope, then execute the bounded Java validator/CLI slice with TDD and independent review.",
+  "next_action": "CSI is complete. No CSI execution is active; any recommendation remediation requires a new Human selection and exact envelope. SF-BL-005 route analysis remains independently preflighted but not dispatched.",
   "blocking_dependency": null,
   "latest_completed_execution": {
-    "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
-    "reviewed_candidate": "476cf3fdd888a5e45d888fa17c2ee65fd97c9f82",
-    "durable_replay_commit": "0aa05658bdd4415936bf0fd31c10ea3a32f6d656",
-    "review": "INDEPENDENT_REVIEW_PASS",
-    "verification": "TARGETED_JAVA_70_70_FULL_JAVA_1468_1468_PYTEST_63_63_REPEAT_BYTES_IDENTICAL",
-    "state": "DIAGNOSTIC_COMPLETE_REVIEW_PASS_FDP_RECONCILED"
+    "execution_id": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-IMPLEMENTATION-001",
+    "reviewed_candidate": "775b7728934df6ec00f6cf097e0fc47f75a5f726",
+    "review": "TWO_AXIS_INDEPENDENT_REVIEW_PASS",
+    "verification": "JAVA_17_PACKAGE_1491_1491_PYTEST_63_63_CLI_GOLDEN_REPORTS",
+    "evidence": "validation/software-factory/sf-bl007/implementation-001-evidence.json",
+    "state": "VERIFIED_HUMAN_CLOSED"
   },
   "latest_selector_diagnostic": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
@@ -120,8 +119,7 @@
   },
   "active_backlog_items": [
     "SF-BL-005",
-    "SF-BL-006",
-    "SF-BL-007"
+    "SF-BL-006"
   ],
   "active_executions": [
     {
@@ -223,16 +221,6 @@
       ],
       "execution_state": "PARKED_AFTER_STAGE_2_FAIL",
       "integration_candidate": "8e835b427bd5f6b242b38d00e714d902298366c1"
-    },
-    {
-      "lane_id": "continuous-system-improvement-implementation",
-      "execution_id": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-IMPLEMENTATION-001",
-      "base_commit": "6a0e266fa65f0496bdbd1f52f9a96bdd59a26836",
-      "selected_backlog_items": [
-        "SF-BL-007"
-      ],
-      "execution_state": "HUMAN_SELECTED_PENDING_EXACT_ENVELOPE",
-      "integration_candidate": null
     }
   ],
   "mapping_improvement_intake": {
@@ -307,7 +295,7 @@
   },
   "system_improvement_intake": {
     "backlog_id": "SF-BL-007",
-    "state": "HUMAN_SELECTED_FOR_IMPLEMENTATION_PENDING_ENVELOPE",
+    "state": "VERIFIED_HUMAN_CLOSED",
     "recommendation_count": 4,
     "tags": {
       "CODE": 2,
@@ -318,22 +306,18 @@
     },
     "effectiveness": "INSUFFICIENT_SAMPLE",
     "implementation_plan_exists": true,
-    "execution_envelope_exists": false,
+    "execution_envelope_exists": true,
     "dispatch_authorized": false,
     "automatic_product_truth_publication": false,
     "design_artifact": "docs/superpowers/specs/2026-09-13-continuous-system-improvement-design.md",
     "review_evidence": "validation/software-factory/sf-bl007/design-review-001.md",
     "reviewed_candidate": "f755640a8f7bef006b42f1dad792e723d21eb195",
-    "implementation_selected": true
+    "implementation_selected": false,
+    "execution_envelope": "validation/software-factory/sf-bl007/execution-envelope-implementation-001.json",
+    "implementation_candidate": "775b7728934df6ec00f6cf097e0fc47f75a5f726",
+    "implementation_review": "validation/software-factory/sf-bl007/implementation-001-review.md",
+    "implementation_evidence": "validation/software-factory/sf-bl007/implementation-001-evidence.json",
+    "parent_closure": true
   },
-  "proposed_next_execution": {
-    "execution_id": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-IMPLEMENTATION-001",
-    "state": "HUMAN_SELECTED_PENDING_EXACT_ENVELOPE",
-    "allowed_output": "BOUNDED_CSI_VALIDATOR_CLI_RECORDS_TESTS_EVIDENCE_CONTROLS",
-    "implementation_envelope_authorized": true,
-    "dispatch_authorized": false,
-    "code_change_authorized": true,
-    "agent_or_automation_change_authorized": false,
-    "parent_closure": false
-  }
+  "proposed_next_execution": null
 }
