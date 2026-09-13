@@ -1,0 +1,36 @@
+$ JAVA17 targeted tests
+SELECTOR-DIAGNOSTIC EXEC-TEST-001 scenarios=1 evaluated=2 accepted=1 SEALED
+SELECTOR-DIAGNOSTIC EXEC-TEST-001 scenarios=1 evaluated=2 accepted=1 SEALED
+SELECTOR-DIAGNOSTIC EXEC-TEST-001 scenarios=1 evaluated=2 accepted=1 SEALED
+SELECTOR-DIAGNOSTIC EXEC-TEST-001 scenarios=1 evaluated=0 accepted=0 SEALED
+$ JAVA17 full package
+SELECTOR-DIAGNOSTIC EXEC-TEST-001 scenarios=1 evaluated=2 accepted=1 SEALED
+SELECTOR-DIAGNOSTIC EXEC-TEST-001 scenarios=1 evaluated=2 accepted=1 SEALED
+SELECTOR-DIAGNOSTIC EXEC-TEST-001 scenarios=1 evaluated=2 accepted=1 SEALED
+SELECTOR-DIAGNOSTIC EXEC-TEST-001 scenarios=1 evaluated=0 accepted=0 SEALED
+./validation/pkb001/scenario-forward/slice-f-scenario-mapping-proposal-001.json 8c940fb94d3c86c80ff2c9555eb5d77b130f6d0d944593424fb7f2ae563535f2
+23:05:55.709 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.featuredeliveryintelligence.fdi.application.FdiApplicationTests]: FdiApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+23:05:56.011 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.featuredeliveryintelligence.fdi.application.FdiApplication for test class com.featuredeliveryintelligence.fdi.application.FdiApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.1)
+
+2026-09-13T23:05:56.520+08:00  INFO 10707 --- [           main] c.f.fdi.application.FdiApplicationTests  : Starting FdiApplicationTests using Java 17.0.20.1 with PID 10707 (started by herman_mbp2023 in /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.worktrees/sf-bl005-realworld-selector-diagnostic-003)
+2026-09-13T23:05:56.524+08:00  INFO 10707 --- [           main] c.f.fdi.application.FdiApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2026-09-13T23:05:58.354+08:00  INFO 10707 --- [           main] c.f.fdi.application.FdiApplicationTests  : Started FdiApplicationTests in 2.163 seconds (process running for 70.704)
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-09-13T23:06:43.236+08:00 ERROR 10707 --- [           main] com.networknt.schema.PatternValidator    : Failed to compile pattern '[': Unclosed character class near index 0
+[
+^
+2026-09-13T23:06:43.275+08:00  WARN 10707 --- [           main] com.networknt.schema.JsonMetaSchema      : Could not load validator pattern
+$ python3 -m pytest -q
+...............................................................          [100%]
+63 passed in 8.21s
+$ git diff --check
+verification PASS
