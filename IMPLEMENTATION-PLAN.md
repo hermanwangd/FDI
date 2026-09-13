@@ -10,6 +10,8 @@ Formal holdout policy preparation may proceed without selecting data. `validatio
 
 H2 preparation now has a 473-entry exact committed-evidence manifest and a conservative negative exposure ledger, both independently reviewed with P0/P1/P2 zero. Global exposure remains incomplete until Human disclosure attestation covers actors, time ranges, workspaces, sessions, repositories, source/tests, scenarios, truth, and prompts. The prepared ledger is not sealed and cannot support a holdout candidate decision.
 
+H1 audit proves that the existing `SFBL005-METHOD-PAIR-001` calibration scorer cannot be relabeled for formal holdout use. Its identity, duplicate, evidence-disposition, scenario-validity, chain, coverage, multi-repository, confidence-interval, and independent-recomputation semantics differ from the frozen protocol. Gap analysis `validation/software-factory/sf-bl005/formal-holdout-scorer-gap-001.json` passed independent review with P0/P1/P2 zero. H1 remains unbound; a separately authorized versioned scorer envelope is required and the legacy scorer stays immutable.
+
 
 Human Authority selected a four-step sequential SF-BL-005 experiment on
 2026-09-13. The order is mandatory because the first RealWorld diagnostic is

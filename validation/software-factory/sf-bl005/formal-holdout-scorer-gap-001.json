@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "SF-FORMAL-HOLDOUT-SCORER-GAP-001",
+  "analysisId": "SF-BL-005-FORMAL-HOLDOUT-SCORER-GAP-001",
+  "controlCommit": "ae91ae29d65dcd977fc9bbec95442cdadb522a8a",
+  "formalProtocol": {
+    "path": "validation/software-factory/sf-bl005/formal-holdout-protocol-001.json",
+    "sha256": "2ab508f80fa9585edc540275bc2e520d0591cdbe2912749c3010fac87f7e8a42",
+    "h1State": "UNBOUND"
+  },
+  "currentScorer": {
+    "contract": "SFBL005-METHOD-PAIR-001",
+    "classification": "CALIBRATION_SCORER_NOT_FORMAL_HOLDOUT_CONFORMANT",
+    "sourceFiles": {
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairData.java": "52145068432a13e264f3025cb6f35df7bf55c50c6ec9b3233da1c4f3c6431233",
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairScorer.java": "88c07dcbfa56eb822648846358d54ac61e46acf9af26e60fca298e8e679bd031",
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairValidation.java": "f83800c607af327999f16aea52e73ebd4f2811e0d11e7ff1a926cd2e0c77a180",
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodpair/MethodPairComparisonRunner.java": "f27d3d54a96b24e2d8692bcfe5385acb40b86228e2916f4acaf70ab41d014e49",
+      "src/main/java/com/featuredeliveryintelligence/fdi/application/MethodPairCompareCli.java": "1d9077db15c78123eb466d7bf7761f11512cb5e208360c1de05d627254af19e6"
+    },
+    "historicalEvidence": {
+      "acceptedIdentityFixCommit": "e7bcfad400d4618b3e22570cdb7c2948f2f74a77",
+      "candidateStageEvaluatorCommit": "4b52e4366f4302bd26c1b454c76cf8831ecc3006",
+      "retainedJarSha256": "33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab",
+      "boundary": "Historical calibration review and one retained whole-JAR digest do not prove formal H1 source-to-binary reproducibility or contract conformance."
+    }
+  },
+  "confirmedCompatibleMechanics": [
+    "digest-bound manifest and artifact ingress",
+    "basic unique-pair TP, FP, and FN arithmetic",
+    "scenario-scoped method identity and overload distinction within the legacy signature string",
+    "abstention count with unmatched expected pairs retained as FN",
+    "null Double results for zero denominators",
+    "directed edge proof lookup and missing-chain diagnostic",
+    "output collision and path validation",
+    "Java CLI coverage for the calibration contract"
+  ],
+  "blockingGaps": [
+    {
+      "id": "H1-GAP-001-HOLDOUT-INGRESS",
+      "severity": "H1_BLOCKER",
+      "observed": "Legacy validation permits only SYNTHETIC or CALIBRATION and rejects HOLDOUT.",
+      "required": "A separately versioned formal-holdout manifest, ingress, validation, report, and CLI contract."
+    },
+    {
+      "id": "H1-GAP-002-CANONICAL-PAIR",
+      "severity": "H1_BLOCKER",
+      "observed": "Legacy pair identity is scenarioId plus Method(sourceRevision,path,signature).",
+      "required": "Canonical UTF-8 JSON and SHA-256 identity using repositorySnapshotSha256, scenarioId, fullyQualifiedDeclaringType, methodName, ordered parameterTypes, and returnType; path excluded; constructor, array, overload, primitive, and generic-erasure rules enforced."
+    },
+    {
+      "id": "H1-GAP-003-EXHAUSTIVE-CLAIMS",
+      "severity": "H1_BLOCKER",
+      "observed": "Legacy scorer collapses proposals into a HashSet and reports additional duplicates separately rather than counting every duplicate occurrence as FP.",
+      "required": "Every proposal occurrence classified exactly once as TP or FP; every gold pair classified exactly once as matched or FN; each duplicate occurrence after first credit is FP."
+    },
+    {
+      "id": "H1-GAP-004-EVIDENCE-DISPOSITION",
+      "severity": "H1_BLOCKER",
+      "observed": "Claim/proof records do not encode or validate entity, action, assertion role, polarity, or business-condition disposition.",
+      "required": "Frozen proof disposition for entity, action, role, assertion polarity, condition, ambiguity, and evidence sufficiency before a canonical pair can receive TP credit; an exact method with any wrong disposition is FP and leaves the necessary gold pair FN."
+    },
+    {
+      "id": "H1-GAP-005-CHAIN-COMPLETENESS",
+      "severity": "H1_BLOCKER",
+      "observed": "Truth validation only checks declared chain members and edges; it does not require the chain to cover every necessary pair or exactly every adjacent ordered edge.",
+      "required": "Truth marks chain-required scenarios, binds an ordered array of canonical pair digests, derives exactly N-1 adjacent edges, rejects omitted, extra, reversed, and non-adjacent edges, and computes chain coverage after pair classification."
+    },
+    {
+      "id": "H1-GAP-006-COVERAGE-NULLS",
+      "severity": "H1_BLOCKER",
+      "observed": "Scenario coverage counts scenarios with supported TPs; chain null has no machine-readable reason and malformed mandatory truth can become an unavailable metric.",
+      "required": "Scenario coverage counts any valid proposed pair, mandatory post-dispatch truth/schema failures are INVALID, and every unavailable denominator carries a reason code."
+    },
+    {
+      "id": "H1-GAP-007-MULTI-REPOSITORY-DECISION",
+      "severity": "H1_BLOCKER",
+      "observed": "One legacy binding and score object cannot partition repositories or enforce per-repository thresholds.",
+      "required": "Per-repository counts and metrics, micro and equal-weight macro aggregate, Wilson intervals, strict unrounded precision greater than 0.80 and recall greater than 0.60 for every repository, and non-masking decision logic."
+    },
+    {
+      "id": "H1-GAP-008-INDEPENDENT-RECOMPUTATION",
+      "severity": "H1_BLOCKER",
+      "observed": "No independently implemented recomputation binary, SHA-256 receipt, or formal conformance-vector bundle exists.",
+      "required": "Two independently bound implementations agree byte-for-byte on raw classifications, counts, metrics, null reasons, coverage, confidence intervals, and decision for every vector."
+    },
+    {
+      "id": "H1-GAP-009-SCENARIO-VALIDITY",
+      "severity": "H1_BLOCKER",
+      "observed": "Legacy Truth identifies scenarios only by strings plus expected pairs and optional chains; it does not bind each scenario to repository snapshot, test/source provenance, coverage stratum, or sealed truth disposition.",
+      "required": "Every sealed scenario has a unique canonical ID, repositorySnapshotSha256, exact test/source provenance digests, one frozen coverage stratum, and sealed truth disposition. Duplicate identity, wrong snapshot, missing provenance/stratum/disposition, malformed schema, or digest mismatch makes the dispatched execution INVALID."
+    }
+  ],
+  "requiredConformanceVectors": [
+    "same canonical method with different source path remains the same pair",
+    "same scenario and signature in different repository snapshots remains distinct",
+    "overload parameter order, arrays, primitives, generic erasure, constructors, and return types",
+    "duplicate first valid claim plus one or more duplicate FPs",
+    "same canonical method with wrong entity, action, role, polarity, condition, ambiguity, or insufficient evidence becomes FP and leaves the necessary gold pair FN",
+    "scenario validity: duplicate canonical ID, wrong repository snapshot, missing test/source provenance, missing coverage stratum, missing truth disposition, malformed schema, and digest mismatch are INVALID",
+    "empty proposal with nonempty gold and zero proposal denominator",
+    "valid proposed FP still contributes scenario coverage",
+    "unsupported and UNRESOLVED abstentions retain necessary FNs",
+    "complete ordered chain and omitted, extra, reversed, and non-adjacent edges",
+    "chain-required and explicitly chain-not-applicable scenarios",
+    "per-repository threshold pass, strict-boundary failure, unavailable metric, and aggregate non-masking",
+    "Wilson interval reference values and independent byte-identical recomputation"
+  ],
+  "recommendedImplementationBoundary": {
+    "strategy": "ADD_VERSIONED_FORMAL_SCORER_PRESERVE_LEGACY_CALIBRATION_CONTRACT",
+    "reason": "Changing SFBL005-METHOD-PAIR-001 in place would reinterpret immutable calibration evidence and risk breaking BOXING/RealWorld replay compatibility.",
+    "minimumDeliverables": [
+      "new formal-holdout data/schema/validation/scorer/report package",
+      "new explicit CLI command",
+      "reference conformance vectors and expected canonical bytes/digests",
+      "independent recomputation implementation",
+      "source-to-binary reproducibility receipt",
+      "Java 17 targeted/full and Python regressions",
+      "exact-candidate independent review"
+    ]
+  },
+  "authority": {
+    "analysisAuthorized": true,
+    "implementationAuthorized": false,
+    "dispatchAuthorized": false,
+    "formalHoldoutAuthorized": false,
+    "legacyScorerMutationAuthorized": false
+  },
+  "result": "H1_UNBOUND_IMPLEMENTATION_ENVELOPE_REQUIRED"
+}

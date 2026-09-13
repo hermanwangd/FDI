@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "SF-INDEPENDENT-FORMAL-SCORER-GAP-REVIEW-001",
+  "analysisId": "SF-BL-005-FORMAL-HOLDOUT-SCORER-GAP-001",
+  "analysisSha256": "b0d55388c056ac47997ffdd68519bd235a42ab67b847c6a1f6e9894bddc11911",
+  "controlCommit": "ae91ae29d65dcd977fc9bbec95442cdadb522a8a",
+  "reviewer": "/root/formal_holdout_protocol_review2",
+  "result": "PASS",
+  "findings": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 0
+  },
+  "priorReview": {
+    "result": "FAIL",
+    "p0": 0,
+    "p1": 2,
+    "p2": 0,
+    "disposition": "REMEDIATED"
+  },
+  "verified": [
+    "formal protocol and all five current Java source SHA-256 values match",
+    "historical commits and retained calibration JAR boundary are accurate",
+    "nine formal scorer blockers are complete against the current source and protocol",
+    "entity, action, role, polarity, condition, ambiguity, and evidence sufficiency are all required before TP credit",
+    "formal scenario validity binds canonical identity, repository snapshot, source/test provenance, coverage stratum, truth disposition, and INVALID behavior",
+    "a new versioned formal scorer preserves immutable legacy calibration semantics",
+    "required conformance vectors and source-to-binary plus independent-recomputation receipts are explicit"
+  ],
+  "boundary": "Gap analysis only. H1 remains UNBOUND; no implementation, dispatch, scorer seal, formal holdout, or legacy scorer mutation is authorized."
+}
