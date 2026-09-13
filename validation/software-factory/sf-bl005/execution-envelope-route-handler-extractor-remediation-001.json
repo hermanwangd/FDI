@@ -4,11 +4,13 @@
     "class-level RequestMapping composes with PutMapping and DeleteMapping having no path or one statically recoverable literal value/path",
     "non-literal mapping values remain unindexed rather than guessed",
     "RequestMapping explicit/unconstrained methods, normalization, ambiguity, provenance, ordering and handler schemas remain unchanged",
-    "the exact frozen RealWorld production source yields 19 handlers, including the five source-backed PUT/DELETE handlers in the coverage matrix",
-    "all 11 frozen HTTP observations resolve by exact method and structural route against that 19-handler index; this is diagnostic verification without selector/scorer/evaluator access",
+    "a mandatory non-skippable test named verifyFrozenRealWorldPutDeleteCoverage builds the exact frozen RealWorld production source and yields 19 handlers, including the five source-backed PUT/DELETE handlers in the coverage matrix",
+    "the same mandatory test consumes the directly bound 11-observation file, resolves all 11 by exact method and structural route against that 19-handler index, and writes canonical machine-readable verification output with source/input/output digests; this is diagnostic verification without selector/scorer/evaluator access",
     "focused tests and the full Java 17 package pass with zero failures, errors and skips",
     "independent review of the exact candidate has no unresolved P0-P2 finding",
-    "delivery evidence binds exact base, candidate, changed paths, commands, results, reviews, artifact digests, elapsed time and available KPI values; missing KPI values remain UNKNOWN"
+    "delivery evidence binds exact base, candidate, changed paths, commands, results, reviews, artifact digests, elapsed time and available KPI values; missing KPI values remain UNKNOWN",
+    "the mandatory verifier rejects any observations SHA/count mismatch and any RealWorld HEAD/tree/subtree/93-file mismatch before asserting handler or resolution results",
+    "canonical verification compares the exact output bytes with recursively sorted two-space JSON plus one trailing newline"
   ],
   "backlogItems": [
     "SF-BL-005"
@@ -20,8 +22,14 @@
     "route-handler-index-tests": [
       "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/route/SpringRouteHandlerIndexTests.java"
     ],
-    "route-handler-remediation-evidence": [
-      "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/**"
+    "route-handler-remediation-integration-evidence": [
+      "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/integration/**"
+    ],
+    "route-handler-remediation-producer-evidence": [
+      "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/**"
+    ],
+    "route-handler-remediation-review-evidence": [
+      "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/review/**"
     ]
   },
   "classification": "BOUNDED_T3_IMPLEMENTATION_REMEDIATION",
@@ -46,7 +54,7 @@
       "successorRef": "SF-BL-005-RHE-001-W3"
     }
   ],
-  "envelopeRevision": 1,
+  "envelopeRevision": 3,
   "excluded": [
     "all five active control files and AGENTS.md",
     "all source and test paths outside the two exact Java files",
@@ -65,10 +73,24 @@
     "testOrImplementationFailureInsideEnvelope": "FAILED_EXECUTION_REMEDIATE_WITHIN_EXACT_WORKITEM"
   },
   "frozenInputs": {
+    "handlerIndexBaseline": {
+      "access": "READ_ONLY_EXACT_REVISION",
+      "count": 14,
+      "path": "validation/software-factory/sf-bl005/cross-repo-realworld-001/generation-realworld-002/seed/validation/software-factory/sf-bl002/route-handler-index-003.json",
+      "revision": "5f07244f3c201563949b9f44992c6e1113117146",
+      "sha256": "bacddebfeb65b663f784efbf8f293092e05ed6f95b2a0c4135893377cacf2f0b"
+    },
     "implementation": {
       "blob": "39d8d9d823744700c2a74b28615f696838ca09ea",
       "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/route/SpringRouteHandlerIndex.java",
       "sha256": "77e8453ff365c18f2e28b552a7b0f2f7c500cb280b1f5cfe9623aa67176ff465"
+    },
+    "observations": {
+      "access": "READ_ONLY_EXACT_REVISION",
+      "count": 11,
+      "path": "validation/software-factory/sf-bl005/cross-repo-realworld-001/generation-realworld-002/seed/validation/software-factory/sf-bl002/http-behavior-observations-003.json",
+      "revision": "5f07244f3c201563949b9f44992c6e1113117146",
+      "sha256": "71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd"
     },
     "realWorldSource": {
       "access": "READ_ONLY",
@@ -99,7 +121,8 @@
     "do not alter route matching, placeholder, ambiguity or fallback behavior",
     "do not change frozen route-analysis outputs",
     "do not access evaluator truth, gold, proofs, diagnoses or scorer",
-    "do not claim RealWorld metric improvement from handler-index verification"
+    "do not claim RealWorld metric improvement from handler-index verification",
+    "do not skip, assume, or prose-assert the frozen RealWorld verifier; missing properties, inputs, output, or any expected handler/resolution must fail the test"
   ],
   "originatingEvidence": {
     "analysisCommit": "8b758f79e677de0fce6d39afbe4b32aae228e41d",
@@ -124,11 +147,14 @@
   ],
   "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
   "requiredOutputs": {
-    "commandLog": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/command-log.txt",
-    "deliveryEvidence": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/delivery-evidence.json",
-    "digestManifest": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/digests.sha256",
+    "deliveryEvidence": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/integration/delivery-evidence.json",
     "implementation": "updated exact production path only",
-    "review": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/independent-review.md",
+    "integrationCommandLog": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/integration/command-log.txt",
+    "integrationDigestManifest": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/integration/digests.sha256",
+    "producerCommandLog": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/command-log.txt",
+    "realWorldVerification": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json",
+    "review": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/review/independent-review.md",
+    "reviewDigest": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/review/digests.sha256",
     "tests": "updated exact test path only"
   },
   "requirementIds": [
@@ -145,12 +171,48 @@
     "maximumConcurrentAnalysisProcesses": 2,
     "oneHeavyJvmAtATime": true
   },
+  "reviewRemediation": {
+    "findings": [
+      {
+        "priority": "P1",
+        "resolution": "Directly bind the exact 11-observation source revision, path, SHA-256 and count; also bind the 14-handler baseline."
+      },
+      {
+        "priority": "P1",
+        "resolution": "Require a named non-skippable Java 17 RealWorld verifier test and canonical machine-readable output."
+      },
+      {
+        "priority": "P2",
+        "resolution": "Split producer, reviewer and integrator evidence ChangeSurfaces and forbid W3 review-evidence mutation."
+      },
+      {
+        "priority": "P1",
+        "resolution": "Pass the same three mandatory verifier properties to every Maven command that can execute the non-skippable test."
+      },
+      {
+        "priority": "P2",
+        "resolution": "Verify observation SHA/count before Maven and require byte-identical canonical JSON round-trip; the test also binds RealWorld HEAD/tree/subtree/file count."
+      },
+      {
+        "priority": "P1",
+        "resolution": "After revision 3 integration, reconcile active STATUS to the new exact envelope commit/SHA before fresh independent preflight."
+      }
+    ],
+    "freshIndependentPreflightRequired": true,
+    "priorReviewer": "/root/route_extractor_envelope_preflight",
+    "priorVerdict": "TWO_CONSECUTIVE_FAIL_PLAN_CONFLICT"
+  },
   "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
   "sourceTree": "63ef6a44f4ab97df26e422a172f0134b1e29cf6a",
   "targetBranch": "codex/sf-bl005-route-handler-extractor-remediation-001",
   "verificationCommands": [
-    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dtest=SpringRouteHandlerIndexTests test",
-    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true package",
+    "git show 5f07244f3c201563949b9f44992c6e1113117146:validation/software-factory/sf-bl005/cross-repo-realworld-001/generation-realworld-002/seed/validation/software-factory/sf-bl002/http-behavior-observations-003.json > validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json",
+    "test \"$(shasum -a 256 validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json | awk '{print $1}')\" = 71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd",
+    "test \"$(python3 -c 'import json; print(len(json.load(open(\"validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json\"))[\"observations\"]))')\" = 11",
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dsfbl005.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.observations.path=validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json -Dsfbl005.verification.output=validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json -Dtest=SpringRouteHandlerIndexTests test",
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dsfbl005.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.observations.path=validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json -Dsfbl005.verification.output=validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json -Dtest=SpringRouteHandlerIndexTests#verifyFrozenRealWorldPutDeleteCoverage test",
+    "python3 -c 'import json,pathlib; p=pathlib.Path(\"validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json\"); d=json.loads(p.read_text(encoding=\"utf-8\")); assert p.read_bytes() == (json.dumps(d, sort_keys=True, indent=2) + \"\\n\").encode(\"utf-8\")'",
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dsfbl005.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.observations.path=validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json -Dsfbl005.verification.output=validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json package",
     "python3 -m pytest -q",
     "git diff --check"
   ],
@@ -158,7 +220,8 @@
     {
       "changeClaims": [
         "route-handler-index-production",
-        "route-handler-index-tests"
+        "route-handler-index-tests",
+        "route-handler-remediation-producer-evidence"
       ],
       "constraints": [
         "TDD_CHARACTERIZATION_FIRST",
@@ -173,22 +236,27 @@
       "inputRefs": [
         "frozenInputs.implementation",
         "frozenInputs.tests",
+        "frozenInputs.observations",
+        "frozenInputs.handlerIndexBaseline",
+        "frozenInputs.realWorldSource",
         "originatingEvidence.coverageMatrix"
       ],
       "objective": "Add fixed HTTP method extraction for method-level PutMapping and DeleteMapping and focused regression coverage.",
       "outputRequirementRefs": [
         "RHE-OUT-001",
-        "RHE-OUT-002"
+        "RHE-OUT-002",
+        "RHE-OUT-REALWORLD-VERIFIER"
       ],
       "workItemRef": "SF-BL-005-RHE-001-W1"
     },
     {
       "changeClaims": [
-        "route-handler-remediation-evidence"
+        "route-handler-remediation-review-evidence"
       ],
       "constraints": [
         "REVIEWER_SEPARATE_FROM_PRODUCER_AND_INTEGRATOR",
-        "NO_SOURCE_OR_TEST_MUTATION"
+        "NO_SOURCE_OR_TEST_MUTATION",
+        "REVIEW_EVIDENCE_IMMUTABLE_TO_W3"
       ],
       "evidenceRequirementRefs": [
         "RHE-EVID-003"
@@ -204,12 +272,13 @@
     },
     {
       "changeClaims": [
-        "route-handler-remediation-evidence"
+        "route-handler-remediation-integration-evidence"
       ],
       "constraints": [
         "EXACT_REVIEWED_CANDIDATE",
         "ONE_HEAVY_JVM_AT_A_TIME",
-        "NO_ACTIVE_CONTROL_MUTATION"
+        "NO_ACTIVE_CONTROL_MUTATION",
+        "MUST_NOT_MUTATE_REVIEW_EVIDENCE"
       ],
       "evidenceRequirementRefs": [
         "RHE-EVID-004"
