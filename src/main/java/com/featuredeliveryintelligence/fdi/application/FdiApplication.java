@@ -6,6 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages = "com.featuredeliveryintelligence.fdi")
 public class FdiApplication {
     public static void main(String[] args) {
+        if (CsiValidateCli.handles(args)) {
+            System.exit(CsiValidateCli.run(args, System.out, System.err));
+        }
         if (MethodPairCompareCli.handles(args)) {
             System.exit(MethodPairCompareCli.run(args, System.out, System.err));
         }

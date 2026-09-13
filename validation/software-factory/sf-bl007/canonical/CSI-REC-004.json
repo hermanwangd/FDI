@@ -1,0 +1,36 @@
+{
+  "recommendation_id": "CSI-REC-004",
+  "disposition": "RECOMMENDED_NOT_SELECTED",
+  "tag": "DELIVERY",
+  "origin_evidence": [
+    {
+      "identity": "control-revisions-a105eb7-1684f63-42864e2-12ea59e-7eee380",
+      "origin_type": "DELIVERY",
+      "durable_ref": null
+    }
+  ],
+  "candidate_revision": "N/A: finding concerns competing active-control revisions",
+  "execution_identity": "N/A: finding concerns FDP reconciliation",
+  "verdict_identity": "N/A: observed control revisions without a separate verdict",
+  "affected_requirement": "AUTH-003,EXEC-001",
+  "insufficiency": "Competing FDP flows wrote contradictory singleton current-selection controls.",
+  "proposed_control": "Require one serialized FDP reconciliation owner and park non-current writers before another current-selection write.",
+  "affected_kpis": [
+    {
+      "metric": "unplanned_human_intervention",
+      "status": "OBSERVED",
+      "value": 1,
+      "numerator": 1,
+      "denominator": 1,
+      "sample_count": 1,
+      "window_start": "2026-09-12T00:00:00Z",
+      "window_end": "2026-09-13T00:00:00Z",
+      "category": "DELIVERY",
+      "size_band": "N/A",
+      "measurement_revision": "6a0e266fa65f0496bdbd1f52f9a96bdd59a26836",
+      "source_evidence": "BACKLOG.md#csi-001-recommendation-intake-for-sf-bl-007",
+      "baseline_identity": null
+    }
+  ],
+  "revision_route": "SF-BL-007"
+}

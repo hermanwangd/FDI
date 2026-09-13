@@ -1,0 +1,20 @@
+{
+  "recommendation_id": "CSI-REC-001",
+  "disposition": "RECOMMENDED_NOT_SELECTED",
+  "tag": "CODE",
+  "origin_evidence": [
+    {
+      "identity": "01a09a1e-11cb-7da1-879d-3f437b460622",
+      "origin_type": "INDEPENDENT_REVIEW",
+      "durable_ref": "provider:codex-run/01a09a1e-11cb-7da1-879d-3f437b460622"
+    }
+  ],
+  "candidate_revision": "8e835b427bd5f6b242b38d00e714d902298366c1",
+  "execution_identity": "N/A: finding arose in independent review",
+  "verdict_identity": "01a09a1e-11cb-7da1-879d-3f437b460622:FAIL",
+  "affected_requirement": "PK-004,EVID-001",
+  "insufficiency": "Local exact match returns before the ambiguity guard, allowing an unsafe resolution.",
+  "proposed_control": "Add a fail-closed characterization and preserve ambiguity checks ahead of successful return.",
+  "affected_kpis": [],
+  "revision_route": "SF-BL-005:T3"
+}
