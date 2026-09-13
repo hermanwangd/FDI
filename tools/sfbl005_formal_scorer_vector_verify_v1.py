@@ -368,8 +368,12 @@ def _validate_repository(given: dict[str, Any], oracle: dict[str, Any]) -> None:
         _fixed(output["recall"], "repository recall")
         if output["precision"] is None and output.get("precisionReason") != "NO_PROPOSED_PAIRS":
             raise VerificationError("null precision requires NO_PROPOSED_PAIRS reason")
+        if output["precision"] is not None and "precisionReason" in output:
+            raise VerificationError("nonnull precision must not have a reason")
         if output["recall"] is None and output.get("recallReason") != "NO_GOLD_PAIRS":
             raise VerificationError("null recall requires NO_GOLD_PAIRS reason")
+        if output["recall"] is not None and "recallReason" in output:
+            raise VerificationError("nonnull recall must not have a reason")
         strict = precision is not None and recall is not None and 5 * actual["tp"] > 4 * (actual["tp"] + actual["fp"]) and 5 * actual["tp"] > 3 * (actual["tp"] + actual["fn"])
         if output["precision"] != precision or output["recall"] != recall or output["strictPass"] is not strict:
             raise VerificationError("repository metric mismatch")

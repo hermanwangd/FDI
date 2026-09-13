@@ -153,7 +153,8 @@ def test_parity_stage_compares_four_runs_to_golden_and_writes_receipt(tmp_path):
         path.write_bytes(b"same")
         runs.append(str(path))
     receipt = tmp_path / "parity.receipt.json"
-    stage = {"id": "parity", "parity": {"runs": runs, "golden": str(golden)}, "receiptPath": str(receipt)}
+    stage = {"id": "parity", "parity": {"runs": runs, "golden": str(golden),
+             "goldenSha256": hashlib.sha256(b"same").hexdigest()}, "receiptPath": str(receipt)}
     result, ledger, _ = invoke(tmp_path, [stage])
     assert result.returncode == 0, result.stderr
     data = json.loads(receipt.read_text())
@@ -187,7 +188,8 @@ def test_parity_mismatch_is_fail_stop_with_receipt(tmp_path):
         path.write_bytes(b"different" if n == 3 else b"same")
         runs.append(str(path))
     receipt = tmp_path / "parity.receipt.json"
-    stage = {"id": "parity", "parity": {"runs": runs, "golden": str(golden)}, "receiptPath": str(receipt)}
+    stage = {"id": "parity", "parity": {"runs": runs, "golden": str(golden),
+             "goldenSha256": hashlib.sha256(b"same").hexdigest()}, "receiptPath": str(receipt)}
     result, ledger, _ = invoke(tmp_path, [stage])
     assert result.returncode != 0
     assert json.loads(receipt.read_text())["result"] == "FAIL"
@@ -270,3 +272,65 @@ def test_rejects_output_collisions_across_all_execution_artifacts_before_start(t
         assert result.returncode != 0, (index, result.stderr)
         assert not case_ledger.exists() and not case_logs.exists()
         assert not first_receipt.exists() and not second_receipt.exists()
+
+
+def test_rejects_child_created_output_symlink_without_digesting_external_bytes(tmp_path):
+    external = tmp_path.parent / f"{tmp_path.name}-external-secret"
+    external.write_bytes(b"external-secret-must-not-be-digested")
+    output = tmp_path / "claimed-output.json"
+    receipt = tmp_path / "receipt.json"
+    stage = {
+        "id": "symlink-output",
+        "argv": [sys.executable, "-c", f"import os; os.symlink({str(external)!r}, {str(output)!r})"],
+        "outputs": [str(output)],
+        "receiptPath": str(receipt),
+    }
+    result, ledger, _ = invoke(tmp_path, [stage])
+    assert result.returncode != 0
+    end = json.loads(ledger.read_text().splitlines()[-1])
+    data = json.loads(receipt.read_text())
+    assert end["result"] == "FAIL" and data["result"] == "FAIL"
+    assert end["outputDigests"] == []
+    assert hashlib.sha256(external.read_bytes()).hexdigest() not in receipt.read_text()
+
+
+def test_parity_rejects_golden_and_runs_mutated_together_after_prevalidation(tmp_path):
+    golden = tmp_path / "golden.bin"
+    golden.write_bytes(b"frozen")
+    runs = []
+    for number in range(4):
+        path = tmp_path / f"run-{number}.bin"
+        path.write_bytes(b"frozen")
+        runs.append(path)
+    mutate_code = ";".join(
+        ["import pathlib"] + [f"pathlib.Path({str(path)!r}).write_bytes(b'tampered')" for path in [golden, *runs]]
+    )
+    stages = [
+        {"id": "mutate", "argv": [sys.executable, "-c", mutate_code],
+         "receiptPath": str(tmp_path / "mutate.receipt.json")},
+        {"id": "parity", "parity": {"runs": [str(path) for path in runs], "golden": str(golden),
+                                      "goldenSha256": hashlib.sha256(b"frozen").hexdigest()},
+         "receiptPath": str(tmp_path / "parity.receipt.json")},
+    ]
+    result, ledger, _ = invoke(tmp_path, stages)
+    assert result.returncode != 0
+    rows = [json.loads(line) for line in ledger.read_text().splitlines()]
+    assert rows[-1]["stageId"] == "parity" and rows[-1]["result"] == "FAIL"
+    parity = json.loads((tmp_path / "parity.receipt.json").read_text())["parity"]
+    assert parity["expectedGoldenSha256"] == hashlib.sha256(b"frozen").hexdigest()
+    assert parity["goldenDigestMatchesFrozen"] is False
+
+
+def test_parity_requires_frozen_golden_digest_before_creating_artifacts(tmp_path):
+    golden = tmp_path / "golden.bin"
+    golden.write_bytes(b"same")
+    runs = []
+    for number in range(4):
+        path = tmp_path / f"run-{number}.bin"
+        path.write_bytes(b"same")
+        runs.append(str(path))
+    stage = {"id": "parity", "parity": {"runs": runs, "golden": str(golden)},
+             "receiptPath": str(tmp_path / "receipt.json")}
+    result, ledger, logs = invoke(tmp_path, [stage])
+    assert result.returncode != 0
+    assert not ledger.exists() and not logs.exists() and not (tmp_path / "receipt.json").exists()

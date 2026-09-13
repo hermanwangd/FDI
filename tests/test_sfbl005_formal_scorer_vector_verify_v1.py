@@ -401,3 +401,49 @@ def test_rejects_added_or_deleted_operation_oracle_key(tmp_path, mutation):
     paths = arrange(tmp_path)
     mutate_expected(paths, mutation)
     assert_semantic_rejection(paths, "OCCURRENCE_SCORING oracle fields must be exactly")
+
+
+@pytest.mark.parametrize("metric", ["precision", "recall"])
+def test_rejects_repository_reason_when_metric_is_nonnull(tmp_path, metric):
+    def given(vector_id):
+        counts = {"tp": 9, "fp": 1, "fn": 1} if vector_id == "P" else {"tp": 4, "fp": 2, "fn": 2}
+        return {"repositories": [{"repositoryId": "synthetic-repository-1", **counts}]}
+    def oracle(vector_id):
+        passing = vector_id == "P"
+        value = "0.900000000000" if passing else "0.666666666667"
+        counts = {"tp": 9, "fp": 1, "fn": 1} if passing else {"tp": 4, "fp": 2, "fn": 2}
+        return {"result": "VALID", "provisionalClassification": "PASS" if passing else "REVISE", "repositories": [{"repositoryId": "synthetic-repository-1", **counts, "precision": value, "recall": value, "strictPass": passing}], "aggregate": {"microPrecision": value, "microRecall": value, "macroPrecision": value, "macroRecall": value}}
+    paths = arrange_semantic(tmp_path, "REPOSITORY_DECISION", given, oracle)
+    mutate_expected(paths, lambda value: value["repositories"][0].update({f"{metric}Reason": "ARBITRARY"}))
+    assert_semantic_rejection(paths, f"nonnull {metric} must not have a reason")
+
+
+def test_rejects_aggregate_reason_when_metric_is_nonnull(tmp_path):
+    given = lambda vector_id: {"repositories": [{"repositoryId": "synthetic-repository-1", "tp": 9 if vector_id == "P" else 4, "fp": 1 if vector_id == "P" else 2, "fn": 1 if vector_id == "P" else 2}]}
+    def oracle(vector_id):
+        passing = vector_id == "P"; value = "0.900000000000" if passing else "0.666666666667"; counts = {"tp": 9, "fp": 1, "fn": 1} if passing else {"tp": 4, "fp": 2, "fn": 2}
+        return {"result": "VALID", "provisionalClassification": "PASS" if passing else "REVISE", "repositories": [{"repositoryId": "synthetic-repository-1", **counts, "precision": value, "recall": value, "strictPass": passing}], "aggregate": {"microPrecision": value, "microRecall": value, "macroPrecision": value, "macroRecall": value}}
+    paths = arrange_semantic(tmp_path, "REPOSITORY_DECISION", given, oracle)
+    mutate_expected(paths, lambda value: value["aggregate"].update(microPrecisionReason="ARBITRARY"))
+    assert_semantic_rejection(paths, "repository aggregate fields must be exactly")
+
+
+@pytest.mark.parametrize("location", ["repository", "aggregate"])
+def test_requires_exact_reason_when_metric_is_null(tmp_path, location):
+    def given(vector_id):
+        counts = {"tp": 9, "fp": 1, "fn": 1} if vector_id == "P" else {"tp": 0, "fp": 0, "fn": 2}
+        return {"repositories": [{"repositoryId": "synthetic-repository-1", **counts}]}
+    def oracle(vector_id):
+        if vector_id == "P":
+            repo = {"repositoryId": "synthetic-repository-1", "tp": 9, "fp": 1, "fn": 1, "precision": "0.900000000000", "recall": "0.900000000000", "strictPass": True}; aggregate = {"microPrecision": "0.900000000000", "microRecall": "0.900000000000", "macroPrecision": "0.900000000000", "macroRecall": "0.900000000000"}; classification = "PASS"; result = "VALID"
+        else:
+            repo = {"repositoryId": "synthetic-repository-1", "tp": 0, "fp": 0, "fn": 2, "precision": None, "precisionReason": "NO_PROPOSED_PAIRS", "recall": "0.000000000000", "strictPass": False}; aggregate = {"microPrecision": None, "microPrecisionReason": "NO_PROPOSED_PAIRS", "microRecall": "0.000000000000", "macroPrecision": None, "macroPrecisionReason": "NO_PROPOSED_PAIRS", "macroRecall": "0.000000000000"}; classification = "INVALID"; result = "INVALID"
+        return {"result": result, "provisionalClassification": classification, "repositories": [repo], "aggregate": aggregate}
+    paths = arrange_semantic(tmp_path, "REPOSITORY_DECISION", given, oracle)
+    if location == "repository":
+        mutate_expected(paths, lambda value: value["repositories"][0].pop("precisionReason"), "N")
+        error = "null precision requires NO_PROPOSED_PAIRS reason"
+    else:
+        mutate_expected(paths, lambda value: value["aggregate"].pop("microPrecisionReason"), "N")
+        error = "repository aggregate fields must be exactly"
+    assert_semantic_rejection(paths, error)

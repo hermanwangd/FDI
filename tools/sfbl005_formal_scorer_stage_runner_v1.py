@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Single-attempt, evidence-preserving stage runner for SF-BL-005 H1."""
+"""Single-attempt, evidence-preserving stage runner for SF-BL-005 H1.
+
+Parity dependencies are static: the golden and all four run files must already
+exist when the complete plan is validated.  They cannot be outputs first
+created by an earlier stage in the same plan.
+"""
 
 from __future__ import annotations
 
@@ -8,6 +13,7 @@ import hashlib
 import json
 import os
 import re
+import stat
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -58,6 +64,25 @@ def safe_path(raw: str, root: Path, label: str, *, must_be_absent: bool = False)
     return path
 
 
+def is_regular_file_within_root(path: Path, root: Path) -> bool:
+    """Check with lstat before any content read, so symlinks are never followed."""
+    try:
+        if not stat.S_ISREG(path.lstat().st_mode):
+            return False
+        path.resolve(strict=True).relative_to(root)
+    except (FileNotFoundError, OSError, ValueError):
+        return False
+    cursor = path
+    while True:
+        if cursor.is_symlink():
+            return False
+        if cursor == root:
+            return True
+        if cursor == root.parent:
+            return False
+        cursor = cursor.parent
+
+
 def load_plan(raw: str) -> Any:
     candidate = Path(raw)
     if candidate.is_file():
@@ -71,6 +96,7 @@ def parity_spec(stage: dict[str, Any]) -> dict[str, Any] | None:
         value = {
             "runs": stage.get("runs", stage.get("runPaths")),
             "golden": stage.get("golden", stage.get("goldenPath")),
+            "goldenSha256": stage.get("goldenSha256"),
         }
     if value is not None and not isinstance(value, dict):
         raise PlanError("parity must be an object")
@@ -132,10 +158,14 @@ def validate(args: argparse.Namespace, document: Any) -> tuple[Path, Path, list[
                 raise PlanError(f"parity stage {stage_id} cannot also define argv")
             runs = parity.get("runs", parity.get("runPaths"))
             golden = parity.get("golden", parity.get("goldenPath"))
+            golden_sha = parity.get("goldenSha256")
             if not isinstance(runs, list) or len(runs) != 4 or not all(isinstance(item, str) for item in runs):
                 raise PlanError(f"parity stage {stage_id} requires exactly four run paths")
+            if not isinstance(golden_sha, str) or not re.fullmatch(r"[0-9a-f]{64}", golden_sha):
+                raise PlanError(f"parity stage {stage_id} requires lowercase 64-hex goldenSha256")
             parity["_runs"] = [safe_path(item, root, f"parity run for {stage_id}") for item in runs]
             parity["_golden"] = safe_path(golden, root, f"parity golden for {stage_id}")
+            parity["_golden_sha"] = golden_sha
             for path in [*parity["_runs"], parity["_golden"]]:
                 if not path.is_file():
                     raise PlanError(f"parity input is not a regular file: {path}")
@@ -184,10 +214,52 @@ def run_parity(stage: dict[str, Any], log_stream: Any) -> tuple[int, dict[str, A
     spec = stage["_parity"]
     runs: list[Path] = spec["_runs"]
     golden: Path = spec["_golden"]
+    expected_golden_sha: str = spec["_golden_sha"]
+    root = Path.cwd().resolve()
+    if not is_regular_file_within_root(golden, root):
+        details = {
+            "allByteIdentical": False,
+            "expectedGoldenSha256": expected_golden_sha,
+            "goldenDigestMatchesFrozen": False,
+            "invalidInputs": [str(golden)],
+            "matchesGolden": [],
+            "runDigests": [],
+        }
+        log_stream.write(canonical_bytes(details))
+        return 1, details
+    actual_golden_sha = sha256(golden)
+    if actual_golden_sha != expected_golden_sha:
+        details = {
+            "allByteIdentical": False,
+            "expectedGoldenSha256": expected_golden_sha,
+            "goldenDigest": {"path": str(golden), "sha256": actual_golden_sha, "bytes": golden.stat().st_size},
+            "goldenDigestMatchesFrozen": False,
+            "invalidInputs": [],
+            "matchesGolden": [],
+            "runDigests": [],
+        }
+        log_stream.write(canonical_bytes(details))
+        return 1, details
+    invalid_runs = [str(path) for path in runs if not is_regular_file_within_root(path, root)]
+    if invalid_runs:
+        details = {
+            "allByteIdentical": False,
+            "expectedGoldenSha256": expected_golden_sha,
+            "goldenDigest": {"path": str(golden), "sha256": actual_golden_sha, "bytes": golden.stat().st_size},
+            "goldenDigestMatchesFrozen": True,
+            "invalidInputs": invalid_runs,
+            "matchesGolden": [],
+            "runDigests": [],
+        }
+        log_stream.write(canonical_bytes(details))
+        return 1, details
     golden_bytes = golden.read_bytes()
     identical = [path.read_bytes() == golden_bytes for path in runs]
     details = {
         "goldenDigest": {"path": str(golden), "sha256": sha256(golden), "bytes": golden.stat().st_size},
+        "expectedGoldenSha256": expected_golden_sha,
+        "goldenDigestMatchesFrozen": True,
+        "invalidInputs": [],
         "runDigests": digest_records(runs),
         "matchesGolden": identical,
         "allByteIdentical": all(identical),
@@ -235,21 +307,31 @@ def execute(args: argparse.Namespace, ledger: Path, logs: Path, stages: list[dic
                     log_stream.write((f"spawn error: {exc}\n").encode("utf-8", errors="replace"))
                     exit_code = 127
 
-        missing_outputs = [path for path in stage["_outputs"] if not path.is_file()]
-        output_digests = digest_records([path for path in stage["_outputs"] if path.is_file()])
+        root = Path.cwd().resolve()
+        missing_outputs = [path for path in stage["_outputs"] if not os.path.lexists(path)]
+        invalid_outputs = [
+            path for path in stage["_outputs"]
+            if os.path.lexists(path) and not is_regular_file_within_root(path, root)
+        ]
+        valid_outputs = [
+            path for path in stage["_outputs"]
+            if os.path.lexists(path) and is_regular_file_within_root(path, root)
+        ]
+        output_digests = digest_records(valid_outputs)
         expected = stage.get("expectedFailureRegex")
         if expected is not None:
             child_output = log.read_bytes()[child_output_start:] if child_started else b""
             matched = exit_code != 0 and re.search(expected, child_output.decode("utf-8", errors="replace")) is not None
             result = "EXPECTED_FAILURE_PASS" if matched else "FAIL"
-            effective_ok = matched and not missing_outputs
+            effective_ok = matched and not missing_outputs and not invalid_outputs
         else:
-            result = "PASS" if exit_code == 0 and not missing_outputs else "FAIL"
+            result = "PASS" if exit_code == 0 and not missing_outputs and not invalid_outputs else "FAIL"
             effective_ok = result == "PASS"
         ended = utc_now()
         end_record = {
             "attempt": 1, "candidateCommit": args.candidate_sha, "event": "END",
             "executionId": args.execution_id, "exitCode": exit_code, "logSha256": sha256(log),
+            "invalidOutputs": [str(path) for path in invalid_outputs],
             "missingOutputs": [str(path) for path in missing_outputs], "outputDigests": output_digests,
             "result": result, "stageId": stage_id, "timestampUtc": ended,
             "stageOrder": stage_order,
