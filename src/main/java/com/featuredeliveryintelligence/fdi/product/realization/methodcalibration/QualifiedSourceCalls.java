@@ -10,10 +10,18 @@ final class QualifiedSourceCalls {
     private final SourceMethodIndex index;
     private final boolean boxing;
     private final boolean verifiedJdkAncestry;
-    QualifiedSourceCalls(SourceMethodIndex index) { this(index, false); }
-    QualifiedSourceCalls(SourceMethodIndex index, boolean boxing) { this(index, boxing, false); }
+    private final boolean genericResolution;
+    QualifiedSourceCalls(SourceMethodIndex index) { this(index, false, false, false); }
+    QualifiedSourceCalls(SourceMethodIndex index, boolean boxing) { this(index, boxing, false, false); }
     QualifiedSourceCalls(SourceMethodIndex index, boolean boxing, boolean verifiedJdkAncestry) {
-        this.index = index; this.boxing = boxing; this.verifiedJdkAncestry = verifiedJdkAncestry;
+        this(index, boxing, verifiedJdkAncestry, false);
+    }
+    QualifiedSourceCalls(SourceMethodIndex index, boolean boxing, boolean verifiedJdkAncestry,
+            boolean genericResolution) {
+        this.index = index;
+        this.boxing = boxing;
+        this.verifiedJdkAncestry = verifiedJdkAncestry;
+        this.genericResolution = genericResolution;
     }
     String expressionType(Expression expression, SourceMethodIndex.Definition context) {
         return type(expression, context, 0);
@@ -37,7 +45,7 @@ final class QualifiedSourceCalls {
                     : !existingTargetBranch(call, definition, action) ? "ABSENT_TARGET_BRANCH" : null;
             if (filter != null && observer == null) continue;
             var target = resolve(call, definition, 0);
-            if (filter == null && target != null && trivialAccessor(target)) filter = "TRIVIAL_ACCESSOR";
+            if (filter == null && target != null && trivialAccessor(target.declaration())) filter = "TRIVIAL_ACCESSOR";
             if (observer != null) observer.accept(new CallObservation(target == null ? null : target.method(),
                     filter != null ? "FILTERED" : target == null ? "UNRESOLVED" : "CANDIDATE",
                     filter != null ? filter : target == null ? "TARGET_NOT_UNIQUELY_RESOLVED" : "QUALIFIED_CALL", site));
@@ -45,7 +53,7 @@ final class QualifiedSourceCalls {
         }
         return result.stream().sorted(Comparator.comparing(SourceMethodIndex.Method::signature)).toList();
     }
-    private SourceMethodIndex.Definition resolve(MethodCallExpr call, SourceMethodIndex.Definition context, int depth) {
+    private ResolvedCall resolve(MethodCallExpr call, SourceMethodIndex.Definition context, int depth) {
         if (depth > 12) return null;
         String receiver = call.getScope().isEmpty() ? context.owner().name() : type(call.getScope().get(), context, depth + 1);
         if (receiver == null) return null;
@@ -55,12 +63,17 @@ final class QualifiedSourceCalls {
             if (type == null) return null;
             arguments.add(type);
         }
-        List<SourceMethodIndex.Definition> matches = new ArrayList<>();
+        List<ResolvedCall> matches = new ArrayList<>();
         boolean[] unknown = {false};
-        collect(receiver, call.getNameAsString(), arguments, new HashSet<>(), matches, unknown);
+        collect(receiver, call.getNameAsString(), arguments, new HashSet<>(), matches, unknown, true);
         if (unknown[0]) return null;
         if (matches.size() == 1) return matches.get(0);
         return boxing && matches.isEmpty() ? boxedTarget(receiver, call.getNameAsString(), arguments) : null;
+    }
+
+    private record ResolvedCall(SourceMethodIndex.Definition declaration, List<String> parameterTypes,
+            String returnType) {
+        SourceMethodIndex.Method method() { return declaration.method(); }
     }
     private static final Map<String, String> BOXES = Map.of("boolean", "java.lang.Boolean", "byte", "java.lang.Byte",
             "short", "java.lang.Short", "char", "java.lang.Character", "int", "java.lang.Integer",
@@ -68,40 +81,58 @@ final class QualifiedSourceCalls {
 
     // JLS 15.12.2: strict invocation precedes boxing. Instead of approximating
     // overload specificity, accept a loose match only with one visible declaration.
-    private SourceMethodIndex.Definition boxedTarget(String receiver, String name, List<String> arguments) {
+    private ResolvedCall boxedTarget(String receiver, String name, List<String> arguments) {
         // Object members exist even without an explicit extends clause. They may
         // win in the strict phase (wait(long), equals(Object)); do not guess.
         for (var method : Object.class.getDeclaredMethods())
             if (method.getName().equals(name)) return null;
-        List<SourceMethodIndex.Definition> overloads = new ArrayList<>();
-        if (!overloads(receiver, name, arguments.size(), new HashSet<>(), overloads) || overloads.size() != 1) return null;
+        List<ResolvedCall> overloads = new ArrayList<>();
+        if (!overloads(receiver, name, arguments.size(), new HashSet<>(), overloads, true) || overloads.size() != 1) return null;
         var target = overloads.get(0);
         for (int i = 0; i < arguments.size(); i++) {
             String argument = arguments.get(i);
-            String parameter = index.qualify(target.node().getParameter(i).getType(), target.owner());
+            String parameter = target.parameterTypes().get(i);
             if (!argument.equals(parameter) && !Objects.equals(BOXES.get(argument), parameter)
                     && !argument.equals(BOXES.get(parameter))) return null;
         }
         return target;
     }
     private boolean overloads(String ownerName, String name, int arity, Set<String> visited,
-            List<SourceMethodIndex.Definition> result) {
+            List<ResolvedCall> result, boolean directReceiver) {
         if (!visited.add(ownerName)) return true;
         if (visited.size() > 64) return false;
         var owner = index.owner(ownerName);
         if (owner == null) return noCompetingBootstrapMethod(ownerName, name);
+        if (genericResolution && !owner.node().getTypeParameters().isEmpty()) return false;
         for (var method : owner.node().getMethodsByName(name)) {
             if (method.getParameters().stream().anyMatch(Parameter::isVarArgs)) return false;
             if (method.getParameters().size() != arity) continue;
             var definition = index.definitions().stream().filter(d -> d.node() == method).findFirst();
             if (definition.isEmpty()) return false;
-            result.add(definition.get());
+            var parameters = method.getParameters().stream()
+                    .map(parameter -> index.qualify(parameter.getType(), owner)).toList();
+            result.add(resolved(definition.get(), parameters, index.qualify(method.getType(), owner)));
+        }
+        if (genericResolution && directReceiver && index.hasGenericParentReference(owner)) {
+            var genericParent = index.directGenericParent(owner);
+            if (genericParent == null) return false;
+            var declarations = index.genericDefinitions(genericParent.owner().name()).stream()
+                    .filter(definition -> definition.declaration().node().getNameAsString().equals(name)).toList();
+            if (genericParent.owner().node().getMethodsByName(name).size() != declarations.size()) return false;
+            for (var declaration : declarations) {
+                if (declaration.parameterTypes().size() == arity) {
+                    result.add(resolved(declaration.declaration(),
+                            substitute(declaration.parameterTypes(), genericParent.bindings()),
+                            substitute(declaration.returnType(), genericParent.bindings())));
+                }
+            }
+            return true;
         }
         var parents = new ArrayList<>(owner.node().getExtendedTypes());
         parents.addAll(owner.node().getImplementedTypes());
         for (var parent : parents) {
             String qualified = index.qualify(parent, owner);
-            if (qualified == null || !overloads(qualified, name, arity, visited, result)) return false;
+            if (qualified == null || !overloads(qualified, name, arity, visited, result, false)) return false;
         }
         return true;
     }
@@ -120,22 +151,69 @@ final class QualifiedSourceCalls {
         }
     }
     private void collect(String ownerName, String name, List<String> arguments, Set<String> visited,
-            List<SourceMethodIndex.Definition> matches, boolean[] unknown) {
+            List<ResolvedCall> matches, boolean[] unknown, boolean directReceiver) {
         if (!visited.add(ownerName) || visited.size() > 64) return;
         var owner = index.owner(ownerName);
         if (owner == null) { unknown[0] |= !noCompetingBootstrapMethod(ownerName, name); return; }
+        if (genericResolution && !owner.node().getTypeParameters().isEmpty()) {
+            unknown[0] = true;
+            return;
+        }
         var local = index.definitions().stream().filter(d -> d.owner().name().equals(ownerName)
                 && d.node().getNameAsString().equals(name)
                 && d.node().getParameters().stream().noneMatch(Parameter::isVarArgs)
                 && d.node().getParameters().stream().map(p -> index.qualify(p.getType(), owner)).toList().equals(arguments)).toList();
-        if (!local.isEmpty()) { matches.addAll(local); return; }
+        if (!local.isEmpty()) {
+            matches.addAll(local.stream().map(definition -> resolved(definition, arguments,
+                    index.qualify(definition.node().getType(), definition.owner()))).toList());
+            return;
+        }
+        if (genericResolution && directReceiver && index.hasGenericParentReference(owner)) {
+            if (owner.node().getMethodsByName(name).stream().anyMatch(method ->
+                    method.getParameters().stream().anyMatch(Parameter::isVarArgs))) {
+                unknown[0] = true;
+                return;
+            }
+            var genericParent = index.directGenericParent(owner);
+            if (genericParent == null) {
+                unknown[0] = true;
+                return;
+            }
+            var declarations = index.genericDefinitions(genericParent.owner().name()).stream()
+                    .filter(definition -> definition.declaration().node().getNameAsString().equals(name)).toList();
+            long declared = genericParent.owner().node().getMethodsByName(name).size();
+            if (declared != declarations.size()) {
+                unknown[0] = true;
+                return;
+            }
+            var inherited = declarations.stream().filter(definition ->
+                    substitute(definition.parameterTypes(), genericParent.bindings()).equals(arguments)).toList();
+            if (!inherited.isEmpty()) {
+                matches.addAll(inherited.stream().map(definition -> resolved(definition.declaration(), arguments,
+                        substitute(definition.returnType(), genericParent.bindings()))).toList());
+            }
+            return;
+        }
         var parents = new ArrayList<>(owner.node().getExtendedTypes());
         parents.addAll(owner.node().getImplementedTypes());
         for (var parent : parents) {
             String qualified = index.qualify(parent, owner);
-            if (qualified != null) collect(qualified, name, arguments, visited, matches, unknown);
+            if (qualified != null) collect(qualified, name, arguments, visited, matches, unknown, false);
             else unknown[0] = true;
         }
+    }
+
+    private ResolvedCall resolved(SourceMethodIndex.Definition declaration, List<String> parameterTypes,
+            String returnType) {
+        return new ResolvedCall(declaration, List.copyOf(parameterTypes), returnType);
+    }
+
+    private List<String> substitute(List<String> types, Map<String, String> bindings) {
+        return types.stream().map(type -> bindings.getOrDefault(type, type)).toList();
+    }
+
+    private String substitute(String type, Map<String, String> bindings) {
+        return bindings.getOrDefault(type, type);
     }
     private String type(Expression expression, SourceMethodIndex.Definition context, int depth) {
         if (depth > 12) return null;
@@ -146,7 +224,7 @@ final class QualifiedSourceCalls {
         if (expression.isEnclosedExpr()) return type(expression.asEnclosedExpr().getInner(), context, depth + 1);
         if (expression.isMethodCallExpr()) {
             var method = resolve(expression.asMethodCallExpr(), context, depth + 1);
-            return method == null ? null : index.qualify(method.node().getType(), method.owner());
+            return method == null ? null : method.returnType();
         }
         boolean field = expression.isFieldAccessExpr() && expression.asFieldAccessExpr().getScope().isThisExpr();
         if (!field && !expression.isNameExpr()) return null;

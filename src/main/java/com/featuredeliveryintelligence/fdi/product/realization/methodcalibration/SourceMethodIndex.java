@@ -26,8 +26,11 @@ final class SourceMethodIndex {
     record Method(String path, String signature) { }
     record Owner(String name, String path, CompilationUnit unit, ClassOrInterfaceDeclaration node) { }
     record Definition(Method method, Owner owner, MethodDeclaration node) { }
+    record GenericDefinition(Definition declaration, List<String> parameterTypes, String returnType) { }
+    record GenericParent(Owner owner, Map<String, String> bindings) { }
     private final Map<String, Owner> owners = new TreeMap<>();
     private final Map<Method, Definition> definitions = new LinkedHashMap<>();
+    private final Map<Method, GenericDefinition> genericDefinitions = new LinkedHashMap<>();
 
     SourceMethodIndex(Path root, List<Path> files) throws IOException {
         if (files.size() > 1000) throw new IllegalArgumentException("SOURCE_FILE_LIMIT");
@@ -46,7 +49,10 @@ final class SourceMethodIndex {
             }
         }
         for (Owner owner : owners.values()) {
-            if (!owner.node().getTypeParameters().isEmpty()) continue;
+            if (!owner.node().getTypeParameters().isEmpty()) {
+                indexGenericDefinitions(owner);
+                continue;
+            }
             for (MethodDeclaration method : owner.node().getMethods()) {
                 if (!method.getTypeParameters().isEmpty()) continue;
                 List<String> params = new ArrayList<>();
@@ -67,6 +73,30 @@ final class SourceMethodIndex {
                         throw new IllegalArgumentException("DUPLICATE_SOURCE_METHOD");
                 }
             }
+        }
+    }
+
+    private void indexGenericDefinitions(Owner owner) {
+        for (MethodDeclaration method : owner.node().getMethods()) {
+            if (!method.isPublic() || !method.getTypeParameters().isEmpty()
+                    || method.getParameters().stream().anyMatch(Parameter::isVarArgs)) continue;
+            List<String> params = new ArrayList<>();
+            boolean known = true;
+            for (Parameter parameter : method.getParameters()) {
+                String type = genericDeclarationType(parameter.getType(), owner);
+                if (type == null) {
+                    known = false;
+                    break;
+                }
+                params.add(type);
+            }
+            String returnType = genericDeclarationType(method.getType(), owner);
+            if (!known || returnType == null) continue;
+            Method key = new Method(owner.path(), owner.name() + "#" + method.getNameAsString()
+                    + "(" + String.join(",", params) + ")");
+            Definition declaration = new Definition(key, owner, method);
+            if (genericDefinitions.putIfAbsent(key, new GenericDefinition(declaration, List.copyOf(params), returnType)) != null)
+                throw new IllegalArgumentException("DUPLICATE_SOURCE_METHOD");
         }
     }
 
@@ -141,6 +171,72 @@ final class SourceMethodIndex {
     Definition definition(Method method) { return definitions.get(method); }
     Owner owner(String name) { return owners.get(name); }
     List<Definition> definitions() { return List.copyOf(definitions.values()); }
+
+    List<GenericDefinition> genericDefinitions(String ownerName) {
+        return genericDefinitions.values().stream()
+                .filter(definition -> definition.declaration().owner().name().equals(ownerName))
+                .sorted(Comparator.comparing(definition -> definition.declaration().method().signature()))
+                .toList();
+    }
+
+    GenericParent directGenericParent(Owner child) {
+        if (!child.node().getTypeParameters().isEmpty()
+                || child.node().getExtendedTypes().size() != 1
+                || !child.node().getImplementedTypes().isEmpty()) return null;
+        var reference = child.node().getExtendedTypes().get(0);
+        if (!reference.isClassOrInterfaceType() || reference.getTypeArguments().isEmpty()) return null;
+        String parentName = qualify(reference, child);
+        Owner parent = parentName == null ? null : owners.get(parentName);
+        if (parent == null || parent.node().getTypeParameters().isEmpty()
+                || !parent.node().getExtendedTypes().isEmpty()
+                || !parent.node().getImplementedTypes().isEmpty()) return null;
+        var arguments = reference.asClassOrInterfaceType().getTypeArguments().orElseThrow();
+        var parameters = parent.node().getTypeParameters();
+        if (arguments.size() != parameters.size()) return null;
+        Map<String, String> bindings = new LinkedHashMap<>();
+        for (int i = 0; i < arguments.size(); i++) {
+            Type argument = arguments.get(i);
+            if (!concreteTypeArgument(argument, child)) return null;
+            bindings.put(parameters.get(i).getNameAsString(), qualify(argument, child));
+        }
+        return new GenericParent(parent, Map.copyOf(bindings));
+    }
+
+    boolean hasGenericParentReference(Owner child) {
+        if (!child.node().getTypeParameters().isEmpty()) return true;
+        if (child.node().getExtendedTypes().size() != 1 || !child.node().getImplementedTypes().isEmpty()) {
+            return child.node().getExtendedTypes().stream().anyMatch(reference -> genericReference(reference, child))
+                    || child.node().getImplementedTypes().stream().anyMatch(reference -> genericReference(reference, child));
+        }
+        return genericReference(child.node().getExtendedTypes().get(0), child);
+    }
+
+    private boolean genericReference(Type reference, Owner child) {
+        if (!reference.isClassOrInterfaceType()
+                || reference.asClassOrInterfaceType().getTypeArguments().isPresent()) return true;
+        String parentName = qualify(reference, child);
+        Owner parent = parentName == null ? null : owners.get(parentName);
+        return parent != null && !parent.node().getTypeParameters().isEmpty();
+    }
+
+    private boolean concreteTypeArgument(Type type, Owner child) {
+        if (!type.isClassOrInterfaceType() || type.asClassOrInterfaceType().getTypeArguments().isPresent()) return false;
+        String qualified = qualify(type, child);
+        if (qualified == null) return false;
+        Owner source = owners.get(qualified);
+        return source == null ? qualified.startsWith("java.lang.") : source.node().getTypeParameters().isEmpty();
+    }
+
+    private String genericDeclarationType(Type type, Owner owner) {
+        if (type.isClassOrInterfaceType()
+                && type.asClassOrInterfaceType().getTypeArguments().isEmpty()
+                && owner.node().getTypeParameters().stream()
+                        .anyMatch(parameter -> parameter.getNameAsString()
+                                .equals(type.asClassOrInterfaceType().getNameAsString()))) {
+            return type.asClassOrInterfaceType().getNameAsString();
+        }
+        return type.isVoidType() ? "void" : qualify(type, owner);
+    }
 
     String qualify(Type type, Owner owner) {
         if (type.isPrimitiveType()) return type.asString();

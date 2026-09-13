@@ -13,6 +13,121 @@ class QualifiedSourceCallsTests {
         Path source = root.resolve("Service.java"); Files.writeString(source, text);
         return new SourceMethodIndex(root, List.of(source));
     }
+    @Test void optInSubstitutesDirectGenericParentArgumentsAndReturnsWithoutRelabeling() throws Exception {
+        var index = index("""
+                package demo;
+                class Value { void finish() {} }
+                class Parent<T> { public T value(T input) { return input; } }
+                class Child extends Parent<Value> {}
+                class Service { Child child; void run(Value input) { child.value(input).finish(); } }
+                """);
+        var method = index.unique("demo.Service#run");
+        assertEquals(List.of("demo.Parent#value(T)", "demo.Value#finish()"),
+                new QualifiedSourceCalls(index, false, false, true).calls(method, "FIND")
+                        .stream().map(SourceMethodIndex.Method::signature).toList());
+        assertTrue(new QualifiedSourceCalls(index).calls(method, "FIND").isEmpty());
+    }
+
+    @Test void genericResolutionRejectsRawWildcardNestedUnboundAndMultilevelParents() throws Exception {
+        var index = index("""
+                package demo;
+                class Value { void finish() {} }
+                class Box<T> {}
+                class Parent<T> { T value(T input) { return input; } }
+                class RawChild extends Parent {}
+                class WildChild extends Parent<? extends Value> {}
+                class NestedChild extends Parent<Box<Value>> {}
+                class GenericChild<T> extends Parent<T> {}
+                class Middle<T> extends Parent<T> {}
+                class DeepChild extends Middle<Value> {}
+                class MissingChild extends Missing<Value> {}
+                class Service {
+                  RawChild raw; WildChild wild; NestedChild nested; GenericChild<Value> generic; DeepChild deep;
+                  MissingChild missing;
+                  void run(Value input) {
+                    raw.value(input); wild.value(input); nested.value(input); generic.value(input);
+                    deep.value(input); missing.value(input);
+                  }
+                }
+                """);
+        assertTrue(new QualifiedSourceCalls(index, false, false, true)
+                .calls(index.unique("demo.Service#run"), "FIND").isEmpty());
+    }
+
+    @Test void genericResolutionRejectsGenericParentBehindNonGenericIntermediary() throws Exception {
+        var index = index("""
+                package demo;
+                class Value { void finish() {} }
+                class Parent<T> { T value(T input) { return input; } }
+                class Middle extends Parent<Value> {}
+                class Deep extends Middle {}
+                class Service { Deep child; void run(Value input) { child.value(input).finish(); } }
+                """);
+        assertTrue(new QualifiedSourceCalls(index, false, false, true)
+                .calls(index.unique("demo.Service#run"), "FIND").isEmpty());
+    }
+
+    @Test void genericResolutionDoesNotInheritPrivateParentMethod() throws Exception {
+        var index = index("""
+                package demo;
+                class Value {}
+                class Parent<T> { private T hidden(T input) { return input; } }
+                class Child extends Parent<Value> {}
+                class Service { Child child; void run(Value input) { child.hidden(input); } }
+                """);
+        assertTrue(new QualifiedSourceCalls(index, false, false, true)
+                .calls(index.unique("demo.Service#run"), "FIND").isEmpty());
+    }
+
+    @Test void genericResolutionConservativelyRejectsProtectedAndPackagePrivateParentMethods() throws Exception {
+        var index = index("""
+                package demo;
+                class Value {}
+                class Parent<T> {
+                  protected T protectedValue(T input) { return input; }
+                  T packageValue(T input) { return input; }
+                }
+                class Child extends Parent<Value> {}
+                class Service { Child child; void run(Value input) {
+                  child.protectedValue(input); child.packageValue(input);
+                } }
+                """);
+        assertTrue(new QualifiedSourceCalls(index, false, false, true)
+                .calls(index.unique("demo.Service#run"), "FIND").isEmpty());
+    }
+
+    @Test void genericMethodDeclarationsAndCompetingOrVariableArityMethodsRemainUnresolved() throws Exception {
+        var index = index("""
+                package demo;
+                class Value {}
+                class Parent<T> {
+                  <U> U generic(U input) { return input; }
+                  T overloaded(T input) { return input; }
+                  Value overloaded(Value input) { return input; }
+                  void variable(T... inputs) {}
+                }
+                class Child extends Parent<Value> {}
+                class Service { Child child;
+                  void run(Value input) { child.generic(input); child.overloaded(input); child.variable(input); }
+                }
+                """);
+        assertTrue(new QualifiedSourceCalls(index, false, false, true)
+                .calls(index.unique("demo.Service#run"), "FIND").isEmpty());
+    }
+
+    @Test void genericSubstitutionKeepsStrictBeforeOptionalBoxing() throws Exception {
+        var index = index("""
+                package demo;
+                class Parent<T> { public void lookup(T input) {} }
+                class Child extends Parent<Integer> {}
+                class Service { Child child; void run(int input) { child.lookup(input); } }
+                """);
+        var method = index.unique("demo.Service#run");
+        assertTrue(new QualifiedSourceCalls(index, false, false, true).calls(method, "FIND").isEmpty());
+        assertEquals(List.of("demo.Parent#lookup(T)"),
+                new QualifiedSourceCalls(index, true, false, true).calls(method, "FIND")
+                        .stream().map(SourceMethodIndex.Method::signature).toList());
+    }
     @Test void exactArgumentTypeResolvesSourceDeclaredInterfaceMethod() throws Exception {
         var index = index("""
                 package demo;
