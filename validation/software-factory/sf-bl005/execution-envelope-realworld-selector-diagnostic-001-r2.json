@@ -1,0 +1,189 @@
+{
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "executionId": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
+  "envelopeRevision": 2,
+  "classification": "DIAGNOSTIC_ONLY_NO_SCORING",
+  "supersedes": {
+    "path": "validation/software-factory/sf-bl005/execution-envelope-realworld-selector-diagnostic-001.json",
+    "sha256": "dff66c7cf9d629db0188cfe9b674e43a19806383e78bef02d42ebd67eb44ca5e",
+    "reviewerRun": "/root/evaluator_review",
+    "verdict": "REVISE_PRIVATE_TEMP_SCOPE_AND_RECORD_SHAPE_WORDING"
+  },
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "targetBranch": "codex/sf-bl005-realworld-selector-diagnostic-001",
+  "constructionBase": "7b35626d799987a5736652fa097b033af3113d95",
+  "controlCommit": "c252dee7f6bcb24ca75e9fa789469116c9f1c2a7",
+  "specRevision": "4ac27198c6060e7978ed0b7f5ee0406225e31e4c",
+  "backlogItems": ["SF-BL-005"],
+  "requirementIds": ["AUTH-002", "PK-004", "EVID-001", "TECH-001"],
+  "controls": {
+    "AGENTS.md": "a70a2d4da9f9dd8add3ca2ab3d794125a08525bdb53cca4426d60f9a9a091c12",
+    "PROJECT-OVERVIEW.md": "e5ceb9b4baf8a5b5a9d557dd78f673221c8ecea182ba782457fc76e08172e4c0",
+    "FRAMEWORK-SPEC.md": "1c78425291c7ff16d39760fcef41ff275076d1cf5b3aa973bcabe1b8c3f5930a",
+    "BACKLOG.md": "d50a1cc0082644f5c80b879e8af48d806f23de3ef4d10669bd4ac71b56748770",
+    "IMPLEMENTATION-PLAN.md": "0daea111e02fcb13dadc9b1ea187eb64796fee9cd7bc1ec6733910b886651e7d",
+    "STATUS.json": "410bfb0ecbd1ff3a6abbe1ad943612476284a5bc854e7cbca331a97b372cc725"
+  },
+  "runtimeCode": {
+    "integratedRunnerCommit": "8c294063d6696a567bbd1c29552e0fd6925e0f73",
+    "intakeEvidence": "validation/software-factory/sf-bl005/runner-ancestor-integration-001/intake.json",
+    "intakeEvidenceSha256": "67c4de7f8e51eee56b736e3f26d441a06c82c7f178edcdd6f1ac0e0b5a404a26"
+  },
+  "frozenInputs": {
+    "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+    "preparation": {
+      "path": "validation/software-factory/sf-bl005/selector-diagnostics-001/realworld-preparation.json",
+      "sha256": "db05c417f4f539c8a9e1f3cbff067bdc52f7a6ff379e725f6dc10b03bc6d0bac"
+    },
+    "publicTestAllowlist": {
+      "path": "validation/software-factory/sf-bl005/parallel-investigations-001/public-inputs.json",
+      "sha256": "7be2562d867623e1e400caaf256be8503e9b69d62840ae04efc6e7f88cc5ab58",
+      "files": 23,
+      "observationReferencedFiles": 5
+    },
+    "runnerInputManifest": {
+      "path": "validation/software-factory/sf-bl005/selector-diagnostic-input-realworld-001-r2.json",
+      "sha256": "023e0fdd412e9de11ccd1a83a9b248fc48365c1196493c2ddd354e7b62cce12b",
+      "recordShape": "SELECTOR-DIAGNOSTIC-INPUT-001",
+      "serializedSchemaProperty": false
+    },
+    "roles": [
+      {
+        "role": "intents",
+        "revision": "fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c",
+        "sourcePath": "validation/software-factory/sf-bl005/cross-repo-realworld-001/producer-inputs/validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json",
+        "bundlePath": "intents.json",
+        "sha256": "1ccc62730b762b1d3e1a8e28adcce8a8a836d6df3d6f1a97f0922ca6c6d7b7fe",
+        "count": 10
+      },
+      {
+        "role": "observations",
+        "revision": "5f07244f3c201563949b9f44992c6e1113117146",
+        "sourcePath": "validation/software-factory/sf-bl005/cross-repo-realworld-001/generation-realworld-002/seed/validation/software-factory/sf-bl002/http-behavior-observations-003.json",
+        "bundlePath": "observations.json",
+        "sha256": "71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd",
+        "count": 11
+      },
+      {
+        "role": "handlers",
+        "revision": "5f07244f3c201563949b9f44992c6e1113117146",
+        "sourcePath": "validation/software-factory/sf-bl005/cross-repo-realworld-001/generation-realworld-002/seed/validation/software-factory/sf-bl002/route-handler-index-003.json",
+        "bundlePath": "handlers.json",
+        "sha256": "bacddebfeb65b663f784efbf8f293092e05ed6f95b2a0c4135893377cacf2f0b",
+        "count": 14
+      }
+    ],
+    "scenarioObservationPairs": 110,
+    "selectorPairLimit": 100000,
+    "accessPolicy": "ALLOWLIST_ONLY_NO_EVALUATOR_TRUTH_GOLD_PROOFS_DIAGNOSES_OR_SCORER"
+  },
+  "ownedPaths": [
+    "validation/software-factory/sf-bl005/realworld-selector-diagnostic-001/**"
+  ],
+  "runtimeScratch": {
+    "root": ".fdi-work/sf-bl005-realworld-selector-diagnostic-001",
+    "allowedPaths": [
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-001/bundle/**",
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-001/run-2/**",
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-001/private-tmp/run-1/**",
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-001/private-tmp/run-2/**"
+    ],
+    "precreate": [
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-001/private-tmp/run-1",
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-001/private-tmp/run-2"
+    ],
+    "runnerPrivateTempLifecycle": "Each runner may create and delete only its own selector-diagnostic-* child beneath the corresponding pre-created java.io.tmpdir. Parent, shared scratch, durable evidence and pre-existing path cleanup is prohibited."
+  },
+  "stages": [
+    {
+      "id": "PREFLIGHT_AND_MATERIALIZE",
+      "acceptance": [
+        "all full revisions, ancestry and digests resolve exactly",
+        "durable and scratch paths do not pre-exist",
+        "materialized inventory is 10 intents, 11 observations, 14 handlers and 23 test files"
+      ]
+    },
+    {
+      "id": "VERIFY_AND_RUN_TWICE",
+      "dependsOn": ["PREFLIGHT_AND_MATERIALIZE"],
+      "acceptance": [
+        "Java 17 targeted/full package, Python regression and git diff check pass",
+        "evaluated equals 110 and accepted plus rejected equals 110",
+        "each rejection has one deterministic first-rejection reason",
+        "legacy and diagnostic seed order/content match",
+        "diagnostics and seals are byte-identical across runs and runtime is retained"
+      ]
+    },
+    {
+      "id": "INDEPENDENT_REVIEW",
+      "dependsOn": ["VERIFY_AND_RUN_TWICE"],
+      "acceptance": [
+        "separately attributable reviewer names exact candidate and recomputes all bindings",
+        "no unresolved P0-P2 finding"
+      ]
+    },
+    {
+      "id": "FDP_RETURN",
+      "dependsOn": ["INDEPENDENT_REVIEW"],
+      "acceptance": [
+        "report dominant first-rejection reason without scoring or active-control mutation"
+      ]
+    }
+  ],
+  "verificationCommands": [
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dtest=SelectorDiagnosticRunTests,SourceMethodIndexTests,QualifiedSourceCallsTests,ScenarioEvidenceSelectorTests,QualifiedCalibrationProducerTests test",
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true package",
+    "python3 -m pytest -q",
+    "git diff --check"
+  ],
+  "runnerCommands": [
+    [
+      "/opt/homebrew/opt/openjdk@17/bin/java",
+      "-Xmx1g",
+      "-Djava.io.tmpdir=.fdi-work/sf-bl005-realworld-selector-diagnostic-001/private-tmp/run-1",
+      "-Dloader.main=com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.SelectorDiagnosticRun",
+      "-cp",
+      "target/fdi-0.4.8.3.jar",
+      "org.springframework.boot.loader.launch.PropertiesLauncher",
+      "validation/software-factory/sf-bl005/selector-diagnostic-input-realworld-001-r2.json",
+      "023e0fdd412e9de11ccd1a83a9b248fc48365c1196493c2ddd354e7b62cce12b",
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-001/bundle",
+      "validation/software-factory/sf-bl005/realworld-selector-diagnostic-001/run-1"
+    ],
+    [
+      "/opt/homebrew/opt/openjdk@17/bin/java",
+      "-Xmx1g",
+      "-Djava.io.tmpdir=.fdi-work/sf-bl005-realworld-selector-diagnostic-001/private-tmp/run-2",
+      "-Dloader.main=com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.SelectorDiagnosticRun",
+      "-cp",
+      "target/fdi-0.4.8.3.jar",
+      "org.springframework.boot.loader.launch.PropertiesLauncher",
+      "validation/software-factory/sf-bl005/selector-diagnostic-input-realworld-001-r2.json",
+      "023e0fdd412e9de11ccd1a83a9b248fc48365c1196493c2ddd354e7b62cce12b",
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-001/bundle",
+      ".fdi-work/sf-bl005-realworld-selector-diagnostic-001/run-2"
+    ]
+  ],
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "oneHeavyJvmAtATime": true,
+    "mavenHeapGb": 2,
+    "forkHeapGb": 2,
+    "runnerHeapGb": 1,
+    "commandTimeoutSeconds": 1200
+  },
+  "excluded": [
+    "source, test, matching-algorithm, active-control, frozen-input or prior-evidence mutation",
+    "cleanup outside runner-owned selector-diagnostic-* private temp children",
+    "evaluator truth, gold, proofs, diagnoses, scorer, recall or precision",
+    "Graphify reindex, upstream RealWorld tests, database or Docker",
+    "calibration, external-signature Slice B, formal holdout, publication, deployment or parent closure",
+    "automatic retry or overwrite"
+  ],
+  "failureRouting": {
+    "missingDependencyOrAccess": "PLAN_BLOCKED",
+    "identityDigestAncestryInventoryOutputOrIsolationMismatch": "PLAN_CONFLICT",
+    "scopeApiAcceptanceOrAlgorithmChange": "PLAN_CHANGE_REQUIRED",
+    "insufficientValidDiagnosticEvidence": "INCONCLUSIVE"
+  }
+}
