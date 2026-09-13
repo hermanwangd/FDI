@@ -55,6 +55,27 @@ User goal `完成實現improvement actions` selects the following continuation o
 4. Select and implement source-based improvement from diagnostic evidence;
    re-run in a separate immutable namespace and independently compare metrics
    under unchanged gold/scorer. Do not claim improvement without results.
+   Selected correction: opt-in conservative primitive/wrapper applicability,
+   candidate `78465e6efaec0cf2a9005072e05735a1c706e915`, reviewed independently.
+   New namespace: `validation/software-factory/sf-bl005/boxing-calibration-001/`
+   with `producer/`, evaluator-private proofs/diagnoses, comparison manifest,
+   official comparison and aggregate result. Retain runtime JAR by SHA under
+   the repository's ignored `.fdi-work/retained-runtimes/candidate-improvements/`
+   before execution. No implicit Object overload, unknown ancestry, competing
+   overload or varargs guess; legacy producer modes remain unchanged.
+   BOXING-001 measured zero change; preserve its negative result and failed
+   input-validation attempt. Successor `boxing-calibration-002/` is selected
+   with candidate `7659216f43fa3cea6a7e3f952199e3f77e2c2369`: inspect only
+   bootstrap-loaded `java.*` ancestor method inventories to prove absence of a
+   competing name. Never initialize/load third-party application classes.
+   Same gold/scorer/input snapshot; fresh runtime/proofs/output namespace.
+5. Complete the previously discussed reverse-quality synthetic evaluation cases
+   (feature creation, refactor-only, misleading parent resource, composite
+   delivery, feature across deliveries, authorization denial, conflicting
+   history/source, non-HTTP entry). Keep the evaluator rubric separate from
+   producer inputs; report current limitations instead of manufacturing Product
+   truth. Work in existing reverse tests/evaluation paths after the forward
+   diagnostic and correction, without altering preserved reverse results.
 
 Evaluator Java/tests under `methodpair/` are additionally owned. Active controls
 may be reconciled locally by Feature Delivery. Existing frozen experiments,
