@@ -27,9 +27,9 @@ Execution Plane treats them as read-only.
   that generic-parent declarations must be public.
 - Follow-up generic candidate:
   `7eb9932522c60d6c62cfb6c4e0c930421f570c4a`.
-- Independent review PASS: HERM-514 run
+- Independent review PASS: separately attributable run
   `01a09985-6552-7813-b422-fc94a28b506c`.
-- Stage 3 evidence repair: HERM-515 run
+- Stage 3 evidence repair: separately attributable run
   `01a099c9-d886-7c4e-9c2c-68984ebcb9b1`; final manifest
   `e17cf74bbb9152480b29d7772d96549f50b61350e55621f729558e61ac71163f`,
   15/15 receiver rows PASS.
