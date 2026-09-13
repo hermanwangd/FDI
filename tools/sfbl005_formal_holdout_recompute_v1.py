@@ -160,6 +160,11 @@ def _provenance(given):
 def _digest(value):
     return isinstance(value, str) and HEX64.fullmatch(value) is not None
 
+def _safe_relative(value):
+    if not isinstance(value, str) or not value: return False
+    path = Path(value)
+    return not path.is_absolute() and ".." not in path.parts and "." not in path.parts
+
 
 def _empty(given):
     proposals = given["proposalOccurrences"]
@@ -211,14 +216,27 @@ def _ratio(num, den):
         value = Decimal(num) / Decimal(den)
         return format(value.quantize(Decimal("0.000000000001"), rounding=ROUND_HALF_EVEN), ".12f")
 
+def _raw_ratio(num, den):
+    if den == 0: return None
+    with localcontext(Context(prec=50, rounding=ROUND_HALF_EVEN)):
+        return Decimal(num) / Decimal(den)
+
+def _metric(value):
+    if value is None: return None
+    with localcontext(Context(prec=50, rounding=ROUND_HALF_EVEN)):
+        return format(value.quantize(Decimal("0.000000000001"), rounding=ROUND_HALF_EVEN), ".12f")
+
 
 def _repository(given):
     repositories = []
     valid = True
     totals = {"tp": 0, "fp": 0, "fn": 0}
+    raw_precisions, raw_recalls = [], []
     for item in given["repositories"]:
         tp, fp, fn = item["tp"], item["fp"], item["fn"]
-        precision, recall = _ratio(tp, tp + fp), _ratio(tp, tp + fn)
+        raw_precision, raw_recall = _raw_ratio(tp, tp + fp), _raw_ratio(tp, tp + fn)
+        precision, recall = _metric(raw_precision), _metric(raw_recall)
+        raw_precisions.append(raw_precision); raw_recalls.append(raw_recall)
         passed = precision is not None and recall is not None and 5 * tp > 4 * (tp + fp) and 5 * tp > 3 * (tp + fn)
         valid &= passed
         repository = {"fn": fn, "fp": fp, "precision": precision, "recall": recall,
@@ -230,8 +248,8 @@ def _repository(given):
     mandatory_null = any(x["precision"] is None or x["recall"] is None for x in repositories)
     precision_null = any(x["precision"] is None for x in repositories)
     recall_null = any(x["recall"] is None for x in repositories)
-    macro_precision = None if precision_null else _ratio(sum(Decimal(x["precision"]) for x in repositories), len(repositories))
-    macro_recall = None if recall_null else _ratio(sum(Decimal(x["recall"]) for x in repositories), len(repositories))
+    macro_precision = None if precision_null else _metric(sum(raw_precisions, Decimal(0)) / Decimal(len(repositories)))
+    macro_recall = None if recall_null else _metric(sum(raw_recalls, Decimal(0)) / Decimal(len(repositories)))
     aggregate = {"macroPrecision": macro_precision, "macroRecall": macro_recall,
                  "microPrecision": _ratio(totals["tp"], totals["tp"] + totals["fp"]),
                  "microRecall": _ratio(totals["tp"], totals["tp"] + totals["fn"])}
@@ -305,6 +323,7 @@ def _valid_given(operation, given):
             if not all(isinstance(item[k], str) for k in PAIR_FIELDS if k != "parameterTypes"): return False
             if not isinstance(item["parameterTypes"], list) or not all(isinstance(x, str) for x in item["parameterTypes"]): return False
             if not _digest(item["repositorySnapshotSha256"]): return False
+            if "sourcePath" in item and not _safe_relative(item["sourcePath"]): return False
         return True
     if operation == "OCCURRENCE_SCORING":
         if not _exact(given, {"goldPairDigests", "proposalOccurrences"}): return False
@@ -410,7 +429,8 @@ def run(manifest_path, inputs_root, output_path):
     if not root.is_dir():
         raise ValueError("inputs root must be a directory")
     results = []
-    for vector in manifest["vectors"]:
+    seen_ids, seen_inputs = set(), set()
+    for ordinal, vector in enumerate(manifest["vectors"], start=1):
         if (not isinstance(vector, dict) or set(vector) != {"coverage", "expected", "id", "input"}
                 or not isinstance(vector["input"], dict) or set(vector["input"]) != {"path", "sha256"}
                 or not isinstance(vector["expected"], dict) or set(vector["expected"]) != {"path", "sha256"}):
@@ -419,6 +439,12 @@ def run(manifest_path, inputs_root, output_path):
                 or not all(isinstance(vector[x]["path"], str) and _digest(vector[x]["sha256"])
                            for x in ("input", "expected"))):
             raise ValueError("unknown manifest vector schema")
+        if vector["id"] in seen_ids or vector["input"]["path"] in seen_inputs:
+            raise ValueError("duplicate vector identity")
+        seen_ids.add(vector["id"]); seen_inputs.add(vector["input"]["path"])
+        if (vector["input"]["path"] != f"{vector['id']}.json" or
+                vector["expected"]["path"] != f"{vector['id']}.json"):
+            raise ValueError("manifest path identity mismatch")
         relative = Path(vector["input"]["path"])
         if relative.is_absolute() or len(relative.parts) != 1 or relative.name != f"{vector['id']}.json":
             raise ValueError("unsafe input path")
@@ -436,6 +462,10 @@ def run(manifest_path, inputs_root, output_path):
             raise ValueError(f"unknown case schema: {vector['id']}")
         if case["schemaVersion"] != "SFBL005-FORMAL-SCORER-CONFORMANCE-CASE-001":
             raise ValueError(f"unknown case schema: {vector['id']}")
+        if (not _integer(case["caseOrdinal"]) or case["caseOrdinal"] != ordinal or
+                not isinstance(case["contract"], str) or not case["contract"] or
+                case["namespace"] != "conformance.invalid"):
+            raise ValueError(f"case metadata mismatch: {vector['id']}")
         if case.get("vectorId") != vector["id"]:
             raise ValueError(f"vector identity mismatch: {vector['id']}")
         coverage = vector["coverage"]

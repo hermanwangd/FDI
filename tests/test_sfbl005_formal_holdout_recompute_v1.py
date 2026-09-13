@@ -91,6 +91,15 @@ def test_repository_metrics_are_fixed_scale_equal_weight_and_null_safe():
     assert null["repositories"][0]["recallReason"] == "NO_GOLD_PAIRS"
     assert null["aggregate"]["macroRecallReason"] == "NO_GOLD_PAIRS"
 
+def test_repository_macro_uses_raw_ratios_before_final_quantization():
+    m = load_module()
+    value = m.evaluate(case("DEV-R-ROUNDING", "REPOSITORY_DECISION", {"repositories": [
+        {"fn": 1, "fp": 0, "repositoryId": "two-thirds", "tp": 2},
+        {"fn": 1, "fp": 0, "repositoryId": "nine-tenths", "tp": 9}]}))
+    assert value["repositories"][0]["recall"] == "0.666666666667"
+    assert value["repositories"][1]["recall"] == "0.900000000000"
+    assert value["aggregate"]["macroRecall"] == "0.783333333333"
+
 def test_empty_recall_is_fixed_scale():
     m = load_module()
     value = m.evaluate(case("DEV-Z1", "EMPTY_AND_ABSTENTION", {
@@ -98,7 +107,7 @@ def test_empty_recall_is_fixed_scale():
     assert value["recall"] == "0.000000000000"
 
 def make_bundle(tmp_path, bad_digest=False):
-    inputs = tmp_path / "inputs"; inputs.mkdir()
+    inputs = tmp_path / "inputs"; inputs.mkdir(parents=True)
     item = case("DEV-S01", "OCCURRENCE_SCORING", {"goldPairDigests": ["a" * 64],
         "proposalOccurrences": [{"disposition": "VALID", "occurrenceIndex": 0, "pairDigest": "a" * 64}]})
     raw = (json.dumps(item, sort_keys=True, separators=(",", ":")) + "\n").encode()
@@ -106,7 +115,7 @@ def make_bundle(tmp_path, bad_digest=False):
     digest = "0" * 64 if bad_digest else hashlib.sha256(raw).hexdigest()
     value = {"schemaVersion": "SFBL005-FORMAL-SCORER-VECTOR-MANIFEST-001", "vectors": [{
         "coverage": [{"polarity": "POSITIVE", "ruleId": "OCCURRENCE_SCORING"}],
-        "expected": {"path": "unused.json", "sha256": "f" * 64}, "id": "DEV-S01",
+        "expected": {"path": "DEV-S01.json", "sha256": "f" * 64}, "id": "DEV-S01",
         "input": {"path": "DEV-S01.json", "sha256": digest}}]}
     manifest = tmp_path / "manifest.json"
     manifest.write_bytes((json.dumps(value, sort_keys=True, separators=(",", ":")) + "\n").encode())
@@ -206,6 +215,39 @@ def test_cli_rejects_symlink_inputs_root(tmp_path):
            "--inputs-root", str(alias), "--output", str(output)]
     proc = subprocess.run(cmd, text=True, capture_output=True)
     assert proc.returncode != 0 and not output.exists()
+
+def test_canonical_source_path_must_be_safe_relative_string():
+    m = load_module(); a = "a" * 64
+    base = {"fullyQualifiedDeclaringType": "invalid.conformance.Service", "methodName": "run",
+        "parameterTypes": [], "repositorySnapshotSha256": a, "returnType": "void", "scenarioId": "DEV"}
+    for unsafe in ("/absolute/A.java", "../escape.java", 7):
+        value = m.evaluate(case("DEV-C", "CANONICAL_IDENTITY", {"candidate": dict(base, sourcePath=unsafe)}))
+        assert value["result"] == "INVALID" and value["reasonCodes"] == ["MALFORMED_GIVEN"]
+
+def test_cli_rejects_manifest_identity_and_case_metadata_mismatch(tmp_path):
+    manifest, inputs = make_bundle(tmp_path)
+    value = json.loads(manifest.read_text())
+    value["vectors"][0]["expected"]["path"] = "../escape.json"
+    manifest.write_text(json.dumps(value))
+    output = tmp_path / "out.json"
+    cmd = [sys.executable, str(SCRIPT), "--manifest", str(manifest), "--inputs-root", str(inputs), "--output", str(output)]
+    assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
+
+    manifest, inputs = make_bundle(tmp_path / "second")
+    item_path = inputs / "DEV-S01.json"; item = json.loads(item_path.read_text())
+    item["caseOrdinal"] = 2; item["namespace"] = "wrong.invalid"
+    raw = (json.dumps(item, sort_keys=True, separators=(",", ":")) + "\n").encode(); item_path.write_bytes(raw)
+    value = json.loads(manifest.read_text()); value["vectors"][0]["input"]["sha256"] = hashlib.sha256(raw).hexdigest()
+    manifest.write_text(json.dumps(value)); output = manifest.parent / "out.json"
+    cmd = [sys.executable, str(SCRIPT), "--manifest", str(manifest), "--inputs-root", str(inputs), "--output", str(output)]
+    assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
+
+def test_cli_rejects_duplicate_vector_ids_and_input_paths(tmp_path):
+    manifest, inputs = make_bundle(tmp_path)
+    value = json.loads(manifest.read_text()); value["vectors"].append(dict(value["vectors"][0]))
+    manifest.write_text(json.dumps(value)); output = tmp_path / "out.json"
+    cmd = [sys.executable, str(SCRIPT), "--manifest", str(manifest), "--inputs-root", str(inputs), "--output", str(output)]
+    assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
     manifest.write_text('{"schemaVersion":"x","schemaVersion":"y","vectors":[]}\n')
     assert subprocess.run(cmd, text=True, capture_output=True).returncode != 0
     real = tmp_path / "real-manifest"; real.write_text('{"schemaVersion":"SFBL005-FORMAL-SCORER-VECTOR-MANIFEST-001","vectors":[]}\n')

@@ -204,6 +204,9 @@ class FormalHoldoutScoreCliTests {
         Path digestManifest = writeManifest("good.json", "0".repeat(64));
         assertThatThrownBy(() -> runCli(digestManifest, inputs, temp.resolve("digest-output.json"))).hasMessageContaining("digest mismatch");
 
+        Path realManifest = writeManifest("good.json", FormalHoldoutConformanceScorer.sha256(good)); Path linkedManifest=temp.resolve("linked-manifest.json");Files.createSymbolicLink(linkedManifest,realManifest);
+        assertThatThrownBy(() -> runCli(linkedManifest,inputs,temp.resolve("linked-manifest-output.json"))).hasMessageContaining("manifest symlink");
+
         Path realInputs = Files.createDirectory(temp.resolve("real-inputs")); Files.write(realInputs.resolve("good.json"), good);
         Path inputRootLink = temp.resolve("input-root-link"); Files.createSymbolicLink(inputRootLink, realInputs);
         Path rootLinkManifest = writeManifest("good.json", FormalHoldoutConformanceScorer.sha256(good));
@@ -244,6 +247,19 @@ class FormalHoldoutScoreCliTests {
         assertThat(testSource).doesNotContain(forbiddenResolve, forbiddenPath);
     }
 
+    @Test
+    void everyOperationRejectsMalformedNestedTypesAndShapes() {
+        assertMalformed("CANONICAL_IDENTITY", "{\"candidate\":{\"fullyQualifiedDeclaringType\":1,\"methodName\":\"m\",\"parameterTypes\":[],\"repositorySnapshotSha256\":\"a\",\"returnType\":\"void\",\"scenarioId\":\"s\"}}", "fullyQualifiedDeclaringType");
+        assertMalformed("OCCURRENCE_SCORING", "{\"goldPairDigests\":\"a\",\"proposalOccurrences\":[]}", "goldPairDigests");
+        assertMalformed("DISPOSITION_EVIDENCE", "{\"goldPairDigest\":\"a\",\"occurrence\":[],\"proofs\":[],\"sealedProofDigest\":\"b\"}", "occurrence");
+        assertMalformed("PROVENANCE_INTEGRITY", "{\"artifactSha256\":\"d\",\"coverageStrata\":{},\"expectedArtifactSha256\":\"d\",\"foreignRepositoryReference\":false,\"pairRepositorySnapshotSha256\":\"a\",\"repositorySnapshotSha256\":\"a\",\"scenarioId\":\"s\",\"sourceProvenanceSha256\":\"c\",\"testProvenanceSha256\":\"b\",\"truthDisposition\":\"SEALED\"}", "coverageStrata");
+        assertMalformed("EMPTY_AND_ABSTENTION", "{\"goldCount\":\"2\",\"proposalOccurrences\":[],\"scenarioCount\":1}", "goldCount");
+        assertMalformed("CHAIN_SCORING", "{\"chainRequired\":true,\"orderedGoldPairDigests\":[\"a\",\"b\"],\"proposalEdges\":[[\"a\"]],\"proposalPairDigests\":[\"a\",\"b\"],\"truthEdges\":[[\"a\",\"b\"]]}", "proposalEdges");
+        assertMalformed("REPOSITORY_DECISION", "{\"repositories\":[{\"fn\":0.5,\"fp\":0,\"repositoryId\":\"r\",\"tp\":1}]}", "fn");
+        assertMalformed("WILSON_INTERVAL", "{\"n\":10.0,\"precision\":50,\"rounding\":\"HALF_EVEN\",\"scale\":12,\"x\":8,\"zDecimal\":\"1.959963984540054\"}", "n");
+        assertMalformed("DETERMINISM_AND_PARITY", "{\"goldenBytes\":null,\"javaRun1Bytes\":\"x\",\"javaRun2Bytes\":\"x\",\"pythonRun1Bytes\":\"x\",\"pythonRun2Bytes\":\"x\"}", "goldenBytes");
+    }
+
     private JsonNode score(String operation, String given, String polarity) throws Exception {
         return scorer.score(JSON.readTree(caseJson(operation, given)), polarity);
     }
@@ -262,4 +278,5 @@ class FormalHoldoutScoreCliTests {
         assertThatThrownBy(() -> runCli(manifest, inputs, temp.resolve("out-" + message + ".json"))).hasMessageContaining(message);
     }
     private String read(Path p) { try { return Files.readString(p); } catch (Exception e) { throw new IllegalStateException(e); } }
+    private void assertMalformed(String operation,String given,String field){assertThatThrownBy(() -> score(operation,given,"NEGATIVE")).isInstanceOf(IllegalArgumentException.class).hasMessageContaining(field);}
 }
