@@ -4,7 +4,7 @@
 
 `SF-BL-005-RESTASSURED-STATUS-DIALECT-001` is selected for exact-envelope creation. The bounded change recognizes a single literal `statusCode(int)` only on the same supported RestAssured MockMvc request chain after existing request, route, ambiguity, entity, and action gates. It must not infer business conditions from a generic 4xx response. Source-backed expected diagnostic impact is unsupported dialect 12→0 and accepted 0→1; these are diagnostic expectations, not recall or precision.
 
-Detailed evidence and the ordered follow-ups are in `validation/software-factory/sf-bl005/rejection-analysis-002/RESULTS.md`. Implementation dispatch remains false until exact-envelope independent preflight and Human authority.
+Detailed evidence and the ordered follow-ups are in `validation/software-factory/sf-bl005/rejection-analysis-002/RESULTS.md`. Envelope revision 1 SHA `2829333b3f3b61815e749b1905c634a39141c8effed57e365ae20fca282162c9` passed fresh independent preflight with P0/P1/P2 zero and was integrated at `c61ceea6ffb1e5657075b5555bf115461e7a90a9`. Implementation dispatch remains false pending Human Authority. Company readiness criteria are defined in `validation/software-factory/sf-bl005/production-readiness-criteria-001.md`.
 
 
 Human Authority selected a four-step sequential SF-BL-005 experiment on
