@@ -1,0 +1,196 @@
+{
+  "acceptance": [
+    "new namespace absent before execution",
+    "producer output baseline/improved digests match frozen calibration-002 values",
+    "truth and proofs bytes copied only after producer completes",
+    "comparison and stage evaluation commands succeed once",
+    "metrics arithmetic and artifacts independently reviewed",
+    "producer generation.json retains embedded protocol identity SF-BL-005-BOXING-CALIBRATION-002 exactly; 003 outer receipt explicitly binds it as a replay subexecution and does not relabel or rewrite producer evidence",
+    "no claim that the retained runtime natively emits BOXING-CALIBRATION-003 identity"
+  ],
+  "classification": "EXPOSED_PETCLINIC_CALIBRATION_NOT_HOLDOUT",
+  "constructionBase": "a56d005fd3727d78e9c88a1d6f8e705e0af0093e",
+  "controlCommit": "a56d005fd3727d78e9c88a1d6f8e705e0af0093e",
+  "controls": {
+    "AGENTS.md": "a70a2d4da9f9dd8add3ca2ab3d794125a08525bdb53cca4426d60f9a9a091c12",
+    "BACKLOG.md": "11577bc33245269ec653a907e6fb15d26926148ebd49d268ad4b3710b3189408",
+    "FRAMEWORK-SPEC.md": "1c78425291c7ff16d39760fcef41ff275076d1cf5b3aa973bcabe1b8c3f5930a",
+    "IMPLEMENTATION-PLAN.md": "9d0bea701d4056308c5ca6b6a7fd39e8d44cd2b9ced8bf8dd741bcb52f43d58e",
+    "PROJECT-OVERVIEW.md": "e5ceb9b4baf8a5b5a9d557dd78f673221c8ecea182ba782457fc76e08172e4c0",
+    "STATUS.json": "b94e9c678c2b3f1499e872794ee02c29bdffbc0e6521ad977f672e3f07b8c1b6"
+  },
+  "envelopeRevision": 1,
+  "excluded": [
+    "source/code/test/control mutation",
+    "producer access to evaluator truth or proofs",
+    "gold or threshold mutation",
+    "formal holdout, generalization, publication, deployment, parent closure"
+  ],
+  "executionId": "SF-BL-005-BOXING-CALIBRATION-003",
+  "frozenInputs": {
+    "comparisonManifest": {
+      "canonical": "sort_keys two-space UTF-8 plus LF",
+      "sha256": "730cf38b4f139806f3c753363cf8a8832b4ae959f0bea717389a0f259d4c55d4"
+    },
+    "expectedProducer": {
+      "baselineSha256": "4d56a13edb7167ab94461e5a5ea496687634858a800df1bc774e7120b37187e5",
+      "improvedSha256": "823a07e84ead932634faaa07bf3c911faa65d2774594561ca2daeb2dec38625c"
+    },
+    "producerInputRoot": {
+      "files": {
+        "validation/pkb001/artifacts/petclinic-graph-818c413.json": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+        "validation/pkb001/runtime/graphify-petclinic-live-evidence.json": "fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8",
+        "validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json": "3c5da364196f1bbec17aabdbf2923c65f2bc0d90b2e9788bac8427219d554a3f",
+        "validation/software-factory/sf-bl002/scenario-search-intent-acceptance-manifest-002.json": "8772b2a1b4cbb485f0ebce793be734bbd8414aaf318e6033bab7225b1e03fd1b",
+        "validation/software-factory/sf-bl002/test-behavior-evidence.json": "6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2"
+      },
+      "materialization": [
+        {
+          "command": "mkdir -p .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/pkb001/artifacts && git show 2180ec5af317968ecbc81a7e411be431af80d14a:validation/pkb001/artifacts/petclinic-graph-818c413.json > .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/pkb001/artifacts/petclinic-graph-818c413.json",
+          "path": "validation/pkb001/artifacts/petclinic-graph-818c413.json",
+          "revision": "2180ec5af317968ecbc81a7e411be431af80d14a"
+        },
+        {
+          "command": "mkdir -p .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/pkb001/runtime && git show 5eb6dd91265dd6ecfb49c74038099f56f34e1ccd:validation/pkb001/runtime/graphify-petclinic-live-evidence.json > .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/pkb001/runtime/graphify-petclinic-live-evidence.json",
+          "path": "validation/pkb001/runtime/graphify-petclinic-live-evidence.json",
+          "revision": "5eb6dd91265dd6ecfb49c74038099f56f34e1ccd"
+        },
+        {
+          "command": "mkdir -p .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/software-factory/sf-bl002 && git show ec4c62e46272354e9b625ec0f6129e46234278f0:validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json > .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json",
+          "path": "validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json",
+          "revision": "ec4c62e46272354e9b625ec0f6129e46234278f0"
+        },
+        {
+          "command": "mkdir -p .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/software-factory/sf-bl002 && git show be2a5742e270659bd2f24fd578b7142d00c8232a:validation/software-factory/sf-bl002/scenario-search-intent-acceptance-manifest-002.json > .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/software-factory/sf-bl002/scenario-search-intent-acceptance-manifest-002.json",
+          "path": "validation/software-factory/sf-bl002/scenario-search-intent-acceptance-manifest-002.json",
+          "revision": "be2a5742e270659bd2f24fd578b7142d00c8232a"
+        },
+        {
+          "command": "mkdir -p .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/software-factory/sf-bl002 && git show 8791b2117a01625ce87afd4cb03a3397f62f1403:validation/software-factory/sf-bl002/test-behavior-evidence.json > .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs/validation/software-factory/sf-bl002/test-behavior-evidence.json",
+          "path": "validation/software-factory/sf-bl002/test-behavior-evidence.json",
+          "revision": "8791b2117a01625ce87afd4cb03a3397f62f1403"
+        }
+      ],
+      "path": ".fdi-work/sf-bl005-boxing-calibration-003/producer-inputs",
+      "snapshotSha256": "41a7f9fc60bf9f0de938a5c2f4fd29e33f8258a060d0826f4240baa180e6fa37"
+    },
+    "proofs": {
+      "sha256": "8dd7494b7b0f0fec9d07c51bdba1c590bda1061cd6c78c3c34df88739c896c68",
+      "sourcePath": "validation/software-factory/sf-bl005/boxing-calibration-002/evaluator/proofs.json"
+    },
+    "runtime": {
+      "path": ".fdi-work/retained-runtimes/candidate-improvements/33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab.jar",
+      "sha256": "33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab"
+    },
+    "source": {
+      "path": ".fdi-work/sfbl002-petclinic-818c413",
+      "revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe"
+    },
+    "truth": {
+      "sha256": "39aa27459305c05a4c983b0c414c60b39ec3e460491b9edb5da49c620bc2de2c",
+      "sourcePath": "validation/software-factory/sf-bl005/boxing-calibration-002/evaluator/truth.json"
+    }
+  },
+  "ownedPaths": [
+    "validation/software-factory/sf-bl005/boxing-calibration-003/**"
+  ],
+  "priorIndependentPreflight": {
+    "candidate": "08fae3a610d4e370595f0f5246faa04b4556a735",
+    "findings": {
+      "p0": 0,
+      "p1": 1,
+      "p2": 0
+    },
+    "remediated": [
+      "embedded BOXING-002 producer identity is explicitly preserved as a frozen-protocol replay subexecution under an outer BOXING-003 receipt; no identity rewriting or native-003 claim"
+    ],
+    "result": "FAIL_PLAN_CONFLICT",
+    "reviewer": "/root/diagnostic_002_preflight"
+  },
+  "producerReplayIdentity": {
+    "embeddedProducerExecutionId": "SF-BL-005-BOXING-CALIBRATION-002",
+    "noIdentityRewrite": true,
+    "outerExecutionId": "SF-BL-005-BOXING-CALIBRATION-003",
+    "reason": "The exact retained, previously reviewed runtime hard-codes its producer protocol identity; changing it would require an unauthorized code/runtime change. The producer artifact is a deterministic frozen-protocol replay subexecution, not represented as newly generated 003-native producer evidence.",
+    "receiptMustBind": [
+      "outer execution id 003",
+      "embedded producer execution id 002",
+      "exact runtime SHA",
+      "generation SHA",
+      "new output namespace",
+      "evaluator commands and results"
+    ],
+    "requiredOuterReceipt": "validation/software-factory/sf-bl005/boxing-calibration-003/execution-receipt.json"
+  },
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "evaluatorHeapGb": 0.5,
+    "oneHeavyJvmAtATime": true,
+    "producerHeapGb": 1
+  },
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "stages": [
+    {
+      "authority": "NO_EVALUATOR_INPUT_ACCESS",
+      "command": "/opt/homebrew/opt/openjdk@17/bin/java -Xmx1g -Dloader.main=com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.JdkBoxingCalibrationRun -cp /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/retained-runtimes/candidate-improvements/33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab.jar org.springframework.boot.loader.launch.PropertiesLauncher .fdi-work/sf-bl005-boxing-calibration-003/producer-inputs /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/sfbl002-petclinic-818c413 validation/software-factory/sf-bl005/boxing-calibration-003/producer",
+      "id": "PRODUCER"
+    },
+    {
+      "authority": "SEPARATE_EVALUATOR",
+      "commands": [
+        "/opt/homebrew/opt/openjdk@17/bin/java -Xmx512m -jar /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/retained-runtimes/candidate-improvements/33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab.jar method-pair-compare --manifest validation/software-factory/sf-bl005/boxing-calibration-003/comparison-manifest.json --manifest-sha256 730cf38b4f139806f3c753363cf8a8832b4ae959f0bea717389a0f259d4c55d4 --output validation/software-factory/sf-bl005/boxing-calibration-003/comparison.json",
+        "GEN_SHA=$(shasum -a 256 validation/software-factory/sf-bl005/boxing-calibration-003/producer/generation.json | awk {print\\ $1}); /opt/homebrew/opt/openjdk@17/bin/java -Xmx512m -Dloader.main=com.featuredeliveryintelligence.fdi.product.realization.methodpair.CandidateStageEvaluationRun -cp /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/retained-runtimes/candidate-improvements/33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab.jar org.springframework.boot.loader.launch.PropertiesLauncher . validation/software-factory/sf-bl005/boxing-calibration-003/producer/generation.json \"$GEN_SHA\" validation/software-factory/sf-bl005/boxing-calibration-003/comparison-manifest.json 730cf38b4f139806f3c753363cf8a8832b4ae959f0bea717389a0f259d4c55d4 validation/software-factory/sf-bl005/boxing-calibration-003/evaluator/stages"
+      ],
+      "comparisonManifestDocument": {
+        "baseline": {
+          "path": "producer/baseline.json",
+          "sha256": "4d56a13edb7167ab94461e5a5ea496687634858a800df1bc774e7120b37187e5"
+        },
+        "binding": {
+          "extractorSha256": "33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab",
+          "inputSnapshotSha256": "41a7f9fc60bf9f0de938a5c2f4fd29e33f8258a060d0826f4240baa180e6fa37",
+          "productionRoots": [
+            "src/main/java"
+          ],
+          "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+          "testRoots": [
+            "src/test/java"
+          ]
+        },
+        "datasetKind": "CALIBRATION",
+        "improved": {
+          "path": "producer/improved.json",
+          "sha256": "823a07e84ead932634faaa07bf3c911faa65d2774594561ca2daeb2dec38625c"
+        },
+        "proofs": {
+          "path": "evaluator/proofs.json",
+          "sha256": "8dd7494b7b0f0fec9d07c51bdba1c590bda1061cd6c78c3c34df88739c896c68"
+        },
+        "schemaVersion": "SFBL005-METHOD-PAIR-001",
+        "truth": {
+          "path": "evaluator/truth.json",
+          "sha256": "39aa27459305c05a4c983b0c414c60b39ec3e460491b9edb5da49c620bc2de2c"
+        }
+      },
+      "dependsOn": [
+        "PRODUCER"
+      ],
+      "id": "EVALUATOR",
+      "materializationCommands": [
+        "mkdir -p validation/software-factory/sf-bl005/boxing-calibration-003/evaluator",
+        "cp validation/software-factory/sf-bl005/boxing-calibration-002/evaluator/truth.json validation/software-factory/sf-bl005/boxing-calibration-003/evaluator/truth.json",
+        "cp validation/software-factory/sf-bl005/boxing-calibration-002/evaluator/proofs.json validation/software-factory/sf-bl005/boxing-calibration-003/evaluator/proofs.json",
+        "python3 -c 'import json,pathlib; e=json.loads(pathlib.Path(\"validation/software-factory/sf-bl005/execution-envelope-boxing-calibration-003.json\").read_text()); d=e[\"stages\"][1][\"comparisonManifestDocument\"]; pathlib.Path(\"validation/software-factory/sf-bl005/boxing-calibration-003/comparison-manifest.json\").write_text(json.dumps(d,sort_keys=True,indent=2)+\"\\n\")'",
+        "test \"$(shasum -a 256 validation/software-factory/sf-bl005/boxing-calibration-003/comparison-manifest.json | awk {print\\ $1})\" = 730cf38b4f139806f3c753363cf8a8832b4ae959f0bea717389a0f259d4c55d4"
+      ]
+    },
+    {
+      "dependsOn": [
+        "EVALUATOR"
+      ],
+      "id": "INDEPENDENT_REVIEW"
+    }
+  ],
+  "targetBranch": "codex/sf-bl005-boxing-calibration-003"
+}
