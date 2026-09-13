@@ -15,29 +15,10 @@ then writes one bounded `IMPLEMENTATION-PLAN.md` and execution envelope.
 | `SF-BL-005` | `FEATURE` | `AUTH-002`, `PK-004`, `EVID-001`, `SF-EVAL-001`, `TECH-001`; source: SF-BL-002 post-acceptance analysis | Align scenario-mapping scoring units, strengthen evidence-backed METHOD realization chains, and compare baseline/improved producers on isolated unseen data under one frozen protocol. Keep TYPE limitations explicit and outputs proposal-only. | `IN_PROGRESS` | `SF-BL-005-CROSSREPO-GATE-CONTAINMENT-003` returned independently reviewed candidate `2c69c62d7c5b9fd33f11c90b52b7a8f0d1bc4ce8`, replayed durably as `1cbfbac252b8c48567ecfdeac43fa87fcbddb643`; focused Java `31/31`, full Java `1402/1402`. `SF-BL-005-CROSSREPO-REALWORLD-003` returned diagnostic recall 0 in both arms; FDP acceptance withheld for envelope deviations. Reconciliation: `validation/software-factory/sf-bl005/fdp-reconciliation-realworld-003.md`. First-run evidence remains immutable. Plan: `IMPLEMENTATION-PLAN.md#current-selection`. Petclinic007 metrics are not generalization or parent closure. Formal holdout remains gated. |
 
 | `SF-BL-006` | `DOCUMENTATION` | `AUTH-001`, `AUTH-003`, `EXEC-003`, `EVID-001`; source: Human-authorized company-AI sharing review | Produce a bounded company-AI workflow learning package with physical learner/evaluator isolation, explicit sharing classification, deterministic file manifests, and no claim of runtime validation. | `BLOCKED_USER_APPROVAL` | Learner archive delivery to the bound email recipient is complete; evaluator-only material was withheld. Evidence: `docs/company-ai-learning/RELEASE-VERIFICATION.json`. Downstream AI upload, installation, adoption and terminal closure remain blocked until the exact company environment and applicable approval are bound. This lane is independent of calibration. |
-| `SF-BL-007` | `FEATURE` | `CSI-001`, `AUTH-001`–`AUTH-003`, `PK-005`, `FD-T3-007`, `FD-T4-001`–`FD-T4-003`, `EVID-001`, `EXEC-001` | Provide a reusable, evidence-bound method for converting verified delivery findings into bounded system-improvement recommendations and routing authorized changes through existing Software Factory controls, without creating a parallel lifecycle or automatic Product truth. | `BLOCKED_USER_APPROVAL` | Capability inclusion is Human-authorized; execution selection still requires Human Authority. No implementation, Plan, envelope, runtime binding, or active-execution lane is authorized. Historical SF-BL-005 findings may be used as read-only design evidence but are not a normative dependency or implementation scope. |
+| `SF-BL-007` | `FEATURE` | `CSI-001`, `AUTH-001`–`AUTH-003`, `PK-005`, `FD-T3-007`, `FD-T4-001`–`FD-T4-003`, `EVID-001`, `EXEC-001` | Provide a reusable, evidence-bound method for converting verified delivery findings into bounded system-improvement recommendations and routing authorized changes through existing Software Factory controls, without creating a parallel lifecycle or automatic Product truth. | `READY` | Eligible for Human selection but not authorized to execute. No implementation, Plan, envelope, runtime binding, or active-execution lane exists. Historical SF-BL-005 findings may be used as read-only design evidence but are not a normative dependency or implementation scope. |
 
 `SF-BL-001` is one parent item. Its gates and capability list are acceptance
 structure, not child Backlog items.
-
-### SF-BL-007 acceptance
-
-1. **Evidence completeness** — Each recommendation binds the originating
-   evidence, affected requirement or expected behavior, observed failure or
-   insufficiency, proposed prevention or earlier-detection control, affected
-   KPIs, and recommended existing revision route. Conditional identities are
-   either exact or explicitly not applicable.
-2. **Authority-safe recommendation** — A recommendation does not modify active
-   controls, dispatch work, expand ChangeClaims, select Backlog work, establish
-   Product meaning, or enact its recommended route.
-3. **Existing-path realization** — Every selected improvement is represented
-   through the existing Backlog, Implementation Plan, WorkItem, execution
-   envelope, evidence, independent-review, T4, or PK-005 path. No parallel
-   lifecycle or correctness verdict is introduced.
-4. **Measurable evidence** — Evaluation reports review escape, remediation
-   elapsed time, additional runs and input/output tokens when available.
-   Recurrence effectiveness is reported only against a frozen comparable cohort;
-   missing data remains unknown and an insufficient sample is explicit.
 
 ## Requirement coverage
 

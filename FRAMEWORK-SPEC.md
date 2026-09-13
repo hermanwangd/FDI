@@ -25,7 +25,7 @@ strength.
 | `PK-003` | Product Context is exact-versioned, provenance-bound, and fail-closed. |
 | `PK-004` | Reverse discovery remains proposal-only. |
 | `PK-005` | Delivery evidence can propose learning but cannot publish Product truth. |
-| `CSI-001` | Verified delivery findings may recommend evidence-bound system improvements, but every resulting change uses existing authority, planning, execution, verification, and Product Knowledge paths. |
+| `CSI-001` | Verified, evidence-bound delivery findings may recommend system improvements, but every resulting change uses existing authority, planning, execution, verification, and Product Knowledge paths. |
 | `FD-T1-001` | T1 produces immutable Product intent and Acceptance Criteria. |
 | `FD-T1-002` | Acceptance Criteria cannot be weakened within a delivery cycle. |
 | `FD-T2-001` | T2 performs System Analysis, ChangeSurface, TechnicalDesign, and DeliverySpec. |
@@ -427,8 +427,10 @@ fields.
 
 ### CSI-001 — Continuous system improvement
 
-Independent review, verification, execution, delivery, and KPI evidence MAY
-produce a system-improvement recommendation.
+Verified, evidence-bound findings from independent review, verification,
+execution, delivery, or KPI measurement MAY produce a system-improvement
+recommendation. The Feature Delivery Plane MUST determine that a finding is
+actionable before recommending a revision route.
 
 A recommendation MUST identify its originating evidence, the affected
 requirement or expected behavior, the observed failure or insufficiency, a
