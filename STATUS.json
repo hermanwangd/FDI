@@ -11,7 +11,7 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Correct active backlog/execution consistency, then materialize a new exact baseline diagnostic replan; downstream remediation remains dependency-blocked.",
+  "next_action": "Materialize and independently preflight SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001, then execute it in a new namespace.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001",
@@ -38,11 +38,11 @@
     "parent_closure": false
   },
   "selected_next_execution": {
-    "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002",
+    "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001",
     "state": "ENVELOPE_PREPARATION_SELECTED",
-    "objective": "Reproduce the frozen pre-remediation RealWorld selector diagnostic in a new namespace.",
-    "selection_authority": "Human selected options 1, 2, and 3 on 2026-09-13",
-    "construction_base": "da947f999abeee15f4a86ed2df90ded9775b5f8c",
+    "objective": "Reproduce the frozen pre-remediation RealWorld selector diagnostic after active-control correction, using a new namespace.",
+    "selection_authority": "Human selected baseline replan option 1 on 2026-09-13",
+    "construction_base": "0bcd856cac721188c2ee18f51527f48e037610fc",
     "code_change_authorized": false,
     "envelope_creation_authorized": true,
     "dispatch_authorized": true,
@@ -50,7 +50,7 @@
     "calibration_authorized": false,
     "formal_holdout_authorized": false,
     "parent_closure": false,
-    "dependencies": []
+    "supersedes_failed_execution": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002"
   },
   "metric_goal": {
     "status": "NOT_MET_DIAGNOSTIC_ONLY",
@@ -118,9 +118,9 @@
   ],
   "active_executions": [
     {
-      "lane_id": "realworld-diagnostic-baseline-rerun",
-      "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002",
-      "base_commit": "da947f999abeee15f4a86ed2df90ded9775b5f8c",
+      "lane_id": "realworld-diagnostic-baseline-replan",
+      "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001",
+      "base_commit": "0bcd856cac721188c2ee18f51527f48e037610fc",
       "selected_backlog_items": [
         "SF-BL-005"
       ],
@@ -227,7 +227,7 @@
   "proposed_next_execution": null,
   "authorized_execution_sequence": [
     {
-      "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002",
+      "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001",
       "order": 1,
       "authority": "ENVELOPE_AND_DISPATCH",
       "depends_on": null
@@ -236,7 +236,7 @@
       "execution_id": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
       "order": 2,
       "authority": "IMPLEMENTATION_DISPATCH",
-      "depends_on": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002"
+      "depends_on": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002-REPLAN-001"
     },
     {
       "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003",
