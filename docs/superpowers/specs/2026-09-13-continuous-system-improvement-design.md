@@ -60,7 +60,6 @@ The logical contract is:
 | `recommendation_id` | Stable repository-unique identifier. |
 | `disposition` | `RECOMMENDED_NOT_SELECTED`, `REJECTED`, or `SUPERSEDED`. |
 | `tag` | `CODE`, `DELIVERY`, `PK`, `MIXED`, or `UNKNOWN`. |
-| `origin_type` | Independent review, verification, execution, delivery, or KPI measurement. |
 | `origin_evidence[]` | Append-only observations; each contains `identity`, `origin_type`, and `durable_ref`. |
 | `candidate_revision` | Exact full revision when applicable; otherwise explicit `N/A` with reason. |
 | `execution_identity` | Exact run or envelope identity when applicable; otherwise explicit `N/A` with reason. |
