@@ -1,15 +1,19 @@
 {
   "execution_id": "SF-BL-005-GENERIC-ANCESTOR-001",
-  "as_of": "2026-09-13T03:06:47Z",
-  "status": "REMEDIATION_REQUIRED",
+  "category": "FEATURE_IMPLEMENTATION",
+  "size": "M",
+  "as_of": "2026-09-13T03:39:20Z",
+  "status": "FRESH_REVIEW_IN_PROGRESS",
   "e2e": {
+    "target_seconds": 7200,
+    "target_state": "YELLOW",
     "lead_time_seconds": null,
-    "elapsed_seconds": 5874
+    "elapsed_seconds": 7827
   },
   "cost": {
-    "input_tokens": 559051,
-    "output_tokens": 111873,
-    "cache_read_tokens": 13315584,
+    "input_tokens": 1085365,
+    "output_tokens": 220209,
+    "cache_read_tokens": 23740416,
     "usage_complete": false
   },
   "quality": {
@@ -24,9 +28,8 @@
     "dependency_wait_seconds": 2758
   },
   "completeness": {
-    "missing_count": 6,
+    "missing_count": 5,
     "missing": [
-      "remediated_candidate",
       "fresh_review_verdict",
       "combined_verification_result",
       "combined_integration_verdict",
@@ -47,6 +50,13 @@
     "corrective_action": "Reject generic substitution unless the receiver itself has the supported direct generic parent and add the non-generic intermediary regression.",
     "status": "IN_PROGRESS",
     "evidence": "HERM-514"
+  },
+  "monitor": {
+    "id": "generic-kpi-completion",
+    "cadence": "PT5M",
+    "destination": "owning-thread",
+    "deduplication_key": "execution_id+kpi+state+evidence_revision",
+    "state": "ACTIVE"
   },
   "stages": [],
   "runs": []

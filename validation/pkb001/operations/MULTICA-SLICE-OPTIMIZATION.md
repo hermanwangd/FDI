@@ -226,9 +226,16 @@ Compact machine-readable record:
 ```json
 {
   "execution_id": "SF-BL-NNN-EXECUTION-NNN",
+  "category": "FEATURE_IMPLEMENTATION",
+  "size": "M",
   "as_of": "2026-09-13T00:00:00Z",
   "status": "IN_PROGRESS",
-  "e2e": {"lead_time_seconds": null, "elapsed_seconds": 0},
+  "e2e": {
+    "target_seconds": 7200,
+    "target_state": "GREEN",
+    "lead_time_seconds": null,
+    "elapsed_seconds": 0
+  },
   "cost": {
     "input_tokens": null,
     "output_tokens": null,
@@ -254,6 +261,13 @@ Compact machine-readable record:
     "planned_gate_count": 0,
     "unplanned_intervention_count": 0,
     "human_wait_seconds": 0
+  },
+  "monitor": {
+    "id": "execution-scoped-monitor-id",
+    "cadence": "PT5M",
+    "destination": "owning-thread",
+    "deduplication_key": "execution_id+kpi+state+evidence_revision",
+    "state": "ACTIVE"
   },
   "stages": [],
   "runs": []
