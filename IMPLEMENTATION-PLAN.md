@@ -54,6 +54,10 @@ No output path may pre-exist. Temporary bundle and repeat-run paths stay under
 the allowlisted bytes materialized from their exact Git revisions. Symlinks,
 missing or extra files, digest mismatch, dirty source state, unreachable
 revision or output collision fail closed as `PLAN_CONFLICT`.
+Each runner command binds `java.io.tmpdir` to its own pre-created child under
+that scratch root. The runner may delete only the private temporary directory
+it creates there; no cleanup of durable evidence, shared scratch or pre-existing
+paths is authorized.
 
 ### Stage 1 — preflight and materialization
 
@@ -61,9 +65,11 @@ revision or output collision fail closed as `PLAN_CONFLICT`.
 2. Verify the preparation and public-input manifest digests.
 3. Materialize intents, observations, handlers and all 23 public test files
    from their named revisions into a fresh bundle; do not read evaluator truth.
-4. Write the runner input manifest outside the bundle. It must use schema
-   `SELECTOR-DIAGNOSTIC-INPUT-001`, list every input path and SHA-256, and bind
-   the execution, framework and source revisions.
+4. Write the runner input manifest outside the bundle. It must conform to the
+   `SELECTOR-DIAGNOSTIC-INPUT-001` record shape, list every input path and
+   SHA-256, and bind execution, framework and source revisions. The identifier
+   names the contract; it is not an extra serialized `schema` property because
+   the strict runner record would reject that unknown field.
 5. Confirm exactly 10 intents, 11 observations, 14 handlers, 23 test files and
    110 candidate pairs before running.
 
@@ -111,7 +117,9 @@ evidence is `INCONCLUSIVE`; no diagnostic result authorizes calibration.
 Do not modify source, tests, matching algorithms, active controls, prior
 evidence or frozen inputs. Do not run a scorer, calibration, formal holdout,
 Graphify reindex, upstream RealWorld tests, database or Docker. Do not publish,
-deploy, close `SF-BL-005`, or automatically retry/overwrite failed output.
+deploy, close `SF-BL-005`, automatically retry/overwrite failed output, or
+clean any path except the runner-owned private temp created inside its bound
+scratch child.
 Aggregate memory remains below 8 GB; Maven heap and fork heap are each 2 GB,
 one heavy JVM runs at a time, and each command timeout is at most 1200 seconds.
 
