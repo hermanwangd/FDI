@@ -2,112 +2,127 @@
 
 ## Current selection
 
-### SF-BL-005-CROSSREPO-REALWORLD-003
+### SF-BL-005 remediation planning
 
-> Execution Plane must use `executing-plans`, coordinate distinct generation,
-> proof/scoring, receipt-review and integration actors, and return one delivery
-> evidence package. Active controls are read-only to every Execution Plane actor.
+Status: SELECTOR_DIAGNOSTICS_SELECTED. The user authorized the bounded
+diagnostic implementation and exact-envelope dispatch. Execution ID:
+SF-BL-005-SELECTOR-DIAGNOSTICS-001. Only stage 2 diagnostic code and stage 4
+review/verification are selected; adapter implementation and calibration are not.
+Stage 1 handoff constraints below are mandatory for this execution.
+Backlog: SF-BL-005. Requirements: AUTH-002, PK-004, EVID-001, SF-EVAL-001,
+TECH-001. Exact source base: d89626981975f2c258e438f25880ac258efe1920.
+Spec revision: d109fde995dfae982b8e0c708367cdd9e7e4cb9d.
 
-**Goal:** Run the still-unused second RealWorld cross-repository calibration
-output once with both reviewed unsupported-action containment corrections, so
-nine supported scenarios can proceed while `RW-SCENARIO-002` remains an honest
-`UNRESOLVED` result.
+Source findings and immutable evidence identities:
+`validation/software-factory/sf-bl005/fdp-reconciliation-realworld-003.md`.
+REALWORLD-003 remains unaccepted for envelope compliance. Its zero-recall
+metrics are diagnostic evidence. This plan does not retroactively authorize
+its output-path changes, repeated scoring, runtime substitution or receipts.
 
-**Classification:** `CALIBRATION / REVISED_AFTER_PRE_SEAL_PLAN_CONFLICT`. This
-is not a first-use run, formal holdout, Product publication, generalization
-claim or parent closure.
+## Objective and sequence
 
-Backlog: `SF-BL-005`; requirements: `AUTH-002`, `PK-004`, `EVID-001`,
-`SF-EVAL-001`, `TECH-001`. Construction base:
-`1cbfbac252b8c48567ecfdeac43fa87fcbddb643`, containing reviewed mapper
-candidate `ec604f1fb6d1f774f4268f70af63e0850357ff74` replayed as `6a19bc0`, and
-reviewed gate candidate `2c69c62d7c5b9fd33f11c90b52b7a8f0d1bc4ce8` replayed as `1cbfbac`.
-Controlling design:
-`validation/software-factory/sf-bl005/cross-repo-realworld-001/SECOND-RUN-DESIGN.md`
-at SHA-256 `1bd839198d48647abf4d1484ea0acd69154ba2f277f243168357ea5b7af88ce8`.
+Prepare reliable handoff and identify exactly where public evidence is rejected,
+then add only request-bound REST Assured support justified by that diagnosis.
+Order: recovery contract -> behavior-preserving diagnosis -> bounded adapter ->
+independent review and combined verification. A future calibration needs its own
+fresh exact envelope. No stage may use evaluator truth to tune producer rules.
 
-## Frozen inputs and boundaries
+## 1. Durable handoff and recovery contract (FDP)
 
-- RealWorld source revision: `ee17e31aafe733d98c4853c8b9a74d7f2f6c924a`.
-- Ten scenarios SHA-256: `c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31`.
-- Evaluator truth SHA-256: `75a67c802ccd9ac5afa38e3d86331dcd698053b242b801d52f98a49e809adf1f`.
-- Producer input manifest SHA-256: `381e681d12868ce03f93721c085c51e0a4f3dc62bf1d90c8853f99d158472e35`.
-- Graph SHA-256: `2c554b8b0e35922b7be423978e6bcf9b9e139607c09299ef8ccb3c84409b0857`.
-- Reuse existing Graphify/test-behavior evidence; no reindexing or extraction.
-- All first-run artifacts and existing validation evidence are immutable.
-- The six frozen calibration algorithm files and `BehaviorEvidencePolicy` remain
-  byte-identical. No matching, classification, proof or scorer tuning.
-- Producer/generation actors cannot access evaluator truth, expected pairs,
-  missing-pair lists or evaluator judgments.
-- No merge, push, deployment, publication, paid service, database, Docker,
-  upstream RealWorld test run, additional rerun or parent closure.
+Owned documents: this Plan, BACKLOG.md, STATUS.json, and a future execution
+ envelope under `validation/software-factory/sf-bl005/`.
 
-## New immutable output namespace
+Before dispatch, materialize full commit IDs, per-stage owned paths, retained
+runtime location and digest, producer/evaluator visibility, and handoff manifest.
+A handoff must include immutable commit or attachment identities, byte lengths,
+SHA-256 values and an independent receiver read-back before worktree cleanup.
+Retain exact producer/scorer JAR bytes outside disposable worktrees. Record the
+absolute Java executable and version; reject anything other than Java 17.
 
-The superseded 002 execution produced no output. This new execution may create
-only the still-unused second-run paths under
-`validation/software-factory/sf-bl005/cross-repo-realworld-001/`:
+Acceptance: a missing/corrupt artifact prevents stage advance; a receiver can
+retrieve identical bytes after producer-worktree removal; unavailable runtime
+bytes prevent an exact-runtime verification claim. Test this with synthetic
+small artifacts, not by deleting existing worktrees or evidence.
 
-- `generation-realworld-002/**`
-- `evaluator/proofs-002.json`
-- `comparison-manifest-002.json`
-- `comparison-002.json`
-- `receipt-002.md`
-- `RESULTS-002.md`
+Recovery: a lost artifact may only be restored from a verified identical copy.
+If no copy exists, report PLAN_BLOCKED/PLAN_CHANGE_REQUIRED; no scorer rerun,
+new receipt name or changed output location is authorized implicitly. A future
+re-execution needs a new envelope and unused namespace. Preserve failed receipts.
+No exactly-once claim when a previous scorer invocation has unknown outcome.
 
-Any pre-existing target path is `PLAN_CONFLICT`; never overwrite it.
+Decision proposal for a future envelope: integrity/compliance failure first;
+then missing mandatory metrics => INCONCLUSIVE; only complete valid metrics
+permit threshold REVISE or calibration recommendation. Human approval is needed
+if adopting this changes the existing acceptance semantics. Until resolved,
+report metric values and their missing reasons without a terminal metric verdict.
 
-## Ordered execution DAG
+## 2. Explain selector losses without changing behavior (Java)
 
-1. Verify base ancestry, both reviewed-candidate provenance records, frozen
-   hashes and output nonexistence; run full Java/Python regression; build and
-   digest the runtime JAR.
-2. Generate `generation-realworld-002` from unchanged public inputs and seal
-   baseline/improved outputs. Retain all scenarios in order. `AUTHENTICATE`
-   remains `UNRESOLVED`, with no component and the deterministic diagnostic.
-3. After sealing, a distinct actor opens evaluator truth and writes
-   `evaluator/proofs-002.json` without changing producer outputs.
-4. Bind producer/proof/truth digests in `comparison-manifest-002.json`; execute
-   the unchanged `SFBL005-METHOD-PAIR-001` scorer exactly once.
-5. A separately attributable reviewer recomputes hashes, counts, metrics and
-   decision and writes `receipt-002.md` with PASS, FAIL or INCONCLUSIVE.
-6. Integrate evidence into `RESULTS-002.md` and return one delivery package to
-   Feature Delivery Plane without editing controls.
+Dependency: stage 1 contract prepared. Package root for paths below:
+`src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/`;
+corresponding tests under `src/test/java/` with the same package path.
+Owned files: ScenarioEvidenceSelector.java, ScenarioEvidenceSelectorTests.java.
+Expose the typed diagnostic result through a package-local interface exercised
+by tests; no CLI or MethodCalibrationRun changes in this slice.
+Budget: two paths, at most 500 changed code/test lines, at most 60 tool calls.
 
-Stages are sequential because generation sealing controls evaluator visibility.
+Add a typed diagnostic result alongside the existing selection interface. Retain
+identical seed selection/order and producer outputs. For every scenario/observation
+pair, record one deterministic first rejection or ACCEPTED; separately report
+scenarios with no observations. Reasons cover route absence/ambiguity, entity,
+action, test identity, request ambiguity, unsupported assertion dialect, assertion
+polarity and unmet condition. Do not relabel all empty results as dialect failures.
 
-## Acceptance and decision
+Acceptance: per-scenario pair counts reconcile (accepted + rejected = evaluated);
+first-rejection precedence is deterministic; existing output bytes stay identical
+with diagnostics on/off; diagnostic output is ordered and contains no evaluator
+truth. Malformed input still fails closed rather than becoming a rejection count.
+This slice proves accounting and parity with pinned existing and synthetic
+fixtures. RealWorld per-scenario diagnosis is a subsequent evidence slice with
+a separately pinned public-input manifest; do not access RealWorld or evaluator
+artifacts during this code slice. Do not claim measured RealWorld bottleneck counts.
 
-- Retain all ten scenarios in original order; unsupported scenarios remain in
-  the denominator and contribute FN for every expected gold pair.
-- Report TP, FP, FN, duplicates, proposed pairs, selected scenarios,
-  unsupported/unresolved scenarios, precision, recall, F1, scenario coverage
-  and complete-chain coverage. Undefined metrics remain null with a reason.
-- Raw precision must be strictly greater than `0.80`; raw recall must be
-  strictly greater than `0.60`.
-- Below either target is `REVISE`; integrity failure is `INVALID`; unavailable
-  mandatory metrics are `INCONCLUSIVE`; passing thresholds supports only a
-  calibration recommendation.
+## 3. Request-bound REST Assured adapter (Java)
 
-## Verification and resources
+Dependency: stage 2 evidence reviewed; freeze the smallest supported syntax set.
+Owned files: ScenarioEvidenceSelector.java, ScenarioEvidenceSelectorTests.java;
+optional new RestAssuredAssertionAdapter.java in the same package. No new Python.
 
-Use Java 17, one heavy process at a time, aggregate below 8 GB, Maven heap/fork
-at 2 GB, producer at 1 GB, evaluator at 512 MB, and 20 minutes per command:
+TDD: first show a single REST Assured request with literal statusCode(200/201)
+is rejected by the old dialect check. Then recognize assertions tied to that
+same request chain. Return unsupported/ambiguous for unproven forms; do not infer
+success from an unrelated assertion or a method name. Preserve action/condition
+requirements; a status code alone cannot prove a domain-specific condition.
+
+Acceptance: positive supported request qualifies only after all existing gates;
+wrong/missing status, another request's assertion, multiple ambiguous requests,
+lambda/helper indirection and unproven condition cases do not qualify. Existing
+MockMvc cases retain results. No AUTHENTICATE classification, entity/action
+heuristic widening, proof/scorer changes, or threshold adjustment. Other diagnosed
+bottlenecks become separate proposals, not silent scope expansion.
+
+## 4. Independent review and verification
+
+Dependency: exact implementation candidate and durable evidence available.
+Reviewer must be distinct from producer/integrator; bind verdict to the exact
+candidate, changed paths, RED/GREEN evidence and handoff/runtime identities.
+Review both positive and negative fixtures plus byte-parity diagnostic evidence.
+
+Use Java 17, one heavy JVM at a time, aggregate memory below 8 GB, Maven heap/fork
+2 GB, each command bounded to 1200 seconds:
 
 ```text
+MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -Dtest=ScenarioEvidenceSelectorTests,MethodCalibrationRunTests,QualifiedCalibrationProducerTests test
 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g package
 python3 -m pytest -q
 git diff --check
 ```
 
-The execution envelope materializes exact paths, digests, actor ownership,
-commands and fail-closed transitions. Identity mismatch is `PLAN_CONFLICT`;
-missing dependency/access is `PLAN_BLOCKED`; semantic or scope change is
-`PLAN_CHANGE_REQUIRED`.
+Required checks must pass. Existing control-test failures must be individually
+reproduced at the exact baseline and returned to FDP for correction/disposition;
+Execution Plane cannot waive them. Retain logs, reports and actual runtime bytes.
 
-## Completion boundary
-
-After independent receipt, return exact identities, artifact digests, results,
-limitations, actor/run identities and KPI evidence. Feature Delivery Plane
-reconciles the result. Human Authority separately owns formal holdout selection
-and terminal `SF-BL-005` closure.
+Return one package with exact commits/digests, loss counts, parity checks,
+negative cases, review verdict, limitations, attempts/rework and token/cycle KPIs.
+PASS establishes ENGINEERING_READY_FOR_FDP_INTAKE only. It promises no recall
+improvement and does not select RealWorld rerun, holdout, publication or closure.

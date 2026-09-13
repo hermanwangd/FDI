@@ -5,22 +5,22 @@
   "backlog": "BACKLOG.md",
   "implementation_plan": "IMPLEMENTATION-PLAN.md",
   "baseline_status": "ACTIVE",
-  "decision": "NOT_RUN",
+  "decision": "INCONCLUSIVE",
   "active_backlog_item": "SF-BL-005",
   "active_implementation_plan": "IMPLEMENTATION-PLAN.md#current-selection",
   "selected_backlog_items": [
     "SF-BL-005"
   ],
   "active_execution": {
-    "execution_id": "SF-BL-005-CROSSREPO-REALWORLD-003",
-    "base_commit": "1cbfbac252b8c48567ecfdeac43fa87fcbddb643",
+    "execution_id": "SF-BL-005-SELECTOR-DIAGNOSTICS-001",
+    "base_commit": "d89626981975f2c258e438f25880ac258efe1920",
     "selected_backlog_items": [
       "SF-BL-005"
     ],
     "execution_state": "READY_FOR_COORDINATOR",
     "integration_candidate": null
   },
-  "next_action": "Delivery Coordinator executes the revised RealWorld calibration from the fresh exact envelope; preserve isolation and immutable second-run outputs, then return evidence to Feature Delivery Plane.",
+  "next_action": "Implement behavior-preserving selector diagnostics, obtain independent review and combined verification; return exact candidate and durable evidence.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-CROSSREPO-GATE-CONTAINMENT-003",
@@ -31,7 +31,7 @@
     "state": "ENGINEERING_READY_REPLAYED_FOR_REALWORLD_RETRY"
   },
   "metric_goal": {
-    "status": "READY_FOR_REVISED_REALWORLD_EXECUTION",
+    "status": "NOT_MET_DIAGNOSTIC_ONLY",
     "scope": "REALWORLD_REVISED_AFTER_FIRST_RUN_FAILURE_NOT_FORMAL_HOLDOUT",
     "recall_strictly_greater_than": 0.6,
     "precision_strictly_greater_than": 0.8
@@ -48,10 +48,12 @@
   "latest_cross_repository_attempt": {
     "execution_id": "SF-BL-005-CROSSREPO-REALWORLD-003",
     "repository_id": "realworld",
-    "generation_status": "NOT_RUN_READY_FOR_COORDINATOR",
-    "scoring_status": "NOT_RUN",
-    "metrics_available": false,
-    "evidence": "validation/software-factory/sf-bl005/execution-envelope-realworld-003.json"
+    "generation_status": "SEALED_OUTPUTS_INSPECTED",
+    "scoring_status": "RETURNED_WITH_ENVELOPE_DEVIATIONS",
+    "metrics_available": true,
+    "evidence": "validation/software-factory/sf-bl005/fdp-reconciliation-realworld-003.md",
+    "reported_recommendation": "REVISE",
+    "fdp_acceptance": "WITHHELD"
   },
   "pkb001_foundation": {
     "status": "PRESERVED_IMMUTABLE_HISTORY",
@@ -84,5 +86,10 @@
     ],
     "outputs_created": false,
     "superseded_by": "SF-BL-005-CROSSREPO-REALWORLD-003"
+  },
+  "remediation_plan": {
+    "state": "DIAGNOSTIC_SLICE_SELECTED",
+    "path": "IMPLEMENTATION-PLAN.md#current-selection",
+    "source_base": "d89626981975f2c258e438f25880ac258efe1920"
   }
 }
