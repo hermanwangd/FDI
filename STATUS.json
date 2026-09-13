@@ -1,5 +1,5 @@
 {
-  "current_focus": "SF-BL-005",
+  "current_focus": "SF-BL-007",
   "phase": "software_factory_vnext",
   "framework_spec": "FRAMEWORK-SPEC.md",
   "backlog": "BACKLOG.md",
@@ -10,9 +10,10 @@
   "active_implementation_plan": "IMPLEMENTATION-PLAN.md#current-selection",
   "selected_backlog_items": [
     "SF-BL-005",
-    "SF-BL-006"
+    "SF-BL-006",
+    "SF-BL-007"
   ],
-  "next_action": "Obtain an independently attributable exact-envelope preflight for SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001; do not dispatch before a separate Human decision.",
+  "next_action": "Human reviews the selected SF-BL-007 process-design Plan and decides whether to authorize production of a reviewed design artifact; no implementation envelope or dispatch exists.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
@@ -119,7 +120,8 @@
   },
   "active_backlog_items": [
     "SF-BL-005",
-    "SF-BL-006"
+    "SF-BL-006",
+    "SF-BL-007"
   ],
   "active_executions": [
     {
@@ -221,6 +223,16 @@
       ],
       "execution_state": "PARKED_AFTER_STAGE_2_FAIL",
       "integration_candidate": "8e835b427bd5f6b242b38d00e714d902298366c1"
+    },
+    {
+      "lane_id": "continuous-system-improvement-design",
+      "execution_id": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-DESIGN-001",
+      "base_commit": "3e163683857fe09913436a3b3881c1b4c3dba5ce",
+      "selected_backlog_items": [
+        "SF-BL-007"
+      ],
+      "execution_state": "HUMAN_SELECTED_DESIGN_PLAN_ONLY_NOT_DISPATCHED",
+      "integration_candidate": null
     }
   ],
   "mapping_improvement_intake": {
@@ -295,7 +307,7 @@
   },
   "system_improvement_intake": {
     "backlog_id": "SF-BL-007",
-    "state": "RECOMMENDED_NOT_SELECTED",
+    "state": "HUMAN_SELECTED_DESIGN_PLAN_ONLY",
     "recommendation_count": 4,
     "tags": {
       "CODE": 2,
@@ -305,9 +317,19 @@
       "UNKNOWN": 0
     },
     "effectiveness": "INSUFFICIENT_SAMPLE",
-    "implementation_plan_exists": false,
+    "implementation_plan_exists": true,
     "execution_envelope_exists": false,
     "dispatch_authorized": false,
     "automatic_product_truth_publication": false
+  },
+  "proposed_next_execution": {
+    "execution_id": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-DESIGN-001",
+    "state": "HUMAN_SELECTED_DESIGN_PLAN_ONLY",
+    "allowed_output": "PROCESS_DESIGN_PLAN_ONLY",
+    "implementation_envelope_authorized": false,
+    "dispatch_authorized": false,
+    "code_change_authorized": false,
+    "agent_or_automation_change_authorized": false,
+    "parent_closure": false
   }
 }
