@@ -348,6 +348,20 @@ changes, new evidence changes the diagnosis, user action becomes necessary, or
 the abnormal condition resolves. Monitoring reports facts and never changes
 scope, acceptance gates or authority.
 
+For every new parent execution created after this rule, KPI monitoring is a
+pre-dispatch requirement. The controller records the execution ID, category and
+S/M/L size, Delivery E2E target, metric owners, improvement owners, monitoring
+cadence, notification destination and deduplication key before starting the first
+implementation run. Missing monitor configuration blocks dispatch; it does not
+authorize a weaker default.
+
+Use one execution-scoped monitor rather than one unbounded project poller. Start
+it when the parent execution is selected, keep it quiet under the rules above,
+and stop it only after FDP acceptance, explicit cancellation or supersession.
+Before stopping, write one final KPI snapshot with complete or explicitly missing
+values and the monitor outcome. Existing historical executions are not rewritten
+to simulate compliance with this prospective rule.
+
 | KPI | Definition | Current baseline (HERM-273 through HERM-282) | Next target | First optimization action when abnormal |
 |---|---|---|---|---|
 | token cost | Sum input and output across every run; report cache-read separately because its provider cost differs. | 32 runs; 2,333,118 input+output and 60,464,384 cache-read tokens, collected 2026-09-06. | Coordinator share at or below 20%, with zero duplicate-trigger runs. | Remove duplicate triggers and repeated context loading before reducing verification. |
@@ -417,6 +431,7 @@ Base / candidate / integration candidate:
 Exact-input manifest digest / identity verification / discovery deviation:
 Model / runtime / instruction revision:
 Run IDs and roles / source / collected at / completeness:
+KPI monitor ID / cadence / destination / deduplication key / final state:
 Input / output / cache-read / duplicate-trigger runs:
 Start / implementation complete / review start / verdict / combined verdict:
 Cycle time / preflight time and calls / total tool calls / review-routing wait:
