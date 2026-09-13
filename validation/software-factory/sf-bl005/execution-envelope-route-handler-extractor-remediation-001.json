@@ -1,0 +1,228 @@
+{
+  "acceptance": [
+    "FIXED_METHOD_MAPPINGS adds PutMapping -> PUT and DeleteMapping -> DELETE while preserving GetMapping -> GET and PostMapping -> POST",
+    "class-level RequestMapping composes with PutMapping and DeleteMapping having no path or one statically recoverable literal value/path",
+    "non-literal mapping values remain unindexed rather than guessed",
+    "RequestMapping explicit/unconstrained methods, normalization, ambiguity, provenance, ordering and handler schemas remain unchanged",
+    "the exact frozen RealWorld production source yields 19 handlers, including the five source-backed PUT/DELETE handlers in the coverage matrix",
+    "all 11 frozen HTTP observations resolve by exact method and structural route against that 19-handler index; this is diagnostic verification without selector/scorer/evaluator access",
+    "focused tests and the full Java 17 package pass with zero failures, errors and skips",
+    "independent review of the exact candidate has no unresolved P0-P2 finding",
+    "delivery evidence binds exact base, candidate, changed paths, commands, results, reviews, artifact digests, elapsed time and available KPI values; missing KPI values remain UNKNOWN"
+  ],
+  "backlogItems": [
+    "SF-BL-005"
+  ],
+  "changeSurfaces": {
+    "route-handler-index-production": [
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/route/SpringRouteHandlerIndex.java"
+    ],
+    "route-handler-index-tests": [
+      "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/route/SpringRouteHandlerIndexTests.java"
+    ],
+    "route-handler-remediation-evidence": [
+      "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/**"
+    ]
+  },
+  "classification": "BOUNDED_T3_IMPLEMENTATION_REMEDIATION",
+  "constructionBase": "9bbcb7da3ecb61810947fdee566e2d842d9d0a5b",
+  "controlCommit": "9bbcb7da3ecb61810947fdee566e2d842d9d0a5b",
+  "controls": {
+    "AGENTS.md": "a70a2d4da9f9dd8add3ca2ab3d794125a08525bdb53cca4426d60f9a9a091c12",
+    "BACKLOG.md": "8721db6b79b394d6661ee58f1c88574ee1ca4a82ef45e292cdf04cf607a38923",
+    "FRAMEWORK-SPEC.md": "1c78425291c7ff16d39760fcef41ff275076d1cf5b3aa973bcabe1b8c3f5930a",
+    "IMPLEMENTATION-PLAN.md": "2fa43bba31594de7ccdeff51ec29d8f04af6b8a6515670e73382c8e855b95de4",
+    "JAVA-CODING-GUIDELINES.md": "06011e21515ea11447d968e94cba2497b8ac0935fb4b3936ff099da31268a28f",
+    "PROJECT-OVERVIEW.md": "e5ceb9b4baf8a5b5a9d557dd78f673221c8ecea182ba782457fc76e08172e4c0",
+    "STATUS.json": "bb5eb2029f2df8ed36a8712c1c62346cc1c08a41b2333c7ac6a4539b7694c48f"
+  },
+  "dependencies": [
+    {
+      "predecessorRef": "SF-BL-005-RHE-001-W1",
+      "successorRef": "SF-BL-005-RHE-001-W2"
+    },
+    {
+      "predecessorRef": "SF-BL-005-RHE-001-W2",
+      "successorRef": "SF-BL-005-RHE-001-W3"
+    }
+  ],
+  "envelopeRevision": 1,
+  "excluded": [
+    "all five active control files and AGENTS.md",
+    "all source and test paths outside the two exact Java files",
+    "selector, scorer, evaluator, gold, frozen input and prior evidence mutation",
+    "generic-ancestor CSI-REC-001/002 remediation",
+    "threshold or acceptance-criterion changes",
+    "calibration, RealWorld scoring, formal holdout, Product truth, publication, deployment and parent closure",
+    "new Python code or modification of existing Python code"
+  ],
+  "executionId": "SF-BL-005-ROUTE-HANDLER-EXTRACTOR-REMEDIATION-001",
+  "failureRouting": {
+    "inputRevisionDigestTreeOrControlMismatch": "PLAN_CONFLICT",
+    "insufficientIndependentEvidence": "INCONCLUSIVE",
+    "newMappingScopeOrBehaviorRequired": "PLAN_CHANGE_REQUIRED",
+    "requiredPathOrJava17Unavailable": "PLAN_BLOCKED",
+    "testOrImplementationFailureInsideEnvelope": "FAILED_EXECUTION_REMEDIATE_WITHIN_EXACT_WORKITEM"
+  },
+  "frozenInputs": {
+    "implementation": {
+      "blob": "39d8d9d823744700c2a74b28615f696838ca09ea",
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/route/SpringRouteHandlerIndex.java",
+      "sha256": "77e8453ff365c18f2e28b552a7b0f2f7c500cb280b1f5cfe9623aa67176ff465"
+    },
+    "realWorldSource": {
+      "access": "READ_ONLY",
+      "productionJavaFiles": 93,
+      "productionSubtree": "393afbd6c7e5dab2352ef896b5866348d6d822a3",
+      "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31",
+      "revision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+      "tree": "3938658872ad216fe45033f4698c66febd80be76"
+    },
+    "tests": {
+      "blob": "791b17c8548a6458a3aaa1790b0c29a7a84e20f1",
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/route/SpringRouteHandlerIndexTests.java",
+      "sha256": "74dcd6fbd728d81f96195efe0e61489b7ea5e4b380c9580744a364b156ae9982"
+    }
+  },
+  "humanOnlyBoundaries": {
+    "calibration": false,
+    "deployment": false,
+    "formalHoldout": false,
+    "implementationDispatch": "SEPARATE_HUMAN_DECISION_REQUIRED_AFTER_INDEPENDENT_PREFLIGHT",
+    "parentClosure": false,
+    "productTruth": false,
+    "publication": false
+  },
+  "negativeCases": [
+    "do not add PatchMapping or composed/meta-annotation support without new source-backed evidence and replan",
+    "do not interpret a non-literal annotation value",
+    "do not alter route matching, placeholder, ambiguity or fallback behavior",
+    "do not change frozen route-analysis outputs",
+    "do not access evaluator truth, gold, proofs, diagnoses or scorer",
+    "do not claim RealWorld metric improvement from handler-index verification"
+  ],
+  "originatingEvidence": {
+    "analysisCommit": "8b758f79e677de0fce6d39afbe4b32aae228e41d",
+    "coverageMatrix": {
+      "path": "validation/software-factory/sf-bl005/route-coverage-analysis-001/coverage-matrix.json",
+      "sha256": "c657cd1f1ae5c71d3e9e8757efafd1d8ce97e587b98dcba82250e35ec98e8139"
+    },
+    "executionReceipt": {
+      "path": "validation/software-factory/sf-bl005/route-coverage-analysis-001/execution-receipt.json",
+      "sha256": "f2ece91070ad5ebf94490a72554e9f8f158bfd3fa000e6cae8cb4b349815781a"
+    },
+    "finding": {
+      "classification": "UNSUPPORTED_STATIC_EXTRACTION",
+      "distinctObservations": 9,
+      "repeatedDiagnosticPairs": 90
+    }
+  },
+  "ownedPaths": [
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/route/SpringRouteHandlerIndex.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/route/SpringRouteHandlerIndexTests.java",
+    "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/**"
+  ],
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "requiredOutputs": {
+    "commandLog": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/command-log.txt",
+    "deliveryEvidence": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/delivery-evidence.json",
+    "digestManifest": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/digests.sha256",
+    "implementation": "updated exact production path only",
+    "review": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/independent-review.md",
+    "tests": "updated exact test path only"
+  },
+  "requirementIds": [
+    "AUTH-002",
+    "PK-004",
+    "EVID-001",
+    "TECH-001"
+  ],
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "commandTimeoutSeconds": 1200,
+    "forkCount": 1,
+    "mavenHeapGb": 2,
+    "maximumConcurrentAnalysisProcesses": 2,
+    "oneHeavyJvmAtATime": true
+  },
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "sourceTree": "63ef6a44f4ab97df26e422a172f0134b1e29cf6a",
+  "targetBranch": "codex/sf-bl005-route-handler-extractor-remediation-001",
+  "verificationCommands": [
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dtest=SpringRouteHandlerIndexTests test",
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true package",
+    "python3 -m pytest -q",
+    "git diff --check"
+  ],
+  "workItems": [
+    {
+      "changeClaims": [
+        "route-handler-index-production",
+        "route-handler-index-tests"
+      ],
+      "constraints": [
+        "TDD_CHARACTERIZATION_FIRST",
+        "NO_PUBLIC_API_CHANGE",
+        "NO_ROUTE_NORMALIZATION_CHANGE",
+        "NO_SELECTOR_OR_SCORER_CHANGE"
+      ],
+      "evidenceRequirementRefs": [
+        "RHE-EVID-001",
+        "RHE-EVID-002"
+      ],
+      "inputRefs": [
+        "frozenInputs.implementation",
+        "frozenInputs.tests",
+        "originatingEvidence.coverageMatrix"
+      ],
+      "objective": "Add fixed HTTP method extraction for method-level PutMapping and DeleteMapping and focused regression coverage.",
+      "outputRequirementRefs": [
+        "RHE-OUT-001",
+        "RHE-OUT-002"
+      ],
+      "workItemRef": "SF-BL-005-RHE-001-W1"
+    },
+    {
+      "changeClaims": [
+        "route-handler-remediation-evidence"
+      ],
+      "constraints": [
+        "REVIEWER_SEPARATE_FROM_PRODUCER_AND_INTEGRATOR",
+        "NO_SOURCE_OR_TEST_MUTATION"
+      ],
+      "evidenceRequirementRefs": [
+        "RHE-EVID-003"
+      ],
+      "inputRefs": [
+        "SF-BL-005-RHE-001-W1.result"
+      ],
+      "objective": "Independently review the exact W1 candidate and verify source-backed behavior, scope, tests, and Java guidelines.",
+      "outputRequirementRefs": [
+        "RHE-OUT-003"
+      ],
+      "workItemRef": "SF-BL-005-RHE-001-W2"
+    },
+    {
+      "changeClaims": [
+        "route-handler-remediation-evidence"
+      ],
+      "constraints": [
+        "EXACT_REVIEWED_CANDIDATE",
+        "ONE_HEAVY_JVM_AT_A_TIME",
+        "NO_ACTIVE_CONTROL_MUTATION"
+      ],
+      "evidenceRequirementRefs": [
+        "RHE-EVID-004"
+      ],
+      "inputRefs": [
+        "SF-BL-005-RHE-001-W1.result",
+        "SF-BL-005-RHE-001-W2.result"
+      ],
+      "objective": "Integrate an independently accepted candidate, run Java 17 full regression, and assemble deterministic delivery evidence.",
+      "outputRequirementRefs": [
+        "RHE-OUT-004"
+      ],
+      "workItemRef": "SF-BL-005-RHE-001-W3"
+    }
+  ]
+}
