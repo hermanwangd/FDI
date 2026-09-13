@@ -192,4 +192,29 @@ class QualifiedSourceCallsTests {
         assertTrue(calls.calls(index.unique("demo.Service#run"), "FIND").isEmpty());
         assertTrue(calls.calls(index.unique("demo.Service#other"), "FIND").isEmpty());
     }
+    @Test void verifiedBootstrapMarkerDoesNotInventAnUnknownOverload() throws Exception {
+        var index = index("""
+                package demo; import java.io.Serializable;
+                class Base implements Serializable {}
+                class Store extends Base {void lookup(Integer id){}}
+                class Service {Store store; void run(int id){store.lookup(id);}}
+                """);
+        var method = index.unique("demo.Service#run");
+        assertTrue(new QualifiedSourceCalls(index, true).calls(method, "FIND").isEmpty());
+        assertEquals(List.of("demo.Store#lookup(java.lang.Integer)"),
+                new QualifiedSourceCalls(index, true, true).calls(method, "FIND").stream()
+                        .map(SourceMethodIndex.Method::signature).toList());
+    }
+    @Test void verifiedJdkModeStillRefusesCompetingJdkMethodsAndUnknownLibraries() throws Exception {
+        var index = index("""
+                package demo; import java.util.ArrayList; import external.Base;
+                class Store extends ArrayList {void add(int x){}}
+                class Unknown extends Base {void lookup(Integer id){}}
+                class Service {Store store; Unknown unknown;
+                    void run(Integer id){store.add(id);} void other(int id){unknown.lookup(id);}}
+                """);
+        var calls = new QualifiedSourceCalls(index, true, true);
+        assertTrue(calls.calls(index.unique("demo.Service#run"), "CREATE").isEmpty());
+        assertTrue(calls.calls(index.unique("demo.Service#other"), "FIND").isEmpty());
+    }
 }

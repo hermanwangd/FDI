@@ -75,6 +75,16 @@ class CandidateTraceTests {
         assertEquals(3, improved.proposals().methods().size());
         assertTrue(improved.proposals().methods().stream().anyMatch(c -> c.pair().method().signature().endsWith("#work()")));
     }
+    @Test void jdkSuccessorKeepsFirstBoxingExperimentUnchanged() throws Exception {
+        var index = index("package demo; import java.io.Serializable; class Controller implements Serializable "
+                + "{void create(int id){lookup(id);} void lookup(Integer id){work();} void work(){} }");
+        var trace = new CandidateTrace(binding);
+        var first = QualifiedCalibrationProducer.produce(binding, List.of("s1"), seeds(), index, trace, true);
+        var successor = QualifiedCalibrationProducer.produce(binding, List.of("s1"), seeds(), index,
+                new CandidateTrace(binding), true, true);
+        assertEquals(1, first.proposals().methods().size());
+        assertEquals(3, successor.proposals().methods().size());
+    }
     @Test void exceedingMethodBudgetFailsRatherThanReturningTruncatedProposals() throws Exception {
         StringBuilder calls = new StringBuilder();
         StringBuilder methods = new StringBuilder();

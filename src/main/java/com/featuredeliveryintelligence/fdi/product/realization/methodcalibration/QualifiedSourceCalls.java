@@ -9,8 +9,12 @@ import java.util.*;
 final class QualifiedSourceCalls {
     private final SourceMethodIndex index;
     private final boolean boxing;
+    private final boolean verifiedJdkAncestry;
     QualifiedSourceCalls(SourceMethodIndex index) { this(index, false); }
-    QualifiedSourceCalls(SourceMethodIndex index, boolean boxing) { this.index = index; this.boxing = boxing; }
+    QualifiedSourceCalls(SourceMethodIndex index, boolean boxing) { this(index, boxing, false); }
+    QualifiedSourceCalls(SourceMethodIndex index, boolean boxing, boolean verifiedJdkAncestry) {
+        this.index = index; this.boxing = boxing; this.verifiedJdkAncestry = verifiedJdkAncestry;
+    }
     String expressionType(Expression expression, SourceMethodIndex.Definition context) {
         return type(expression, context, 0);
     }
@@ -85,7 +89,7 @@ final class QualifiedSourceCalls {
         if (!visited.add(ownerName)) return true;
         if (visited.size() > 64) return false;
         var owner = index.owner(ownerName);
-        if (owner == null) return false;
+        if (owner == null) return noCompetingBootstrapMethod(ownerName, name);
         for (var method : owner.node().getMethodsByName(name)) {
             if (method.getParameters().stream().anyMatch(Parameter::isVarArgs)) return false;
             if (method.getParameters().size() != arity) continue;
@@ -101,11 +105,25 @@ final class QualifiedSourceCalls {
         }
         return true;
     }
+    private boolean noCompetingBootstrapMethod(String ownerName, String name) {
+        if (!boxing || !verifiedJdkAncestry || !ownerName.startsWith("java.")) return false;
+        try {
+            // Bootstrap loader only: never infer from a third-party classpath or
+            // initialize arbitrary application code while inspecting evidence.
+            Class<?> owner = Class.forName(ownerName, false, null);
+            for (var method : owner.getMethods()) if (method.getName().equals(name)) return false;
+            for (Class<?> type = owner; type != null; type = type.getSuperclass())
+                for (var method : type.getDeclaredMethods()) if (method.getName().equals(name)) return false;
+            return true;
+        } catch (ClassNotFoundException | LinkageError | SecurityException unavailable) {
+            return false;
+        }
+    }
     private void collect(String ownerName, String name, List<String> arguments, Set<String> visited,
             List<SourceMethodIndex.Definition> matches, boolean[] unknown) {
         if (!visited.add(ownerName) || visited.size() > 64) return;
         var owner = index.owner(ownerName);
-        if (owner == null) { unknown[0] = true; return; }
+        if (owner == null) { unknown[0] |= !noCompetingBootstrapMethod(ownerName, name); return; }
         var local = index.definitions().stream().filter(d -> d.owner().name().equals(ownerName)
                 && d.node().getNameAsString().equals(name)
                 && d.node().getParameters().stream().noneMatch(Parameter::isVarArgs)
