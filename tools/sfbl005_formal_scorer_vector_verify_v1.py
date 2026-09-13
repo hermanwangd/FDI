@@ -194,12 +194,87 @@ def _validate_count_operation(operation: str, given: dict[str, Any], oracle: dic
     counts = _counts(oracle.get("counts"), f"{operation} counts")
     if operation == "OCCURRENCE_SCORING":
         _exact_keys(given, {"goldPairDigests", "proposalOccurrences"}, "OCCURRENCE_SCORING given")
-        if counts["tp"] + counts["fn"] != len(given["goldPairDigests"]) or counts["tp"] + counts["fp"] != len(given["proposalOccurrences"]):
-            raise VerificationError("OCCURRENCE_SCORING counts violate conservation")
-    elif operation == "DISPOSITION_EVIDENCE":
-        _exact_keys(given, {"goldPairDigest", "occurrence", "proofs", "sealedProofDigest"}, "DISPOSITION_EVIDENCE given")
-        if counts["tp"] + counts["fn"] != 1 or counts["tp"] + counts["fp"] != 1:
-            raise VerificationError("DISPOSITION_EVIDENCE counts violate conservation")
+        unmatched = list(given["goldPairDigests"])
+        valid_seen: set[str] = set()
+        expected = {"tp": 0, "fp": 0, "fn": 0, "duplicateCount": 0}
+        for index, occurrence in enumerate(given["proposalOccurrences"]):
+            occurrence = _exact_keys(occurrence, {"disposition", "occurrenceIndex", "pairDigest"}, "proposal occurrence")
+            if occurrence["occurrenceIndex"] != index:
+                raise VerificationError("proposal occurrenceIndex must be contiguous")
+            digest = occurrence["pairDigest"]
+            if occurrence["disposition"] == "VALID" and digest in unmatched:
+                expected["tp"] += 1
+                unmatched.remove(digest)
+                valid_seen.add(digest)
+            else:
+                expected["fp"] += 1
+                if occurrence["disposition"] == "VALID" and digest in valid_seen:
+                    expected["duplicateCount"] += 1
+                    valid_seen.add(digest)
+        expected["fn"] = len(unmatched)
+        if counts != expected:
+            raise VerificationError("occurrence scoring oracle mismatch")
+
+
+def _validate_disposition(given: dict[str, Any], oracle: dict[str, Any]) -> None:
+    occurrence = _exact_keys(given["occurrence"], {"occurrenceId", "pairDigest", "facets"}, "disposition occurrence")
+    facets = _exact_keys(occurrence["facets"], {"entity", "action", "assertionRole", "polarity", "businessCondition", "ambiguity", "evidenceSufficiency"}, "disposition facets")
+    proofs = given["proofs"]
+    if not isinstance(proofs, list):
+        raise VerificationError("proofs must be an array")
+    structural_reason = None
+    if len(proofs) == 0:
+        structural_reason = "MISSING_PROOF"
+    elif len(proofs) > 1:
+        structural_reason = "DUPLICATE_PROOF"
+    else:
+        proof = _exact_keys(proofs[0], {"occurrenceId", "pairDigest", "proofDigest"}, "proof")
+        if proof["occurrenceId"] != occurrence["occurrenceId"] or proof["pairDigest"] != occurrence["pairDigest"]:
+            structural_reason = "ORPHAN_PROOF"
+        elif proof["proofDigest"] != given["sealedProofDigest"]:
+            structural_reason = "PROOF_DIGEST_MISMATCH"
+    if structural_reason:
+        expected = {"result": "INVALID", "reasonCodes": [structural_reason]}
+        if oracle.get("result") != expected["result"] or oracle.get("reasonCodes") != expected["reasonCodes"] or "counts" in oracle:
+            raise VerificationError("disposition oracle mismatch")
+        return
+    reason_map = {
+        "entity": ("MATCH", "ENTITY_MISMATCH"), "action": ("MATCH", "ACTION_MISMATCH"),
+        "assertionRole": ("MATCH", "ROLE_MISMATCH"), "polarity": ("MATCH", "POLARITY_MISMATCH"),
+        "businessCondition": ("MATCH", "CONDITION_MISMATCH"), "ambiguity": ("UNAMBIGUOUS", "AMBIGUOUS"),
+        "evidenceSufficiency": ("SUFFICIENT", "INSUFFICIENT_EVIDENCE"),
+    }
+    reasons = [reason for key, (passing, reason) in reason_map.items() if facets[key] != passing]
+    matched = not reasons and occurrence["pairDigest"] == given["goldPairDigest"]
+    expected_counts = {"tp": 1 if matched else 0, "fp": 0 if matched else 1, "fn": 0 if matched else 1, "duplicateCount": 0}
+    if oracle.get("result") != "VALID" or oracle.get("reasonCodes") != reasons or _counts(oracle.get("counts"), "DISPOSITION_EVIDENCE counts") != expected_counts:
+        raise VerificationError("disposition oracle mismatch")
+
+
+def _validate_provenance(given: dict[str, Any], oracle: dict[str, Any]) -> None:
+    reasons = []
+    scenario_ids = given.get("scenarioIds")
+    if scenario_ids is not None and (not isinstance(scenario_ids, list) or len(scenario_ids) != len(set(scenario_ids))):
+        reasons.append("DUPLICATE_SCENARIO")
+    if given["pairRepositorySnapshotSha256"] != given["repositorySnapshotSha256"]:
+        reasons.append("WRONG_SNAPSHOT")
+    if given["testProvenanceSha256"] is None:
+        reasons.append("MISSING_TEST_PROVENANCE")
+    if given["sourceProvenanceSha256"] is None:
+        reasons.append("MISSING_SOURCE_PROVENANCE")
+    if not isinstance(given["coverageStrata"], list) or len(given["coverageStrata"]) != 1:
+        reasons.append("STRATUM_CARDINALITY")
+    if given["truthDisposition"] is None:
+        reasons.append("MISSING_TRUTH_DISPOSITION")
+    if "unknownField" in given:
+        reasons.append("MALFORMED_SCHEMA")
+    if given["artifactSha256"] != given["expectedArtifactSha256"]:
+        reasons.append("ARTIFACT_DIGEST_MISMATCH")
+    if given["foreignRepositoryReference"] is True:
+        reasons.append("CROSS_REPOSITORY_REFERENCE")
+    expected_result = "INVALID" if reasons else "VALID"
+    if oracle.get("result") != expected_result or oracle.get("reasonCodes") != reasons:
+        raise VerificationError("provenance oracle mismatch")
 
 
 def _chain_reason(given: dict[str, Any]) -> str | None:
@@ -388,8 +463,12 @@ def _validate_semantics(operation: str, given: dict[str, Any], oracle: dict[str,
     _validate_operation_shape(operation, given, oracle)
     if operation == "CANONICAL_IDENTITY":
         _validate_canonical(given, oracle)
-    elif operation in {"OCCURRENCE_SCORING", "DISPOSITION_EVIDENCE"} and "counts" in oracle:
+    elif operation == "OCCURRENCE_SCORING":
         _validate_count_operation(operation, given, oracle)
+    elif operation == "DISPOSITION_EVIDENCE":
+        _validate_disposition(given, oracle)
+    elif operation == "PROVENANCE_INTEGRITY":
+        _validate_provenance(given, oracle)
     elif operation == "CHAIN_SCORING":
         _validate_chain(given, oracle)
     elif operation == "EMPTY_AND_ABSTENTION":

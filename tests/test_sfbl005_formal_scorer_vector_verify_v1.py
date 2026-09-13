@@ -223,14 +223,15 @@ def arrange_semantic(tmp_path, operation, given, oracle):
     return paths
 
 
-def mutate_expected(paths, mutation):
-    path = paths[3] / "P.json"
+def mutate_expected(paths, mutation, vector_id="P"):
+    path = paths[3] / f"{vector_id}.json"
     value = json.loads(path.read_text())
     mutation(value["oracle"])
     data = canonical(value)
     path.write_bytes(data)
     manifest = json.loads(paths[0].read_text())
-    manifest["vectors"][0]["expected"]["sha256"] = sha(data)
+    index = 0 if vector_id == "P" else 1
+    manifest["vectors"][index]["expected"]["sha256"] = sha(data)
     paths[0].write_bytes(canonical(manifest))
 
 
@@ -282,3 +283,41 @@ def test_rejects_parity_claim_not_derived_from_bytes(tmp_path):
     oracle = lambda _: {"result": "PASS", "byteIdentical": True, "goldenSha256": sha(b"alpha"), "runSha256": [sha(b"alpha")] * 4}
     paths = arrange_semantic(tmp_path, "DETERMINISM_AND_PARITY", given, oracle)
     assert_semantic_rejection(paths, "parity oracle mismatch")
+
+
+def test_rejects_arbitrary_disposition_reason_not_derived_from_given(tmp_path):
+    def given(vector_id):
+        facets = {"entity": "MATCH" if vector_id == "P" else "FAIL", "action": "MATCH", "assertionRole": "MATCH", "polarity": "MATCH", "businessCondition": "MATCH", "ambiguity": "UNAMBIGUOUS", "evidenceSufficiency": "SUFFICIENT"}
+        return {"goldPairDigest": "a" * 64, "occurrence": {"occurrenceId": "SYN-1#0", "pairDigest": "a" * 64, "facets": facets}, "proofs": [{"occurrenceId": "SYN-1#0", "pairDigest": "a" * 64, "proofDigest": "b" * 64}], "sealedProofDigest": "b" * 64}
+    def oracle(vector_id):
+        mismatch = vector_id == "N"
+        return {"result": "VALID", "reasonCodes": ["ENTITY_MISMATCH"] if mismatch else [], "counts": {"tp": 0 if mismatch else 1, "fp": 1 if mismatch else 0, "fn": 1 if mismatch else 0, "duplicateCount": 0}}
+    paths = arrange_semantic(tmp_path, "DISPOSITION_EVIDENCE", given, oracle)
+    mutate_expected(paths, lambda value: value.update(reasonCodes=["ARBITRARY_WRONG_REASON"]), "N")
+    assert_semantic_rejection(paths, "disposition oracle mismatch")
+
+
+def test_rejects_arbitrary_provenance_reason_not_derived_from_given(tmp_path):
+    def given(vector_id):
+        value = {"artifactSha256": "d" * 64, "coverageStrata": ["SYNTHETIC_UNIT"], "expectedArtifactSha256": "d" * 64, "foreignRepositoryReference": False, "pairRepositorySnapshotSha256": "a" * 64, "repositorySnapshotSha256": "a" * 64, "scenarioId": "SYN-1", "sourceProvenanceSha256": "c" * 64, "testProvenanceSha256": "b" * 64, "truthDisposition": "SEALED"}
+        if vector_id == "N": value["scenarioIds"] = ["SYN-1", "SYN-1"]
+        return value
+    def oracle(vector_id):
+        invalid = vector_id == "N"
+        return {"result": "INVALID" if invalid else "VALID", "reasonCodes": ["DUPLICATE_SCENARIO"] if invalid else []}
+    paths = arrange_semantic(tmp_path, "PROVENANCE_INTEGRITY", given, oracle)
+    mutate_expected(paths, lambda value: value.update(reasonCodes=["ARBITRARY_WRONG_REASON"]), "N")
+    assert_semantic_rejection(paths, "provenance oracle mismatch")
+
+
+def test_rejects_occurrence_counts_that_conserve_totals_but_misclassify_exact_match(tmp_path):
+    def given(vector_id):
+        digest = "a" * 64
+        proposal_digest = digest if vector_id == "P" else "b" * 64
+        return {"goldPairDigests": [digest], "proposalOccurrences": [{"disposition": "VALID", "occurrenceIndex": 0, "pairDigest": proposal_digest}]}
+    def oracle(vector_id):
+        matched = vector_id == "P"
+        return {"result": "VALID", "counts": {"tp": 1 if matched else 0, "fp": 0 if matched else 1, "fn": 0 if matched else 1, "duplicateCount": 0}}
+    paths = arrange_semantic(tmp_path, "OCCURRENCE_SCORING", given, oracle)
+    mutate_expected(paths, lambda value: value.update(counts={"tp": 0, "fp": 1, "fn": 1, "duplicateCount": 0}))
+    assert_semantic_rejection(paths, "occurrence scoring oracle mismatch")
