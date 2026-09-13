@@ -89,6 +89,12 @@ format.
 
 ## Selection boundary
 
+Branch-local user selection on 2026-09-13: `SF-BL-005-CANDIDATE-TRACE-001`
+under `IMPLEMENTATION-PLAN.md#current-selection`. This diagnostic implementation
+does not dispatch, cancel, or mutate the canonical execution below, which is
+retained as original-checkout context, not this branch's active instruction.
+Parent `SF-BL-005` remains `IN_PROGRESS`.
+
 The Azure DevOps listing is read-only discovery, not repository selection.
 Repository selection, retrieval, training-material access, Graphify indexing,
 Product Context acceptance, A/P execution, and terminal closure occur only at

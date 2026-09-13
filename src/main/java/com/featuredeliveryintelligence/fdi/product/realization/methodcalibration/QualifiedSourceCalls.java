@@ -13,15 +13,29 @@ final class QualifiedSourceCalls {
         return type(expression, context, 0);
     }
     List<SourceMethodIndex.Method> calls(SourceMethodIndex.Method method, String action) {
+        return calls(method, action, null);
+    }
+    record CallObservation(SourceMethodIndex.Method target, String stage, String reason, String callSite) { }
+    List<SourceMethodIndex.Method> calls(SourceMethodIndex.Method method, String action,
+            java.util.function.Consumer<CallObservation> observer) {
         var definition = index.definition(method);
         if (definition == null) return List.of();
         Set<SourceMethodIndex.Method> result = new LinkedHashSet<>();
         for (var call : definition.node().findAll(MethodCallExpr.class)) {
-            if (!direct(call, definition.node(), !"REJECT".equals(action))
-                    || !branchQualified(call, definition.node(), action)
-                    || !existingTargetBranch(call, definition, action)) continue;
+            String site = call.getNameAsString() + "@" + call.getRange().map(Object::toString).orElse("UNKNOWN");
+            if (!direct(call, definition.node(), !"REJECT".equals(action))) {
+                if (observer != null) observer.accept(new CallObservation(null, "FILTERED", "NON_DIRECT_OR_CATCH", site));
+                continue;
+            }
+            String filter = !branchQualified(call, definition.node(), action) ? "ACTION_BRANCH"
+                    : !existingTargetBranch(call, definition, action) ? "ABSENT_TARGET_BRANCH" : null;
+            if (filter != null && observer == null) continue;
             var target = resolve(call, definition, 0);
-            if (target != null && !trivialAccessor(target)) result.add(target.method());
+            if (filter == null && target != null && trivialAccessor(target)) filter = "TRIVIAL_ACCESSOR";
+            if (observer != null) observer.accept(new CallObservation(target == null ? null : target.method(),
+                    filter != null ? "FILTERED" : target == null ? "UNRESOLVED" : "CANDIDATE",
+                    filter != null ? filter : target == null ? "TARGET_NOT_UNIQUELY_RESOLVED" : "QUALIFIED_CALL", site));
+            if (filter == null && target != null) result.add(target.method());
         }
         return result.stream().sorted(Comparator.comparing(SourceMethodIndex.Method::signature)).toList();
     }

@@ -31,4 +31,10 @@ class MethodCalibrationRunTests {
         assertThrows(IllegalArgumentException.class, () -> MethodCalibrationRun.main(
                 new String[] { root.toString(), root.toString(), root.toString() }));
     }
+    @Test void tracedEntryPointRefusesOverwriteAndInvalidArguments() {
+        assertEquals("OUTPUT_EXISTS", assertThrows(IllegalArgumentException.class,
+                () -> CandidateTraceCalibrationRun.main(new String[] {
+                        root.toString(), root.toString(), root.toString() })).getMessage());
+        assertThrows(IllegalArgumentException.class, () -> CandidateTraceCalibrationRun.main(new String[0]));
+    }
 }
