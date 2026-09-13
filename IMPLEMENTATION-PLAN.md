@@ -114,6 +114,9 @@ These existing lanes remain unchanged:
 - `SF-BL-005-ROUTE-COVERAGE-ANALYSIS-001`
 - `SF-BL-005-GENERIC-ANCESTOR-FOLLOWUP-INTEGRATION-001`
 
-The already-running independent preflight for route coverage may finish as
-read-only evidence. It does not authorize route analysis dispatch and does not
-change the current `SF-BL-007` selection.
+The route-coverage envelope received a separately attributable read-only
+preflight `PASS`, bound to envelope SHA-256
+`73eb5c1a522151d5921946d391fe2d1ef60dd795f1f83ca04addaf903d3d814c`.
+Reviewer run: `01a09a4c-e3c4-7698-af2e-14ba05d64362`.
+That evidence does not authorize route analysis dispatch and does not change
+the current `SF-BL-007` selection.
