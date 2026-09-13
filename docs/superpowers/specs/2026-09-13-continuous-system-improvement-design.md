@@ -61,7 +61,7 @@ The logical contract is:
 | `disposition` | `RECOMMENDED_NOT_SELECTED`, `REJECTED`, or `SUPERSEDED`. |
 | `tag` | `CODE`, `DELIVERY`, `PK`, `MIXED`, or `UNKNOWN`. |
 | `origin_type` | Independent review, verification, execution, delivery, or KPI measurement. |
-| `origin_evidence` | Durable evidence path or provider identity. |
+| `origin_evidence[]` | Append-only observations; each contains `identity`, `origin_type`, and `durable_ref`. |
 | `candidate_revision` | Exact full revision when applicable; otherwise explicit `N/A` with reason. |
 | `execution_identity` | Exact run or envelope identity when applicable; otherwise explicit `N/A` with reason. |
 | `verdict_identity` | Independent verdict and reviewer identity when applicable. |
@@ -72,9 +72,11 @@ The logical contract is:
 | `revision_route` | Existing Backlog, T2, T3, T4, or PK path. |
 | `duplicate_key` | Deterministic key described below. |
 
-Prose without durable evidence cannot satisfy `origin_evidence`. Moving refs,
-short commit hashes, and unbound “latest” candidates fail validation when a
-candidate revision applies.
+Each `origin_evidence[]` item uses a repository path plus digest or an immutable
+provider identity in `durable_ref`; descriptive prose alone cannot satisfy the
+field. Array order is first-observed order and existing entries cannot be
+replaced. Moving refs, short commit hashes, and unbound “latest” candidates
+fail validation when a candidate revision applies.
 
 ## Disposition and authority
 
