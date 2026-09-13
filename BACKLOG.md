@@ -96,6 +96,7 @@ their defined authority gates. `SF-BL-005` is selected for the bounded
 remediation planning under `IMPLEMENTATION-PLAN.md`. REALWORLD-003
 returned with envelope deviations and remains unaccepted. The bounded recovery,
 selector-diagnostic and adapter plan is prepared; the two-path selector diagnostic slice is selected for dispatch under a fresh
-envelope. Adapter changes and calibration rerun remain unselected. `SF-BL-002` remains `IN_PROGRESS`, engineering accepted
+envelope. Two disjoint supporting investigations (handoff recovery and public test syntax)
+are also selected under the Plan. Adapter changes and calibration rerun remain unselected. `SF-BL-002` remains `IN_PROGRESS`, engineering accepted
 but pending Human terminal closure, with no work dispatched. `SF-BL-001` and
 `SF-BL-003` remain unselected; `SF-BL-004` is `VERIFIED` and unselected.

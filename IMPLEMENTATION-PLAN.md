@@ -126,3 +126,46 @@ Return one package with exact commits/digests, loss counts, parity checks,
 negative cases, review verdict, limitations, attempts/rework and token/cycle KPIs.
 PASS establishes ENGINEERING_READY_FOR_FDP_INTAKE only. It promises no recall
 improvement and does not select RealWorld rerun, holdout, publication or closure.
+
+## Parallel supporting investigations selected
+
+Execution SF-BL-005-PARALLEL-INVESTIGATIONS-001; base
+86e96e8d317b9b7ebfc435f54918d62ae157a431; same Spec and requirement bindings.
+This selection runs alongside SELECTOR-DIAGNOSTICS-001, which retains its
+original control/envelope binding. Neither investigation modifies its code.
+
+One coordinator creates two stage-1 peers in distinct managed worktrees, then
+one independent stage-2 evidence review after both reports persist. No builds,
+Java processes, calibration, scorer, Docker, network research or evaluator truth.
+Aggregate memory below 8 GB; each investigation <=40 tool calls, report <=10 KB.
+Inputs and output paths are frozen in execution-envelope-parallel-investigations-001.json.
+Reports are proposals only; active controls remain FDP-owned.
+
+A: Handoff recovery investigation. Own only
+validation/software-factory/sf-bl005/parallel-investigations-001/recovery.md.
+Read the pinned FDP reconciliation and operational guidance. Produce an
+observed-fact/inference table, loss-to-recovery decision table, receiver read-back
+criteria and minimal recommended lifecycle change. Cover missing bytes, wrong
+hash, duplicate trigger, unknown scorer outcome, runtime loss and output collision.
+Do not reproduce losses, clean worktrees or change operational instructions.
+Acceptance: every finding names its pinned source; all six negative cases have
+explicit stop/recovery/owner rules; source-hash equality never substitutes for
+binary-hash equality. Review is document consistency checking, not runtime proof.
+
+B: Public test syntax inventory. Own only
+validation/software-factory/sf-bl005/parallel-investigations-001/test-syntax.md.
+Read only the pinned public-tests bundle and existing selector source. Inventory
+all bundled Java test files, group request/assertion dialects and list source
+file/line examples with request-to-assertion binding. Include negative/error cases,
+multiple requests and helper/lambda/variable-status ambiguities where observed;
+label proposed synthetic cases separately. Report unknowns explicitly.
+Acceptance: examined-file count equals the public manifest; examples resolve to
+pinned source lines; distinguish AST/library syntax from observation labels.
+Recommend a smallest adapter subset without code, threshold changes or predicted
+recall. This is syntax inspection, not HERM-500 diagnostic output measurement.
+
+Reviewer owns only parallel-investigations-001/review.md under the same prefix.
+Verify both exact report commits, input digests, owned-path diffs and report
+acceptance; no reviewer edits to producer reports. Coordinator returns the two
+reports plus review verdict and actual run/time/token/duplicate records. Preserve
+reports as commits and attachments; receiver verifies bytes before cleanup.
