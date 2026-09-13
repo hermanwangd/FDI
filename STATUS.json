@@ -12,7 +12,7 @@
     "SF-BL-005",
     "SF-BL-006"
   ],
-  "next_action": "Select the next bounded public-input diagnostic or call-resolution work. Selector integration is verified; investigation observations are received with limitations. No adapter implementation, calibration rerun, publication or parent closure is selected.",
+  "next_action": "Review the prepared two-file sealed diagnostic runner scope, then select its implementation; generic ancestor resolution is separately planned. No diagnostic run or calibration is authorized.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-CROSSREPO-GATE-CONTAINMENT-003",
@@ -117,6 +117,26 @@
       ],
       "execution_state": "LEARNER_EMAIL_DELIVERED_DOWNSTREAM_AI_UNBOUND",
       "integration_candidate": "d5fc328be167811fc2aa6b5dfcf956d7067c6cc0"
+    },
+    {
+      "lane_id": "ancestor-resolution-planning",
+      "execution_id": "SF-BL-005-ANCESTOR-RESOLUTION-PLAN-001",
+      "base_commit": "fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c",
+      "selected_backlog_items": [
+        "SF-BL-005"
+      ],
+      "execution_state": "PREPARED_NOT_DISPATCHED",
+      "integration_candidate": null
+    },
+    {
+      "lane_id": "realworld-diagnostic-preparation",
+      "execution_id": "SF-BL-005-REALWORLD-DIAGNOSTIC-PREP-001",
+      "base_commit": "fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c",
+      "selected_backlog_items": [
+        "SF-BL-005"
+      ],
+      "execution_state": "PREPARED_NOT_DISPATCHED",
+      "integration_candidate": null
     }
   ],
   "mapping_improvement_intake": {
@@ -154,5 +174,14 @@
     "recovery_recommendations": "READBACK_NECESSARY_NOT_CLEANUP_AUTHORIZATION_OR_PREVENTION_OF_ALL_LOSS_CASES",
     "human_engineering_intake_required": false,
     "parent_closure": false
+  },
+  "preparation": {
+    "framework_base": "fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c",
+    "ancestor_resolution": "SOURCE_BACKED_GENERIC_SLICE_PLANNED_EXTERNAL_ARTIFACTS_UNVERIFIED",
+    "realworld_diagnostic": "INPUTS_VERIFIED_RUNNER_NOT_IMPLEMENTED",
+    "evidence": "validation/software-factory/sf-bl005/selector-diagnostics-001/realworld-preparation.json",
+    "implementation_authorized": false,
+    "diagnostic_execution_authorized": false,
+    "calibration_authorized": false
   }
 }

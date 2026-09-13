@@ -114,3 +114,8 @@ but pending Human terminal closure, with no work dispatched. `SF-BL-001` and
 `SF-BL-003` remain unselected; `SF-BL-004` is `VERIFIED` and unselected.
 
 The independent `SF-BL-006` company-AI lane retains its delivered learner package and downstream approval boundary; see the company-ai-docs lane in the Plan.
+
+User-selected follow-up preparation: source-backed generic ancestor resolution plan
+and frozen public-input RealWorld selector diagnosis. See IMPLEMENTATION-PLAN.md#current-selection.
+Preparation is complete; runner implementation and diagnostic/calibration execution
+remain unselected. External dependency signature availability remains unverified.
