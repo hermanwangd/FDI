@@ -26,6 +26,15 @@ def commit_file(repo: Path, path: str, content: bytes, mode: int = 0o644) -> str
     return git(repo, "rev-parse", "HEAD").stdout.strip()
 
 
+def commit_symlink(repo: Path, path: str, target: str) -> str:
+    link = repo / path
+    link.parent.mkdir(parents=True, exist_ok=True)
+    link.symlink_to(target)
+    git(repo, "add", path)
+    git(repo, "commit", "-m", path)
+    return git(repo, "rev-parse", "HEAD").stdout.strip()
+
+
 def repo_with_base(tmp_path: Path) -> tuple[Path, str]:
     repo = tmp_path / "repo"
     repo.mkdir()
@@ -36,9 +45,11 @@ def repo_with_base(tmp_path: Path) -> tuple[Path, str]:
     return repo, base
 
 
-def run_guard(repo: Path, base: str, candidate: str, output: Path) -> subprocess.CompletedProcess[str]:
+def run_guard(repo: Path, base: str, candidate: str, output: Path,
+              profile: str = "prep") -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        [sys.executable, str(TOOL), "--base", base, "--candidate", candidate,
+        [sys.executable, str(TOOL), "--profile", profile,
+         "--base", base, "--candidate", candidate,
          "--source-manifest-output", str(output)],
         cwd=repo, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
     )
@@ -183,3 +194,177 @@ def test_rejects_governance_artifacts_under_formal_scorer_root(tmp_path: Path) -
         assert result.returncode != 0, name
         assert "not allowlisted" in result.stderr
         assert not output.exists()
+
+
+def test_implementation_profile_accepts_only_implementation_sources_and_tests(tmp_path: Path) -> None:
+    repo, base = repo_with_base(tmp_path)
+    commit_file(
+        repo,
+        "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/Scorer.java",
+        b"final class Scorer {}\n",
+    )
+    candidate = commit_file(
+        repo,
+        "tools/sfbl005_formal_holdout_recompute_v1.py",
+        b"# clean-room recomputer\n",
+    )
+    output = repo / "source-manifest.json"
+
+    result = run_guard(repo, base, candidate, output, profile="implementation")
+
+    assert result.returncode == 0, result.stderr
+    assert output.exists()
+
+
+def test_implementation_profile_accepts_each_exact_contract_path(tmp_path: Path) -> None:
+    allowed = (
+        "contracts/sfbl005-formal-holdout-scorer-v1.schema.json",
+        "src/main/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCli.java",
+        "src/test/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCliTests.java",
+        "tests/test_sfbl005_formal_holdout_recompute_v1.py",
+    )
+    for index, path in enumerate(allowed):
+        case = tmp_path / str(index)
+        case.mkdir()
+        repo, base = repo_with_base(case)
+        candidate = commit_file(repo, path, b"implementation\n")
+        output = repo / "source-manifest.json"
+
+        result = run_guard(repo, base, candidate, output, profile="implementation")
+
+        assert result.returncode == 0, f"{path}: {result.stderr}"
+        assert output.exists()
+
+
+def test_implementation_profile_rejects_prep_and_governance_paths(tmp_path: Path) -> None:
+    forbidden = (
+        "src/main/java/com/featuredeliveryintelligence/fdi/application/FdiApplication.java",
+        "tools/sfbl005_formal_scorer_vector_verify_v1.py",
+        "tests/test_sfbl005_formal_scorer_candidate_guard_v1.py",
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/catalog.json",
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/inputs/C01.json",
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/independent-review.json",
+        "validation/software-factory/sf-bl005/execution-envelope-formal-holdout-scorer-001-r2.json",
+    )
+    for index, path in enumerate(forbidden):
+        case = tmp_path / str(index)
+        case.mkdir()
+        repo, base = repo_with_base(case)
+        candidate = commit_file(repo, path, b"forbidden\n")
+        output = repo / "source-manifest.json"
+
+        result = run_guard(repo, base, candidate, output, profile="implementation")
+
+        assert result.returncode != 0, path
+        assert "not allowlisted" in result.stderr, path
+        assert not output.exists()
+
+
+def test_base_object_guard_cannot_be_weakened_by_candidate_guard_change(tmp_path: Path) -> None:
+    repo, _ = repo_with_base(tmp_path)
+    base_tool = repo / "tools/sfbl005_formal_scorer_candidate_guard_v1.py"
+    base_tool.parent.mkdir(parents=True)
+    base_tool.write_bytes(TOOL.read_bytes())
+    git(repo, "add", str(base_tool.relative_to(repo)))
+    git(repo, "commit", "-m", "guard base")
+    base = git(repo, "rev-parse", "HEAD").stdout.strip()
+    base_program = git(repo, "show", f"{base}:tools/sfbl005_formal_scorer_candidate_guard_v1.py").stdout
+    base_tool.write_text("raise SystemExit(0)\n", encoding="utf-8")
+    forbidden = repo / "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/catalog.json"
+    forbidden.parent.mkdir(parents=True)
+    forbidden.write_text("{}\n", encoding="utf-8")
+    git(repo, "add", ".")
+    git(repo, "commit", "-m", "try to weaken guard")
+    candidate = git(repo, "rev-parse", "HEAD").stdout.strip()
+    output = repo / "source-manifest.json"
+
+    result = subprocess.run(
+        [sys.executable, "-", "--profile", "implementation", "--base", base,
+         "--candidate", candidate, "--source-manifest-output", str(output)],
+        input=base_program, cwd=repo, text=True,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+    )
+
+    assert result.returncode != 0
+    assert "not allowlisted" in result.stderr
+    assert not output.exists()
+
+
+def test_implementation_profile_rejects_symlink_in_java_prefix(tmp_path: Path) -> None:
+    repo, base = repo_with_base(tmp_path)
+    candidate = commit_symlink(
+        repo,
+        "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/Scorer.java",
+        "../../../../../../../../README.md",
+    )
+    output = repo / "source-manifest.json"
+
+    result = run_guard(repo, base, candidate, output, profile="implementation")
+
+    assert result.returncode != 0
+    assert "mode 120000" in result.stderr
+    assert not output.exists()
+
+
+def test_implementation_profile_rejects_gitlink_in_java_prefix(tmp_path: Path) -> None:
+    repo, base = repo_with_base(tmp_path)
+    path = "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/Scorer.java"
+    git(repo, "update-index", "--add", "--cacheinfo", f"160000,{base},{path}")
+    git(repo, "commit", "-m", "gitlink")
+    candidate = git(repo, "rev-parse", "HEAD").stdout.strip()
+    output = repo / "source-manifest.json"
+
+    result = run_guard(repo, base, candidate, output, profile="implementation")
+
+    assert result.returncode != 0
+    assert "type commit" in result.stderr
+    assert not output.exists()
+
+
+def test_implementation_profile_rejects_non_java_suffix_in_java_prefix(tmp_path: Path) -> None:
+    repo, base = repo_with_base(tmp_path)
+    candidate = commit_file(
+        repo,
+        "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/payload.txt",
+        b"not Java\n",
+    )
+    output = repo / "source-manifest.json"
+
+    result = run_guard(repo, base, candidate, output, profile="implementation")
+
+    assert result.returncode != 0
+    assert "must end with .java" in result.stderr
+    assert not output.exists()
+
+
+def test_implementation_profile_enforces_exact_path_modes(tmp_path: Path) -> None:
+    cases = (
+        ("contracts/sfbl005-formal-holdout-scorer-v1.schema.json", 0o755),
+        ("src/main/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCli.java", 0o755),
+        ("tests/test_sfbl005_formal_holdout_recompute_v1.py", 0o755),
+    )
+    for index, (path, mode) in enumerate(cases):
+        case = tmp_path / str(index)
+        case.mkdir()
+        repo, base = repo_with_base(case)
+        candidate = commit_file(repo, path, b"content\n", mode=mode)
+        output = repo / "source-manifest.json"
+
+        result = run_guard(repo, base, candidate, output, profile="implementation")
+
+        assert result.returncode != 0, path
+        assert "mode 100755" in result.stderr, path
+        assert not output.exists()
+
+
+def test_implementation_profile_accepts_executable_recomputer_tool(tmp_path: Path) -> None:
+    repo, base = repo_with_base(tmp_path)
+    candidate = commit_file(
+        repo, "tools/sfbl005_formal_holdout_recompute_v1.py", b"#!/usr/bin/env python3\n", mode=0o755
+    )
+    output = repo / "source-manifest.json"
+
+    result = run_guard(repo, base, candidate, output, profile="implementation")
+
+    assert result.returncode == 0, result.stderr
+    assert output.exists()

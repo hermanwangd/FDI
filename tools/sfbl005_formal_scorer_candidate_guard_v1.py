@@ -14,7 +14,7 @@ import sys
 
 FULL_COMMIT = re.compile(r"[0-9a-f]{40}\Z")
 
-ALLOW_EXACT = frozenset({
+PREP_ALLOW_EXACT = frozenset({
     "contracts/sfbl005-formal-holdout-scorer-v1.schema.json",
     "src/main/java/com/featuredeliveryintelligence/fdi/application/FdiApplication.java",
     "src/main/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCli.java",
@@ -26,12 +26,30 @@ ALLOW_EXACT = frozenset({
     "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/catalog.json",
     "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/vector-manifest.json",
 })
-ALLOW_PREFIXES = (
+PREP_ALLOW_PREFIXES = (
     "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/",
     "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/",
     "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/inputs/",
     "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/expected/",
 )
+IMPLEMENTATION_ALLOW_EXACT = frozenset({
+    "contracts/sfbl005-formal-holdout-scorer-v1.schema.json",
+    "src/main/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCli.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCliTests.java",
+    "tools/sfbl005_formal_holdout_recompute_v1.py",
+    "tests/test_sfbl005_formal_holdout_recompute_v1.py",
+})
+IMPLEMENTATION_ALLOW_PREFIXES = (
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/",
+)
+IMPLEMENTATION_EXACT_MODES = {
+    "contracts/sfbl005-formal-holdout-scorer-v1.schema.json": frozenset({"100644"}),
+    "src/main/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCli.java": frozenset({"100644"}),
+    "src/test/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCliTests.java": frozenset({"100644"}),
+    "tools/sfbl005_formal_holdout_recompute_v1.py": frozenset({"100644", "100755"}),
+    "tests/test_sfbl005_formal_holdout_recompute_v1.py": frozenset({"100644"}),
+}
 DENY_EXACT = frozenset({
     "src/main/java/com/featuredeliveryintelligence/fdi/application/MethodPairCompareCli.java",
     "src/test/java/com/featuredeliveryintelligence/fdi/application/MethodPairCompareCliTests.java",
@@ -89,12 +107,62 @@ def is_prefixed(path: str, prefixes: tuple[str, ...]) -> bool:
     return any(path.startswith(prefix) for prefix in prefixes)
 
 
-def validate_changed_paths(paths: list[str]) -> None:
+def candidate_tree_metadata(repo: Path, candidate: str, paths: list[str]) -> dict[str, tuple[str, str]]:
+    if not paths:
+        return {}
+    raw = git(repo, "ls-tree", "-rz", "--full-tree", candidate, "--", *paths)
+    metadata_by_path: dict[str, tuple[str, str]] = {}
+    for record in raw.split(b"\0"):
+        if not record:
+            continue
+        metadata, separator, path_bytes = record.partition(b"\t")
+        if not separator:
+            raise GuardError("malformed git ls-tree record")
+        fields = metadata.decode("ascii").split(" ")
+        if len(fields) != 3:
+            raise GuardError("malformed git ls-tree metadata")
+        mode, object_type, _ = fields
+        try:
+            path = path_bytes.decode("utf-8")
+        except UnicodeDecodeError as exc:
+            raise GuardError("candidate path is not valid UTF-8") from exc
+        metadata_by_path[path] = (mode, object_type)
+    return metadata_by_path
+
+
+def validate_implementation_entry(path: str, mode: str, object_type: str) -> None:
+    if object_type != "blob":
+        raise GuardError(f"implementation path has type {object_type}: {path}")
+    allowed_modes = IMPLEMENTATION_EXACT_MODES.get(path)
+    if allowed_modes is not None:
+        if mode not in allowed_modes:
+            raise GuardError(f"implementation path has forbidden mode {mode}: {path}")
+        return
+    if not path.endswith(".java"):
+        raise GuardError(f"implementation Java path must end with .java: {path}")
+    if mode != "100644":
+        raise GuardError(f"implementation Java path has forbidden mode {mode}: {path}")
+
+
+def validate_changed_paths(repo: Path, candidate: str, paths: list[str], profile: str) -> None:
+    if profile == "prep":
+        allow_exact = PREP_ALLOW_EXACT
+        allow_prefixes = PREP_ALLOW_PREFIXES
+    elif profile == "implementation":
+        allow_exact = IMPLEMENTATION_ALLOW_EXACT
+        allow_prefixes = IMPLEMENTATION_ALLOW_PREFIXES
+    else:
+        raise GuardError(f"unknown guard profile: {profile}")
+    tree_metadata = candidate_tree_metadata(repo, candidate, paths) if profile == "implementation" else {}
     for path in paths:
         if path in DENY_EXACT or is_prefixed(path, DENY_PREFIXES):
             raise GuardError(f"legacy path changed: {path}")
-        if path not in ALLOW_EXACT and not is_prefixed(path, ALLOW_PREFIXES):
+        if path not in allow_exact and not is_prefixed(path, allow_prefixes):
             raise GuardError(f"changed path is not allowlisted: {path}")
+        if profile == "implementation":
+            if path not in tree_metadata:
+                raise GuardError(f"implementation path is absent from candidate tree: {path}")
+            validate_implementation_entry(path, *tree_metadata[path])
 
 
 def source_entries(repo: Path, candidate: str) -> list[dict[str, object]]:
@@ -143,6 +211,7 @@ def validate_output(repo: Path, output_arg: str) -> Path:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--profile", choices=("prep", "implementation"), default="prep")
     parser.add_argument("--base", required=True)
     parser.add_argument("--candidate", required=True)
     parser.add_argument("--source-manifest-output", required=True)
@@ -159,7 +228,7 @@ def main(argv: list[str] | None = None) -> int:
             raise GuardError("base must be an ancestor of candidate")
         if ancestor.returncode != 0:
             raise GuardError("unable to verify base ancestor relationship")
-        validate_changed_paths(changed_paths(repo, base, candidate))
+        validate_changed_paths(repo, candidate, changed_paths(repo, base, candidate), args.profile)
         output = validate_output(repo, args.source_manifest_output)
         document = {
             "baseCommit": base,
