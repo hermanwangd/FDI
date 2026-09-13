@@ -155,12 +155,6 @@ evidence, not a forecast; template/property gaps remain separate and unselected.
 
 ## Preserved lanes
 
-Prior selector diagnostics are integrated at 758e086382e6023d6e4d389299a46bd696aa3857;
-receipt fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c. Evidence:
-validation/software-factory/sf-bl005/selector-diagnostics-001/intake.json.
-Parallel investigation observations retain documented limitations and immutable
-reports; no cleanup authorization or retrospective compliance waiver.
-SF-BL-006 learner delivery remains complete, with downstream company AI approval
-unbound; no upload, adoption or closure selected. Details: Plan at
-2248420436c6fd6c35fe36bbb4db738c43500ce3 and STATUS.json.
-One FDP writer serializes controls. Preserve all existing envelope bindings.
+Prior intake and SF-BL-006 boundaries remain in STATUS.json and Plan at
+2248420436c6fd6c35fe36bbb4db738c43500ce3. Preserve all prior evidence,
+envelope bindings and approval limits. One FDP writer serializes controls.
