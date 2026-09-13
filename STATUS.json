@@ -12,8 +12,8 @@
     "SF-BL-005",
     "SF-BL-006"
   ],
-  "next_action": "Reuse existing runner execution; queue source-backed generic opt-in slice after runner return, then bind exact combined candidate review and full regression.",
-  "blocking_dependency": null,
+  "next_action": "Provide an exact Java 17 runtime, then run the envelope-bound targeted/full package and packaged synthetic runner smoke on combined candidate 5248a12aa0ee1b760aa1c3bae9ba3f261f907b40 before FDP intake.",
+  "blocking_dependency": "JAVA_17_RUNTIME_UNAVAILABLE_ON_CURRENT_HOST",
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-CROSSREPO-GATE-CONTAINMENT-003",
     "reviewed_candidate": "2c69c62d7c5b9fd33f11c90b52b7a8f0d1bc4ce8",
@@ -125,8 +125,8 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "WAITING_RUNNER_RETURN",
-      "integration_candidate": null
+      "execution_state": "FRESH_INDEPENDENT_REVIEW_PASS",
+      "integration_candidate": "0b8073622db0d121c22976bcb2af038d0971a824"
     },
     {
       "lane_id": "realworld-diagnostic-preparation",
@@ -145,8 +145,8 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "READY_FOR_COORDINATOR",
-      "integration_candidate": null
+      "execution_state": "INDEPENDENT_REVIEW_COMPLETE_WITH_LIMITATIONS",
+      "integration_candidate": "143abdf72084e78ef42bd16b0f8272a36d1910c8"
     },
     {
       "lane_id": "combined-runner-ancestor",
@@ -155,8 +155,8 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "WAITING_EXACT_CANDIDATES",
-      "integration_candidate": null
+      "execution_state": "CODE_REVIEW_PASS_PLAN_BLOCKED_JAVA17",
+      "integration_candidate": "5248a12aa0ee1b760aa1c3bae9ba3f261f907b40"
     }
   ],
   "mapping_improvement_intake": {
