@@ -13,7 +13,7 @@
     "SF-BL-006",
     "SF-BL-007"
   ],
-  "next_action": "Human reviews the selected SF-BL-007 process-design Plan and decides whether to authorize production of a reviewed design artifact; no implementation envelope or dispatch exists.",
+  "next_action": "Human decides whether to select a bounded SF-BL-007 implementation proposal from the independently reviewed process design; no implementation envelope or dispatch exists.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
@@ -231,8 +231,8 @@
       "selected_backlog_items": [
         "SF-BL-007"
       ],
-      "execution_state": "HUMAN_SELECTED_DESIGN_PLAN_ONLY_NOT_DISPATCHED",
-      "integration_candidate": null
+      "execution_state": "DESIGN_REVIEWED_NOT_IMPLEMENTATION_SELECTED",
+      "integration_candidate": "f755640a8f7bef006b42f1dad792e723d21eb195"
     }
   ],
   "mapping_improvement_intake": {
@@ -307,7 +307,7 @@
   },
   "system_improvement_intake": {
     "backlog_id": "SF-BL-007",
-    "state": "HUMAN_SELECTED_DESIGN_PLAN_ONLY",
+    "state": "DESIGN_REVIEWED_NOT_IMPLEMENTATION_SELECTED",
     "recommendation_count": 4,
     "tags": {
       "CODE": 2,
@@ -320,12 +320,15 @@
     "implementation_plan_exists": true,
     "execution_envelope_exists": false,
     "dispatch_authorized": false,
-    "automatic_product_truth_publication": false
+    "automatic_product_truth_publication": false,
+    "design_artifact": "docs/superpowers/specs/2026-09-13-continuous-system-improvement-design.md",
+    "review_evidence": "validation/software-factory/sf-bl007/design-review-001.md",
+    "reviewed_candidate": "f755640a8f7bef006b42f1dad792e723d21eb195"
   },
   "proposed_next_execution": {
     "execution_id": "SF-BL-007-CONTINUOUS-SYSTEM-IMPROVEMENT-DESIGN-001",
-    "state": "HUMAN_SELECTED_DESIGN_PLAN_ONLY",
-    "allowed_output": "PROCESS_DESIGN_PLAN_ONLY",
+    "state": "DESIGN_REVIEWED_NOT_IMPLEMENTATION_SELECTED",
+    "allowed_output": "NONE_PENDING_HUMAN_SELECTION",
     "implementation_envelope_authorized": false,
     "dispatch_authorized": false,
     "code_change_authorized": false,
