@@ -5,3 +5,7 @@ The frozen PetClinic calibration replay reproduced BOXING-002 exactly: TP 31, FP
 The retained runtime truthfully emits embedded producer identity `SF-BL-005-BOXING-CALIBRATION-002`; this run records it as a frozen-protocol subexecution under outer execution `SF-BL-005-BOXING-CALIBRATION-003`, without rewriting the producer artifact.
 
 This is exposed calibration, not formal holdout or generalization evidence. Assessment remains `INCONCLUSIVE`.
+
+## Independent review disposition
+
+`FAIL` with P1=1. Numeric outputs are available but this run is not accepted as completed calibration because command-attempt and ordering evidence was not durably recorded. A new namespace replan is required; these files remain immutable failure evidence.

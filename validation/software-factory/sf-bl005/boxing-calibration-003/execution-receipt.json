@@ -1,5 +1,5 @@
 {
-  "assessment": "INCONCLUSIVE_EXPOSED_CALIBRATION_REPLAY",
+  "assessment": "FAILED_EVIDENCE_INTEGRITY_REPLAN_REQUIRED",
   "boundaries": {
     "deployment": false,
     "formalHoldout": false,
@@ -9,16 +9,22 @@
   },
   "commands": {
     "candidateStageEvaluation": {
-      "attempts": 1,
-      "exitCode": 0
+      "artifactOutcome": "OUTPUT_PRESENT_AND_INTERNALLY_VALID",
+      "attempts": null,
+      "evidenceLimitation": "COMMAND_ATTEMPT_AND_EXIT_NOT_DURABLY_LOGGED",
+      "exitCode": null
     },
     "comparison": {
-      "attempts": 1,
-      "exitCode": 0
+      "artifactOutcome": "OUTPUT_PRESENT_AND_INTERNALLY_VALID",
+      "attempts": null,
+      "evidenceLimitation": "COMMAND_ATTEMPT_AND_EXIT_NOT_DURABLY_LOGGED",
+      "exitCode": null
     },
     "producer": {
-      "attempts": 1,
-      "exitCode": 0
+      "artifactOutcome": "OUTPUT_PRESENT_AND_INTERNALLY_VALID",
+      "attempts": null,
+      "evidenceLimitation": "COMMAND_ATTEMPT_AND_EXIT_NOT_DURABLY_LOGGED",
+      "exitCode": null
     }
   },
   "comparisonToBoxing002": {
@@ -55,7 +61,18 @@
     "truePositives": 31,
     "unsupportedTypeClaims": 0
   },
-  "review": "PENDING_INDEPENDENT_REVIEW",
+  "resultStatus": "NUMERIC_OUTPUTS_AVAILABLE_NOT_ACCEPTED_AS_COMPLETED_CALIBRATION",
+  "review": {
+    "finding": "Command logs do not substantiate exact-once attempts, exit codes, or producer-before-evaluator ordering.",
+    "findings": {
+      "p0": 0,
+      "p1": 1,
+      "p2": 0
+    },
+    "reviewedCandidate": "98d201f09fd0ba8fc689dea5a3f68ceb1cf5a242",
+    "reviewer": "/root/diagnostic_002_result_review",
+    "verdict": "FAIL"
+  },
   "runtimeSha256": "33201a0d159507d1f7d339b96148fdd468722b6be038f6c07880af71911193ab",
   "schemaVersion": "software-factory.sf-bl005-boxing-calibration-replay.v1"
 }
