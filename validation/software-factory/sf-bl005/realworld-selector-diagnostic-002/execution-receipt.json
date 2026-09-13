@@ -1,0 +1,85 @@
+{
+  "authorityBoundary": {
+    "calibration": false,
+    "diagnosticOnly": true,
+    "evaluatorTruthAccessed": false,
+    "formalHoldout": false,
+    "parentClosure": false,
+    "scorerExecuted": false
+  },
+  "diagnostic": {
+    "accepted": 0,
+    "evaluated": 110,
+    "firstRejectionCounts": {
+      "ACCEPTED": 0,
+      "ACTION_MISMATCH": 0,
+      "ASSERTION_POLARITY": 0,
+      "ENTITY_MISMATCH": 20,
+      "REQUEST_AMBIGUOUS": 0,
+      "ROUTE_ABSENT": 90,
+      "ROUTE_AMBIGUOUS": 0,
+      "TEST_IDENTITY": 0,
+      "UNMET_CONDITION": 0,
+      "UNSUPPORTED_ASSERTION_DIALECT": 0
+    },
+    "rejected": 110,
+    "scenarios": 10
+  },
+  "envelopeIntegratedCommit": "325990b0ad20509bd13d656160211a89b3f00a01",
+  "envelopeRevision": 2,
+  "envelopeSha256": "2b87905596466f8d2dd2fdaca0c44e4736826190a6093b3f841959344085dd7b",
+  "executionBase": "9eef86c108ae6984f115dab493ab722caaf19585",
+  "executionId": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-002",
+  "independentPreflight": "PASS",
+  "independentReview": {
+    "candidate": "0d7be6dc421bf05e50d5deaf9e984537275e84a3",
+    "findings": {
+      "p0": 0,
+      "p1": 1,
+      "p2": 0
+    },
+    "reason": "Receipt contradicted python-regression.log; envelope requires Python regression PASS.",
+    "reviewer": "/root/diagnostic_002_result_review",
+    "verdict": "FAIL"
+  },
+  "manifestSha256": "1d242a8ee25ff37f6e75f64dd176113a55aae3b1a2df972e5a85953831e2bec9",
+  "materialization": {
+    "files": 26,
+    "firstPass": false,
+    "operatorTranscriptionErrorPreserved": "materialization-attempt.json"
+  },
+  "outputs": {
+    "diagnostics.json": {
+      "bytes": 16646,
+      "sha256": "13addb04e59670cac980aa912fec2f9f883bae24d32e47fd99cdcfc8b846d0d9"
+    },
+    "run-2-diagnostics.json": {
+      "bytes": 16646,
+      "sha256": "13addb04e59670cac980aa912fec2f9f883bae24d32e47fd99cdcfc8b846d0d9"
+    },
+    "run-2-seal.json": {
+      "bytes": 4047,
+      "sha256": "6ae9d2108ee45d2b8307d6cf799b63b9458c031588d204e991bf3e52867eaf2e"
+    },
+    "seal.json": {
+      "bytes": 4047,
+      "sha256": "6ae9d2108ee45d2b8307d6cf799b63b9458c031588d204e991bf3e52867eaf2e"
+    }
+  },
+  "result": "FAILED_PYTHON_CONTROL_STATE_REGRESSION",
+  "runs": {
+    "count": 2,
+    "diagnosticsByteIdentical": true,
+    "sealsByteIdentical": true
+  },
+  "runtimeJarSha256": "1f5053ec33d3f14ff60a39d6dbf094d8f4c8c9f730d3a1722e243e4a80eb6f3c",
+  "schemaVersion": "SF-EXECUTION-RECEIPT-001",
+  "verification": {
+    "fullJavaPackageExitCode": 0,
+    "gitDiffCheckExitCode": 0,
+    "gitDiffCheckPending": false,
+    "pythonRegressionExitCode": 1,
+    "pythonRegressionResult": "FAIL_3_FAILED_60_PASSED",
+    "targetedJavaExitCode": 0
+  }
+}
