@@ -1,0 +1,196 @@
+{
+  "acceptance": [
+    "TDD demonstrates the five exact RestAssured tests fail as unsupported before production change",
+    "focused synthetic tests cover 200, 401, 403, 422, body continuation, unrelated/standalone/nonliteral/multiple statusCode, multiple requests and lambda",
+    "mandatory non-skippable test verifyFrozenRealWorldRestAssuredStatusDialect requires the five separately named sfbl005.selector.* input/output properties and binds exact RealWorld revision/tree, the two public test file digests, and exact materialized 10-intent/11-observation/19-handler input digests",
+    "mandatory verifier confirms the exact 12 formerly unsupported pairs transition to 1 ACCEPTED, 5 ASSERTION_POLARITY, and 6 UNMET_CONDITION with ENTITY=73 and ACTION=25 unchanged",
+    "plain selection and diagnostic selection retain identical seed order/content",
+    "Java 17 focused and full package pass with zero failures/errors/skips",
+    "Python regression passes",
+    "independent exact-candidate review has P0-P2 zero",
+    "delivery evidence records unavailable recall/precision as null",
+    "selector-verification.json and route-verification.json are separate canonical outputs; full package must produce both without overwrite",
+    "all Maven invocations carry both the existing route-verifier properties and the distinct selector-verifier properties"
+  ],
+  "changeContract": {
+    "assertionPreconditions": [
+      "then() is downstream on the same request-owned fluent chain",
+      "exactly one statusCode call downstream of then",
+      "statusCode has exactly one integer literal argument"
+    ],
+    "classification": {
+      "200-299": "positive",
+      "400-499": "error",
+      "allOtherStatus": "unsupported dialect"
+    },
+    "forbidden": [
+      "generic method-name matching outside a supported RestAssured chain",
+      "business-condition inference from status code",
+      "scorer, threshold, gold, intent, observation, handler, or public-test mutation"
+    ],
+    "mustRemainUnchanged": [
+      "route, ambiguity, entity, action, test identity, condition gates and their order",
+      "MockMvc andExpect behavior",
+      "multiple request and lambda rejection",
+      "nonliteral and multiple statusCode rejection"
+    ],
+    "requestPreconditions": [
+      "exactly one recognized HTTP request call",
+      "first request argument is a literal absolute route",
+      "request belongs directly to the test method and is not inside a lambda"
+    ],
+    "supportedRootShapes": [
+      "given() fluent chain",
+      "RestAssuredMockMvc.when() fluent chain"
+    ]
+  },
+  "classification": "BOUNDED_T3_ASSERTION_DIALECT_IMPLEMENTATION",
+  "constructionBase": "399a183b9d90a52bdc653550c89d9dc2bb63c17c",
+  "controlCommit": "6bb0aed26b040627655cbe0ad668b5da5d65f5aa",
+  "controls": {
+    "AGENTS.md": "a70a2d4da9f9dd8add3ca2ab3d794125a08525bdb53cca4426d60f9a9a091c12",
+    "BACKLOG.md": "8ecb2934ba230d64e417f6247eee2c28ea7b0ad1b9409b9963ef3ea0c5bc1bc5",
+    "FRAMEWORK-SPEC.md": "1c78425291c7ff16d39760fcef41ff275076d1cf5b3aa973bcabe1b8c3f5930a",
+    "IMPLEMENTATION-PLAN.md": "b7521dd613c850b419b806f85b85e7e222762d998763f5460c4ccb7cea6e4cb0",
+    "JAVA-CODING-GUIDELINES.md": "06011e21515ea11447d968e94cba2497b8ac0935fb4b3936ff099da31268a28f",
+    "PROJECT-OVERVIEW.md": "e5ceb9b4baf8a5b5a9d557dd78f673221c8ecea182ba782457fc76e08172e4c0",
+    "STATUS.json": "717852be97de0e34ceb92413684dbd92b8a725ae985b4a10ae159847b8c78b04"
+  },
+  "envelopeRevision": 2,
+  "executionId": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
+  "failureRouting": {
+    "bindingOrScopeMismatch": "PLAN_CONFLICT",
+    "missingJava17OrSource": "PLAN_BLOCKED",
+    "newDialectOrConditionSemanticsRequired": "PLAN_CHANGE_REQUIRED",
+    "testOrImplementationFailure": "FAILED_EXECUTION_PRESERVE_EVIDENCE"
+  },
+  "frozenInputs": {
+    "diagnostic003": {
+      "counts": {
+        "ACCEPTED": 0,
+        "ACTION_MISMATCH": 25,
+        "ENTITY_MISMATCH": 73,
+        "UNSUPPORTED_ASSERTION_DIALECT": 12
+      },
+      "path": "validation/software-factory/sf-bl005/realworld-selector-diagnostic-003/run-1/diagnostics.json",
+      "sha256": "79812bc498697f151a58c4bb442068c8903e212ce2320912f87adad6b056de68"
+    },
+    "handlers": {
+      "count": 19,
+      "materializedPath": "validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/handlers.json",
+      "materializedSha256": "9b18b6ed556e55aed9db77dee4dc032aa951216af37231f9619095a46ad34053",
+      "metadata": {
+        "authority": "PROPOSAL_ONLY",
+        "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003",
+        "generation_method": "SpringRouteHandlerIndex.verifyFrozenRealWorldPutDeleteCoverage",
+        "schema_version": "software-factory.sf-bl002-route-handler-index.v0.3",
+        "semantic_publication_allowed": false,
+        "source_revision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+      },
+      "sourcePath": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json",
+      "sourceSha256": "068ebd262b3c8a292bf59d267466a725a32ff37df77cee4974771a946e1db48b",
+      "transform": "Preserve payload.handlers order; split handlerRef on first two ASCII spaces into productionIdentity, comma-separated httpMethods, normalizedRouteTemplate; retain handlerRef/sourceLocation/sourceDigest; canonical Python json.dumps sort_keys=True indent=2 plus LF."
+    },
+    "implementation": {
+      "blob": "01d5dcd5e6be59526ea21e2d9adb98a8b9b4cfc4",
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelector.java",
+      "sha256": "b7d1cbe33944b433712238a495fb30701f3bdd6bba688c06687dd67516fb47bc"
+    },
+    "intents": {
+      "count": 10,
+      "materializedPath": "validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/intents.json",
+      "sha256": "1ccc62730b762b1d3e1a8e28adcce8a8a836d6df3d6f1a97f0922ca6c6d7b7fe",
+      "sourcePath": "validation/software-factory/sf-bl005/cross-repo-realworld-001/producer-inputs/validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json",
+      "sourceRevision": "fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c"
+    },
+    "observations": {
+      "count": 11,
+      "materializedPath": "validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json",
+      "path": "validation/software-factory/sf-bl005/realworld-selector-diagnostic-003/bundle/observations.json",
+      "sha256": "71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd"
+    },
+    "realWorldSource": {
+      "path": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31",
+      "productionSubtree": "393afbd6c7e5dab2352ef896b5866348d6d822a3",
+      "publicTestFiles": [
+        {
+          "path": "src/test/java/io/spring/api/ArticleApiTest.java",
+          "sha256": "786f03763a4679009125e35fee54da170ed734d50e0c5f45f6cd7122738ceb9d"
+        },
+        {
+          "path": "src/test/java/io/spring/api/CurrentUserApiTest.java",
+          "sha256": "aeeaf546cf0b7f7e5e37e7d8d08b7957bcbf2181d4d842234b290a4480b54040"
+        }
+      ],
+      "revision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+      "tree": "3938658872ad216fe45033f4698c66febd80be76"
+    },
+    "rejectionAnalysis": {
+      "path": "validation/software-factory/sf-bl005/rejection-analysis-002/RESULTS.md",
+      "sha256": "d732df2a1414823d66f260358b75305bd2d82e3f6d99e2d62e4177ddea3b3862"
+    },
+    "tests": {
+      "blob": "00a4a6aacd333c286a2259f6b4335e708aa493e0",
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelectorTests.java",
+      "sha256": "2d4f24b3c337ba4d0acf0c3a9814841d56883deb22f5d0ea81dd451dbd7ec7b7"
+    }
+  },
+  "humanOnlyBoundaries": {
+    "calibration": false,
+    "deployment": false,
+    "formalHoldout": false,
+    "implementationDispatch": true,
+    "parentClosure": false,
+    "productTruth": false,
+    "publication": false
+  },
+  "inputMaterializationCommands": [
+    "mkdir -p validation/software-factory/sf-bl005/restassured-status-dialect-001/producer",
+    "git show fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c:validation/software-factory/sf-bl005/cross-repo-realworld-001/producer-inputs/validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json > validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/intents.json",
+    "cp validation/software-factory/sf-bl005/realworld-selector-diagnostic-003/bundle/observations.json validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json",
+    "python3 -c 'import json,pathlib; s=json.loads(pathlib.Path(\"validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/realworld-route-verification.json\").read_text()); hs=[]; [(lambda a,h: hs.append({\"handlerRef\":h[\"handlerRef\"],\"httpMethods\":a[1].split(\",\"),\"normalizedRouteTemplate\":a[2],\"productionIdentity\":a[0],\"sourceLocation\":h[\"sourceLocation\"],\"sourceDigest\":h[\"sourceDigest\"]}))(h[\"handlerRef\"].split(\" \",2),h) for h in s[\"payload\"][\"handlers\"]]; d={\"schema_version\":\"software-factory.sf-bl002-route-handler-index.v0.3\",\"execution_id\":\"SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003\",\"authority\":\"PROPOSAL_ONLY\",\"semantic_publication_allowed\":False,\"source_revision\":s[\"sourceRevision\"],\"generation_method\":\"SpringRouteHandlerIndex.verifyFrozenRealWorldPutDeleteCoverage\",\"handlers\":hs}; pathlib.Path(\"validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/handlers.json\").write_text(json.dumps(d,sort_keys=True,indent=2)+\"\\n\")' ",
+    "test \"$(shasum -a 256 validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/intents.json | awk '{print $1}')\" = 1ccc62730b762b1d3e1a8e28adcce8a8a836d6df3d6f1a97f0922ca6c6d7b7fe",
+    "test \"$(shasum -a 256 validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json | awk '{print $1}')\" = 71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd",
+    "test \"$(shasum -a 256 validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/handlers.json | awk '{print $1}')\" = 9b18b6ed556e55aed9db77dee4dc032aa951216af37231f9619095a46ad34053"
+  ],
+  "ownedPaths": [
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelector.java",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelectorTests.java",
+    "validation/software-factory/sf-bl005/restassured-status-dialect-001/**"
+  ],
+  "priorIndependentPreflight": {
+    "candidate": "2268ba90a6a117543b7c1e7d4532d1c3603dc166",
+    "findings": {
+      "p0": 0,
+      "p1": 2,
+      "p2": 0
+    },
+    "remediated": [
+      "bind exact executable intents and 19-handler materialization",
+      "use distinct selector-verifier properties and output while retaining route-verifier properties"
+    ],
+    "result": "FAIL_PLAN_CONFLICT",
+    "reviewer": "/root/diagnostic_002_preflight"
+  },
+  "repository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory",
+  "resourceLimits": {
+    "aggregateMemoryGbLessThan": 8,
+    "forkCount": 1,
+    "mavenHeapGb": 2,
+    "oneHeavyJvmAtATime": true
+  },
+  "schemaVersion": "SF-EXECUTION-ENVELOPE-001",
+  "sourceTree": "5a36700a0409deca055348ad5b9ac462365e1f82",
+  "supersedes": {
+    "reason": "Human approved implementation dispatch and FDP reconciled selection baseline versus construction baseline; frozen semantics and inputs unchanged.",
+    "revision": 1,
+    "sha256": "2829333b3f3b61815e749b1905c634a39141c8effed57e365ae20fca282162c9"
+  },
+  "targetBranch": "codex/sf-bl005-restassured-status-dialect-001",
+  "verificationCommands": [
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dsfbl005.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.observations.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json -Dsfbl005.verification.output=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/route-verification.json -Dsfbl005.selector.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.selector.intents.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/intents.json -Dsfbl005.selector.observations.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json -Dsfbl005.selector.handlers.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/handlers.json -Dsfbl005.selector.verification.output=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/selector-verification.json -Dtest=ScenarioEvidenceSelectorTests test",
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dsfbl005.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.observations.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json -Dsfbl005.verification.output=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/route-verification.json -Dsfbl005.selector.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.selector.intents.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/intents.json -Dsfbl005.selector.observations.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json -Dsfbl005.selector.handlers.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/handlers.json -Dsfbl005.selector.verification.output=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/selector-verification.json package",
+    "python3 -m pytest -q",
+    "git diff --check"
+  ]
+}
