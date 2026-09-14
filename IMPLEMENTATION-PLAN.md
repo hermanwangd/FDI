@@ -2,9 +2,9 @@
 
 ## Current selection
 
-`SF-BL-005-RESTASSURED-STATUS-DIALECT-001` has an independently preflighted exact envelope and is selected for a Human implementation-dispatch decision. The bounded change recognizes a single literal `statusCode(int)` only on the same supported RestAssured MockMvc request chain after existing request, route, ambiguity, entity, and action gates. It must not infer business conditions from a generic 4xx response. Source-backed expected diagnostic impact is unsupported dialect 12→0 and accepted 0→1; these are diagnostic expectations, not recall or precision.
+`SF-BL-005-RESTASSURED-STATUS-DIALECT-001` is Human-authorized for implementation dispatch, subject to reconciled revision 2 independent preflight and PR integration. The bounded change recognizes a single literal `statusCode(int)` only on the same supported RestAssured MockMvc request chain after existing request, route, ambiguity, entity, and action gates. It must not infer business conditions from a generic 4xx response. Source-backed expected diagnostic impact is unsupported dialect 12→0 and accepted 0→1; these are diagnostic expectations, not recall or precision.
 
-Detailed evidence and the ordered follow-ups are in `validation/software-factory/sf-bl005/rejection-analysis-002/RESULTS.md`. Envelope revision 1 SHA `2829333b3f3b61815e749b1905c634a39141c8effed57e365ae20fca282162c9` passed fresh independent preflight with P0/P1/P2 zero and was integrated at `c61ceea6ffb1e5657075b5555bf115461e7a90a9`. Implementation dispatch remains false pending Human Authority. Company readiness criteria are defined in `validation/software-factory/sf-bl005/production-readiness-criteria-001.md`.
+Detailed evidence and the ordered follow-ups are in `validation/software-factory/sf-bl005/rejection-analysis-002/RESULTS.md`. Envelope revision 1 SHA `2829333b3f3b61815e749b1905c634a39141c8effed57e365ae20fca282162c9` passed fresh independent preflight with P0/P1/P2 zero and was integrated at `c61ceea6ffb1e5657075b5555bf115461e7a90a9`. Human selected option 1 approving implementation dispatch and FDP reconciliation. Revision 1 remains immutable historical preflight evidence. Revision 2 is materialized at `validation/software-factory/sf-bl005/execution-envelope-restassured-status-dialect-001-r2.json`; it retains the assertion contract, frozen inputs and verification commands, and binds the reconciled controls. The old selection baseline `7463f5c744ac975f0e335a8006777bda88b4b470` is retained as history; revision 1 construction base was `91af12b1d445163b92cc4bfc9100da9bef48fd73`. Revision 2 construction base is `399a183b9d90a52bdc653550c89d9dc2bb63c17c`. Execution remains gated on fresh independent preflight, not another Human approval. Company readiness criteria are defined in `validation/software-factory/sf-bl005/production-readiness-criteria-001.md`.
 
 Formal holdout policy preparation may proceed without selecting data. `validation/software-factory/sf-bl005/formal-holdout-protocol-001.json` revision 1 is `PREPARED_POLICY_NOT_EXECUTABLE` and independently reviewed with P0/P1/P2 zero. It contains no repository, revision, scenario, sample, or gold identity. It cannot be externally sealed until its H0 final-candidate, H1 scorer, and H2 contamination-ledger receipts exist, and it grants no selection or execution authority.
 
@@ -31,7 +31,7 @@ publication, formal holdout, threshold changes or parent closure.
 
 ### Current execution ledger
 
-- `SF-BL-005-RESTASSURED-STATUS-DIALECT-001` — `ENVELOPE_PREFLIGHT_PASS_AWAITING_HUMAN_DISPATCH`; implementation and dispatch are not yet authorized.
+- `SF-BL-005-RESTASSURED-STATUS-DIALECT-001` — `HUMAN_AUTHORIZED_RECONCILIATION_PREFLIGHT_PENDING`; implementation and dispatch are authorized, with fresh revision 2 preflight required.
 - `SF-BL-005-BOXING-CALIBRATION-003` — `FAILED_EVIDENCE_PRESERVED_REPLAN_REQUIRED`; not accepted as completed calibration.
 - `SF-BL-005-BOXING-CALIBRATION-003-REPLAN-001` — `ENVELOPE_PREFLIGHT_PASS_AWAITING_HUMAN_DISPATCH`; no calibration executed.
 
