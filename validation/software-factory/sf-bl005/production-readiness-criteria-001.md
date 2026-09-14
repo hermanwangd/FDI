@@ -26,8 +26,9 @@ The formal quality gate is evaluated on proposal pairs against sealed evaluator 
 
 ## Ordered path to readiness
 
-1. Complete the source-backed entity and action remediations with separate exact envelopes, then replay the governed RealWorld diagnostic and account for every remaining polarity and condition disposition.
-2. Replan BOXING calibration in a new namespace with contemporaneous command evidence.
-3. Add a second evaluator-separated repository calibration using a materially different test/assertion style.
-4. Bind H0 final candidate, H1 scorer and H2 contamination receipts, then externally seal the already reviewed holdout-selection protocol before choosing the unseen repositories.
-5. Run the formal holdout once, independently review the full bundle, then request the terminal Human Authority decision.
+1. Human Authority selects the H1 macro aggregation contract. That selection permits preparation of the bounded protocol reseal and a new exact envelope only; it does not itself authorize scorer execution, calibration, or holdout access.
+2. Complete the source-backed entity and action remediations with separate exact envelopes, then replay the governed RealWorld diagnostic and account for every remaining polarity and condition disposition.
+3. Execute an authorized BOXING calibration replan in its new namespace with contemporaneous command evidence.
+4. Add a second evaluator-separated repository calibration using a materially different test/assertion style.
+5. Bind H0 final candidate, H1 scorer and H2 contamination receipts, then externally seal the already reviewed holdout-selection protocol before choosing the unseen repositories.
+6. Run the formal holdout once, independently review the full bundle, then request the terminal Human Authority decision.
