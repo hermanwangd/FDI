@@ -264,6 +264,35 @@ def test_rejects_repository_metric_not_recomputed_from_raw_counts(tmp_path):
     assert_semantic_rejection(paths, "repository metric mismatch")
 
 
+def test_repository_macro_averages_raw_ratios_before_final_quantization(tmp_path):
+    def given(vector_id):
+        if vector_id == "P":
+            return {"repositories": [{"repositoryId": "synthetic-repository-1", "tp": 9, "fp": 1, "fn": 1}]}
+        return {
+            "repositories": [
+                {"repositoryId": "synthetic-repository-1", "tp": 90, "fp": 5, "fn": 10},
+                {"repositoryId": "synthetic-repository-2", "tp": 4, "fp": 2, "fn": 2},
+            ]
+        }
+
+    def oracle(vector_id):
+        if vector_id == "P":
+            repositories = [{"repositoryId": "synthetic-repository-1", "tp": 9, "fp": 1, "fn": 1, "precision": "0.900000000000", "recall": "0.900000000000", "strictPass": True}]
+            aggregate = {"microPrecision": "0.900000000000", "microRecall": "0.900000000000", "macroPrecision": "0.900000000000", "macroRecall": "0.900000000000"}
+            return {"result": "VALID", "provisionalClassification": "PASS", "repositories": repositories, "aggregate": aggregate}
+        repositories = [
+            {"repositoryId": "synthetic-repository-1", "tp": 90, "fp": 5, "fn": 10, "precision": "0.947368421053", "recall": "0.900000000000", "strictPass": True},
+            {"repositoryId": "synthetic-repository-2", "tp": 4, "fp": 2, "fn": 2, "precision": "0.666666666667", "recall": "0.666666666667", "strictPass": False},
+        ]
+        aggregate = {"microPrecision": "0.930693069307", "microRecall": "0.886792452830", "macroPrecision": "0.807017543860", "macroRecall": "0.783333333333"}
+        return {"result": "VALID", "provisionalClassification": "REVISE", "repositories": repositories, "aggregate": aggregate}
+
+    paths = arrange_semantic(tmp_path, "REPOSITORY_DECISION", given, oracle)
+    result = run(paths)
+
+    assert result.returncode == 0, result.stderr
+
+
 def test_rejects_nonfixed_decimal_encoding(tmp_path):
     given = lambda _: {"repositories": [{"repositoryId": "synthetic-repository-1", "tp": 0, "fp": 1, "fn": 2}]}
     oracle = lambda _: {"result": "VALID", "provisionalClassification": "REVISE", "repositories": [{"repositoryId": "synthetic-repository-1", "tp": 0, "fp": 1, "fn": 2, "precision": "0E-12", "recall": "0E-12", "strictPass": False}], "aggregate": {"microPrecision": "0E-12", "microRecall": "0E-12", "macroPrecision": "0E-12", "macroRecall": "0E-12"}}

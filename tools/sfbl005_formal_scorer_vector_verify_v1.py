@@ -150,13 +150,20 @@ def _fixed(value: Any, label: str) -> Decimal | None:
     return Decimal(value)
 
 
-def _ratio(x: int, n: int) -> str | None:
+def _raw_ratio(x: int, n: int) -> Decimal | None:
     if n == 0:
         return None
     with localcontext() as context:
         context.prec = 50
         context.rounding = ROUND_HALF_EVEN
-        return format((Decimal(x) / Decimal(n)).quantize(Decimal("0.000000000001")), "f")
+        return Decimal(x) / Decimal(n)
+
+
+def _ratio(x: int, n: int) -> str | None:
+    ratio = _raw_ratio(x, n)
+    if ratio is None:
+        return None
+    return format(ratio.quantize(Decimal("0.000000000001"), rounding=ROUND_HALF_EVEN), "f")
 
 
 def _validate_canonical(given: dict[str, Any], oracle: dict[str, Any]) -> None:
@@ -378,7 +385,13 @@ def _validate_repository(given: dict[str, Any], oracle: dict[str, Any]) -> None:
         if output["precision"] != precision or output["recall"] != recall or output["strictPass"] is not strict:
             raise VerificationError("repository metric mismatch")
         any_null |= precision is None or recall is None
-        raw_metrics.append((actual, Decimal(precision) if precision else None, Decimal(recall) if recall else None))
+        raw_metrics.append(
+            (
+                actual,
+                _raw_ratio(actual["tp"], actual["tp"] + actual["fp"]),
+                _raw_ratio(actual["tp"], actual["tp"] + actual["fn"]),
+            )
+        )
     total_tp = sum(item[0]["tp"] for item in raw_metrics)
     total_fp = sum(item[0]["fp"] for item in raw_metrics)
     total_fn = sum(item[0]["fn"] for item in raw_metrics)
