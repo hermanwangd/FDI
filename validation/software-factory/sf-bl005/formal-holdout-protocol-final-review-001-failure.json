@@ -1,0 +1,33 @@
+{
+  "disposition": {
+    "implementationPlanBytes": 9521,
+    "pythonRegression": {
+      "failed": 0,
+      "passed": 145
+    },
+    "state": "REMEDIATED_IN_SUCCESSOR_CANDIDATE",
+    "successorCandidate": "7575182e1632d2049e7a74e6145629532974cc9c"
+  },
+  "finding": {
+    "effect": "The direct size test and clean-tracked-copy regression both failed; the final candidate could not inherit the earlier 145/145 result.",
+    "id": "IMPLEMENTATION_PLAN_SIZE_LIMIT",
+    "observedBytes": 10178,
+    "required": "IMPLEMENTATION-PLAN.md must be less than 10000 bytes",
+    "severity": "P1"
+  },
+  "findings": {
+    "P0": 0,
+    "P1": 1,
+    "P2": 0
+  },
+  "preservationBoundary": "This failure remains evidence and is not replaced by the successor PASS.",
+  "pythonRegression": {
+    "failed": 2,
+    "passed": 143
+  },
+  "result": "FAIL",
+  "reviewedCandidate": "058173ba6b9989dfb40c7230626f96f153a7965b",
+  "reviewedTree": "90a95e5e8692ac59322851e58bc29404a3a845f0",
+  "reviewer": "/root/h1_raw_protocol_review",
+  "schemaVersion": "SFBL005-FORMAL-HOLDOUT-PROTOCOL-FINAL-REVIEW-FAILURE-001"
+}
