@@ -3,14 +3,28 @@ package com.featuredeliveryintelligence.fdi.product.realization.methodcalibratio
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HexFormat;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ScenarioEvidenceSelectorTests {
     @TempDir Path root;
     private static final ObjectMapper JSON = new ObjectMapper();
+    private static final String REALWORLD_REVISION = "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a";
+    private static final String REALWORLD_TREE = "3938658872ad216fe45033f4698c66febd80be76";
+    private static final String INTENTS_SHA256 =
+            "1ccc62730b762b1d3e1a8e28adcce8a8a836d6df3d6f1a97f0922ca6c6d7b7fe";
+    private static final String OBSERVATIONS_SHA256 =
+            "71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd";
+    private static final String HANDLERS_SHA256 =
+            "9b18b6ed556e55aed9db77dee4dc032aa951216af37231f9619095a46ad34053";
 
     @Test void diagnosticsRejectExpansionAboveLimitBeforeAllocatingPairs() throws Exception {
         var input = JSON.createObjectNode();
@@ -292,6 +306,187 @@ class ScenarioEvidenceSelectorTests {
                 """).getResult().orElseThrow().findFirst(com.github.javaparser.ast.body.MethodDeclaration.class).orElseThrow();
         assertTrue(ScenarioEvidenceSelector.qualifies(test,"BROWSE",List.of("paged-results")));
     }
+
+    @Test void restAssuredStatusCode200WithBodyIsPositiveEvidence() {
+        assertRestAssuredReason(null, """
+                void update() { given().when().put("/articles/{slug}", slug).then().statusCode(200)
+                        .body("article.slug", equalTo(slug)); }
+                """);
+    }
+
+    @Test void restAssuredStatusCode401IsErrorEvidence() {
+        assertRestAssuredReason(ScenarioEvidenceSelector.DiagnosticReason.ASSERTION_POLARITY, """
+                void unauthenticated() { given().when().get("/user").then().statusCode(401); }
+                """);
+    }
+
+    @Test void restAssuredStatusCode403IsErrorEvidence() {
+        assertRestAssuredReason(ScenarioEvidenceSelector.DiagnosticReason.ASSERTION_POLARITY, """
+                void forbidden() { given().when().put("/articles/{slug}", slug).then().statusCode(403); }
+                """);
+    }
+
+    @Test void restAssuredStatusCode422WithBodyIsErrorEvidence() {
+        assertRestAssuredReason(ScenarioEvidenceSelector.DiagnosticReason.ASSERTION_POLARITY, """
+                void invalid() { given().when().put("/user").then().statusCode(422)
+                        .body("errors.email[0]", equalTo("email already exist")); }
+                """);
+    }
+
+    @Test void restAssuredMockMvcStatusCode200WithBodyIsPositiveEvidence() {
+        assertRestAssuredReason(null, """
+                void update() { RestAssuredMockMvc.when().put("/user").then().statusCode(200)
+                        .body("user.email", equalTo(email)); }
+                """);
+    }
+
+    @Test void restAssuredStatusCodeClassifiesOnlyTwoHundredsAndFourHundreds() {
+        assertRestAssuredReason(null, "UPDATE", "void update() { given().when().put(\"/orders/new\")"
+                + ".then().statusCode(299); }");
+        assertRestAssuredReason(ScenarioEvidenceSelector.DiagnosticReason.UNMET_CONDITION, "REJECT", "void reject() { given().when().put(\"/orders/new\")"
+                + ".then().statusCode(400); }");
+        assertRestAssuredReason(ScenarioEvidenceSelector.DiagnosticReason.UNSUPPORTED_ASSERTION_DIALECT, "UPDATE",
+                "void redirect() { given().when().put(\"/orders/new\").then().statusCode(300); }");
+        assertRestAssuredReason(ScenarioEvidenceSelector.DiagnosticReason.UNSUPPORTED_ASSERTION_DIALECT, "UPDATE",
+                "void serverError() { given().when().put(\"/orders/new\").then().statusCode(500); }");
+    }
+
+    @Test void restAssuredStatusCodeRequiresOneIntegerLiteralOnTheRequestChain() {
+        assertRestAssuredReason(ScenarioEvidenceSelector.DiagnosticReason.UNSUPPORTED_ASSERTION_DIALECT, "UPDATE",
+                "void variable() { int expected = 200; given().when().put(\"/orders/new\")"
+                        + ".then().statusCode(expected); }");
+        assertRestAssuredReason(ScenarioEvidenceSelector.DiagnosticReason.UNSUPPORTED_ASSERTION_DIALECT, "UPDATE",
+                "void multiple() { given().when().put(\"/orders/new\").then().statusCode(200)"
+                        + ".statusCode(201); }");
+    }
+
+    @Test void restAssuredStatusCodeCannotBorrowUnrelatedOrDeferredEvidence() {
+        var test = parseTest("void standalone() { given().when().put(\"/orders/new\"); statusCode(200); }");
+        assertEquals(ScenarioEvidenceSelector.DiagnosticReason.UNSUPPORTED_ASSERTION_DIALECT,
+                ScenarioEvidenceSelector.rejectionReason(test, "UPDATE", List.of()));
+        test = parseTest("void deferred() { Runnable later = () -> given().when().put(\"/orders/new\")"
+                + ".then().statusCode(200); }");
+        assertEquals(ScenarioEvidenceSelector.DiagnosticReason.REQUEST_AMBIGUOUS,
+                ScenarioEvidenceSelector.rejectionReason(test, "UPDATE", List.of()));
+    }
+
+    @Test void restAssuredMultipleRequestsRemainAmbiguousBeforeAssertionClassification() {
+        var test = parseTest("void mixed() { given().when().put(\"/orders/new\").then().statusCode(200);"
+                + " given().when().put(\"/health\").then().statusCode(200); }");
+        assertEquals(ScenarioEvidenceSelector.DiagnosticReason.REQUEST_AMBIGUOUS,
+                ScenarioEvidenceSelector.rejectionReason(test, "UPDATE", List.of()));
+    }
+
+    @Test void verifyFrozenRealWorldRestAssuredStatusDialect() throws Exception {
+        Path checkout = requiredPathProperty("sfbl005.selector.realworld.checkout");
+        Path intentsPath = requiredPathProperty("sfbl005.selector.intents.path");
+        Path observationsPath = requiredPathProperty("sfbl005.selector.observations.path");
+        Path handlersPath = requiredPathProperty("sfbl005.selector.handlers.path");
+        Path outputPath = requiredPathProperty("sfbl005.selector.verification.output");
+
+        assertEquals(REALWORLD_REVISION, runGit(checkout, "rev-parse", "HEAD").trim());
+        assertEquals(REALWORLD_TREE, runGit(checkout, "rev-parse", "HEAD^{tree}").trim());
+        assertEquals("786f03763a4679009125e35fee54da170ed734d50e0c5f45f6cd7122738ceb9d",
+                sha256(Files.readAllBytes(checkout.resolve("src/test/java/io/spring/api/ArticleApiTest.java"))));
+        assertEquals("aeeaf546cf0b7f7e5e37e7d8d08b7957bcbf2181d4d842234b290a4480b54040",
+                sha256(Files.readAllBytes(checkout.resolve("src/test/java/io/spring/api/CurrentUserApiTest.java"))));
+
+        byte[] intentsBytes = Files.readAllBytes(intentsPath);
+        byte[] observationsBytes = Files.readAllBytes(observationsPath);
+        byte[] handlersBytes = Files.readAllBytes(handlersPath);
+        assertEquals(INTENTS_SHA256, sha256(intentsBytes));
+        assertEquals(OBSERVATIONS_SHA256, sha256(observationsBytes));
+        assertEquals(HANDLERS_SHA256, sha256(handlersBytes));
+
+        var intents = JSON.readTree(intentsBytes);
+        var observations = JSON.readTree(observationsBytes);
+        var handlers = JSON.readTree(handlersBytes);
+        assertEquals(10, intents.required("records").size());
+        assertEquals(11, observations.required("observations").size());
+        assertEquals(19, handlers.required("handlers").size());
+
+        var plain = ScenarioEvidenceSelector.select(intents, observations, handlers, checkout);
+        var diagnostics = ScenarioEvidenceSelector.selectWithDiagnostics(intents, observations, handlers, checkout);
+        assertEquals(plain, diagnostics.seeds());
+
+        Map<String, Integer> counts = new TreeMap<>();
+        for (var scenario : diagnostics.scenarios()) {
+            for (var pair : scenario.pairs()) counts.merge(pair.reason().name(), 1, Integer::sum);
+        }
+        assertEquals(Map.of(
+                "ACCEPTED", 1,
+                "ACTION_MISMATCH", 25,
+                "ENTITY_MISMATCH", 73,
+                "ASSERTION_POLARITY", 5,
+                "UNMET_CONDITION", 6), counts);
+        assertEquals(List.of("http-behavior-observation-00001"),
+                plain.stream().map(ScenarioEvidenceSelector.Seed::observationRef).toList());
+
+        Map<String, Object> report = new TreeMap<>();
+        report.put("diagnosticCounts", counts);
+        report.put("inputCounts", new TreeMap<>(Map.of("handlers", 19, "intents", 10, "observations", 11)));
+        report.put("inputDigests", new TreeMap<>(Map.of("handlers", HANDLERS_SHA256, "intents", INTENTS_SHA256,
+                "observations", OBSERVATIONS_SHA256)));
+        report.put("schemaVersion", "software-factory.sf-bl005-selector-verification.v1");
+        report.put("seedObservationRefs", plain.stream()
+                .map(ScenarioEvidenceSelector.Seed::observationRef).toList());
+        report.put("sourceRevision", REALWORLD_REVISION);
+        report.put("sourceTree", REALWORLD_TREE);
+        byte[] reportBytes = (JSON.writerWithDefaultPrettyPrinter().writeValueAsString(report) + "\n")
+                .getBytes(StandardCharsets.UTF_8);
+        String reportText = new String(reportBytes, StandardCharsets.UTF_8);
+        assertTrue(reportText.indexOf("\"handlers\" : 19") < reportText.indexOf("\"intents\" : 10"));
+        assertTrue(reportText.indexOf("\"intents\" : 10") < reportText.indexOf("\"observations\" : 11"));
+        assertTrue(reportText.indexOf("\"handlers\" : \"" + HANDLERS_SHA256 + "\"")
+                < reportText.indexOf("\"intents\" : \"" + INTENTS_SHA256 + "\""));
+        assertTrue(reportText.indexOf("\"intents\" : \"" + INTENTS_SHA256 + "\"")
+                < reportText.indexOf("\"observations\" : \"" + OBSERVATIONS_SHA256 + "\""));
+        Files.createDirectories(outputPath.toAbsolutePath().normalize().getParent());
+        Files.write(outputPath, reportBytes);
+        assertArrayEquals(reportBytes, Files.readAllBytes(outputPath));
+    }
+
+    private static void assertRestAssuredReason(ScenarioEvidenceSelector.DiagnosticReason expected, String method) {
+        assertRestAssuredReason(expected, "UPDATE", method);
+    }
+
+    private static void assertRestAssuredReason(ScenarioEvidenceSelector.DiagnosticReason expected, String action,
+                                                String method) {
+        assertEquals(expected, ScenarioEvidenceSelector.rejectionReason(parseTest(method), action, List.of()));
+    }
+
+    private static com.github.javaparser.ast.body.MethodDeclaration parseTest(String method) {
+        var test = ScenarioEvidenceSelector.parser().parse("class Tests {" + method + "}")
+                .getResult().orElseThrow().findFirst(com.github.javaparser.ast.body.MethodDeclaration.class).orElseThrow();
+        return test;
+    }
+
+    private static String runGit(Path checkout, String... args) throws Exception {
+        var command = new java.util.ArrayList<String>();
+        command.add("git");
+        command.add("-C");
+        command.add(checkout.toString());
+        command.addAll(List.of(args));
+        var process = new ProcessBuilder(command).redirectErrorStream(true).start();
+        String output = new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+        assertEquals(0, process.waitFor(), output);
+        return output;
+    }
+
+    private static String sha256(byte[] content) {
+        try {
+            return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(content));
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private static Path requiredPathProperty(String name) {
+        String value = System.getProperty(name);
+        assertTrue(value != null && !value.isBlank(), "required system property is missing: " + name);
+        return Path.of(value).toAbsolutePath().normalize();
+    }
+
     private static com.fasterxml.jackson.databind.JsonNode observations(String... names) {
         var root = JSON.createObjectNode(); var array = root.putArray("observations");
         for (String name : names) array.addObject().put("observationRef", "obs-" + name)
