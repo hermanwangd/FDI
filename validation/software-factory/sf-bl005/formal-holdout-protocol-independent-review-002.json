@@ -1,0 +1,63 @@
+{
+  "artifacts": {
+    "humanDecision": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/macro-rounding-human-decision-001.json",
+      "sha256": "ec6b37b438ec17bf8265379ceb20ca8d01804a41c8bf20cc41969ee0d6f3a2df"
+    },
+    "manifest": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/vector-manifest.json",
+      "sha256": "ca131bd772946080ccaee98fc2d12663218a129d8d0be1e437e7bca02cb6a82f"
+    },
+    "protocol": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-protocol-002.json",
+      "sha256": "e927329533ac7bbe045ad1dc3fd310cdad1c4186b8d278bb24323eaffbe27323"
+    },
+    "r02Expected": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/expected/R02_NON_MASKING.json",
+      "sha256": "3d5684f4e6b3fc00a93f930eade7261fccfd8095afb2410ea314919acc16ccb8"
+    },
+    "semanticReview": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/vector-semantic-review-002.json",
+      "sha256": "366b8b95398a133407da87693101a38d74a6f9eeeb91f938a9a502af47e9da73"
+    },
+    "verifier": {
+      "path": "tools/sfbl005_formal_scorer_vector_verify_v1.py",
+      "sha256": "e3053d5c88fcd9b1e8611128621c8ceab349ef2ae7909da88d73ee6602f73026"
+    },
+    "verifierTests": {
+      "path": "tests/test_sfbl005_formal_scorer_vector_verify_v1.py",
+      "sha256": "09cb527d783c0d4595bc350bdcc6635ad15e6bd50b7bd11419c2aaedbfba3b2e"
+    }
+  },
+  "boundary": "Revision-2 preparation review only. H1 remains UNBOUND. No scorer execution, calibration, holdout selection or access, external seal, production publication, or readiness decision is authorized.",
+  "findings": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0
+  },
+  "protocolId": "SF-BL-005-FORMAL-HOLDOUT-PROTOCOL-001",
+  "protocolRevision": 2,
+  "result": "PASS",
+  "reviewedCandidate": "3d46de1d3e9b93b7c9c3b221eeeda22c13984429",
+  "reviewedTree": "da2911537b43280a628ebd067503793989b0803d",
+  "reviewer": "/root/h1_raw_protocol_review",
+  "schemaVersion": "SFBL005-FORMAL-HOLDOUT-PROTOCOL-INDEPENDENT-REVIEW-002",
+  "verified": {
+    "exactSevenPathDiff": true,
+    "formalHoldoutIdentityAccessed": false,
+    "humanOption1AuthorityBounded": true,
+    "manifestEntries": 60,
+    "onlyExpectedVectorChanged": "R02_NON_MASKING",
+    "protocolRevision1Preserved": true,
+    "protocolRevision1Sha256": "2ab508f80fa9585edc540275bc2e520d0591cdbe2912749c3010fac87f7e8a42",
+    "pythonTests": {
+      "failed": 0,
+      "passed": 145
+    },
+    "r02MacroRecall": "0.783333333333",
+    "rawRatioPrecision50HalfEvenFinalScale12": true,
+    "roundedRepositoryCounterfactual": "0.783333333334",
+    "scorerExecuted": false,
+    "semanticReviewByteIdentical": true
+  }
+}
