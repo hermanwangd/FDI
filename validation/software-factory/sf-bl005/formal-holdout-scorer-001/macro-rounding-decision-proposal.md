@@ -33,3 +33,7 @@ Retain rounded-repository aggregation, explicitly freeze that rule, and modify/r
 ## Review and acceptance limits
 
 This proposal requires independent review before PR integration and remains a Human decision input after integration. Implementation tests do not establish mapping quality, cross-repository generalization or formal holdout precision/recall. The production aggregate input contract, H0 mapping candidate, H2 exposure attestation/external seal and final Human readiness decision remain separate obligations.
+
+The reproducible 60-vector comparison is recorded in
+`macro-rounding-comparison-001/README.md`; its complete machine-readable output
+is `macro-rounding-comparison-001/comparison.json`.
