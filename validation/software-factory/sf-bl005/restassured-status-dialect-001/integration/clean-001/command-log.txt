@@ -30,3 +30,63 @@ timestamp=RECORDED_WITH_FINAL_SCOPE_PROOF_COMMAND_BELOW
 command=git diff --check origin/main HEAD
 exit=0
 admissibility=ADMISSIBLE
+
+attempt=scope-list-probe-001
+started=2026-09-14T19:51:42Z
+completed=2026-09-14T19:51:42Z
+command=git diff --name-only origin/main HEAD
+exit=0
+result=all observed paths were the two allowlisted source/test files or the allowlisted producer/integration namespace; final evidence-only additions are listed in scope-proof.txt
+admissibility=ADMISSIBLE_SCOPE_PROBE
+
+attempt=allowlist-probe-001
+started=2026-09-14T19:51:42Z
+completed=2026-09-14T19:51:42Z
+command=test -z "$(git diff --name-only origin/main HEAD | rg -v '^(src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelector.java|src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelectorTests.java|validation/software-factory/sf-bl005/restassured-status-dialect-001/(producer|integration)/)' || true)"
+exit=0
+admissibility=ADMISSIBLE_SCOPE_PROBE
+
+attempt=excluded-path-probe-002
+started=2026-09-14T19:51:42Z
+completed=2026-09-14T19:51:42Z
+command=git diff --quiet origin/main HEAD -- output/pdf/FDI-CSI-Proposal-Company-Share-v1.pdf tmp/pdfs validation/software-factory/sf-bl005/formal-holdout-scorer-001/macro-rounding-decision-proposal.md validation/software-factory/sf-bl005/intake-portability-002.md validation/software-factory/sf-bl005/readiness-audit-20260914T124057Z.json
+exit=0
+result=no excluded path group in the origin/main..HEAD diff
+admissibility=ADMISSIBLE_SCOPE_PROBE
+
+attempt=diff-check-002
+started=2026-09-14T19:51:42Z
+completed=2026-09-14T19:51:42Z
+command=git diff --check origin/main HEAD
+exit=0
+admissibility=ADMISSIBLE
+
+attempt=integration-digest-manifest-001
+started=2026-09-14T19:52:51Z
+completed=2026-09-14T19:52:51Z
+command=sha256sum delivery-evidence.json route-verification.json selector-verification.json scope-proof.txt ../../producer/digests.sha256 > digests.sha256
+exit=0
+admissibility=ADMISSIBLE_DIGEST_MANIFEST_GENERATION; manifest self-hash excluded
+
+attempt=receiver-readback-001
+started=2026-09-14T19:53:02Z
+completed=2026-09-14T19:53:02Z
+command=sha256sum command-log.txt delivery-evidence.json route-verification.json selector-verification.json scope-proof.txt digests.sha256 ../../producer/digests.sha256
+exit=0
+result=7 rows verified, 0 failures; receiver self-hash excluded
+admissibility=ADMISSIBLE_RECEIVER_READBACK
+
+attempt=readback-json-probe-001
+started=2026-09-14T19:54:09Z
+completed=2026-09-14T19:54:09Z
+command=jq -e '.verification.focused.tests == 26 and .verification.fullPackage.tests == 1503 and .precision == null and .recall == null and .scopeBoundaries.activeControlsModified == false' delivery-evidence.json
+exit=1
+result=wrong JSON pointer; no artifact mutation
+admissibility=INADMISSIBLE_EXCLUDED_PROBE
+
+attempt=readback-json-probe-002
+started=2026-09-14T19:54:09Z
+completed=2026-09-14T19:54:09Z
+command=jq -e '.verification.java17.focused.tests == 26 and .verification.java17.fullPackage.tests == 1503 and .precision == null and .recall == null and .scopeBoundaries.activeControlsModified == false' delivery-evidence.json
+exit=0
+admissibility=ADMISSIBLE_EVIDENCE_READBACK
