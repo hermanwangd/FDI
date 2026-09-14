@@ -11,16 +11,16 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Execution Plane dispatches authorized RestAssured implementation after this FDP intake reaches main; revision 2 preflight and PR48 gates are satisfied. BOXING calibration replan still awaits separate Human dispatch.",
+  "next_action": "RestAssured bounded delivery is FDP-accepted; keep SF-BL-005 and production readiness open. Human authority must separately select the next material lane: BOXING calibration dispatch, formal-holdout H1 scorer implementation, or another bounded remediation.",
   "blocking_dependency": null,
   "latest_completed_execution": {
-    "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003",
-    "integrated_commit": "5ce6bbcac538c0e22086da30f3b646a2a30bb7db",
-    "review": "INDEPENDENT_REVIEW_PASS_P0_P2_ZERO",
-    "verification": "JAVA17_PACKAGE_1493_1493_PYTEST_63_63_TWO_RUN_BYTE_PARITY",
-    "result": "ROUTE_ABSENT_0_ENTITY_MISMATCH_73_ACTION_MISMATCH_25_UNSUPPORTED_ASSERTION_DIALECT_12",
-    "state": "DIAGNOSTIC_COMPLETE_FDP_RETURNED",
-    "evidence": "validation/software-factory/sf-bl005/realworld-selector-diagnostic-003/execution-receipt.json"
+    "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
+    "integrated_commit": "39723313af6c05b3a46215242903e5d0f51a6a9b",
+    "review": "INDEPENDENT_REVIEW_PASS_P0_P1_P2_ZERO",
+    "verification": "JAVA17_FOCUSED_26_26_PACKAGE_1503_1503_PYTEST_142_142_DIGEST_5_5_RECEIVER_7_7",
+    "result": "ACCEPTED_1_ASSERTION_POLARITY_5_UNMET_CONDITION_6_ENTITY_MISMATCH_73_ACTION_MISMATCH_25_UNSUPPORTED_ASSERTION_DIALECT_0",
+    "state": "FDP_ACCEPTED_PR_INTEGRATED_SLICE_COMPLETE_PARENT_ACTIVE",
+    "evidence": "validation/software-factory/sf-bl005/restassured-status-dialect-001/fdp-intake-001.json"
   },
   "latest_selector_diagnostic": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
@@ -39,7 +39,7 @@
   },
   "selected_next_execution": {
     "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
-    "state": "PREFLIGHT_PASS_PR_INTEGRATED_DISPATCH_READY",
+    "state": "FDP_ACCEPTED_PR_INTEGRATED_SLICE_COMPLETE_PARENT_ACTIVE",
     "objective": "Add tightly bounded RestAssured MockMvc statusCode assertion classification after existing route/request gates.",
     "selection_authority": "Human selected option 1: RestAssured implementation dispatch with FDP control reconciliation",
     "construction_base": "399a183b9d90a52bdc653550c89d9dc2bb63c17c",
@@ -49,7 +49,7 @@
     "calibration_authorized": false,
     "formal_holdout_authorized": false,
     "parent_closure": false,
-    "dependency": "SATISFIED_REVISION_2_PREFLIGHT_AND_PR48_INTEGRATION",
+    "dependency": "COMPLETE_PR50_INTEGRATED_FDP_ACCEPTED",
     "envelope_revision": 2,
     "independent_preflight": "PASS_P0_P1_P2_ZERO",
     "selection_baseline": "7463f5c744ac975f0e335a8006777bda88b4b470",
@@ -58,7 +58,14 @@
     "envelope_path": "validation/software-factory/sf-bl005/execution-envelope-restassured-status-dialect-001-r2.json",
     "envelope_sha256": "1d24b7953453f2822c65675094b34fc19d008e12327429cc6a2382cca3d4e971",
     "envelope_integrated_commit": "f7bdb991e94745dee024a481fe573bc6ff62e554",
-    "independent_preflight_evidence": "validation/software-factory/sf-bl005/envelope-independent-preflight-restassured-status-dialect-001-r2.json"
+    "independent_preflight_evidence": "validation/software-factory/sf-bl005/envelope-independent-preflight-restassured-status-dialect-001-r2.json",
+    "implementation_candidate": "aecf83ecbcd6c51ca8598137fc5d079810acfa11",
+    "implementation_candidate_tree": "ba8ac687155323252b0d558b22faee36c4942801",
+    "integrated_commit": "39723313af6c05b3a46215242903e5d0f51a6a9b",
+    "independent_final_review": "PASS_P0_P1_P2_ZERO",
+    "precision": null,
+    "recall": null,
+    "fdp_intake_evidence": "validation/software-factory/sf-bl005/restassured-status-dialect-001/fdp-intake-001.json"
   },
   "metric_goal": {
     "status": "NOT_MET_DIAGNOSTIC_ONLY",
@@ -132,8 +139,8 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "PREFLIGHT_PASS_PR_INTEGRATED_DISPATCH_READY",
-      "integration_candidate": "f7bdb991e94745dee024a481fe573bc6ff62e554"
+      "execution_state": "FDP_ACCEPTED_PR_INTEGRATED_SLICE_COMPLETE_PARENT_ACTIVE",
+      "integration_candidate": "39723313af6c05b3a46215242903e5d0f51a6a9b"
     },
     {
       "lane_id": "boxing-calibration-003-replan",
