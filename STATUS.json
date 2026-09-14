@@ -11,7 +11,7 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Human Authority selects the H1 macro aggregation contract from validation/software-factory/sf-bl005/formal-holdout-scorer-001/macro-rounding-decision-proposal.md. FDP recommends averaging raw per-repository ratios under precision 50 and quantizing only the final macro value. No scorer execution, protocol reseal, calibration, or holdout is authorized by this proposal.",
+  "next_action": "Integrate the independently reviewed H1 raw-ratio protocol revision 2 and conformance reseal, then prepare a new exact-candidate envelope bound to that integration commit. No scorer execution, calibration, repository selection, or formal holdout is authorized.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
@@ -326,19 +326,19 @@
   },
   "formal_holdout_protocol": {
     "protocol_id": "SF-BL-005-FORMAL-HOLDOUT-PROTOCOL-001",
-    "revision": 1,
+    "revision": 2,
     "document_state": "PREPARED_POLICY_NOT_EXECUTABLE",
-    "protocol_sha256": "2ab508f80fa9585edc540275bc2e520d0591cdbe2912749c3010fac87f7e8a42",
-    "independent_review": "PASS_P0_P1_P2_ZERO",
+    "protocol_sha256": "e927329533ac7bbe045ad1dc3fd310cdad1c4186b8d278bb24323eaffbe27323",
+    "independent_review": "PASS_REVISION_2_P0_P1_P2_ZERO",
     "repository_or_sample_identity_disclosed": false,
     "h0_final_candidate": "UNBOUND",
-    "h1_scorer": "UNBOUND_MACRO_ROUNDING_ORDER_HUMAN_DECISION_REQUIRED",
+    "h1_scorer": "UNBOUND_PROTOCOL_R2_RESEAL_REVIEW_PASS_NEW_EXACT_ENVELOPE_REQUIRED",
     "h2_contamination_ledger": "PREPARED_REVIEW_PASS_PENDING_HUMAN_DISCLOSURE_ATTESTATION_AND_EXTERNAL_SEAL",
     "external_seal_receipt": "MISSING",
     "repository_selection_authorized": false,
     "holdout_execution_authorized": false,
     "formal_holdout_metrics_available": false,
-    "evidence": "validation/software-factory/sf-bl005/formal-holdout-protocol-independent-review-001.json",
+    "evidence": "validation/software-factory/sf-bl005/formal-holdout-protocol-independent-review-002.json",
     "h2_ledger_sha256": "064376ed3b18219393887833275093365e348b5cc31201b1c2569a310c012a18",
     "h2_evidence_manifest_sha256": "4c9acd0a669ce4120d020ce4cf1d92f8ff70a7377f63e7b6a47a353c7e098f28",
     "h2_manifest_entries": 473,
@@ -359,8 +359,22 @@
     },
     "h1_candidate": "ea15e51df0f5410bfb5532e1c255f107ccb0975b",
     "h1_candidate_execution_authorized": false,
-    "h1_macro_rounding_decision": "PENDING_HUMAN_SELECTION",
-    "h1_macro_rounding_recommendation": "RAW_RATIO_AVERAGE_THEN_FINAL_SCALE_12",
-    "h1_decision_proposal": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/macro-rounding-decision-proposal.md"
+    "h1_macro_rounding_decision": "SELECTED_RAW_RATIO_AVERAGE_THEN_FINAL_SCALE_12",
+    "h1_macro_rounding_recommendation": "ACCEPTED_BY_HUMAN_AUTHORITY",
+    "h1_decision_proposal": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/macro-rounding-decision-proposal.md",
+    "h1_decision_receipt": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/macro-rounding-human-decision-001.json",
+      "sha256": "ec6b37b438ec17bf8265379ceb20ca8d01804a41c8bf20cc41969ee0d6f3a2df"
+    },
+    "h1_protocol_reseal": {
+      "protocolPath": "validation/software-factory/sf-bl005/formal-holdout-protocol-002.json",
+      "protocolSha256": "e927329533ac7bbe045ad1dc3fd310cdad1c4186b8d278bb24323eaffbe27323",
+      "manifestSha256": "ca131bd772946080ccaee98fc2d12663218a129d8d0be1e437e7bca02cb6a82f",
+      "semanticReviewSha256": "366b8b95398a133407da87693101a38d74a6f9eeeb91f938a9a502af47e9da73",
+      "independentReviewPath": "validation/software-factory/sf-bl005/formal-holdout-protocol-independent-review-002.json",
+      "independentReviewSha256": "9d9c4f2411b505dc63977bd44ff55c5be4aeaae2a3496dddcd262e2e3f0bfbf6",
+      "state": "REVIEW_PASS_PENDING_PR_INTEGRATION",
+      "next": "NEW_EXACT_CANDIDATE_ENVELOPE_AFTER_INTEGRATION"
+    }
   }
 }
