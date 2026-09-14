@@ -11,7 +11,7 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Human Authority decides whether to dispatch the exact RestAssured status dialect implementation and, separately, the independently preflighted BOXING calibration replan; production readiness remains NOT_READY.",
+  "next_action": "FDP completes RestAssured revision 2 independent preflight and PR integration, then dispatches the Human-authorized bounded implementation; BOXING replan still awaits separate Human dispatch.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003",
@@ -39,21 +39,23 @@
   },
   "selected_next_execution": {
     "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
-    "state": "ENVELOPE_PREFLIGHT_PASS_AWAITING_HUMAN_DISPATCH",
+    "state": "HUMAN_AUTHORIZED_RECONCILIATION_PREFLIGHT_PENDING",
     "objective": "Add tightly bounded RestAssured MockMvc statusCode assertion classification after existing route/request gates.",
-    "selection_authority": "Goal-directed FDP selection from source-backed diagnostic 003 analysis",
-    "construction_base": "7463f5c744ac975f0e335a8006777bda88b4b470",
-    "code_change_authorized": false,
+    "selection_authority": "Human selected option 1: RestAssured implementation dispatch with FDP control reconciliation",
+    "construction_base": "399a183b9d90a52bdc653550c89d9dc2bb63c17c",
+    "code_change_authorized": true,
     "envelope_creation_authorized": true,
-    "dispatch_authorized": false,
+    "dispatch_authorized": true,
     "calibration_authorized": false,
     "formal_holdout_authorized": false,
     "parent_closure": false,
-    "dependency": "REJECTION_ANALYSIS_002_INTEGRATED",
-    "envelope_revision": 1,
-    "envelope_sha256": "2829333b3f3b61815e749b1905c634a39141c8effed57e365ae20fca282162c9",
-    "envelope_integrated_commit": "c61ceea6ffb1e5657075b5555bf115461e7a90a9",
-    "independent_preflight": "PASS_P0_P1_P2_ZERO"
+    "dependency": "RECONCILED_ENVELOPE_INDEPENDENT_PREFLIGHT_PASS",
+    "envelope_revision": 2,
+    "independent_preflight": "PENDING_REVISION_2",
+    "selection_baseline": "7463f5c744ac975f0e335a8006777bda88b4b470",
+    "prior_envelope_sha256": "2829333b3f3b61815e749b1905c634a39141c8effed57e365ae20fca282162c9",
+    "prior_envelope_integrated_commit": "c61ceea6ffb1e5657075b5555bf115461e7a90a9",
+    "envelope_path": "validation/software-factory/sf-bl005/execution-envelope-restassured-status-dialect-001-r2.json"
   },
   "metric_goal": {
     "status": "NOT_MET_DIAGNOSTIC_ONLY",
@@ -123,11 +125,11 @@
     {
       "lane_id": "restassured-status-dialect",
       "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
-      "base_commit": "c61ceea6ffb1e5657075b5555bf115461e7a90a9",
+      "base_commit": "399a183b9d90a52bdc653550c89d9dc2bb63c17c",
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "ENVELOPE_PREFLIGHT_PASS_AWAITING_HUMAN_DISPATCH",
+      "execution_state": "HUMAN_AUTHORIZED_RECONCILIATION_PREFLIGHT_PENDING",
       "integration_candidate": null
     },
     {
