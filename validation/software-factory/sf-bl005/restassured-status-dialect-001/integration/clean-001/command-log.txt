@@ -1,0 +1,32 @@
+execution_id=SF-BL-005-RESTASSURED-STATUS-DIALECT-001
+stage=5
+evidence_revision=clean-001
+recorded_clock=UTC
+candidate_binding=implementation_commit_445bd225979bcd92c701aa2c1ff815fb03b8ac6a; final_exact_head_in_handoff
+
+attempt=copy-canonical-verifiers-001
+started=2026-09-14T19:49:43Z
+completed=2026-09-14T19:49:43Z
+command=cp validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/route-verification.json validation/software-factory/sf-bl005/restassured-status-dialect-001/integration/clean-001/route-verification.json && cp validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/selector-verification.json validation/software-factory/sf-bl005/restassured-status-dialect-001/integration/clean-001/selector-verification.json
+exit=0
+admissibility=ADMISSIBLE_CANONICAL_OUTPUT_SEPARATION
+
+attempt=digest-readback-001
+timestamp=RECORDED_WITH_FINAL_MANIFEST_COMMAND_BELOW
+command=sha256sum integration/clean-001/delivery-evidence.json integration/clean-001/route-verification.json integration/clean-001/selector-verification.json integration/clean-001/scope-proof.txt integration/clean-001/receiver-readback.json
+exit=0
+result=6 digest rows are independently checked by receiver-readback; receiver self-hash is excluded to avoid circular construction
+admissibility=ADMISSIBLE
+
+attempt=excluded-path-probe-001
+timestamp=RECORDED_WITH_FINAL_SCOPE_PROOF_COMMAND_BELOW
+command=git diff --quiet origin/main HEAD -- output/pdf/FDI-CSI-Proposal-Company-Share-v1.pdf tmp/pdfs validation/software-factory/sf-bl005/formal-holdout-scorer-001/macro-rounding-decision-proposal.md validation/software-factory/sf-bl005/intake-portability-002.md validation/software-factory/sf-bl005/readiness-audit-20260914T124057Z.json
+exit=0
+result=none of the five excluded path groups appears in the eventual origin/main..HEAD diff
+admissibility=ADMISSIBLE_SCOPE_PROBE
+
+attempt=diff-check-final-001
+timestamp=RECORDED_WITH_FINAL_SCOPE_PROOF_COMMAND_BELOW
+command=git diff --check origin/main HEAD
+exit=0
+admissibility=ADMISSIBLE

@@ -1,0 +1,98 @@
+{
+  "schema_version" : "software-factory.sf-bl002-http-behavior-observations.v0.3",
+  "execution_id" : "SF-BL-002-ROUTE-EFFECTIVENESS-005",
+  "authority" : "PROPOSAL_ONLY",
+  "semantic_publication_allowed" : false,
+  "source_revision" : "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+  "generation_method" : "SfBl002RouteEffectivenessRun.generate",
+  "observations" : [ {
+    "observationRef" : "http-behavior-observation-00001",
+    "testSourcePath" : "src/test/java/io/spring/api/ArticleApiTest.java",
+    "testMethod" : "should_update_article_content_success",
+    "sourceLocation" : "src/test/java/io/spring/api/ArticleApiTest.java:110",
+    "httpMethod" : "PUT",
+    "normalizedRouteTemplate" : "/articles/{slug}",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00002",
+    "testSourcePath" : "src/test/java/io/spring/api/ArticleApiTest.java",
+    "testMethod" : "should_get_403_if_not_author_to_update_article",
+    "sourceLocation" : "src/test/java/io/spring/api/ArticleApiTest.java:158",
+    "httpMethod" : "PUT",
+    "normalizedRouteTemplate" : "/articles/{slug}",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00003",
+    "testSourcePath" : "src/test/java/io/spring/api/ArticleApiTest.java",
+    "testMethod" : "should_delete_article_success",
+    "sourceLocation" : "src/test/java/io/spring/api/ArticleApiTest.java:178",
+    "httpMethod" : "DELETE",
+    "normalizedRouteTemplate" : "/articles/{slug}",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00004",
+    "testSourcePath" : "src/test/java/io/spring/api/ArticleApiTest.java",
+    "testMethod" : "should_403_if_not_author_delete_article",
+    "sourceLocation" : "src/test/java/io/spring/api/ArticleApiTest.java:201",
+    "httpMethod" : "DELETE",
+    "normalizedRouteTemplate" : "/articles/{slug}",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00005",
+    "testSourcePath" : "src/test/java/io/spring/api/ArticleFavoriteApiTest.java",
+    "testMethod" : "should_unfavorite_an_article_success",
+    "sourceLocation" : "src/test/java/io/spring/api/ArticleFavoriteApiTest.java:93",
+    "httpMethod" : "DELETE",
+    "normalizedRouteTemplate" : "/articles/{slug}/favorite",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00006",
+    "testSourcePath" : "src/test/java/io/spring/api/CommentsApiTest.java",
+    "testMethod" : "should_delete_comment_success",
+    "sourceLocation" : "src/test/java/io/spring/api/CommentsApiTest.java:136",
+    "httpMethod" : "DELETE",
+    "normalizedRouteTemplate" : "/articles/{slug}/comments/{id}",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00007",
+    "testSourcePath" : "src/test/java/io/spring/api/CommentsApiTest.java",
+    "testMethod" : "should_get_403_if_not_author_of_article_or_author_of_comment_when_delete_comment",
+    "sourceLocation" : "src/test/java/io/spring/api/CommentsApiTest.java:158",
+    "httpMethod" : "DELETE",
+    "normalizedRouteTemplate" : "/articles/{slug}/comments/{id}",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00008",
+    "testSourcePath" : "src/test/java/io/spring/api/CurrentUserApiTest.java",
+    "testMethod" : "should_update_current_user_profile",
+    "sourceLocation" : "src/test/java/io/spring/api/CurrentUserApiTest.java:111",
+    "httpMethod" : "PUT",
+    "normalizedRouteTemplate" : "/user",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00009",
+    "testSourcePath" : "src/test/java/io/spring/api/CurrentUserApiTest.java",
+    "testMethod" : "should_get_error_if_email_exists_when_update_user_profile",
+    "sourceLocation" : "src/test/java/io/spring/api/CurrentUserApiTest.java:135",
+    "httpMethod" : "PUT",
+    "normalizedRouteTemplate" : "/user",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00010",
+    "testSourcePath" : "src/test/java/io/spring/api/CurrentUserApiTest.java",
+    "testMethod" : "should_get_401_if_not_login",
+    "sourceLocation" : "src/test/java/io/spring/api/CurrentUserApiTest.java:166",
+    "httpMethod" : "PUT",
+    "normalizedRouteTemplate" : "/user",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  }, {
+    "observationRef" : "http-behavior-observation-00011",
+    "testSourcePath" : "src/test/java/io/spring/api/ProfileApiTest.java",
+    "testMethod" : "should_unfollow_user_success",
+    "sourceLocation" : "src/test/java/io/spring/api/ProfileApiTest.java:86",
+    "httpMethod" : "DELETE",
+    "normalizedRouteTemplate" : "/profiles/{username}/follow",
+    "extractionBasis" : "REST_TEMPLATE_CALL"
+  } ],
+  "gaps" : [ ]
+}
