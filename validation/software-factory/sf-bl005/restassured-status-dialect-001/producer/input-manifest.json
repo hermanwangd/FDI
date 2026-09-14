@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "software-factory.sf-bl005-restassured-status-dialect-input-manifest.v1",
+  "executionId": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
+  "envelopeRevision": 2,
+  "envelopeSha256": "1d24b7953453f2822c65675094b34fc19d008e12327429cc6a2382cca3d4e971",
+  "constructionBase": "399a183b9d90a52bdc653550c89d9dc2bb63c17c",
+  "cleanCandidateBase": "5fe3cfbcf6574ce01b2954c9a36b4952f23e6c9f",
+  "sourceEvidenceBoundary": {
+    "contaminatedBaseline": "90b252a01c1ea45fc92a9034959f6ca88e1351e0",
+    "reviewedSourceCandidate": "7e8e54f2f28cf90672fc152b3d0fcef8c98115b5",
+    "use": "READ_ONLY_BLOB_DIFF_SOURCE",
+    "replayedOrCherryPicked": false
+  },
+  "realWorld": {
+    "revision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+    "tree": "3938658872ad216fe45033f4698c66febd80be76",
+    "productionSubtree": "393afbd6c7e5dab2352ef896b5866348d6d822a3",
+    "publicTests": {
+      "src/test/java/io/spring/api/ArticleApiTest.java": "786f03763a4679009125e35fee54da170ed734d50e0c5f45f6cd7122738ceb9d",
+      "src/test/java/io/spring/api/CurrentUserApiTest.java": "aeeaf546cf0b7f7e5e37e7d8d08b7957bcbf2181d4d842234b290a4480b54040"
+    }
+  },
+  "inputs": {
+    "intents": {"path": "producer/intents.json", "count": 10, "sha256": "1ccc62730b762b1d3e1a8e28adcce8a8a836d6df3d6f1a97f0922ca6c6d7b7fe"},
+    "observations": {"path": "producer/observations.json", "count": 11, "sha256": "71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd"},
+    "handlers": {"path": "producer/handlers.json", "count": 19, "sha256": "9b18b6ed556e55aed9db77dee4dc032aa951216af37231f9619095a46ad34053"}
+  },
+  "authority": "PROPOSAL_ONLY",
+  "semanticPublicationAllowed": false,
+  "precision": null,
+  "recall": null
+}

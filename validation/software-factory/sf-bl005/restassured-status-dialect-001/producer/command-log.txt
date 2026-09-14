@@ -1,0 +1,107 @@
+execution_id=SF-BL-005-RESTASSURED-STATUS-DIALECT-001
+evidence_namespace=producer/remediation-003
+recorded_clock=UTC
+resource_policy=MAVEN_OPTS=-Xmx2g; argLine=-Xmx2g; forkCount=1; one heavy JVM; aggregate memory below 8GB
+
+attempt=tdd-red-001
+started=2026-09-14T19:40:48Z
+completed=2026-09-14T19:40:56Z
+command=JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dtest='ScenarioEvidenceSelectorTests#restAssuredStatusCode200WithBodyIsPositiveEvidence+restAssuredStatusCode401IsErrorEvidence+restAssuredStatusCode403IsErrorEvidence+restAssuredStatusCode422WithBodyIsErrorEvidence+restAssuredMockMvcStatusCode200WithBodyIsPositiveEvidence' test
+exit=1
+result=5 tests, 5 failures, 0 errors, 0 skipped; each returned UNSUPPORTED_ASSERTION_DIALECT
+admissibility=ADMISSIBLE_RED_BEFORE_PRODUCTION_CHANGE
+
+attempt=input-mkdir-001
+started=2026-09-14T19:41:36Z
+completed=2026-09-14T19:41:36Z
+command=mkdir -p validation/software-factory/sf-bl005/restassured-status-dialect-001/producer
+exit=0
+admissibility=ADMISSIBLE_FROZEN_INPUT_MATERIALIZATION
+
+attempt=input-intents-001
+started=2026-09-14T19:41:36Z
+completed=2026-09-14T19:41:36Z
+command=git show fccbb5587f06f5ba7b9ee36a41eaf26b8b66ef8c:validation/software-factory/sf-bl005/cross-repo-realworld-001/producer-inputs/validation/software-factory/sf-bl002/accepted-scenario-search-intents-002.json > validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/intents.json
+exit=0
+admissibility=ADMISSIBLE_FROZEN_INPUT_MATERIALIZATION
+
+attempt=input-observations-001
+started=2026-09-14T19:41:36Z
+completed=2026-09-14T19:41:36Z
+command=cp validation/software-factory/sf-bl005/realworld-selector-diagnostic-003/bundle/observations.json validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json
+exit=0
+admissibility=ADMISSIBLE_FROZEN_INPUT_MATERIALIZATION
+
+attempt=input-handlers-001
+started=2026-09-14T19:41:36Z
+completed=2026-09-14T19:41:37Z
+command=python3 -c 'materialize handlers.json from the pinned route-verification payload using the exact envelope transform'
+exit=0
+admissibility=ADMISSIBLE_FROZEN_INPUT_MATERIALIZATION; exact command is preserved in execution-envelope-restassured-status-dialect-001-r2.json
+
+attempt=input-hash-intents-001
+started=2026-09-14T19:41:46Z
+completed=2026-09-14T19:41:46Z
+command=test "$(shasum -a 256 validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/intents.json | awk '{print $1}')" = 1ccc62730b762b1d3e1a8e28adcce8a8a836d6df3d6f1a97f0922ca6c6d7b7fe
+exit=0
+admissibility=ADMISSIBLE_DIGEST_ASSERTION
+
+attempt=input-hash-observations-001
+started=2026-09-14T19:41:46Z
+completed=2026-09-14T19:41:46Z
+command=test "$(shasum -a 256 validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json | awk '{print $1}')" = 71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd
+exit=0
+admissibility=ADMISSIBLE_DIGEST_ASSERTION
+
+attempt=input-hash-handlers-001
+started=2026-09-14T19:41:46Z
+completed=2026-09-14T19:41:46Z
+command=test "$(shasum -a 256 validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/handlers.json | awk '{print $1}')" = 9b18b6ed556e55aed9db77dee4dc032aa951216af37231f9619095a46ad34053
+exit=0
+admissibility=ADMISSIBLE_DIGEST_ASSERTION
+
+attempt=java17-focused-001
+started=2026-09-14T19:41:57Z
+completed=2026-09-14T19:42:04Z
+command=JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dsfbl005.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.observations.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json -Dsfbl005.verification.output=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/route-verification.json -Dsfbl005.selector.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.selector.intents.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/intents.json -Dsfbl005.selector.observations.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json -Dsfbl005.selector.handlers.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/handlers.json -Dsfbl005.selector.verification.output=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/selector-verification.json -Dtest=ScenarioEvidenceSelectorTests test
+exit=0
+result=26 tests, 0 failures, 0 errors, 0 skipped; route and selector outputs both created
+admissibility=ADMISSIBLE
+
+attempt=java17-full-001
+started=2026-09-14T19:42:14Z
+completed=UNKNOWN
+command=JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dsfbl005.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.observations.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json -Dsfbl005.verification.output=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/route-verification.json -Dsfbl005.selector.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.selector.intents.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/intents.json -Dsfbl005.selector.observations.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json -Dsfbl005.selector.handlers.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/handlers.json -Dsfbl005.selector.verification.output=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/selector-verification.json package
+exit=UNKNOWN_CAPTURE
+result=process later observed terminated, but completion stream was not retained
+admissibility=INADMISSIBLE_EVIDENCE_CAPTURE; excluded from pass claim and rerun below
+
+attempt=java17-full-002
+started=2026-09-14T19:43:34Z
+completed=2026-09-14T19:44:32Z
+command=JAVA_HOME=/opt/homebrew/opt/openjdk@17 MAVEN_OPTS=-Xmx2g ./mvnw -q -DargLine=-Xmx2g -DforkCount=1 -DreuseForks=true -Dsfbl005.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.observations.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json -Dsfbl005.verification.output=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/route-verification.json -Dsfbl005.selector.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31 -Dsfbl005.selector.intents.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/intents.json -Dsfbl005.selector.observations.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json -Dsfbl005.selector.handlers.path=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/handlers.json -Dsfbl005.selector.verification.output=validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/selector-verification.json package
+exit=0
+result=1503 tests, 0 failures, 0 errors, 0 skipped; Java 17.0.20.1
+admissibility=ADMISSIBLE
+
+attempt=python-regression-001
+started=2026-09-14T19:44:37Z
+completed=2026-09-14T19:44:58Z
+command=python3 -m pytest -q
+exit=0
+result=142 passed in 20.08s
+admissibility=ADMISSIBLE_CLEAN_EXACT_HEAD
+
+attempt=evidence-directory-mkdir-001
+started=2026-09-14T19:46:22Z
+completed=2026-09-14T19:46:22Z
+command=mkdir -p validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/remediation-003 validation/software-factory/sf-bl005/restassured-status-dialect-001/integration/clean-001
+exit=0
+admissibility=ADMISSIBLE_EVIDENCE_PREPARATION
+
+attempt=producer-digest-manifest-001
+started=2026-09-14T19:50:28Z
+completed=2026-09-14T19:50:28Z
+command=sha256sum producer/command-log.txt producer/execution-receipt.json producer/handlers.json producer/input-manifest.json producer/intents.json producer/observations.json producer/route-verification.json producer/selector-verification.json producer/remediation-003/command-log.txt producer/remediation-003/execution-receipt.json > producer/digests.sha256
+exit=0
+admissibility=ADMISSIBLE_DIGEST_MANIFEST_GENERATION; manifest self-hash excluded
