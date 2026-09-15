@@ -1,0 +1,26 @@
+{
+  "reviewerRun": "/root/parity_r2_review",
+  "independentOfProducer": true,
+  "controlCommit": "1b269c977aa6bde4ce2bbc7658d132b99e8f7803",
+  "candidate": "4baf876c8c10749ae047f57a16914196e1bc0516",
+  "initialControlReview": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 1,
+    "finding": "active lane identity/base mismatch",
+    "remediation": "Stable execution id and base469 retained; control/source guard base1b269 separately bound"
+  },
+  "finalControlReview": "PASS",
+  "finalCodeReview": {
+    "verdict": "PASS",
+    "P0": 0,
+    "P1": 0,
+    "P2": 0
+  },
+  "scope": [
+    "Python diff 1b269..4baf",
+    "inherited Java/Python V07 ea15..469",
+    "six control hashes and envelope ancestry"
+  ],
+  "limitations": "Independent static review; runtime verification is separately attributed to producer."
+}

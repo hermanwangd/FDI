@@ -1,0 +1,44 @@
+[
+  {
+    "name": "java-full",
+    "argv": [
+      "./mvnw",
+      "-DargLine=-Xmx1g",
+      "-DforkCount=1",
+      "-Dsfbl005.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-002/realworld-fixture",
+      "-Dsfbl005.observations.path=/Users/herman_mbp2023/ClawProjects/skills/fdi-h1-envelope-r4-final/validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json",
+      "-Dsfbl005.verification.output=/Users/herman_mbp2023/ClawProjects/skills/fdi-h1-envelope-r4-final/validation/software-factory/sf-bl005/formal-holdout-scorer-001/malformed-remediation-001/r2/realworld-regression.json",
+      "clean",
+      "package"
+    ],
+    "cwd": "/Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix",
+    "candidate": "4baf876c8c10749ae047f57a16914196e1bc0516",
+    "startedAt": "2026-09-15T12:53:37.760708+00:00",
+    "endedAt": "2026-09-15T12:54:46.511589+00:00",
+    "exitCode": 0,
+    "logSha256": "52aec816ce108d5726bf2efda3de560ca01ade94fc585cc4260fea9aa2f2724d",
+    "environment": {
+      "JAVA_HOME": "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home",
+      "MAVEN_OPTS": "-Xmx2g"
+    }
+  },
+  {
+    "name": "python-full",
+    "argv": [
+      "python3",
+      "-m",
+      "pytest",
+      "-q"
+    ],
+    "cwd": "/Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix",
+    "candidate": "4baf876c8c10749ae047f57a16914196e1bc0516",
+    "startedAt": "2026-09-15T12:54:46.512541+00:00",
+    "endedAt": "2026-09-15T12:55:09.685651+00:00",
+    "exitCode": 0,
+    "logSha256": "12b1ce7a2d97f89826c76410b9be151dc82642717bd0885e138c7464540fff22",
+    "environment": {
+      "JAVA_HOME": "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home",
+      "MAVEN_OPTS": "-Xmx2g"
+    }
+  }
+]

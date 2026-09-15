@@ -11,7 +11,7 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Remediate scorer malformed-payload handling against frozen V07; candidate revision and new exact envelope required. Preserve successful regression and failed Java conformance evidence.",
+  "next_action": "Human candidate merge decision for4baf876: independent code/evidence reviews pass, Java17 1509/Python166 and four golden comparisons pass; H1 remains unbound.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
@@ -155,12 +155,12 @@
     {
       "lane_id": "h1-synthetic-scorer",
       "execution_id": "SF-BL-005-FORMAL-HOLDOUT-SCORER-001",
-      "base_commit": "09053f393f8f8453008577b5e76366c460d9fce1",
+      "base_commit": "469c0a2f26b0cc3e2b1e753c8d1bf3774809bac3",
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "FAILED_SCORER_V07_CONFORMANCE",
-      "integration_candidate": null
+      "execution_state": "VALIDATED_REVIEW_PASS_AWAITING_MERGE_DECISION",
+      "integration_candidate": "4baf876c8c10749ae047f57a16914196e1bc0516"
     }
   ],
   "mapping_improvement_intake": {
@@ -342,7 +342,7 @@
     "independent_review": "PASS_REVISION_2_P0_P1_P2_ZERO",
     "repository_or_sample_identity_disclosed": false,
     "h0_final_candidate": "UNBOUND",
-    "h1_scorer": "UNBOUND_SCORER_V07_CONFORMANCE_FAILED",
+    "h1_scorer": "UNBOUND_CANDIDATE_PARITY_VALIDATED",
     "h2_contamination_ledger": "PREPARED_REVIEW_PASS_PENDING_HUMAN_DISCLOSURE_ATTESTATION_AND_EXTERNAL_SEAL",
     "external_seal_receipt": "MISSING",
     "repository_selection_authorized": false,
@@ -365,9 +365,9 @@
       "sha256": "232499edf4c529c26b6b89aad39ba60bdd9815c959c263ef65ec640a0740d069",
       "preflight": "PASS_P0_P1_P2_ZERO",
       "dispatch_authorized": true,
-      "implementation_authorized": false,
+      "implementation_authorized": true,
       "human_dispatch_receipt": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-human-dispatch-001.json",
-      "next": "CANDIDATE_REMEDIATION_REQUIRED",
+      "next": "SUPERSEDED_FOR_REMEDIATION_BY_R2_ENVELOPE",
       "execution_evidence": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-replan-002-execution/summary.json",
       "fixture_authority": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-fixture-human-decision-001.json"
     },
@@ -389,6 +389,17 @@
       "independentReviewSha256": "9d9c4f2411b505dc63977bd44ff55c5be4aeaae2a3496dddcd262e2e3f0bfbf6",
       "state": "INTEGRATED_PR55",
       "next": "R4_SYNTHETIC_EXECUTION_AUTHORIZED"
+    },
+    "h1_remediation": {
+      "candidate": "4baf876c8c10749ae047f57a16914196e1bc0516",
+      "base": "ea15e51df0f5410bfb5532e1c255f107ccb0975b",
+      "authority": "Human option 1: reconcile candidate controls, fix polarity arrays and missing micro metric reasons, fully revalidate",
+      "state": "VALIDATED_REVIEW_PASS_AWAITING_MERGE_DECISION",
+      "candidate_merge_authorized": false,
+      "remediation_id": "PARITY-R2",
+      "envelope": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/malformed-remediation-001/remediation-r2-envelope.json",
+      "control_commit": "1b269c977aa6bde4ce2bbc7658d132b99e8f7803",
+      "evidence": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/malformed-remediation-001/r2/summary.json"
     }
   }
 }
