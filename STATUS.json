@@ -11,7 +11,7 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Human main-merge decision for PR62 integration: Java17 1519/Python176, four golden byte matches, independent code and evidence review pass.",
+  "next_action": "H1 preparation independently reviewed PASS; decide durable binary custody and final H1 receipt intake. PR62 merged, H1 remains unbound.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
@@ -159,8 +159,8 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "INTEGRATION_VALIDATED_REVIEW_PASS_AWAITING_MAIN_MERGE_DECISION",
-      "integration_candidate": "10f409e4a7ddc264f35d6f77bdb2035eb1e88e18"
+      "execution_state": "PR62_MERGED_H1_BINDING_PREPARATION",
+      "integration_candidate": "295a1c0a2d238d507f100fbdcc259056997d80a6"
     }
   ],
   "mapping_improvement_intake": {
@@ -342,7 +342,7 @@
     "independent_review": "PASS_REVISION_2_P0_P1_P2_ZERO",
     "repository_or_sample_identity_disclosed": false,
     "h0_final_candidate": "UNBOUND",
-    "h1_scorer": "UNBOUND_CANDIDATE_PARITY_VALIDATED",
+    "h1_scorer": "UNBOUND_BINDING_EVIDENCE_PREPARED",
     "h2_contamination_ledger": "PREPARED_REVIEW_PASS_PENDING_HUMAN_DISCLOSURE_ATTESTATION_AND_EXTERNAL_SEAL",
     "external_seal_receipt": "MISSING",
     "repository_selection_authorized": false,
@@ -394,21 +394,27 @@
       "candidate": "4baf876c8c10749ae047f57a16914196e1bc0516",
       "base": "ea15e51df0f5410bfb5532e1c255f107ccb0975b",
       "authority": "Human option 1: reconcile candidate controls, fix polarity arrays and missing micro metric reasons, fully revalidate",
-      "state": "VALIDATED_REVIEW_PASS_AWAITING_MERGE_DECISION",
-      "candidate_merge_authorized": false,
+      "state": "INCLUDED_IN_MERGED_PR62",
+      "candidate_merge_authorized": true,
       "remediation_id": "PARITY-R2",
       "envelope": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/malformed-remediation-001/remediation-r2-envelope.json",
       "control_commit": "1b269c977aa6bde4ce2bbc7658d132b99e8f7803",
-      "evidence": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/malformed-remediation-001/r2/summary.json"
+      "evidence": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/malformed-remediation-001/r2/summary.json",
+      "merged_commit": "295a1c0a2d238d507f100fbdcc259056997d80a6"
     },
     "h1_integration": {
       "source_candidate": "4baf876c8c10749ae047f57a16914196e1bc0516",
       "evidence_candidate": "09ce1b1b47c2407e1d0a0327a5712966b66afd9a",
       "main_base": "ebe6e1eff6a9c6bfe5e67709b8628cd316f2556b",
-      "state": "VALIDATED_REVIEW_PASS_AWAITING_MAIN_MERGE_DECISION",
-      "main_merge_authorized": false,
+      "state": "PR62_MERGED_POSTMERGE_TREE_VERIFIED",
+      "main_merge_authorized": true,
       "tested_candidate": "10f409e4a7ddc264f35d6f77bdb2035eb1e88e18",
-      "evidence": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/pr-integration-001/summary.json"
+      "evidence": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/pr-integration-001/summary.json",
+      "merged_commit": "295a1c0a2d238d507f100fbdcc259056997d80a6"
+    },
+    "h1_binding_preparation": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/h1-binding-preparation-001/preparation.json",
+      "state": "PREPARED_NOT_BOUND"
     }
   }
 }

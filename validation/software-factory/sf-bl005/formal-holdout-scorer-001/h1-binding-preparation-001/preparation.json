@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "H1-BINDING-PREPARATION-001",
+  "state": "PREPARED_NOT_BOUND",
+  "mergedCommit": "295a1c0a2d238d507f100fbdcc259056997d80a6",
+  "mergedTree": "2635ca835c1d87e4d26b85373feb0a28a917afa1",
+  "reviewedPrHead": "343854c9cfd6adc0a9e7df693eb096efeb71df56",
+  "treeIdenticalToReviewedPrHead": true,
+  "testedCandidate": "10f409e4a7ddc264f35d6f77bdb2035eb1e88e18",
+  "sources": [
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCli.java",
+      "gitBlob": "d93f595855dac4a0f30dee670b65b7015fc4dbfa",
+      "sha256": "bf4137c5c5b3357bc97bf04e417a9218993f0267a9289c3b2e830ee82971a721"
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/FormalHoldoutConformanceScorer.java",
+      "gitBlob": "bf42090e5cf04b080e2fa53a1ca07d7013e592e7",
+      "sha256": "3a59c70c972370866411fe02bce4953a3993446822ed7982eb7f1aae8dbdd01c"
+    },
+    {
+      "path": "tools/sfbl005_formal_holdout_recompute_v1.py",
+      "gitBlob": "395d12c57bee01b00ddaedc1fc02cb2794cae2fb",
+      "sha256": "a7330600f3e1450ba63f67ee5559b88b55739e5dba68f34fdec4ebb022c424d0"
+    }
+  ],
+  "binary": {
+    "candidate": "10f409e4a7ddc264f35d6f77bdb2035eb1e88e18",
+    "jarPath": "/Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix/target/fdi-0.4.8.3.jar",
+    "jarSha256": "174820e92302892e67c7c7f992aa983bc4e102e410b4da74083a63b53ee5b029"
+  },
+  "binaryReadbackVerified": true,
+  "binaryStorageLimitation": "JAR currently resides in local build output; durable artifact custody and retrieval must be agreed before external seal. Hash is recorded, binary is not committed.",
+  "references": [
+    {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-protocol-002.json",
+      "sha256": "e927329533ac7bbe045ad1dc3fd310cdad1c4186b8d278bb24323eaffbe27323"
+    },
+    {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/vector-manifest.json",
+      "sha256": "ca131bd772946080ccaee98fc2d12663218a129d8d0be1e437e7bca02cb6a82f"
+    },
+    {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/golden-output-002.json",
+      "sha256": "9c0e8f93cd1b2e8ecc85923995efdd5481d00e5fe3ecb375bf59b8f1a770af47"
+    },
+    {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/macro-rounding-human-decision-001.json",
+      "sha256": "ec6b37b438ec17bf8265379ceb20ca8d01804a41c8bf20cc41969ee0d6f3a2df"
+    },
+    {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/pr-integration-001/independent-review.json",
+      "sha256": "bede78c715d7b49e1321ed10d7b2dfc61011d02efb1b946cd224d751c69c3ff3"
+    },
+    {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/pr-integration-001/evidence-review.json",
+      "sha256": "027a916f0debdee854591581efc9d2e26e864b2ca8c5b16d46e831b3e93a0ee5"
+    },
+    {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/pr-integration-001/retry-002/conformance-runs.json",
+      "sha256": "13ec7138d7d662d81242677659bb6f9c25fb18117fb9f901d919c57082294717"
+    }
+  ],
+  "requirements": [
+    {
+      "requirement": "scorer source commit and source SHA-256",
+      "status": "EVIDENCE_PRESENT"
+    },
+    {
+      "requirement": "scorer binary SHA-256",
+      "status": "HASH_AND_LOCAL_BYTES_VERIFIED_DURABLE_CUSTODY_PENDING"
+    },
+    {
+      "requirement": "pair identity, deduplication, TP, FP, FN, abstention, zero-denominator and chain conformance",
+      "status": "60_FROZEN_VECTORS_FOUR_MATCHING_RUNS"
+    },
+    {
+      "requirement": "independent recomputation implementation and SHA-256",
+      "status": "PYTHON_SOURCE_HASH_BOUND_AND_PARITY_REVIEWED"
+    },
+    {
+      "requirement": "no gold-derived tuning after seal",
+      "status": "FUTURE_SEAL_CONSTRAINT_NOT_YET_APPLICABLE_NO_SEAL_PRESENT"
+    },
+    {
+      "requirement": "revision-2 raw-ratio aggregation and Human decision",
+      "status": "FROZEN_PROTOCOL_AND_DECISION_DIGEST_REFERENCED"
+    }
+  ],
+  "pending": [
+    "Durable scorer binary custody and retrieval decision",
+    "Issue final H1 receipt through authorized FDP intake; this preparation does not bind H1"
+  ],
+  "formalHoldoutAuthorized": false,
+  "productionReady": false,
+  "independentReview": "independent-review.json: PASS_P0_P1_P2_ZERO"
+}
