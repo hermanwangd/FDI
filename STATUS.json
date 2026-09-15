@@ -11,7 +11,7 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Review and execute r4 file-input remediation; original pre-stage failure preserved.",
+  "next_action": "Resolve full Java regression fixture conflict: exact candidate requires RealWorld fixture but synthetic envelope forbids its materialization. Preserve failure; no downstream execution.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
@@ -159,7 +159,7 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "HUMAN_AUTHORIZED_PENDING_EXECUTION",
+      "execution_state": "FAILED_PLAN_CONFLICT_REALWORLD_FIXTURE_REQUIRED",
       "integration_candidate": null
     }
   ],
@@ -342,7 +342,7 @@
     "independent_review": "PASS_REVISION_2_P0_P1_P2_ZERO",
     "repository_or_sample_identity_disclosed": false,
     "h0_final_candidate": "UNBOUND",
-    "h1_scorer": "UNBOUND_R4_SYNTHETIC_EXECUTION_AUTHORIZED",
+    "h1_scorer": "UNBOUND_R4_EXECUTION_FAILED_FIXTURE_PLAN_CONFLICT",
     "h2_contamination_ledger": "PREPARED_REVIEW_PASS_PENDING_HUMAN_DISCLOSURE_ATTESTATION_AND_EXTERNAL_SEAL",
     "external_seal_receipt": "MISSING",
     "repository_selection_authorized": false,
@@ -367,7 +367,8 @@
       "dispatch_authorized": true,
       "implementation_authorized": false,
       "human_dispatch_receipt": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-human-dispatch-001.json",
-      "next": "REPLAN_FILE_INPUT_REVIEW_THEN_EXECUTE"
+      "next": "PLAN_CHANGE_REQUIRED_REALWORLD_REGRESSION_FIXTURE",
+      "execution_evidence": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-replan-001-execution/summary.json"
     },
     "h1_candidate": "ea15e51df0f5410bfb5532e1c255f107ccb0975b",
     "h1_candidate_execution_authorized": true,

@@ -1,0 +1,355 @@
+{"argv":["/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-001/candidate/mvnw","-f","/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-001/candidate/pom.xml","clean","-DargLine=-Xmx1g","-DforkCount=1","-DreuseForks=true","package"],"attempt":1,"event":"START","stageId":"java17-full-package"}
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------< com.featuredeliveryintelligence:fdi >-----------------
+[INFO] Building Feature Delivery Intelligence 0.4.8.3
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.0:clean (default-clean) @ fdi ---
+[INFO] Deleting /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-001/candidate/target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ fdi ---
+[INFO] skip non existing resourceDirectory /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-001/candidate/src/main/resources
+[INFO] skip non existing resourceDirectory /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-001/candidate/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ fdi ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 212 source files with javac [debug parameters release 17] to target/classes
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-001/candidate/src/main/java/com/featuredeliveryintelligence/fdi/validation/codebaseline/PythonJson.java: Some input files use or override a deprecated API.
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-001/candidate/src/main/java/com/featuredeliveryintelligence/fdi/validation/codebaseline/PythonJson.java: Recompile with -Xlint:deprecation for details.
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-001/candidate/src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelector.java: Some input files use unchecked or unsafe operations.
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-001/candidate/src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelector.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ fdi ---
+[INFO] Copying 61 resources from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ fdi ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 129 source files with javac [debug parameters release 17] to target/test-classes
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-001/candidate/src/test/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SliceFInputVerifierTests.java: Some input files use or override a deprecated API.
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-001/candidate/src/test/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SliceFInputVerifierTests.java: Recompile with -Xlint:deprecation for details.
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-001/candidate/src/test/java/com/featuredeliveryintelligence/fdi/product/realization/graphexpansion/GraphifyProductionExpansionTests.java: Some input files use unchecked or unsafe operations.
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-001/candidate/src/test/java/com/featuredeliveryintelligence/fdi/product/realization/graphexpansion/GraphifyProductionExpansionTests.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ fdi ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.featuredeliveryintelligence.fdi.ReviewRegressionTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.044 s -- in com.featuredeliveryintelligence.fdi.ReviewRegressionTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.CrossRepositoryMethodRunTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.084 s -- in com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.CrossRepositoryMethodRunTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.CandidateTraceTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.166 s -- in com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.CandidateTraceTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.ScenarioEvidenceSelectorTests
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.097 s -- in com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.ScenarioEvidenceSelectorTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.CalibrationProducerTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.CalibrationProducerTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.QualifiedCalibrationProducerTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.QualifiedCalibrationProducerTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.CrossRepositoryManifestTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.034 s -- in com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.CrossRepositoryManifestTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.SourceMethodIndexTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.030 s -- in com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.SourceMethodIndexTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.SelectorDiagnosticRunTests
+SELECTOR-DIAGNOSTIC EXEC-TEST-001 scenarios=1 evaluated=2 accepted=1 SEALED
+SELECTOR-DIAGNOSTIC EXEC-TEST-001 scenarios=1 evaluated=2 accepted=1 SEALED
+SELECTOR-DIAGNOSTIC EXEC-TEST-001 scenarios=1 evaluated=2 accepted=1 SEALED
+SELECTOR-DIAGNOSTIC EXEC-TEST-001 scenarios=1 evaluated=0 accepted=0 SEALED
+[INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.550 s -- in com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.SelectorDiagnosticRunTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.MethodCalibrationRunTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.MethodCalibrationRunTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.RedirectEvidenceAssociationTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.RedirectEvidenceAssociationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.QualifiedSourceCallsTests
+[INFO] Tests run: 25, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.048 s -- in com.featuredeliveryintelligence.fdi.product.realization.methodcalibration.QualifiedSourceCallsTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.ScenarioRealizationProposalTests
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in com.featuredeliveryintelligence.fdi.product.realization.ScenarioRealizationProposalTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.graphexpansion.GraphifyProductionExpansionTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s -- in com.featuredeliveryintelligence.fdi.product.realization.graphexpansion.GraphifyProductionExpansionTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.route.RouteContractTests
+[INFO] Tests run: 25, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.featuredeliveryintelligence.fdi.product.realization.route.RouteContractTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.route.SpringRouteHandlerIndexTests
+[ERROR] Tests run: 20, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.878 s <<< FAILURE! -- in com.featuredeliveryintelligence.fdi.product.realization.route.SpringRouteHandlerIndexTests
+[ERROR] com.featuredeliveryintelligence.fdi.product.realization.route.SpringRouteHandlerIndexTests.verifyFrozenRealWorldPutDeleteCoverage -- Time elapsed: 0.002 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: required system property is missing: sfbl005.realworld.checkout ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at com.featuredeliveryintelligence.fdi.product.realization.route.SpringRouteHandlerIndexTests.requiredPathProperty(SpringRouteHandlerIndexTests.java:828)
+	at com.featuredeliveryintelligence.fdi.product.realization.route.SpringRouteHandlerIndexTests.verifyFrozenRealWorldPutDeleteCoverage(SpringRouteHandlerIndexTests.java:265)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.StructuralComponentIdentityTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.featuredeliveryintelligence.fdi.product.realization.StructuralComponentIdentityTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.ScenarioForwardParityTests
+[INFO] Tests run: 36, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in com.featuredeliveryintelligence.fdi.product.realization.ScenarioForwardParityTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002ScenarioEffectivenessEvaluationTests
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.341 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002ScenarioEffectivenessEvaluationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.RouteAwareScenarioMapperTests
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.079 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.RouteAwareScenarioMapperTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SliceGEvaluatorComparisonTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.105 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SliceGEvaluatorComparisonTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002RouteEffectivenessFullPipelineAcceptanceTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.14 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002RouteEffectivenessFullPipelineAcceptanceTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.ScenarioObservationAssignmentGeneratorTests
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.384 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.ScenarioObservationAssignmentGeneratorTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002HierarchicalEvaluationTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.156 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002HierarchicalEvaluationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002ScenarioEffectivenessRunTests
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.908 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002ScenarioEffectivenessRunTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.ScenarioSearchIntentProposalGeneratorTests
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.020 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.ScenarioSearchIntentProposalGeneratorTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.BehaviorEvidencePolicyTests
+[INFO] Tests run: 29, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.BehaviorEvidencePolicyTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.ScenarioSearchIntentMatcherTests
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.377 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.ScenarioSearchIntentMatcherTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SliceFInputVerifierTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.301 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SliceFInputVerifierTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.ScenarioGroundedForwardMapperTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.ScenarioGroundedForwardMapperTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002ScenarioMappingRunTests
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.490 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002ScenarioMappingRunTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002RouteEffectivenessEvaluationTests
+[INFO] Tests run: 37, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.896 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002RouteEffectivenessEvaluationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002RouteEffectivenessRunTests
+[INFO] Tests run: 31, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.830 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SfBl002RouteEffectivenessRunTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SliceFScenarioMappingArtifactTests
+./validation/pkb001/scenario-forward/slice-f-scenario-mapping-proposal-001.json 8c940fb94d3c86c80ff2c9555eb5d77b130f6d0d944593424fb7f2ae563535f2
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.207 s -- in com.featuredeliveryintelligence.fdi.product.realization.scenarioforward.SliceFScenarioMappingArtifactTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.ScenarioMappingSchemaV04Tests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.042 s -- in com.featuredeliveryintelligence.fdi.product.realization.ScenarioMappingSchemaV04Tests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.directtrace.DirectTestTraceAdapterTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.417 s -- in com.featuredeliveryintelligence.fdi.product.realization.directtrace.DirectTestTraceAdapterTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.evaluation.ProviderNeutralEvaluatorTruthTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.071 s -- in com.featuredeliveryintelligence.fdi.product.realization.evaluation.ProviderNeutralEvaluatorTruthTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.evaluation.HierarchicalForwardEvaluationGeneratorTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.026 s -- in com.featuredeliveryintelligence.fdi.product.realization.evaluation.HierarchicalForwardEvaluationGeneratorTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.evaluation.HierarchicalForwardEvaluationTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.045 s -- in com.featuredeliveryintelligence.fdi.product.realization.evaluation.HierarchicalForwardEvaluationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.methodpair.MethodPairScorerTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.featuredeliveryintelligence.fdi.product.realization.methodpair.MethodPairScorerTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.methodpair.MethodPairComparisonRunnerTests
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.287 s -- in com.featuredeliveryintelligence.fdi.product.realization.methodpair.MethodPairComparisonRunnerTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.methodpair.CandidateStageEvaluationRunTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.020 s -- in com.featuredeliveryintelligence.fdi.product.realization.methodpair.CandidateStageEvaluationRunTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.methodpair.CandidateStageScorerTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.featuredeliveryintelligence.fdi.product.realization.methodpair.CandidateStageScorerTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.ScenarioMappingContractV04Tests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.featuredeliveryintelligence.fdi.product.realization.ScenarioMappingContractV04Tests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.realization.RealizationProposalTests
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.featuredeliveryintelligence.fdi.product.realization.RealizationProposalTests
+[INFO] Running com.featuredeliveryintelligence.fdi.product.semantics.ScenarioProposalContractsTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.featuredeliveryintelligence.fdi.product.semantics.ScenarioProposalContractsTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.evidence.ReverseEvidenceBundleTests
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in com.featuredeliveryintelligence.fdi.reverse.evidence.ReverseEvidenceBundleTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.input.deliveryhistory.DeliveryHistoryInputAdapterTests
+[INFO] Tests run: 22, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.055 s -- in com.featuredeliveryintelligence.fdi.reverse.input.deliveryhistory.DeliveryHistoryInputAdapterTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.input.structural.StructuralEvidenceAdapterTests
+[INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.029 s -- in com.featuredeliveryintelligence.fdi.reverse.input.structural.StructuralEvidenceAdapterTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.input.testbehavior.TestBehaviorEvidenceAdapterTests
+[INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.374 s -- in com.featuredeliveryintelligence.fdi.reverse.input.testbehavior.TestBehaviorEvidenceAdapterTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.cli.ReverseProposalCliTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.443 s -- in com.featuredeliveryintelligence.fdi.reverse.cli.ReverseProposalCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.ReverseFailureVocabularyTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.featuredeliveryintelligence.fdi.reverse.ReverseFailureVocabularyTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.generator.ReverseQualityMatrixTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.featuredeliveryintelligence.fdi.reverse.generator.ReverseQualityMatrixTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.generator.ReverseProposalGenerationIntegrationTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.346 s -- in com.featuredeliveryintelligence.fdi.reverse.generator.ReverseProposalGenerationIntegrationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.generator.DeterministicReverseProposalGeneratorTests
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.featuredeliveryintelligence.fdi.reverse.generator.DeterministicReverseProposalGeneratorTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.proposal.ScenarioTextValidatorTests
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.featuredeliveryintelligence.fdi.reverse.proposal.ScenarioTextValidatorTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.proposal.ScenarioProposalTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.featuredeliveryintelligence.fdi.reverse.proposal.ScenarioProposalTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.proposal.CapabilityProposalTests
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.featuredeliveryintelligence.fdi.reverse.proposal.CapabilityProposalTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.proposal.ReverseProposalPackageTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.featuredeliveryintelligence.fdi.reverse.proposal.ReverseProposalPackageTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.evaluation.ReverseEvaluatorTruthTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in com.featuredeliveryintelligence.fdi.reverse.evaluation.ReverseEvaluatorTruthTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.evaluation.ReverseEvaluationIntegrationTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.220 s -- in com.featuredeliveryintelligence.fdi.reverse.evaluation.ReverseEvaluationIntegrationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.evaluation.ReverseSealedPackageTests
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.featuredeliveryintelligence.fdi.reverse.evaluation.ReverseSealedPackageTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.evaluation.ReverseProposalComparatorTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.featuredeliveryintelligence.fdi.reverse.evaluation.ReverseProposalComparatorTests
+[INFO] Running com.featuredeliveryintelligence.fdi.reverse.ReverseJsonTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.featuredeliveryintelligence.fdi.reverse.ReverseJsonTests
+[INFO] Running com.featuredeliveryintelligence.fdi.PackageArchitectureTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.featuredeliveryintelligence.fdi.PackageArchitectureTests
+[INFO] Running com.featuredeliveryintelligence.fdi.portability.changereference.ProjectChangeReferenceIntegrationTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.771 s -- in com.featuredeliveryintelligence.fdi.portability.changereference.ProjectChangeReferenceIntegrationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.portability.changereference.ChangeExtractorTests
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.338 s -- in com.featuredeliveryintelligence.fdi.portability.changereference.ChangeExtractorTests
+[INFO] Running com.featuredeliveryintelligence.fdi.portability.changereference.GitChangeSourceTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.137 s -- in com.featuredeliveryintelligence.fdi.portability.changereference.GitChangeSourceTests
+[INFO] Running com.featuredeliveryintelligence.fdi.portability.changereference.ReferencePackageWriterTests
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.073 s -- in com.featuredeliveryintelligence.fdi.portability.changereference.ReferencePackageWriterTests
+[INFO] Running com.featuredeliveryintelligence.fdi.portability.changereference.ChangeClassifierTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.featuredeliveryintelligence.fdi.portability.changereference.ChangeClassifierTests
+[INFO] Running com.featuredeliveryintelligence.fdi.structural.graphify.GraphifyBindingAttestorFailClosedTests
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.featuredeliveryintelligence.fdi.structural.graphify.GraphifyBindingAttestorFailClosedTests
+[INFO] Running com.featuredeliveryintelligence.fdi.structural.graphify.GraphifyAdapterFailClosedTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.featuredeliveryintelligence.fdi.structural.graphify.GraphifyAdapterFailClosedTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.CodeBaselineCliTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.036 s -- in com.featuredeliveryintelligence.fdi.application.CodeBaselineCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.GraphifyRuntimeProbeCliTests
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.featuredeliveryintelligence.fdi.application.GraphifyRuntimeProbeCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.FormalHoldoutScoreCliTests
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.065 s -- in com.featuredeliveryintelligence.fdi.application.FormalHoldoutScoreCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.AcquisitionCliTests
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.featuredeliveryintelligence.fdi.application.AcquisitionCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.Task7EvaluateCliTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.050 s -- in com.featuredeliveryintelligence.fdi.application.Task7EvaluateCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.FdiApplicationTests
+12:18:26.625 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.featuredeliveryintelligence.fdi.application.FdiApplicationTests]: FdiApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+12:18:26.690 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.featuredeliveryintelligence.fdi.application.FdiApplication for test class com.featuredeliveryintelligence.fdi.application.FdiApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.1)
+
+2026-09-15T12:18:26.818Z  INFO 78101 --- [           main] c.f.fdi.application.FdiApplicationTests  : Starting FdiApplicationTests using Java 17.0.20.1 with PID 78101 (started by herman_mbp2023 in /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-001/candidate)
+2026-09-15T12:18:26.819Z  INFO 78101 --- [           main] c.f.fdi.application.FdiApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2026-09-15T12:18:27.158Z  INFO 78101 --- [           main] c.f.fdi.application.FdiApplicationTests  : Started FdiApplicationTests in 0.423 seconds (process running for 39.397)
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.929 s -- in com.featuredeliveryintelligence.fdi.application.FdiApplicationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.ExperimentRunnerCliTests
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.046 s -- in com.featuredeliveryintelligence.fdi.application.ExperimentRunnerCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.CsiValidateCliTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.featuredeliveryintelligence.fdi.application.CsiValidateCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.ProjectChangeReferenceCliTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.851 s -- in com.featuredeliveryintelligence.fdi.application.ProjectChangeReferenceCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.MethodPairCompareCliTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.featuredeliveryintelligence.fdi.application.MethodPairCompareCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.ScenarioForwardCliTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.609 s -- in com.featuredeliveryintelligence.fdi.application.ScenarioForwardCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.NextRunGateCliTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.270 s -- in com.featuredeliveryintelligence.fdi.application.NextRunGateCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.ScenarioReviewCliTests
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.139 s -- in com.featuredeliveryintelligence.fdi.application.ScenarioReviewCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.DeliveryHistoryCliTests
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.760 s -- in com.featuredeliveryintelligence.fdi.application.DeliveryHistoryCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.BlindReviewCliTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.477 s -- in com.featuredeliveryintelligence.fdi.application.BlindReviewCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.HumanReviewPacketCliTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s -- in com.featuredeliveryintelligence.fdi.application.HumanReviewPacketCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.testbehavior.extractor.JavaParserTestBehaviorExtractorTests
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.115 s -- in com.featuredeliveryintelligence.fdi.testbehavior.extractor.JavaParserTestBehaviorExtractorTests
+[INFO] Running com.featuredeliveryintelligence.fdi.testbehavior.cli.TestBehaviorExtractCliTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.229 s -- in com.featuredeliveryintelligence.fdi.testbehavior.cli.TestBehaviorExtractCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.testbehavior.http.HttpBehaviorObservationExtractorTests
+[INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.562 s -- in com.featuredeliveryintelligence.fdi.testbehavior.http.HttpBehaviorObservationExtractorTests
+[INFO] Running com.featuredeliveryintelligence.fdi.testbehavior.api.TestBehaviorContractTests
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in com.featuredeliveryintelligence.fdi.testbehavior.api.TestBehaviorContractTests
+[INFO] Running com.featuredeliveryintelligence.fdi.testbehavior.api.TestBehaviorErrorVocabularyTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.featuredeliveryintelligence.fdi.testbehavior.api.TestBehaviorErrorVocabularyTests
+[INFO] Running com.featuredeliveryintelligence.fdi.testbehavior.validation.TestBehaviorEvidenceValidatorTests
+[INFO] Tests run: 27, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in com.featuredeliveryintelligence.fdi.testbehavior.validation.TestBehaviorEvidenceValidatorTests
+[INFO] Running com.featuredeliveryintelligence.fdi.RuntimeMigrationTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.featuredeliveryintelligence.fdi.RuntimeMigrationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.task7.Task7EvaluationCharacterizationTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.121 s -- in com.featuredeliveryintelligence.fdi.validation.task7.Task7EvaluationCharacterizationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.task7.Task7ThirdReviewAdjudicationTests
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.260 s -- in com.featuredeliveryintelligence.fdi.validation.task7.Task7ThirdReviewAdjudicationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.scenarioreview.ScenarioReviewCharacterizationTests
+[INFO] Tests run: 43, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.305 s -- in com.featuredeliveryintelligence.fdi.validation.scenarioreview.ScenarioReviewCharacterizationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.scenarioreview.ScenarioReviewRevisionTwoArtifactTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.083 s -- in com.featuredeliveryintelligence.fdi.validation.scenarioreview.ScenarioReviewRevisionTwoArtifactTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.componentcompare.ComponentCompareTests
+[INFO] Tests run: 43, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.042 s -- in com.featuredeliveryintelligence.fdi.validation.componentcompare.ComponentCompareTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.runtimeprobe.GraphifyRuntimeProbeCharacterizationTests
+[INFO] Tests run: 23, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in com.featuredeliveryintelligence.fdi.validation.runtimeprobe.GraphifyRuntimeProbeCharacterizationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.blindreview.BlindReviewCharacterizationTests
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.070 s -- in com.featuredeliveryintelligence.fdi.validation.blindreview.BlindReviewCharacterizationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.codebaseline.PythonJsonTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.featuredeliveryintelligence.fdi.validation.codebaseline.PythonJsonTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.codebaseline.CodeBaselineCharacterizationTests
+[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.featuredeliveryintelligence.fdi.validation.codebaseline.CodeBaselineCharacterizationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.deliveryhistory.PythonJsonTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.featuredeliveryintelligence.fdi.validation.deliveryhistory.PythonJsonTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.deliveryhistory.PyTimestampTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.featuredeliveryintelligence.fdi.validation.deliveryhistory.PyTimestampTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.deliveryhistory.DeliveryHistoryCharacterizationTests
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.303 s -- in com.featuredeliveryintelligence.fdi.validation.deliveryhistory.DeliveryHistoryCharacterizationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.csi.CsiRecommendationValidatorTests
+[INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.featuredeliveryintelligence.fdi.validation.csi.CsiRecommendationValidatorTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.nextrun.NextRunGateCharacterizationTests
+2026-09-15T12:18:40.437Z ERROR 78101 --- [           main] com.networknt.schema.PatternValidator    : Failed to compile pattern '[': Unclosed character class near index 0
+[
+^
+2026-09-15T12:18:40.439Z  WARN 78101 --- [           main] com.networknt.schema.JsonMetaSchema      : Could not load validator pattern
+[INFO] Tests run: 81, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.065 s -- in com.featuredeliveryintelligence.fdi.validation.nextrun.NextRunGateCharacterizationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.acquisition.AcquisitionValidatorCharacterizationTests
+[INFO] Tests run: 48, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.049 s -- in com.featuredeliveryintelligence.fdi.validation.acquisition.AcquisitionValidatorCharacterizationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioForwardGateTests
+[INFO] Tests run: 23, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.634 s -- in com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioForwardGateTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioAcceptedSemanticsRevisionFourArtifactTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioAcceptedSemanticsRevisionFourArtifactTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioForwardRequestReaderTests
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioForwardRequestReaderTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioForwardCharacterizationTests
+[INFO] Tests run: 36, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in com.featuredeliveryintelligence.fdi.validation.scenarioforward.ScenarioForwardCharacterizationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.humanreviewpacket.HumanReviewPacketTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in com.featuredeliveryintelligence.fdi.validation.humanreviewpacket.HumanReviewPacketTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.experimentrunner.ExperimentRunnerCharacterizationTests
+[INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.074 s -- in com.featuredeliveryintelligence.fdi.validation.experimentrunner.ExperimentRunnerCharacterizationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.readiness.Phase0ReadinessCliTests
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.015 s -- in com.featuredeliveryintelligence.fdi.validation.readiness.Phase0ReadinessCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.readiness.Phase0ReadinessCharacterizationTests
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in com.featuredeliveryintelligence.fdi.validation.readiness.Phase0ReadinessCharacterizationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.blindevaluation.BlindEvaluationTests
+[INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.featuredeliveryintelligence.fdi.validation.blindevaluation.BlindEvaluationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.blindevaluation.BlindEvaluationCliTests
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in com.featuredeliveryintelligence.fdi.validation.blindevaluation.BlindEvaluationCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.blindevaluation.BlindEvaluationParityTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.featuredeliveryintelligence.fdi.validation.blindevaluation.BlindEvaluationParityTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.liveverifier.GraphifyLiveVerifierCliTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.featuredeliveryintelligence.fdi.validation.liveverifier.GraphifyLiveVerifierCliTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.liveverifier.StdioMcpClientTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.083 s -- in com.featuredeliveryintelligence.fdi.validation.liveverifier.StdioMcpClientTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.liveverifier.GraphifyLiveVerifierTests
+[INFO] Tests run: 23, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.100 s -- in com.featuredeliveryintelligence.fdi.validation.liveverifier.GraphifyLiveVerifierTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.liveverifier.CrossRepositoryGraphifyEvidenceTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in com.featuredeliveryintelligence.fdi.validation.liveverifier.CrossRepositoryGraphifyEvidenceTests
+[INFO] Running com.featuredeliveryintelligence.fdi.validation.liveverifier.StdioMcpClientHandshakeTests
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.354 s -- in com.featuredeliveryintelligence.fdi.validation.liveverifier.StdioMcpClientHandshakeTests
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   SpringRouteHandlerIndexTests.verifyFrozenRealWorldPutDeleteCoverage:265->requiredPathProperty:828 required system property is missing: sfbl005.realworld.checkout ==> expected: <true> but was: <false>
+[INFO] 
+[ERROR] Tests run: 1508, Failures: 1, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:01 min
+[INFO] Finished at: 2026-09-15T12:18:43Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.2:test (default-test) on project fdi: There are test failures.
+[ERROR] 
+[ERROR] See /Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-001/candidate/target/surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
