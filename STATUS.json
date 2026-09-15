@@ -11,7 +11,7 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Resolve full Java regression fixture conflict: exact candidate requires RealWorld fixture but synthetic envelope forbids its materialization. Preserve failure; no downstream execution.",
+  "next_action": "Remediate scorer malformed-payload handling against frozen V07; candidate revision and new exact envelope required. Preserve successful regression and failed Java conformance evidence.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
@@ -159,7 +159,7 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "FAILED_PLAN_CONFLICT_REALWORLD_FIXTURE_REQUIRED",
+      "execution_state": "FAILED_SCORER_V07_CONFORMANCE",
       "integration_candidate": null
     }
   ],
@@ -342,7 +342,7 @@
     "independent_review": "PASS_REVISION_2_P0_P1_P2_ZERO",
     "repository_or_sample_identity_disclosed": false,
     "h0_final_candidate": "UNBOUND",
-    "h1_scorer": "UNBOUND_R4_EXECUTION_FAILED_FIXTURE_PLAN_CONFLICT",
+    "h1_scorer": "UNBOUND_SCORER_V07_CONFORMANCE_FAILED",
     "h2_contamination_ledger": "PREPARED_REVIEW_PASS_PENDING_HUMAN_DISCLOSURE_ATTESTATION_AND_EXTERNAL_SEAL",
     "external_seal_receipt": "MISSING",
     "repository_selection_authorized": false,
@@ -361,14 +361,15 @@
     "h1_envelope": {
       "execution_id": "SF-BL-005-FORMAL-HOLDOUT-SCORER-001",
       "revision": 4,
-      "path": "validation/software-factory/sf-bl005/execution-envelope-formal-holdout-scorer-001-r4-replan-001.json",
-      "sha256": "485bfffbbe70f4b8d121dd197688e209dac69c87b11a743408309b18f24b0d40",
+      "path": "validation/software-factory/sf-bl005/execution-envelope-formal-holdout-scorer-001-r4-replan-002.json",
+      "sha256": "232499edf4c529c26b6b89aad39ba60bdd9815c959c263ef65ec640a0740d069",
       "preflight": "PASS_P0_P1_P2_ZERO",
       "dispatch_authorized": true,
       "implementation_authorized": false,
       "human_dispatch_receipt": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-human-dispatch-001.json",
-      "next": "PLAN_CHANGE_REQUIRED_REALWORLD_REGRESSION_FIXTURE",
-      "execution_evidence": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-replan-001-execution/summary.json"
+      "next": "CANDIDATE_REMEDIATION_REQUIRED",
+      "execution_evidence": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-replan-002-execution/summary.json",
+      "fixture_authority": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-fixture-human-decision-001.json"
     },
     "h1_candidate": "ea15e51df0f5410bfb5532e1c255f107ccb0975b",
     "h1_candidate_execution_authorized": true,

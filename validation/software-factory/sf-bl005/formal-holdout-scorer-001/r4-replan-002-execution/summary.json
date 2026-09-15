@@ -1,0 +1,29 @@
+{
+  "result": "FAIL_CONFORMANCE",
+  "executionControlCommit": "89ca1ec664d0baf2b14b35989705c87dbcdde000",
+  "candidateCommit": "ea15e51df0f5410bfb5532e1c255f107ccb0975b",
+  "javaTargeted": {
+    "tests": 15,
+    "failures": 0
+  },
+  "javaFullPackage": {
+    "tests": 1508,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "candidatePython": {
+    "passed": 163
+  },
+  "scorerRunsAttempted": 1,
+  "scorerRunsCompleted": 0,
+  "firstFailureVector": "V07_MALFORMED_SCHEMA",
+  "expected": "INVALID with MALFORMED_SCHEMA reason",
+  "actual": "IllegalArgumentException: unknown given field: unknownField",
+  "cause": "Input validator rejects intentional malformed payload before provenance scorer can produce frozen negative oracle.",
+  "fixtureTrackedStateUnchanged": true,
+  "candidateTrackedStateUnchanged": true,
+  "formalMetricsAvailable": false,
+  "H1": "UNBOUND",
+  "productionReady": false
+}

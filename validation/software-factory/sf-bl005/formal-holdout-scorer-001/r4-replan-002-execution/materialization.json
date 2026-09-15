@@ -1,0 +1,33 @@
+{
+  "worktrees": {
+    "baseWorktree": {
+      "commit": "ffd9032bd5840aae5e2a5d0b5eafd9f211803aac",
+      "path": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-002/base"
+    },
+    "candidateWorktree": {
+      "commit": "ea15e51df0f5410bfb5532e1c255f107ccb0975b",
+      "path": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-002/candidate"
+    },
+    "controlWorktree": {
+      "commit": "e30f2c0a4fdc21cdd9f892ca3302b8cc9bc59162",
+      "path": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-002/control"
+    },
+    "executionRoot": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-002",
+    "requirements": [
+      "all three detached worktrees at exact clean commits",
+      "execution root absent before dispatch",
+      "no symlink in any worktree or output ancestor",
+      "all receipts, ledgers, logs, and outputs absent before their phase",
+      "Only the pinned RealWorld regression fixture is permitted; no calibration or formal holdout execution or new repository selection."
+    ]
+  },
+  "fixture": {
+    "commit": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+    "observationsPath": "validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json",
+    "observationsSha256": "71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd",
+    "path": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-002/realworld-fixture",
+    "scope": "Read-only fixed already-exposed RealWorld regression fixture. No calibration, selection or holdout authority.",
+    "sourceRepository": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/realworld-ee17e31",
+    "tree": "3938658872ad216fe45033f4698c66febd80be76"
+  }
+}
