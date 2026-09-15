@@ -1,0 +1,24 @@
+.....................F                                                   [100%]
+=================================== FAILURES ===================================
+___________ test_provenance_unknown_fields_return_one_schema_reason ____________
+
+    def test_provenance_unknown_fields_return_one_schema_reason():
+        m = load_module()
+        given = {"artifactSha256": "d" * 64, "expectedArtifactSha256": "d" * 64,
+                 "coverageStrata": ["UNIT"], "foreignRepositoryReference": False,
+                 "pairRepositorySnapshotSha256": "a" * 64, "repositorySnapshotSha256": "a" * 64,
+                 "scenarioId": "DEV", "sourceProvenanceSha256": "c" * 64,
+                 "testProvenanceSha256": "b" * 64, "truthDisposition": "SEALED"}
+        for extra in ({"unknownField": "x"}, {"unexpected": None, "another": {"nested": 1}}):
+            result = m.evaluate(case("DEV-UNKNOWN", "PROVENANCE_INTEGRITY", dict(given, **extra)))
+            assert result["result"] == "INVALID"
+>           assert result["reasonCodes"] == ["MALFORMED_SCHEMA"]
+E           AssertionError: assert ['MALFORMED_GIVEN'] == ['MALFORMED_SCHEMA']
+E             
+E             At index 0 diff: 'MALFORMED_GIVEN' != 'MALFORMED_SCHEMA'
+E             Use -v to get more diff
+
+tests/test_sfbl005_formal_holdout_recompute_v1.py:309: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_sfbl005_formal_holdout_recompute_v1.py::test_provenance_unknown_fields_return_one_schema_reason
+1 failed, 21 passed in 0.63s
