@@ -11,7 +11,7 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Integrate the independently reviewed H1 raw-ratio protocol revision 2 and conformance reseal, then prepare a new exact-candidate envelope bound to that integration commit. No scorer execution, calibration, repository selection, or formal holdout is authorized.",
+  "next_action": "Execute Human-authorized r4 synthetic scorer phases in order, preserve evidence, and obtain independent execution review. Formal holdout and calibration remain unauthorized.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
@@ -150,6 +150,16 @@
         "SF-BL-005"
       ],
       "execution_state": "ENVELOPE_PREFLIGHT_PASS_AWAITING_HUMAN_DISPATCH",
+      "integration_candidate": null
+    },
+    {
+      "lane_id": "h1-synthetic-scorer",
+      "execution_id": "SF-BL-005-FORMAL-HOLDOUT-SCORER-001",
+      "base_commit": "09053f393f8f8453008577b5e76366c460d9fce1",
+      "selected_backlog_items": [
+        "SF-BL-005"
+      ],
+      "execution_state": "HUMAN_AUTHORIZED_PENDING_EXECUTION",
       "integration_candidate": null
     }
   ],
@@ -332,7 +342,7 @@
     "independent_review": "PASS_REVISION_2_P0_P1_P2_ZERO",
     "repository_or_sample_identity_disclosed": false,
     "h0_final_candidate": "UNBOUND",
-    "h1_scorer": "UNBOUND_PROTOCOL_R2_RESEAL_REVIEW_PASS_NEW_EXACT_ENVELOPE_REQUIRED",
+    "h1_scorer": "UNBOUND_R4_SYNTHETIC_EXECUTION_AUTHORIZED",
     "h2_contamination_ledger": "PREPARED_REVIEW_PASS_PENDING_HUMAN_DISCLOSURE_ATTESTATION_AND_EXTERNAL_SEAL",
     "external_seal_receipt": "MISSING",
     "repository_selection_authorized": false,
@@ -350,15 +360,17 @@
     "legacy_calibration_scorer_formal_eligible": false,
     "h1_envelope": {
       "execution_id": "SF-BL-005-FORMAL-HOLDOUT-SCORER-001",
-      "revision": 1,
-      "sha256": "0c1828b9f62f32567009c109c0969d182a5e28f4183853c737546957a700062d",
-      "preflight": "FAIL_PLAN_CONFLICT_P0_0_P1_4_P2_1",
+      "revision": 4,
+      "path": "validation/software-factory/sf-bl005/execution-envelope-formal-holdout-scorer-001-r4.json",
+      "sha256": "191a0a7ab9939aed8d884bf31983c0f0f420ed2d8e7490c976735e6852956659",
+      "preflight": "PASS_P0_P1_P2_ZERO",
+      "dispatch_authorized": true,
       "implementation_authorized": false,
-      "dispatch_authorized": false,
-      "next": "HUMAN_SELECTS_MACRO_ROUNDING_CONTRACT_THEN_BOUNDED_PROTOCOL_RESEAL_AND_NEW_ENVELOPE"
+      "human_dispatch_receipt": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-human-dispatch-001.json",
+      "next": "EXECUTE_R4_SYNTHETIC_PHASES_THEN_INDEPENDENT_REVIEW"
     },
     "h1_candidate": "ea15e51df0f5410bfb5532e1c255f107ccb0975b",
-    "h1_candidate_execution_authorized": false,
+    "h1_candidate_execution_authorized": true,
     "h1_macro_rounding_decision": "SELECTED_RAW_RATIO_AVERAGE_THEN_FINAL_SCALE_12",
     "h1_macro_rounding_recommendation": "ACCEPTED_BY_HUMAN_AUTHORITY",
     "h1_decision_proposal": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/macro-rounding-decision-proposal.md",
@@ -373,8 +385,8 @@
       "semanticReviewSha256": "366b8b95398a133407da87693101a38d74a6f9eeeb91f938a9a502af47e9da73",
       "independentReviewPath": "validation/software-factory/sf-bl005/formal-holdout-protocol-independent-review-002.json",
       "independentReviewSha256": "9d9c4f2411b505dc63977bd44ff55c5be4aeaae2a3496dddcd262e2e3f0bfbf6",
-      "state": "REVIEW_PASS_PENDING_PR_INTEGRATION",
-      "next": "NEW_EXACT_CANDIDATE_ENVELOPE_AFTER_INTEGRATION"
+      "state": "INTEGRATED_PR55",
+      "next": "R4_SYNTHETIC_EXECUTION_AUTHORIZED"
     }
   }
 }
