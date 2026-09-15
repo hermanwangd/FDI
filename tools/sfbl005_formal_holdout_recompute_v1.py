@@ -362,12 +362,12 @@ def _valid_given(operation, given):
         required = {"artifactSha256", "coverageStrata", "expectedArtifactSha256", "foreignRepositoryReference",
             "pairRepositorySnapshotSha256", "repositorySnapshotSha256", "scenarioId", "sourceProvenanceSha256",
             "testProvenanceSha256", "truthDisposition"}
-        if not required <= set(given) or set(given) - required - {"scenarioIds", "unknownField"}: return False
+        # Unknown payload keys are classified by _provenance, independently of their names or values.
+        if not required <= set(given): return False
         if not isinstance(given["scenarioId"], str) or not given["scenarioId"]: return False
         if "scenarioIds" in given and (not isinstance(given["scenarioIds"], list) or
                 not all(isinstance(x, str) and x for x in given["scenarioIds"])): return False
         if given["truthDisposition"] not in {"SEALED", None}: return False
-        if "unknownField" in given and not isinstance(given["unknownField"], str): return False
         nullable_digests = ("sourceProvenanceSha256", "testProvenanceSha256")
         if not all(given[x] is None or _digest(given[x]) for x in nullable_digests): return False
         return (isinstance(given["coverageStrata"], list) and all(isinstance(x, str) for x in given["coverageStrata"])

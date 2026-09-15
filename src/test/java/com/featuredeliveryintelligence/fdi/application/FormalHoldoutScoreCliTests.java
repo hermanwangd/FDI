@@ -92,6 +92,16 @@ class FormalHoldoutScoreCliTests {
     }
 
     @Test
+    void provenanceUnknownFieldsProduceOneMalformedSchemaReason() throws Exception {
+        String base = "\"artifactSha256\":\"d\",\"coverageStrata\":[\"UNIT\"],\"expectedArtifactSha256\":\"d\",\"pairRepositorySnapshotSha256\":\"a\",\"repositorySnapshotSha256\":\"a\",\"scenarioId\":\"S-1\",\"sourceProvenanceSha256\":\"c\",\"testProvenanceSha256\":\"b\",\"truthDisposition\":\"SEALED\",\"foreignRepositoryReference\":false";
+        for (String extra : new String[]{"\"unknownField\":\"x\"", "\"unexpected\":null,\"another\":{\"nested\":1}"}) {
+            JsonNode result = score("PROVENANCE_INTEGRITY", "{" + base + "," + extra + "}", "NEGATIVE");
+            assertThat(result.path("result").asText()).isEqualTo("INVALID");
+            assertThat(result.path("reasonCodes")).containsExactly(JSON.getNodeFactory().textNode("MALFORMED_SCHEMA"));
+        }
+    }
+
+    @Test
     void emptyProposalAndExplicitAbstentionRetainDenominators() throws Exception {
         JsonNode empty = score("EMPTY_AND_ABSTENTION", "{\"goldCount\":2,\"proposalOccurrences\":[],\"scenarioCount\":1}", "NEGATIVE");
         assertThat(empty.path("result").asText()).isEqualTo("INVALID");

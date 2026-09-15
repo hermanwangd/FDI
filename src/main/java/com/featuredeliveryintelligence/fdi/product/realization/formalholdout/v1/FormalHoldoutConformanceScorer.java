@@ -166,7 +166,13 @@ public final class FormalHoldoutConformanceScorer {
         if (g.path("coverageStrata").size() != 1) reasons.add("STRATUM_CARDINALITY");
         if (g.path("truthDisposition").isNull() || g.path("truthDisposition").isMissingNode()) reasons.add("MISSING_TRUTH_DISPOSITION");
         Set<String> allowed = Set.of("artifactSha256","coverageStrata","expectedArtifactSha256","foreignRepositoryReference","pairRepositorySnapshotSha256","repositorySnapshotSha256","scenarioId","scenarioIds","sourceProvenanceSha256","testProvenanceSha256","truthDisposition");
-        g.fieldNames().forEachRemaining(k -> { if (!allowed.contains(k)) reasons.add("MALFORMED_SCHEMA"); });
+        Iterator<String> fields = g.fieldNames();
+        while (fields.hasNext()) {
+            if (!allowed.contains(fields.next())) {
+                reasons.add("MALFORMED_SCHEMA");
+                break;
+            }
+        }
         if (!g.path("artifactSha256").asText().equals(g.path("expectedArtifactSha256").asText())) reasons.add("ARTIFACT_DIGEST_MISMATCH");
         if (g.path("foreignRepositoryReference").asBoolean()) reasons.add("CROSS_REPOSITORY_REFERENCE");
         ObjectNode o = JSON.createObjectNode(); o.set("reasonCodes", strings(reasons)); o.put("result", reasons.isEmpty()?"VALID":"INVALID"); return o;
@@ -281,7 +287,12 @@ public final class FormalHoldoutConformanceScorer {
             case "DETERMINISM_AND_PARITY" -> Set.of("goldenBytes","javaRun1Bytes","javaRun2Bytes","pythonRun1Bytes","pythonRun2Bytes");
             default -> throw new IllegalArgumentException("unknown operation: "+op);
         };
-        input.get("given").fieldNames().forEachRemaining(k -> {if(!allowed.contains(k))throw new IllegalArgumentException("unknown given field: "+k);});
+        // Unknown provenance payload fields are scored evidence, not a malformed case envelope.
+        if (!op.equals("PROVENANCE_INTEGRITY")) {
+            input.get("given").fieldNames().forEachRemaining(k -> {
+                if (!allowed.contains(k)) throw new IllegalArgumentException("unknown given field: " + k);
+            });
+        }
         JsonNode g=input.get("given");
         Set<String> required = switch(op) {
             case "CANONICAL_IDENTITY" -> Set.of();

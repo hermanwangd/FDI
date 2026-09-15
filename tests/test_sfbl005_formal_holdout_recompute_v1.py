@@ -294,3 +294,16 @@ def test_cli_creates_output_as_regular_file_in_verified_parent(tmp_path):
     after = parent.stat(); created = output.lstat()
     assert (before.st_dev, before.st_ino) == (after.st_dev, after.st_ino)
     assert created.st_nlink == 1 and output.is_file() and not output.is_symlink()
+
+
+def test_provenance_unknown_fields_return_one_schema_reason():
+    m = load_module()
+    given = {"artifactSha256": "d" * 64, "expectedArtifactSha256": "d" * 64,
+             "coverageStrata": ["UNIT"], "foreignRepositoryReference": False,
+             "pairRepositorySnapshotSha256": "a" * 64, "repositorySnapshotSha256": "a" * 64,
+             "scenarioId": "DEV", "sourceProvenanceSha256": "c" * 64,
+             "testProvenanceSha256": "b" * 64, "truthDisposition": "SEALED"}
+    for extra in ({"unknownField": "x"}, {"unexpected": None, "another": {"nested": 1}}):
+        result = m.evaluate(case("DEV-UNKNOWN", "PROVENANCE_INTEGRITY", dict(given, **extra)))
+        assert result["result"] == "INVALID"
+        assert result["reasonCodes"] == ["MALFORMED_SCHEMA"]
