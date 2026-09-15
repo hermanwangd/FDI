@@ -29,12 +29,12 @@ def test_hand_authored_oracles_cover_mapping_failures_and_decimal_wilson():
         "evidenceSufficiency": "SUFFICIENT", "polarity": "MATCH"}, "occurrenceId": "DEV#0", "pairDigest": a},
         "proofs": [{"occurrenceId": "DEV#0", "pairDigest": a, "proofDigest": b}], "sealedProofDigest": b})
     assert m.evaluate(disposition, "DISPOSITION_EVIDENCE", "NEGATIVE") == {
-        "counts": {"duplicateCount": 0, "fn": 1, "fp": 1, "tp": 0}, "polarity": "NEGATIVE",
+        "counts": {"duplicateCount": 0, "fn": 1, "fp": 1, "tp": 0}, "polarity": ["NEGATIVE"],
         "reasonCodes": ["ACTION_MISMATCH"], "result": "VALID", "ruleId": "DISPOSITION_EVIDENCE"}
     wilson = case("DEV-W03", "WILSON_INTERVAL", {"n": 10, "precision": 50,
         "rounding": "HALF_EVEN", "scale": 12, "x": 8, "zDecimal": "1.959963984540054"})
     assert m.evaluate(wilson, "WILSON_INTERVAL", "POSITIVE") == {
-        "lower": "0.490162471537", "polarity": "POSITIVE", "result": "VALID",
+        "lower": "0.490162471537", "polarity": ["POSITIVE"], "result": "VALID",
         "ruleId": "WILSON_INTERVAL", "upper": "0.943317848546"}
 
 def test_hand_authored_cases_exercise_every_operation_family():
@@ -130,6 +130,7 @@ def test_cli_uses_hand_authored_inputs_and_emits_canonical_declared_order(tmp_pa
     assert set(decoded) == {"schemaVersion", "manifestSha256", "results"}
     assert decoded["manifestSha256"] == hashlib.sha256(manifest.read_bytes()).hexdigest()
     assert decoded["results"][0]["oracle"]["counts"] == {"duplicateCount": 0, "fn": 0, "fp": 0, "tp": 1}
+    assert decoded["results"][0]["oracle"]["polarity"] == ["POSITIVE"]
     assert raw == (json.dumps(decoded, sort_keys=True, separators=(",", ":")) + "\n").encode()
 
 def test_cli_fails_closed_on_digest_mismatch_collision_and_symlink(tmp_path):
@@ -309,3 +310,29 @@ def test_provenance_unknown_fields_return_one_schema_reason():
         assert result["reasonCodes"] == ["MALFORMED_SCHEMA"]
         mixed = m.evaluate(case("DEV-MIXED", "PROVENANCE_INTEGRITY", dict(given, **extra, pairRepositorySnapshotSha256="e" * 64)))
         assert mixed["reasonCodes"] == ["MALFORMED_SCHEMA", "WRONG_SNAPSHOT"]
+
+
+def test_malformed_given_keeps_polarity_array():
+    m = load_module()
+    result = m.evaluate(case("DEV-MALFORMED", "WILSON_INTERVAL", {}), "WILSON_INTERVAL", "NEGATIVE")
+    assert result == {"reasonCodes": ["MALFORMED_GIVEN"], "result": "INVALID",
+                      "ruleId": "WILSON_INTERVAL", "polarity": ["NEGATIVE"]}
+
+
+def test_micro_null_reasons_follow_aggregate_denominators():
+    m = load_module()
+    for tp, fp, fn, expected in [
+        (0, 0, 1, {"microPrecisionReason": "NO_PROPOSED_PAIRS"}),
+        (0, 1, 0, {"microRecallReason": "NO_GOLD_PAIRS"}),
+        (0, 0, 0, {"microPrecisionReason": "NO_PROPOSED_PAIRS", "microRecallReason": "NO_GOLD_PAIRS"}),
+        (1, 0, 0, {}),
+    ]:
+        aggregate = m.evaluate(case("DEV-MICRO-NULL", "REPOSITORY_DECISION", {
+            "repositories": [{"repositoryId": "one", "tp": tp, "fp": fp, "fn": fn}]}))["aggregate"]
+        assert {k: v for k, v in aggregate.items() if k.startswith("micro") and k.endswith("Reason")} == expected
+    mixed = m.evaluate(case("DEV-MIXED-NULL", "REPOSITORY_DECISION", {"repositories": [
+        {"repositoryId": "empty", "tp": 0, "fp": 0, "fn": 0},
+        {"repositoryId": "defined", "tp": 1, "fp": 0, "fn": 0}]}))["aggregate"]
+    assert mixed["macroPrecisionReason"] == "NO_PROPOSED_PAIRS"
+    assert mixed["macroRecallReason"] == "NO_GOLD_PAIRS"
+    assert "microPrecisionReason" not in mixed and "microRecallReason" not in mixed

@@ -267,6 +267,8 @@ def _repository(given):
                  "microRecall": _ratio(totals["tp"], totals["tp"] + totals["fn"])}
     if precision_null: aggregate["macroPrecisionReason"] = "NO_PROPOSED_PAIRS"
     if recall_null: aggregate["macroRecallReason"] = "NO_GOLD_PAIRS"
+    if aggregate["microPrecision"] is None: aggregate["microPrecisionReason"] = "NO_PROPOSED_PAIRS"
+    if aggregate["microRecall"] is None: aggregate["microRecallReason"] = "NO_GOLD_PAIRS"
     return {"aggregate": aggregate, "provisionalClassification": "INVALID" if mandatory_null else ("PASS" if valid else "REVISE"),
             "repositories": repositories, "result": "INVALID" if mandatory_null else "VALID"}
 
@@ -413,12 +415,12 @@ def evaluate(case, rule_id=None, polarity=None):
         return {"reasonCodes": ["UNSUPPORTED_OPERATION"], "result": "INVALID"}
     if not _valid_given(operation, case.get("given")):
         oracle = {"reasonCodes": ["MALFORMED_GIVEN"], "result": "INVALID", "ruleId": rule_id or RULES[operation]}
-        if polarity is not None: oracle["polarity"] = polarity
+        if polarity is not None: oracle["polarity"] = [polarity]
         return oracle
     oracle = OPERATIONS[operation](case["given"])
     oracle["ruleId"] = rule_id or RULES[operation]
     if polarity is not None:
-        oracle["polarity"] = polarity
+        oracle["polarity"] = [polarity]
     return oracle
 
 
