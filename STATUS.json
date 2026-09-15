@@ -11,7 +11,7 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Validate PR62 integration candidate after Plan/Status conflict reconciliation; independent review and full regression required before merge decision.",
+  "next_action": "Human main-merge decision for PR62 integration: Java17 1519/Python176, four golden byte matches, independent code and evidence review pass.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
@@ -159,8 +159,8 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "INTEGRATION_VALIDATION_SELECTED",
-      "integration_candidate": "4baf876c8c10749ae047f57a16914196e1bc0516"
+      "execution_state": "INTEGRATION_VALIDATED_REVIEW_PASS_AWAITING_MAIN_MERGE_DECISION",
+      "integration_candidate": "10f409e4a7ddc264f35d6f77bdb2035eb1e88e18"
     }
   ],
   "mapping_improvement_intake": {
@@ -405,8 +405,10 @@
       "source_candidate": "4baf876c8c10749ae047f57a16914196e1bc0516",
       "evidence_candidate": "09ce1b1b47c2407e1d0a0327a5712966b66afd9a",
       "main_base": "ebe6e1eff6a9c6bfe5e67709b8628cd316f2556b",
-      "state": "INTEGRATION_VALIDATION_SELECTED",
-      "main_merge_authorized": false
+      "state": "VALIDATED_REVIEW_PASS_AWAITING_MAIN_MERGE_DECISION",
+      "main_merge_authorized": false,
+      "tested_candidate": "10f409e4a7ddc264f35d6f77bdb2035eb1e88e18",
+      "evidence": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/pr-integration-001/summary.json"
     }
   }
 }
