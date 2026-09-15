@@ -159,12 +159,6 @@ public final class FormalHoldoutConformanceScorer {
 
     private ObjectNode provenanceIntegrity(JsonNode g) {
         List<String> reasons = new ArrayList<>();
-        if (g.has("scenarioIds") && distinctText((ArrayNode)g.get("scenarioIds")).size() != g.get("scenarioIds").size()) reasons.add("DUPLICATE_SCENARIO");
-        if (!g.path("pairRepositorySnapshotSha256").asText().equals(g.path("repositorySnapshotSha256").asText())) reasons.add("WRONG_SNAPSHOT");
-        if (g.path("testProvenanceSha256").isNull() || g.path("testProvenanceSha256").isMissingNode()) reasons.add("MISSING_TEST_PROVENANCE");
-        if (g.path("sourceProvenanceSha256").isNull() || g.path("sourceProvenanceSha256").isMissingNode()) reasons.add("MISSING_SOURCE_PROVENANCE");
-        if (g.path("coverageStrata").size() != 1) reasons.add("STRATUM_CARDINALITY");
-        if (g.path("truthDisposition").isNull() || g.path("truthDisposition").isMissingNode()) reasons.add("MISSING_TRUTH_DISPOSITION");
         Set<String> allowed = Set.of("artifactSha256","coverageStrata","expectedArtifactSha256","foreignRepositoryReference","pairRepositorySnapshotSha256","repositorySnapshotSha256","scenarioId","scenarioIds","sourceProvenanceSha256","testProvenanceSha256","truthDisposition");
         Iterator<String> fields = g.fieldNames();
         while (fields.hasNext()) {
@@ -173,6 +167,12 @@ public final class FormalHoldoutConformanceScorer {
                 break;
             }
         }
+        if (g.has("scenarioIds") && distinctText((ArrayNode)g.get("scenarioIds")).size() != g.get("scenarioIds").size()) reasons.add("DUPLICATE_SCENARIO");
+        if (!g.path("pairRepositorySnapshotSha256").asText().equals(g.path("repositorySnapshotSha256").asText())) reasons.add("WRONG_SNAPSHOT");
+        if (g.path("testProvenanceSha256").isNull() || g.path("testProvenanceSha256").isMissingNode()) reasons.add("MISSING_TEST_PROVENANCE");
+        if (g.path("sourceProvenanceSha256").isNull() || g.path("sourceProvenanceSha256").isMissingNode()) reasons.add("MISSING_SOURCE_PROVENANCE");
+        if (g.path("coverageStrata").size() != 1) reasons.add("STRATUM_CARDINALITY");
+        if (g.path("truthDisposition").isNull() || g.path("truthDisposition").isMissingNode()) reasons.add("MISSING_TRUTH_DISPOSITION");
         if (!g.path("artifactSha256").asText().equals(g.path("expectedArtifactSha256").asText())) reasons.add("ARTIFACT_DIGEST_MISMATCH");
         if (g.path("foreignRepositoryReference").asBoolean()) reasons.add("CROSS_REPOSITORY_REFERENCE");
         ObjectNode o = JSON.createObjectNode(); o.set("reasonCodes", strings(reasons)); o.put("result", reasons.isEmpty()?"VALID":"INVALID"); return o;

@@ -98,6 +98,8 @@ class FormalHoldoutScoreCliTests {
             JsonNode result = score("PROVENANCE_INTEGRITY", "{" + base + "," + extra + "}", "NEGATIVE");
             assertThat(result.path("result").asText()).isEqualTo("INVALID");
             assertThat(result.path("reasonCodes")).containsExactly(JSON.getNodeFactory().textNode("MALFORMED_SCHEMA"));
+            JsonNode mixed = score("PROVENANCE_INTEGRITY", "{" + base.replace("\"pairRepositorySnapshotSha256\":\"a\"", "\"pairRepositorySnapshotSha256\":\"z\"") + "," + extra + "}", "NEGATIVE");
+            assertThat(mixed.path("reasonCodes")).containsExactly(JSON.getNodeFactory().textNode("MALFORMED_SCHEMA"), JSON.getNodeFactory().textNode("WRONG_SNAPSHOT"));
         }
     }
 

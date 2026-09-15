@@ -307,3 +307,5 @@ def test_provenance_unknown_fields_return_one_schema_reason():
         result = m.evaluate(case("DEV-UNKNOWN", "PROVENANCE_INTEGRITY", dict(given, **extra)))
         assert result["result"] == "INVALID"
         assert result["reasonCodes"] == ["MALFORMED_SCHEMA"]
+        mixed = m.evaluate(case("DEV-MIXED", "PROVENANCE_INTEGRITY", dict(given, **extra, pairRepositorySnapshotSha256="e" * 64)))
+        assert mixed["reasonCodes"] == ["MALFORMED_SCHEMA", "WRONG_SNAPSHOT"]
