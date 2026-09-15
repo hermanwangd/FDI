@@ -1,0 +1,10 @@
+execution_id=SF-BL-005-RESTASSURED-STATUS-DIALECT-001
+remediation=evidence-rebuild-from-origin-main
+source_candidate=7e8e54f2f28cf90672fc152b3d0fcef8c98115b5
+contaminated_baseline=90b252a01c1ea45fc92a9034959f6ca88e1351e0
+clean_base=5fe3cfbcf6574ce01b2954c9a36b4952f23e6c9f
+
+The five exact red tests were run before the production blob was applied and returned exit=1 with 5 failures, all expected UNSUPPORTED_ASSERTION_DIALECT. The allowlisted production/test blob diff was then applied to a separate worktree rooted at clean_base. The exact focused Java17 command, full Java17 package command, and clean exact-HEAD Python command are recorded in ../command-log.txt with timestamps, exit results, and admissibility.
+
+preserved_prior_stage5_pass=7e8e54f2f28cf90672fc152b3d0fcef8c98115b5|review:01a0a14a-1306-78ff-80b4-a9d1ef131d94|P0=0|P1=0|P2=0|evidence:refresh-001
+preserved_prior_fail=ae4d2451453f432f3e6c7902f3a9bf8d47175a8f|review:01a0a11e-1d63-73a6-a46a-0e1b6b96d883|P0=0|P1=0|P2=1

@@ -1,0 +1,200 @@
+{
+  "authority": "PROPOSAL_ONLY",
+  "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003",
+  "generation_method": "SpringRouteHandlerIndex.verifyFrozenRealWorldPutDeleteCoverage",
+  "handlers": [
+    {
+      "handlerRef": "io.spring.api.ArticleApi#article GET /articles/{slug}",
+      "httpMethods": [
+        "GET"
+      ],
+      "normalizedRouteTemplate": "/articles/{slug}",
+      "productionIdentity": "io.spring.api.ArticleApi#article",
+      "sourceDigest": "6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+      "sourceLocation": "src/main/java/io/spring/api/ArticleApi.java:35"
+    },
+    {
+      "handlerRef": "io.spring.api.ArticleApi#deleteArticle DELETE /articles/{slug}",
+      "httpMethods": [
+        "DELETE"
+      ],
+      "normalizedRouteTemplate": "/articles/{slug}",
+      "productionIdentity": "io.spring.api.ArticleApi#deleteArticle",
+      "sourceDigest": "6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+      "sourceLocation": "src/main/java/io/spring/api/ArticleApi.java:65"
+    },
+    {
+      "handlerRef": "io.spring.api.ArticleApi#updateArticle PUT /articles/{slug}",
+      "httpMethods": [
+        "PUT"
+      ],
+      "normalizedRouteTemplate": "/articles/{slug}",
+      "productionIdentity": "io.spring.api.ArticleApi#updateArticle",
+      "sourceDigest": "6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+      "sourceLocation": "src/main/java/io/spring/api/ArticleApi.java:44"
+    },
+    {
+      "handlerRef": "io.spring.api.ArticleFavoriteApi#favoriteArticle POST /articles/{slug}/favorite",
+      "httpMethods": [
+        "POST"
+      ],
+      "normalizedRouteTemplate": "/articles/{slug}/favorite",
+      "productionIdentity": "io.spring.api.ArticleFavoriteApi#favoriteArticle",
+      "sourceDigest": "d3f44c10c425e57df26755bb37188699deb8a53bc0a10124a6e27eee8c5eb6bb",
+      "sourceLocation": "src/main/java/io/spring/api/ArticleFavoriteApi.java:29"
+    },
+    {
+      "handlerRef": "io.spring.api.ArticleFavoriteApi#unfavoriteArticle DELETE /articles/{slug}/favorite",
+      "httpMethods": [
+        "DELETE"
+      ],
+      "normalizedRouteTemplate": "/articles/{slug}/favorite",
+      "productionIdentity": "io.spring.api.ArticleFavoriteApi#unfavoriteArticle",
+      "sourceDigest": "d3f44c10c425e57df26755bb37188699deb8a53bc0a10124a6e27eee8c5eb6bb",
+      "sourceLocation": "src/main/java/io/spring/api/ArticleFavoriteApi.java:39"
+    },
+    {
+      "handlerRef": "io.spring.api.ArticlesApi#createArticle POST /articles",
+      "httpMethods": [
+        "POST"
+      ],
+      "normalizedRouteTemplate": "/articles",
+      "productionIdentity": "io.spring.api.ArticlesApi#createArticle",
+      "sourceDigest": "9c0500e2b74a21fb4431b8719b97adfdd4a5421779c11343404ed7284b4df8d1",
+      "sourceLocation": "src/main/java/io/spring/api/ArticlesApi.java:28"
+    },
+    {
+      "handlerRef": "io.spring.api.ArticlesApi#getArticles GET /articles",
+      "httpMethods": [
+        "GET"
+      ],
+      "normalizedRouteTemplate": "/articles",
+      "productionIdentity": "io.spring.api.ArticlesApi#getArticles",
+      "sourceDigest": "9c0500e2b74a21fb4431b8719b97adfdd4a5421779c11343404ed7284b4df8d1",
+      "sourceLocation": "src/main/java/io/spring/api/ArticlesApi.java:48"
+    },
+    {
+      "handlerRef": "io.spring.api.ArticlesApi#getFeed GET /articles/feed",
+      "httpMethods": [
+        "GET"
+      ],
+      "normalizedRouteTemplate": "/articles/feed",
+      "productionIdentity": "io.spring.api.ArticlesApi#getFeed",
+      "sourceDigest": "9c0500e2b74a21fb4431b8719b97adfdd4a5421779c11343404ed7284b4df8d1",
+      "sourceLocation": "src/main/java/io/spring/api/ArticlesApi.java:40"
+    },
+    {
+      "handlerRef": "io.spring.api.CommentsApi#createComment POST /articles/{slug}/comments",
+      "httpMethods": [
+        "POST"
+      ],
+      "normalizedRouteTemplate": "/articles/{slug}/comments",
+      "productionIdentity": "io.spring.api.CommentsApi#createComment",
+      "sourceDigest": "688fd94dc61f87552412dcc6205d5d3257b7ac961a14c693a7f222b4de5a9f89",
+      "sourceLocation": "src/main/java/io/spring/api/CommentsApi.java:40"
+    },
+    {
+      "handlerRef": "io.spring.api.CommentsApi#deleteComment DELETE /articles/{slug}/comments/{id}",
+      "httpMethods": [
+        "DELETE"
+      ],
+      "normalizedRouteTemplate": "/articles/{slug}/comments/{id}",
+      "productionIdentity": "io.spring.api.CommentsApi#deleteComment",
+      "sourceDigest": "688fd94dc61f87552412dcc6205d5d3257b7ac961a14c693a7f222b4de5a9f89",
+      "sourceLocation": "src/main/java/io/spring/api/CommentsApi.java:67"
+    },
+    {
+      "handlerRef": "io.spring.api.CommentsApi#getComments GET /articles/{slug}/comments",
+      "httpMethods": [
+        "GET"
+      ],
+      "normalizedRouteTemplate": "/articles/{slug}/comments",
+      "productionIdentity": "io.spring.api.CommentsApi#getComments",
+      "sourceDigest": "688fd94dc61f87552412dcc6205d5d3257b7ac961a14c693a7f222b4de5a9f89",
+      "sourceLocation": "src/main/java/io/spring/api/CommentsApi.java:53"
+    },
+    {
+      "handlerRef": "io.spring.api.CurrentUserApi#currentUser GET /user",
+      "httpMethods": [
+        "GET"
+      ],
+      "normalizedRouteTemplate": "/user",
+      "productionIdentity": "io.spring.api.CurrentUserApi#currentUser",
+      "sourceDigest": "131deb9234c4817d67fa9e4cc40b0068ce45cec3fc4c22b9b769ed832f0ea68d",
+      "sourceLocation": "src/main/java/io/spring/api/CurrentUserApi.java:31"
+    },
+    {
+      "handlerRef": "io.spring.api.CurrentUserApi#updateProfile PUT /user",
+      "httpMethods": [
+        "PUT"
+      ],
+      "normalizedRouteTemplate": "/user",
+      "productionIdentity": "io.spring.api.CurrentUserApi#updateProfile",
+      "sourceDigest": "131deb9234c4817d67fa9e4cc40b0068ce45cec3fc4c22b9b769ed832f0ea68d",
+      "sourceLocation": "src/main/java/io/spring/api/CurrentUserApi.java:40"
+    },
+    {
+      "handlerRef": "io.spring.api.ProfileApi#follow POST /profiles/{username}/follow",
+      "httpMethods": [
+        "POST"
+      ],
+      "normalizedRouteTemplate": "/profiles/{username}/follow",
+      "productionIdentity": "io.spring.api.ProfileApi#follow",
+      "sourceDigest": "314dbd49f5b7c8b95763f73f960d538275a31e4ed35929b1b2e2840c0a7bbbf2",
+      "sourceLocation": "src/main/java/io/spring/api/ProfileApi.java:37"
+    },
+    {
+      "handlerRef": "io.spring.api.ProfileApi#getProfile GET /profiles/{username}",
+      "httpMethods": [
+        "GET"
+      ],
+      "normalizedRouteTemplate": "/profiles/{username}",
+      "productionIdentity": "io.spring.api.ProfileApi#getProfile",
+      "sourceDigest": "314dbd49f5b7c8b95763f73f960d538275a31e4ed35929b1b2e2840c0a7bbbf2",
+      "sourceLocation": "src/main/java/io/spring/api/ProfileApi.java:28"
+    },
+    {
+      "handlerRef": "io.spring.api.ProfileApi#unfollow DELETE /profiles/{username}/follow",
+      "httpMethods": [
+        "DELETE"
+      ],
+      "normalizedRouteTemplate": "/profiles/{username}/follow",
+      "productionIdentity": "io.spring.api.ProfileApi#unfollow",
+      "sourceDigest": "314dbd49f5b7c8b95763f73f960d538275a31e4ed35929b1b2e2840c0a7bbbf2",
+      "sourceLocation": "src/main/java/io/spring/api/ProfileApi.java:51"
+    },
+    {
+      "handlerRef": "io.spring.api.TagsApi#getTags GET /tags",
+      "httpMethods": [
+        "GET"
+      ],
+      "normalizedRouteTemplate": "/tags",
+      "productionIdentity": "io.spring.api.TagsApi#getTags",
+      "sourceDigest": "f83c118f5089ba7fcd6a05e297069a9d0c214df97664e843ec33383c920f4c46",
+      "sourceLocation": "src/main/java/io/spring/api/TagsApi.java:17"
+    },
+    {
+      "handlerRef": "io.spring.api.UsersApi#createUser POST /users",
+      "httpMethods": [
+        "POST"
+      ],
+      "normalizedRouteTemplate": "/users",
+      "productionIdentity": "io.spring.api.UsersApi#createUser",
+      "sourceDigest": "1d1b1fc09791dc54d2610415ed4511f006d282f34127f4a4a71cd2e4a780e823",
+      "sourceLocation": "src/main/java/io/spring/api/UsersApi.java:39"
+    },
+    {
+      "handlerRef": "io.spring.api.UsersApi#userLogin POST /users/login",
+      "httpMethods": [
+        "POST"
+      ],
+      "normalizedRouteTemplate": "/users/login",
+      "productionIdentity": "io.spring.api.UsersApi#userLogin",
+      "sourceDigest": "1d1b1fc09791dc54d2610415ed4511f006d282f34127f4a4a71cd2e4a780e823",
+      "sourceLocation": "src/main/java/io/spring/api/UsersApi.java:47"
+    }
+  ],
+  "schema_version": "software-factory.sf-bl002-route-handler-index.v0.3",
+  "semantic_publication_allowed": false,
+  "source_revision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+}

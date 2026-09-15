@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "software-factory.sf-bl005-restassured-status-dialect-producer-receipt.v2",
+  "executionId": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
+  "envelopeRevision": 2,
+  "envelopeSha256": "1d24b7953453f2822c65675094b34fc19d008e12327429cc6a2382cca3d4e971",
+  "cleanCandidateBase": "5fe3cfbcf6574ce01b2954c9a36b4952f23e6c9f",
+  "implementationCommit": "445bd225979bcd92c701aa2c1ff815fb03b8ac6a",
+  "implementationTreeBeforeEvidence": "7c88037e60b281a080c2595f47dacd43393d41be",
+  "sourceEvidence": {
+    "reviewedCandidate": "7e8e54f2f28cf90672fc152b3d0fcef8c98115b5",
+    "contaminatedBaselineNotCarried": "90b252a01c1ea45fc92a9034959f6ca88e1351e0",
+    "method": "allowlisted_blob_diff_only"
+  },
+  "implementationBlobs": {
+    "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelector.java": "d6380b128ca78e54b26489578a76e6e573df4f8d",
+    "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelectorTests.java": "7050d084d03e46fddd60be86df5f13465454f11f"
+  },
+  "source": {
+    "revision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+    "tree": "3938658872ad216fe45033f4698c66febd80be76",
+    "productionSubtree": "393afbd6c7e5dab2352ef896b5866348d6d822a3"
+  },
+  "inputs": {
+    "intents": {"count": 10, "sha256": "1ccc62730b762b1d3e1a8e28adcce8a8a836d6df3d6f1a97f0922ca6c6d7b7fe"},
+    "observations": {"count": 11, "sha256": "71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd"},
+    "handlers": {"count": 19, "sha256": "9b18b6ed556e55aed9db77dee4dc032aa951216af37231f9619095a46ad34053"}
+  },
+  "outputs": {
+    "routeVerification": {"path": "producer/route-verification.json", "sha256": "068ebd262b3c8a292bf59d267466a725a32ff37df77cee4974771a946e1db48b"},
+    "selectorVerification": {"path": "producer/selector-verification.json", "sha256": "1a668764b9b04c180f5107f531122d136e8ee10a56d203728239f3fe49b5cd06"}
+  },
+  "diagnosticCounts": {
+    "ACCEPTED": 1,
+    "ACTION_MISMATCH": 25,
+    "ASSERTION_POLARITY": 5,
+    "ENTITY_MISMATCH": 73,
+    "UNMET_CONDITION": 6,
+    "UNSUPPORTED_ASSERTION_DIALECT": 0
+  },
+  "tdd": {
+    "red": {"tests": 5, "failures": 5, "errors": 0, "skipped": 0, "exit": 1, "admissibility": "ADMISSIBLE_RED_BEFORE_PRODUCTION_CHANGE"},
+    "green": {"tests": 26, "failures": 0, "errors": 0, "skipped": 0, "exit": 0, "admissibility": "ADMISSIBLE"}
+  },
+  "verification": {
+    "focusedJava17": {"tests": 26, "failures": 0, "errors": 0, "skipped": 0, "exit": 0, "admissibility": "ADMISSIBLE"},
+    "fullJava17Package": {"tests": 1503, "failures": 0, "errors": 0, "skipped": 0, "exit": 0, "admissibility": "ADMISSIBLE"},
+    "cleanExactHeadPythonRegression": {"passed": 142, "failed": 0, "exit": 0, "admissibility": "ADMISSIBLE_CLEAN_EXACT_HEAD"},
+    "precision": null,
+    "recall": null
+  },
+  "scopeBoundaries": {
+    "activeControlsModified": false,
+    "envelopeOrPlanModified": false,
+    "scorerOrThresholdChanges": false,
+    "calibration": false,
+    "formalHoldout": false,
+    "productTruthPublication": false,
+    "parentClosure": false,
+    "pullRequest": false
+  },
+  "status": "PASS_ENGINEERING_EVIDENCE_READY_FOR_FRESH_INDEPENDENT_REVIEW",
+  "limitations": [
+    "The first full-package attempt exceeded the tool output window and did not retain a completion exit; it is recorded as inadmissible and excluded from the pass claim. A second exact run was captured with exit 0 and 1503 tests.",
+    "Maven emitted an existing networknt pattern-validator warning while the full package still exited 0.",
+    "The final evidence commit identity is reported in the handoff; this receipt binds the implementation commit and pre-evidence implementation tree."
+  ]
+}

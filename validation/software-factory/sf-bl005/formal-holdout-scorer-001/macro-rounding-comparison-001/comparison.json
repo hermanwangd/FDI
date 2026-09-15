@@ -1,0 +1,374 @@
+{
+  "arithmetic": {
+    "decimalPrecision": 50,
+    "finalMacroScale": 12,
+    "repositoryOutputScale": 12,
+    "rounding": "ROUND_HALF_EVEN"
+  },
+  "schemaVersion": "SFBL005-MACRO-ROUNDING-COMPARISON-001",
+  "summary": {
+    "differentVectors": 1,
+    "identicalVectors": 59,
+    "nonRepositoryDecisionVectors": 54,
+    "repositoryDecisionVectors": 6,
+    "totalVectors": 60
+  },
+  "vectors": [
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "EMPTY_AND_ABSTENTION",
+      "vectorId": "A01_UNRESOLVED"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "EMPTY_AND_ABSTENTION",
+      "vectorId": "A02_UNSUPPORTED"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CANONICAL_IDENTITY",
+      "vectorId": "C01_PATH_EXCLUDED"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CANONICAL_IDENTITY",
+      "vectorId": "C02_SNAPSHOT_DISTINCT"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CANONICAL_IDENTITY",
+      "vectorId": "C03_OVERLOAD_ORDER"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CANONICAL_IDENTITY",
+      "vectorId": "C04_PRIMITIVE_REFERENCE_ARRAY"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CANONICAL_IDENTITY",
+      "vectorId": "C05_GENERIC_ERASURE"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CANONICAL_IDENTITY",
+      "vectorId": "C06_CONSTRUCTOR"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CANONICAL_IDENTITY",
+      "vectorId": "C07_RETURN_TYPE"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CHAIN_SCORING",
+      "vectorId": "CH01_COMPLETE"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CHAIN_SCORING",
+      "vectorId": "CH02_MISSING_PROPOSED_EDGE"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CHAIN_SCORING",
+      "vectorId": "CH03_MISSING_PAIR"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CHAIN_SCORING",
+      "vectorId": "CH04_NOT_APPLICABLE"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CHAIN_SCORING",
+      "vectorId": "CH05_OMITTED_TRUTH_EDGE"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CHAIN_SCORING",
+      "vectorId": "CH06_EXTRA_TRUTH_EDGE"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CHAIN_SCORING",
+      "vectorId": "CH07_REVERSED_EDGE"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CHAIN_SCORING",
+      "vectorId": "CH08_NONADJACENT_EDGE"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "CHAIN_SCORING",
+      "vectorId": "CH09_EXTRA_PROPOSAL"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DISPOSITION_EVIDENCE",
+      "vectorId": "D00_VALID"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DISPOSITION_EVIDENCE",
+      "vectorId": "D01_ENTITY"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DISPOSITION_EVIDENCE",
+      "vectorId": "D02_ACTION"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DISPOSITION_EVIDENCE",
+      "vectorId": "D03_ROLE"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DISPOSITION_EVIDENCE",
+      "vectorId": "D04_POLARITY"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DISPOSITION_EVIDENCE",
+      "vectorId": "D05_CONDITION"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DISPOSITION_EVIDENCE",
+      "vectorId": "D06_AMBIGUITY"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DISPOSITION_EVIDENCE",
+      "vectorId": "D07_SUFFICIENCY"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DISPOSITION_EVIDENCE",
+      "vectorId": "D08_MISSING_PROOF"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DISPOSITION_EVIDENCE",
+      "vectorId": "D09_DUPLICATE_PROOF"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DISPOSITION_EVIDENCE",
+      "vectorId": "D10_ORPHAN_PROOF"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DISPOSITION_EVIDENCE",
+      "vectorId": "D11_PROOF_DIGEST"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DETERMINISM_AND_PARITY",
+      "vectorId": "P01_REPEATABILITY"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DETERMINISM_AND_PARITY",
+      "vectorId": "P02_CROSS_IMPLEMENTATION"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DETERMINISM_AND_PARITY",
+      "vectorId": "P03_NONDETERMINISM"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "DETERMINISM_AND_PARITY",
+      "vectorId": "P04_CROSS_IMPLEMENTATION_MISMATCH"
+    },
+    {
+      "changedFields": [],
+      "comparison": "IDENTICAL",
+      "operation": "REPOSITORY_DECISION",
+      "rawRatioAverageThenFinalScale12": {
+        "macroPrecision": "0.894444444444",
+        "macroRecall": "0.738636363636"
+      },
+      "roundedRepositoryOutputAverageThenScale12": {
+        "macroPrecision": "0.894444444444",
+        "macroRecall": "0.738636363636"
+      },
+      "vectorId": "R01_TWO_REPOSITORY_PASS"
+    },
+    {
+      "changedFields": [
+        "macroRecall"
+      ],
+      "comparison": "DIFFERENT",
+      "operation": "REPOSITORY_DECISION",
+      "rawRatioAverageThenFinalScale12": {
+        "macroPrecision": "0.807017543860",
+        "macroRecall": "0.783333333333"
+      },
+      "roundedRepositoryOutputAverageThenScale12": {
+        "macroPrecision": "0.807017543860",
+        "macroRecall": "0.783333333334"
+      },
+      "vectorId": "R02_NON_MASKING"
+    },
+    {
+      "changedFields": [],
+      "comparison": "IDENTICAL",
+      "operation": "REPOSITORY_DECISION",
+      "rawRatioAverageThenFinalScale12": {
+        "macroPrecision": "0.800000000000",
+        "macroRecall": "0.800000000000"
+      },
+      "roundedRepositoryOutputAverageThenScale12": {
+        "macroPrecision": "0.800000000000",
+        "macroRecall": "0.800000000000"
+      },
+      "vectorId": "R03_PRECISION_BOUNDARY"
+    },
+    {
+      "changedFields": [],
+      "comparison": "IDENTICAL",
+      "operation": "REPOSITORY_DECISION",
+      "rawRatioAverageThenFinalScale12": {
+        "macroPrecision": "1.000000000000",
+        "macroRecall": "0.600000000000"
+      },
+      "roundedRepositoryOutputAverageThenScale12": {
+        "macroPrecision": "1.000000000000",
+        "macroRecall": "0.600000000000"
+      },
+      "vectorId": "R04_RECALL_BOUNDARY"
+    },
+    {
+      "changedFields": [],
+      "comparison": "IDENTICAL",
+      "operation": "REPOSITORY_DECISION",
+      "rawRatioAverageThenFinalScale12": {
+        "macroPrecision": null,
+        "macroRecall": "0.000000000000"
+      },
+      "roundedRepositoryOutputAverageThenScale12": {
+        "macroPrecision": null,
+        "macroRecall": "0.000000000000"
+      },
+      "vectorId": "R05_REPOSITORY_NULL"
+    },
+    {
+      "changedFields": [],
+      "comparison": "IDENTICAL",
+      "operation": "REPOSITORY_DECISION",
+      "rawRatioAverageThenFinalScale12": {
+        "macroPrecision": "0.950000000000",
+        "macroRecall": "0.950000000000"
+      },
+      "roundedRepositoryOutputAverageThenScale12": {
+        "macroPrecision": "0.950000000000",
+        "macroRecall": "0.950000000000"
+      },
+      "vectorId": "R06_MACRO_EQUAL_WEIGHT"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "OCCURRENCE_SCORING",
+      "vectorId": "S01_SINGLE_TP"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "OCCURRENCE_SCORING",
+      "vectorId": "S02_WRONG_PAIR"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "OCCURRENCE_SCORING",
+      "vectorId": "S03_DUPLICATE_FP"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "OCCURRENCE_SCORING",
+      "vectorId": "S04_INVALID_THEN_VALID"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "PROVENANCE_INTEGRITY",
+      "vectorId": "V00_VALID"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "PROVENANCE_INTEGRITY",
+      "vectorId": "V01_DUPLICATE_SCENARIO"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "PROVENANCE_INTEGRITY",
+      "vectorId": "V02_WRONG_SNAPSHOT"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "PROVENANCE_INTEGRITY",
+      "vectorId": "V03_MISSING_TEST_PROVENANCE"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "PROVENANCE_INTEGRITY",
+      "vectorId": "V04_MISSING_SOURCE_PROVENANCE"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "PROVENANCE_INTEGRITY",
+      "vectorId": "V05_STRATUM_CARDINALITY"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "PROVENANCE_INTEGRITY",
+      "vectorId": "V06_MISSING_TRUTH_DISPOSITION"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "PROVENANCE_INTEGRITY",
+      "vectorId": "V07_MALFORMED_SCHEMA"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "PROVENANCE_INTEGRITY",
+      "vectorId": "V08_ARTIFACT_DIGEST"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "PROVENANCE_INTEGRITY",
+      "vectorId": "V09_CROSS_REPOSITORY_REFERENCE"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "WILSON_INTERVAL",
+      "vectorId": "W01_WILSON_ZERO"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "WILSON_INTERVAL",
+      "vectorId": "W02_WILSON_ONE"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "WILSON_INTERVAL",
+      "vectorId": "W03_WILSON_EIGHT_TEN"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "WILSON_INTERVAL",
+      "vectorId": "W04_INVALID_COUNTS"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "EMPTY_AND_ABSTENTION",
+      "vectorId": "Z01_EMPTY_PROPOSAL"
+    },
+    {
+      "comparison": "NOT_APPLICABLE",
+      "operation": "EMPTY_AND_ABSTENTION",
+      "vectorId": "Z02_FP_SCENARIO_COVERAGE"
+    }
+  ]
+}

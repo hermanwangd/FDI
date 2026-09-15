@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "software-factory.sf-bl005-restassured-status-dialect-receiver-readback.v3",
+  "executionId": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
+  "evidenceRevision": "clean-001",
+  "checkedAt": "2026-09-14T19:53:02Z",
+  "command": "sha256sum command-log.txt delivery-evidence.json route-verification.json selector-verification.json scope-proof.txt digests.sha256 ../../producer/digests.sha256",
+  "exit": 0,
+  "manifestRows": 7,
+  "verifiedRows": 7,
+  "failures": 0,
+  "admissibility": "ADMISSIBLE_RECEIVER_READBACK; RECEIVER_SELF_HASH_EXCLUDED",
+  "rows": [
+    {"path": "integration/clean-001/command-log.txt", "sha256": "660c088fc7231493143344f5acd27ed51606eaebb1072642162528bb92d9f990", "status": "OK"},
+    {"path": "integration/clean-001/delivery-evidence.json", "sha256": "3697f36cc25f8e56db6f6b1b1695205fce0b8ad0b75aa9a2d3bcaba3cd3225b3", "status": "OK"},
+    {"path": "integration/clean-001/route-verification.json", "sha256": "068ebd262b3c8a292bf59d267466a725a32ff37df77cee4974771a946e1db48b", "status": "OK"},
+    {"path": "integration/clean-001/selector-verification.json", "sha256": "1a668764b9b04c180f5107f531122d136e8ee10a56d203728239f3fe49b5cd06", "status": "OK"},
+    {"path": "integration/clean-001/scope-proof.txt", "sha256": "ba5a522e90727e9ec9a0c9e99392ed02af4f12e27d2b741d35599eb9d68b9acd", "status": "OK"},
+    {"path": "validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/digests.sha256", "sha256": "0025e4446781e39fdb11886f374837b6504d883ccc80ff23bac911c65492d544", "status": "OK"},
+    {"path": "integration/clean-001/digests.sha256", "sha256": "b9311e00a1b0235596a524788f8e1c4c2482084b4bb0dcaf0293de59d7500ae9", "status": "OK"}
+  ],
+  "selfHash": {"status": "EXCLUDED", "reason": "A receiver/readback artifact cannot include its own digest without circular construction."},
+  "interpretation": "The receiver readback verifies every command/evidence/digest payload other than its own bytes; the integration digest manifest independently verifies the five canonical payloads and the producer manifest."
+}

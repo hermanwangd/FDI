@@ -1,0 +1,201 @@
+{
+  "schema_version": "software-factory.sf-bl002-accepted-scenario-search-intents.v0.1",
+  "status": "FROZEN",
+  "authority": "ACCEPTED_RETRIEVAL_AID_ONLY",
+  "semantic_publication_allowed": false,
+  "source_revision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+  "semantics_sha256": "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31",
+  "records": [
+    {
+      "scenarioId": "RW-SCENARIO-001",
+      "capabilityId": "RW-CAPABILITY-ACCOUNT",
+      "action": "CREATE",
+      "entity": "USER",
+      "conditions": [
+        "valid-registration"
+      ],
+      "aliases": [
+        "register user",
+        "create user",
+        "sign up"
+      ],
+      "guardTokens": [],
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY",
+      "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+      "semanticsDigest": "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31"
+    },
+    {
+      "scenarioId": "RW-SCENARIO-002",
+      "capabilityId": "RW-CAPABILITY-ACCOUNT",
+      "action": "AUTHENTICATE",
+      "entity": "USER",
+      "conditions": [
+        "valid-credentials"
+      ],
+      "aliases": [
+        "login user",
+        "authenticate user",
+        "sign in"
+      ],
+      "guardTokens": [],
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY",
+      "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+      "semanticsDigest": "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31"
+    },
+    {
+      "scenarioId": "RW-SCENARIO-003",
+      "capabilityId": "RW-CAPABILITY-ARTICLE",
+      "action": "CREATE",
+      "entity": "ARTICLE",
+      "conditions": [
+        "authenticated",
+        "valid-content"
+      ],
+      "aliases": [
+        "create article",
+        "new article"
+      ],
+      "guardTokens": [],
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY",
+      "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+      "semanticsDigest": "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31"
+    },
+    {
+      "scenarioId": "RW-SCENARIO-004",
+      "capabilityId": "RW-CAPABILITY-ARTICLE",
+      "action": "UPDATE",
+      "entity": "ARTICLE",
+      "conditions": [
+        "own-article",
+        "valid-content"
+      ],
+      "aliases": [
+        "update article",
+        "edit article"
+      ],
+      "guardTokens": [],
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY",
+      "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+      "semanticsDigest": "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31"
+    },
+    {
+      "scenarioId": "RW-SCENARIO-005",
+      "capabilityId": "RW-CAPABILITY-ACCOUNT",
+      "action": "REJECT",
+      "entity": "USER",
+      "conditions": [
+        "duplicate-email"
+      ],
+      "aliases": [
+        "register user",
+        "create user"
+      ],
+      "guardTokens": [
+        "duplicate",
+        "email"
+      ],
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY",
+      "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+      "semanticsDigest": "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31"
+    },
+    {
+      "scenarioId": "RW-SCENARIO-006",
+      "capabilityId": "RW-CAPABILITY-ACCOUNT",
+      "action": "REJECT",
+      "entity": "USER",
+      "conditions": [
+        "invalid-password"
+      ],
+      "aliases": [
+        "login user",
+        "authenticate user"
+      ],
+      "guardTokens": [
+        "password",
+        "invalid"
+      ],
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY",
+      "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+      "semanticsDigest": "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31"
+    },
+    {
+      "scenarioId": "RW-SCENARIO-007",
+      "capabilityId": "RW-CAPABILITY-ARTICLE",
+      "action": "REJECT",
+      "entity": "ARTICLE",
+      "conditions": [
+        "non-owner"
+      ],
+      "aliases": [
+        "update article",
+        "edit article"
+      ],
+      "guardTokens": [
+        "forbidden",
+        "author"
+      ],
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY",
+      "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+      "semanticsDigest": "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31"
+    },
+    {
+      "scenarioId": "RW-SCENARIO-008",
+      "capabilityId": "RW-CAPABILITY-ARTICLE",
+      "action": "REJECT",
+      "entity": "ARTICLE",
+      "conditions": [
+        "missing-title"
+      ],
+      "aliases": [
+        "create article",
+        "new article"
+      ],
+      "guardTokens": [
+        "title",
+        "invalid"
+      ],
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY",
+      "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+      "semanticsDigest": "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31"
+    },
+    {
+      "scenarioId": "RW-SCENARIO-009",
+      "capabilityId": "RW-CAPABILITY-ARTICLE",
+      "action": "BROWSE",
+      "entity": "ARTICLE",
+      "conditions": [
+        "paged-results",
+        "limit",
+        "offset"
+      ],
+      "aliases": [
+        "list article",
+        "browse article"
+      ],
+      "guardTokens": [],
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY",
+      "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+      "semanticsDigest": "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31"
+    },
+    {
+      "scenarioId": "RW-SCENARIO-010",
+      "capabilityId": "RW-CAPABILITY-FEED",
+      "action": "BROWSE",
+      "entity": "FEED",
+      "conditions": [
+        "paged-results",
+        "following",
+        "limit",
+        "offset"
+      ],
+      "aliases": [
+        "feed article",
+        "following feed"
+      ],
+      "guardTokens": [],
+      "authority": "ACCEPTED_RETRIEVAL_AID_ONLY",
+      "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+      "semanticsDigest": "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31"
+    }
+  ]
+}

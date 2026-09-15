@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "SFBL005-H1-R4-HUMAN-DISPATCH-001",
+  "humanDecision": "User selected option 1: approve active-control alignment to r4 and synthetic scorer verification",
+  "envelopePath": "validation/software-factory/sf-bl005/execution-envelope-formal-holdout-scorer-001-r4.json",
+  "envelopeSha256": "191a0a7ab9939aed8d884bf31983c0f0f420ed2d8e7490c976735e6852956659",
+  "envelopeIntegratedCommit": "09053f393f8f8453008577b5e76366c460d9fce1",
+  "candidateCommit": "ea15e51df0f5410bfb5532e1c255f107ccb0975b",
+  "authority": {
+    "controlReconciliationAuthorized": true,
+    "syntheticScorerExecutionAuthorized": true,
+    "calibrationAuthorized": false,
+    "formalHoldoutAccessAuthorized": false,
+    "candidateMergeAuthorized": false,
+    "productionReadinessAuthorized": false
+  },
+  "boundary": "This decision authorizes the r4 three-phase synthetic execution once. The immutable preparation envelope retains its historical false flags; this later Human decision grants only the stated execution scope."
+}

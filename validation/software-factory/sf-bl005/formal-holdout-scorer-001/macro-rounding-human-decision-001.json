@@ -1,0 +1,43 @@
+{
+  "authority": {
+    "calibrationAuthorized": false,
+    "candidateExecutionAuthorized": false,
+    "conformanceResealPreparationAuthorized": true,
+    "exactEnvelopePreparationAuthorized": true,
+    "formalHoldoutAccessAuthorized": false,
+    "formalHoldoutExecutionAuthorized": false,
+    "formalHoldoutSelectionAuthorized": false,
+    "productionReadinessAuthorized": false,
+    "protocolRevisionPreparationAuthorized": true,
+    "syntheticConformanceExecutionAuthorized": false
+  },
+  "boundary": "This decision resolves only macro rounding order. H1 remains unbound until the revised protocol, conformance artifacts, exact candidate, execution evidence, independent reviews, merge, and post-merge receipt satisfy their separate gates.",
+  "contract": {
+    "aggregation": "compute each exact-context ratio, sum unquantized ratios, divide by repository count, then quantize once",
+    "decimalPrecision": 50,
+    "finalScale": 12,
+    "perRepositoryRatioSource": "integer TP, FP, and FN counts",
+    "rounding": "HALF_EVEN",
+    "serializedRepositoryMetricsAreAggregationInputs": false,
+    "thresholdDecisionUsesRoundedDecimals": false
+  },
+  "decisionDate": "2026-09-15",
+  "decisionId": "SF-BL-005-H1-MACRO-ROUNDING-001",
+  "decisionState": "SELECTED",
+  "evidence": {
+    "comparison": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/macro-rounding-comparison-001/comparison.json",
+      "sha256": "9a2b1e0207ee0ecb4fb6a9a68d7f3f5c110b9e7e8087b24f1fa2e96011a76844"
+    },
+    "comparisonIndependentReview": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/macro-rounding-comparison-001/independent-review.md",
+      "sha256": "f1066a3262b64a38a4dbeb5f4069702c5f2e024b55c033ba6ecefe72a1a95b87"
+    },
+    "proposal": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/macro-rounding-decision-proposal.md",
+      "sha256": "b313dd4181813a058053aed52096fa57ee2952cc793db590b5d9d03ac3b12a51"
+    }
+  },
+  "humanSelection": "OPTION_1_RAW_RATIO_AVERAGE_THEN_FINAL_SCALE_12",
+  "schemaVersion": "SFBL005-H1-MACRO-ROUNDING-HUMAN-DECISION-001"
+}

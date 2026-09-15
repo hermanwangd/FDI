@@ -1,0 +1,56 @@
+{
+  "executionId": "SF-BL-005-FORMAL-HOLDOUT-SCORER-001",
+  "baseCommit": "469c0a2f26b0cc3e2b1e753c8d1bf3774809bac3",
+  "controlCommit": "1b269c977aa6bde4ce2bbc7658d132b99e8f7803",
+  "backlogIds": [
+    "SF-BL-005"
+  ],
+  "requirementIds": [
+    "AUTH-002",
+    "EVID-001",
+    "SF-EVAL-001",
+    "TECH-001"
+  ],
+  "specRevision": "ebe6e1eff6a9c6bfe5e67709b8628cd316f2556b",
+  "controlDigests": {
+    "AGENTS.md": "a70a2d4da9f9dd8add3ca2ab3d794125a08525bdb53cca4426d60f9a9a091c12",
+    "PROJECT-OVERVIEW.md": "e5ceb9b4baf8a5b5a9d557dd78f673221c8ecea182ba782457fc76e08172e4c0",
+    "FRAMEWORK-SPEC.md": "1c78425291c7ff16d39760fcef41ff275076d1cf5b3aa973bcabe1b8c3f5930a",
+    "BACKLOG.md": "0689c1d8a14553bdd499174c8f21e8680b4d09259801880e45e6af9935e51069",
+    "IMPLEMENTATION-PLAN.md": "c236ff0797de94c4c435bb5f39d97e9353daa2e31842f62a6fed6aadad65c7bc",
+    "STATUS.json": "11ee22caf55379191ed686f62ba4efb5509a9f373d547dae6a62cd683803577a"
+  },
+  "ownedPaths": [
+    "tools/sfbl005_formal_holdout_recompute_v1.py",
+    "tests/test_sfbl005_formal_holdout_recompute_v1.py"
+  ],
+  "excludedPaths": [
+    "active controls",
+    "Java",
+    "frozen conformance inputs/expected/golden"
+  ],
+  "evidenceRoot": "/Users/herman_mbp2023/ClawProjects/skills/fdi-h1-envelope-r4-final/validation/software-factory/sf-bl005/formal-holdout-scorer-001/malformed-remediation-001/r2",
+  "scope": "Correct scalar polarity serialization and omitted zero-denominator micro metric reasons; preserve existing V07 handling.",
+  "acceptance": [
+    "All 60 synthetic vectors byte-equal frozen golden in two Java and two Python runs",
+    "Targeted/full Python and approved full Java17 regression pass",
+    "Independent candidate review has no P0/P1/P2 findings"
+  ],
+  "negativeCases": [
+    "Malformed given retains array polarity",
+    "No proposed pairs emits microPrecisionReason",
+    "No gold pairs emits microRecallReason",
+    "Mixed repository null macro but defined micro has no micro null reason"
+  ],
+  "resourceLimit": "aggregate <8GB; Maven Xmx2g; single fork Xmx1g",
+  "sourceGuardBase": "1b269c977aa6bde4ce2bbc7658d132b99e8f7803",
+  "historicalImplementationBase": "ffd9032bd5840aae5e2a5d0b5eafd9f211803aac",
+  "historicalCandidate": "469c0a2f26b0cc3e2b1e753c8d1bf3774809bac3",
+  "humanAuthority": "User selected option 1: reconcile controls, fix parity and full revalidation",
+  "candidateMergeAuthorized": false,
+  "h1BindingAuthorized": false,
+  "formalHoldoutAuthorized": false,
+  "calibrationAuthorized": false,
+  "goldenSha256": "9c0e8f93cd1b2e8ecc85923995efdd5481d00e5fe3ecb375bf59b8f1a770af47",
+  "remediationId": "PARITY-R2"
+}

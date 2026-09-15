@@ -171,13 +171,21 @@ final class ScenarioEvidenceSelector {
         while (chain.getParentNode().orElse(null) instanceof MethodCallExpr) chain = chain.getParentNode().orElseThrow();
         final var boundRequest = request;
         calls = chain.findAll(MethodCallExpr.class);
-        if (calls.stream().noneMatch(c -> c.getNameAsString().equals("andExpect")
-                && c.getScope().map(s -> s == boundRequest || s.isAncestorOf(boundRequest)).orElse(false)))
-            return DiagnosticReason.UNSUPPORTED_ASSERTION_DIALECT;
-        boolean error = calls.stream().anyMatch(c -> List.of("attributeHasErrors", "attributeHasFieldErrors",
-                "attributeHasFieldErrorCode", "is4xxClientError", "isBadRequest").contains(c.getNameAsString()));
-        boolean positive = calls.stream().anyMatch(c -> List.of("is3xxRedirection", "isOk", "isCreated",
-                "redirectedUrl").contains(c.getNameAsString()));
+        boolean mockMvc = calls.stream().anyMatch(c -> c.getNameAsString().equals("andExpect")
+                && c.getScope().map(s -> s == boundRequest || s.isAncestorOf(boundRequest)).orElse(false));
+        boolean error;
+        boolean positive;
+        if (mockMvc) {
+            error = calls.stream().anyMatch(c -> List.of("attributeHasErrors", "attributeHasFieldErrors",
+                    "attributeHasFieldErrorCode", "is4xxClientError", "isBadRequest").contains(c.getNameAsString()));
+            positive = calls.stream().anyMatch(c -> List.of("is3xxRedirection", "isOk", "isCreated",
+                    "redirectedUrl").contains(c.getNameAsString()));
+        } else {
+            var statusEvidence = restAssuredStatusEvidence(request);
+            if (statusEvidence == null) return DiagnosticReason.UNSUPPORTED_ASSERTION_DIALECT;
+            error = statusEvidence.error();
+            positive = statusEvidence.positive();
+        }
         if (action.equals("REJECT")) {
             if (!error) return DiagnosticReason.ASSERTION_POLARITY;
             if (conditions.contains("duplicate-name-guard") && calls.stream()
@@ -209,6 +217,59 @@ final class ScenarioEvidenceSelector {
         }
         return null;
     }
+
+    private record StatusEvidence(boolean error, boolean positive) {
+    }
+
+    private static StatusEvidence restAssuredStatusEvidence(MethodCallExpr request) {
+        List<MethodCallExpr> chain = requestChain(request);
+        if (!supportedRestAssuredRoot(request)) return null;
+        int thenIndex = -1;
+        for (int i = 1; i < chain.size(); i++) {
+            MethodCallExpr call = chain.get(i);
+            if (call.getNameAsString().equals("then") && call.getArguments().isEmpty()) {
+                thenIndex = i;
+                break;
+            }
+        }
+        if (thenIndex < 0) return null;
+        List<MethodCallExpr> statusCalls = chain.subList(thenIndex + 1, chain.size()).stream()
+                .filter(c -> c.getNameAsString().equals("statusCode")).toList();
+        if (statusCalls.size() != 1) return null;
+        MethodCallExpr statusCode = statusCalls.get(0);
+        if (statusCode.getArguments().size() != 1 || !statusCode.getArgument(0).isIntegerLiteralExpr()) return null;
+        int value = statusCode.getArgument(0).asIntegerLiteralExpr().asInt();
+        if (value >= 200 && value <= 299) return new StatusEvidence(false, true);
+        if (value >= 400 && value <= 499) return new StatusEvidence(true, false);
+        return null;
+    }
+
+    private static List<MethodCallExpr> requestChain(MethodCallExpr request) {
+        List<MethodCallExpr> chain = new ArrayList<>();
+        com.github.javaparser.ast.Node current = request;
+        while (current instanceof MethodCallExpr call) {
+            chain.add(call);
+            var parent = current.getParentNode().orElse(null);
+            final var currentNode = current;
+            if (!(parent instanceof MethodCallExpr parentCall)
+                    || parentCall.getScope().map(scope -> scope == currentNode).orElse(false) == false) break;
+            current = parentCall;
+        }
+        return chain;
+    }
+
+    private static boolean supportedRestAssuredRoot(MethodCallExpr request) {
+        MethodCallExpr root = request;
+        while (root.getScope().filter(scope -> scope instanceof MethodCallExpr).isPresent()) {
+            root = root.getScope().orElseThrow().asMethodCallExpr();
+        }
+        if (root.getNameAsString().equals("given") && root.getArguments().isEmpty()
+                && root.getScope().isEmpty()) return true;
+        return root.getNameAsString().equals("when") && root.getArguments().isEmpty()
+                && root.getScope().filter(scope -> scope.isNameExpr()
+                        && scope.asNameExpr().getNameAsString().equals("RestAssuredMockMvc")).isPresent();
+    }
+
     static JavaParser parser() {
         return new JavaParser(new com.github.javaparser.ParserConfiguration()
                 .setLanguageLevel(com.github.javaparser.ParserConfiguration.LanguageLevel.JAVA_17));

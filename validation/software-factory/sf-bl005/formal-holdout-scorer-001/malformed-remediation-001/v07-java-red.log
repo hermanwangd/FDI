@@ -1,0 +1,75 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------< com.featuredeliveryintelligence:fdi >-----------------
+[INFO] Building Feature Delivery Intelligence 0.4.8.3
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ fdi ---
+[INFO] skip non existing resourceDirectory /Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix/src/main/resources
+[INFO] skip non existing resourceDirectory /Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ fdi ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 212 source files with javac [debug parameters release 17] to target/classes
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix/src/main/java/com/featuredeliveryintelligence/fdi/validation/codebaseline/PythonJson.java: Some input files use or override a deprecated API.
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix/src/main/java/com/featuredeliveryintelligence/fdi/validation/codebaseline/PythonJson.java: Recompile with -Xlint:deprecation for details.
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix/src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelector.java: Some input files use unchecked or unsafe operations.
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix/src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelector.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ fdi ---
+[INFO] Copying 61 resources from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ fdi ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 129 source files with javac [debug parameters release 17] to target/test-classes
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix/src/test/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SliceFInputVerifierTests.java: Some input files use or override a deprecated API.
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix/src/test/java/com/featuredeliveryintelligence/fdi/product/realization/scenarioforward/SliceFInputVerifierTests.java: Recompile with -Xlint:deprecation for details.
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix/src/test/java/com/featuredeliveryintelligence/fdi/product/realization/graphexpansion/GraphifyProductionExpansionTests.java: Some input files use unchecked or unsafe operations.
+[INFO] /Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix/src/test/java/com/featuredeliveryintelligence/fdi/product/realization/graphexpansion/GraphifyProductionExpansionTests.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ fdi ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.featuredeliveryintelligence.fdi.application.FormalHoldoutScoreCliTests
+[ERROR] Tests run: 16, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.243 s <<< FAILURE! -- in com.featuredeliveryintelligence.fdi.application.FormalHoldoutScoreCliTests
+[ERROR] com.featuredeliveryintelligence.fdi.application.FormalHoldoutScoreCliTests.provenanceUnknownFieldsProduceOneMalformedSchemaReason -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.IllegalArgumentException: unknown given field: unknownField
+	at com.featuredeliveryintelligence.fdi.product.realization.formalholdout.v1.FormalHoldoutConformanceScorer.lambda$validateInput$6(FormalHoldoutConformanceScorer.java:284)
+	at java.base/java.util.Iterator.forEachRemaining(Iterator.java:133)
+	at com.featuredeliveryintelligence.fdi.product.realization.formalholdout.v1.FormalHoldoutConformanceScorer.validateInput(FormalHoldoutConformanceScorer.java:284)
+	at com.featuredeliveryintelligence.fdi.product.realization.formalholdout.v1.FormalHoldoutConformanceScorer.score(FormalHoldoutConformanceScorer.java:26)
+	at com.featuredeliveryintelligence.fdi.application.FormalHoldoutScoreCliTests.score(FormalHoldoutScoreCliTests.java:294)
+	at com.featuredeliveryintelligence.fdi.application.FormalHoldoutScoreCliTests.provenanceUnknownFieldsProduceOneMalformedSchemaReason(FormalHoldoutScoreCliTests.java:98)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Errors: 
+[ERROR]   FormalHoldoutScoreCliTests.provenanceUnknownFieldsProduceOneMalformedSchemaReason:98->score:294 » IllegalArgument unknown given field: unknownField
+[INFO] 
+[ERROR] Tests run: 16, Failures: 0, Errors: 1, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.242 s
+[INFO] Finished at: 2026-09-15T20:40:07+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.2:test (default-test) on project fdi: 
+[ERROR] 
+[ERROR] See /Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix/target/surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

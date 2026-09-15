@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "software-factory.sf-bl005-restassured-status-dialect-integration-clean-delivery.v1",
+  "executionId": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
+  "stage": 5,
+  "evidenceRevision": "clean-001",
+  "cleanCandidateBase": "5fe3cfbcf6574ce01b2954c9a36b4952f23e6c9f",
+  "implementationCommit": "445bd225979bcd92c701aa2c1ff815fb03b8ac6a",
+  "candidateBinding": {
+    "finalCandidateCommit": "RECORDED_IN_HANDOFF_AFTER_EVIDENCE_COMMIT",
+    "implementationTreeBeforeEvidence": "7c88037e60b281a080c2595f47dacd43393d41be",
+    "sourceAndTestBlobsMatchReviewedAllowlistedImplementation": true,
+    "contaminatedBaselineCarried": false
+  },
+  "preservedVerdicts": [
+    {
+      "candidate": "7e8e54f2f28cf90672fc152b3d0fcef8c98115b5",
+      "reviewRun": "01a0a14a-1306-78ff-80b4-a9d1ef131d94",
+      "verdictComment": "01a0a156-db1e-7165-867b-b2d27341a681",
+      "verdict": "PASS",
+      "P0": 0,
+      "P1": 0,
+      "P2": 0,
+      "evidenceRevision": "refresh-001",
+      "disposition": "PRESERVED_IMMUTABLE_PRIOR_REVIEW; NOT_REPLACED"
+    },
+    {
+      "candidate": "ae4d2451453f432f3e6c7902f3a9bf8d47175a8f",
+      "reviewRun": "01a0a11e-1d63-73a6-a46a-0e1b6b96d883",
+      "verdictComment": "01a0a129-1fee-76aa-8761-131a686b713e",
+      "verdict": "FAIL",
+      "P0": 0,
+      "P1": 0,
+      "P2": 1,
+      "disposition": "PRESERVED_IMMUTABLE_PRIOR_REVIEW; NOT_REPLACED"
+    }
+  ],
+  "cancelledPriorIntegration": {
+    "run": "01a0a160-6080-7600-8c47-85b78b1d2794",
+    "remoteBranchDeleted": true,
+    "pullRequestExists": false,
+    "mainAndOriginMain": "5fe3cfbcf6574ce01b2954c9a36b4952f23e6c9f",
+    "disposition": "NOT_REUSED"
+  },
+  "frozenInputs": {
+    "realWorldRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+    "realWorldTree": "3938658872ad216fe45033f4698c66febd80be76",
+    "intentsSha256": "1ccc62730b762b1d3e1a8e28adcce8a8a836d6df3d6f1a97f0922ca6c6d7b7fe",
+    "observationsSha256": "71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd",
+    "handlersSha256": "9b18b6ed556e55aed9db77dee4dc032aa951216af37231f9619095a46ad34053"
+  },
+  "outputs": {
+    "commandLog": "integration/clean-001/command-log.txt",
+    "digestManifest": "integration/clean-001/digests.sha256",
+    "receiverReadback": "integration/clean-001/receiver-readback.json",
+    "scopeProof": "integration/clean-001/scope-proof.txt",
+    "routeVerification": "integration/clean-001/route-verification.json",
+    "selectorVerification": "integration/clean-001/selector-verification.json"
+  },
+  "verification": {
+    "java17": {
+      "runtime": "Java 17.0.20.1",
+      "focused": {"tests": 26, "failures": 0, "errors": 0, "skipped": 0, "exit": 0, "admissibility": "ADMISSIBLE"},
+      "fullPackage": {"tests": 1503, "failures": 0, "errors": 0, "skipped": 0, "exit": 0, "admissibility": "ADMISSIBLE"},
+      "resourcePolicy": "MAVEN_OPTS=-Xmx2g; argLine=-Xmx2g; forkCount=1; one heavy JVM; aggregate below 8GB"
+    },
+    "cleanExactHeadPython": {"passed": 142, "failed": 0, "exit": 0, "admissibility": "ADMISSIBLE_CLEAN_EXACT_HEAD"},
+    "digestManifestReadback": {"rows": 5, "verified": 5, "failures": 0, "exit": 0, "admissibility": "ADMISSIBLE"},
+    "receiverReadback": {"rows": 7, "verified": 7, "failures": 0, "exit": 0, "admissibility": "ADMISSIBLE_RECEIVER_READBACK; RECEIVER_SELF_HASH_EXCLUDED"},
+    "gitDiffCheck": {"exit": 0, "admissibility": "ADMISSIBLE"}
+  },
+  "diagnosticCounts": {
+    "ACCEPTED": 1,
+    "ASSERTION_POLARITY": 5,
+    "UNMET_CONDITION": 6,
+    "ENTITY_MISMATCH": 73,
+    "ACTION_MISMATCH": 25,
+    "UNSUPPORTED_ASSERTION_DIALECT": 0
+  },
+  "seedParity": {"plainAndDiagnosticOrderAndContentIdentical": true, "seedObservationRefs": ["http-behavior-observation-00001"]},
+  "scopeBoundaries": {
+    "allowlist": [
+      "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelector.java",
+      "src/test/java/com/featuredeliveryintelligence/fdi/product/realization/methodcalibration/ScenarioEvidenceSelectorTests.java",
+      "validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/**",
+      "validation/software-factory/sf-bl005/restassured-status-dialect-001/integration/**"
+    ],
+    "activeControlsModified": false,
+    "envelopeOrPlanModified": false,
+    "scorerOrThresholdChanges": false,
+    "calibration": false,
+    "formalHoldout": false,
+    "productTruthPublication": false,
+    "parentClosure": false,
+    "pullRequest": false
+  },
+  "recall": null,
+  "precision": null,
+  "status": "READY_FOR_FRESH_INDEPENDENT_EXACT_CANDIDATE_REVIEW",
+  "requiredNextStep": "Fresh independent reviewer binds exact final candidate commit/tree and returns PASS with P0=0, P1=0, P2=0; Coordinator may then route exactly one PR-only integration path.",
+  "limitations": [
+    "The final candidate commit/tree is named in the handoff after this evidence commit; the implementation commit and pre-evidence tree are bound above.",
+    "The first full-package attempt had an incomplete output capture and is retained as inadmissible; the second exact command is the admissible full-package result.",
+    "No recall or precision claim is made; both remain null.",
+    "Existing Maven networknt pattern-validator warning did not affect the exit-0 package result."
+  ]
+}
