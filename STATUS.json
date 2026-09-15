@@ -11,7 +11,7 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Execute r4 replan 002 with Human-approved pinned RealWorld regression fixture, then independently review results.",
+  "next_action": "Remediate scorer malformed-payload handling against frozen V07; candidate revision and new exact envelope required. Preserve successful regression and failed Java conformance evidence.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
@@ -159,7 +159,7 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "REPLAN_002_AUTHORIZED",
+      "execution_state": "FAILED_SCORER_V07_CONFORMANCE",
       "integration_candidate": null
     }
   ],
@@ -342,7 +342,7 @@
     "independent_review": "PASS_REVISION_2_P0_P1_P2_ZERO",
     "repository_or_sample_identity_disclosed": false,
     "h0_final_candidate": "UNBOUND",
-    "h1_scorer": "UNBOUND_REPLAN_002_REGRESSION_AUTHORIZED",
+    "h1_scorer": "UNBOUND_SCORER_V07_CONFORMANCE_FAILED",
     "h2_contamination_ledger": "PREPARED_REVIEW_PASS_PENDING_HUMAN_DISCLOSURE_ATTESTATION_AND_EXTERNAL_SEAL",
     "external_seal_receipt": "MISSING",
     "repository_selection_authorized": false,
@@ -367,8 +367,8 @@
       "dispatch_authorized": true,
       "implementation_authorized": false,
       "human_dispatch_receipt": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-human-dispatch-001.json",
-      "next": "EXECUTE_REPLAN_002",
-      "execution_evidence": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-replan-001-execution/summary.json",
+      "next": "CANDIDATE_REMEDIATION_REQUIRED",
+      "execution_evidence": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-replan-002-execution/summary.json",
       "fixture_authority": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-fixture-human-decision-001.json"
     },
     "h1_candidate": "ea15e51df0f5410bfb5532e1c255f107ccb0975b",

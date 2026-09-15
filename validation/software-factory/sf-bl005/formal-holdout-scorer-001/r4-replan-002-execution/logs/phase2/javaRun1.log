@@ -1,0 +1,16 @@
+{"argv":["/opt/homebrew/opt/openjdk@17/bin/java","-Xmx1g","-Dloader.main=com.featuredeliveryintelligence.fdi.application.FormalHoldoutScoreCli","-cp","/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-002/candidate/target/fdi-0.4.8.3.jar","org.springframework.boot.loader.launch.PropertiesLauncher","--manifest","/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-002/control/validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/vector-manifest.json","--inputs-root","/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-002/control/validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/inputs","--output","/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-002/outputs/java-run-1.json"],"attempt":1,"event":"START","stageId":"javaRun1"}
+Exception in thread "main" java.lang.reflect.InvocationTargetException
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)
+	at org.springframework.boot.loader.launch.PropertiesLauncher.main(PropertiesLauncher.java:580)
+Caused by: java.lang.IllegalArgumentException: unknown given field: unknownField
+	at com.featuredeliveryintelligence.fdi.product.realization.formalholdout.v1.FormalHoldoutConformanceScorer.lambda$validateInput$6(FormalHoldoutConformanceScorer.java:284)
+	at java.base/java.util.Iterator.forEachRemaining(Iterator.java:133)
+	at com.featuredeliveryintelligence.fdi.product.realization.formalholdout.v1.FormalHoldoutConformanceScorer.validateInput(FormalHoldoutConformanceScorer.java:284)
+	at com.featuredeliveryintelligence.fdi.product.realization.formalholdout.v1.FormalHoldoutConformanceScorer.score(FormalHoldoutConformanceScorer.java:26)
+	at com.featuredeliveryintelligence.fdi.application.FormalHoldoutScoreCli.main(FormalHoldoutScoreCli.java:35)
+	... 7 more
