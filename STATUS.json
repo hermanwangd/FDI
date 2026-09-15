@@ -11,16 +11,16 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Human Authority decides whether to dispatch the exact RestAssured status dialect implementation and, separately, the independently preflighted BOXING calibration replan; production readiness remains NOT_READY.",
+  "next_action": "Execute reconciled Python parity remediation, regression and independent review; candidate merge remains gated.",
   "blocking_dependency": null,
   "latest_completed_execution": {
-    "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-003",
-    "integrated_commit": "5ce6bbcac538c0e22086da30f3b646a2a30bb7db",
-    "review": "INDEPENDENT_REVIEW_PASS_P0_P2_ZERO",
-    "verification": "JAVA17_PACKAGE_1493_1493_PYTEST_63_63_TWO_RUN_BYTE_PARITY",
-    "result": "ROUTE_ABSENT_0_ENTITY_MISMATCH_73_ACTION_MISMATCH_25_UNSUPPORTED_ASSERTION_DIALECT_12",
-    "state": "DIAGNOSTIC_COMPLETE_FDP_RETURNED",
-    "evidence": "validation/software-factory/sf-bl005/realworld-selector-diagnostic-003/execution-receipt.json"
+    "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
+    "integrated_commit": "39723313af6c05b3a46215242903e5d0f51a6a9b",
+    "review": "INDEPENDENT_REVIEW_PASS_P0_P1_P2_ZERO",
+    "verification": "JAVA17_FOCUSED_26_26_PACKAGE_1503_1503_PYTEST_142_142_DIGEST_5_5_RECEIVER_7_7",
+    "result": "ACCEPTED_1_ASSERTION_POLARITY_5_UNMET_CONDITION_6_ENTITY_MISMATCH_73_ACTION_MISMATCH_25_UNSUPPORTED_ASSERTION_DIALECT_0",
+    "state": "FDP_ACCEPTED_PR_INTEGRATED_SLICE_COMPLETE_PARENT_ACTIVE",
+    "evidence": "validation/software-factory/sf-bl005/restassured-status-dialect-001/fdp-intake-001.json"
   },
   "latest_selector_diagnostic": {
     "execution_id": "SF-BL-005-REALWORLD-SELECTOR-DIAGNOSTIC-001",
@@ -39,21 +39,33 @@
   },
   "selected_next_execution": {
     "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
-    "state": "ENVELOPE_PREFLIGHT_PASS_AWAITING_HUMAN_DISPATCH",
+    "state": "FDP_ACCEPTED_PR_INTEGRATED_SLICE_COMPLETE_PARENT_ACTIVE",
     "objective": "Add tightly bounded RestAssured MockMvc statusCode assertion classification after existing route/request gates.",
-    "selection_authority": "Goal-directed FDP selection from source-backed diagnostic 003 analysis",
-    "construction_base": "7463f5c744ac975f0e335a8006777bda88b4b470",
-    "code_change_authorized": false,
+    "selection_authority": "Human selected option 1: RestAssured implementation dispatch with FDP control reconciliation",
+    "construction_base": "399a183b9d90a52bdc653550c89d9dc2bb63c17c",
+    "code_change_authorized": true,
     "envelope_creation_authorized": true,
-    "dispatch_authorized": false,
+    "dispatch_authorized": true,
     "calibration_authorized": false,
     "formal_holdout_authorized": false,
     "parent_closure": false,
-    "dependency": "REJECTION_ANALYSIS_002_INTEGRATED",
-    "envelope_revision": 1,
-    "envelope_sha256": "2829333b3f3b61815e749b1905c634a39141c8effed57e365ae20fca282162c9",
-    "envelope_integrated_commit": "c61ceea6ffb1e5657075b5555bf115461e7a90a9",
-    "independent_preflight": "PASS_P0_P1_P2_ZERO"
+    "dependency": "COMPLETE_PR50_INTEGRATED_FDP_ACCEPTED",
+    "envelope_revision": 2,
+    "independent_preflight": "PASS_P0_P1_P2_ZERO",
+    "selection_baseline": "7463f5c744ac975f0e335a8006777bda88b4b470",
+    "prior_envelope_sha256": "2829333b3f3b61815e749b1905c634a39141c8effed57e365ae20fca282162c9",
+    "prior_envelope_integrated_commit": "c61ceea6ffb1e5657075b5555bf115461e7a90a9",
+    "envelope_path": "validation/software-factory/sf-bl005/execution-envelope-restassured-status-dialect-001-r2.json",
+    "envelope_sha256": "1d24b7953453f2822c65675094b34fc19d008e12327429cc6a2382cca3d4e971",
+    "envelope_integrated_commit": "f7bdb991e94745dee024a481fe573bc6ff62e554",
+    "independent_preflight_evidence": "validation/software-factory/sf-bl005/envelope-independent-preflight-restassured-status-dialect-001-r2.json",
+    "implementation_candidate": "aecf83ecbcd6c51ca8598137fc5d079810acfa11",
+    "implementation_candidate_tree": "ba8ac687155323252b0d558b22faee36c4942801",
+    "integrated_commit": "39723313af6c05b3a46215242903e5d0f51a6a9b",
+    "independent_final_review": "PASS_P0_P1_P2_ZERO",
+    "precision": null,
+    "recall": null,
+    "fdp_intake_evidence": "validation/software-factory/sf-bl005/restassured-status-dialect-001/fdp-intake-001.json"
   },
   "metric_goal": {
     "status": "NOT_MET_DIAGNOSTIC_ONLY",
@@ -123,12 +135,12 @@
     {
       "lane_id": "restassured-status-dialect",
       "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
-      "base_commit": "c61ceea6ffb1e5657075b5555bf115461e7a90a9",
+      "base_commit": "f7bdb991e94745dee024a481fe573bc6ff62e554",
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "ENVELOPE_PREFLIGHT_PASS_AWAITING_HUMAN_DISPATCH",
-      "integration_candidate": null
+      "execution_state": "FDP_ACCEPTED_PR_INTEGRATED_SLICE_COMPLETE_PARENT_ACTIVE",
+      "integration_candidate": "39723313af6c05b3a46215242903e5d0f51a6a9b"
     },
     {
       "lane_id": "boxing-calibration-003-replan",
@@ -138,6 +150,16 @@
         "SF-BL-005"
       ],
       "execution_state": "ENVELOPE_PREFLIGHT_PASS_AWAITING_HUMAN_DISPATCH",
+      "integration_candidate": null
+    },
+    {
+      "lane_id": "h1-synthetic-scorer",
+      "execution_id": "SF-BL-005-FORMAL-HOLDOUT-SCORER-001",
+      "base_commit": "469c0a2f26b0cc3e2b1e753c8d1bf3774809bac3",
+      "selected_backlog_items": [
+        "SF-BL-005"
+      ],
+      "execution_state": "PARITY_REMEDIATION_SELECTED",
       "integration_candidate": null
     }
   ],
@@ -314,19 +336,19 @@
   },
   "formal_holdout_protocol": {
     "protocol_id": "SF-BL-005-FORMAL-HOLDOUT-PROTOCOL-001",
-    "revision": 1,
+    "revision": 2,
     "document_state": "PREPARED_POLICY_NOT_EXECUTABLE",
-    "protocol_sha256": "2ab508f80fa9585edc540275bc2e520d0591cdbe2912749c3010fac87f7e8a42",
-    "independent_review": "PASS_P0_P1_P2_ZERO",
+    "protocol_sha256": "e927329533ac7bbe045ad1dc3fd310cdad1c4186b8d278bb24323eaffbe27323",
+    "independent_review": "PASS_REVISION_2_P0_P1_P2_ZERO",
     "repository_or_sample_identity_disclosed": false,
     "h0_final_candidate": "UNBOUND",
-    "h1_scorer": "UNBOUND_ENVELOPE_PREFLIGHT_FAIL_EXACT_VECTOR_AND_VERIFICATION_TOOL_MATERIALIZATION_REQUIRED",
+    "h1_scorer": "UNBOUND_SCORER_V07_CONFORMANCE_FAILED",
     "h2_contamination_ledger": "PREPARED_REVIEW_PASS_PENDING_HUMAN_DISCLOSURE_ATTESTATION_AND_EXTERNAL_SEAL",
     "external_seal_receipt": "MISSING",
     "repository_selection_authorized": false,
     "holdout_execution_authorized": false,
     "formal_holdout_metrics_available": false,
-    "evidence": "validation/software-factory/sf-bl005/formal-holdout-protocol-independent-review-001.json",
+    "evidence": "validation/software-factory/sf-bl005/formal-holdout-protocol-independent-review-002.json",
     "h2_ledger_sha256": "064376ed3b18219393887833275093365e348b5cc31201b1c2569a310c012a18",
     "h2_evidence_manifest_sha256": "4c9acd0a669ce4120d020ce4cf1d92f8ff70a7377f63e7b6a47a353c7e098f28",
     "h2_manifest_entries": 473,
@@ -338,12 +360,44 @@
     "legacy_calibration_scorer_formal_eligible": false,
     "h1_envelope": {
       "execution_id": "SF-BL-005-FORMAL-HOLDOUT-SCORER-001",
-      "revision": 1,
-      "sha256": "0c1828b9f62f32567009c109c0969d182a5e28f4183853c737546957a700062d",
-      "preflight": "FAIL_PLAN_CONFLICT_P0_0_P1_4_P2_1",
-      "implementation_authorized": false,
-      "dispatch_authorized": false,
-      "next": "MATERIALIZE_EXACT_SYNTHETIC_VECTORS_GOLDEN_AND_CHECKED_VERIFICATION_TOOLS"
+      "revision": 4,
+      "path": "validation/software-factory/sf-bl005/execution-envelope-formal-holdout-scorer-001-r4-replan-002.json",
+      "sha256": "232499edf4c529c26b6b89aad39ba60bdd9815c959c263ef65ec640a0740d069",
+      "preflight": "PASS_P0_P1_P2_ZERO",
+      "dispatch_authorized": true,
+      "implementation_authorized": true,
+      "human_dispatch_receipt": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-human-dispatch-001.json",
+      "next": "SUPERSEDED_FOR_REMEDIATION_BY_R2_ENVELOPE",
+      "execution_evidence": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-replan-002-execution/summary.json",
+      "fixture_authority": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/r4-fixture-human-decision-001.json"
+    },
+    "h1_candidate": "ea15e51df0f5410bfb5532e1c255f107ccb0975b",
+    "h1_candidate_execution_authorized": true,
+    "h1_macro_rounding_decision": "SELECTED_RAW_RATIO_AVERAGE_THEN_FINAL_SCALE_12",
+    "h1_macro_rounding_recommendation": "ACCEPTED_BY_HUMAN_AUTHORITY",
+    "h1_decision_proposal": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/macro-rounding-decision-proposal.md",
+    "h1_decision_receipt": {
+      "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/macro-rounding-human-decision-001.json",
+      "sha256": "ec6b37b438ec17bf8265379ceb20ca8d01804a41c8bf20cc41969ee0d6f3a2df"
+    },
+    "h1_protocol_reseal": {
+      "protocolPath": "validation/software-factory/sf-bl005/formal-holdout-protocol-002.json",
+      "protocolSha256": "e927329533ac7bbe045ad1dc3fd310cdad1c4186b8d278bb24323eaffbe27323",
+      "manifestSha256": "ca131bd772946080ccaee98fc2d12663218a129d8d0be1e437e7bca02cb6a82f",
+      "semanticReviewSha256": "366b8b95398a133407da87693101a38d74a6f9eeeb91f938a9a502af47e9da73",
+      "independentReviewPath": "validation/software-factory/sf-bl005/formal-holdout-protocol-independent-review-002.json",
+      "independentReviewSha256": "9d9c4f2411b505dc63977bd44ff55c5be4aeaae2a3496dddcd262e2e3f0bfbf6",
+      "state": "INTEGRATED_PR55",
+      "next": "R4_SYNTHETIC_EXECUTION_AUTHORIZED"
+    },
+    "h1_remediation": {
+      "candidate": "469c0a2f26b0cc3e2b1e753c8d1bf3774809bac3",
+      "base": "ea15e51df0f5410bfb5532e1c255f107ccb0975b",
+      "authority": "Human option 1: reconcile candidate controls, fix polarity arrays and missing micro metric reasons, fully revalidate",
+      "state": "CONTROL_RECONCILED_REMEDIATION_SELECTED",
+      "candidate_merge_authorized": false,
+      "remediation_id": "PARITY-R2",
+      "envelope": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/malformed-remediation-001/remediation-r2-envelope.json"
     }
   }
 }
