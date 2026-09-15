@@ -1,0 +1,81 @@
+F.....F...............FF                                                 [100%]
+=================================== FAILURES ===================================
+_____ test_hand_authored_oracles_cover_mapping_failures_and_decimal_wilson _____
+
+    def test_hand_authored_oracles_cover_mapping_failures_and_decimal_wilson():
+        m = load_module()
+        a, b = "a" * 64, "b" * 64
+        disposition = case("DEV-D02", "DISPOSITION_EVIDENCE", {
+            "goldPairDigest": a, "occurrence": {"facets": {"action": "FAIL", "ambiguity": "UNAMBIGUOUS",
+            "assertionRole": "MATCH", "businessCondition": "MATCH", "entity": "MATCH",
+            "evidenceSufficiency": "SUFFICIENT", "polarity": "MATCH"}, "occurrenceId": "DEV#0", "pairDigest": a},
+            "proofs": [{"occurrenceId": "DEV#0", "pairDigest": a, "proofDigest": b}], "sealedProofDigest": b})
+>       assert m.evaluate(disposition, "DISPOSITION_EVIDENCE", "NEGATIVE") == {
+            "counts": {"duplicateCount": 0, "fn": 1, "fp": 1, "tp": 0}, "polarity": ["NEGATIVE"],
+            "reasonCodes": ["ACTION_MISMATCH"], "result": "VALID", "ruleId": "DISPOSITION_EVIDENCE"}
+E       AssertionError: assert {'counts': {'... 'VALID', ...} == {'counts': {'... 'VALID', ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'polarity': 'NEGATIVE'} != {'polarity': ['NEGATIVE']}
+E         Use -v to get more diff
+
+tests/test_sfbl005_formal_holdout_recompute_v1.py:31: AssertionError
+____ test_cli_uses_hand_authored_inputs_and_emits_canonical_declared_order _____
+
+tmp_path = PosixPath('/private/var/folders/f7/cxmy128d6mq88dkh76zm1v3r0000gn/T/pytest-of-herman_mbp2023/pytest-491/test_cli_uses_hand_authored_in0')
+
+    def test_cli_uses_hand_authored_inputs_and_emits_canonical_declared_order(tmp_path):
+        manifest, inputs = make_bundle(tmp_path); output = tmp_path / "oracle.json"
+        proc = subprocess.run([sys.executable, str(SCRIPT), "--manifest", str(manifest),
+            "--inputs-root", str(inputs), "--output", str(output)], text=True, capture_output=True)
+        assert proc.returncode == 0, proc.stderr
+        raw = output.read_bytes(); decoded = json.loads(raw)
+        assert set(decoded) == {"schemaVersion", "manifestSha256", "results"}
+        assert decoded["manifestSha256"] == hashlib.sha256(manifest.read_bytes()).hexdigest()
+        assert decoded["results"][0]["oracle"]["counts"] == {"duplicateCount": 0, "fn": 0, "fp": 0, "tp": 1}
+>       assert decoded["results"][0]["oracle"]["polarity"] == ["POSITIVE"]
+E       AssertionError: assert 'POSITIVE' == ['POSITIVE']
+
+tests/test_sfbl005_formal_holdout_recompute_v1.py:133: AssertionError
+__________________ test_malformed_given_keeps_polarity_array ___________________
+
+    def test_malformed_given_keeps_polarity_array():
+        m = load_module()
+        result = m.evaluate(case("DEV-MALFORMED", "WILSON_INTERVAL", {}), "WILSON_INTERVAL", "NEGATIVE")
+>       assert result == {"reasonCodes": ["MALFORMED_GIVEN"], "result": "INVALID",
+                          "ruleId": "WILSON_INTERVAL", "polarity": ["NEGATIVE"]}
+E       AssertionError: assert {'polarity': ...SON_INTERVAL'} == {'polarity': ...SON_INTERVAL'}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Differing items:
+E         {'polarity': 'NEGATIVE'} != {'polarity': ['NEGATIVE']}
+E         Use -v to get more diff
+
+tests/test_sfbl005_formal_holdout_recompute_v1.py:318: AssertionError
+____________ test_micro_null_reasons_follow_aggregate_denominators _____________
+
+    def test_micro_null_reasons_follow_aggregate_denominators():
+        m = load_module()
+        for tp, fp, fn, expected in [
+            (0, 0, 1, {"microPrecisionReason": "NO_PROPOSED_PAIRS"}),
+            (0, 1, 0, {"microRecallReason": "NO_GOLD_PAIRS"}),
+            (0, 0, 0, {"microPrecisionReason": "NO_PROPOSED_PAIRS", "microRecallReason": "NO_GOLD_PAIRS"}),
+            (1, 0, 0, {}),
+        ]:
+            aggregate = m.evaluate(case("DEV-MICRO-NULL", "REPOSITORY_DECISION", {
+                "repositories": [{"repositoryId": "one", "tp": tp, "fp": fp, "fn": fn}]}))["aggregate"]
+>           assert {k: v for k, v in aggregate.items() if k.startswith("micro") and k.endswith("Reason")} == expected
+E           AssertionError: assert {} == {'microPrecis...OPOSED_PAIRS'}
+E             
+E             Right contains 1 more item:
+E             {'microPrecisionReason': 'NO_PROPOSED_PAIRS'}
+E             Use -v to get more diff
+
+tests/test_sfbl005_formal_holdout_recompute_v1.py:332: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_sfbl005_formal_holdout_recompute_v1.py::test_hand_authored_oracles_cover_mapping_failures_and_decimal_wilson
+FAILED tests/test_sfbl005_formal_holdout_recompute_v1.py::test_cli_uses_hand_authored_inputs_and_emits_canonical_declared_order
+FAILED tests/test_sfbl005_formal_holdout_recompute_v1.py::test_malformed_given_keeps_polarity_array
+FAILED tests/test_sfbl005_formal_holdout_recompute_v1.py::test_micro_null_reasons_follow_aggregate_denominators
+4 failed, 20 passed in 0.61s
