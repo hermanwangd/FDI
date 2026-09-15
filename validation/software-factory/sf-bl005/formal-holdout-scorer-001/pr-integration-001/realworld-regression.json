@@ -1,0 +1,168 @@
+{
+  "digests": {
+    "handlerAndResolutionOutputSha256": "716948157f27d1c0d5cf3a7699c6fda67536c0d0757816ea138192044013f965",
+    "observationsSha256": "71650799ebf6c48e90515f02c34c2a1617c74ae2ea3980affe2d623a2eff8ffd",
+    "productionSourceTree": "393afbd6c7e5dab2352ef896b5866348d6d822a3",
+    "sourceTree": "3938658872ad216fe45033f4698c66febd80be76"
+  },
+  "handlerCount": 19,
+  "observationCount": 11,
+  "payload": {
+    "handlers": [
+      {
+        "handlerRef": "io.spring.api.ArticleApi#article GET /articles/{slug}",
+        "sourceDigest": "6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+        "sourceLocation": "src/main/java/io/spring/api/ArticleApi.java:35"
+      },
+      {
+        "handlerRef": "io.spring.api.ArticleApi#deleteArticle DELETE /articles/{slug}",
+        "sourceDigest": "6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+        "sourceLocation": "src/main/java/io/spring/api/ArticleApi.java:65"
+      },
+      {
+        "handlerRef": "io.spring.api.ArticleApi#updateArticle PUT /articles/{slug}",
+        "sourceDigest": "6592216bb1e356288ca130d1ad78b4d8069479da2c2d27416fc137e9b1e33acb",
+        "sourceLocation": "src/main/java/io/spring/api/ArticleApi.java:44"
+      },
+      {
+        "handlerRef": "io.spring.api.ArticleFavoriteApi#favoriteArticle POST /articles/{slug}/favorite",
+        "sourceDigest": "d3f44c10c425e57df26755bb37188699deb8a53bc0a10124a6e27eee8c5eb6bb",
+        "sourceLocation": "src/main/java/io/spring/api/ArticleFavoriteApi.java:29"
+      },
+      {
+        "handlerRef": "io.spring.api.ArticleFavoriteApi#unfavoriteArticle DELETE /articles/{slug}/favorite",
+        "sourceDigest": "d3f44c10c425e57df26755bb37188699deb8a53bc0a10124a6e27eee8c5eb6bb",
+        "sourceLocation": "src/main/java/io/spring/api/ArticleFavoriteApi.java:39"
+      },
+      {
+        "handlerRef": "io.spring.api.ArticlesApi#createArticle POST /articles",
+        "sourceDigest": "9c0500e2b74a21fb4431b8719b97adfdd4a5421779c11343404ed7284b4df8d1",
+        "sourceLocation": "src/main/java/io/spring/api/ArticlesApi.java:28"
+      },
+      {
+        "handlerRef": "io.spring.api.ArticlesApi#getArticles GET /articles",
+        "sourceDigest": "9c0500e2b74a21fb4431b8719b97adfdd4a5421779c11343404ed7284b4df8d1",
+        "sourceLocation": "src/main/java/io/spring/api/ArticlesApi.java:48"
+      },
+      {
+        "handlerRef": "io.spring.api.ArticlesApi#getFeed GET /articles/feed",
+        "sourceDigest": "9c0500e2b74a21fb4431b8719b97adfdd4a5421779c11343404ed7284b4df8d1",
+        "sourceLocation": "src/main/java/io/spring/api/ArticlesApi.java:40"
+      },
+      {
+        "handlerRef": "io.spring.api.CommentsApi#createComment POST /articles/{slug}/comments",
+        "sourceDigest": "688fd94dc61f87552412dcc6205d5d3257b7ac961a14c693a7f222b4de5a9f89",
+        "sourceLocation": "src/main/java/io/spring/api/CommentsApi.java:40"
+      },
+      {
+        "handlerRef": "io.spring.api.CommentsApi#deleteComment DELETE /articles/{slug}/comments/{id}",
+        "sourceDigest": "688fd94dc61f87552412dcc6205d5d3257b7ac961a14c693a7f222b4de5a9f89",
+        "sourceLocation": "src/main/java/io/spring/api/CommentsApi.java:67"
+      },
+      {
+        "handlerRef": "io.spring.api.CommentsApi#getComments GET /articles/{slug}/comments",
+        "sourceDigest": "688fd94dc61f87552412dcc6205d5d3257b7ac961a14c693a7f222b4de5a9f89",
+        "sourceLocation": "src/main/java/io/spring/api/CommentsApi.java:53"
+      },
+      {
+        "handlerRef": "io.spring.api.CurrentUserApi#currentUser GET /user",
+        "sourceDigest": "131deb9234c4817d67fa9e4cc40b0068ce45cec3fc4c22b9b769ed832f0ea68d",
+        "sourceLocation": "src/main/java/io/spring/api/CurrentUserApi.java:31"
+      },
+      {
+        "handlerRef": "io.spring.api.CurrentUserApi#updateProfile PUT /user",
+        "sourceDigest": "131deb9234c4817d67fa9e4cc40b0068ce45cec3fc4c22b9b769ed832f0ea68d",
+        "sourceLocation": "src/main/java/io/spring/api/CurrentUserApi.java:40"
+      },
+      {
+        "handlerRef": "io.spring.api.ProfileApi#follow POST /profiles/{username}/follow",
+        "sourceDigest": "314dbd49f5b7c8b95763f73f960d538275a31e4ed35929b1b2e2840c0a7bbbf2",
+        "sourceLocation": "src/main/java/io/spring/api/ProfileApi.java:37"
+      },
+      {
+        "handlerRef": "io.spring.api.ProfileApi#getProfile GET /profiles/{username}",
+        "sourceDigest": "314dbd49f5b7c8b95763f73f960d538275a31e4ed35929b1b2e2840c0a7bbbf2",
+        "sourceLocation": "src/main/java/io/spring/api/ProfileApi.java:28"
+      },
+      {
+        "handlerRef": "io.spring.api.ProfileApi#unfollow DELETE /profiles/{username}/follow",
+        "sourceDigest": "314dbd49f5b7c8b95763f73f960d538275a31e4ed35929b1b2e2840c0a7bbbf2",
+        "sourceLocation": "src/main/java/io/spring/api/ProfileApi.java:51"
+      },
+      {
+        "handlerRef": "io.spring.api.TagsApi#getTags GET /tags",
+        "sourceDigest": "f83c118f5089ba7fcd6a05e297069a9d0c214df97664e843ec33383c920f4c46",
+        "sourceLocation": "src/main/java/io/spring/api/TagsApi.java:17"
+      },
+      {
+        "handlerRef": "io.spring.api.UsersApi#createUser POST /users",
+        "sourceDigest": "1d1b1fc09791dc54d2610415ed4511f006d282f34127f4a4a71cd2e4a780e823",
+        "sourceLocation": "src/main/java/io/spring/api/UsersApi.java:39"
+      },
+      {
+        "handlerRef": "io.spring.api.UsersApi#userLogin POST /users/login",
+        "sourceDigest": "1d1b1fc09791dc54d2610415ed4511f006d282f34127f4a4a71cd2e4a780e823",
+        "sourceLocation": "src/main/java/io/spring/api/UsersApi.java:47"
+      }
+    ],
+    "resolutions": [
+      {
+        "handlerRef": "io.spring.api.ArticleApi#updateArticle PUT /articles/{slug}",
+        "observationRef": "http-behavior-observation-00001",
+        "status": "RESOLVED"
+      },
+      {
+        "handlerRef": "io.spring.api.ArticleApi#updateArticle PUT /articles/{slug}",
+        "observationRef": "http-behavior-observation-00002",
+        "status": "RESOLVED"
+      },
+      {
+        "handlerRef": "io.spring.api.ArticleApi#deleteArticle DELETE /articles/{slug}",
+        "observationRef": "http-behavior-observation-00003",
+        "status": "RESOLVED"
+      },
+      {
+        "handlerRef": "io.spring.api.ArticleApi#deleteArticle DELETE /articles/{slug}",
+        "observationRef": "http-behavior-observation-00004",
+        "status": "RESOLVED"
+      },
+      {
+        "handlerRef": "io.spring.api.ArticleFavoriteApi#unfavoriteArticle DELETE /articles/{slug}/favorite",
+        "observationRef": "http-behavior-observation-00005",
+        "status": "RESOLVED"
+      },
+      {
+        "handlerRef": "io.spring.api.CommentsApi#deleteComment DELETE /articles/{slug}/comments/{id}",
+        "observationRef": "http-behavior-observation-00006",
+        "status": "RESOLVED"
+      },
+      {
+        "handlerRef": "io.spring.api.CommentsApi#deleteComment DELETE /articles/{slug}/comments/{id}",
+        "observationRef": "http-behavior-observation-00007",
+        "status": "RESOLVED"
+      },
+      {
+        "handlerRef": "io.spring.api.CurrentUserApi#updateProfile PUT /user",
+        "observationRef": "http-behavior-observation-00008",
+        "status": "RESOLVED"
+      },
+      {
+        "handlerRef": "io.spring.api.CurrentUserApi#updateProfile PUT /user",
+        "observationRef": "http-behavior-observation-00009",
+        "status": "RESOLVED"
+      },
+      {
+        "handlerRef": "io.spring.api.CurrentUserApi#updateProfile PUT /user",
+        "observationRef": "http-behavior-observation-00010",
+        "status": "RESOLVED"
+      },
+      {
+        "handlerRef": "io.spring.api.ProfileApi#unfollow DELETE /profiles/{username}/follow",
+        "observationRef": "http-behavior-observation-00011",
+        "status": "RESOLVED"
+      }
+    ]
+  },
+  "schemaVersion": "software-factory.sf-bl005-realworld-route-verification.v1",
+  "sourceRevision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+}
