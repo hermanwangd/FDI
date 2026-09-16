@@ -11,7 +11,7 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "H0/H1 bound to709 with exact review and restored binary conformance. H2 remains incomplete: obtain scoped Human exposure disclosure, finish comparison policy/tool binding and independent coverage review before external seal.",
+  "next_action": "Implement and independently validate selected deterministic H2 overlap evidence comparator; preserve H0/H1 pinned709 bindings.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
@@ -425,6 +425,12 @@
       "sha256": "0da7532491c6a8491ab2a15f223f152f552fa073bbe6c527ce1a6e3fa010fbac"
     },
     "h2_ledger_revision": 2,
-    "h2_ledger_path": "validation/software-factory/sf-bl005/contamination-ledger-002.json"
+    "h2_ledger_path": "validation/software-factory/sf-bl005/contamination-ledger-002.json",
+    "h2_comparator": {
+      "state": "IMPLEMENTATION_SELECTED",
+      "design": "validation/software-factory/sf-bl005/h2-comparator-001/DESIGN.md",
+      "mode": "MATCH_OR_UNKNOWN_DIAGNOSTIC_NO_SELECTION",
+      "base": "e7608776eb956e3007b632b087be657f7ec2f391"
+    }
   }
 }
