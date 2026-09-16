@@ -41,7 +41,8 @@ public final class H2ExposureComparator {
         if (candidate.isBlank()) throw new IllegalArgumentException("candidateId must be nonblank");
         JsonNode comparisons = input.get("comparisons");
         if (!comparisons.isArray() || comparisons.size() > 64) throw new IllegalArgumentException("comparisons must be array of at most 64");
-        Set<String> ids = new HashSet<>(), matches = new HashSet<>();
+        Set<String> ids = new HashSet<>(), matches = new HashSet<>(), adequateDimensions = new HashSet<>();
+        boolean reviewRequired = false;
         ArrayNode results = JSON.createArrayNode();
         for (JsonNode pair : comparisons) {
             exactFields(pair, Set.of("id", "dimension", "left", "right"));
@@ -53,23 +54,34 @@ public final class H2ExposureComparator {
                     .put("leftSha256", string(pair.get("left"), "sha256"))
                     .put("rightSha256", string(pair.get("right"), "sha256"));
             String outcome = "UNKNOWN", reason = "NO_POSITIVE_OVERLAP_PROOF";
+            if ((dimension.equals("REPOSITORY_IDENTITY") || dimension.equals("REPOSITORY_LINEAGE"))
+                    && !left.isEmpty() && !right.isEmpty()) adequateDimensions.add(dimension);
             if (!left.isEmpty() && left.equals(right)) {
                 outcome = "MATCH"; reason = "EXACT_NONEMPTY_CONTENT_EQUALITY"; matches.add(dimension);
             } else if (!dimension.equals("REPOSITORY_IDENTITY") && !dimension.equals("REPOSITORY_LINEAGE")) {
-                Set<List<String>> a = shingles(left), b = shingles(right);
+                List<String> leftTokens = tokens(left), rightTokens = tokens(right);
+                if (leftTokens.size() >= 5 && rightTokens.size() >= 5) adequateDimensions.add(dimension);
+                Set<List<String>> a = shingles(leftTokens), b = shingles(rightTokens);
                 Set<List<String>> intersection = new HashSet<>(a); intersection.retainAll(b);
                 Set<List<String>> union = new HashSet<>(a); union.addAll(b);
                 result.put("intersection", intersection.size()).put("union", union.size());
-                if (!a.isEmpty() && !b.isEmpty() && (long)intersection.size() * 5 >= (long)union.size() * 4)
+                if (!a.isEmpty() && !b.isEmpty() && (long)intersection.size() * 5 >= (long)union.size() * 4) {
                     reason = "NEAR_DUPLICATE_REVIEW_REQUIRED";
+                    reviewRequired = true;
+                }
             }
             result.put("result", outcome).put("reason", reason); results.add(result);
         }
-        ObjectNode output = JSON.createObjectNode().put("schemaVersion", "H2-COMPARISON-OUTPUT-001")
+        String calibrationReadiness = !matches.isEmpty() ? "BLOCKED_MATCH"
+                : reviewRequired ? "REVIEW_REQUIRED"
+                : !adequateDimensions.containsAll(DIMENSIONS) ? "INSUFFICIENT_EVIDENCE"
+                : "DIAGNOSTICALLY_CLEAR";
+        ObjectNode output = JSON.createObjectNode().put("schemaVersion", "H2-COMPARISON-OUTPUT-002")
                 .put("candidateId", candidate).put("inputSha256", hash(bytes))
                 .put("eligibility", matches.isEmpty() ? "NOT_PROVEN_INDEPENDENT" : "INELIGIBLE")
+                .put("calibrationReadiness", calibrationReadiness)
                 .put("selectionAuthorized", false).put("applicability", "SUPPLIED_EXTRACTS_ONLY");
-        output.putObject("policy").put("id", "H2-EXACT-AND-SHINGLE-001").put("version", 1)
+        output.putObject("policy").put("id", "H2-EXACT-AND-SHINGLE-001").put("version", 2)
                 .put("shingleTokens", 5).put("thresholdNumerator", 4).put("thresholdDenominator", 5);
         output.set("comparisons", results);
         ArrayNode dimensions = output.putArray("dimensions");
@@ -90,13 +102,17 @@ public final class H2ExposureComparator {
         return content;
     }
 
-    private static Set<List<String>> shingles(String content) {
+    private static List<String> tokens(String content) {
         List<String> tokens = new ArrayList<>();
         Matcher matcher = TOKENS.matcher(content);
         while (matcher.find()) {
             tokens.add(matcher.group());
             if (tokens.size() > 20000) throw new IllegalArgumentException("artifact token limit exceeded");
         }
+        return tokens;
+    }
+
+    private static Set<List<String>> shingles(List<String> tokens) {
         Set<List<String>> shingles = new HashSet<>();
         for (int i = 0; i + 5 <= tokens.size(); i++) shingles.add(List.copyOf(tokens.subList(i, i + 5)));
         return shingles;
