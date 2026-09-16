@@ -11,7 +11,7 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "H1 preparation independently reviewed PASS; decide durable binary custody and final H1 receipt intake. PR62 merged, H1 remains unbound.",
+  "next_action": "H0/H1 bound to709 with exact review and restored binary conformance. H2 remains incomplete: obtain scoped Human exposure disclosure, finish comparison policy/tool binding and independent coverage review before external seal.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
@@ -159,7 +159,7 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "PR62_MERGED_H1_BINDING_PREPARATION",
+      "execution_state": "H0_H1_BOUND_H2_INCOMPLETE",
       "integration_candidate": "295a1c0a2d238d507f100fbdcc259056997d80a6"
     }
   ],
@@ -341,18 +341,18 @@
     "protocol_sha256": "e927329533ac7bbe045ad1dc3fd310cdad1c4186b8d278bb24323eaffbe27323",
     "independent_review": "PASS_REVISION_2_P0_P1_P2_ZERO",
     "repository_or_sample_identity_disclosed": false,
-    "h0_final_candidate": "UNBOUND",
-    "h1_scorer": "UNBOUND_BINDING_EVIDENCE_PREPARED",
-    "h2_contamination_ledger": "PREPARED_REVIEW_PASS_PENDING_HUMAN_DISCLOSURE_ATTESTATION_AND_EXTERNAL_SEAL",
+    "h0_final_candidate": "BOUND_709CB015",
+    "h1_scorer": "BOUND_709CB015_LOCAL_CUSTODY_VERIFIED",
+    "h2_contamination_ledger": "REVISION_2_PREPARED_DISCLOSURE_AND_COMPARISON_BINDING_INCOMPLETE",
     "external_seal_receipt": "MISSING",
     "repository_selection_authorized": false,
     "holdout_execution_authorized": false,
     "formal_holdout_metrics_available": false,
     "evidence": "validation/software-factory/sf-bl005/formal-holdout-protocol-independent-review-002.json",
-    "h2_ledger_sha256": "064376ed3b18219393887833275093365e348b5cc31201b1c2569a310c012a18",
-    "h2_evidence_manifest_sha256": "4c9acd0a669ce4120d020ce4cf1d92f8ff70a7377f63e7b6a47a353c7e098f28",
-    "h2_manifest_entries": 473,
-    "h2_independent_review": "PASS_P0_P1_P2_ZERO",
+    "h2_ledger_sha256": "c9ca78a5a5f98f8884da96d8081dc5c70ef43b186d2c6221658ab4f7858357df",
+    "h2_evidence_manifest_sha256": "61677fabde88b39e0a242e2752117c04ed19c20e09652ffec4789da6942300fb",
+    "h2_manifest_entries": 1721,
+    "h2_independent_review": "REVISION_2_STRUCTURAL_EVIDENCE_PASS_GLOBAL_DISCLOSURE_AND_COMPARATOR_INCOMPLETE",
     "h2_global_exposure_completeness": "INCOMPLETE_PENDING_HUMAN_DISCLOSURE_ATTESTATION",
     "h2_sealed": false,
     "h1_gap_analysis_sha256": "b0d55388c056ac47997ffdd68519bd235a42ab67b847c6a1f6e9894bddc11911",
@@ -414,7 +414,17 @@
     },
     "h1_binding_preparation": {
       "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/h1-binding-preparation-001/preparation.json",
-      "state": "PREPARED_NOT_BOUND"
-    }
+      "state": "SUPERSEDED_BY_BOUND_RECEIPT"
+    },
+    "h0_receipt": {
+      "path": "validation/software-factory/sf-bl005/h0-h1-h2-gap-completion-001/h0-receipt.json",
+      "sha256": "37dbdbed903fd71443c6d3d219a09991151cd756dfaee764c04bbe301e58f62c"
+    },
+    "h1_receipt": {
+      "path": "validation/software-factory/sf-bl005/h0-h1-h2-gap-completion-001/h1-receipt.json",
+      "sha256": "0da7532491c6a8491ab2a15f223f152f552fa073bbe6c527ce1a6e3fa010fbac"
+    },
+    "h2_ledger_revision": 2,
+    "h2_ledger_path": "validation/software-factory/sf-bl005/contamination-ledger-002.json"
   }
 }

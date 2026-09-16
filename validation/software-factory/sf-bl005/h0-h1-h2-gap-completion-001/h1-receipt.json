@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "H1-SCORER-RECEIPT-001",
+  "state": "BOUND_FDP_ACCEPTED",
+  "scorerSourceCommit": "709cb0159b0b446eba93ba5c1083f3596e9d9001",
+  "sources": [
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/application/FormalHoldoutScoreCli.java",
+      "gitBlob": "d93f595855dac4a0f30dee670b65b7015fc4dbfa",
+      "sha256": "bf4137c5c5b3357bc97bf04e417a9218993f0267a9289c3b2e830ee82971a721"
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/realization/formalholdout/v1/FormalHoldoutConformanceScorer.java",
+      "gitBlob": "bf42090e5cf04b080e2fa53a1ca07d7013e592e7",
+      "sha256": "3a59c70c972370866411fe02bce4953a3993446822ed7982eb7f1aae8dbdd01c"
+    },
+    {
+      "path": "tools/sfbl005_formal_holdout_recompute_v1.py",
+      "gitBlob": "395d12c57bee01b00ddaedc1fc02cb2794cae2fb",
+      "sha256": "a7330600f3e1450ba63f67ee5559b88b55739e5dba68f34fdec4ebb022c424d0"
+    }
+  ],
+  "binary": {
+    "candidateCommit": "709cb0159b0b446eba93ba5c1083f3596e9d9001",
+    "jarSha256": "648d79dc115e827d07d8699f43ce1480242fa24fe99e0c9c0f57d9b455ce2272",
+    "storedPath": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-artifacts/sha256/648d79dc115e827d07d8699f43ce1480242fa24fe99e0c9c0f57d9b455ce2272/fdi-scorer.jar",
+    "retrievedPath": "/tmp/fdi-candidate-648d79dc115e827d.jar",
+    "bytes": 23402946,
+    "retrievalHashMatches": true,
+    "storageClass": "CONTENT_ADDRESSED_READ_ONLY_LOCAL_SINGLE_HOST",
+    "retention": "Retain while referenced by any H0/H1/protocol receipt; excluded from build cleanup",
+    "offsiteBackup": false
+  },
+  "conformanceRuns": {
+    "path": "validation/software-factory/sf-bl005/h0-h1-h2-gap-completion-001/final-conformance-runs.json",
+    "sha256": "6c1976b5d17a0260a39eb5dffea38f94baadccb4114452e43296e314a0f001e1"
+  },
+  "vectorCount": 60,
+  "matchingRuns": 4,
+  "protocol": {
+    "path": "validation/software-factory/sf-bl005/formal-holdout-protocol-002.json",
+    "sha256": "e927329533ac7bbe045ad1dc3fd310cdad1c4186b8d278bb24323eaffbe27323"
+  },
+  "rawRatioHumanDecision": {
+    "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/macro-rounding-human-decision-001.json",
+    "sha256": "ec6b37b438ec17bf8265379ceb20ca8d01804a41c8bf20cc41969ee0d6f3a2df"
+  },
+  "noPostSealGoldTuning": "Mandatory future constraint. No external seal exists; any source/binary change after sealing invalidates this receipt and requires a new authorized revision.",
+  "qualificationScope": "Frozen synthetic conformance only; does not claim actual holdout execution or producer generalization.",
+  "formalHoldoutAuthorized": false,
+  "independentReview": {
+    "path": "validation/software-factory/sf-bl005/h0-h1-h2-gap-completion-001/h0-h1-independent-review.json",
+    "sha256": "eb8a72b85a4d132ce9081d2e0dbb6adca5bafefd31aa0cf4ba82bd3277ebbe60"
+  },
+  "intakeAuthority": "User selected autonomous gap completion; protocol assigns candidate freeze to implementation actor, receipt intake to delivery control. No protocol seal/holdout authority granted."
+}
