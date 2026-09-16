@@ -109,7 +109,8 @@ Within active item `SF-BL-005`, the Human-approved
 `3a9bb68228d1e6ff8b4703a73af336a8666c8da6`. It may add engineering-calibration
 readiness only. Candidate `16d5176bcf5397c2de8051fe62a32bd2366887e3`
 passed Java1534, Python176, eight packaged CLI runs, and independent review
-P0/P1/P2 zero; SF-BL-005 remains `IN_PROGRESS`, and H2 completion, formal
+P0/P1/P2 zero, then integrated through PR66 at `f3e7c5380e19d0788f1403aec7733e5969afd53c`;
+SF-BL-005 remains `IN_PROGRESS`, and H2 completion, formal
 selection, holdout execution, production readiness, and parent closure remain
 outside this slice.
 
