@@ -21,8 +21,23 @@ class H2ExposureCompareCliTests {
     private ObjectNode input(String dimension, String left, String right) throws Exception {
         ObjectNode root = JSON.createObjectNode().put("schemaVersion", "H2-COMPARISON-INPUT-001").put("candidateId", "synthetic");
         ObjectNode pair = root.putArray("comparisons").addObject().put("id", "p1").put("dimension", dimension);
-        pair.putObject("left").put("content", left).put("sha256", hash(left));
-        pair.putObject("right").put("content", right).put("sha256", hash(right));
+        setArtifact(pair, "left", left);
+        setArtifact(pair, "right", right);
+        return root;
+    }
+    private void setArtifact(ObjectNode pair, String side, String content) throws Exception {
+        pair.putObject(side).put("content", content).put("sha256", hash(content));
+    }
+    private ObjectNode allDimensions() throws Exception {
+        ObjectNode root = JSON.createObjectNode().put("schemaVersion", "H2-COMPARISON-INPUT-001").put("candidateId", "synthetic");
+        var comparisons = root.putArray("comparisons");
+        for (int i = 0; i < DIMENSIONS.length; i++) {
+            ObjectNode pair = comparisons.addObject().put("id", "coverage-" + i).put("dimension", DIMENSIONS[i]);
+            String left = i < 2 ? "left-identity-" + i : "a b c d e left" + i;
+            String right = i < 2 ? "right-identity-" + i : "u v w x y right" + i;
+            setArtifact(pair, "left", left);
+            setArtifact(pair, "right", right);
+        }
         return root;
     }
     private JsonNode run(String raw) throws Exception {
@@ -116,5 +131,34 @@ class H2ExposureCompareCliTests {
         assertThrows(Exception.class,()->H2ExposureCompareCli.main(new String[]{"--input",in.toString(),"--output",link.toString()}));
         Path dirLink=temp.resolve("dirlink"); Files.createSymbolicLink(dirLink,temp);
         assertThrows(Exception.class,()->H2ExposureCompareCli.main(new String[]{"--input",in.toString(),"--output",dirLink.resolve("new").toString()}));
+    }
+    @Test void adequateSevenDimensionEvidenceIsDiagnosticallyClearOnly() throws Exception {
+        JsonNode clear = run(allDimensions());
+        assertEquals("DIAGNOSTICALLY_CLEAR", clear.path("calibrationReadiness").asText());
+        assertEquals("NOT_PROVEN_INDEPENDENT", clear.path("eligibility").asText());
+        assertFalse(clear.path("selectionAuthorized").asBoolean(true));
+        assertEquals("SUPPLIED_EXTRACTS_ONLY", clear.path("applicability").asText());
+        assertEquals("H2-COMPARISON-OUTPUT-002", clear.path("schemaVersion").asText());
+        assertEquals(2, clear.at("/policy/version").asInt());
+    }
+    @Test void exactMatchBlocksCalibrationAheadOfReviewAndMissingEvidence() throws Exception {
+        ObjectNode root = input("REPOSITORY_IDENTITY", "same", "same");
+        ObjectNode near = (ObjectNode) input("SOURCE_CONTENT", "a b c d e f g h", "a b c d e f g h i").at("/comparisons/0");
+        near.put("id", "near");
+        ((com.fasterxml.jackson.databind.node.ArrayNode) root.get("comparisons")).add(near);
+        assertEquals("BLOCKED_MATCH", run(root).path("calibrationReadiness").asText());
+    }
+    @Test void nearDuplicateRequiresReviewAheadOfMissingEvidence() throws Exception {
+        JsonNode near = run(input("SOURCE_CONTENT", "a b c d e f g h", "a b c d e f g h i"));
+        assertEquals("REVIEW_REQUIRED", near.path("calibrationReadiness").asText());
+    }
+    @Test void missingEmptyAndShortEvidenceAreInsufficient() throws Exception {
+        assertEquals("INSUFFICIENT_EVIDENCE", run(input("REPOSITORY_IDENTITY", "left", "right")).path("calibrationReadiness").asText());
+        ObjectNode emptyIdentity = allDimensions();
+        setArtifact((ObjectNode) emptyIdentity.at("/comparisons/0"), "left", "");
+        assertEquals("INSUFFICIENT_EVIDENCE", run(emptyIdentity).path("calibrationReadiness").asText());
+        ObjectNode shortText = allDimensions();
+        setArtifact((ObjectNode) shortText.at("/comparisons/2"), "left", "a b c d");
+        assertEquals("INSUFFICIENT_EVIDENCE", run(shortText).path("calibrationReadiness").asText());
     }
 }
