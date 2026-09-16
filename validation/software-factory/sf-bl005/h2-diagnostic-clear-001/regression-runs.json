@@ -1,0 +1,38 @@
+[
+  {
+    "candidate": "16d5176bcf5397c2de8051fe62a32bd2366887e3",
+    "command": "JAVA_HOME=<openjdk17> MAVEN_OPTS=-Xmx2g ./mvnw <frozen RealWorld properties> -DargLine=-Xmx1g -DforkCount=1 clean package",
+    "errors": 0,
+    "exitCode": 0,
+    "failures": 0,
+    "logSha256": "0977ac049450f07255f74606c83d203363fa611682ceb1189991b6236fff47d5",
+    "name": "java-full",
+    "tests": 1534
+  },
+  {
+    "candidate": "16d5176bcf5397c2de8051fe62a32bd2366887e3",
+    "command": "python3 -m pytest -q",
+    "exitCode": 0,
+    "failures": 0,
+    "logSha256": "227ae33e5d28e32a0af63ccfe1601305c80a769677ba5c498a0bcc0afa4c47e6",
+    "name": "python-full",
+    "tests": 176
+  },
+  {
+    "candidateBeforeImplementation": "a4dd72d",
+    "errors": 0,
+    "failures": 4,
+    "logSha256": "d4bdf194b689d378e394847c0017429875aeac7791104cc2f8fd7fcc7edafbe0",
+    "name": "targeted-red",
+    "reason": "Four behavioral assertions failed because calibrationReadiness was absent.",
+    "tests": 15
+  },
+  {
+    "candidate": "16d5176bcf5397c2de8051fe62a32bd2366887e3",
+    "errors": 0,
+    "failures": 0,
+    "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "name": "targeted-green",
+    "tests": 15
+  }
+]
