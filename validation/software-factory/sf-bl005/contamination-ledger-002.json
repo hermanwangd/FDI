@@ -1,0 +1,958 @@
+{
+  "schemaVersion": "SF-CONTAMINATION-LEDGER-001",
+  "ledgerId": "SF-BL-005-CONTAMINATION-LEDGER-001",
+  "ledgerRevision": 2,
+  "documentState": "PREPARED_INCOMPLETE_AWAITING_HUMAN_DISCLOSURE_ATTESTATION_AND_EXTERNAL_SEAL",
+  "authority": {
+    "recordsPastExposureOnly": true,
+    "eligibleCandidateInventory": false,
+    "repositorySelectionAuthorized": false,
+    "holdoutExecutionAuthorized": false
+  },
+  "coverage": {
+    "throughControlCommit": "709cb0159b0b446eba93ba5c1083f3596e9d9001",
+    "searchedRoots": [
+      "AGENTS.md",
+      "BACKLOG.md",
+      "IMPLEMENTATION-PLAN.md",
+      "STATUS.json",
+      "FRAMEWORK-SPEC.md",
+      "PROJECT-OVERVIEW.md",
+      "docs/proposals",
+      "validation/software-factory/sf-bl005",
+      "validation/software-factory/sf-bl002",
+      "validation/pkb001",
+      "src",
+      "tests",
+      "tools",
+      "config",
+      "pom.xml"
+    ],
+    "method": "Streaming git ls-tree/cat-file SHA256 inventory for exact snapshot roots, plus additive semantic exposure events. Historical ledger revision1 retained.",
+    "durableEvidenceCompleteness": "STRUCTURAL_MANIFEST_READY_FOR_EXACT_RECOMPUTATION_SEMANTIC_EXPOSURE_ASSERTIONS_REQUIRE_INDEPENDENT_REVIEW",
+    "globalExposureCompleteness": "INCOMPLETE_PENDING_HUMAN_DISCLOSURE_ATTESTATION",
+    "reason": "Repository evidence cannot prove that Human or prior actors never inspected additional external repositories, forks, scenarios, truth, source, or tests outside the committed audit trail.",
+    "missingDataDisposition": "H2 remains not sealable and every candidate overlap remains NOT_PROVEN_INDEPENDENT until Human disclosure attestation and independent coverage review are bound.",
+    "committedEvidenceManifest": {
+      "path": "validation/software-factory/sf-bl005/h0-h1-h2-gap-completion-001/committed-snapshot-manifest.json",
+      "sha256": "61677fabde88b39e0a242e2752117c04ed19c20e09652ffec4789da6942300fb",
+      "entryCount": 1721,
+      "sourceCommit": "709cb0159b0b446eba93ba5c1083f3596e9d9001",
+      "exclusions": 0
+    }
+  },
+  "definitions": {
+    "METADATA_ONLY": "Only repository identity, license, language, framework, size, or README-level metadata was inspected; no source, test, scenario, truth, or derived semantic structure is claimed read.",
+    "SOURCE_INSPECTED": "Source, test, scenario, truth bytes, public functional specification, or a derived semantic structure such as Graphify or behavior evidence was read.",
+    "GENERATED": "A producer or candidate generated mapping or diagnostic output against the subject corpus.",
+    "SCORED": "Generated output was compared with truth, proofs, or a scorer, whether or not the result was accepted.",
+    "UNKNOWN": "Evidence cannot establish an exposure stage; UNKNOWN is never treated as no exposure."
+  },
+  "matchingPolicy": {
+    "dimensions": [
+      "REPOSITORY_IDENTITY",
+      "REPOSITORY_LINEAGE",
+      "FUNCTIONAL_CORPUS",
+      "SCENARIO_SET",
+      "TRUTH_SET",
+      "SOURCE_CONTENT",
+      "TEST_CONTENT"
+    ],
+    "outcomes": [
+      "MATCH",
+      "NO_MATCH",
+      "UNKNOWN"
+    ],
+    "rules": [
+      "Any MATCH makes the candidate INELIGIBLE.",
+      "Any UNKNOWN makes independence NOT_PROVEN and forbids selection.",
+      "Only seven NO_MATCH outcomes against a complete sealed ledger can establish PROVEN_INDEPENDENT.",
+      "Fork/common ancestry, patch-equivalent tree or subtree, vendored/copied/renamed modules, and exact or near-duplicate scenario/truth all count as MATCH.",
+      "Shallow or missing history, unavailable snapshots, unsealed similarity thresholds, or tool failure count as UNKNOWN."
+    ],
+    "candidateReceiptBoundary": "Candidate comparisons use opaque IDs in a later evaluator-only receipt. NO_MATCH results and candidate identities are never written into this negative exposure ledger."
+  },
+  "exposureRecords": [
+    {
+      "recordId": "EXPOSURE-REPOSITORY-FDI-001",
+      "subject": {
+        "assetClass": "REPOSITORY_LINEAGE",
+        "canonicalRepository": "https://github.com/hermanwangd/FDI.git",
+        "repositoryIdentitySha256": "73e14923e26d60f821bf4c384c5e9a8c1829b0ccc3058cc7570024b7751efff1",
+        "exactRevisions": [
+          "72c1798d451b106eb7bf2f2c5ecd9e68d13a042f",
+          "932cf2d5a56697f58a0959bdf9def97be6f4e299",
+          "0e7e827eb9c41df6804ffa56ea0f0ac7e2eb3355",
+          "6a19bc0b728204cfa13aa2f9ca752978175d8181",
+          "56793c86949034b9cfc5f8824f34f136afecdd59",
+          "ec604f19b71656318133437d8e000f11267b776a",
+          "31faec3f380581f9756385183bdd45c7d7849151",
+          "6bd20ec37cf750685429c27931686b41579c6bd2",
+          "db2765d596cc4a2c9f27c28ed799d602ec3fe979",
+          "765921602dd6da0f8330c4933e409409b5d56f4e",
+          "4b52e4f2d6520163cb28fe8faf3db0960e2def0d",
+          "709cb0159b0b446eba93ba5c1083f3596e9d9001"
+        ],
+        "lineageFingerprints": [
+          "2012c8b4195517ff683102a0161766891ddb66d48e20cf0da7d7d1654a7b65c7"
+        ],
+        "functionalCorpusFingerprints": []
+      },
+      "events": [
+        {
+          "stage": "SOURCE_INSPECTED",
+          "purposes": [
+            "DEVELOPMENT",
+            "DEBUGGING",
+            "SCORER_DEVELOPMENT",
+            "CANDIDATE_INSPECTION"
+          ],
+          "contentKinds": [
+            "SOURCE",
+            "TEST",
+            "SCENARIO",
+            "TRUTH",
+            "PRODUCER_OUTPUT",
+            "SCORE"
+          ],
+          "executionIds": [
+            "SF-BL-005-FEASIBILITY-001",
+            "SF-BL-005-CROSSREPO-REALWORLD-002",
+            "SF-BL-005-METHOD-CALIBRATION-005",
+            "SF-BL-005-BOXING-CALIBRATION-002"
+          ]
+        },
+        {
+          "stage": "SOURCE_INSPECTED",
+          "purposes": [
+            "SCORER_DEVELOPMENT",
+            "CANDIDATE_INSPECTION"
+          ],
+          "contentKinds": [
+            "SOURCE",
+            "TEST",
+            "TRUTH"
+          ],
+          "executionIds": [
+            "SF-BL-005-FORMAL-HOLDOUT-SCORER-001"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "path": "validation/software-factory/sf-bl005/execution-envelope-realworld-002.json",
+          "sha256": "5091c9685478f295d06503033e5dc75cfe04e56ff489bcafd9fc34c38cfda9f9"
+        },
+        {
+          "path": "validation/software-factory/sf-bl005/feasibility-001/candidate/manifest.json",
+          "sha256": "980340f206cc6c90af642a7805b12fa7865d4403c2975ac7a7ce88afcaf6471c"
+        },
+        {
+          "path": "validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md",
+          "sha256": "28d4d6bf6ebe38cce5dade84b145b2dcb336b0bd1868b4c2ab9cf2d3690033d0"
+        }
+      ],
+      "uncertaintyReasons": [
+        "Observed revisions are an evidence-backed non-exhaustive set of development commits; the repository lineage as a whole is excluded."
+      ],
+      "revisionEvidence": [
+        {
+          "revision": "72c1798d451b106eb7bf2f2c5ecd9e68d13a042f",
+          "evidenceRef": "validation/software-factory/sf-bl005/feasibility-001/candidate/manifest.json",
+          "evidenceSha256": "980340f206cc6c90af642a7805b12fa7865d4403c2975ac7a7ce88afcaf6471c",
+          "verificationStatus": "VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED"
+        },
+        {
+          "revision": "932cf2d5a56697f58a0959bdf9def97be6f4e299",
+          "evidenceRef": "validation/software-factory/sf-bl005/feasibility-001/candidate/manifest.json",
+          "evidenceSha256": "980340f206cc6c90af642a7805b12fa7865d4403c2975ac7a7ce88afcaf6471c",
+          "verificationStatus": "VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED"
+        },
+        {
+          "revision": "0e7e827eb9c41df6804ffa56ea0f0ac7e2eb3355",
+          "evidenceRef": "validation/software-factory/sf-bl005/feasibility-001/candidate/manifest.json",
+          "evidenceSha256": "980340f206cc6c90af642a7805b12fa7865d4403c2975ac7a7ce88afcaf6471c",
+          "verificationStatus": "VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED"
+        },
+        {
+          "revision": "6a19bc0b728204cfa13aa2f9ca752978175d8181",
+          "evidenceRef": "validation/software-factory/sf-bl005/execution-envelope-realworld-002.json",
+          "evidenceSha256": "5091c9685478f295d06503033e5dc75cfe04e56ff489bcafd9fc34c38cfda9f9",
+          "verificationStatus": "VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED"
+        },
+        {
+          "revision": "56793c86949034b9cfc5f8824f34f136afecdd59",
+          "evidenceRef": "validation/software-factory/sf-bl005/execution-envelope-realworld-002.json",
+          "evidenceSha256": "5091c9685478f295d06503033e5dc75cfe04e56ff489bcafd9fc34c38cfda9f9",
+          "verificationStatus": "VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED"
+        },
+        {
+          "revision": "ec604f19b71656318133437d8e000f11267b776a",
+          "evidenceRef": "validation/software-factory/sf-bl005/execution-envelope-realworld-002.json",
+          "evidenceSha256": "5091c9685478f295d06503033e5dc75cfe04e56ff489bcafd9fc34c38cfda9f9",
+          "verificationStatus": "VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED"
+        },
+        {
+          "revision": "31faec3f380581f9756385183bdd45c7d7849151",
+          "evidenceRef": "validation/software-factory/sf-bl005/method-calibration-005/protocol.json",
+          "evidenceSha256": "d5e0c157eed92b59eee9c30458e3260afa4812f2c49a9947c846d1439904fe30",
+          "verificationStatus": "VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED"
+        },
+        {
+          "revision": "6bd20ec37cf750685429c27931686b41579c6bd2",
+          "evidenceRef": "validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md",
+          "evidenceSha256": "28d4d6bf6ebe38cce5dade84b145b2dcb336b0bd1868b4c2ab9cf2d3690033d0",
+          "verificationStatus": "VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED"
+        },
+        {
+          "revision": "db2765d596cc4a2c9f27c28ed799d602ec3fe979",
+          "evidenceRef": "validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md",
+          "evidenceSha256": "28d4d6bf6ebe38cce5dade84b145b2dcb336b0bd1868b4c2ab9cf2d3690033d0",
+          "verificationStatus": "VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED"
+        },
+        {
+          "revision": "765921602dd6da0f8330c4933e409409b5d56f4e",
+          "evidenceRef": "validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md",
+          "evidenceSha256": "28d4d6bf6ebe38cce5dade84b145b2dcb336b0bd1868b4c2ab9cf2d3690033d0",
+          "verificationStatus": "VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED"
+        },
+        {
+          "revision": "4b52e4f2d6520163cb28fe8faf3db0960e2def0d",
+          "evidenceRef": "validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md",
+          "evidenceSha256": "28d4d6bf6ebe38cce5dade84b145b2dcb336b0bd1868b4c2ab9cf2d3690033d0",
+          "verificationStatus": "VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED"
+        },
+        {
+          "revision": "709cb0159b0b446eba93ba5c1083f3596e9d9001",
+          "evidenceRef": "validation/software-factory/sf-bl005/h0-h1-h2-gap-completion-001/committed-snapshot-manifest.json",
+          "evidenceSha256": "61677fabde88b39e0a242e2752117c04ed19c20e09652ffec4789da6942300fb",
+          "verificationStatus": "CURRENT_GIT_OBJECT_AND_TREE_VERIFIED"
+        }
+      ]
+    },
+    {
+      "recordId": "EXPOSURE-REPOSITORY-PETCLINIC-001",
+      "subject": {
+        "assetClass": "REPOSITORY_LINEAGE",
+        "canonicalRepository": "https://github.com/spring-projects/spring-petclinic.git",
+        "repositoryIdentitySha256": "71fa7cd6820a5db1cb295abcb1b064896175461a892671f76309bec16b545ad8",
+        "exactRevisions": [
+          "818c4136ea971c21674525f9053de0d9c7ad8cfe"
+        ],
+        "lineageFingerprints": [
+          "eab55ba3d9530437c36af5ba265b5f3a04da55a71f8c615a98820afbfc3cec13"
+        ],
+        "functionalCorpusFingerprints": [
+          "3c5da364196f1bbec17aabdbf2923c65f2bc0d90b2e9788bac8427219d554a3f",
+          "39aa27459305c05a4c983b0c414c60b39ec3e460491b9edb5da49c620bc2de2c"
+        ]
+      },
+      "events": [
+        {
+          "stage": "SOURCE_INSPECTED",
+          "purposes": [
+            "DEVELOPMENT",
+            "DEBUGGING",
+            "CALIBRATION"
+          ],
+          "contentKinds": [
+            "SOURCE",
+            "TEST",
+            "SCENARIO",
+            "TRUTH"
+          ]
+        },
+        {
+          "stage": "GENERATED",
+          "purposes": [
+            "CALIBRATION"
+          ],
+          "contentKinds": [
+            "SOURCE",
+            "TEST",
+            "SCENARIO",
+            "PRODUCER_OUTPUT"
+          ]
+        },
+        {
+          "stage": "SCORED",
+          "purposes": [
+            "CALIBRATION"
+          ],
+          "contentKinds": [
+            "SCENARIO",
+            "TRUTH",
+            "PRODUCER_OUTPUT",
+            "SCORE"
+          ],
+          "executionIds": [
+            "SF-BL-005-METHOD-CALIBRATION-005",
+            "SF-BL-005-METHOD-QUALITY-006",
+            "SF-BL-005-METHOD-QUALITY-007",
+            "SF-BL-005-BOXING-CALIBRATION-001",
+            "SF-BL-005-BOXING-CALIBRATION-002",
+            "SF-BL-005-BOXING-CALIBRATION-003"
+          ]
+        }
+      ],
+      "boundCorpora": {
+        "scenarioSetSha256": "3c5da364196f1bbec17aabdbf2923c65f2bc0d90b2e9788bac8427219d554a3f",
+        "scenarioAcceptanceManifestSha256": "8772b2a1b4cbb485f0ebce793be734bbd8414aaf318e6033bab7225b1e03fd1b",
+        "testEvidenceSha256": "6260f5f3f524256bc276b4715c8560b8f0b674e62c0307d1791d2ec9e3ebc0f2",
+        "graphSha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+        "graphifyReceiptSha256": "fd3b6729e720e33c89c87cb987748b17ee6cc4ac1fad2c09ddbf093ab39cd5f8",
+        "methodTruthSha256": "39aa27459305c05a4c983b0c414c60b39ec3e460491b9edb5da49c620bc2de2c",
+        "legacyTruthSha256": [
+          "4d22799e4d7597e0bbc302c9db3cd0510f70cc946cb5de5909ded9c4b1b112d1",
+          "22292caf3b8f55ff418b0716dce32da19e93974555ef597da1705674b467c385"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "validation/software-factory/sf-bl005/petclinic-replay-004/run-manifest.json",
+          "sha256": "e2ebafdbb2da52fa2cbe9e85e35e1a5833169ae2f4a351dac3f3c60bc9a47eb2"
+        },
+        {
+          "path": "validation/software-factory/sf-bl005/method-calibration-005/protocol.json",
+          "sha256": "d5e0c157eed92b59eee9c30458e3260afa4812f2c49a9947c846d1439904fe30"
+        },
+        {
+          "path": "validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md",
+          "sha256": "28d4d6bf6ebe38cce5dade84b145b2dcb336b0bd1868b4c2ab9cf2d3690033d0"
+        }
+      ],
+      "uncertaintyReasons": [],
+      "revisionEvidence": [
+        {
+          "revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+          "evidenceRef": "validation/software-factory/sf-bl005/petclinic-replay-004/run-manifest.json",
+          "evidenceSha256": "e2ebafdbb2da52fa2cbe9e85e35e1a5833169ae2f4a351dac3f3c60bc9a47eb2",
+          "verificationStatus": "VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED"
+        }
+      ]
+    },
+    {
+      "recordId": "EXPOSURE-REPOSITORY-REALWORLD-001",
+      "subject": {
+        "assetClass": "REPOSITORY_LINEAGE",
+        "canonicalRepository": "https://github.com/gothinkster/spring-boot-realworld-example-app.git",
+        "repositoryIdentitySha256": "5cc6a322a52f23b472a36c33bb8a14632e57c1c9d0ddd5817863756c6e99891c",
+        "exactRevisions": [
+          "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+        ],
+        "lineageFingerprints": [
+          "e71c976155da4fe3328001b7233fd41be7a3f4099f62f6633bd671fc3d9be8fc",
+          "5947e74d40b6a4e1593a0a44e574712b3064bd790be75e62d9565bccb5d4b91f"
+        ],
+        "functionalCorpusFingerprints": [
+          "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31",
+          "75a67c802ccd9ac5afa38e3d86331dcd698053b242b801d52f98a49e809adf1f"
+        ]
+      },
+      "events": [
+        {
+          "stage": "SOURCE_INSPECTED",
+          "purposes": [
+            "CANDIDATE_INSPECTION",
+            "CALIBRATION",
+            "DIAGNOSTIC",
+            "DEBUGGING"
+          ],
+          "contentKinds": [
+            "REPOSITORY_METADATA",
+            "SOURCE",
+            "TEST",
+            "SCENARIO",
+            "TRUTH"
+          ]
+        },
+        {
+          "stage": "GENERATED",
+          "purposes": [
+            "CALIBRATION",
+            "DIAGNOSTIC"
+          ],
+          "contentKinds": [
+            "SOURCE",
+            "TEST",
+            "SCENARIO",
+            "PRODUCER_OUTPUT"
+          ]
+        },
+        {
+          "stage": "SCORED",
+          "purposes": [
+            "CALIBRATION"
+          ],
+          "contentKinds": [
+            "SCENARIO",
+            "TRUTH",
+            "PRODUCER_OUTPUT",
+            "SCORE"
+          ],
+          "executionIds": [
+            "SF-BL-005-CROSSREPO-REALWORLD-003"
+          ]
+        },
+        {
+          "stage": "GENERATED",
+          "purposes": [
+            "REGRESSION_FIXTURE_AND_SELECTOR_DIAGNOSTIC"
+          ],
+          "contentKinds": [
+            "SOURCE",
+            "TEST",
+            "PRODUCER_OUTPUT"
+          ],
+          "executionIds": [
+            "SF-BL-005-FORMAL-HOLDOUT-SCORER-001-PR-INTEGRATION"
+          ]
+        }
+      ],
+      "boundCorpora": {
+        "scenarioSetSha256": "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31",
+        "truthSha256": "75a67c802ccd9ac5afa38e3d86331dcd698053b242b801d52f98a49e809adf1f",
+        "producerInputManifestSha256": "381e681d12868ce03f93721c085c51e0a4f3dc62bf1d90c8853f99d158472e35",
+        "graphSha256": "2c554b8b0e35922b7be423978e6bcf9b9e139607c09299ef8ccb3c84409b0857",
+        "testEvidenceSha256": "785c172756033a0bca032ffa6b2a81c152dd586f0a6a3a4d9dd0d92107b2ed26"
+      },
+      "evidence": [
+        {
+          "path": "validation/software-factory/sf-bl005/cross-repo-realworld-001/PREPARATION.md",
+          "sha256": "a18d9fdc4306e6da22042320a5a5b1952260bd681ccca2471cf06b2d2aaba9e2"
+        },
+        {
+          "path": "validation/software-factory/sf-bl005/execution-envelope-realworld-002.json",
+          "sha256": "5091c9685478f295d06503033e5dc75cfe04e56ff489bcafd9fc34c38cfda9f9"
+        },
+        {
+          "path": "validation/software-factory/sf-bl005/fdp-reconciliation-realworld-003.md",
+          "sha256": "de2835001016cfa8c1c81042b9b60e6b12b8a4f30ec41f5917cdafdc33d93353"
+        },
+        {
+          "path": "docs/proposals/scenario-mapping-quality-improvement.md",
+          "sha256": "c8b0ebd83e5c8a459b576525b6d42b8db313cc922afafb055f000f3f8666010f"
+        }
+      ],
+      "uncertaintyReasons": [],
+      "revisionEvidence": [
+        {
+          "revision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+          "evidenceRef": "validation/software-factory/sf-bl005/execution-envelope-realworld-002.json",
+          "evidenceSha256": "5091c9685478f295d06503033e5dc75cfe04e56ff489bcafd9fc34c38cfda9f9",
+          "verificationStatus": "VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED"
+        }
+      ]
+    },
+    {
+      "recordId": "EXPOSURE-REPOSITORY-LMS-001",
+      "subject": {
+        "assetClass": "REPOSITORY_LINEAGE",
+        "canonicalRepository": "https://github.com/MPfria02/Library_Management_System.git",
+        "repositoryIdentitySha256": "230d2417f3c9a953a0545217d4f90742df9f45674fdd8d39c45ab5a97398a3bb",
+        "exactRevisions": [
+          "99af0cb66c70b9bd98c16e3b0c22dc015debb779"
+        ],
+        "lineageFingerprints": [
+          "8828f555313b3b8f6b1fd55327549997335c0735e74470865c87510ffcf7f487"
+        ],
+        "functionalCorpusFingerprints": [
+          "c2cde305c0737f839a21b3efd4bbcfff59375013ea4a38a159aacdda299f5525"
+        ]
+      },
+      "events": [
+        {
+          "stage": "SOURCE_INSPECTED",
+          "purposes": [
+            "CANDIDATE_INSPECTION"
+          ],
+          "contentKinds": [
+            "REPOSITORY_METADATA",
+            "SOURCE",
+            "TEST"
+          ],
+          "executionIds": [
+            "SF-BL-005-FEASIBILITY-001"
+          ]
+        }
+      ],
+      "boundCorpora": {
+        "fileDigestInventorySha256": "c2cde305c0737f839a21b3efd4bbcfff59375013ea4a38a159aacdda299f5525",
+        "httpProbeSha256": "ecff4c6dcdfff590dcbb6f3d3c1561a893db7499d634495a2eadf474a50d7113"
+      },
+      "evidence": [
+        {
+          "path": "validation/software-factory/sf-bl005/feasibility-001/candidate/manifest.json",
+          "sha256": "980340f206cc6c90af642a7805b12fa7865d4403c2975ac7a7ce88afcaf6471c"
+        },
+        {
+          "path": "docs/proposals/scenario-mapping-quality-improvement.md",
+          "sha256": "c8b0ebd83e5c8a459b576525b6d42b8db313cc922afafb055f000f3f8666010f"
+        }
+      ],
+      "uncertaintyReasons": [
+        "No scenario set, truth set, METHOD generation, or METHOD score is proven; source and test inspection alone excludes this exact inspected corpus from unseen holdout use."
+      ],
+      "revisionEvidence": [
+        {
+          "revision": "99af0cb66c70b9bd98c16e3b0c22dc015debb779",
+          "evidenceRef": "validation/software-factory/sf-bl005/feasibility-001/candidate/manifest.json",
+          "evidenceSha256": "980340f206cc6c90af642a7805b12fa7865d4403c2975ac7a7ce88afcaf6471c",
+          "verificationStatus": "VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED"
+        }
+      ]
+    },
+    {
+      "recordId": "EXPOSURE-REPOSITORY-RAEPERD-REALWORLD-001",
+      "subject": {
+        "assetClass": "REPOSITORY_LINEAGE",
+        "canonicalRepository": "https://github.com/raeperd/realworld-springboot-java.git",
+        "repositoryIdentitySha256": "12e0cca05781fea36a301916fef79be58717aac9ad178f3d0d452b18bd6f0879",
+        "exactRevisions": [
+          "67cf40d83a7a8d0f818fddc53a52d01a3529a95e"
+        ],
+        "lineageFingerprints": [
+          "8052c1dd0ba518a4a779bd05c0189e7697cdb8782260bf0519b306589cc613c1",
+          "5947e74d40b6a4e1593a0a44e574712b3064bd790be75e62d9565bccb5d4b91f"
+        ],
+        "functionalCorpusFingerprints": [
+          "5947e74d40b6a4e1593a0a44e574712b3064bd790be75e62d9565bccb5d4b91f"
+        ]
+      },
+      "events": [
+        {
+          "stage": "METADATA_ONLY",
+          "purposes": [
+            "CANDIDATE_INSPECTION"
+          ],
+          "contentKinds": [
+            "REPOSITORY_METADATA"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/proposals/scenario-mapping-quality-improvement.md",
+          "sha256": "c8b0ebd83e5c8a459b576525b6d42b8db313cc922afafb055f000f3f8666010f"
+        }
+      ],
+      "uncertaintyReasons": [
+        "Only committed candidate metadata and README-derived framework observations are proven; no source/test/scenario/truth inspection or execution is claimed. Shared RealWorld functional lineage is already exposed."
+      ],
+      "revisionEvidence": [
+        {
+          "revision": "67cf40d83a7a8d0f818fddc53a52d01a3529a95e",
+          "evidenceRef": "docs/proposals/scenario-mapping-quality-improvement.md",
+          "evidenceSha256": "c8b0ebd83e5c8a459b576525b6d42b8db313cc922afafb055f000f3f8666010f",
+          "verificationStatus": "VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED"
+        }
+      ]
+    },
+    {
+      "recordId": "EXPOSURE-CORPUS-REALWORLD-SPEC-001",
+      "subject": {
+        "assetClass": "FUNCTIONAL_CORPUS",
+        "identitySha256": "98b461e7b450a29b26342a7f84393580873ca90f561d102b45536a83443e031d"
+      },
+      "events": [
+        {
+          "stage": "SOURCE_INSPECTED",
+          "purposes": [
+            "SCENARIO_AUTHORING",
+            "TRUTH_AUTHORING"
+          ],
+          "contentKinds": [
+            "SOURCE",
+            "SCENARIO",
+            "TRUTH"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "path": "validation/software-factory/sf-bl005/cross-repo-realworld-001/PREPARATION.md",
+          "sha256": "a18d9fdc4306e6da22042320a5a5b1952260bd681ccca2471cf06b2d2aaba9e2"
+        }
+      ],
+      "uncertaintyReasons": []
+    },
+    {
+      "recordId": "EXPOSURE-CORPUS-REVERSE-QUALITY-001",
+      "subject": {
+        "assetClass": "FUNCTIONAL_CORPUS",
+        "identitySha256": "9ba848d5b7b18f8090c76b4def567589f7a28026e68963732d2a93f6efb42f91"
+      },
+      "events": [
+        {
+          "stage": "SOURCE_INSPECTED",
+          "purposes": [
+            "DEVELOPMENT",
+            "SCORER_DEVELOPMENT"
+          ],
+          "contentKinds": [
+            "TEST",
+            "TRUTH"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "path": "validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md",
+          "sha256": "28d4d6bf6ebe38cce5dade84b145b2dcb336b0bd1868b4c2ab9cf2d3690033d0"
+        }
+      ],
+      "uncertaintyReasons": []
+    },
+    {
+      "recordId": "EXPOSURE-CORPUS-H1-SYNTHETIC-CONFORMANCE-001",
+      "subject": {
+        "assetClass": "FUNCTIONAL_CORPUS",
+        "identitySha256": "ca131bd772946080ccaee98fc2d12663218a129d8d0be1e437e7bca02cb6a82f"
+      },
+      "events": [
+        {
+          "stage": "SCORED",
+          "purposes": [
+            "SCORER_DEVELOPMENT",
+            "PARITY_VERIFICATION"
+          ],
+          "contentKinds": [
+            "SOURCE",
+            "TEST",
+            "SCENARIO",
+            "TRUTH",
+            "SCORE"
+          ],
+          "executionIds": [
+            "SF-BL-005-FORMAL-HOLDOUT-SCORER-001"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/vector-manifest.json",
+          "sha256": "ca131bd772946080ccaee98fc2d12663218a129d8d0be1e437e7bca02cb6a82f"
+        },
+        {
+          "path": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/golden-output-002.json",
+          "sha256": "9c0e8f93cd1b2e8ecc85923995efdd5481d00e5fe3ecb375bf59b8f1a770af47"
+        }
+      ],
+      "uncertaintyReasons": [
+        "Synthetic development corpus, never eligible as unseen holdout."
+      ]
+    }
+  ],
+  "seal": {
+    "state": "NOT_SEALED",
+    "required": [
+      "full integration commit",
+      "Git blob ID",
+      "ledger SHA-256",
+      "UTC seal timestamp",
+      "Human disclosure attestation digest",
+      "independent coverage review PASS P0/P1/P2 zero",
+      "external H2 receipt"
+    ],
+    "rule": "The external receipt freezes these exact prepared bytes. Any ledger byte or coverage-scope change requires a new revision and receipt."
+  },
+  "fingerprintSchema": {
+    "canonicalJsonAlgorithm": {
+      "id": "RFC8785_SUBSET_SORTED_JSON_V1",
+      "version": 1,
+      "serialization": "UTF-8 JSON, keys sorted recursively, separators comma and colon, no insignificant whitespace, arrays in declared order",
+      "digest": "SHA-256 exact serialized bytes",
+      "derivationCommand": "python3 -c 'json.dumps(value,sort_keys=True,separators=(\",\",\":\")).encode(); hashlib.sha256(bytes).hexdigest()'"
+    },
+    "artifactDigestAlgorithm": {
+      "id": "EXACT_BYTES_SHA256_V1",
+      "version": 1,
+      "serialization": "exact artifact bytes",
+      "digest": "SHA-256"
+    },
+    "dimensions": {
+      "REPOSITORY_IDENTITY": "canonical JSON object containing normalized HTTPS clone URL",
+      "REPOSITORY_LINEAGE": "canonical JSON object containing URL plus exact revision, or an explicitly named shared functional specification",
+      "FUNCTIONAL_CORPUS": "exact scenario/truth/inventory artifact digest or canonical named-corpus JSON",
+      "SCENARIO_SET": "exact artifact SHA-256",
+      "TRUTH_SET": "exact artifact SHA-256",
+      "SOURCE_CONTENT": "exact tree/file inventory or derived graph SHA-256",
+      "TEST_CONTENT": "exact file/test-evidence inventory SHA-256"
+    },
+    "normalization": "Repository URLs are lower-case host plus case-preserved path, https scheme, no credentials, no query or fragment, optional terminal .git preserved as recorded. Unknown aliases or lineage remain UNKNOWN.",
+    "comparisonImplementation": "UNBOUND; later evaluator-only overlap receipt must bind tool source and binary SHA-256 plus frozen near-duplicate thresholds. Until then all candidate dimensions are UNKNOWN and H2 cannot support selection."
+  },
+  "fingerprintProvenance": [
+    {
+      "value": "73e14923e26d60f821bf4c384c5e9a8c1829b0ccc3058cc7570024b7751efff1",
+      "dimension": "REPOSITORY_IDENTITY",
+      "algorithmId": "RFC8785_SUBSET_SORTED_JSON_V1",
+      "canonicalInput": {
+        "url": "https://github.com/hermanwangd/FDI.git"
+      },
+      "evidenceRefs": [
+        "validation/software-factory/sf-bl005/contamination-evidence-manifest-001.json"
+      ]
+    },
+    {
+      "value": "2012c8b4195517ff683102a0161766891ddb66d48e20cf0da7d7d1654a7b65c7",
+      "dimension": "REPOSITORY_LINEAGE",
+      "algorithmId": "RFC8785_SUBSET_SORTED_JSON_V1",
+      "canonicalInput": {
+        "url": "https://github.com/hermanwangd/FDI.git",
+        "class": "implementation-lineage"
+      },
+      "evidenceRefs": [
+        "validation/software-factory/sf-bl005/contamination-evidence-manifest-001.json"
+      ]
+    },
+    {
+      "value": "71fa7cd6820a5db1cb295abcb1b064896175461a892671f76309bec16b545ad8",
+      "dimension": "REPOSITORY_IDENTITY",
+      "algorithmId": "RFC8785_SUBSET_SORTED_JSON_V1",
+      "canonicalInput": {
+        "url": "https://github.com/spring-projects/spring-petclinic.git"
+      },
+      "evidenceRefs": [
+        "validation/software-factory/sf-bl005/petclinic-replay-004/run-manifest.json"
+      ]
+    },
+    {
+      "value": "5cc6a322a52f23b472a36c33bb8a14632e57c1c9d0ddd5817863756c6e99891c",
+      "dimension": "REPOSITORY_IDENTITY",
+      "algorithmId": "RFC8785_SUBSET_SORTED_JSON_V1",
+      "canonicalInput": {
+        "url": "https://github.com/gothinkster/spring-boot-realworld-example-app.git"
+      },
+      "evidenceRefs": [
+        "docs/proposals/scenario-mapping-quality-improvement.md"
+      ]
+    },
+    {
+      "value": "230d2417f3c9a953a0545217d4f90742df9f45674fdd8d39c45ab5a97398a3bb",
+      "dimension": "REPOSITORY_IDENTITY",
+      "algorithmId": "RFC8785_SUBSET_SORTED_JSON_V1",
+      "canonicalInput": {
+        "url": "https://github.com/MPfria02/Library_Management_System.git"
+      },
+      "evidenceRefs": [
+        "validation/software-factory/sf-bl005/feasibility-001/candidate/manifest.json"
+      ]
+    },
+    {
+      "value": "12e0cca05781fea36a301916fef79be58717aac9ad178f3d0d452b18bd6f0879",
+      "dimension": "REPOSITORY_IDENTITY",
+      "algorithmId": "RFC8785_SUBSET_SORTED_JSON_V1",
+      "canonicalInput": {
+        "url": "https://github.com/raeperd/realworld-springboot-java.git"
+      },
+      "evidenceRefs": [
+        "docs/proposals/scenario-mapping-quality-improvement.md"
+      ]
+    },
+    {
+      "value": "eab55ba3d9530437c36af5ba265b5f3a04da55a71f8c615a98820afbfc3cec13",
+      "dimension": "REPOSITORY_LINEAGE",
+      "algorithmId": "RFC8785_SUBSET_SORTED_JSON_V1",
+      "canonicalInput": {
+        "url": "https://github.com/spring-projects/spring-petclinic.git",
+        "revision": "818c4136ea971c21674525f9053de0d9c7ad8cfe"
+      },
+      "evidenceRefs": [
+        "validation/software-factory/sf-bl005/petclinic-replay-004/run-manifest.json"
+      ]
+    },
+    {
+      "value": "e71c976155da4fe3328001b7233fd41be7a3f4099f62f6633bd671fc3d9be8fc",
+      "dimension": "REPOSITORY_LINEAGE",
+      "algorithmId": "RFC8785_SUBSET_SORTED_JSON_V1",
+      "canonicalInput": {
+        "url": "https://github.com/gothinkster/spring-boot-realworld-example-app.git",
+        "revision": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a"
+      },
+      "evidenceRefs": [
+        "docs/proposals/scenario-mapping-quality-improvement.md",
+        "validation/software-factory/sf-bl005/cross-repo-realworld-001/PREPARATION.md"
+      ]
+    },
+    {
+      "value": "8828f555313b3b8f6b1fd55327549997335c0735e74470865c87510ffcf7f487",
+      "dimension": "REPOSITORY_LINEAGE",
+      "algorithmId": "RFC8785_SUBSET_SORTED_JSON_V1",
+      "canonicalInput": {
+        "url": "https://github.com/MPfria02/Library_Management_System.git",
+        "revision": "99af0cb66c70b9bd98c16e3b0c22dc015debb779"
+      },
+      "evidenceRefs": [
+        "validation/software-factory/sf-bl005/feasibility-001/candidate/manifest.json"
+      ]
+    },
+    {
+      "value": "8052c1dd0ba518a4a779bd05c0189e7697cdb8782260bf0519b306589cc613c1",
+      "dimension": "REPOSITORY_LINEAGE",
+      "algorithmId": "RFC8785_SUBSET_SORTED_JSON_V1",
+      "canonicalInput": {
+        "url": "https://github.com/raeperd/realworld-springboot-java.git",
+        "revision": "67cf40d83a7a8d0f818fddc53a52d01a3529a95e"
+      },
+      "evidenceRefs": [
+        "docs/proposals/scenario-mapping-quality-improvement.md"
+      ]
+    },
+    {
+      "value": "5947e74d40b6a4e1593a0a44e574712b3064bd790be75e62d9565bccb5d4b91f",
+      "dimension": "FUNCTIONAL_CORPUS",
+      "algorithmId": "RFC8785_SUBSET_SORTED_JSON_V1",
+      "canonicalInput": {
+        "functional-spec": "realworld-conduit"
+      },
+      "evidenceRefs": [
+        "docs/proposals/scenario-mapping-quality-improvement.md"
+      ]
+    },
+    {
+      "value": "98b461e7b450a29b26342a7f84393580873ca90f561d102b45536a83443e031d",
+      "dimension": "FUNCTIONAL_CORPUS",
+      "algorithmId": "RFC8785_SUBSET_SORTED_JSON_V1",
+      "canonicalInput": {
+        "corpus": "RealWorld public endpoint and error specifications"
+      },
+      "evidenceRefs": [
+        "validation/software-factory/sf-bl005/cross-repo-realworld-001/PREPARATION.md"
+      ]
+    },
+    {
+      "value": "9ba848d5b7b18f8090c76b4def567589f7a28026e68963732d2a93f6efb42f91",
+      "dimension": "FUNCTIONAL_CORPUS",
+      "algorithmId": "RFC8785_SUBSET_SORTED_JSON_V1",
+      "canonicalInput": {
+        "corpus": "SF-BL-005 reverse-quality 8-case fixture",
+        "commit": "db2765d596cc4a2c9f27c28ed799d602ec3fe979"
+      },
+      "evidenceRefs": [
+        "validation/software-factory/sf-bl005/boxing-calibration-002/RESULTS.md"
+      ]
+    },
+    {
+      "value": "3c5da364196f1bbec17aabdbf2923c65f2bc0d90b2e9788bac8427219d554a3f",
+      "dimension": "SCENARIO_SET",
+      "algorithmId": "EXACT_BYTES_SHA256_V1",
+      "canonicalInput": {
+        "boundArtifactSha256": "3c5da364196f1bbec17aabdbf2923c65f2bc0d90b2e9788bac8427219d554a3f"
+      },
+      "evidenceRefs": [
+        "validation/software-factory/sf-bl005/petclinic-replay-004/run-manifest.json"
+      ]
+    },
+    {
+      "value": "39aa27459305c05a4c983b0c414c60b39ec3e460491b9edb5da49c620bc2de2c",
+      "dimension": "TRUTH_SET",
+      "algorithmId": "EXACT_BYTES_SHA256_V1",
+      "canonicalInput": {
+        "boundArtifactSha256": "39aa27459305c05a4c983b0c414c60b39ec3e460491b9edb5da49c620bc2de2c"
+      },
+      "evidenceRefs": [
+        "validation/software-factory/sf-bl005/method-calibration-005/protocol.json"
+      ]
+    },
+    {
+      "value": "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31",
+      "dimension": "SCENARIO_SET",
+      "algorithmId": "EXACT_BYTES_SHA256_V1",
+      "canonicalInput": {
+        "boundArtifactSha256": "c06b279138ad7134e2898d2dd0fb2e701e906fdad6ae1591ab438fd09956bd31"
+      },
+      "evidenceRefs": [
+        "validation/software-factory/sf-bl005/execution-envelope-realworld-002.json"
+      ]
+    },
+    {
+      "value": "75a67c802ccd9ac5afa38e3d86331dcd698053b242b801d52f98a49e809adf1f",
+      "dimension": "TRUTH_SET",
+      "algorithmId": "EXACT_BYTES_SHA256_V1",
+      "canonicalInput": {
+        "boundArtifactSha256": "75a67c802ccd9ac5afa38e3d86331dcd698053b242b801d52f98a49e809adf1f"
+      },
+      "evidenceRefs": [
+        "validation/software-factory/sf-bl005/execution-envelope-realworld-002.json"
+      ]
+    },
+    {
+      "value": "c2cde305c0737f839a21b3efd4bbcfff59375013ea4a38a159aacdda299f5525",
+      "dimension": "SOURCE_CONTENT",
+      "algorithmId": "EXACT_BYTES_SHA256_V1",
+      "canonicalInput": {
+        "boundArtifactSha256": "c2cde305c0737f839a21b3efd4bbcfff59375013ea4a38a159aacdda299f5525"
+      },
+      "evidenceRefs": [
+        "validation/software-factory/sf-bl005/feasibility-001/candidate/manifest.json"
+      ]
+    },
+    {
+      "value": "ca131bd772946080ccaee98fc2d12663218a129d8d0be1e437e7bca02cb6a82f",
+      "dimension": "FUNCTIONAL_CORPUS",
+      "algorithmId": "EXACT_BYTES_SHA256_V1",
+      "artifactPath": "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/vector-manifest.json",
+      "evidenceRefs": [
+        "validation/software-factory/sf-bl005/formal-holdout-scorer-001/conformance/vector-manifest.json"
+      ]
+    }
+  ],
+  "humanDisclosureAttestationSchema": {
+    "schemaVersion": "SF-HUMAN-DISCLOSURE-ATTESTATION-001",
+    "requiredFields": [
+      "attestationId",
+      "attestorIdentity",
+      "actorCoverage",
+      "timeWindowUtc",
+      "categoryResponses",
+      "unresolvedActorsOrPeriods",
+      "signedAtUtc",
+      "canonicalSha256"
+    ],
+    "actorCoverage": "List every Human and known implementation, producer, evaluator, reviewer, and research actor whose project exposure is covered; omission is unresolved, not implicit none.",
+    "timeWindowUtc": {
+      "from": "Project exposure start or explicitly UNKNOWN",
+      "through": "Must be at or after ledger coverage.throughControlCommit integration time"
+    },
+    "categoryResponses": {
+      "categories": [
+        "external repositories and forks",
+        "source content",
+        "test content",
+        "functional specifications",
+        "scenario sets",
+        "truth or gold",
+        "evaluation proofs",
+        "candidate inventories",
+        "prompts containing any prior item"
+      ],
+      "responseSchema": [
+        "DISCLOSED with identity and exposure details",
+        "NONE_EXPLICITLY_ATTESTED",
+        "UNKNOWN",
+        "DECLINED"
+      ]
+    },
+    "workspaceAndSessionCoverage": [
+      "local workspaces and worktrees",
+      "remote or cloud tasks",
+      "browser/source inspection",
+      "documents, messages, prompts, exports, and temporary artifacts"
+    ],
+    "failClosedRules": [
+      "Every category must have one response for every covered actor and time segment.",
+      "UNKNOWN, DECLINED, missing actor, missing period, or partial category coverage keeps global exposure completeness INCOMPLETE and H2 not sealable.",
+      "Every DISCLOSED item is added in a new ledger revision before sealing.",
+      "NONE_EXPLICITLY_ATTESTED is a scoped Human statement, not proof of foundation-model pretraining absence."
+    ],
+    "sealRequirements": [
+      "attestor identity",
+      "UTC timestamp",
+      "canonical JSON SHA-256",
+      "signature or authenticated Human Authority receipt",
+      "independent reconciliation against committed evidence manifest and all DISCLOSED items"
+    ]
+  },
+  "revisionEvidencePolicy": "Every VERIFIED_BY_COMMITTED_RECEIPT_NOT_CURRENT_OBJECT_DB_REQUIRED item must have a non-null evidenceSha256 matching exact committed bytes; otherwise its status is UNVERIFIED and the related comparison dimensions remain UNKNOWN."
+}

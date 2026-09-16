@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "H0-FINAL-CANDIDATE-RECEIPT-001",
+  "state": "BOUND_FDP_ACCEPTED",
+  "candidateCommit": "709cb0159b0b446eba93ba5c1083f3596e9d9001",
+  "candidateTree": "a2cceb33450d494328a9b5e99744f03242df3dca",
+  "binary": {
+    "candidateCommit": "709cb0159b0b446eba93ba5c1083f3596e9d9001",
+    "jarSha256": "648d79dc115e827d07d8699f43ce1480242fa24fe99e0c9c0f57d9b455ce2272",
+    "storedPath": "/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-artifacts/sha256/648d79dc115e827d07d8699f43ce1480242fa24fe99e0c9c0f57d9b455ce2272/fdi-scorer.jar",
+    "retrievedPath": "/tmp/fdi-candidate-648d79dc115e827d.jar",
+    "bytes": 23402946,
+    "retrievalHashMatches": true,
+    "storageClass": "CONTENT_ADDRESSED_READ_ONLY_LOCAL_SINGLE_HOST",
+    "retention": "Retain while referenced by any H0/H1/protocol receipt; excluded from build cleanup",
+    "offsiteBackup": false
+  },
+  "allSourceAndConfigurationManifest": {
+    "path": "validation/software-factory/sf-bl005/h0-h1-h2-gap-completion-001/committed-snapshot-manifest.json",
+    "sha256": "61677fabde88b39e0a242e2752117c04ed19c20e09652ffec4789da6942300fb"
+  },
+  "verification": {
+    "java17Targeted": 16,
+    "java17Full": 1519,
+    "pythonFull": 176,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "commands": {
+      "path": "validation/software-factory/sf-bl005/h0-h1-h2-gap-completion-001/regression-runs.json",
+      "sha256": "14c98583126d0e6ccc6f9fcbd139aa261ca26b534630209815fcd88d4b5fd5e4"
+    },
+    "surefire": {
+      "path": "validation/software-factory/sf-bl005/h0-h1-h2-gap-completion-001/surefire-summary.json",
+      "sha256": "0d638db4661ff216aad5994f94bf0c87df6ecb6e085c63edbed8d790766dfdf8"
+    }
+  },
+  "postFreezeChangeRule": "Producer source/config/binary changes invalidate this binding and require new receipt; control/evidence-only changes retain explicit candidate identity.",
+  "formalHoldoutAuthorized": false,
+  "independentReview": {
+    "path": "validation/software-factory/sf-bl005/h0-h1-h2-gap-completion-001/h0-h1-independent-review.json",
+    "sha256": "eb8a72b85a4d132ce9081d2e0dbb6adca5bafefd31aa0cf4ba82bd3277ebbe60"
+  },
+  "intakeAuthority": "User selected autonomous gap completion; protocol assigns candidate freeze to implementation actor, receipt intake to delivery control. No protocol seal/holdout authority granted."
+}

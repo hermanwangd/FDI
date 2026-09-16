@@ -1,0 +1,69 @@
+[
+  {
+    "candidate": "709cb0159b0b446eba93ba5c1083f3596e9d9001",
+    "name": "java-targeted",
+    "argv": [
+      "./mvnw",
+      "-DargLine=-Xmx1g",
+      "-DforkCount=1",
+      "-Dtest=FormalHoldoutScoreCliTests",
+      "test"
+    ],
+    "cwd": "/Users/herman_mbp2023/ClawProjects/skills/fdi-h1-envelope-r4-final",
+    "environment": {
+      "JAVA_HOME": "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home",
+      "MAVEN_OPTS": "-Xmx2g"
+    },
+    "startedAt": "2026-09-16T12:03:38.719403+00:00",
+    "endedAt": "2026-09-16T12:03:47.477774+00:00",
+    "exitCode": 0,
+    "logSha256": "cef867c4ed78ad7fc7ffd6eee3f5c1a6e2f170731ac78006cd48e85abbe28366"
+  },
+  {
+    "candidate": "709cb0159b0b446eba93ba5c1083f3596e9d9001",
+    "name": "java-full",
+    "argv": [
+      "./mvnw",
+      "-Dsfbl005.selector.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-002/realworld-fixture",
+      "-Dsfbl005.selector.intents.path=/Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix/validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/intents.json",
+      "-Dsfbl005.selector.observations.path=/Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix/validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/observations.json",
+      "-Dsfbl005.selector.handlers.path=/Users/herman_mbp2023/ClawProjects/skills/fdi-h1-malformed-fix/validation/software-factory/sf-bl005/restassured-status-dialect-001/producer/handlers.json",
+      "-Dsfbl005.selector.verification.output=/Users/herman_mbp2023/ClawProjects/skills/fdi-h1-envelope-r4-final/validation/software-factory/sf-bl005/h0-h1-h2-gap-completion-001/selector-verification.json",
+      "-DargLine=-Xmx1g",
+      "-DforkCount=1",
+      "-Dsfbl005.realworld.checkout=/Users/herman_mbp2023/ClawProjects/skills/Software-Factory/.fdi-work/formal-holdout-scorer-001-r4-replan-002/realworld-fixture",
+      "-Dsfbl005.observations.path=/Users/herman_mbp2023/ClawProjects/skills/fdi-h1-envelope-r4-final/validation/software-factory/sf-bl005/route-handler-extractor-remediation-001/producer/frozen-http-behavior-observations-003.json",
+      "-Dsfbl005.verification.output=/Users/herman_mbp2023/ClawProjects/skills/fdi-h1-envelope-r4-final/validation/software-factory/sf-bl005/h0-h1-h2-gap-completion-001/route-verification.json",
+      "clean",
+      "package"
+    ],
+    "cwd": "/Users/herman_mbp2023/ClawProjects/skills/fdi-h1-envelope-r4-final",
+    "environment": {
+      "JAVA_HOME": "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home",
+      "MAVEN_OPTS": "-Xmx2g"
+    },
+    "startedAt": "2026-09-16T12:03:47.478557+00:00",
+    "endedAt": "2026-09-16T12:04:50.356398+00:00",
+    "exitCode": 0,
+    "logSha256": "a074f79adb915b1b505f48a68a4fbec10d91bbfaa22cee7595082063fab82206"
+  },
+  {
+    "candidate": "709cb0159b0b446eba93ba5c1083f3596e9d9001",
+    "name": "python-full",
+    "argv": [
+      "python3",
+      "-m",
+      "pytest",
+      "-q"
+    ],
+    "cwd": "/Users/herman_mbp2023/ClawProjects/skills/fdi-h1-envelope-r4-final",
+    "environment": {
+      "JAVA_HOME": "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home",
+      "MAVEN_OPTS": "-Xmx2g"
+    },
+    "startedAt": "2026-09-16T12:04:50.357218+00:00",
+    "endedAt": "2026-09-16T12:05:13.444119+00:00",
+    "exitCode": 0,
+    "logSha256": "8a6468b98badfc2ba50315ab0bc8ba579b08e71f87fe5a5d908803e3d96c8c3a"
+  }
+]
