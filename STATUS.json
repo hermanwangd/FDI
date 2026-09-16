@@ -11,7 +11,7 @@
   "selected_backlog_items": [
     "SF-BL-005"
   ],
-  "next_action": "Integrate the independently reviewed H2 diagnostic comparator through PR. Global Human exposure disclosure and formal negative-evidence/independence policy remain open; no holdout selection or execution is authorized.",
+  "next_action": "Implement and independently review the selected H2 engineering-calibration readiness extension. Global Human exposure disclosure and formal independence policy remain open; no holdout selection or execution is authorized.",
   "blocking_dependency": null,
   "latest_completed_execution": {
     "execution_id": "SF-BL-005-RESTASSURED-STATUS-DIALECT-001",
@@ -169,8 +169,18 @@
       "selected_backlog_items": [
         "SF-BL-005"
       ],
-      "execution_state": "DIAGNOSTIC_VERIFIED_REVIEW_PASS",
+      "execution_state": "DIAGNOSTIC_INTEGRATED_PR65_H2_INCOMPLETE",
       "integration_candidate": "356150ca0220a223a2bbbdeb73bda4956ff6ef6f"
+    },
+    {
+      "lane_id": "h2-diagnostic-clear",
+      "execution_id": "SF-BL-005-H2-DIAGNOSTIC-CLEAR-001",
+      "base_commit": "3a9bb68228d1e6ff8b4703a73af336a8666c8da6",
+      "selected_backlog_items": [
+        "SF-BL-005"
+      ],
+      "execution_state": "DESIGN_APPROVED_IMPLEMENTATION_SELECTED",
+      "integration_candidate": null
     }
   ],
   "mapping_improvement_intake": {
@@ -437,14 +447,16 @@
     "h2_ledger_revision": 2,
     "h2_ledger_path": "validation/software-factory/sf-bl005/contamination-ledger-002.json",
     "h2_comparator": {
-      "state": "DIAGNOSTIC_VERIFIED_REVIEW_PASS",
+      "state": "DIAGNOSTIC_INTEGRATED_PR65_EXTENSION_SELECTED",
       "design": "validation/software-factory/sf-bl005/h2-comparator-001/DESIGN.md",
       "mode": "MATCH_OR_UNKNOWN_DIAGNOSTIC_NO_SELECTION",
       "base": "e7608776eb956e3007b632b087be657f7ec2f391",
       "candidate": "356150ca0220a223a2bbbdeb73bda4956ff6ef6f",
       "runtime_sha256": "5f8200c6bd65c8d5b849a8f0b50239a186dd5dfebb6dbaef387b51a801441a9b",
       "evidence": "validation/software-factory/sf-bl005/h2-comparator-001/summary.json",
-      "formal_independence_eligible": false
+      "formal_independence_eligible": false,
+      "merged_commit": "3a9bb68228d1e6ff8b4703a73af336a8666c8da6",
+      "selected_extension": "SF-BL-005-H2-DIAGNOSTIC-CLEAR-001"
     }
   }
 }

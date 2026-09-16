@@ -104,6 +104,13 @@ format.
 
 ## Selection boundary
 
+Within active item `SF-BL-005`, the Human-approved
+`SF-BL-005-H2-DIAGNOSTIC-CLEAR-001` extension is selected from merged PR65 base
+`3a9bb68228d1e6ff8b4703a73af336a8666c8da6`. It may add engineering-calibration
+readiness only; SF-BL-005 remains `IN_PROGRESS`, and H2 completion, formal
+selection, holdout execution, production readiness, and parent closure remain
+outside this slice.
+
 Improvement source candidate `ceca0e38d4930ea1db31cb2635b941b21273609b`
 was integrated at `3ffe374`; BOXING-002 measured recall 0.775
 and precision 0.8611111111111112 under unchanged gold/scorer.
