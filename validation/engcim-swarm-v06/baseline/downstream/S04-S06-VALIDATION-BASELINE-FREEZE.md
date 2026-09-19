@@ -1,6 +1,6 @@
 # S04–S06 Validation Baseline Freeze
 
-Freeze revision: `downstream-baseline-v0.2-final`
+Freeze revision: `downstream-baseline-v0.3-closure-review`
 Dataset: `SPC-MISSION-V1`
 Fixture revision: `SPC-MISSION-V1-r1`
 
@@ -17,8 +17,13 @@ Fixture revision: `SPC-MISSION-V1-r1`
 | S05 Development Gold complete | YES as candidate data | no r1/r2 execution performed |
 | S06 evaluator-only gold complete | YES as candidate data | evaluator-only directory isolated from S05 |
 | r2 solution absent from producer inputs | YES | no r2 commit or exact patch exists in baseline |
-| downstream independent review | NO | no independent reviewer result exists |
-| downstream scoped seal | NOT_READY | review and runtime evidence do not exist in a preparation task |
+| S04 gold / Product Context review | NOT_READY | PC1 R-003 conflicts with frozen non-retryable HTTP 404 behavior |
+| S05 gold / fixture review | NOT_READY | frozen `npm test` fails before execution due to export/import mismatch |
+| S06 evaluator/gold review | PASS | evaluator-only boundary and r1/r2 gold reviewed |
+| RC7-B runtime Control gating closure | PASS | bound from preserved runtime-gated evidence under `gate0/` |
+| downstream scoped seal | NOT_READY | S04 and S05 blockers remain |
 
-The correction loop is frozen as a test contract only; this task does not
-create r1, F1, r2, or runtime Verification Results.
+The correction loop remains frozen as a test contract only; this closure review
+does not create r1, F1, r2, or S01–S06 effectiveness runtime results. The
+preserved RC7-B runtime-gated evidence is a separate scoped closure and is not
+an S04–S06 effectiveness result.

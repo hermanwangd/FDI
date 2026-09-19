@@ -1,4 +1,4 @@
-# ENGCIM Swarm S01–S06 Validation Baseline v0.2 FINAL
+# ENGCIM Swarm S01–S06 Validation Baseline v0.3 Closure Review
 
 This namespace is a Gate-0 preparation baseline. It freezes the inputs and
 acceptance contracts; it does not execute S01–S06 and contains no effectiveness
@@ -12,16 +12,20 @@ The baseline deliberately contains two datasets:
 They are not treated as compatible Product Knowledge datasets. The downstream
 sequence starts at S02 and uses SPC-MISSION-V1 throughout.
 
-Current classification:
+Closure-review classification:
 
 ```text
 VALIDATION_BASELINE = NOT_READY
 ```
 
-The preparation is not promotable until the exact blockers in
-`VALIDATION-BASELINE-FREEZE.md` are resolved, especially independent review and
-S01 source-level re-adjudication. No implementation, skill, control, runtime,
-or Product Knowledge source was modified.
+The preparation is not promotable. The independent review is now recorded, but
+the review found three substantive blockers: S01 source/gold disagreement,
+the S04 PC1 semantic contradiction, and the S05 fixture test import/export
+mismatch. No implementation, skill, control, runtime, Product Context, gold, or
+fixture source was modified.
+
+The preserved RC7-B runtime-gated validation is bound as a scoped Gate-0
+control-closure PASS under `gate0/`; it is not an S01–S06 effectiveness result.
 
 ## Layout
 
@@ -32,6 +36,23 @@ downstream/  SPC-MISSION-V1, Product Context A/B, S04-S06 contracts
 controls/    frozen bindings and required evidence catalog
 manifests/   source, checksum, and generation-isolation manifests
 ```
+
+## Review outcome
+
+| Scope | Result |
+|---|---|
+| S01 source re-adjudication | `FAIL` — `S01-NEGATIVE-001` refuted |
+| S02 gold / fixture review | `PASS` |
+| S03 gold / fixture review | `PASS` |
+| S04 gold / Product Context review | `NOT_READY` |
+| S05 gold / fixture review | `NOT_READY` |
+| S06 gold / isolation review | `PASS` |
+| Preserved RC7-B runtime-gated control closure | `PASS` |
+| Overall baseline | `NOT_READY` |
+
+The exact owner, evidence, and minimal correction for each blocker are in
+`OWNING-LAYER-FAILURES.md`. Effectiveness execution remains prohibited until a
+new frozen revision clears the blockers.
 
 Canonical downstream fixture:
 

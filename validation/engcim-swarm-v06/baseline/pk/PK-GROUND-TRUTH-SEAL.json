@@ -6,13 +6,21 @@
   "createdAt": "2026-09-20",
   "datasetRef": "PKB001-PETCLINIC plus SPC-MISSION-V1 S02-S03 fixture",
   "authorIdentity": "codex-validation-preparer",
-  "reviewIdentities": [],
-  "reviewStatus": {"S01":"PENDING_INDEPENDENT_REVIEW_AND_SOURCE_READJUDICATION","S02":"PENDING_INDEPENDENT_REVIEW","S03":"PENDING_INDEPENDENT_REVIEW"},
-  "sourceReadjudication": {"S01":"PENDING","basis":"original Petclinic source checkout/tests not in this namespace"},
+  "reviewIdentities": ["codex-baseline-closure-reviewer"],
+  "reviewSessionRef": "codex-s01-s06-closure-20260919",
+  "reviewStatus": {"S01":"FAIL","S02":"PASS","S03":"PASS"},
+  "sourceReadjudication": {"S01":"FAIL","reviewRef":"S01-SOURCE-READJUDICATION-V06-20260919","basis":"exact Petclinic source checkout at 818c4136ea971c21674525f9053de0d9c7ad8cfe"},
   "goldArtifacts": [
-    {"scenarioRef":"S01","path":"pk/s01/S01-SEMANTIC-GOLD.json","sha256":"0c6939f9cbfbfd44a60f138898677f62d5b9f4a61e7be266596a2eeffa1ab84c","reviewStatus":"PENDING_INDEPENDENT_REVIEW_AND_SOURCE_READJUDICATION"},
-    {"scenarioRef":"S02","path":"pk/s02/S02-REFRESH-GOLD.json","sha256":"8b9ab56d279f1d1afb7f0c1486daeef6a57a34447f4d3b991c94e991700d59b7","reviewStatus":"PENDING_INDEPENDENT_REVIEW"},
-    {"scenarioRef":"S03","path":"pk/s03/S03-MULTI-REPO-REALIZATION-GOLD.json","sha256":"49f26c57da74a75183e33d3045adfd22ab2338b4823de5535a16b67f7190f089","reviewStatus":"PENDING_INDEPENDENT_REVIEW"}
+    {"scenarioRef":"S01","path":"pk/s01/S01-SEMANTIC-GOLD.json","sha256":"0c6939f9cbfbfd44a60f138898677f62d5b9f4a61e7be266596a2eeffa1ab84c","reviewStatus":"FAIL"},
+    {"scenarioRef":"S02","path":"pk/s02/S02-REFRESH-GOLD.json","sha256":"8b9ab56d279f1d1afb7f0c1486daeef6a57a34447f4d3b991c94e991700d59b7","reviewStatus":"PASS"},
+    {"scenarioRef":"S03","path":"pk/s03/S03-MULTI-REPO-REALIZATION-GOLD.json","sha256":"49f26c57da74a75183e33d3045adfd22ab2338b4823de5535a16b67f7190f089","reviewStatus":"PASS"}
+  ],
+  "reviewArtifacts": [
+    {"scenarioRef":"S01","path":"pk/s01/gold-review.md","sha256":"49913708a1ff3b3b63664be07c9e42954f7949c9b4e01aac3daec1f81d660da4"},
+    {"scenarioRef":"S01","path":"pk/s01/S01-SOURCE-READJUDICATION.json","sha256":"cfac02f970e6a07685e541f0c2d7ccb2e61e83b4a563149ef1a27db08cc10cae"},
+    {"scenarioRef":"S01","path":"pk/s01/S01-SOURCE-READJUDICATION.md","sha256":"b33560393b5311bef9c0e3f72333b235319e16253931ead76b1fb245a89d310a"},
+    {"scenarioRef":"S02","path":"pk/s02/gold-review.md","sha256":"9dae187fa94fe2eb40db310145a520c134a3e45c25d7e680ea1957118e691801"},
+    {"scenarioRef":"S03","path":"pk/s03/gold-review.md","sha256":"dd656f6239570a90f7c9b663eff89b0156197a4a16fc4b0b2b5366814abb6f22"}
   ],
   "fixtureManifests": [
     {"path":"manifests/source-manifest.json","sha256":"db0cb2cca1aad70830f365b33933a05004c52c202664aa41620e91ff07e025be"},
@@ -26,5 +34,5 @@
   "product_knowledge_input": false,
   "evaluator_only": true,
   "isolationPolicy": {"goldFilesExcludedFromGeneration":true,"sealExcludedFromGeneration":true,"manifest":"manifests/generation-isolation-manifest.json"},
-  "notReadyReasons": ["S01 source-level re-adjudication is pending.","Independent review is pending for S01, S02, and S03 gold."]
+  "notReadyReasons": ["S01-NEGATIVE-001 is refuted by exact source-level re-adjudication; frozen S01 gold requires a new revision."]
 }

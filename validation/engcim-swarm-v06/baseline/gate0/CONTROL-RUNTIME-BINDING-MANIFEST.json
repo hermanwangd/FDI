@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "engcim-control-runtime-binding-manifest.v0.1",
+  "manifestRef": "CONTROL-RUNTIME-BINDING-V06-RC7B-001",
+  "closureResultRef": "RC7B-RUNTIME-GATING-CLOSURE-V06-001",
+  "runtimeImplementationCommit": "c9090701b6b9a4c0270fdf269c723c8e30fc600b",
+  "evidenceRoot": "validation/engcim-swarm-rc7b-runtime-gated/evidence/control-invocations/",
+  "bindings": [
+    {
+      "stageRef": "S05-R1-BEFORE-MUTATION",
+      "gateDecision": "proceed",
+      "bindingInput": "validation/engcim-swarm-rc7b-runtime-gated/evidence/control-invocations/stage-a-s05-r1-pre.inputs.json",
+      "controls": [
+        {"controlRef":"CTRL-AUTHORIZATION-001","outcome":"SATISFIED","resultRef":"ECR-74d2d0bd42b3a43dd2ea6945"},
+        {"controlRef":"CTRL-EXECUTION-SAFETY-001","outcome":"SATISFIED","resultRef":"ECR-5a10b2baf9b743939c4fc1a4"}
+      ]
+    },
+    {
+      "stageRef": "S05-R1-DELIVERY",
+      "gateDecision": "proceed",
+      "bindingInput": "validation/engcim-swarm-rc7b-runtime-gated/evidence/control-invocations/stage-b-s05-r1-delivery.inputs.json",
+      "controls": [
+        {"controlRef":"CTRL-REPOSITORY-PROVENANCE-001","outcome":"SATISFIED","resultRef":"ECR-3408d6f97b66d72028bd7c8d"},
+        {"controlRef":"CTRL-EVIDENCE-INTEGRITY-001","outcome":"SATISFIED","resultRef":"ECR-3b4301cd199a6757f48b08ed"}
+      ]
+    },
+    {
+      "stageRef": "S06-R1-ACCEPT",
+      "gateDecision": "proceed; verification result FAIL / REFUTED",
+      "bindingInput": "validation/engcim-swarm-rc7b-runtime-gated/evidence/control-invocations/stage-c-s06-r1-accept.inputs.json",
+      "controls": [
+        {"controlRef":"CTRL-REPOSITORY-PROVENANCE-001","outcome":"SATISFIED","resultRef":"ECR-925236088343692acf2f76de"},
+        {"controlRef":"CTRL-EXACT-BINDING-001","outcome":"SATISFIED","resultRef":"ECR-948621efc38611c06bf90d13"},
+        {"controlRef":"CTRL-INDEPENDENT-EVALUATION-001","outcome":"SATISFIED","resultRef":"ECR-235be6f8b640e9426c509b16"},
+        {"controlRef":"CTRL-EVIDENCE-INTEGRITY-001","outcome":"SATISFIED","resultRef":"ECR-eaabc0667937770f390c9b0a"}
+      ]
+    },
+    {
+      "stageRef": "F1-MISSION-CLOSURE-R1",
+      "gateDecision": "blocked",
+      "bindingInput": "validation/engcim-swarm-rc7b-runtime-gated/evidence/control-invocations/stage-c-f1-closure.inputs.json",
+      "controls": [
+        {"controlRef":"CTRL-FINDING-RESOLUTION-001","outcome":"UNSATISFIED","reasonCodes":["UNRESOLVED_FINDING"],"resultRef":"ECR-27f6445bdf1be568a4a8f4cb"}
+      ]
+    },
+    {
+      "stageRef": "S05-R2-BEFORE-MUTATION",
+      "gateDecision": "proceed",
+      "bindingInput": "validation/engcim-swarm-rc7b-runtime-gated/evidence/control-invocations/stage-d-s05-r2-pre.inputs.json",
+      "controls": [
+        {"controlRef":"CTRL-AUTHORIZATION-001","outcome":"SATISFIED","resultRef":"ECR-a6183d6bd72b141e2beae546"},
+        {"controlRef":"CTRL-EXECUTION-SAFETY-001","outcome":"SATISFIED","resultRef":"ECR-60b0649bd2320b975238014b"}
+      ]
+    },
+    {
+      "stageRef": "S05-R2-DELIVERY",
+      "gateDecision": "proceed",
+      "bindingInput": "validation/engcim-swarm-rc7b-runtime-gated/evidence/control-invocations/stage-d-s05-r2-delivery.inputs.json",
+      "controls": [
+        {"controlRef":"CTRL-REPOSITORY-PROVENANCE-001","outcome":"SATISFIED","resultRef":"ECR-ffc84a2b25c4b7ca554ca6d3"},
+        {"controlRef":"CTRL-EVIDENCE-INTEGRITY-001","outcome":"SATISFIED","resultRef":"ECR-f724a5e96e6134008dc24882"}
+      ]
+    },
+    {
+      "stageRef": "S05-R2-CURRENT-BEFORE-S06-R2",
+      "gateDecision": "blocked",
+      "bindingInput": "validation/engcim-swarm-rc7b-runtime-gated/evidence/control-invocations/stage-e-stale-r1.inputs.json",
+      "controls": [
+        {"controlRef":"CTRL-EXACT-BINDING-001","outcome":"UNSATISFIED","reasonCodes":["STALE_BINDING","SUBJECT_MISMATCH"],"resultRef":"ECR-35d99a563c6afb7406ff8fe5"},
+        {"controlRef":"CTRL-FINDING-RESOLUTION-001","outcome":"INCONCLUSIVE","reasonCodes":["FINDING_INPUT_INVALID"],"resultRef":"ECR-cdc3acd27f88fd5a6d42c2e3"}
+      ]
+    },
+    {
+      "stageRef": "S06-R2-ACCEPT",
+      "gateDecision": "proceed; verification result PASS / VERIFIED",
+      "bindingInput": "validation/engcim-swarm-rc7b-runtime-gated/evidence/control-invocations/stage-f-s06-r2-accept.inputs.json",
+      "controls": [
+        {"controlRef":"CTRL-REPOSITORY-PROVENANCE-001","outcome":"SATISFIED","resultRef":"ECR-aa2149aad9ce8eb453daf087"},
+        {"controlRef":"CTRL-EXACT-BINDING-001","outcome":"SATISFIED","resultRef":"ECR-9453ba7db31e7a742b13789b"},
+        {"controlRef":"CTRL-INDEPENDENT-EVALUATION-001","outcome":"SATISFIED","resultRef":"ECR-da7e4afa042e5c13b95091f0"},
+        {"controlRef":"CTRL-EVIDENCE-INTEGRITY-001","outcome":"SATISFIED","resultRef":"ECR-052abd982da5bdadb7292cd1"}
+      ]
+    },
+    {
+      "stageRef": "F1-MISSION-CLOSURE-R2",
+      "gateDecision": "blocked on first input, then proceed on normalized retry",
+      "bindingInput": "validation/engcim-swarm-rc7b-runtime-gated/evidence/control-invocations/stage-g-final-finding-retry.inputs.json",
+      "controls": [
+        {"controlRef":"CTRL-FINDING-RESOLUTION-001","outcome":"UNSATISFIED","reasonCodes":["RESOLUTION_EVIDENCE_MISSING"],"resultRef":"ECR-f6a69a1a0c9dfbfc55cf6629"},
+        {"controlRef":"CTRL-FINDING-RESOLUTION-001","outcome":"SATISFIED","resultRef":"ECR-6b1fb8798d7a370df9c80aab"}
+      ]
+    }
+  ],
+  "executionSafety": {
+    "acceptedCorrectionExecutions": 1,
+    "acceptedDuplicateCorrectionExecutions": 0,
+    "manualChildDoneCount": 0
+  }
+}

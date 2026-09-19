@@ -5,14 +5,20 @@
   "authority": "EVALUATOR_ONLY",
   "createdAt": "2026-09-20",
   "authorIdentity": "codex-validation-preparer",
-  "reviewIdentities": [],
-  "reviewStatus": {"S04":"PENDING_EXECUTION_REVIEW","S05":"PENDING_EXECUTION_REVIEW","S06":"PENDING_EXECUTION_REVIEW"},
+  "reviewIdentities": ["codex-baseline-closure-reviewer"],
+  "reviewSessionRef": "codex-s01-s06-closure-20260919",
+  "reviewStatus": {"S04":"NOT_READY","S05":"NOT_READY","S06":"PASS"},
   "goldArtifacts": [
     {"scenarioRef":"S04","path":"downstream/s04/case-a-complete.md","sha256":"0b4550b002914699e91ae6b280766b7e8c19fc2831220e3b18c32308306e19f7"},
     {"scenarioRef":"S04","path":"downstream/s04/case-b-ambiguous.md","sha256":"657d1abd2ee8fa8bb8ff6d000704b8a52deb13600307ca616c6d5230859bdb83"},
     {"scenarioRef":"S04","path":"downstream/s04/decision-response-a.json","sha256":"3418800d91053a932d6d24cff1bce59369b898221a4ce212c3d27c0469b2bc1b"},
     {"scenarioRef":"S05","path":"downstream/s05/S05-DEVELOPMENT-GOLD.json","sha256":"6b06902aa135e1545275478196675df09ed9a22faaf1bcc5c80189f27c20230d"},
     {"scenarioRef":"S06","path":"downstream/s06/evaluator-only/S06-VERIFICATION-GOLD.json","sha256":"b1f026822541f4d963ff53ed687cf6b207ea6f254225a3f2eca577a24fb782a6"}
+  ],
+  "reviewArtifacts": [
+    {"scenarioRef":"S04","path":"downstream/s04/gold-review.md","sha256":"6c71ec79f8c05afb3b1c7ed882f0a50f892687c132f9b2948664930acaac89b9"},
+    {"scenarioRef":"S05","path":"downstream/s05/gold-review.md","sha256":"9e9bc2b0b2286600d7ef28e6ba7030a22b621a83da47d9a25f1d3147cbd7d4cc"},
+    {"scenarioRef":"S06","path":"downstream/s06/gold-review.md","sha256":"92686df10767acc6090b82c2ffd59f257820542e36f0a10042ef5c5c3f9fcc47"}
   ],
   "productContextArtifacts": [
     {"path":"downstream/product-context/PC0.md","sha256":"ab3f65405533bc32f6a00544d7aa289bc87e9f41adce62715d5d80bfef99c47d"},
@@ -25,5 +31,6 @@
   "requiredEvidenceDigest":"97c05c4b6aab64c74b07ef35b9e4c488a17cd284559535212d977bed940edfe8",
   "isolationManifest":"manifests/generation-isolation-manifest.json",
   "isolationManifestDigest":"0e539fbb84f5242dbc87e9ddfd25e61a852a5b10387cd0bb2b8571d46f4c7d10",
-  "notReadyReasons":["No S04-S06 independent execution review exists in a preparation-only task."]
+  "runtimeControlClosure":{"path":"gate0/RC7-B-RUNTIME-CONTROL-GATING-RESULT.json","status":"PASS","resultRef":"RC7B-RUNTIME-GATING-CLOSURE-V06-001"},
+  "notReadyReasons":["PC1 R-003 conflicts with the frozen non-retryable HTTP 404 rule.","S05 frozen npm test fails because the test imports openSelectedChart while the fixture exports selectChart."]
 }
