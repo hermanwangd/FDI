@@ -1,0 +1,88 @@
+{
+  "BIND-PROVENANCE-S06-R1": {
+    "subject": {
+      "subjectRef": "candidate:r1",
+      "repositoryPath": "/Users/herman_mbp2023/engcim-swarm-rc7b-runtime-gated-canonical",
+      "repositoryUrl": "https://github.com/hermanwangd/engcim-rc7b-v03-fixture-20260919.git",
+      "baselineCommit": "6c77175ae4a948a24c1cdd74db83cc6bb10e2401",
+      "candidateCommit": "a1a0ea1489c9dfd9244efd0fbd6d68c84c8a7bcd"
+    },
+    "evidence": {
+      "evidenceRefs": ["S06-R1-GIT-RESOLVED"],
+      "remoteRef": "origin/main",
+      "checkoutMode": "fresh-independent-checkout"
+    }
+  },
+  "BIND-EXACT-S06-R1": {
+    "subject": {
+      "subjectRef": "candidate:r1",
+      "revision": "a1a0ea1489c9dfd9244efd0fbd6d68c84c8a7bcd"
+    },
+    "evidence": {
+      "evidenceRefs": ["S06-R1-EXACT-BINDING"],
+      "boundSubjectRef": "candidate:r1",
+      "boundRevision": "a1a0ea1489c9dfd9244efd0fbd6d68c84c8a7bcd"
+    }
+  },
+  "BIND-INDEPENDENT-S06-R1": {
+    "subject": {
+      "subjectRef": "candidate:r1",
+      "producerRef": "E7C-10"
+    },
+    "evidence": {
+      "evidenceRefs": ["S06-R1-FV003-VERIFICATION"],
+      "evaluation": {
+        "evaluatorRef": "E7C-11",
+        "producerRef": "E7C-10",
+        "evaluatedSubjectRef": "candidate:r1",
+        "independent": true,
+        "outcome": "FAIL / REFUTED",
+        "evidenceRef": "S06-R1-FV003-VERIFICATION"
+      }
+    }
+  },
+  "BIND-EVIDENCE-S06-R1": {
+    "subject": {
+      "subjectRef": "candidate:r1",
+      "requiredEvidenceRefs": [
+        "S06-R1-GIT-CHECKOUT",
+        "S06-R1-FV003-VERIFICATION",
+        "S06-R1-MULTICA-DELIVERY"
+      ]
+    },
+    "evidence": {
+      "evidenceRefs": [
+        "S06-R1-GIT-CHECKOUT",
+        "S06-R1-FV003-VERIFICATION",
+        "S06-R1-MULTICA-DELIVERY"
+      ],
+      "evidence": [
+        {
+          "ref": "S06-R1-GIT-CHECKOUT",
+          "source": "multica repo checkout --ref r1; git rev-parse HEAD; git status --porcelain=v1",
+          "runRef": "01a0b9bf-9f79-7008-bf62-3e40e64eb135",
+          "resolvable": true,
+          "valid": true,
+          "sufficient": true
+        },
+        {
+          "ref": "S06-R1-FV003-VERIFICATION",
+          "source": "sealed Node FV-003 command",
+          "observed": "expected 10; observed 1000; exit 1; REFUTED",
+          "runRef": "01a0b9bf-9f79-7008-bf62-3e40e64eb135",
+          "resolvable": true,
+          "valid": true,
+          "sufficient": true
+        },
+        {
+          "ref": "S06-R1-MULTICA-DELIVERY",
+          "source": "Multica S06 delivery comment 01a0b9c3-8cc9-7619-8f32-5c339383638d",
+          "runRef": "01a0b9bf-9f79-7008-bf62-3e40e64eb135",
+          "resolvable": true,
+          "valid": true,
+          "sufficient": true
+        }
+      ]
+    }
+  }
+}

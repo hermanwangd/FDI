@@ -1,0 +1,29 @@
+{
+  "BIND-STALE-R1-VERIFICATION": {
+    "subject": {
+      "subjectRef": "candidate:r2",
+      "revision": "4cd95d6be709b946e9df601b15fef97f9061bc77"
+    },
+    "evidence": {
+      "evidenceRefs": ["S06-R1-VERIFICATION-EVIDENCE"],
+      "boundSubjectRef": "candidate:r1",
+      "boundRevision": "a1a0ea1489c9dfd9244efd0fbd6d68c84c8a7bcd",
+      "source": "S06-R1 fresh checkout and FV-003 VerificationResult FAIL / REFUTED",
+      "runRef": "E7C-11/01a0b9bf-9f79-7008-bf62-3e40e64eb135"
+    }
+  },
+  "BIND-FINDING-F1-BEFORE-R2-VERIFICATION": {
+    "subject": {
+      "findingRef": "F1",
+      "currentSubjectRef": "candidate:r2",
+      "currentRevision": "4cd95d6be709b946e9df601b15fef97f9061bc77",
+      "findingStatus": "UNRESOLVED"
+    },
+    "evidence": {
+      "evidenceRefs": ["F1-R1-UNRESOLVED"],
+      "findingSource": "S06-R1 VerificationFinding from E7C-11",
+      "verificationResult": "FAIL / REFUTED",
+      "candidateRef": "candidate:r1"
+    }
+  }
+}

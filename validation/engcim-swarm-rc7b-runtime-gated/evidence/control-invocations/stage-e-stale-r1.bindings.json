@@ -1,0 +1,18 @@
+[
+  {
+    "bindingRef": "BIND-STALE-R1-VERIFICATION",
+    "scopeRef": "E7C-12:r2",
+    "gateRef": "S05-R2-CURRENT-BEFORE-S06-R2",
+    "controlRef": "CTRL-EXACT-BINDING-001",
+    "subjectRef": "candidate:r2",
+    "evidenceRefs": ["S06-R1-VERIFICATION-EVIDENCE"]
+  },
+  {
+    "bindingRef": "BIND-FINDING-F1-BEFORE-R2-VERIFICATION",
+    "scopeRef": "E7C-12:r2",
+    "gateRef": "S05-R2-CURRENT-BEFORE-S06-R2",
+    "controlRef": "CTRL-FINDING-RESOLUTION-001",
+    "subjectRef": "finding:F1",
+    "evidenceRefs": ["F1-R1-UNRESOLVED"]
+  }
+]

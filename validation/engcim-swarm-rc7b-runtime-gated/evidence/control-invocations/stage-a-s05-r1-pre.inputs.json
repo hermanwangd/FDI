@@ -1,0 +1,46 @@
+{
+  "BIND-AUTH-S05-R1": {
+    "subject": {
+      "subjectRef": "candidate:r1",
+      "requestedAction": "IMPLEMENT",
+      "governedScope": "engcim-rc7b-v03-fixture-20260919/src/chartViewer.js",
+      "currentRevision": "6c77175ae4a948a24c1cdd74db83cc6bb10e2401",
+      "governingArtifactRef": "RC7B-RUNTIME-GATED-DELTA-PROMPT"
+    },
+    "evidence": {
+      "evidenceRefs": ["AUTH-RC7B-RUNTIME-GATED-20260919"],
+      "authorityDecision": {
+        "decision": "AUTHORIZED",
+        "action": "IMPLEMENT",
+        "subjectRef": "candidate:r1",
+        "scope": "engcim-rc7b-v03-fixture-20260919/src/chartViewer.js",
+        "revision": "6c77175ae4a948a24c1cdd74db83cc6bb10e2401",
+        "governingArtifactRef": "RC7B-RUNTIME-GATED-DELTA-PROMPT",
+        "evidenceRef": "AUTH-RC7B-RUNTIME-GATED-20260919"
+      }
+    }
+  },
+  "BIND-SAFETY-S05-R1": {
+    "subject": {
+      "subjectRef": "candidate:r1",
+      "mutation": {
+        "operation": "IMPLEMENT",
+        "target": "rc7b-runtime-gated-r1",
+        "authorized": true,
+        "withinBoundary": true,
+        "protectedBranch": false,
+        "defaultBranch": false,
+        "forcePush": false,
+        "hardReset": false
+      }
+    },
+    "evidence": {
+      "evidenceRefs": ["EXEC-SAFETY-S05-R1"],
+      "guard": {
+        "command": "git commit on isolated synthetic fixture branch",
+        "target": "rc7b-runtime-gated-r1",
+        "destructive": false
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "BIND-AUTH-S05-R2": {
+    "subject": {
+      "subjectRef": "candidate:r2",
+      "requestedAction": "CORRECT",
+      "governedScope": "engcim-rc7b-v03-fixture-20260919/src/chartViewer.js",
+      "currentRevision": "a1a0ea1489c9dfd9244efd0fbd6d68c84c8a7bcd",
+      "governingArtifactRef": "F1-CORRECTION-REQUEST"
+    },
+    "evidence": {
+      "evidenceRefs": ["AUTH-RC7B-CORRECTION-F1"],
+      "authorityDecision": {
+        "decision": "AUTHORIZED",
+        "action": "CORRECT",
+        "subjectRef": "candidate:r2",
+        "scope": "engcim-rc7b-v03-fixture-20260919/src/chartViewer.js",
+        "revision": "a1a0ea1489c9dfd9244efd0fbd6d68c84c8a7bcd",
+        "governingArtifactRef": "F1-CORRECTION-REQUEST",
+        "evidenceRef": "AUTH-RC7B-CORRECTION-F1"
+      }
+    }
+  },
+  "BIND-SAFETY-S05-R2": {
+    "subject": {
+      "subjectRef": "candidate:r2",
+      "mutation": {
+        "operation": "CORRECT",
+        "target": "rc7b-runtime-gated-20260919",
+        "authorized": true,
+        "withinBoundary": true,
+        "protectedBranch": false,
+        "defaultBranch": false,
+        "forcePush": false,
+        "hardReset": false
+      }
+    },
+    "evidence": {
+      "evidenceRefs": ["EXEC-SAFETY-S05-R2"],
+      "guard": {
+        "command": "git commit then git push to governed synthetic fixture branch",
+        "target": "rc7b-runtime-gated-20260919",
+        "destructive": false
+      }
+    }
+  }
+}

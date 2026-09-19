@@ -1,0 +1,60 @@
+{
+  "BIND-PROVENANCE-S05-R1": {
+    "subject": {
+      "subjectRef": "candidate:r1",
+      "repositoryPath": "/Users/herman_mbp2023/engcim-swarm-rc7b-runtime-gated-canonical",
+      "repositoryUrl": "https://github.com/hermanwangd/engcim-rc7b-v03-fixture-20260919.git",
+      "baselineCommit": "6c77175ae4a948a24c1cdd74db83cc6bb10e2401",
+      "candidateCommit": "a1a0ea1489c9dfd9244efd0fbd6d68c84c8a7bcd"
+    },
+    "evidence": {
+      "evidenceRefs": ["GIT-R1-RESOLVED"],
+      "remoteRef": "origin/main",
+      "resolvedAt": "2026-09-19T12:57:00Z"
+    }
+  },
+  "BIND-EVIDENCE-S05-R1": {
+    "subject": {
+      "subjectRef": "candidate:r1",
+      "requiredEvidenceRefs": [
+        "DEV-R1-CANONICAL-GIT",
+        "DEV-R1-SELF-TEST",
+        "DEV-R1-MULTICA-DELIVERY"
+      ]
+    },
+    "evidence": {
+      "evidenceRefs": [
+        "DEV-R1-CANONICAL-GIT",
+        "DEV-R1-SELF-TEST",
+        "DEV-R1-MULTICA-DELIVERY"
+      ],
+      "evidence": [
+        {
+          "ref": "DEV-R1-CANONICAL-GIT",
+          "source": "git rev-parse, git remote get-url, git diff --name-only",
+          "runRef": "E7C-10/01a0b9ba-cc97-70ee-8e05-767bc53eb7be",
+          "resolvable": true,
+          "valid": true,
+          "sufficient": true
+        },
+        {
+          "ref": "DEV-R1-SELF-TEST",
+          "source": "node --input-type=module chartLimits self-check",
+          "observed": "chartLimits().max === 1000",
+          "runRef": "E7C-10/01a0b9ba-cc97-70ee-8e05-767bc53eb7be",
+          "resolvable": true,
+          "valid": true,
+          "sufficient": true
+        },
+        {
+          "ref": "DEV-R1-MULTICA-DELIVERY",
+          "source": "Multica delivery comment 01a0b9bd-004a-73fc-b5f0-3706ce969542",
+          "runRef": "01a0b9ba-cc97-70ee-8e05-767bc53eb7be",
+          "resolvable": true,
+          "valid": true,
+          "sufficient": true
+        }
+      ]
+    }
+  }
+}
