@@ -1,0 +1,87 @@
+[ {
+  "caseRef" : "exact-binding-fresh",
+  "actual" : {
+    "resultRef" : "ECR-5d433643bbf83c140b7183c6",
+    "controlRef" : "CTRL-EXACT-BINDING-001",
+    "subjectRefs" : [ "candidate" ],
+    "outcome" : "SATISFIED",
+    "reasonCodes" : [ ],
+    "evidenceRefs" : [ "BIND-R2" ]
+  }
+}, {
+  "caseRef" : "exact-binding-stale",
+  "actual" : {
+    "resultRef" : "ECR-d89fcecbf89c0d89ac04bda8",
+    "controlRef" : "CTRL-EXACT-BINDING-001",
+    "subjectRefs" : [ "candidate" ],
+    "outcome" : "UNSATISFIED",
+    "reasonCodes" : [ "STALE_BINDING" ],
+    "evidenceRefs" : [ "BIND-R1" ]
+  }
+}, {
+  "caseRef" : "evidence-integrity-valid",
+  "actual" : {
+    "resultRef" : "ECR-99964edda06ea9078e964d5a",
+    "controlRef" : "CTRL-EVIDENCE-INTEGRITY-001",
+    "subjectRefs" : [ "verification:r1" ],
+    "outcome" : "SATISFIED",
+    "reasonCodes" : [ ],
+    "evidenceRefs" : [ "EV-1" ]
+  }
+}, {
+  "caseRef" : "independent-evaluation-producer-only",
+  "actual" : {
+    "resultRef" : "ECR-d092a6085d8c9db04de5b4ac",
+    "controlRef" : "CTRL-INDEPENDENT-EVALUATION-001",
+    "subjectRefs" : [ "candidate:r1" ],
+    "outcome" : "UNSATISFIED",
+    "reasonCodes" : [ "EVALUATOR_NOT_INDEPENDENT" ],
+    "evidenceRefs" : [ "SELF-1" ]
+  }
+}, {
+  "caseRef" : "execution-safety-protected-force-push",
+  "actual" : {
+    "resultRef" : "ECR-55c7df4690f2b46ff529e1f0",
+    "controlRef" : "CTRL-EXECUTION-SAFETY-001",
+    "subjectRefs" : [ ],
+    "outcome" : "UNSATISFIED",
+    "reasonCodes" : [ "PROTECTED_BRANCH_MUTATION" ],
+    "evidenceRefs" : [ "EXEC-1" ]
+  }
+}, {
+  "caseRef" : "finding-resolution-fresh",
+  "actual" : {
+    "resultRef" : "ECR-f58df66812109df45d94ad2c",
+    "controlRef" : "CTRL-FINDING-RESOLUTION-001",
+    "subjectRefs" : [ "candidate", "F1" ],
+    "outcome" : "SATISFIED",
+    "reasonCodes" : [ ],
+    "evidenceRefs" : [ "RES-R2" ]
+  },
+  "bindingResult" : {
+    "resultRef" : "ECR-0ca3edfa2478d9856b710c6c",
+    "controlRef" : "CTRL-EXACT-BINDING-001",
+    "subjectRefs" : [ "candidate" ],
+    "outcome" : "SATISFIED",
+    "reasonCodes" : [ ],
+    "evidenceRefs" : [ "BIND-R2" ]
+  }
+}, {
+  "caseRef" : "finding-resolution-stale",
+  "actual" : {
+    "resultRef" : "ECR-f4f278c7b0b584da304b99cf",
+    "controlRef" : "CTRL-FINDING-RESOLUTION-001",
+    "subjectRefs" : [ "candidate", "F1" ],
+    "outcome" : "UNSATISFIED",
+    "reasonCodes" : [ "STALE_RESOLUTION_EVIDENCE" ],
+    "evidenceRefs" : [ "RES-R1" ]
+  },
+  "bindingResult" : {
+    "resultRef" : "ECR-9d88ca02bec32ccfa6a0bfef",
+    "controlRef" : "CTRL-EXACT-BINDING-001",
+    "subjectRefs" : [ "candidate" ],
+    "outcome" : "UNSATISFIED",
+    "reasonCodes" : [ "STALE_BINDING" ],
+    "evidenceRefs" : [ "BIND-R1" ]
+  }
+} ]
