@@ -1,0 +1,71 @@
+{
+  "fixtureRef": "SPC-PK-REFRESH-V1",
+  "authority": "SYNTHETIC_VALIDATION_FIXTURE",
+  "fixtureRevision": "baseline-r1",
+  "domain": "SPC chart management and viewing",
+  "sources": [
+    {
+      "sourceRef": "S02-SRC-PRODUCT-SPEC",
+      "sourceClass": "PRODUCT_DOCUMENT",
+      "revision": "product-spec-r1",
+      "semanticFacts": [
+        "A chart capability accepts a chart configuration and presents a chart to a user.",
+        "A chart configuration with missing or invalid limits is not a valid chart configuration."
+      ],
+      "rules": ["S02-RULE-CHART-LIMITS-001"]
+    },
+    {
+      "sourceRef": "S02-SRC-QA-SPEC",
+      "sourceClass": "VERIFICATION_ASSET",
+      "revision": "qa-spec-r1",
+      "semanticFacts": [
+        "Valid chart configurations render with their configured limits.",
+        "Malformed chart configurations are rejected and are not rendered as valid charts."
+      ],
+      "rules": ["S02-RULE-CHART-LIMITS-001"]
+    },
+    {
+      "sourceRef": "S02-SRC-REALIZATION-MAP",
+      "sourceClass": "REALIZATION_DOCUMENT",
+      "revision": "realization-map-r1",
+      "semanticFacts": [],
+      "rules": [],
+      "realization": {
+        "apiComponent": "chart-management-api",
+        "viewerComponent": "chart-viewer",
+        "deploymentComponent": "spc-deployment",
+        "apiProvides": "ChartConfigInterface",
+        "viewerConsumes": "ChartConfigInterface"
+      }
+    }
+  ],
+  "knowledge": [
+    {
+      "knowledgeRef": "S02-K-CAPABILITY-001",
+      "kind": "PRODUCT_SEMANTIC",
+      "meaning": "Chart configuration management and chart viewing",
+      "supportingSourceRefs": ["S02-SRC-PRODUCT-SPEC", "S02-SRC-QA-SPEC"]
+    },
+    {
+      "knowledgeRef": "S02-K-RULE-001",
+      "kind": "PRODUCT_RULE",
+      "meaning": "Missing or invalid chart limits make a chart configuration invalid; an invalid chart is not rendered as valid.",
+      "supportingSourceRefs": ["S02-SRC-PRODUCT-SPEC", "S02-SRC-QA-SPEC"]
+    },
+    {
+      "knowledgeRef": "S02-K-REALIZATION-001",
+      "kind": "REALIZATION_MAPPING",
+      "meaning": "chart-viewer consumes ChartConfigInterface from chart-management-api and is deployed with spc-deployment.",
+      "supportingSourceRefs": ["S02-SRC-REALIZATION-MAP"]
+    }
+  ],
+  "semanticProjection": [
+    "S02-K-CAPABILITY-001:Chart configuration management and chart viewing",
+    "S02-K-RULE-001:invalid limits are rejected and not rendered as valid"
+  ],
+  "realizationProjection": [
+    "chart-management-api->ChartConfigInterface",
+    "chart-viewer consumes ChartConfigInterface",
+    "spc-deployment deploys chart-management-api and chart-viewer"
+  ]
+}

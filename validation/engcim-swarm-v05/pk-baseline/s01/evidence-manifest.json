@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "pk-s01-evidence-manifest.v0.1",
+  "manifestRef": "S01-EVIDENCE-MANIFEST-V05-001",
+  "authority": "EVALUATOR_INPUT_CATALOG",
+  "sourceSnapshot": "pkb001-petclinic-reviewed-semantics-004",
+  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "evidence": [
+    {"evidenceRef":"S01-EVID-SEMANTICS-004","path":"validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004.json","sha256":"6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3","role":"reviewed experiment semantics"},
+    {"evidenceRef":"S01-EVID-SEMANTICS-EVIDENCE","path":"validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004-evidence.json","sha256":"3c48228142c21b8ac92558f13cb314673e5b8b49b7856e301934d5acf73956d3","role":"forward gate and authority boundary"},
+    {"evidenceRef":"S01-EVID-REVIEW-004","path":"validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-decisions-004.json","sha256":"98c46df1ffdf6ce57d37d6d320b644ac25778797b1ad786831f76d94e0d34f4f","role":"reviewed decisions and rejected hypotheses"},
+    {"evidenceRef":"S01-EVID-ACCEPTANCE-MANIFEST","path":"validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/acceptance-manifest-004.json","sha256":"1b3fbbfd210c2c0d82d74a2579c1980d5de6b047fff56a08cc2b43097c76e2a9","role":"accepted capability/scenario boundary"},
+    {"evidenceRef":"S01-EVID-AI-REVIEW","path":"validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/ai-provisional-review-001.json","sha256":"09b0f023c42f1520e9559dd78c5dd86c7b16bd18a75dace1d980744a7246cbe8","role":"review rationale and evidence limitations"},
+    {"evidenceRef":"S01-EVID-PRODUCT-CANDIDATE","path":"validation/pkb001/datasets/petclinic-product-semantics-candidate.json","sha256":"72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea","role":"candidate capability naming only; not Product truth"},
+    {"evidenceRef":"S01-EVID-MAPPING-V2","path":"validation/pkb001/evaluator/petclinic-818c413/gold-mappings-v2.json","sha256":"22292caf3b8f55ff418b0716dce32da19e93974555ef597da1705674b467c385","role":"evaluator realization mapping used only as supporting evidence"}
+  ],
+  "isolation": {
+    "goldPath": "validation/engcim-swarm-v05/pk-baseline/s01/S01-SEMANTIC-GOLD.json",
+    "reviewPath": "validation/engcim-swarm-v05/pk-baseline/s01/gold-review.md",
+    "generationAccess": "DENIED",
+    "executionAccess": "DENIED"
+  }
+}

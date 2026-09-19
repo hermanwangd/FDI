@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "pk-baseline-source-manifest.v0.1",
+  "manifestRef": "PK-SOURCE-MANIFEST-V05-001",
+  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "historicalEvidence": [
+    {
+      "sourceRef": "S01-REVIEWED-SEMANTICS",
+      "path": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004.json",
+      "sha256": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+      "authority": "REVIEWED_EXPERIMENT_SEMANTICS",
+      "productTruth": false
+    },
+    {
+      "sourceRef": "S01-REVIEWED-EVIDENCE",
+      "path": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004-evidence.json",
+      "sha256": "3c48228142c21b8ac92558f13cb314673e5b8b49b7856e301934d5acf73956d3",
+      "authority": "FORWARD_GATE_EVIDENCE",
+      "productTruth": false
+    },
+    {
+      "sourceRef": "S01-REVIEW-DECISIONS",
+      "path": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-decisions-004.json",
+      "sha256": "98c46df1ffdf6ce57d37d6d320b644ac25778797b1ad786831f76d94e0d34f4f",
+      "authority": "REVIEW_DECISIONS",
+      "productTruth": false
+    },
+    {
+      "sourceRef": "S01-PRODUCT-CANDIDATE",
+      "path": "validation/pkb001/datasets/petclinic-product-semantics-candidate.json",
+      "sha256": "72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea",
+      "authority": "FROZEN_CANDIDATE",
+      "productTruth": false
+    }
+  ],
+  "syntheticFixtures": [
+    {
+      "fixtureRef": "SPC-PK-REFRESH-V1",
+      "path": "validation/engcim-swarm-v05/pk-baseline/s02/fixture/",
+      "authority": "SYNTHETIC_VALIDATION_FIXTURE",
+      "fixtureRevision": "baseline-r1 plus D1-D8"
+    },
+    {
+      "fixtureRef": "SPC-MULTIREPO-V1",
+      "path": "validation/engcim-swarm-v05/pk-baseline/s03/fixture/",
+      "authority": "SYNTHETIC_VALIDATION_FIXTURE",
+      "fixtureRevision": "SPC-MULTIREPO-V1-r1"
+    }
+  ],
+  "checksumManifest": "validation/engcim-swarm-v05/pk-baseline/manifests/fixture-checksums.txt"
+}

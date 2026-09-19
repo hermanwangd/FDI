@@ -1,0 +1,20 @@
+{
+  "fixtureRef": "SPC-MULTIREPO-V1",
+  "authority": "SYNTHETIC_VALIDATION_FIXTURE",
+  "fixtureRevision": "SPC-MULTIREPO-V1-r1",
+  "analysisAnchors": [
+    {
+      "anchorRef": "S03-ANCHOR-CHART-LIMITS",
+      "scenarioRef": "S03-SCENARIO-CHART-LIMITS",
+      "intentOrChangeRef": "S03-INTENT-VALIDATE-CHART-CONFIGURATION",
+      "startingComponentRefs": ["COMP-chart-viewer", "COMP-chart-management-api", "COMP-spc-deployment"]
+    }
+  ],
+  "repositories": [
+    {"repositoryRef":"REPO-chart-management-api","name":"chart-management-api","role":"RELEVANT","root":"repos/chart-management-api"},
+    {"repositoryRef":"REPO-chart-viewer","name":"chart-viewer","role":"RELEVANT","root":"repos/chart-viewer"},
+    {"repositoryRef":"REPO-spc-deployment","name":"spc-deployment","role":"RELEVANT","root":"repos/spc-deployment"},
+    {"repositoryRef":"REPO-distractor-service","name":"distractor-service","role":"DISTRACTOR","root":"repos/distractor-service"}
+  ],
+  "sourceRevisionPolicy": "All files are frozen under fixture revision SPC-MULTIREPO-V1-r1; each referenced file has a SHA-256 in manifests/fixture-checksums.txt."
+}

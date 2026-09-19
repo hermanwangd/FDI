@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "pk-s03-realization-gold.v0.1",
+  "goldRef": "S03-MULTI-REPO-REALIZATION-GOLD-V05-001",
+  "authority": "EVALUATOR_ONLY",
+  "fixtureRef": "SPC-MULTIREPO-V1",
+  "fixtureAuthority": "SYNTHETIC_VALIDATION_FIXTURE",
+  "sourceRevision": "SPC-MULTIREPO-V1-r1",
+  "analysisAnchors": [
+    {
+      "anchorRef": "S03-ANCHOR-CHART-LIMITS",
+      "scenarioRef": "S03-SCENARIO-CHART-LIMITS",
+      "intentOrChangeRef": "S03-INTENT-VALIDATE-CHART-CONFIGURATION",
+      "startingComponentRefs": ["COMP-chart-viewer", "COMP-chart-management-api", "COMP-spc-deployment"]
+    }
+  ],
+  "expectedComponents": [
+    {"componentRef":"COMP-chart-management-api","repositoryRef":"REPO-chart-management-api","sourceEvidenceRefs":["S03-EVID-API-SOURCE"]},
+    {"componentRef":"COMP-chart-viewer","repositoryRef":"REPO-chart-viewer","sourceEvidenceRefs":["S03-EVID-VIEWER-SOURCE"]},
+    {"componentRef":"COMP-spc-deployment","repositoryRef":"REPO-spc-deployment","sourceEvidenceRefs":["S03-EVID-DEPLOYMENT-SOURCE"]}
+  ],
+  "expectedRepositories": [
+    {"repositoryRef":"REPO-chart-management-api","role":"RELEVANT","sourceEvidenceRefs":["S03-EVID-API-README","S03-EVID-API-SOURCE"]},
+    {"repositoryRef":"REPO-chart-viewer","role":"RELEVANT","sourceEvidenceRefs":["S03-EVID-VIEWER-README","S03-EVID-VIEWER-SOURCE"]},
+    {"repositoryRef":"REPO-spc-deployment","role":"RELEVANT","sourceEvidenceRefs":["S03-EVID-DEPLOYMENT-README","S03-EVID-DEPLOYMENT-SOURCE"]}
+  ],
+  "expectedInterfaces": [
+    {"interfaceRef":"IFACE-chart-config","name":"ChartConfigInterface","sourceEvidenceRefs":["S03-EVID-API-SOURCE"]}
+  ],
+  "expectedEdges": [
+    {"fromRef":"COMP-chart-viewer","toRef":"COMP-chart-management-api","relationType":"CONSUMES_FROM","criticality":"CRITICAL","evidenceRefs":["S03-EVID-VIEWER-SOURCE","S03-EVID-API-SOURCE"]},
+    {"fromRef":"COMP-chart-viewer","toRef":"COMP-chart-management-api","relationType":"CALLS","criticality":"CRITICAL","evidenceRefs":["S03-EVID-VIEWER-SOURCE","S03-EVID-API-SOURCE"]},
+    {"fromRef":"COMP-chart-management-api","toRef":"IFACE-chart-config","relationType":"EXPOSES","criticality":"CRITICAL","evidenceRefs":["S03-EVID-API-SOURCE"]},
+    {"fromRef":"COMP-spc-deployment","toRef":"COMP-chart-management-api","relationType":"DEPLOYS_WITH","criticality":"CRITICAL","evidenceRefs":["S03-EVID-DEPLOYMENT-SOURCE"]},
+    {"fromRef":"COMP-spc-deployment","toRef":"COMP-chart-viewer","relationType":"DEPLOYS_WITH","criticality":"CRITICAL","evidenceRefs":["S03-EVID-DEPLOYMENT-SOURCE"]}
+  ],
+  "expectedImpactSet": ["COMP-chart-management-api", "COMP-chart-viewer", "COMP-spc-deployment"],
+  "negativeMappings": [
+    {"mappingRef":"S03-NEGATIVE-DISTRACTOR-REPO","ref":"REPO-distractor-service","reason":"No chart or deployment evidence connects this repository to the anchor."},
+    {"mappingRef":"S03-NEGATIVE-DISTRACTOR-COMPONENT","ref":"COMP-notification-service","reason":"Notification behavior is outside the chart-limits scenario."},
+    {"mappingRef":"S03-NEGATIVE-NONDEPENDENCY","ref":"COMP-chart-viewer->COMP-distractor-service","reason":"No CALLS, CONSUMES_FROM, or DEPLOYS_WITH evidence exists."},
+    {"mappingRef":"S03-NEGATIVE-NEAR-MISS","ref":"COMP-chart-management-api->COMP-distractor-service","reason":"Shared email vocabulary is not a realization dependency."}
+  ],
+  "sourceRevisions": [
+    {"repositoryRef":"REPO-chart-management-api","fixtureRevision":"SPC-MULTIREPO-V1-r1","evidenceRefs":["S03-EVID-API-README","S03-EVID-API-SOURCE"]},
+    {"repositoryRef":"REPO-chart-viewer","fixtureRevision":"SPC-MULTIREPO-V1-r1","evidenceRefs":["S03-EVID-VIEWER-README","S03-EVID-VIEWER-SOURCE"]},
+    {"repositoryRef":"REPO-spc-deployment","fixtureRevision":"SPC-MULTIREPO-V1-r1","evidenceRefs":["S03-EVID-DEPLOYMENT-README","S03-EVID-DEPLOYMENT-SOURCE"]},
+    {"repositoryRef":"REPO-distractor-service","fixtureRevision":"SPC-MULTIREPO-V1-r1","evidenceRefs":["S03-EVID-DISTRACTOR-README","S03-EVID-DISTRACTOR-SOURCE"]}
+  ]
+}
