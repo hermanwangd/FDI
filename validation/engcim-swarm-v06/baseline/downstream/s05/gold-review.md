@@ -1,33 +1,32 @@
 # S05 Software Development Gold / Fixture Review
 
-Review status: `NOT_READY`
+Review status: `PASS`
 
 Author: `codex-validation-preparer`
 Independent reviewer: `codex-baseline-closure-reviewer`
-Review session: `codex-s01-s06-closure-20260919`
-Reviewed at: `2026-09-19T17:25:00Z`
+Review session: `codex-s01-s06-correction-20260920`
+Reviewed at: `2026-09-20T18:00:00Z`
 
-## Verified portions
+## Decision
 
-The canonical repository and baseline resolve to:
+`PASS` for the S05 gold and corrected fixture revision. The canonical
+repository and reviewed baseline resolve to:
 
-- `https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture.git`
-- `2eff5f9f84ca709684bfe0b7c90102268f07a0f0`
+- Repository: `https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture.git`
+- Ref: `refs/heads/validation/s05-fixture-v2-20260920`
+- Parent baseline: `2eff5f9f84ca709684bfe0b7c90102268f07a0f0`
+- Corrected fixture commit: `4ab29f8dbbf1479f8e9f51f0f5eb3ddd100672a6`
 
-The seeded chart-limit defect is present at `src/chartViewer.js` (`max: 1000`),
-the declared pre-correction allowed and forbidden paths do not overlap, and
-the fixture source is byte-identical to the canonical baseline files reviewed.
+## Verified contract
 
-## Blocking finding
+The seeded chart-limit defect remains present at `src/chartViewer.js`
+(`max: 1000`). The allowed and forbidden paths in the S05 gold do not
+overlap. The only correction is the interaction contract in
+`src/interaction.js`: the fixture now exports `openSelectedChart` and returns
+the expected `{action: 'OPENED', chartId}` shape. The test file, chart viewer
+defect, README, package metadata, and declared scope were not changed.
 
-The frozen required test does not pass at the baseline fixture. Running
-`npm test` in `downstream/s05/fixture-source` fails before test execution with:
-
-```text
-SyntaxError: The requested module '../src/interaction.js' does not provide an export named 'openSelectedChart'
-```
-
-The fixture exports `selectChart` while the test imports `openSelectedChart`.
-This is an additional fixture defect beyond the declared chart-limit defect.
-The fixture is not modified in this review. A new fixture revision and rerun of
-the S05 review are required before readiness can be claimed.
+The fixture source is byte-identical to the reviewed canonical commit, and a
+fresh `npm test` at commit `4ab29f8dbbf1479f8e9f51f0f5eb3ddd100672a6` passes
+2 tests with 0 failures. No r1/r2 execution result was created, and no exact
+correction patch was exposed to producer inputs.

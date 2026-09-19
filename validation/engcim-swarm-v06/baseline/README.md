@@ -1,4 +1,4 @@
-# ENGCIM Swarm S01–S06 Validation Baseline v0.3 Closure Review
+# ENGCIM Swarm S01–S06 Validation Baseline v0.4 Correction Re-seal
 
 This namespace is a Gate-0 preparation baseline. It freezes the inputs and
 acceptance contracts; it does not execute S01–S06 and contains no effectiveness
@@ -12,17 +12,16 @@ The baseline deliberately contains two datasets:
 They are not treated as compatible Product Knowledge datasets. The downstream
 sequence starts at S02 and uses SPC-MISSION-V1 throughout.
 
-Closure-review classification:
+Correction/re-seal classification:
 
 ```text
-VALIDATION_BASELINE = NOT_READY
+VALIDATION_BASELINE = READY
 ```
 
-The preparation is not promotable. The independent review is now recorded, but
-the review found three substantive blockers: S01 source/gold disagreement,
-the S04 PC1 semantic contradiction, and the S05 fixture test import/export
-mismatch. No implementation, skill, control, runtime, Product Context, gold, or
-fixture source was modified.
+The three closure blockers were corrected in bounded, versioned validation
+artifacts and independently re-reviewed: S01 gold/readjudication revision 2,
+PC1 revision 2, and the S05 fixture revision v2. No production/framework,
+Scenario, Skill, Control, or runtime implementation was modified.
 
 The preserved RC7-B runtime-gated validation is bound as a scoped Gate-0
 control-closure PASS under `gate0/`; it is not an S01–S06 effectiveness result.
@@ -41,18 +40,18 @@ manifests/   source, checksum, and generation-isolation manifests
 
 | Scope | Result |
 |---|---|
-| S01 source re-adjudication | `FAIL` — `S01-NEGATIVE-001` refuted |
+| S01 source re-adjudication | `PASS` — revision 2 narrows `S01-NEGATIVE-001` to the unsupported visible-selector claim |
 | S02 gold / fixture review | `PASS` |
 | S03 gold / fixture review | `PASS` |
-| S04 gold / Product Context review | `NOT_READY` |
-| S05 gold / fixture review | `NOT_READY` |
+| S04 gold / Product Context review | `PASS` — PC1 revision 2 preserves non-retryable HTTP 404 |
+| S05 gold / fixture review | `PASS` — fixture v2 `npm test` passes 2/2 |
 | S06 gold / isolation review | `PASS` |
 | Preserved RC7-B runtime-gated control closure | `PASS` |
-| Overall baseline | `NOT_READY` |
+| Overall baseline | `READY` |
 
 The exact owner, evidence, and minimal correction for each blocker are in
-`OWNING-LAYER-FAILURES.md`. Effectiveness execution remains prohibited until a
-new frozen revision clears the blockers.
+`OWNING-LAYER-FAILURES.md`. This artifact still does not claim S01–S06
+effectiveness execution; it only clears the pre-registration gate.
 
 Canonical downstream fixture:
 
@@ -60,4 +59,6 @@ Canonical downstream fixture:
 
 Baseline commit:
 
-`2eff5f9f84ca709684bfe0b7c90102268f07a0f0`
+`4ab29f8dbbf1479f8e9f51f0f5eb3ddd100672a6` on
+`refs/heads/validation/s05-fixture-v2-20260920` (parent
+`2eff5f9f84ca709684bfe0b7c90102268f07a0f0`)

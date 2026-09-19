@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "pk-s01-semantic-gold-revision.v0.1",
+  "goldRef": "S01-SEMANTIC-GOLD-V06-002",
+  "revision": 2,
+  "authority": "EVALUATOR_ONLY",
+  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "publicationAllowed": false,
+  "supersedes": {
+    "path": "pk/s01/S01-SEMANTIC-GOLD.json",
+    "sha256": "0c6939f9cbfbfd44a60f138898677f62d5b9f4a61e7be266596a2eeffa1ab84c"
+  },
+  "unchangedCriticalItemCount": 17,
+  "changeSet": [
+    {
+      "itemRef": "S01-NEGATIVE-001",
+      "changeType": "SEMANTIC_CORRECTION",
+      "previousMeaning": "A user-visible language-selection capability is not established by the reviewed evidence and must not be accepted as Product behavior.",
+      "expectedMeaning": "The reviewed source does not establish a visible Product UI language selector. URL-driven locale switching via the lang parameter may exist and must not be treated as evidence that a visible selector is part of Product behavior.",
+      "acceptableVariants": [
+        "Reject a visible selector as unsupported",
+        "Retain a visible selector as an unresolved hypothesis; do not promote URL-driven locale switching into a UI capability"
+      ],
+      "expectedAuthorityState": "REJECTED_OR_UNRESOLVED_REVIEWED_HYPOTHESIS",
+      "expectedAmbiguityState": "KNOWN_LIMITATION",
+      "expectedGovernanceDisposition": "INSUFFICIENT_EVIDENCE",
+      "sourceEvidenceRefs": [
+        "S01-SOURCE-READJUDICATION-V06-20260920-V2",
+        "WebConfiguration.java:L13-L18",
+        "WebConfiguration.java:L39-L49",
+        "messages_*.properties"
+      ]
+    }
+  ],
+  "integrity": {
+    "unchangedItemsSource": "pk/s01/S01-SEMANTIC-GOLD.json",
+    "unchangedItemsDigest": "sha256:0c6939f9cbfbfd44a60f138898677f62d5b9f4a61e7be266596a2eeffa1ab84c",
+    "sourceReadjudication": "pk/s01/S01-SOURCE-READJUDICATION-v2.json",
+    "sourceReadjudicationResult": "PASS"
+  }
+}

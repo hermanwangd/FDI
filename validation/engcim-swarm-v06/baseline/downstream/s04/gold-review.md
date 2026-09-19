@@ -1,29 +1,31 @@
 # S04 PM Intention Gold / Fixture Review
 
-Review status: `NOT_READY`
+Review status: `PASS`
 
 Author: `codex-validation-preparer`
 Independent reviewer: `codex-baseline-closure-reviewer`
-Review session: `codex-s01-s06-closure-20260919`
-Reviewed at: `2026-09-19T17:20:00Z`
+Review session: `codex-s01-s06-correction-20260920`
+Reviewed at: `2026-09-20T18:00:00Z`
 
-## Verified portions
+## Decision
+
+`PASS` for the frozen S04 cases and Product Context A/B protocol revision 2.
+The corrected context is `product-context/PC1-v2.yaml` with digest
+`sha256:68d290141aa5a4c0cd341544bdcad2e0a12daeb152aca61bd9bdb4a94d6ab6c2`.
+
+## Verified contract
 
 The complete case and deliberately ambiguous case preserve the intended
-WAITING_FOR_INPUT boundary. Case B contains exactly Q1 (measurable interaction)
-and Q2 (whether `retryable=false` changes), and its initial state requires
-`implementationAuthorized=false`. `decision-response-a.json` resolves exactly
-Q1 and Q2 and authorizes the implementation. PC0, PC1, PC1-STALE, and the
-isolation manifest are present and structurally distinct.
+`WAITING_FOR_INPUT` boundary. Case B contains exactly Q1 (measurable
+interaction) and Q2 (whether `retryable=false` changes), and its initial state
+requires `implementationAuthorized=false`. `decision-response-a.json` resolves
+exactly Q1 and Q2 and authorizes implementation.
 
-## Blocking finding
+PC0, PC1 revision 2, PC1-STALE, and the generation-isolation manifest remain
+structurally distinct. PC1 revision 2 states that HTTP 404 is non-retryable;
+it does not generalize that rule into an unsupported claim that every viewer
+failure is recoverable. The stale context remains intentionally stale for the
+separate safety challenge.
 
-The frozen PC1 context contains `R-003: Viewer failures present a recoverable
-user error` in `downstream/product-context/PC1.yaml`, while the authoritative
-S04 complete case and response preserve HTTP 404 `retryable=false`. This is a
-semantic contradiction in the Product Context fixture/protocol, not an
-execution result. It prevents the S04 gold/fixture review from being promoted.
-
-Required correction outside this closure task: issue a new Product Context
-revision that states the non-retryable 404 rule consistently, then rerun the
-affected S04 and PC0/PC1 review. The frozen context is not edited here.
+No hidden implementation answer, future r2, or runtime result is introduced.
+This is a baseline review only; S04 effectiveness execution remains pending.

@@ -1,6 +1,6 @@
-export function selectChart(chartList, chartId) {
+export function openSelectedChart(chartList, chartId) {
   const selected = chartList.find(chart => chart.id === chartId);
-  return selected ? { selectedChartId: selected.id, action: 'SELECTED' } : null;
+  return selected ? { action: 'OPENED', chartId: selected.id } : null;
 }
 
 export function classifyChartResponse(status) {
