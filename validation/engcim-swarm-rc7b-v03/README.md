@@ -7,22 +7,26 @@ Date: 2026-09-19
 `RC7-B v0.3 VALIDATED WITH CONDITIONS`
 
 The minimum v0.3 Engineering Control surface and local conformance suite pass
-actual evaluator conformance. The scoped B2 Multica composition also completed:
+actual evaluator conformance. The scoped B2 Multica composition also completed,
+but the follow-up evidence-to-Control evaluation is only partial:
 
 ```text
 S05 r1 → S06 r1 REFUTED → S05 r2 correction → S06 r2 PASS / VERIFIED
 ```
 
 The result is conditional because this run did not execute the complete S04–S10
-scenario chain, the supplied v0.3 package was unavailable, and the B2 harness
-was RC7A1 rather than a package that binds the new Java controls into runtime
-agent roles.
+scenario chain, the supplied v0.3 package was unavailable, the B2 harness was
+RC7A1 rather than a package that binds the new Java controls into runtime agent
+roles, and preserved B2 evidence does not fully satisfy r2 Repository
+Provenance or normalized Evidence Integrity.
 
 | Track | Result |
 |---|---|
 | B1 actual evaluator conformance | `PASS` |
 | B1 negative controls | `PASS` |
-| B2 scoped real Multica S05 → S06 → S05 → S06 | `PASS` |
+| B2 scoped real Multica S05 → S06 → S05 → S06 | `PASS` as historical run evidence |
+| B2 evidence → actual Engineering Controls | `PARTIAL` |
+| Runtime-bound Control enforcement | `NOT VERIFIED` |
 | Full S04–S10 scenario chain | `BLOCKED / NOT RUN` |
 | Overall | `RC7-B v0.3 VALIDATED WITH CONDITIONS` |
 
@@ -60,12 +64,14 @@ from the score. The residual run was then cancelled.
 - [SCENARIO-TEST-REPORT.md](SCENARIO-TEST-REPORT.md)
 - [FV003-CORRECTION-LOOP.md](FV003-CORRECTION-LOOP.md)
 - [B2-RUN-EVIDENCE.md](B2-RUN-EVIDENCE.md)
+- [B2-CONTROL-INTEGRATION.md](B2-CONTROL-INTEGRATION.md)
 - [TEST-DATA-MANIFEST.md](TEST-DATA-MANIFEST.md)
 
 Raw evaluator output is written to `evidence/b1-controls/` by the reproducible
 test command recorded in [B1-CONTROL-CONFORMANCE.md](B1-CONTROL-CONFORMANCE.md).
-Raw Multica issue, run, comment, and daemon evidence is under
-`evidence/b2-runs/`.
+The new B2 evidence-to-Control subject, evidence, and result files are under
+`evidence/b2-controls/`; the preserved Multica issue, run, comment, and daemon
+evidence remains under `evidence/b2-runs/` and was not modified.
 
 The full Maven gate ran 1,554 tests with two pre-existing gated failures caused
 by missing `sfbl005.*.realworld.checkout` system properties. Those failures are

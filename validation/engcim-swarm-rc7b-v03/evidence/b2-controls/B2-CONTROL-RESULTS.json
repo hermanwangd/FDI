@@ -1,0 +1,47 @@
+{
+  "sourceNamespace": "validation/engcim-swarm-rc7b-v03/evidence/b2-runs",
+  "frozenIdentities": {
+    "repository": "https://github.com/hermanwangd/engcim-rc7b-v03-fixture-20260919.git",
+    "baseline": "6c77175ae4a948a24c1cdd74db83cc6bb10e2401",
+    "r1": "a1a0ea1489c9dfd9244efd0fbd6d68c84c8a7bcd",
+    "acceptedR2": "123a2ad5946a5cd65a40b62e15bebf0f14e2f0e0",
+    "excludedCommits": [
+      "92ec2570a4da188baca4bbb50f48db27e6906c89",
+      "8e73a91feb2d94ec2dfa28ce1ba7cb7f6e1f97da"
+    ]
+  },
+  "evaluations": [
+    {"applicationPoint":"S05 r1","controlRef":"CTRL-REPOSITORY-PROVENANCE-001","resultFile":"01-s05-r1-provenance.result.json","resultRef":"ECR-0d5a1310c351c3677d35bede","outcome":"SATISFIED","reasonCodes":[]},
+    {"applicationPoint":"S05 r1","controlRef":"CTRL-EVIDENCE-INTEGRITY-001","resultFile":"02-s05-r1-evidence-integrity.result.json","resultRef":"ECR-6b1ce6de4e96f8368c3b8e97","outcome":"INCONCLUSIVE","reasonCodes":["EVIDENCE_REQUIREMENTS_MISSING"]},
+    {"applicationPoint":"S05 r1","controlRef":"CTRL-AUTHORIZATION-001","resultFile":"03-s05-r1-authorization.result.json","resultRef":"ECR-0d4a273b176734192029c17b","outcome":"INCONCLUSIVE","reasonCodes":["AUTHORITY_EVIDENCE_MISSING"]},
+    {"applicationPoint":"S05 r1","controlRef":"CTRL-EXECUTION-SAFETY-001","resultFile":"04-s05-r1-execution-safety.result.json","resultRef":"ECR-2f833bef06a8e93358566b1a","outcome":"INCONCLUSIVE","reasonCodes":["UNKNOWN_MUTATION_TARGET"]},
+    {"applicationPoint":"S06 r1","controlRef":"CTRL-REPOSITORY-PROVENANCE-001","resultFile":"05-s06-r1-provenance.result.json","resultRef":"ECR-361145f56571f86e437bbfc1","outcome":"SATISFIED","reasonCodes":[]},
+    {"applicationPoint":"S06 r1","controlRef":"CTRL-EXACT-BINDING-001","resultFile":"06-s06-r1-exact-binding.result.json","resultRef":"ECR-1e223f4ba2127c6dd93961e4","outcome":"SATISFIED","reasonCodes":[]},
+    {"applicationPoint":"S06 r1","controlRef":"CTRL-INDEPENDENT-EVALUATION-001","resultFile":"07-s06-r1-independent.result.json","resultRef":"ECR-69c3c486ab69d9b597b112cd","outcome":"SATISFIED","reasonCodes":[]},
+    {"applicationPoint":"S06 r1","controlRef":"CTRL-EVIDENCE-INTEGRITY-001","resultFile":"08-s06-r1-evidence-integrity.result.json","resultRef":"ECR-78a24429031819bde92078d4","outcome":"INCONCLUSIVE","reasonCodes":["EVIDENCE_REQUIREMENTS_MISSING"]},
+    {"applicationPoint":"F1 after S06 r1","controlRef":"CTRL-FINDING-RESOLUTION-001","resultFile":"09-f1-r1-unresolved.result.json","resultRef":"ECR-f535ee3c059a7a369846ddc5","outcome":"UNSATISFIED","reasonCodes":["UNRESOLVED_FINDING"]},
+    {"applicationPoint":"F1 after correction assignment","controlRef":"CTRL-FINDING-RESOLUTION-001","resultFile":"10-f1-assigned.result.json","resultRef":"ECR-b02be6bc444f7ef3adcf061b","outcome":"UNSATISFIED","reasonCodes":["UNRESOLVED_FINDING"]},
+    {"applicationPoint":"old r1 evidence against current r2","controlRef":"CTRL-EXACT-BINDING-001","resultFile":"11-r1-stale-binding.result.json","resultRef":"ECR-a46b953bfec0cab8eeea1a32","outcome":"UNSATISFIED","reasonCodes":["STALE_BINDING"]},
+    {"applicationPoint":"F1 before fresh r2 verification","controlRef":"CTRL-FINDING-RESOLUTION-001","resultFile":"12-f1-before-fresh-r2.result.json","resultRef":"ECR-17f3c184c3c8402dd9cc631f","outcome":"UNSATISFIED","reasonCodes":["UNRESOLVED_FINDING"]},
+    {"applicationPoint":"S06 r2","controlRef":"CTRL-REPOSITORY-PROVENANCE-001","resultFile":"13-s06-r2-provenance.result.json","resultRef":"ECR-96bc5e238ff0379af2ff419a","outcome":"UNSATISFIED","reasonCodes":["CANDIDATE_UNRESOLVABLE"]},
+    {"applicationPoint":"S06 r2","controlRef":"CTRL-EXACT-BINDING-001","resultFile":"14-s06-r2-exact-binding.result.json","resultRef":"ECR-c558ae0d5172b7b64a25da2d","outcome":"SATISFIED","reasonCodes":[]},
+    {"applicationPoint":"S06 r2","controlRef":"CTRL-INDEPENDENT-EVALUATION-001","resultFile":"15-s06-r2-independent.result.json","resultRef":"ECR-17cfa79248026b2e8d6f2a31","outcome":"SATISFIED","reasonCodes":[]},
+    {"applicationPoint":"S06 r2","controlRef":"CTRL-EVIDENCE-INTEGRITY-001","resultFile":"16-s06-r2-evidence-integrity.result.json","resultRef":"ECR-376ae56c5384d1bf7b51d145","outcome":"INCONCLUSIVE","reasonCodes":["EVIDENCE_REQUIREMENTS_MISSING"]},
+    {"applicationPoint":"F1 after fresh S06 r2","controlRef":"CTRL-FINDING-RESOLUTION-001","resultFile":"17-f1-final.result.json","resultRef":"ECR-cd082fb80779362fbb184cba","outcome":"SATISFIED","reasonCodes":[]}
+  ],
+  "controlSummary": [
+    {"controlRef":"CTRL-AUTHORIZATION-001","name":"Authorization","outcomes":["INCONCLUSIVE"],"resultFiles":["03-s05-r1-authorization.result.json"]},
+    {"controlRef":"CTRL-EXACT-BINDING-001","name":"Exact Binding","outcomes":["SATISFIED","UNSATISFIED","SATISFIED"],"resultFiles":["06-s06-r1-exact-binding.result.json","11-r1-stale-binding.result.json","14-s06-r2-exact-binding.result.json"]},
+    {"controlRef":"CTRL-EVIDENCE-INTEGRITY-001","name":"Evidence Integrity","outcomes":["INCONCLUSIVE","INCONCLUSIVE","INCONCLUSIVE"],"resultFiles":["02-s05-r1-evidence-integrity.result.json","08-s06-r1-evidence-integrity.result.json","16-s06-r2-evidence-integrity.result.json"]},
+    {"controlRef":"CTRL-INDEPENDENT-EVALUATION-001","name":"Independent Evaluation","outcomes":["SATISFIED","SATISFIED"],"resultFiles":["07-s06-r1-independent.result.json","15-s06-r2-independent.result.json"]},
+    {"controlRef":"CTRL-EXECUTION-SAFETY-001","name":"Execution Safety","outcomes":["INCONCLUSIVE"],"resultFiles":["04-s05-r1-execution-safety.result.json"]},
+    {"controlRef":"CTRL-FINDING-RESOLUTION-001","name":"Finding Resolution","outcomes":["UNSATISFIED","UNSATISFIED","UNSATISFIED","SATISFIED"],"resultFiles":["09-f1-r1-unresolved.result.json","10-f1-assigned.result.json","12-f1-before-fresh-r2.result.json","17-f1-final.result.json"]},
+    {"controlRef":"CTRL-REPOSITORY-PROVENANCE-001","name":"Repository Provenance","outcomes":["SATISFIED","SATISFIED","UNSATISFIED"],"resultFiles":["01-s05-r1-provenance.result.json","05-s06-r1-provenance.result.json","13-s06-r2-provenance.result.json"]}
+  ],
+  "assessment": {
+    "b2EvidenceControlIntegration": "PARTIAL",
+    "runtimeBoundControlEnforcement": "NOT_VERIFIED",
+    "overallRc7bV03Classification": "RC7-B v0.3 VALIDATED WITH CONDITIONS",
+    "reclassificationNote": "The existing overall classification is not promoted. The actual evaluator closes the r1/finding/r2 binding sequence, but r2 Repository Provenance and all three Evidence Integrity evaluations remain unsatisfied or inconclusive from preserved evidence."
+  }
+}
