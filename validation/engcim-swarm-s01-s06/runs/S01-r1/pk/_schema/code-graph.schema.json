@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pk/_schema/code-graph.schema.json",
+  "title": "Code Graph Node / Edge",
+  "description": "pk/code-graph/nodes.jsonl 與 edges.jsonl 的逐行 schema。Node 7 種、Relation 9 種（pk-conceptual-model.md 第 3.2 節）。每行一個 JSON object。",
+  "$defs": {
+    "node": {
+      "type": "object",
+      "required": ["id", "nodeType", "name", "validationState"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(Product|Capability|Component|Interface|Repository|Module|CodeEntity):.+",
+          "description": "格式 <NodeType>:<name>，如 Repository:chart-management-api、Module:chart-management-api/chart/core"
+        },
+        "nodeType": {
+          "type": "string",
+          "enum": ["Product", "Capability", "Component", "Interface", "Repository", "Module", "CodeEntity"]
+        },
+        "name": {"type": "string"},
+        "validationState": {"$ref": "common.schema.json#/$defs/validationState"},
+        "confidence": {"$ref": "common.schema.json#/$defs/confidence"},
+        "evidence": {"type": "array", "items": {"type": "string"}, "description": "Evidence 記錄 id"},
+        "governanceIssueRef": {"type": ["string", "null"]},
+        "attrs": {"type": "object", "description": "nodeType 特有屬性（如 Repository 的 location／commit）"}
+      }
+    },
+    "edge": {
+      "type": "object",
+      "required": ["id", "type", "from", "to", "evidence", "confidence", "validationState"],
+      "properties": {
+        "id": {"type": "string", "description": "穩定 id，建議 <type>|<from>|<to>"},
+        "type": {
+          "type": "string",
+          "enum": ["REALIZES", "IMPLEMENTED_IN", "CONTAINS", "CALLS", "DEPENDS_ON", "IMPLEMENTS", "USES", "EXPOSES", "CONSUMES"]
+        },
+        "from": {"type": "string", "description": "from node id"},
+        "to": {"type": "string", "description": "to node id"},
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "description": "無證據不產 edge；每筆為結構化證據（非 evidence id）",
+          "items": {
+            "type": "object",
+            "required": ["evidenceType", "detail", "sourceRepo", "observedAt"],
+            "properties": {
+              "evidenceType": {
+                "type": "string",
+                "enum": ["api-usage", "openapi-client", "event-contract", "message-schema", "package-dependency", "helm-config-reference", "db-contract", "code-analysis", "human-input"]
+              },
+              "detail": {"type": "string", "description": "檔案路徑＋行號／套件版本／config 鍵值"},
+              "sourceRepo": {"type": "string"},
+              "commit": {"type": ["string", "null"]},
+              "observedAt": {"type": "string", "format": "date-time"}
+            }
+          }
+        },
+        "confidence": {"$ref": "common.schema.json#/$defs/confidence"},
+        "validationState": {"$ref": "common.schema.json#/$defs/validationState"},
+        "governanceIssueRef": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

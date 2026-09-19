@@ -1,0 +1,13 @@
+{
+  "scenarioRef": "S01-PRODUCT-KNOWLEDGE",
+  "name": "Product Knowledge",
+  "goal": "Build a governed, evidence-backed product knowledge baseline from the frozen product documents, delivery history, and repository corpus.",
+  "inputRequirements": ["product-docs", "delivery-history", "repository-manifest", "committed-repositories"],
+  "contextRequirements": ["SPC Demo product", "Chart Management capability", "Chart Viewing scenario", "source provenance"],
+  "skillRefs": ["product-knowledge", "pk-file-ingestion", "pk-document-analysis", "pk-repository-analysis", "pk-correlation-synthesis", "artifact-consistency"],
+  "controlRefs": ["CTRL-REPOSITORY-PROVENANCE-001", "CTRL-EVIDENCE-INTEGRITY-001"],
+  "outputRequirements": ["semantic knowledge entries", "architecture knowledge entries", "product realization mappings", "Code Graph slice", "evidence/provenance references"],
+  "successCriteria": ["every frozen source is classified", "every accepted fact has evidence", "repository relations are bound to exact revisions", "unsupported assertions and gaps are explicit", "ProductKB artifact is internally consistent"],
+  "scenarioRevision": "S01-r1",
+  "definitionDigest": "sha256:346c8a75ea55e4e330256fb8a3719de13638acfa683289a58215eb42bf226fda"
+}

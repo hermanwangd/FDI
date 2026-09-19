@@ -1,0 +1,30 @@
+id: real:spc/chart-viewer
+pkClass: pk-realization
+validationState: PROVISIONAL
+confidence: auto-observation
+sourceClass: src-code-delivery
+evidence:
+  - ev:s01-product-training
+  - ev:s01-repository-manifest
+  - ev:s01-repo-analysis-chart-viewer
+governanceIssueRef: null
+updatedAt: "2026-09-19T14:17:23Z"
+supersedes: null
+supersededBy: null
+
+component: Component:chart-viewer
+realizes:
+  - cap:spc/chart-management
+  - scen:spc/chart-management/chart-viewing
+implementedIn:
+  - Repository:chart-viewer
+exposes: []
+consumes:
+  - Interface:chart-management-api/synthetic-chart-management-api
+dependsOn: []
+codeRegions:
+  - repository: chart-viewer
+    path: src/chartViewer.js:4-24
+    module: Module:chart-viewer/src/chartViewer.js
+gapStatus: AMBIGUOUS
+gapNote: "The pinned execution revision is the deliberate pre-FV-003 baseline; the source corpus working branch contains a later limits-validation change and is excluded from S01 execution."

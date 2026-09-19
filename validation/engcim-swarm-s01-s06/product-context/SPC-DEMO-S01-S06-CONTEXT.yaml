@@ -1,0 +1,67 @@
+contextRef: CTX-SPC-DEMO-S01-S06
+contextRevision: 1
+status: FROZEN_FOR_S01_S06_PC1
+product:
+  name: SPC Demo
+capability:
+  name: Chart Management
+scenario:
+  name: Chart Viewing
+semantics:
+  objective: Retrieve and visualize configured SPC charts.
+  rules:
+    - id: R-001
+      text: A chart must reference a valid chart configuration.
+    - id: R-002
+      text: Chart Viewer retrieves chart definitions through Chart Management API.
+    - id: R-003
+      text: Viewer failures present a recoverable user error.
+    - id: R-004
+      text: API changes preserve the published Chart API contract.
+  nonGoals:
+    - Unrelated chart creation behavior.
+architecture:
+  components:
+    - chart-viewer
+    - chart-management-api
+    - spc-deployment
+  interfaces:
+    - ref: ChartAPI
+      endpoint: GET /api/charts/{id}
+realization:
+  repoComponentMap:
+    - repo: chart-viewer
+      component: chart-viewer
+    - repo: chart-management-api
+      component: chart-management-api
+    - repo: spc-deployment
+      component: spc-deployment
+  codeGraphSlice:
+    - from: chart-viewer.getChart
+      relation: CONSUMES
+      to: ChartAPI
+    - from: ChartAPI
+      relation: IMPLEMENTED_IN
+      to: chart-management-api.get_chart
+evidenceRefs:
+  - validation-fixtures/TEST-DATA-MANIFEST.md
+  - validation-fixtures/product-docs/product-training.md
+  - validation-fixtures/product-docs/chart-management-spec.md
+  - validation-fixtures/product-docs/product-rules.yaml
+  - validation-fixtures/repos/repository-manifest.yaml
+  - validation-fixtures/repos/chart-viewer/src/chartViewer.js
+  - validation-fixtures/repos/chart-management-api/openapi.yaml
+  - validation-fixtures/repos/spc-deployment/deployment.yaml
+  - validation-fixtures/repos/spc-deployment/values.yaml
+sourceSnapshot:
+  fixtureManifestSha256: b68709dc3ec67d4bb20356c7cad546f1417f1c86feb01a2b61f2d92ace13820a
+  fixtureChecksumsSha256: 68755497b5de24e0c55c1818649a9a1873988745763d571ba85395bcef5836ed
+  repositories:
+    chart-viewer: 890a2246b1ab9386c1c533dc22a7248f0f544154
+    chart-management-api: 02b5f22eb42e97f8b60f78ecdb962d5ff7c5f2cf
+    spc-deployment: 9638e9c46996033310ed43094e092f8423a59246
+  executionRoot: /Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/execution-repos
+composition:
+  sourceSnapshot: S01-S06 frozen corpus
+  rawInputsRemainAvailable: true
+  unsupportedKnowledgeAdded: false

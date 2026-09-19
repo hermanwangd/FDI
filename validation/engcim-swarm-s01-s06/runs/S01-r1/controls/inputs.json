@@ -1,0 +1,53 @@
+{
+  "BIND-S01-REPOSITORY-PROVENANCE-chart-viewer": {
+    "subject": {
+      "subjectRef": "S01:repository:chart-viewer",
+      "repositoryPath": "/Users/herman_mbp2023/Documents/FDI-s01-s06-freeze/validation/engcim-swarm-s01-s06/runs/S01-r1/repositories/chart-viewer",
+      "repositoryUrl": "/Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/repos/chart-viewer",
+      "baselineCommit": "890a2246b1ab9386c1c533dc22a7248f0f544154",
+      "candidateCommit": "890a2246b1ab9386c1c533dc22a7248f0f544154"
+    },
+    "evidence": {
+      "evidenceRefs": ["EVID-S01-REPOSITORY-MANIFEST", "EVID-S01-REPOSITORY-REVISION", "EVID-S01-PROVENANCE"]
+    }
+  },
+  "BIND-S01-REPOSITORY-PROVENANCE-chart-management-api": {
+    "subject": {
+      "subjectRef": "S01:repository:chart-management-api",
+      "repositoryPath": "/Users/herman_mbp2023/Documents/FDI-s01-s06-freeze/validation/engcim-swarm-s01-s06/runs/S01-r1/repositories/chart-management-api",
+      "repositoryUrl": "/Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/repos/chart-management-api",
+      "baselineCommit": "02b5f22eb42e97f8b60f78ecdb962d5ff7c5f2cf",
+      "candidateCommit": "02b5f22eb42e97f8b60f78ecdb962d5ff7c5f2cf"
+    },
+    "evidence": {
+      "evidenceRefs": ["EVID-S01-REPOSITORY-MANIFEST", "EVID-S01-REPOSITORY-REVISION", "EVID-S01-PROVENANCE"]
+    }
+  },
+  "BIND-S01-REPOSITORY-PROVENANCE-spc-deployment": {
+    "subject": {
+      "subjectRef": "S01:repository:spc-deployment",
+      "repositoryPath": "/Users/herman_mbp2023/Documents/FDI-s01-s06-freeze/validation/engcim-swarm-s01-s06/runs/S01-r1/repositories/spc-deployment",
+      "repositoryUrl": "/Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/repos/spc-deployment",
+      "baselineCommit": "9638e9c46996033310ed43094e092f8423a59246",
+      "candidateCommit": "9638e9c46996033310ed43094e092f8423a59246"
+    },
+    "evidence": {
+      "evidenceRefs": ["EVID-S01-REPOSITORY-MANIFEST", "EVID-S01-REPOSITORY-REVISION", "EVID-S01-PROVENANCE"]
+    }
+  },
+  "BIND-S01-EVIDENCE-INTEGRITY": {
+    "subject": {
+      "subjectRef": "S01:pk-artifact:r1",
+      "requiredEvidenceRefs": ["EVID-S01-PRODUCT-DOCS", "EVID-S01-DELIVERY-HISTORY", "EVID-S01-PK-ARTIFACT", "EVID-S01-CODE-GRAPH", "EVID-S01-PROVENANCE"]
+    },
+    "evidence": {
+      "evidence": [
+        {"ref":"EVID-S01-PRODUCT-DOCS","resolvable":true,"valid":true,"sufficient":true},
+        {"ref":"EVID-S01-DELIVERY-HISTORY","resolvable":true,"valid":true,"sufficient":true},
+        {"ref":"EVID-S01-PK-ARTIFACT","resolvable":true,"valid":true,"sufficient":true},
+        {"ref":"EVID-S01-CODE-GRAPH","resolvable":true,"valid":true,"sufficient":true},
+        {"ref":"EVID-S01-PROVENANCE","resolvable":true,"valid":true,"sufficient":true}
+      ]
+    }
+  }
+}
