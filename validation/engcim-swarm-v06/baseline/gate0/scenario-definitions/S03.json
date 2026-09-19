@@ -1,0 +1,14 @@
+{
+  "scenarioRef": "S03-MULTI-REPO-ANALYSIS",
+  "datasetRef": "SPC-MISSION-V1",
+  "name": "Multi-Repo Analysis",
+  "goal": "Derive an evidence-backed product-level Code Graph from the three pinned synthetic repositories and prove idempotent re-analysis.",
+  "inputRequirements": ["repository-manifest", "chart-viewer@890a2246b1ab9386c1c533dc22a7248f0f544154", "chart-management-api@02b5f22eb42e97f8b60f78ecdb962d5ff7c5f2cf", "spc-deployment@9638e9c46996033310ed43094e092f8423a59246"],
+  "contextRequirements": ["repository provenance", "repository-to-component mapping", "source checkout identity"],
+  "skillRefs": ["pk-repository-analysis", "pk-correlation-synthesis", "product-knowledge", "artifact-consistency"],
+  "controlRefs": ["CTRL-REPOSITORY-PROVENANCE-001", "CTRL-EVIDENCE-INTEGRITY-001"],
+  "outputRequirements": ["Repository/Module/CodeEntity/Interface nodes", "CONTAINS/CALLS/EXPOSES/CONSUMES/DEPENDS_ON/IMPLEMENTED_IN edges", "edge evidence", "first graph artifact", "second graph artifact", "idempotency comparison"],
+  "successCriteria": ["all three repositories are analyzed at pinned revisions", "detectable relations carry evidence", "second run does not duplicate graph facts", "missing relations remain absent rather than inferred", "graph artifact is traceable to source revisions"],
+  "scenarioRevision": "S03-r2-spc-mission-v1",
+  "definitionDigest": "sha256:a3adf92fa9672eff180b03cc0243db02bb723046d39eac2d1b4f4fde85ebf771"
+}

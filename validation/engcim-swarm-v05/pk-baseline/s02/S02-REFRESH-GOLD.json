@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pk-s02-refresh-gold.v0.1",
+  "goldRef": "S02-REFRESH-GOLD-V05-001",
+  "authority": "EVALUATOR_ONLY",
+  "fixtureRef": "SPC-PK-REFRESH-V1",
+  "fixtureAuthority": "SYNTHETIC_VALIDATION_FIXTURE",
+  "items": [
+    {"deltaRef":"D1","changedSourceRefs":["S02-SRC-PRODUCT-SPEC"],"affectedKnowledgeRefs":["S02-K-RULE-001"],"expectedSemanticEffect":"MODIFIED","expectedGovernanceOutcome":"PROPOSE_REVISION","expectedRevisionOutcome":"NEW_KNOWLEDGE_REVISION"},
+    {"deltaRef":"D2","changedSourceRefs":["S02-SRC-PRODUCT-SPEC"],"affectedKnowledgeRefs":["S02-K-FACT-002"],"expectedSemanticEffect":"NEW","expectedGovernanceOutcome":"PROPOSE_REVISION","expectedRevisionOutcome":"ADD_KNOWLEDGE_ITEM"},
+    {"deltaRef":"D3","changedSourceRefs":["S02-SRC-QA-SPEC"],"affectedKnowledgeRefs":["S02-K-RULE-001"],"expectedSemanticEffect":"INSUFFICIENT","expectedGovernanceOutcome":"MARK_STALE","expectedRevisionOutcome":"REQUIRE_SUPPORT_REVIEW"},
+    {"deltaRef":"D4","changedSourceRefs":["S02-SRC-QA-SPEC"],"affectedKnowledgeRefs":["S02-K-RULE-001"],"expectedSemanticEffect":"CONFLICT","expectedGovernanceOutcome":"SURFACE_CONFLICT","expectedRevisionOutcome":"REQUIRE_HUMAN_DECISION"},
+    {"deltaRef":"D5","changedSourceRefs":[],"affectedKnowledgeRefs":[],"expectedSemanticEffect":"NO_CHANGE","expectedGovernanceOutcome":"KEEP_ACTIVE","expectedRevisionOutcome":"NO_NEW_REVISION"},
+    {"deltaRef":"D6","changedSourceRefs":["S02-SRC-PRODUCT-SPEC"],"affectedKnowledgeRefs":["S02-K-RULE-001"],"expectedSemanticEffect":"NO_CHANGE","expectedGovernanceOutcome":"KEEP_ACTIVE","expectedRevisionOutcome":"UPDATE_PROVENANCE_ONLY"},
+    {"deltaRef":"D7","changedSourceRefs":["S02-SRC-QA-SPEC"],"affectedKnowledgeRefs":["S02-K-RULE-001"],"expectedSemanticEffect":"NO_CHANGE","expectedGovernanceOutcome":"KEEP_ACTIVE","expectedRevisionOutcome":"UPDATE_EVIDENCE_SET"},
+    {"deltaRef":"D8","changedSourceRefs":["S02-SRC-REALIZATION-MAP"],"affectedKnowledgeRefs":["S02-K-REALIZATION-001"],"expectedSemanticEffect":"NO_CHANGE","expectedGovernanceOutcome":"KEEP_ACTIVE","expectedRevisionOutcome":"UPDATE_REALIZATION_ONLY"}
+  ]
+}

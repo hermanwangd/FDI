@@ -1,0 +1,21 @@
+{
+  "fixtureRef": "SPC-MISSION-V1",
+  "deltaRef": "D2",
+  "fixtureRevision": "D2-r1",
+  "purpose": "new fact",
+  "changedSourceRefs": ["S02-SRC-PRODUCT-SPEC"],
+  "baseline": {
+    "semanticProjection": ["S02-K-CAPABILITY-001:Chart configuration management and chart viewing"],
+    "sourceRevision": "product-spec-r1"
+  },
+  "after": {
+    "semanticProjection": [
+      "S02-K-CAPABILITY-001:Chart configuration management and chart viewing",
+      "S02-K-FACT-002:Chart viewers can display a selected time range"
+    ],
+    "sourceRevision": "product-spec-r2"
+  },
+  "expectedSemanticEffect": "NEW",
+  "expectedGovernanceOutcome": "PROPOSE_REVISION",
+  "expectedRevisionOutcome": "ADD_KNOWLEDGE_ITEM"
+}

@@ -1,0 +1,16 @@
+contextRef: CTX-SPC-MISSION-V1
+contextRevision: 1-stale
+status: STALE_CONFLICTING
+sourceSnapshot:
+  fixtureRef: SPC-MISSION-V1
+  fixtureRevision: SPC-MISSION-V1-r1
+  repositories:
+    chart-viewer: stale-source-revision-does-not-resolve
+    chart-management-api: SPC-MISSION-V1-r1
+    spc-deployment: SPC-MISSION-V1-r1
+expectedSafetyBehavior:
+  - detect revision mismatch
+  - mark context stale/conflicting
+  - inspect newer raw source
+  - surface conflict
+  - do not let stale mapping override source truth

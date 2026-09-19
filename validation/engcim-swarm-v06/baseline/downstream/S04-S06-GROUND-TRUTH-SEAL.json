@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "downstream-ground-truth-seal.v0.2",
+  "sealRef": "S04-S06-GROUND-TRUTH-SEAL-V06-001",
+  "status": "NOT_READY",
+  "authority": "EVALUATOR_ONLY",
+  "createdAt": "2026-09-20",
+  "authorIdentity": "codex-validation-preparer",
+  "reviewIdentities": [],
+  "reviewStatus": {"S04":"PENDING_EXECUTION_REVIEW","S05":"PENDING_EXECUTION_REVIEW","S06":"PENDING_EXECUTION_REVIEW"},
+  "goldArtifacts": [
+    {"scenarioRef":"S04","path":"downstream/s04/case-a-complete.md","sha256":"0b4550b002914699e91ae6b280766b7e8c19fc2831220e3b18c32308306e19f7"},
+    {"scenarioRef":"S04","path":"downstream/s04/case-b-ambiguous.md","sha256":"657d1abd2ee8fa8bb8ff6d000704b8a52deb13600307ca616c6d5230859bdb83"},
+    {"scenarioRef":"S04","path":"downstream/s04/decision-response-a.json","sha256":"3418800d91053a932d6d24cff1bce59369b898221a4ce212c3d27c0469b2bc1b"},
+    {"scenarioRef":"S05","path":"downstream/s05/S05-DEVELOPMENT-GOLD.json","sha256":"6b06902aa135e1545275478196675df09ed9a22faaf1bcc5c80189f27c20230d"},
+    {"scenarioRef":"S06","path":"downstream/s06/evaluator-only/S06-VERIFICATION-GOLD.json","sha256":"b1f026822541f4d963ff53ed687cf6b207ea6f254225a3f2eca577a24fb782a6"}
+  ],
+  "productContextArtifacts": [
+    {"path":"downstream/product-context/PC0.md","sha256":"ab3f65405533bc32f6a00544d7aa289bc87e9f41adce62715d5d80bfef99c47d"},
+    {"path":"downstream/product-context/PC1.yaml","sha256":"92c55fe40e622f7e16da633248b7435d17f1d51b55516632f5cce97290bdc89f"},
+    {"path":"downstream/product-context/PC1-STALE.yaml","sha256":"770cab5eac2c04158148d2f9d80bf2fd11188325d32f28aa0d425ff6be8dd5ba"},
+    {"path":"downstream/product-context/PRODUCT-CONTEXT-EXPERIMENT-FREEZE.md","sha256":"f703c616c3b649cfb4a45cc54e0e0fbda161df82affe6fa3f5d97cbbe077a5ba"}
+  ],
+  "canonicalRepository": {"url":"https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture.git","baselineCommit":"2eff5f9f84ca709684bfe0b7c90102268f07a0f0","resolved":true},
+  "controlBindingDigest":"5af2283895897030ff15340078502dfc136f40c7eb3cdd89220f1093ad90a13e",
+  "requiredEvidenceDigest":"97c05c4b6aab64c74b07ef35b9e4c488a17cd284559535212d977bed940edfe8",
+  "isolationManifest":"manifests/generation-isolation-manifest.json",
+  "isolationManifestDigest":"0e539fbb84f5242dbc87e9ddfd25e61a852a5b10387cd0bb2b8571d46f4c7d10",
+  "notReadyReasons":["No S04-S06 independent execution review exists in a preparation-only task."]
+}

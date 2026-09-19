@@ -1,0 +1,14 @@
+{
+  "scenarioRef": "S06-VERIFICATION-TESTING",
+  "datasetRef": "SPC-MISSION-V1",
+  "name": "Verification & Testing",
+  "goal": "Independently evaluate the exact software candidate, surface FV-003 at r1, reject stale evidence, and verify corrected r2 with fresh evidence.",
+  "inputRequirements": ["exact S05 candidate", "verification fixtures", "sealed FV-003", "S04 Intention Spec", "fresh repository checkout"],
+  "contextRequirements": ["Product Context PC0 or PC1", "pinned repository revision", "verification role independence", "current candidate identity"],
+  "skillRefs": ["runtime-qa", "test-architecture", "test-design", "root-cause-debugging", "artifact-consistency", "verification-protocol"],
+  "controlRefs": ["CTRL-REPOSITORY-PROVENANCE-001", "CTRL-EXACT-BINDING-001", "CTRL-INDEPENDENT-EVALUATION-001", "CTRL-EVIDENCE-INTEGRITY-001", "CTRL-FINDING-RESOLUTION-001"],
+  "outputRequirements": ["Verification Result", "VerificationFinding", "exact candidate binding", "reproduction evidence", "root-cause evidence", "fresh retest evidence", "current revision verdict"],
+  "successCriteria": ["r1 is independently evaluated and FV-003 is FAIL/REFUTED", "F1 remains unresolved until governed correction and fresh r2 evidence", "r1 evidence is rejected after r2 becomes current", "r2 is independently evaluated from a fresh checkout", "fresh r2 result is PASS/VERIFIED and resolves F1"],
+  "scenarioRevision": "S06-r2-spc-mission-v1",
+  "definitionDigest": "sha256:ae3f75cbb80f5808502dbd8c7e17efc621b1b46d254279bbb9ac4b641176d28c"
+}

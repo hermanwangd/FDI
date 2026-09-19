@@ -1,0 +1,19 @@
+{
+  "fixtureRef": "SPC-PK-REFRESH-V1",
+  "deltaRef": "D8",
+  "fixtureRevision": "D8-r1",
+  "purpose": "realization-only",
+  "changedSourceRefs": ["S02-SRC-REALIZATION-MAP"],
+  "baseline": {
+    "semanticProjection": ["S02-K-CAPABILITY-001:Chart configuration management and chart viewing"],
+    "realizationProjection": ["chart-viewer consumes ChartConfigInterface"]
+  },
+  "after": {
+    "semanticProjection": ["S02-K-CAPABILITY-001:Chart configuration management and chart viewing"],
+    "realizationProjection": ["chart-renderer consumes ChartConfigInterface"],
+    "changedComponent": "chart-renderer"
+  },
+  "expectedSemanticEffect": "NO_CHANGE",
+  "expectedGovernanceOutcome": "KEEP_ACTIVE",
+  "expectedRevisionOutcome": "UPDATE_REALIZATION_ONLY"
+}

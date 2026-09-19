@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "engcim-s01-s06-source-manifest.v0.2",
+  "manifestRef": "S01-S06-SOURCE-MANIFEST-V06-001",
+  "freezeDate": "2026-09-20",
+  "datasets": [
+    {
+      "datasetRef": "PKB001-PETCLINIC",
+      "role": "S01 standalone semantic calibration",
+      "compatibilityWith": {"SPC-MISSION-V1": "N/A"},
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourceAuthority": "historical evidence artifacts; source-level re-adjudication pending",
+      "sourceFiles": [
+        {"sourceRef":"S01-REVIEWED-SEMANTICS","path":"validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004.json","sha256":"6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3"},
+        {"sourceRef":"S01-REVIEWED-EVIDENCE","path":"validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004-evidence.json","sha256":"3c48228142c21b8ac92558f13cb314673e5b8b49b7856e301934d5acf73956d3"},
+        {"sourceRef":"S01-REVIEW-DECISIONS","path":"validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-decisions-004.json","sha256":"98c46df1ffdf6ce57d37d6d320b644ac25778797b1ad786831f76d94e0d34f4f"},
+        {"sourceRef":"S01-ACCEPTANCE-MANIFEST","path":"validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/acceptance-manifest-004.json","sha256":"1b3fbbfd210c2c0d82d74a2579c1980d5de6b047fff56a08cc2b43097c76e2a9"},
+        {"sourceRef":"S01-AI-REVIEW","path":"validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/ai-provisional-review-001.json","sha256":"09b0f023c42f1520e9559dd78c5dd86c7b16bd18a75dace1d980744a7246cbe8"},
+        {"sourceRef":"S01-PRODUCT-CANDIDATE","path":"validation/pkb001/datasets/petclinic-product-semantics-candidate.json","sha256":"72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea"},
+        {"sourceRef":"S01-MAPPING","path":"validation/pkb001/evaluator/petclinic-818c413/gold-mappings-v2.json","sha256":"22292caf3b8f55ff418b0716dce32da19e93974555ef597da1705674b467c385"}
+      ]
+    },
+    {
+      "datasetRef": "SPC-MISSION-V1",
+      "role": "S02-S06 integrated mission corpus",
+      "compatibilityWith": {"PKB001-PETCLINIC": "N/A"},
+      "fixtureRevision": "SPC-MISSION-V1-r1",
+      "authority": "SYNTHETIC_VALIDATION_FIXTURE",
+      "sourceRoot": "downstream/source-corpus/SPC-MISSION-V1",
+      "sourceFiles": [
+        {"sourceRef":"S02-SOURCE-BUNDLE","path":"downstream/source-corpus/SPC-MISSION-V1/source-bundle-baseline.json","sha256":"f2e4a6964263115ad7e2756c0b64a1cc7baadb3830b55dcc5267ff376e6ae007"},
+        {"sourceRef":"S02-PRODUCT-TRAINING","path":"downstream/source-corpus/SPC-MISSION-V1/product-docs/product-training.md","sha256":"92466e71ac6a809f37ee66cc0e1481ecef2a85527e2972df4352776b6ae5ab4c"},
+        {"sourceRef":"S02-CHART-SPEC","path":"downstream/source-corpus/SPC-MISSION-V1/product-docs/chart-management-spec.md","sha256":"45834fcb8aac864e2d99d2e7e7567ef9e2d4a9af64d5d6f7d33bf8a4e9b99dbe"},
+        {"sourceRef":"S02-PRODUCT-RULES","path":"downstream/source-corpus/SPC-MISSION-V1/product-docs/product-rules.yaml","sha256":"de8c65d263a999dd0532ebfc6a833ace697fe94edbcd1cb1cf7e5770bb9c3c04"},
+        {"sourceRef":"S03-REPOSITORY-MANIFEST","path":"downstream/source-corpus/SPC-MISSION-V1/repository-manifest.json","sha256":"2abbcf478b4651697664b10eb43405cc3878ee84e36622422fef684886cb3753"},
+        {"sourceRef":"S04-COMPLETE-REQUEST","path":"downstream/source-corpus/SPC-MISSION-V1/pm/chart-viewer-enhancement-request.md","sha256":"972df04841bd95ddaca54a8748ce6113c1f10eadb612c4c23430a5cbe925f9e9"},
+        {"sourceRef":"S06-FV003","path":"downstream/source-corpus/SPC-MISSION-V1/verification/FV-003.md","sha256":"29ab86351cc8625801809109272884da348c3156ba768023f5e946ab9789bb86"},
+        {"sourceRef":"S06-API-CONTRACT","path":"downstream/source-corpus/SPC-MISSION-V1/verification/api-contract.md","sha256":"a6884c962e8dc70318bf80bd99e11fd7667bfdbb79b6816b897c61816dae24fc"},
+        {"sourceRef":"S06-VALID-REGRESSION","path":"downstream/source-corpus/SPC-MISSION-V1/verification/valid-chart-regression.md","sha256":"007dfb45e98bc9af9ab2bb680b2bcded203d57da6667447e6302be5101dce79e"}
+      ],
+      "fixtureRootDigest": {"algorithm":"sha256(sorted hash/path lines without comments)","digest":"dced92652b75ce48fcb02fe5a0f1bf3b2291fa534481166f1fd4930e7dd54d52"},
+      "canonicalDownstreamRepository": {
+        "url": "https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture.git",
+        "baselineCommit": "2eff5f9f84ca709684bfe0b7c90102268f07a0f0",
+        "ref": "refs/heads/main",
+        "resolvableAtFreeze": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "fixtureRef": "SPC-PK-REFRESH-V1",
+  "deltaRef": "D6",
+  "fixtureRevision": "D6-r1",
+  "purpose": "revision-only",
+  "changedSourceRefs": ["S02-SRC-PRODUCT-SPEC"],
+  "baseline": {
+    "semanticProjection": ["S02-K-RULE-001:invalid limits are rejected and not rendered as valid"],
+    "sourceRevision": "product-spec-r1",
+    "sourceDigest": "digest-product-spec-r1"
+  },
+  "after": {
+    "semanticProjection": ["S02-K-RULE-001:invalid limits are rejected and not rendered as valid"],
+    "sourceRevision": "product-spec-r2",
+    "sourceDigest": "digest-product-spec-r2"
+  },
+  "expectedSemanticEffect": "NO_CHANGE",
+  "expectedGovernanceOutcome": "KEEP_ACTIVE",
+  "expectedRevisionOutcome": "UPDATE_PROVENANCE_ONLY"
+}

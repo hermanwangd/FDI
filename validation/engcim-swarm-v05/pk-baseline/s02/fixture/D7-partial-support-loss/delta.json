@@ -1,0 +1,19 @@
+{
+  "fixtureRef": "SPC-PK-REFRESH-V1",
+  "deltaRef": "D7",
+  "fixtureRevision": "D7-r1",
+  "purpose": "partial support loss",
+  "changedSourceRefs": ["S02-SRC-QA-SPEC"],
+  "baseline": {
+    "knowledgeRef": "S02-K-RULE-001",
+    "supportingSourceRefs": ["S02-SRC-PRODUCT-SPEC", "S02-SRC-QA-SPEC"]
+  },
+  "after": {
+    "knowledgeRef": "S02-K-RULE-001",
+    "supportingSourceRefs": ["S02-SRC-PRODUCT-SPEC"],
+    "removedSourceRef": "S02-SRC-QA-SPEC"
+  },
+  "expectedSemanticEffect": "NO_CHANGE",
+  "expectedGovernanceOutcome": "KEEP_ACTIVE",
+  "expectedRevisionOutcome": "UPDATE_EVIDENCE_SET"
+}

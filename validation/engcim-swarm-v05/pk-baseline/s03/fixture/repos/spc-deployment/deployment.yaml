@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spc-chart-stack
+spec:
+  template:
+    metadata:
+      labels:
+        app: spc-chart-stack
+    spec:
+      containers:
+        - name: chart-management-api
+          image: synthetic/chart-management-api:SPC-MULTIREPO-V1
+        - name: chart-viewer
+          image: synthetic/chart-viewer:SPC-MULTIREPO-V1

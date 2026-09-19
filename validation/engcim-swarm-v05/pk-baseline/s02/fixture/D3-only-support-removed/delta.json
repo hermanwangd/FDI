@@ -1,0 +1,20 @@
+{
+  "fixtureRef": "SPC-PK-REFRESH-V1",
+  "deltaRef": "D3",
+  "fixtureRevision": "D3-r1",
+  "purpose": "only support removed",
+  "changedSourceRefs": ["S02-SRC-QA-SPEC"],
+  "baseline": {
+    "knowledgeRef": "S02-K-RULE-001",
+    "supportingSourceRefs": ["S02-SRC-QA-SPEC"]
+  },
+  "after": {
+    "knowledgeRef": "S02-K-RULE-001",
+    "supportingSourceRefs": [],
+    "removedSourceRef": "S02-SRC-QA-SPEC",
+    "supportStatus": "NO_VALID_SUPPORT"
+  },
+  "expectedSemanticEffect": "INSUFFICIENT",
+  "expectedGovernanceOutcome": "MARK_STALE",
+  "expectedRevisionOutcome": "REQUIRE_SUPPORT_REVIEW"
+}

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "pk-generation-input-manifest.v0.1",
+  "manifestRef": "PK-GEN-INPUTS-V05-001",
+  "purpose": "Non-evaluator inputs permitted for S01-S03 generation/execution",
+  "generation_access": "ALLOW_LIST_ONLY",
+  "product_knowledge_input": true,
+  "execution_input": true,
+  "evaluator_only": false,
+  "evaluator_truth_files": [],
+  "excluded_paths": [
+    "s01/S01-SEMANTIC-GOLD.json",
+    "s01/gold-review.md",
+    "s02/S02-REFRESH-GOLD.json",
+    "s02/gold-review.md",
+    "s03/S03-MULTI-REPO-REALIZATION-GOLD.json",
+    "s03/gold-review.md",
+    "PK-GROUND-TRUTH-SEAL.json"
+  ],
+  "allowed_source_refs": [
+    "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004.json",
+    "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004-evidence.json",
+    "validation/pkb001/datasets/petclinic-product-semantics-candidate.json",
+    "validation/engcim-swarm-v05/pk-baseline/s02/fixture/baseline/source-bundle.json",
+    "validation/engcim-swarm-v05/pk-baseline/s03/fixture/repos/"
+  ],
+  "isolation_rule": "S01-S03 generation/execution roles MUST NOT receive evaluator gold, gold reviews, or the ground-truth seal."
+}

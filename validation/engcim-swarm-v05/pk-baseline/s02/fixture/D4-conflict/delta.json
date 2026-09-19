@@ -1,0 +1,19 @@
+{
+  "fixtureRef": "SPC-PK-REFRESH-V1",
+  "deltaRef": "D4",
+  "fixtureRevision": "D4-r1",
+  "purpose": "conflict",
+  "changedSourceRefs": ["S02-SRC-QA-SPEC"],
+  "baseline": {
+    "meaning": "Missing or invalid chart limits make a chart configuration invalid.",
+    "sourceRevision": "qa-spec-r1"
+  },
+  "after": {
+    "meaning": "Missing chart limits are tolerated and use defaults.",
+    "sourceRevision": "qa-spec-r2",
+    "conflictWith": "S02-K-RULE-001"
+  },
+  "expectedSemanticEffect": "CONFLICT",
+  "expectedGovernanceOutcome": "SURFACE_CONFLICT",
+  "expectedRevisionOutcome": "REQUIRE_HUMAN_DECISION"
+}

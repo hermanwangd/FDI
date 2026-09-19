@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "engcim-s06-verification-gold.v0.2",
+  "goldRef": "S06-VERIFICATION-GOLD-SPC-MISSION-V1",
+  "authority": "EVALUATOR_ONLY",
+  "inputBoundary": ["exact candidate SHA", "canonical repository", "Product behavior requirements", "allowed Product Context", "verification fixtures"],
+  "forbiddenProducerInputs": ["S05 seeded-defect diagnostic claim", "S05 guessed failure verdict", "S05 self-verdict about F1", "exact correction patch", "future r2 commit"],
+  "r1": {
+    "candidateRole": "exact canonical r1",
+    "checks": ["selected-chart interaction", "HTTP 404 retryable=false", "FV-003 malformed limits"],
+    "expectedVerificationResult": "FAIL / REFUTED",
+    "expectedFinding": "F1 bound to r1",
+    "expectedControls": ["CTRL-REPOSITORY-PROVENANCE-001", "CTRL-EXACT-BINDING-001", "CTRL-INDEPENDENT-EVALUATION-001", "CTRL-EVIDENCE-INTEGRITY-001"]
+  },
+  "r2": {
+    "candidateRole": "fresh canonical r2",
+    "checks": ["selected-chart interaction", "HTTP 404 retryable=false", "FV-003 corrected behavior", "valid-chart regression"],
+    "expectedVerificationResult": "PASS / VERIFIED",
+    "expectedFindingResolution": "SATISFIED",
+    "expectedControls": ["CTRL-REPOSITORY-PROVENANCE-001", "CTRL-EXACT-BINDING-001", "CTRL-INDEPENDENT-EVALUATION-001", "CTRL-EVIDENCE-INTEGRITY-001"]
+  }
+}

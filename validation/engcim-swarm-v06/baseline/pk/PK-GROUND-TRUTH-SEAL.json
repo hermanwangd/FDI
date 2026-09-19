@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "pk-ground-truth-seal.v0.2",
+  "sealRef": "PK-GROUND-TRUTH-SEAL-V06-001",
+  "status": "NOT_READY",
+  "authority": "EVALUATOR_ONLY",
+  "createdAt": "2026-09-20",
+  "datasetRef": "PKB001-PETCLINIC plus SPC-MISSION-V1 S02-S03 fixture",
+  "authorIdentity": "codex-validation-preparer",
+  "reviewIdentities": [],
+  "reviewStatus": {"S01":"PENDING_INDEPENDENT_REVIEW_AND_SOURCE_READJUDICATION","S02":"PENDING_INDEPENDENT_REVIEW","S03":"PENDING_INDEPENDENT_REVIEW"},
+  "sourceReadjudication": {"S01":"PENDING","basis":"original Petclinic source checkout/tests not in this namespace"},
+  "goldArtifacts": [
+    {"scenarioRef":"S01","path":"pk/s01/S01-SEMANTIC-GOLD.json","sha256":"0c6939f9cbfbfd44a60f138898677f62d5b9f4a61e7be266596a2eeffa1ab84c","reviewStatus":"PENDING_INDEPENDENT_REVIEW_AND_SOURCE_READJUDICATION"},
+    {"scenarioRef":"S02","path":"pk/s02/S02-REFRESH-GOLD.json","sha256":"8b9ab56d279f1d1afb7f0c1486daeef6a57a34447f4d3b991c94e991700d59b7","reviewStatus":"PENDING_INDEPENDENT_REVIEW"},
+    {"scenarioRef":"S03","path":"pk/s03/S03-MULTI-REPO-REALIZATION-GOLD.json","sha256":"49f26c57da74a75183e33d3045adfd22ab2338b4823de5535a16b67f7190f089","reviewStatus":"PENDING_INDEPENDENT_REVIEW"}
+  ],
+  "fixtureManifests": [
+    {"path":"manifests/source-manifest.json","sha256":"db0cb2cca1aad70830f365b33933a05004c52c202664aa41620e91ff07e025be"},
+    {"path":"manifests/fixture-checksums.txt","sha256":"eae9e20befa66edd55ea2c4b078932b4195efdd31fe6b6a35eef2a3106fa1c16"},
+    {"path":"manifests/generation-isolation-manifest.json","sha256":"0e539fbb84f5242dbc87e9ddfd25e61a852a5b10387cd0bb2b8571d46f4c7d10"},
+    {"path":"pk/s01/evidence-manifest.json","sha256":"14314333b531c6f703d62bea8f26788e5ba102fe0a27fe763eb054263c3f9de2"},
+    {"path":"pk/s03/evidence-manifest.json","sha256":"61a7b4f66d57036c00d95905b376664540bccde057c4609f670b568a1ab58aea"}
+  ],
+  "fixtureRootDigests": [{"fixtureRef":"SPC-MISSION-V1","algorithm":"sha256(sorted hash/path lines without comments)","digest":"dced92652b75ce48fcb02fe5a0f1bf3b2291fa534481166f1fd4930e7dd54d52"}],
+  "generation_access": "DENIED",
+  "product_knowledge_input": false,
+  "evaluator_only": true,
+  "isolationPolicy": {"goldFilesExcludedFromGeneration":true,"sealExcludedFromGeneration":true,"manifest":"manifests/generation-isolation-manifest.json"},
+  "notReadyReasons": ["S01 source-level re-adjudication is pending.","Independent review is pending for S01, S02, and S03 gold."]
+}

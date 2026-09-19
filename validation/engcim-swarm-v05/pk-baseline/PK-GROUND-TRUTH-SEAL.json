@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "pk-ground-truth-seal.v0.1",
+  "sealRef": "PK-GROUND-TRUTH-SEAL-V05-001",
+  "status": "NOT_READY",
+  "authority": "EVALUATOR_ONLY",
+  "createdAt": "2026-09-19",
+  "repository": "hermanwangd/FDI",
+  "repositoryCommit": "c30c39794a959045482d1e64e271b894931a889b",
+  "repositoryCommitRole": "source_snapshot_before_baseline_preparation",
+  "authorIdentity": "codex-validation-preparer",
+  "reviewIdentities": [],
+  "reviewStatus": {
+    "S01": "PENDING_INDEPENDENT_REVIEW",
+    "S02": "PENDING_INDEPENDENT_REVIEW",
+    "S03": "PENDING_INDEPENDENT_REVIEW"
+  },
+  "goldArtifacts": [
+    {"scenarioRef":"S01","path":"s01/S01-SEMANTIC-GOLD.json","sha256":"f87b151dd0f25e67f477a997541d4aa9a02bdd82eb00920cfff3506168ab2b97","reviewStatus":"PENDING_INDEPENDENT_REVIEW"},
+    {"scenarioRef":"S02","path":"s02/S02-REFRESH-GOLD.json","sha256":"24df8bbf7f1813c633641b2dc4f82dd7ad1994f3c61f0e0b9842edd9805fea9f","reviewStatus":"PENDING_INDEPENDENT_REVIEW"},
+    {"scenarioRef":"S03","path":"s03/S03-MULTI-REPO-REALIZATION-GOLD.json","sha256":"c20f72fcd646ad5c5ce0f6eebd281e172c1dd8bac422159a40f02343b1942351","reviewStatus":"PENDING_INDEPENDENT_REVIEW"}
+  ],
+  "fixtureManifests": [
+    {"path":"manifests/source-manifest.json","sha256":"88f21b198a8e835a3db00a6535701285fdd5058bd5c0774db74d4358e6ff68ce"},
+    {"path":"manifests/fixture-checksums.txt","sha256":"ae02985c3395eaf7dc6e95a264418d7267f81d57ea79f4a5286e875adb44eb31"},
+    {"path":"manifests/generation-input-manifest.json","sha256":"98c3551cf4c9a83af3eca7f9b8871f86ea8fda8a52bc97711c6eb815326cc40f"},
+    {"path":"s01/evidence-manifest.json","sha256":"89b7761ebda1477126f253d2b9559527fc28ecfcb22842bb041c1604a26d20e4"},
+    {"path":"s03/evidence-manifest.json","sha256":"244749df9f6f4127763ff188d64aea2bc5bd8862252b7e57bbd37fff68bd1a60"}
+  ],
+  "fixtureRootDigests": [
+    {"fixtureRef":"SPC-PK-REFRESH-V1","algorithm":"sha256(sorted hash/path lines)","digest":"81416d14a284bf20fb54164808cd7f88b12676b0a76cc70a071df0e17f94b1ed"},
+    {"fixtureRef":"SPC-MULTIREPO-V1","algorithm":"sha256(sorted hash/path lines)","digest":"ea49f885d1c0a98c0b50eb5c431ad91197be62bde4c9b1475256152d4ad8f3e7"}
+  ],
+  "generation_access": "DENIED",
+  "product_knowledge_input": false,
+  "execution_input": false,
+  "evaluator_only": true,
+  "isolationPolicy": {
+    "goldFilesExcludedFromGeneration": true,
+    "sealExcludedFromGeneration": true,
+    "generationManifest": "manifests/generation-input-manifest.json"
+  },
+  "notReadyReasons": [
+    "Independent review is pending for S01 semantic gold.",
+    "Independent review is pending for S02 refresh gold.",
+    "Independent review is pending for S03 realization gold."
+  ]
+}
