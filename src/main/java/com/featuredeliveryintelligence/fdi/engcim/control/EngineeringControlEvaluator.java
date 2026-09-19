@@ -212,6 +212,7 @@ public final class EngineeringControlEvaluator {
         }
         if (!booleanField(resolution, "independent")
                 || text(resolution, "evaluatorRef").isBlank()
+                || text(resolution, "producerRef").isBlank()
                 || text(resolution, "evaluatorRef").equals(text(resolution, "producerRef"))) {
             reasons.add("EVALUATOR_NOT_INDEPENDENT");
         }

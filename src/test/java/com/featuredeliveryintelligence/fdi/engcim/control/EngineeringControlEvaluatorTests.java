@@ -334,6 +334,21 @@ class EngineeringControlEvaluatorTests {
     }
 
     @Test
+    void findingResolutionRequiresProducerIdentityForIndependentEvaluation() {
+        ObjectNode subject = finding("RESOLVED", R2);
+        ObjectNode missingProducer = resolution("F1", "candidate", R2, "S06", "", "PASS", true, "RES-2");
+        EngineeringControlResult freshBinding = evaluate(EngineeringControlCatalog.EXACT_BINDING,
+                object().put("subjectRef", "candidate").put("revision", R2),
+                object().put("boundSubjectRef", "candidate").put("boundRevision", R2));
+
+        EngineeringControlResult result = evaluate(EngineeringControlCatalog.FINDING_RESOLUTION,
+                subject, bindingEnvelope(freshBinding, missingProducer));
+
+        assertEquals(EngineeringControlResult.Outcome.UNSATISFIED, result.outcome());
+        assertTrue(result.reasonCodes().contains("EVALUATOR_NOT_INDEPENDENT"));
+    }
+
+    @Test
     void findingResolutionRequiresResolutionEvidenceAfterR2Exists() {
         EngineeringControlResult result = evaluate(EngineeringControlCatalog.FINDING_RESOLUTION,
                 finding("RESOLVED", R2), object());
