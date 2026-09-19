@@ -1,0 +1,14 @@
+RC7-B v0.2 package control-surface probe
+Timestamp: 2026-09-19
+Package: /Users/herman_mbp2023/engcim-swarm-rc7a1-validation-20260919/engcim-swarm-package-RC7A1
+
+Commands:
+  rg -n -i 'CTRL-' <package>        -> exit 1, 0 bytes
+  rg -n -i 'VerificationFinding' <package> -> exit 1, 0 bytes
+  rg -n -i 'Correction Obligation' <package> -> exit 1, 0 bytes
+  rg -n -i 'correction disposition' <package> -> exit 1, 0 bytes
+
+Conclusion:
+  No RC7-B control runtime surface was found in the available package.
+  This is a validation blocker, not a claim that the package's RC7A1
+  human-resume controls failed.

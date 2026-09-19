@@ -1,0 +1,160 @@
+{
+  "oracle": "reference-only; not an ENGCIM runtime implementation",
+  "identities": {
+    "baselineCommit": "890a2246b1ab9386c1c533dc22a7248f0f544154",
+    "candidateR1": "ba55d2e84b245a1500383733c398be9ccad15bef",
+    "candidateR2": "8977df8388e04e4f4599d3fca1851ff0fd1e7fd9"
+  },
+  "provenance": {
+    "repositoryRef": "file:///Users/herman_mbp2023/engcim-swarm-rc7a1-validation-20260919/validation-fixtures/repos/chart-viewer",
+    "sourceRepoExists": true,
+    "sourceHeadAtRun": "890a2246b1ab9386c1c533dc22a7248f0f544154",
+    "sourceWorkingTreeClean": true,
+    "candidateWorkingTreeClean": true,
+    "identities": {
+      "baselineCommit": "890a2246b1ab9386c1c533dc22a7248f0f544154",
+      "candidateR1": "ba55d2e84b245a1500383733c398be9ccad15bef",
+      "candidateR2": "8977df8388e04e4f4599d3fca1851ff0fd1e7fd9"
+    },
+    "independentlyResolvedByVerifierClone": {
+      "baselineCommit": true,
+      "candidateR1": true,
+      "candidateR2": true
+    },
+    "ancestry": {
+      "baseline_to_r1": true,
+      "r1_to_r2": true
+    },
+    "result": "PASS"
+  },
+  "verification": {
+    "r1": {
+      "checkout": "PASS",
+      "resolvedCommit": "ba55d2e84b245a1500383733c398be9ccad15bef",
+      "command": "node tests/fv003-invalid-limits.mjs",
+      "exitCode": 1,
+      "expected": "FAIL",
+      "outputSha256": "7c627126fe62fbc9912fb809b383400cccf0023fcedc35b49caf417052f5a17b",
+      "result": "PASS"
+    },
+    "r2": {
+      "checkout": "PASS",
+      "resolvedCommit": "8977df8388e04e4f4599d3fca1851ff0fd1e7fd9",
+      "command": "node tests/fv003-invalid-limits.mjs",
+      "exitCode": 0,
+      "expected": "PASS",
+      "outputSha256": "91412278aeea35aa74ea95a054336b2e6deeb5a9beabe4f176d5cb221b839774",
+      "result": "PASS"
+    }
+  },
+  "positive": {
+    "repositoryProvenance": "PASS",
+    "independentVerification": "PASS",
+    "correctionObligationLifecycle": "PASS",
+    "revisionFreshness": "PASS",
+    "evidenceIntegrity": "PASS",
+    "result": "PASS"
+  },
+  "correctionObligation": {
+    "finding": {
+      "ref": "F1",
+      "candidate": "ba55d2e84b245a1500383733c398be9ccad15bef",
+      "severity": "MATERIAL",
+      "status": "OPEN"
+    },
+    "beforeDisposition": "UNSATISFIED",
+    "disposition": {
+      "owner": "S05",
+      "reason": "FV-003 invalid limits",
+      "evidence": "r2 correction commit"
+    },
+    "afterDisposition": "SATISFIED",
+    "result": "PASS"
+  },
+  "revisionFreshness": {
+    "oldReviewAtR1": {
+      "candidate": "ba55d2e84b245a1500383733c398be9ccad15bef",
+      "current": "8977df8388e04e4f4599d3fca1851ff0fd1e7fd9",
+      "result": "UNSATISFIED",
+      "reason": "STALE_REVISION"
+    },
+    "oldVerificationAtR1": {
+      "candidate": "ba55d2e84b245a1500383733c398be9ccad15bef",
+      "current": "8977df8388e04e4f4599d3fca1851ff0fd1e7fd9",
+      "result": "UNSATISFIED",
+      "reason": "STALE_REVISION"
+    },
+    "freshReviewAtR2": {
+      "candidate": "8977df8388e04e4f4599d3fca1851ff0fd1e7fd9",
+      "result": "SATISFIED"
+    },
+    "freshVerificationAtR2": {
+      "candidate": "8977df8388e04e4f4599d3fca1851ff0fd1e7fd9",
+      "result": "SATISFIED"
+    },
+    "result": "PASS"
+  },
+  "evidenceIntegrity": {
+    "r1Tree": "d8cd531cc5f74e1ccc2a3aca86ac04ebd898f8f7",
+    "r2Tree": "9a3f146e6712b76790bcedd6aaabe4ae99dc2fb9",
+    "distinctCandidateIdentity": true,
+    "result": "PASS"
+  },
+  "negativeControls": {
+    "result": "PASS",
+    "cases": [
+      {
+        "id": "B1-N1",
+        "name": "Unknown Candidate Commit",
+        "observed": true,
+        "expected": "UNSATISFIED",
+        "result": "PASS"
+      },
+      {
+        "id": "B1-N2",
+        "name": "Reuse r1 Review for r2",
+        "observed": "UNSATISFIED",
+        "reason": "STALE_REVISION",
+        "expected": "UNSATISFIED",
+        "result": "PASS"
+      },
+      {
+        "id": "B1-N3",
+        "name": "Reuse r1 Verification for r2",
+        "observed": "UNSATISFIED",
+        "reason": "STALE_REVISION",
+        "expected": "UNSATISFIED",
+        "result": "PASS"
+      },
+      {
+        "id": "B1-N4",
+        "name": "Content Changes Without New Identity",
+        "observed": true,
+        "expected": "UNSATISFIED",
+        "result": "PASS"
+      },
+      {
+        "id": "B1-N5",
+        "name": "Producer-only Provenance",
+        "observed": "INCONCLUSIVE",
+        "expected": "INCONCLUSIVE",
+        "result": "PASS"
+      },
+      {
+        "id": "B1-N6",
+        "name": "Unresolved Finding With No Disposition",
+        "observed": "UNSATISFIED",
+        "expected": "UNSATISFIED",
+        "result": "PASS"
+      },
+      {
+        "id": "B1-N7",
+        "name": "Missing Correction Evidence",
+        "observed": "INCONCLUSIVE",
+        "expected": "INCONCLUSIVE",
+        "result": "PASS"
+      }
+    ]
+  },
+  "referenceOracleResult": "PASS"
+}
