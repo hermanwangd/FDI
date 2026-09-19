@@ -89,6 +89,20 @@ class EngineeringControlEvaluatorTests {
     }
 
     @Test
+    void authorizationDoesNotAuthorizeMissingSubjectIdentity() {
+        ObjectNode evidence = object();
+        evidence.putObject("authorityDecision")
+                .put("decision", "AUTHORIZED")
+                .put("evidenceRef", "AUTH-1");
+
+        EngineeringControlResult result = evaluate(EngineeringControlCatalog.AUTHORIZATION,
+                object(), evidence);
+
+        assertEquals(EngineeringControlResult.Outcome.INCONCLUSIVE, result.outcome());
+        assertTrue(result.reasonCodes().contains("AUTHORITY_EVIDENCE_MISSING"));
+    }
+
+    @Test
     void exactBindingRejectsR1EvaluationWhenR2IsCurrent() {
         ObjectNode current = object().put("subjectRef", "candidate").put("revision", R2);
         ObjectNode bound = object().put("boundSubjectRef", "candidate").put("boundRevision", R1);
@@ -194,6 +208,23 @@ class EngineeringControlEvaluatorTests {
 
         assertEquals(EngineeringControlResult.Outcome.UNSATISFIED, result.outcome());
         assertTrue(result.reasonCodes().contains("EVALUATOR_NOT_INDEPENDENT"));
+    }
+
+    @Test
+    void independentEvaluationRequiresProducerIdentity() {
+        ObjectNode subject = object().put("subjectRef", "candidate:r1");
+        ObjectNode evidence = object();
+        evidence.putObject("evaluation")
+                .put("evaluatorRef", "S06")
+                .put("evaluatedSubjectRef", "candidate:r1")
+                .put("independent", true)
+                .put("evidenceRef", "VER-1");
+
+        EngineeringControlResult result = evaluate(EngineeringControlCatalog.INDEPENDENT_EVALUATION,
+                subject, evidence);
+
+        assertEquals(EngineeringControlResult.Outcome.INCONCLUSIVE, result.outcome());
+        assertTrue(result.reasonCodes().contains("EVALUATION_EVIDENCE_MISSING"));
     }
 
     @Test

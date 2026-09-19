@@ -54,6 +54,13 @@ public final class EngineeringControlEvaluator {
             return result(EngineeringControlCatalog.AUTHORIZATION, subject, evidence,
                     EngineeringControlResult.Outcome.INCONCLUSIVE, Set.of("AUTHORITY_EVIDENCE_MISSING"));
         }
+        if (!allTextPresent(subject, "requestedAction", "subjectRef", "governedScope", "currentRevision",
+                "governingArtifactRef")
+                || !allTextPresent(decision, "decision", "action", "subjectRef", "scope", "revision",
+                "governingArtifactRef", "evidenceRef")) {
+            return result(EngineeringControlCatalog.AUTHORIZATION, subject, evidence,
+                    EngineeringControlResult.Outcome.INCONCLUSIVE, Set.of("AUTHORITY_EVIDENCE_MISSING"));
+        }
         if (!"AUTHORIZED".equals(text(decision, "decision"))) reasons.add("AUTHORIZATION_DENIED");
         if (!text(subject, "requestedAction").equals(text(decision, "action"))) reasons.add("ACTION_NOT_AUTHORIZED");
         if (!text(subject, "subjectRef").equals(text(decision, "subjectRef"))) reasons.add("SUBJECT_MISMATCH");
@@ -141,6 +148,11 @@ public final class EngineeringControlEvaluator {
         }
         JsonNode evaluation = evidence.get("evaluation");
         if (evaluation == null || !evaluation.isObject() || text(evaluation, "evidenceRef").isBlank()) {
+            return result(EngineeringControlCatalog.INDEPENDENT_EVALUATION, subject, evidence,
+                    EngineeringControlResult.Outcome.INCONCLUSIVE, Set.of("EVALUATION_EVIDENCE_MISSING"));
+        }
+        if (!allTextPresent(subject, "subjectRef", "producerRef")
+                || !allTextPresent(evaluation, "evaluatorRef", "producerRef", "evaluatedSubjectRef")) {
             return result(EngineeringControlCatalog.INDEPENDENT_EVALUATION, subject, evidence,
                     EngineeringControlResult.Outcome.INCONCLUSIVE, Set.of("EVALUATION_EVIDENCE_MISSING"));
         }
@@ -344,6 +356,11 @@ public final class EngineeringControlEvaluator {
     private static boolean booleanField(JsonNode node, String field) {
         JsonNode value = node == null ? null : node.get(field);
         return value != null && value.isBoolean() && value.asBoolean();
+    }
+
+    private static boolean allTextPresent(JsonNode node, String... fields) {
+        for (String field : fields) if (text(node, field).isBlank()) return false;
+        return true;
     }
 
     private static boolean canonicalUrl(String value) {
