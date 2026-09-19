@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "engcim-generation-isolation.v0.2",
+  "manifestRef": "S01-S06-GENERATION-ISOLATION-V06-001",
+  "generation_access": "ALLOW_LIST_ONLY",
+  "evaluator_truth_access": "DENIED",
+  "product_knowledge_input": false,
+  "evaluator_only": true,
+  "rules": [
+    {"actor":"S01 generation","mayRead":["PKB001 source evidence and source manifest"],"mayNotRead":["pk/s01/S01-SEMANTIC-GOLD.json","pk/s01/gold-review.md","PK-GROUND-TRUTH-SEAL.json"]},
+    {"actor":"S02/S03 execution","mayRead":["SPC-MISSION-V1 source corpus","frozen scenario definition"],"mayNotRead":["pk/s02/S02-REFRESH-GOLD.json","pk/s03/S03-MULTI-REPO-REALIZATION-GOLD.json","gold-review.md","VALIDATION-GROUND-TRUTH-SEAL.json"]},
+    {"actor":"S05 producer","mayRead":["S04 authorized Intention Spec","S05 Development Gold scope","canonical baseline commit","developer test assets"],"mayNotRead":["downstream/s06/evaluator-only/**","S06 expected verdicts","S06 diagnostic claim about FV-003","exact correction patch","future r2 commit"]},
+    {"actor":"S06 evaluator","mayRead":["exact candidate","Product behavior requirements","allowed Product Context","evaluator-only tests"],"mayNotRead":["S05 private diagnostics beyond legitimate candidate evidence","future r2 before correction authorization"]}
+  ],
+  "goldPathsExcludedFromGeneration": [
+    "pk/s01/S01-SEMANTIC-GOLD.json",
+    "pk/s01/gold-review.md",
+    "pk/s02/S02-REFRESH-GOLD.json",
+    "pk/s02/gold-review.md",
+    "pk/s03/S03-MULTI-REPO-REALIZATION-GOLD.json",
+    "pk/s03/gold-review.md",
+    "downstream/s05/S05-DEVELOPMENT-GOLD.json",
+    "downstream/s06/evaluator-only/S06-VERIFICATION-GOLD.json",
+    "VALIDATION-GROUND-TRUTH-SEAL.json"
+  ],
+  "futureR2Precreated": false,
+  "exactCorrectionPatchPresentInProducerInputs": false,
+  "s05SeededDefectDiagnosticPresentInS06Inputs": false
+}

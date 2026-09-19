@@ -1,0 +1,292 @@
+{
+  "schemaVersion": "pk-s01-semantic-gold.v0.1",
+  "goldRef": "S01-SEMANTIC-GOLD-V06-001",
+  "authority": "EVALUATOR_ONLY",
+  "sourceAuthority": "REVIEWED_EXPERIMENT_SEMANTICS_PENDING_SOURCE_READJUDICATION",
+  "sourceSnapshot": "pkb001-petclinic-reviewed-semantics-004",
+  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "publicationAllowed": false,
+  "independentSourceReadjudication": "PENDING",
+  "knownLimitations": [
+    "Exact future-date cutoff and timezone are not established.",
+    "Search ordering, page size, storage, routing, and concurrency are not Product semantics."
+  ],
+  "knownConflicts": [],
+  "items": [
+    {
+      "itemRef": "S01-PRODUCT-FACT-001",
+      "type": "PRODUCT_FACT",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "The reviewed experiment covers a veterinary clinic product with owner, pet, visit, and veterinarian workflows.",
+      "acceptableVariants": ["Equivalent grouping of the five accepted reviewed capabilities"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-PRODUCT-CANDIDATE"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "NONE_WITHIN_REVIEWED_SCOPE",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-PRODUCT-FACT-002",
+      "type": "PRODUCT_FACT",
+      "criticality": "NON_CRITICAL",
+      "expectedMeaning": "The reviewed semantics intentionally leave internal storage, routing, ordering, timezone, and concurrency mechanisms unspecified.",
+      "acceptableVariants": ["The same exclusions are preserved without promoting implementation details"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-REVIEW-004"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "KNOWN_LIMITATION",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-CAPABILITY-001",
+      "type": "CAPABILITY",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "Owner lookup and owner-detail viewing by name, including result paging and selecting a matching owner.",
+      "acceptableVariants": ["Find Owners", "飼主查詢與詳細資料檢視"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-MAPPING-V2"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "NONE_WITHIN_REVIEWED_SCOPE",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-CAPABILITY-002",
+      "type": "CAPABILITY",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "Create owner records and later update the owner's contact information while preserving identity.",
+      "acceptableVariants": ["Register Owner plus Maintain Owner Details", "飼主基本資料建立與更新"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-MAPPING-V2"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "NONE_WITHIN_REVIEWED_SCOPE",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-CAPABILITY-003",
+      "type": "CAPABILITY",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "Create and update pets in an owner scope, including type selection and same-owner name uniqueness.",
+      "acceptableVariants": ["Register Pet plus Maintain Pet Details", "飼主名下寵物資料與同名限制"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-MAPPING-V2"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "NONE_WITHIN_REVIEWED_SCOPE",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-CAPABILITY-004",
+      "type": "CAPABILITY",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "Record a dated visit and description for a pet, enforcing the reviewed future-date boundary.",
+      "acceptableVariants": ["Record Pet Visit", "寵物看診紀錄與日期限制"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-MAPPING-V2"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "KNOWN_LIMITATION",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-CAPABILITY-005",
+      "type": "CAPABILITY",
+      "criticality": "NON_CRITICAL",
+      "expectedMeaning": "Browse veterinarians, their specialties, and paged results.",
+      "acceptableVariants": ["Browse Veterinarians plus Review Veterinarian Specialties", "獸醫名錄與專長瀏覽"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-REVIEW-004", "S01-EVID-MAPPING-V2"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "KNOWN_LIMITATION",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-SCENARIO-001",
+      "type": "BEHAVIOR_SCENARIO",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "Given matching owners, surname search displays matches, supports paging when needed, and permits selecting a detail view.",
+      "acceptableVariants": ["HYP-SCENARIO-001"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-MAPPING-V2"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "NONE_WITHIN_REVIEWED_SCOPE",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-SCENARIO-002",
+      "type": "BEHAVIOR_SCENARIO",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "Leading and trailing whitespace in an owner surname query does not prevent the matching owner from being found.",
+      "acceptableVariants": ["HYP-SCENARIO-002"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-REVIEW-004"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "KNOWN_LIMITATION",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-SCENARIO-003",
+      "type": "BEHAVIOR_SCENARIO",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "Submitting valid owner information creates an owner record that can later be queried and viewed.",
+      "acceptableVariants": ["HYP-SCENARIO-003"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-MAPPING-V2"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "NONE_WITHIN_REVIEWED_SCOPE",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-SCENARIO-004",
+      "type": "BEHAVIOR_SCENARIO",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "Submitting contact changes for an identifiable owner updates that owner and displays the changed values on re-view.",
+      "acceptableVariants": ["HYP-SCENARIO-004"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-MAPPING-V2"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "NONE_WITHIN_REVIEWED_SCOPE",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-SCENARIO-005",
+      "type": "BEHAVIOR_SCENARIO",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "Submitting valid pet data in an owner scope creates a pet that is visible from that owner.",
+      "acceptableVariants": ["HYP-SCENARIO-005"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-MAPPING-V2"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "NONE_WITHIN_REVIEWED_SCOPE",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-SCENARIO-006",
+      "type": "BEHAVIOR_SCENARIO",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "A same-owner duplicate pet name is rejected and the name conflict is surfaced.",
+      "acceptableVariants": ["HYP-SCENARIO-006"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-REVIEW-004"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "KNOWN_LIMITATION",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-SCENARIO-011",
+      "type": "BEHAVIOR_SCENARIO",
+      "criticality": "NON_CRITICAL",
+      "expectedMeaning": "Valid changes to an existing pet update the correct pet and are visible on re-view.",
+      "acceptableVariants": ["HYP-SCENARIO-011"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-REVIEW-004", "S01-EVID-MAPPING-V2"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "NONE_WITHIN_REVIEWED_SCOPE",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-SCENARIO-007",
+      "type": "BEHAVIOR_SCENARIO",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "A valid dated visit with description is recorded for the selected pet and appears in later pet viewing.",
+      "acceptableVariants": ["HYP-SCENARIO-007"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-MAPPING-V2"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "NONE_WITHIN_REVIEWED_SCOPE",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-SCENARIO-008",
+      "type": "BEHAVIOR_SCENARIO",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "A visit date beyond the allowed future boundary is rejected with date-rule feedback.",
+      "acceptableVariants": ["HYP-SCENARIO-008"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-REVIEW-004"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "KNOWN_LIMITATION",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-SCENARIO-009",
+      "type": "BEHAVIOR_SCENARIO",
+      "criticality": "NON_CRITICAL",
+      "expectedMeaning": "The veterinarian list can be browsed by page and each row presents available specialties.",
+      "acceptableVariants": ["HYP-SCENARIO-009"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-REVIEW-004", "S01-EVID-MAPPING-V2"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "KNOWN_LIMITATION",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-RULE-001",
+      "type": "PRODUCT_RULE_OR_CONSTRAINT",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "Pet-name uniqueness is scoped to one owner; cross-owner global uniqueness is excluded.",
+      "acceptableVariants": ["Reject same-owner duplicate; allow same name under another owner unless other evidence says otherwise"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-REVIEW-004"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "NONE_WITHIN_REVIEWED_SCOPE",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-RULE-002",
+      "type": "PRODUCT_RULE_OR_CONSTRAINT",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "Future visit dates outside the allowed range are rejected, but the exact cutoff and timezone remain unspecified.",
+      "acceptableVariants": ["Reject the evidenced out-of-range future date without inventing an exact cutoff"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-REVIEW-004"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "KNOWN_LIMITATION",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-RULE-003",
+      "type": "PRODUCT_RULE_OR_CONSTRAINT",
+      "criticality": "NON_CRITICAL",
+      "expectedMeaning": "Owner surname query behavior is preserved when the input contains leading or trailing whitespace.",
+      "acceptableVariants": ["Normalize query boundary whitespace before matching"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-REVIEW-004"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "KNOWN_LIMITATION",
+      "expectedGovernanceDisposition": "ACCEPTABLE_PROPOSAL"
+    },
+    {
+      "itemRef": "S01-AMBIGUITY-001",
+      "type": "PRODUCT_RULE_OR_CONSTRAINT",
+      "criticality": "NON_CRITICAL",
+      "expectedMeaning": "Search ordering and result page size are intentionally unspecified by the reviewed semantics.",
+      "acceptableVariants": ["Do not assert an ordering or page-size rule"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-REVIEW-004"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "AMBIGUOUS",
+      "expectedGovernanceDisposition": "AMBIGUOUS"
+    },
+    {
+      "itemRef": "S01-NEGATIVE-001",
+      "type": "PRODUCT_FACT",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "A user-visible language-selection capability is not established by the reviewed evidence and must not be accepted as Product behavior.",
+      "acceptableVariants": ["Reject as unsupported claim", "Retain as historical hypothesis only"],
+      "supportingEvidenceRefs": ["S01-EVID-REVIEW-004", "S01-EVID-SEMANTICS-EVIDENCE"],
+      "expectedAuthorityState": "REJECTED_OR_UNRESOLVED_REVIEWED_HYPOTHESIS",
+      "expectedAmbiguityState": "KNOWN_LIMITATION",
+      "expectedGovernanceDisposition": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "itemRef": "S01-NEGATIVE-002",
+      "type": "PRODUCT_RULE_OR_CONSTRAINT",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "A repository method name or internal storage mechanism is not itself a Product rule or Product capability.",
+      "acceptableVariants": ["Keep implementation detail as realization evidence only"],
+      "supportingEvidenceRefs": ["S01-EVID-MAPPING-V2", "S01-EVID-SEMANTICS-004"],
+      "expectedAuthorityState": "REALIZATION_EVIDENCE_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "KNOWN_LIMITATION",
+      "expectedGovernanceDisposition": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "itemRef": "S01-NEGATIVE-003",
+      "type": "PRODUCT_RULE_OR_CONSTRAINT",
+      "criticality": "CRITICAL",
+      "expectedMeaning": "Global pet-name uniqueness is an incorrect generalization; the reviewed boundary is same-owner scope.",
+      "acceptableVariants": ["Reject the global uniqueness claim"],
+      "supportingEvidenceRefs": ["S01-EVID-SEMANTICS-004", "S01-EVID-REVIEW-004"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_BOUNDARY",
+      "expectedAmbiguityState": "NONE_WITHIN_REVIEWED_SCOPE",
+      "expectedGovernanceDisposition": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "itemRef": "S01-NEGATIVE-004",
+      "type": "PRODUCT_RULE_OR_CONSTRAINT",
+      "criticality": "NON_CRITICAL",
+      "expectedMeaning": "The exact future-date cutoff, timezone, sorting rule, page size, and persistence mechanism are not gold truth.",
+      "acceptableVariants": ["Surface as unresolved rather than inventing values"],
+      "supportingEvidenceRefs": ["S01-EVID-REVIEW-004", "S01-EVID-SEMANTICS-004"],
+      "expectedAuthorityState": "REVIEWED_EXPERIMENT_SEMANTICS_NOT_PRODUCT_TRUTH",
+      "expectedAmbiguityState": "KNOWN_LIMITATION",
+      "expectedGovernanceDisposition": "INSUFFICIENT_EVIDENCE"
+    }
+  ]
+}

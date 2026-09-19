@@ -1,0 +1,14 @@
+{
+  "scenarioRef": "S02-PK-REFRESH",
+  "name": "PK Refresh",
+  "datasetRef": "SPC-MISSION-V1",
+  "goal": "Refresh the frozen product knowledge baseline while preserving unchanged facts and exposing changed, removed, new, and conflicting facts.",
+  "inputRequirements": ["S01 knowledge artifact", "one changed fact", "one new fact", "one removed fact", "one conflicting fact", "one unchanged fact", "source revisions"],
+  "contextRequirements": ["prior knowledge revision", "new source snapshot", "conflict governance rules"],
+  "skillRefs": ["product-knowledge", "pk-correlation-synthesis", "pk-file-ingestion", "pk-document-analysis", "pk-repository-analysis", "artifact-consistency"],
+  "controlRefs": ["CTRL-REPOSITORY-PROVENANCE-001", "CTRL-EXACT-BINDING-001", "CTRL-EVIDENCE-INTEGRITY-001"],
+  "outputRequirements": ["refresh artifact", "source revision mapping", "changed/new/removed/unchanged decisions", "conflict record", "parent aggregation"],
+  "successCriteria": ["unchanged fact is preserved", "changed and new facts are updated", "removed fact is explicitly retired", "conflict is surfaced without silent winner", "all outputs bind to source revisions"],
+  "scenarioRevision": "S02-r2-spc-mission-v1",
+  "definitionDigest": "sha256:e1034e55ef5184eee5fc883f00d0031d1fe0f31f0d0d8165d653c3dc7fc1599e"
+}

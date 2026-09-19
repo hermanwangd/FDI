@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "engcim-s05-development-gold.v0.2",
+  "goldRef": "S05-DEVELOPMENT-GOLD-SPC-MISSION-V1",
+  "caseRef": "S05-FV003-CORRECTION-LOOP",
+  "authorized": true,
+  "allowedRepositories": ["https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture.git"],
+  "allowedPathsBeforeCorrection": ["src/interaction.js"],
+  "forbiddenPathsBeforeCorrection": ["src/chartViewer.js", "test/interaction.test.js"],
+  "correctionScopeAfterF1": ["src/chartViewer.js"],
+  "expectedBehavior": ["open selected chart in one interaction", "preserve HTTP 404 retryable=false", "do not change chart-limit semantics at r1"],
+  "requiredTests": ["npm test", "developer self-check bound to candidate SHA"],
+  "requiredEvidenceRefs": ["EVID-S05-AUTHORITY", "EVID-S05-SAFETY", "EVID-S05-REPOSITORY", "EVID-S05-CANDIDATE", "EVID-S05-PUBLICATION", "EVID-S05-INTEGRITY"],
+  "canonicalPublicationRequired": true,
+  "r1Requirements": ["seeded chart-limit defect remains unchanged", "canonical candidate commit is pushed", "duplicate accepted execution=0", "manual child done=0"],
+  "r2Requirements": ["parent is exact r1", "correction is governed after F1", "canonical r2 is pushed", "no exact patch is present in producer inputs"]
+}

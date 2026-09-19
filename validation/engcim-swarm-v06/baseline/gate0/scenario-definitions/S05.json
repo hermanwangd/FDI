@@ -1,0 +1,14 @@
+{
+  "scenarioRef": "S05-SOFTWARE-DEVELOPMENT",
+  "datasetRef": "SPC-MISSION-V1",
+  "name": "Software Development",
+  "goal": "Produce an authorized, repository-traceable software candidate within the frozen change surface, including governed correction work when required.",
+  "inputRequirements": ["authorized Intention Spec", "repository realization", "allowed change surface", "optional governed CorrectionRequest"],
+  "contextRequirements": ["Product Context PC0 or PC1", "pinned execution repository revisions", "branch/workspace identity", "developer test assets"],
+  "skillRefs": ["software-development", "execution-guard", "root-cause-debugging", "artifact-consistency"],
+  "controlRefs": ["CTRL-AUTHORIZATION-001", "CTRL-EXECUTION-SAFETY-001", "CTRL-REPOSITORY-PROVENANCE-001", "CTRL-EVIDENCE-INTEGRITY-001", "CTRL-EXACT-BINDING-001"],
+  "outputRequirements": ["Development Result", "canonical repository", "baseline commit", "candidate commit", "branch/workspace", "changed files", "self-test evidence", "guard evidence"],
+  "successCriteria": ["authorization is current for exact action/scope/revision", "mutation is within the allowed boundary", "candidate is independently resolvable from canonical Git history", "evidence is complete", "no default-branch or unsafe destructive mutation occurs"],
+  "scenarioRevision": "S05-r2-spc-mission-v1",
+  "definitionDigest": "sha256:4634378ea311acda86f9544e772665653a9ff5139d73ed414946b8c0faeb6052"
+}
