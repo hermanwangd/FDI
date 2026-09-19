@@ -1,0 +1,187 @@
+{
+  "schemaVersion": "engcim-s03-claims.v0.1",
+  "artifactKind": "S03_EXECUTION_CLAIMS",
+  "revision": 1,
+  "runId": "01a0bbd2-7a7e-737b-aabd-bebdca11da50",
+  "scenarioRef": "S03-MULTI-REPO-ANALYSIS",
+  "scenarioRevision": "S03-r2-spc-mission-v1",
+  "definitionDigest": "sha256:a3adf92fa9672eff180b03cc0243db02bb723046d39eac2d1b4f4fde85ebf771",
+  "datasetRef": "SPC-MISSION-V1",
+  "authority": "EXECUTION_EVIDENCE_ONLY",
+  "sourceBinding": {
+    "inputManifest": "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-input-manifest.json",
+    "inputManifestSha256": "sha256:230e1e4a3bc63d28e4b0b573eba1de52b2004a57a74396a9a755ec260dc8736c",
+    "fixtureRevision": "SPC-MISSION-V1-r1",
+    "checkoutRevision": "229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8",
+    "goldPath": "validation/engcim-swarm-v06/baseline/pk/s03/S03-MULTI-REPO-REALIZATION-GOLD.json",
+    "goldSha256": "sha256:49f26c57da74a75183e33d3045adfd22ab2338b4823de5535a16b67f7190f089",
+    "goldAuthority": "EVALUATOR_ONLY"
+  },
+  "observationLifecycle": {
+    "rawObservationCount": 28,
+    "rawObservationValidationState": "PROVISIONAL",
+    "manualSourceSupplementCount": 5,
+    "manualSupplementReason": "The frozen API interface is an exported JavaScript object and deployment source is YAML-only; both were read directly from pinned files and retained as provisional observations.",
+    "trustedProductKnowledgeWritten": false,
+    "governanceIssueCreated": false
+  },
+  "nodeClaims": {
+    "graphArtifact": "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-first/nodes.jsonl",
+    "observedNodeCounts": {"Repository":4,"Component":4,"Module":7,"CodeEntity":5,"Interface":1,"total":21},
+    "expectedRelevantRepositories": ["REPO-chart-management-api","REPO-chart-viewer","REPO-spc-deployment"],
+    "expectedRelevantComponents": ["COMP-chart-management-api","COMP-chart-viewer","COMP-spc-deployment"],
+    "repositoryToComponentMapping": [
+      {"repositoryRef":"REPO-chart-management-api","componentRef":"COMP-chart-management-api","status":"PASS","evidenceRefs":["S03-EVID-API-README","S03-EVID-API-SOURCE"]},
+      {"repositoryRef":"REPO-chart-viewer","componentRef":"COMP-chart-viewer","status":"PASS","evidenceRefs":["S03-EVID-VIEWER-README","S03-EVID-VIEWER-SOURCE"]},
+      {"repositoryRef":"REPO-spc-deployment","componentRef":"COMP-spc-deployment","status":"PASS","evidenceRefs":["S03-EVID-DEPLOYMENT-README","S03-EVID-DEPLOYMENT-SOURCE"]},
+      {"repositoryRef":"REPO-distractor-service","componentRef":null,"status":"PASS_NEGATIVE_SCOPE","evidenceRefs":["S03-EVID-DISTRACTOR-README","S03-EVID-DISTRACTOR-SOURCE"]}
+    ],
+    "expectedInterface": {"interfaceRef":"IFACE-chart-config","graphNode":"Interface:chart-management-api/ChartConfigInterface","name":"ChartConfigInterface","status":"PASS","evidenceRefs":["S03-EVID-API-SOURCE"]}
+  },
+  "edgeClaims": [
+    {
+      "goldEdgeRef":"COMP-chart-viewer->COMP-chart-management-api:CONSUMES_FROM",
+      "goldRelationType":"CONSUMES_FROM",
+      "graphRelationType":"CONSUMES",
+      "graphEdgeRefs":["CONSUMES|Component:chart-viewer|Interface:chart-management-api/ChartConfigInterface","DEPENDS_ON|Component:chart-viewer|Component:chart-management-api"],
+      "status":"PASS_STANDARDIZED_ALIAS",
+      "criticality":"CRITICAL",
+      "evidenceRefs":["S03-EVID-VIEWER-SOURCE","S03-EVID-API-SOURCE"]
+    },
+    {
+      "goldEdgeRef":"COMP-chart-viewer->COMP-chart-management-api:CALLS",
+      "goldRelationType":"CALLS",
+      "graphRelationType":"CALLS",
+      "graphEdgeRefs":["CALLS|CodeEntity:chart-viewer/src/chartViewer.js#renderChart|CodeEntity:chart-management-api/src/chartApi.js#getChartConfig","CALLS|CodeEntity:chart-viewer/src/chartViewer.js#renderChart|CodeEntity:chart-management-api/src/chartApi.js#validateChartLimits"],
+      "status":"PASS",
+      "criticality":"CRITICAL",
+      "evidenceRefs":["S03-EVID-VIEWER-SOURCE","S03-EVID-API-SOURCE"]
+    },
+    {
+      "goldEdgeRef":"COMP-chart-management-api->IFACE-chart-config:EXPOSES",
+      "goldRelationType":"EXPOSES",
+      "graphRelationType":"EXPOSES",
+      "graphEdgeRefs":["EXPOSES|Component:chart-management-api|Interface:chart-management-api/ChartConfigInterface"],
+      "status":"PASS",
+      "criticality":"CRITICAL",
+      "evidenceRefs":["S03-EVID-API-SOURCE"]
+    },
+    {
+      "goldEdgeRef":"COMP-spc-deployment->COMP-chart-management-api:DEPLOYS_WITH",
+      "goldRelationType":"DEPLOYS_WITH",
+      "graphRelationType":"DEPENDS_ON",
+      "graphEdgeRefs":["DEPENDS_ON|Component:spc-deployment|Component:chart-management-api"],
+      "status":"PASS_STANDARDIZED_ALIAS",
+      "criticality":"CRITICAL",
+      "evidenceRefs":["S03-EVID-DEPLOYMENT-SOURCE"]
+    },
+    {
+      "goldEdgeRef":"COMP-spc-deployment->COMP-chart-viewer:DEPLOYS_WITH",
+      "goldRelationType":"DEPLOYS_WITH",
+      "graphRelationType":"DEPENDS_ON",
+      "graphEdgeRefs":["DEPENDS_ON|Component:spc-deployment|Component:chart-viewer"],
+      "status":"PASS_STANDARDIZED_ALIAS",
+      "criticality":"CRITICAL",
+      "evidenceRefs":["S03-EVID-DEPLOYMENT-SOURCE"]
+    }
+  ],
+  "impactSet": {
+    "expected": ["COMP-chart-management-api","COMP-chart-viewer","COMP-spc-deployment"],
+    "observed": ["COMP-chart-management-api","COMP-chart-viewer","COMP-spc-deployment"],
+    "numerator": 3,
+    "denominator": 3,
+    "status":"PASS"
+  },
+  "negativeMappings": [
+    {"mappingRef":"S03-NEGATIVE-DISTRACTOR-REPO","ref":"REPO-distractor-service","outcome":"PASS_REJECTED","reason":"No chart or deployment evidence connects this repository to the chart-limits anchor.","anchorEdgeCount":0,"evidenceRefs":["S03-EVID-DISTRACTOR-README","S03-EVID-DISTRACTOR-SOURCE"]},
+    {"mappingRef":"S03-NEGATIVE-DISTRACTOR-COMPONENT","ref":"COMP-notification-service","outcome":"PASS_ABSENT","reason":"Notification behavior is outside the chart-limits scenario; no such anchor component node was emitted.","evidenceRefs":["S03-EVID-DISTRACTOR-README","S03-EVID-DISTRACTOR-SOURCE"]},
+    {"mappingRef":"S03-NEGATIVE-NONDEPENDENCY","ref":"COMP-chart-viewer->COMP-distractor-service","outcome":"PASS_NO_EDGE","reason":"No CALLS, CONSUMES_FROM, or DEPLOYS_WITH evidence exists.","graphEdgeRefs":[],"evidenceRefs":["S03-EVID-VIEWER-SOURCE","S03-EVID-DISTRACTOR-SOURCE"]},
+    {"mappingRef":"S03-NEGATIVE-NEAR-MISS","ref":"COMP-chart-management-api->COMP-distractor-service","outcome":"PASS_NO_EDGE","reason":"Shared email vocabulary is not a realization dependency.","graphEdgeRefs":[],"evidenceRefs":["S03-EVID-API-SOURCE","S03-EVID-DISTRACTOR-SOURCE"]}
+  ],
+  "idempotency": {
+    "firstGraph": {
+      "path":"validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-first",
+      "nodeCount":21,
+      "edgeCount":25,
+      "nodesSha256":"sha256:430d0a6ac9d4e650b71823cc83b456c1422be484b83f2df3b87f1a9cb9625ecd",
+      "edgesSha256":"sha256:7723cf8c0f2ebc3544eb758fff6e6e37d5387ed55e799ab2b328e684c6de11e4"
+    },
+    "secondGraph": {
+      "path":"validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-second",
+      "nodeCount":21,
+      "edgeCount":25,
+      "nodesSha256":"sha256:430d0a6ac9d4e650b71823cc83b456c1422be484b83f2df3b87f1a9cb9625ecd",
+      "edgesSha256":"sha256:7723cf8c0f2ebc3544eb758fff6e6e37d5387ed55e799ab2b328e684c6de11e4"
+    },
+    "nodesByteIdentical":true,
+    "edgesByteIdentical":true,
+    "duplicateNodeFacts":0,
+    "duplicateEdgeFacts":0,
+    "secondRunAdds": {"nodes":0,"edges":0}
+  },
+  "metric": {
+    "name":"critical-gold-edge-coverage",
+    "sampleSize":5,
+    "numerator":5,
+    "denominator":5,
+    "scoringRule":"Each frozen critical gold edge must map to one or more standardized graph edges with non-empty evidence and source-revision bindings; evaluator-only relation aliases are recorded explicitly rather than inferred."
+  },
+  "provenanceMetric": {
+    "name":"graph-edge-evidence-closure",
+    "sampleSize":25,
+    "numerator":25,
+    "denominator":25,
+    "scoringRule":"Every materialized graph edge must have at least one evidence object containing evidenceType, detail, sourceRepo, commit, and observedAt."
+  },
+  "repositoryMetric": {"sampleSize":4,"numerator":4,"denominator":4,"scoringRule":"Every manifest repository, including the distractor, has a pinned checkout identity and file-level SHA-256 evidence."},
+  "unsupportedOrNearMissOutcomes": {
+    "unsupportedCount":2,
+    "nearMissCount":2,
+    "totalNegativeMappings":4,
+    "allNegativeMappingsHeldOut":true,
+    "scoringRule":"Negative mappings pass only when the unsupported or near-miss relation remains absent while the repository itself may still have internal containment facts."
+  },
+  "controlEvidence": [
+    {
+      "controlRef":"CTRL-REPOSITORY-PROVENANCE-001",
+      "gate":"multi-repo-analysis-execution",
+      "status":"PASS",
+      "requiredEvidenceRefs":["EVID-S03-REPOSITORY-MANIFEST","EVID-S03-SOURCE-REVISIONS","EVID-S03-SOURCE-MANIFEST"],
+      "bindings":[
+        {"requiredEvidenceRef":"EVID-S03-REPOSITORY-MANIFEST","frozenPath":"validation/engcim-swarm-v06/baseline/pk/s03/fixture/repository-manifest.json","executionRef":"S03-r2-spc-mission-v1-input-manifest.json","check":"All four manifest entries were fetched in declared scope and role; the lock binds each checkout to baseline commit 229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8."},
+        {"requiredEvidenceRef":"EVID-S03-SOURCE-REVISIONS","frozenPath":"validation/engcim-swarm-v06/baseline/pk/s03/fixture/repository-manifest.json","executionRef":"S03-r2-spc-mission-v1-input-manifest.json","check":"Each repository is bound to SPC-MISSION-V1-r1 plus checkout revision and exact source file SHA-256 evidence."},
+        {"requiredEvidenceRef":"EVID-S03-SOURCE-MANIFEST","frozenPath":"validation/engcim-swarm-v06/baseline/manifests/source-manifest.json","executionRef":"S03-r2-spc-mission-v1-input-manifest.json","check":"Dataset-level source authority and canonical fixture identity are exact-path and digest bound."}
+      ],
+      "predicate":"Repository scope, repository-to-component mapping, checkout identity, fixture revision, and file evidence are all resolvable."
+    },
+    {
+      "controlRef":"CTRL-EVIDENCE-INTEGRITY-001",
+      "gate":"multi-repo-analysis-execution",
+      "status":"PASS",
+      "requiredEvidenceRefs":["EVID-S03-REPOSITORY-MANIFEST","EVID-S03-ANALYSIS-ANCHOR","EVID-S03-GOLD"],
+      "bindings":[
+        {"requiredEvidenceRef":"EVID-S03-REPOSITORY-MANIFEST","frozenPath":"validation/engcim-swarm-v06/baseline/pk/s03/fixture/repository-manifest.json","executionRef":"S03-r2-spc-mission-v1-input-manifest.json","check":"The analyzed repository set is exactly the four frozen manifest entries; no manifest-external repository was added."},
+        {"requiredEvidenceRef":"EVID-S03-ANALYSIS-ANCHOR","frozenPath":"validation/engcim-swarm-v06/baseline/pk/s03/S03-MULTI-REPO-REALIZATION-GOLD.json","executionRef":"S03-r2-spc-mission-v1-claims.json","check":"The chart-limits anchor, expected components, ChartConfigInterface, critical edge mappings, impact set, and four negative mappings are all explicitly recorded."},
+        {"requiredEvidenceRef":"EVID-S03-GOLD","frozenPath":"validation/engcim-swarm-v06/baseline/pk/s03/S03-MULTI-REPO-REALIZATION-GOLD.json","executionRef":"S03-r2-spc-mission-v1-claims.json","check":"Evaluator-only gold is digest-bound for comparison only; source-led graph generation does not copy gold facts without file evidence."}
+      ],
+      "predicate":"No graph edge is emitted without evidence, no negative mapping is silently converted into a positive edge, and all source revisions are retained."
+    }
+  ],
+  "operationalClassifications": {
+    "owningLayer":"S03_MULTI_REPO_ANALYSIS_EXECUTION",
+    "manualRescue":{"applied":false,"classification":"NONE","note":"The five manual observations/edges are explicit source-analysis supplements permitted by pk-repository-analysis for YAML and parser-lite gaps; no post-hoc unsupported claim or silent correction was used."},
+    "retry":{"attempt":1,"retried":false,"classification":"NONE","note":"First successful execution attempt."},
+    "blocked":{"classification":"NONE_FOR_EXECUTION; REVIEW_VERIFIER_PENDING_FOR_PROGRESSION","owner":"separate current-revision Reviewer and Verifier gates"},
+    "externalCapabilityBlockers":["TKMS MCP NOT_VERIFIED","Azure DevOps MCP NOT_VERIFIED"],
+    "baselineOrContractFailure":false
+  },
+  "artifacts": [
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-input-manifest.json",
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-claims.json",
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-execution-result.json",
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-command-output.txt",
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/",
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-first/",
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-second/"
+  ]
+}

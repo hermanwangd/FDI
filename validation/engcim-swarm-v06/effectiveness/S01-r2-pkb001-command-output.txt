@@ -1,0 +1,84 @@
+$ bash validation/engcim-swarm-v06/baseline/validate_baseline.sh
+PASS: scenario JSON and definition digests
+PASS: S01 semantic coverage and revision 2 gold
+PASS: S01 exact source readjudication revision 2
+PASS: S02/S03 frozen gold and fixture invariants
+PASS: S04 cases and Product Context revision 2
+PASS: S05 required fixture test passes
+PASS: S05 canonical remote, corrected fixture, and isolation
+PASS: independent S01-S06 review decisions are PASS
+PASS: preserved RC7-B runtime-gated control closure is bound
+PASS: fixture checksums
+PASS: scoped and top-level seal references
+PASS: READY seal status matrix and Gate-0 binding are consistent
+S01-S06 BASELINE CHECKS = PASS
+VALIDATION_BASELINE = READY
+
+$ jq '{scenarioRef,scenarioRevision,datasetRef,definitionDigest}' validation/engcim-swarm-v06/baseline/gate0/scenario-definitions/S01.json
+{
+  "scenarioRef": "S01-PRODUCT-KNOWLEDGE",
+  "scenarioRevision": "S01-r2-pkb001",
+  "datasetRef": "PKB001-PETCLINIC",
+  "definitionDigest": "sha256:868777143c176e3beb40881f1a17f96344b5f88335d03e3b00e6114797d49adf"
+}
+
+$ jq '{selection_id,source_commit_sha,source_tree_oid,status,observed_file_count,observed_java_file_count}' validation/pkb001/datasets/petclinic-calibration-candidate.json
+{
+  "selection_id": "pkb001-petclinic-818c413-candidate",
+  "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "source_tree_oid": "0bb31bb92bc1839f6378e832e54c8b4af03e4ee2",
+  "status": "FROZEN",
+  "observed_file_count": 132,
+  "observed_java_file_count": 50
+}
+
+$ jq '{dataset_id,status,source_commit_sha,history_cutoff,post_cutoff_knowledge_policy,commitCount:(.commits|length),pullRequestCount:(.pull_requests|length)}' validation/pkb001/datasets/petclinic-delivery-history.json
+{
+  "dataset_id": "pkb001-delivery-history-v1",
+  "status": "FROZEN",
+  "source_commit_sha": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "history_cutoff": "2026-08-26T10:57:54Z",
+  "post_cutoff_knowledge_policy": "EXCLUDE_AFTER_CUTOFF",
+  "commitCount": 1042,
+  "pullRequestCount": 91
+}
+
+$ jq '{runId,revision,authority,sourceRevision,sourceTree,outputCounts,generationIsolation}' validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-claims.json
+{
+  "runId": "01a0bb9d-cba4-749e-9dff-877a16af8736",
+  "revision": 1,
+  "authority": "PROPOSAL_ONLY",
+  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "sourceTree": "0bb31bb92bc1839f6378e832e54c8b4af03e4ee2",
+  "outputCounts": {
+    "totalClaims": 25,
+    "productFacts": 3,
+    "capabilities": 5,
+    "behaviorScenarios": 10,
+    "rulesOrConstraints": 7,
+    "claimsWithEvidence": 25,
+    "unsupportedClaimsExplicit": 3,
+    "nearMissClaimsExplicit": 4
+  },
+  "generationIsolation": {
+    "inputManifest": "validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-input-manifest.json",
+    "goldReadDuringGeneration": false,
+    "priorReviewedSemanticsReadDuringGeneration": false,
+    "historicalExecutionReadDuringGeneration": false,
+    "tkmsMcpTested": false,
+    "azureDevOpsMcpTested": false
+  }
+}
+
+$ jq '{claims:(.claims|length),claimsWithEvidence:([.claims[]|select((.evidenceRefs|length)>0)]|length),missingEvidence:([.claims[]|select((.evidenceRefs|length)==0)|.claimId]),evidenceRefs:([.claims[].evidenceRefs[]]|unique|length),catalogRefs:(.evidenceCatalog|map(.evidenceRef)|unique|length)}' validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-claims.json
+{
+  "claims": 25,
+  "claimsWithEvidence": 25,
+  "missingEvidence": [],
+  "evidenceRefs": 16,
+  "catalogRefs": 16
+}
+
+$ sha256sum validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-input-manifest.json validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-claims.json
+2d8e2b97ccaa597dbf774b202720ff9d3b4351bc76033bb6fec008417121a395  validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-input-manifest.json
+9b48b1e4242c2295424845ef111045029e4e4020a71acb2319c1a617f08c43d  validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-claims.json

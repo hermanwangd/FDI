@@ -1,0 +1,289 @@
+{
+  "schemaVersion": "engcim-s02-refresh-artifact.v0.1",
+  "artifactKind": "S02_REFRESH_ARTIFACT",
+  "revision": 1,
+  "runId": "01a0bbba-b665-7063-bf5b-32a70ded812f",
+  "scenarioRef": "S02-PK-REFRESH",
+  "scenarioRevision": "S02-r2-spc-mission-v1",
+  "definitionDigest": "sha256:e1034e55ef5184eee5fc883f00d0031d1fe0f31f0d0d8165d653c3dc7fc1599e",
+  "datasetRef": "SPC-MISSION-V1",
+  "authority": "EXECUTION_EVIDENCE_ONLY",
+  "refreshClassification": "COMPLETED_WITH_SURFACED_CONFLICT",
+  "priorKnowledgeRevision": {
+    "fixtureRevision": "SPC-MISSION-V1-r1",
+    "sourceBundlePath": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/baseline/source-bundle.json",
+    "sourceBundleSha256": "fd2222f195139384bfb4a02af20a92225c07c6d415bcca2a5de957eaed848a7b",
+    "knowledgeRefs": [
+      "S02-K-CAPABILITY-001",
+      "S02-K-RULE-001",
+      "S02-K-REALIZATION-001"
+    ]
+  },
+  "newSourceSnapshot": {
+    "fixtureRef": "SPC-MISSION-V1",
+    "fixtureRevision": "SPC-MISSION-V1-r1 plus D1-D8",
+    "sourceBundlePath": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/baseline/source-bundle.json",
+    "deltaRootPath": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/",
+    "inputManifest": "validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-input-manifest.json",
+    "sourceRevisions": [
+      "product-spec-r1 -> product-spec-r2",
+      "qa-spec-r1 -> qa-spec-r2",
+      "realization-map-r1 (D8 mapping change; revision retained)"
+    ]
+  },
+  "sourceRevisionMapping": [
+    {
+      "sourceRef": "S02-SRC-PRODUCT-SPEC",
+      "sourceClass": "src-product-docs",
+      "beforeRevision": "product-spec-r1",
+      "afterRevision": "product-spec-r2",
+      "deltaRefs": ["D1", "D2", "D6"],
+      "evidence": [
+        "validation/engcim-swarm-v06/baseline/pk/s02/fixture/baseline/source-bundle.json",
+        "validation/engcim-swarm-v06/baseline/pk/s02/fixture/D1-semantic-change/delta.json",
+        "validation/engcim-swarm-v06/baseline/pk/s02/fixture/D2-new-fact/delta.json",
+        "validation/engcim-swarm-v06/baseline/pk/s02/fixture/D6-revision-only/delta.json"
+      ]
+    },
+    {
+      "sourceRef": "S02-SRC-QA-SPEC",
+      "sourceClass": "src-test-assets",
+      "beforeRevision": "qa-spec-r1",
+      "afterRevision": "qa-spec-r2",
+      "deltaRefs": ["D3", "D4", "D7"],
+      "evidence": [
+        "validation/engcim-swarm-v06/baseline/pk/s02/fixture/baseline/source-bundle.json",
+        "validation/engcim-swarm-v06/baseline/pk/s02/fixture/D3-only-support-removed/delta.json",
+        "validation/engcim-swarm-v06/baseline/pk/s02/fixture/D4-conflict/delta.json",
+        "validation/engcim-swarm-v06/baseline/pk/s02/fixture/D7-partial-support-loss/delta.json"
+      ]
+    },
+    {
+      "sourceRef": "S02-SRC-REALIZATION-MAP",
+      "sourceClass": "src-engineering",
+      "beforeRevision": "realization-map-r1",
+      "afterRevision": "realization-map-r1",
+      "deltaRefs": ["D8"],
+      "revisionNote": "The fixture changes the realization component while retaining the declared source revision.",
+      "evidence": [
+        "validation/engcim-swarm-v06/baseline/pk/s02/fixture/baseline/source-bundle.json",
+        "validation/engcim-swarm-v06/baseline/pk/s02/fixture/D8-realization-only/delta.json"
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "deltaRef": "D1",
+      "decisionClass": "CHANGED",
+      "sourceRefs": ["S02-SRC-PRODUCT-SPEC"],
+      "sourceRevisions": ["product-spec-r1", "product-spec-r2"],
+      "affectedKnowledgeRefs": ["S02-K-RULE-001"],
+      "before": "invalid limits are rejected and not rendered as valid",
+      "after": "invalid limits are accepted for preview but not for publication",
+      "semanticEffect": "MODIFIED",
+      "governanceOutcome": "PROPOSE_REVISION",
+      "revisionOutcome": "NEW_KNOWLEDGE_REVISION",
+      "evidenceRefs": ["baseline/source-bundle.json", "D1-semantic-change/delta.json"]
+    },
+    {
+      "deltaRef": "D2",
+      "decisionClass": "NEW",
+      "sourceRefs": ["S02-SRC-PRODUCT-SPEC"],
+      "sourceRevisions": ["product-spec-r2"],
+      "affectedKnowledgeRefs": ["S02-K-FACT-002"],
+      "before": null,
+      "after": "Chart viewers can display a selected time range",
+      "semanticEffect": "NEW",
+      "governanceOutcome": "PROPOSE_REVISION",
+      "revisionOutcome": "ADD_KNOWLEDGE_ITEM",
+      "evidenceRefs": ["D2-new-fact/delta.json"]
+    },
+    {
+      "deltaRef": "D3",
+      "decisionClass": "REMOVED",
+      "sourceRefs": ["S02-SRC-QA-SPEC"],
+      "sourceRevisions": ["qa-spec-r1", "qa-spec-r2"],
+      "affectedKnowledgeRefs": ["S02-K-RULE-001"],
+      "before": "QA specification was a supporting source for S02-K-RULE-001",
+      "after": "QA support is removed; no valid support remains in this delta",
+      "semanticEffect": "INSUFFICIENT",
+      "governanceOutcome": "MARK_STALE",
+      "revisionOutcome": "REQUIRE_SUPPORT_REVIEW",
+      "retirement": {
+        "status": "EXPLICITLY_RETIRED_PENDING_SUPPORT_REVIEW",
+        "retiredSupport": "S02-SRC-QA-SPEC",
+        "knowledgeState": "STALE",
+        "note": "The unsupported QA-backed observation is retired; no replacement winner is inferred."
+      },
+      "evidenceRefs": ["D3-only-support-removed/delta.json"]
+    },
+    {
+      "deltaRef": "D4",
+      "decisionClass": "CONFLICTING",
+      "sourceRefs": ["S02-SRC-QA-SPEC"],
+      "sourceRevisions": ["qa-spec-r2"],
+      "affectedKnowledgeRefs": ["S02-K-RULE-001"],
+      "before": "Missing or invalid chart limits make a chart configuration invalid.",
+      "after": "Missing chart limits are tolerated and use defaults.",
+      "semanticEffect": "CONFLICT",
+      "governanceOutcome": "SURFACE_CONFLICT",
+      "revisionOutcome": "REQUIRE_HUMAN_DECISION",
+      "conflictRef": "S02-CONFLICT-RULE-001-LIMITS",
+      "winner": null,
+      "silentWinnerSelected": false,
+      "evidenceRefs": ["D4-conflict/delta.json"]
+    },
+    {
+      "deltaRef": "D5",
+      "decisionClass": "UNCHANGED",
+      "sourceRefs": [],
+      "sourceRevisions": ["product-spec-r1", "qa-spec-r1"],
+      "affectedKnowledgeRefs": [],
+      "before": "S02-K-RULE-001:invalid limits are rejected and not rendered as valid",
+      "after": "S02-K-RULE-001:invalid limits are rejected and not rendered as valid",
+      "semanticEffect": "NO_CHANGE",
+      "governanceOutcome": "KEEP_ACTIVE",
+      "revisionOutcome": "NO_NEW_REVISION",
+      "evidenceRefs": ["D5-no-change/delta.json", "baseline/source-bundle.json"]
+    },
+    {
+      "deltaRef": "D6",
+      "decisionClass": "UNCHANGED",
+      "sourceRefs": ["S02-SRC-PRODUCT-SPEC"],
+      "sourceRevisions": ["product-spec-r1", "product-spec-r2"],
+      "affectedKnowledgeRefs": ["S02-K-RULE-001"],
+      "before": "invalid limits are rejected and not rendered as valid",
+      "after": "invalid limits are rejected and not rendered as valid",
+      "semanticEffect": "NO_CHANGE",
+      "governanceOutcome": "KEEP_ACTIVE",
+      "revisionOutcome": "UPDATE_PROVENANCE_ONLY",
+      "evidenceRefs": ["D6-revision-only/delta.json"]
+    },
+    {
+      "deltaRef": "D7",
+      "decisionClass": "UNCHANGED",
+      "sourceRefs": ["S02-SRC-QA-SPEC"],
+      "sourceRevisions": ["qa-spec-r1", "qa-spec-r2"],
+      "affectedKnowledgeRefs": ["S02-K-RULE-001"],
+      "before": "S02-K-RULE-001 is supported by product spec and QA spec",
+      "after": "S02-K-RULE-001 remains supported by the product spec; QA support is removed",
+      "semanticEffect": "NO_CHANGE",
+      "governanceOutcome": "KEEP_ACTIVE",
+      "revisionOutcome": "UPDATE_EVIDENCE_SET",
+      "evidenceRefs": ["D7-partial-support-loss/delta.json"]
+    },
+    {
+      "deltaRef": "D8",
+      "decisionClass": "UNCHANGED",
+      "sourceRefs": ["S02-SRC-REALIZATION-MAP"],
+      "sourceRevisions": ["realization-map-r1"],
+      "affectedKnowledgeRefs": ["S02-K-REALIZATION-001"],
+      "before": "chart-viewer consumes ChartConfigInterface",
+      "after": "chart-renderer consumes ChartConfigInterface",
+      "semanticEffect": "NO_CHANGE",
+      "governanceOutcome": "KEEP_ACTIVE",
+      "revisionOutcome": "UPDATE_REALIZATION_ONLY",
+      "evidenceRefs": ["D8-realization-only/delta.json"]
+    }
+  ],
+  "refreshedKnowledge": [
+    {
+      "knowledgeRef": "S02-K-CAPABILITY-001",
+      "state": "PRESERVED_ACTIVE",
+      "meaning": "Chart configuration management and chart viewing",
+      "supportingSourceRefs": ["S02-SRC-PRODUCT-SPEC", "S02-SRC-QA-SPEC"],
+      "sourceRevisions": ["product-spec-r1", "qa-spec-r1"],
+      "semanticEffect": "NO_CHANGE",
+      "evidenceRefs": ["baseline/source-bundle.json", "D8-realization-only/delta.json"]
+    },
+    {
+      "knowledgeRef": "S02-K-RULE-001",
+      "state": "CONFLICTING_REQUIRES_HUMAN_DECISION",
+      "candidateRevisions": [
+        {
+          "candidateRef": "S02-K-RULE-001-PRODUCT-SPEC-R2",
+          "sourceRef": "S02-SRC-PRODUCT-SPEC",
+          "sourceRevision": "product-spec-r2",
+          "meaning": "Invalid limits are accepted for preview but not for publication.",
+          "status": "PROPOSED_REVISION"
+        },
+        {
+          "candidateRef": "S02-K-RULE-001-QA-SPEC-R2",
+          "sourceRef": "S02-SRC-QA-SPEC",
+          "sourceRevision": "qa-spec-r2",
+          "meaning": "Missing chart limits are tolerated and use defaults.",
+          "status": "CONFLICTING_OBSERVATION"
+        }
+      ],
+      "sourceRevisions": ["product-spec-r2", "qa-spec-r2"],
+      "semanticEffect": "MODIFIED_AND_CONFLICTING",
+      "governanceOutcome": "SURFACE_CONFLICT",
+      "selectedWinner": null,
+      "evidenceRefs": ["D1-semantic-change/delta.json", "D3-only-support-removed/delta.json", "D4-conflict/delta.json", "D7-partial-support-loss/delta.json"]
+    },
+    {
+      "knowledgeRef": "S02-K-FACT-002",
+      "state": "ADDED_PROPOSED",
+      "meaning": "Chart viewers can display a selected time range",
+      "supportingSourceRefs": ["S02-SRC-PRODUCT-SPEC"],
+      "sourceRevisions": ["product-spec-r2"],
+      "semanticEffect": "NEW",
+      "governanceOutcome": "PROPOSE_REVISION",
+      "evidenceRefs": ["D2-new-fact/delta.json"]
+    },
+    {
+      "knowledgeRef": "S02-K-REALIZATION-001",
+      "state": "REALIZATION_UPDATED_SEMANTICS_PRESERVED",
+      "meaning": "chart-renderer consumes ChartConfigInterface and is deployed with spc-deployment; chart-management-api provides ChartConfigInterface.",
+      "supportingSourceRefs": ["S02-SRC-REALIZATION-MAP"],
+      "sourceRevisions": ["realization-map-r1"],
+      "semanticEffect": "NO_CHANGE",
+      "governanceOutcome": "KEEP_ACTIVE",
+      "evidenceRefs": ["D8-realization-only/delta.json"]
+    }
+  ],
+  "conflictRecord": {
+    "conflictRef": "S02-CONFLICT-RULE-001-LIMITS",
+    "knowledgeRef": "S02-K-RULE-001",
+    "leftClaim": {
+      "sourceRef": "S02-SRC-PRODUCT-SPEC",
+      "sourceRevision": "product-spec-r2",
+      "claim": "Invalid limits are accepted for preview but not for publication."
+    },
+    "rightClaim": {
+      "sourceRef": "S02-SRC-QA-SPEC",
+      "sourceRevision": "qa-spec-r2",
+      "claim": "Missing chart limits are tolerated and use defaults."
+    },
+    "detectedBy": "D4",
+    "governanceOutcome": "SURFACE_CONFLICT",
+    "resolution": "REQUIRE_HUMAN_DECISION",
+    "selectedWinner": null,
+    "silentWinnerSelected": false,
+    "evidenceRefs": ["D4-conflict/delta.json", "baseline/source-bundle.json"]
+  },
+  "retirementRecord": {
+    "deltaRef": "D3",
+    "knowledgeRef": "S02-K-RULE-001",
+    "retiredSubject": "QA support for S02-K-RULE-001",
+    "status": "STALE",
+    "governanceOutcome": "MARK_STALE",
+    "nextAction": "REQUIRE_SUPPORT_REVIEW",
+    "replacement": null,
+    "evidenceRefs": ["D3-only-support-removed/delta.json"]
+  },
+  "unsupportedOrNearMissOutcomes": {
+    "unsupportedCount": 0,
+    "nearMissCount": 0,
+    "outcomes": [],
+    "note": "All eight fixture deltas have explicit before/after or support/removal evidence; no unsupported or near-miss claim was emitted."
+  },
+  "provenanceClosure": {
+    "decisionCount": 8,
+    "decisionsWithSourceRevision": 8,
+    "decisionsWithResolvableEvidence": 8,
+    "conflictsWithBothSourceRevisions": 1,
+    "retirementsWithEvidence": 1,
+    "allOutputsBound": true
+  }
+}

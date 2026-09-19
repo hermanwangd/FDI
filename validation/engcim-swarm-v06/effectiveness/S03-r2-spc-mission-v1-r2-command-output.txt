@@ -1,0 +1,63 @@
+S03 revision-2 execution command/output evidence
+runId: 01a0bbeb-fd53-7620-845f-003dec14ad63
+revision: 2
+scenarioRevision: S03-r2-spc-mission-v1
+fixtureRevision: SPC-MISSION-V1-r1
+baselineContainerCommit: 229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8
+
+$ bash validation/engcim-swarm-v06/baseline/validate_baseline.sh
+PASS: scenario JSON and definition digests
+PASS: S01 semantic coverage and revision 2 gold
+PASS: S01 exact source readjudication revision 2
+PASS: S02/S03 frozen gold and fixture invariants
+PASS: S04 cases and Product Context revision 2
+PASS: S05 required fixture test passes
+PASS: S05 canonical remote, corrected fixture, and isolation
+PASS: independent S01-S06 review decisions are PASS
+PASS: preserved RC7-B runtime-gated control closure is bound
+PASS: fixture checksums
+PASS: scoped and top-level seal references
+PASS: READY seal status matrix and Gate-0 binding are consistent
+S01-S06 BASELINE CHECKS = PASS
+VALIDATION_BASELINE = READY
+
+$ jq -e '.contractResolution.effectiveControlRefs == ["CTRL-REPOSITORY-PROVENANCE-001","CTRL-EXACT-BINDING-001","CTRL-EVIDENCE-INTEGRITY-001"] and .fixtureBinding.fixtureRevision == "SPC-MISSION-V1-r1" and (.repositoryBindings | all(.[]; .effectivePin.identityKind == "SYNTHETIC_FIXTURE_CONTENT"))' S03-r2-spc-mission-v1-r2-corrected-contract.json
+true
+
+$ bash pk-repository-analysis/scripts/repo-fetch.sh --config S03-r2-spc-mission-v1-r2-analysis-config.yaml --workdir S03-r2-spc-mission-v1-r2-checkout
+[repo-fetch] four local fixture checkouts materialized
+[repo-fetch] source fixture identity: SPC-MISSION-V1-r1
+
+$ jq -s 'all(.[]; .revision == "SPC-MISSION-V1-r1" and .revisionKind == "SYNTHETIC_FIXTURE")' S03-r2-spc-mission-v1-r2-checkout/manifest.lock
+true
+
+$ python3 pk-repository-analysis/scripts/analyze-repo.py (four manifest repositories; --commit SPC-MISSION-V1-r1)
+[graphify-analyzer] chart-management-api@SPC-MISSION-V1-r1: 10 observations
+[graphify-analyzer] chart-viewer@SPC-MISSION-V1-r1: 9 observations
+[graphify-analyzer] spc-deployment@SPC-MISSION-V1-r1: 0 observations plus manual YAML supplement
+[graphify-analyzer] distractor-service@SPC-MISSION-V1-r1: 4 observations
+
+$ python3 pk-repository-analysis/scripts/correlate-cross-repo.py (four analyzer outputs plus manual supplement)
+[correlate] 4 repos -> 1 automatic cross-repo edge
+[synthesis] source-grounded manual supplement retained; no gold-only edge emitted
+
+$ python3 pk-repository-analysis/scripts/graph-update.py --graph graph-first ...
+[graph-update] nodes +21/~1, edges +25/~0, STALE 0; total 21 nodes / 25 edges
+
+$ cp graph-first graph-second; python3 pk-repository-analysis/scripts/graph-update.py --graph graph-second ...
+[graph-update] nodes +0/~0, edges +0/~25, STALE 0; total 21 nodes / 25 edges
+
+$ cmp graph-first/nodes.jsonl graph-second/nodes.jsonl; cmp graph-first/edges.jsonl graph-second/edges.jsonl
+nodes=IDENTICAL
+edges=IDENTICAL
+
+$ sha256sum graph-first/nodes.jsonl graph-first/edges.jsonl graph-second/nodes.jsonl graph-second/edges.jsonl
+4fca71ae27eb28f339d2dd6584f0b887fb41ea31e0b0b542e5edcc20bf290676  graph-first/nodes.jsonl
+c9e64d9c043bff5eb9505e55b4b819fa476d23be122acf024d8fb4a03454a3f8  graph-first/edges.jsonl
+4fca71ae27eb28f339d2dd6584f0b887fb41ea31e0b0b542e5edcc20bf290676  graph-second/nodes.jsonl
+c9e64d9c043bff5eb9505e55b4b819fa476d23be122acf024d8fb4a03454a3f8  graph-second/edges.jsonl
+
+$ jq -s 'group_by(.validationState) | map({state:.[0].validationState,count:length})' <all revision-2 observation JSONL files>
+[{"state":"PROVISIONAL","count":36}]
+
+Control gate result: PASS for CTRL-REPOSITORY-PROVENANCE-001, CTRL-EXACT-BINDING-001, and CTRL-EVIDENCE-INTEGRITY-001. Reviewer and Verifier remain separate current-revision gates; no acceptance or done claim is made.

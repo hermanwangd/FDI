@@ -1,0 +1,263 @@
+{
+  "schemaVersion": "engcim-s01-claims-packet.v0.1",
+  "artifactKind": "S01_FRESH_GENERATED_CLAIMS",
+  "revision": 1,
+  "runId": "01a0bb9d-cba4-749e-9dff-877a16af8736",
+  "scenarioRef": "S01-PRODUCT-KNOWLEDGE",
+  "scenarioRevision": "S01-r2-pkb001",
+  "datasetRef": "PKB001-PETCLINIC",
+  "authority": "PROPOSAL_ONLY",
+  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "sourceTree": "0bb31bb92bc1839f6378e832e54c8b4af03e4ee2",
+  "generatedAt": "2026-09-19T21:47:02Z",
+  "generationMethod": "fresh source-led synthesis from frozen Product Team seed, exact Petclinic source/test snapshot, source manifest, and cutoff-bounded delivery history",
+  "generationIsolation": {
+    "inputManifest": "validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-input-manifest.json",
+    "goldReadDuringGeneration": false,
+    "priorReviewedSemanticsReadDuringGeneration": false,
+    "historicalExecutionReadDuringGeneration": false,
+    "tkmsMcpTested": false,
+    "azureDevOpsMcpTested": false
+  },
+  "outputCounts": {
+    "totalClaims": 25,
+    "productFacts": 3,
+    "capabilities": 5,
+    "behaviorScenarios": 10,
+    "rulesOrConstraints": 7,
+    "claimsWithEvidence": 25,
+    "unsupportedClaimsExplicit": 3,
+    "nearMissClaimsExplicit": 4
+  },
+  "claims": [
+    {
+      "claimId": "RUN1-PRODUCT-FACT-001",
+      "type": "PRODUCT_FACT",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "The Petclinic product boundary covers veterinary-clinic workflows for owners, pets, visits, and veterinarians.",
+      "evidenceRefs": ["EV-PRODUCT-SEED", "EV-OWNER-CONTROLLER", "EV-PET-CONTROLLER", "EV-VISIT-CONTROLLER", "EV-VET-CONTROLLER"],
+      "provenance": {"sourceClass": "src-team-seed + src-code-delivery", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "authorityBoundary": "proposal supported by seed and implementation evidence; not published Product truth"}
+    },
+    {
+      "claimId": "RUN1-PRODUCT-FACT-002",
+      "type": "PRODUCT_FACT",
+      "status": "LIMITATION_EXPLICIT",
+      "claim": "The semantic baseline does not promote storage technology, request routing, search ordering, pagination size, timezone, or concurrency mechanism into Product meaning.",
+      "evidenceRefs": ["EV-SOURCE-MANIFEST", "EV-OWNER-REPO", "EV-OWNER-CONTROLLER", "EV-HISTORY"],
+      "provenance": {"sourceClass": "src-code-delivery", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "authorityBoundary": "implementation and historical evidence retained as realization context only"}
+    },
+    {
+      "claimId": "RUN1-CAPABILITY-001",
+      "type": "CAPABILITY",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "Find Owners: search clinic customers by surname/name, handle no-result and multi-result states, and open an owner detail view.",
+      "evidenceRefs": ["EV-PRODUCT-SEED", "EV-OWNER-CONTROLLER", "EV-OWNER-TEST"],
+      "provenance": {"sourceClass": "src-team-seed + src-code-delivery + src-test-assets", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe"}
+    },
+    {
+      "claimId": "RUN1-CAPABILITY-002",
+      "type": "CAPABILITY",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "Register and maintain owner details, including creation and later update of contact information while preserving owner identity.",
+      "evidenceRefs": ["EV-PRODUCT-SEED", "EV-OWNER-CONTROLLER", "EV-OWNER-TEST", "EV-OWNER-MODEL"],
+      "provenance": {"sourceClass": "src-team-seed + src-code-delivery + src-test-assets", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe"}
+    },
+    {
+      "claimId": "RUN1-CAPABILITY-003",
+      "type": "CAPABILITY",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "Register and maintain pet details within an owner scope, including pet type selection and same-owner name conflict handling.",
+      "evidenceRefs": ["EV-PRODUCT-SEED", "EV-PET-CONTROLLER", "EV-PET-VALIDATOR", "EV-PET-TEST"],
+      "provenance": {"sourceClass": "src-team-seed + src-code-delivery + src-test-assets", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe"}
+    },
+    {
+      "claimId": "RUN1-CAPABILITY-004",
+      "type": "CAPABILITY",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "Record a dated clinical visit and description for a selected pet.",
+      "evidenceRefs": ["EV-PRODUCT-SEED", "EV-VISIT-CONTROLLER", "EV-VISIT-MODEL", "EV-VISIT-TEST"],
+      "provenance": {"sourceClass": "src-team-seed + src-code-delivery + src-test-assets", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe"}
+    },
+    {
+      "claimId": "RUN1-CAPABILITY-005",
+      "type": "CAPABILITY",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "Browse veterinarians and their specialties, with a paged HTML list and a list resource representation.",
+      "evidenceRefs": ["EV-PRODUCT-SEED", "EV-VET-CONTROLLER", "EV-VET-REPOSITORY"],
+      "provenance": {"sourceClass": "src-team-seed + src-code-delivery", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe"}
+    },
+    {
+      "claimId": "RUN1-BEHAVIOR-001",
+      "type": "BEHAVIOR_SCENARIO",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "Given matching owners, submitting a surname search displays matches, supports a result list, and permits selecting an owner detail view.",
+      "evidenceRefs": ["EV-OWNER-CONTROLLER", "EV-OWNER-TEST"],
+      "provenance": {"sourceClass": "src-code-delivery + src-test-assets", "locations": ["OwnerController.java:L94-L121", "OwnerController.java:L169-L176", "OwnerControllerTests.java:L144-L158"]}
+    },
+    {
+      "claimId": "RUN1-BEHAVIOR-002",
+      "type": "BEHAVIOR_SCENARIO",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "Given a surname query with leading or trailing whitespace, the search normalizes the boundary whitespace and still finds the matching owner.",
+      "evidenceRefs": ["EV-OWNER-CONTROLLER", "EV-OWNER-TEST"],
+      "provenance": {"sourceClass": "src-code-delivery + src-test-assets", "locations": ["OwnerController.java:L98-L104", "OwnerControllerTests.java:L160-L172"]}
+    },
+    {
+      "claimId": "RUN1-BEHAVIOR-003",
+      "type": "BEHAVIOR_SCENARIO",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "Given valid owner information, submitting the creation form saves an owner and redirects to that owner's detail view.",
+      "evidenceRefs": ["EV-OWNER-CONTROLLER", "EV-OWNER-TEST"],
+      "provenance": {"sourceClass": "src-code-delivery + src-test-assets", "locations": ["OwnerController.java:L77-L87", "OwnerControllerTests.java:L114-L123"]}
+    },
+    {
+      "claimId": "RUN1-BEHAVIOR-004",
+      "type": "BEHAVIOR_SCENARIO",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "Given an identifiable owner, submitting valid contact changes saves the owner and redirects to the owner detail route.",
+      "evidenceRefs": ["EV-OWNER-CONTROLLER", "EV-OWNER-TEST"],
+      "provenance": {"sourceClass": "src-code-delivery + src-test-assets", "locations": ["OwnerController.java:L144-L161", "OwnerControllerTests.java:L211-L228"]}
+    },
+    {
+      "claimId": "RUN1-BEHAVIOR-005",
+      "type": "BEHAVIOR_SCENARIO",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "Given an owner scope and valid pet data, submitting pet creation saves the pet and redirects to the owner route.",
+      "evidenceRefs": ["EV-PET-CONTROLLER", "EV-PET-TEST"],
+      "provenance": {"sourceClass": "src-code-delivery + src-test-assets", "locations": ["PetController.java:L107-L136", "PetControllerTests.java:L97-L105"]}
+    },
+    {
+      "claimId": "RUN1-BEHAVIOR-006",
+      "type": "BEHAVIOR_SCENARIO",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "Given a same-owner duplicate pet name, creation is rejected and a name conflict is surfaced on the pet form.",
+      "evidenceRefs": ["EV-PET-CONTROLLER", "EV-PET-TEST", "EV-OWNER-MODEL"],
+      "provenance": {"sourceClass": "src-code-delivery + src-test-assets", "locations": ["PetController.java:L111-L113", "Owner.java:L144-L153", "PetControllerTests.java:L123-L134"]}
+    },
+    {
+      "claimId": "RUN1-BEHAVIOR-011",
+      "type": "BEHAVIOR_SCENARIO",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "Given an existing pet and valid changes, the update targets that pet and redirects back to the owner route.",
+      "evidenceRefs": ["EV-PET-CONTROLLER", "EV-PET-TEST"],
+      "provenance": {"sourceClass": "src-code-delivery + src-test-assets", "locations": ["PetController.java:L144-L199", "PetControllerTests.java:L191-L212"]}
+    },
+    {
+      "claimId": "RUN1-BEHAVIOR-007",
+      "type": "BEHAVIOR_SCENARIO",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "Given a selected pet and a valid future date plus description, the visit is saved and the owner route is returned.",
+      "evidenceRefs": ["EV-VISIT-CONTROLLER", "EV-VISIT-MODEL", "EV-VISIT-TEST"],
+      "provenance": {"sourceClass": "src-code-delivery + src-test-assets", "locations": ["VisitController.java:L97-L111", "Visit.java:L42-L50", "VisitControllerTests.java:L75-L84"]}
+    },
+    {
+      "claimId": "RUN1-BEHAVIOR-008",
+      "type": "BEHAVIOR_SCENARIO",
+      "status": "SUPPORTED_WITH_LIMITATION",
+      "claim": "Given a visit date that is not in the future, submission is rejected with date-rule feedback; the exact cutoff and timezone are not promoted.",
+      "evidenceRefs": ["EV-VISIT-CONTROLLER", "EV-VISIT-TEST"],
+      "provenance": {"sourceClass": "src-code-delivery + src-test-assets", "locations": ["VisitController.java:L100-L105", "VisitControllerTests.java:L96-L107"], "limitation": "The frozen evidence establishes the not-in-future rejection boundary but not an exact timezone contract."}
+    },
+    {
+      "claimId": "RUN1-BEHAVIOR-009",
+      "type": "BEHAVIOR_SCENARIO",
+      "status": "SUPPORTED_WITH_LIMITATION",
+      "claim": "The veterinarian list can be browsed by page and each returned veterinarian exposes associated specialty data; ordering details remain unspecified.",
+      "evidenceRefs": ["EV-VET-CONTROLLER", "EV-VET-REPOSITORY", "EV-SOURCE-MANIFEST"],
+      "provenance": {"sourceClass": "src-code-delivery", "locations": ["VetController.java:L44-L71", "VetRepository.java:L40-L56"], "limitation": "No Product source establishes ordering or page-size meaning."}
+    },
+    {
+      "claimId": "RUN1-RULE-001",
+      "type": "PRODUCT_RULE_OR_CONSTRAINT",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "Pet-name uniqueness is scoped to one owner; the evidence does not establish global pet-name uniqueness across owners.",
+      "evidenceRefs": ["EV-PET-CONTROLLER", "EV-OWNER-MODEL", "EV-PET-TEST"],
+      "provenance": {"sourceClass": "src-code-delivery + src-test-assets", "locations": ["PetController.java:L111-L113", "Owner.java:L144-L153", "PetControllerTests.java:L123-L134"]}
+    },
+    {
+      "claimId": "RUN1-RULE-002",
+      "type": "PRODUCT_RULE_OR_CONSTRAINT",
+      "status": "SUPPORTED_WITH_LIMITATION",
+      "claim": "Visit dates that are not in the future are rejected; the precise future-date cutoff and timezone remain unspecified.",
+      "evidenceRefs": ["EV-VISIT-CONTROLLER", "EV-VISIT-MODEL", "EV-VISIT-TEST"],
+      "provenance": {"sourceClass": "src-code-delivery + src-test-assets", "locations": ["VisitController.java:L83-L85", "VisitController.java:L100-L102", "Visit.java:L45-L50", "VisitControllerTests.java:L96-L107"]}
+    },
+    {
+      "claimId": "RUN1-RULE-003",
+      "type": "PRODUCT_RULE_OR_CONSTRAINT",
+      "status": "SUPPORTED_PROPOSAL",
+      "claim": "Owner surname query boundary whitespace is ignored before matching.",
+      "evidenceRefs": ["EV-OWNER-CONTROLLER", "EV-OWNER-TEST"],
+      "provenance": {"sourceClass": "src-code-delivery + src-test-assets", "locations": ["OwnerController.java:L98-L104", "OwnerControllerTests.java:L160-L172"]}
+    },
+    {
+      "claimId": "RUN1-AMBIGUITY-001",
+      "type": "PRODUCT_RULE_OR_CONSTRAINT",
+      "status": "UNRESOLVED_LIMITATION",
+      "claim": "Search ordering and result page size are intentionally unresolved semantic claims; observed implementation values are not promoted as Product rules.",
+      "evidenceRefs": ["EV-OWNER-CONTROLLER", "EV-OWNER-REPO", "EV-SOURCE-MANIFEST"],
+      "provenance": {"sourceClass": "src-code-delivery", "locations": ["OwnerController.java:L124-L136", "OwnerRepository.java:L38-L45"], "limitation": "Implementation exposes page size and query method but no independent Product authority establishes their semantic status."}
+    },
+    {
+      "claimId": "RUN1-NEGATIVE-001",
+      "type": "PRODUCT_FACT",
+      "status": "REJECTED_UNSUPPORTED",
+      "claim": "A visible Product UI language selector is not established. The frozen source supports URL-driven locale switching via a lang parameter, which must not be promoted into a visible selector capability.",
+      "evidenceRefs": ["EV-WEB-CONFIG", "EV-SOURCE-MANIFEST"],
+      "provenance": {"sourceClass": "src-code-delivery", "locations": ["WebConfiguration.java:L13-L18", "WebConfiguration.java:L39-L49"], "authorityBoundary": "mechanism observed; visible selector claim rejected as insufficiently evidenced"}
+    },
+    {
+      "claimId": "RUN1-NEGATIVE-002",
+      "type": "PRODUCT_RULE_OR_CONSTRAINT",
+      "status": "REJECTED_IMPLEMENTATION_ONLY",
+      "claim": "A repository method name or internal storage mechanism is not itself a Product rule or Product capability; retain it as realization evidence only.",
+      "evidenceRefs": ["EV-OWNER-REPO", "EV-SOURCE-MANIFEST"],
+      "provenance": {"sourceClass": "src-code-delivery", "locations": ["OwnerRepository.java:L24-L60"], "authorityBoundary": "repository API is implementation evidence, not Product truth"}
+    },
+    {
+      "claimId": "RUN1-NEGATIVE-003",
+      "type": "PRODUCT_RULE_OR_CONSTRAINT",
+      "status": "REJECTED_OVERGENERALIZATION",
+      "claim": "Global pet-name uniqueness is rejected; the evidenced conflict check is scoped to pets belonging to the same owner.",
+      "evidenceRefs": ["EV-PET-CONTROLLER", "EV-OWNER-MODEL", "EV-PET-TEST"],
+      "provenance": {"sourceClass": "src-code-delivery + src-test-assets", "locations": ["PetController.java:L111-L113", "Owner.java:L144-L153", "PetControllerTests.java:L123-L134"], "authorityBoundary": "same-owner scope is supported; global scope is unsupported"}
+    },
+    {
+      "claimId": "RUN1-NEGATIVE-004",
+      "type": "PRODUCT_RULE_OR_CONSTRAINT",
+      "status": "UNRESOLVED_LIMITATION",
+      "claim": "Exact future-date cutoff, timezone, search ordering, page size, and persistence mechanism remain unresolved semantic claims and must not be invented.",
+      "evidenceRefs": ["EV-VISIT-CONTROLLER", "EV-OWNER-CONTROLLER", "EV-OWNER-REPO", "EV-SOURCE-MANIFEST"],
+      "provenance": {"sourceClass": "src-code-delivery", "locations": ["VisitController.java:L83-L85", "VisitController.java:L100-L102", "OwnerController.java:L124-L136", "OwnerRepository.java:L38-L60"], "authorityBoundary": "implementation details are explicitly not Product truth"}
+    }
+  ],
+  "unsupportedClaims": [
+    {"claimId": "RUN1-NEGATIVE-001", "reason": "visible selector not evidenced; URL locale mechanism is a near miss, not equivalent Product behavior"},
+    {"claimId": "RUN1-NEGATIVE-002", "reason": "repository/storage detail is realization evidence only"},
+    {"claimId": "RUN1-NEGATIVE-003", "reason": "global uniqueness overgeneralizes same-owner evidence"}
+  ],
+  "nearMissClaims": [
+    {"claimId": "RUN1-NEGATIVE-001", "nearMiss": "URL-driven ?lang=<locale> switching", "disposition": "retain mechanism; reject visible UI selector"},
+    {"claimId": "RUN1-NEGATIVE-002", "nearMiss": "findByLastNameStartingWith repository method", "disposition": "retain as realization evidence; reject as Product rule"},
+    {"claimId": "RUN1-AMBIGUITY-001", "nearMiss": "page size 5 in implementation", "disposition": "do not promote to semantic page-size rule"},
+    {"claimId": "RUN1-NEGATIVE-004", "nearMiss": "LocalDate.now() comparison", "disposition": "record boundary evidence without inventing timezone/cutoff semantics"}
+  ],
+  "evidenceCatalog": [
+    {"evidenceRef": "EV-PRODUCT-SEED", "sourceClass": "src-team-seed", "sourceUri": "validation/pkb001/datasets/petclinic-product-semantics-candidate.json", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sha256": "72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea", "excerpt": "Ten frozen capability seeds cover owner, pet, visit, veterinarian, and clinic-home workflows.", "confidence": "Product Team seed; proposal input"},
+    {"evidenceRef": "EV-OWNER-CONTROLLER", "sourceClass": "src-code-delivery", "sourceUri": "src/test/resources/testbehavior/petclinic-818c4136/fixtures/src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sha256": "f1f61c17a818e0a0643bf3cd9bb3eaf32d6e019b3dac4f5dfd4890dc1221d16e", "excerpt": "Owner creation, surname search, paging model, update, and detail routes are implemented.", "confidence": "Exact source snapshot; structural/behavior evidence"},
+    {"evidenceRef": "EV-OWNER-TEST", "sourceClass": "src-test-assets", "sourceUri": "src/test/resources/testbehavior/petclinic-818c4136/fixtures/src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sha256": "bf12386be5621935b92a30d8f7334e3a0399e41c9547b174f2f95fef96232358", "excerpt": "Tests cover owner creation, lookup, whitespace normalization, no results, update, and detail rendering.", "confidence": "Exact test snapshot; verification evidence"},
+    {"evidenceRef": "EV-OWNER-MODEL", "sourceClass": "src-code-delivery", "sourceUri": "src/test/resources/testbehavior/petclinic-818c4136/fixtures/src/main/java/org/springframework/samples/petclinic/owner/Owner.java", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sha256": "7cac66179350f35c0b3b0622a8a9f79de3b232641aac88da4e816437451c7daa", "excerpt": "Owner pet lookup compares names within the owner's pet collection; duplicate persisted IDs are also guarded.", "confidence": "Exact source snapshot; structural evidence"},
+    {"evidenceRef": "EV-OWNER-REPO", "sourceClass": "src-code-delivery", "sourceUri": "src/test/resources/testbehavior/petclinic-818c4136/fixtures/src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sha256": "654cc5a38b2806748116caf4fbd6a99010a35605db32a12707078c34ccec2cd9", "excerpt": "Repository exposes surname-prefix lookup and ID lookup; these are implementation details.", "confidence": "Exact source snapshot; realization evidence only"},
+    {"evidenceRef": "EV-PET-CONTROLLER", "sourceClass": "src-code-delivery", "sourceUri": "src/test/resources/testbehavior/petclinic-818c4136/fixtures/src/main/java/org/springframework/samples/petclinic/owner/PetController.java", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sha256": "1a8a8097ff334b85d3a62c4df79ec52c2dbee8777925970e140081cff7e7c25e", "excerpt": "Pet creation/update, owner-scoped duplicate detection, future birth-date rejection, and persistence paths are implemented.", "confidence": "Exact source snapshot; structural/behavior evidence"},
+    {"evidenceRef": "EV-PET-VALIDATOR", "sourceClass": "src-code-delivery", "sourceUri": "src/test/resources/testbehavior/petclinic-818c4136/fixtures/src/main/java/org/springframework/samples/petclinic/owner/PetValidator.java", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sha256": "1cee4c2a57afd7edb3521fa7a19c4b643f23c2f5b91406ecd638319c6cce9f7f", "excerpt": "New pets require text name, type, and birth date; pet names are limited to 30 characters.", "confidence": "Exact source snapshot; structural evidence"},
+    {"evidenceRef": "EV-PET-TEST", "sourceClass": "src-test-assets", "sourceUri": "src/test/resources/testbehavior/petclinic-818c4136/fixtures/src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sha256": "29f21b836ebe350364d9b3084bbb7f46c22d360203144d4a4b425e3583403588", "excerpt": "Tests cover valid create/update and blank, duplicate, missing type, invalid birth date, and persistence-conflict cases.", "confidence": "Exact test snapshot; verification evidence"},
+    {"evidenceRef": "EV-VISIT-CONTROLLER", "sourceClass": "src-code-delivery", "sourceUri": "src/test/resources/testbehavior/petclinic-818c4136/fixtures/src/main/java/org/springframework/samples/petclinic/owner/VisitController.java", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sha256": "b7c8f9cb7b2b2b5827d85787d1f18c95762a0213760013cef9d0a9e1c2c0f8d8", "excerpt": "Visit form handling requires a future date, adds a visit to the selected pet, saves the owner, and redirects.", "confidence": "Exact source snapshot; structural/behavior evidence"},
+    {"evidenceRef": "EV-VISIT-MODEL", "sourceClass": "src-code-delivery", "sourceUri": "src/test/resources/testbehavior/petclinic-818c4136/fixtures/src/main/java/org/springframework/samples/petclinic/owner/Visit.java", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sha256": "8587d71a42308feb8fe427236a4d3e211bd1b3554e645d0e235afd681683226c", "excerpt": "Visit has a date and nonblank description; its constructor defaults date to tomorrow.", "confidence": "Exact source snapshot; structural evidence"},
+    {"evidenceRef": "EV-VISIT-TEST", "sourceClass": "src-test-assets", "sourceUri": "src/test/resources/testbehavior/petclinic-818c4136/fixtures/src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sha256": "e3d9fe4ad0c92bab43919d53d5e56a5036e0c694c3ad348a6796fdce762532bf", "excerpt": "Tests cover successful visit booking, missing required data, and rejection of a date that is not in the future.", "confidence": "Exact test snapshot; verification evidence"},
+    {"evidenceRef": "EV-VET-CONTROLLER", "sourceClass": "src-code-delivery", "sourceUri": "src/test/resources/testbehavior/petclinic-818c4136/fixtures/src/main/java/org/springframework/samples/petclinic/vet/VetController.java", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sha256": "8a0d285d35e59e61ec98e650506b0b19d0142d75a0886268dd139530f3efb8b8", "excerpt": "Veterinarian HTML listing is paged and a list resource returns all veterinarians.", "confidence": "Exact source snapshot; structural evidence"},
+    {"evidenceRef": "EV-VET-REPOSITORY", "sourceClass": "src-code-delivery", "sourceUri": "src/test/resources/testbehavior/petclinic-818c4136/fixtures/src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "excerpt": "Repository exposes full and paged veterinarian retrieval.", "confidence": "Exact source snapshot; structural evidence"},
+    {"evidenceRef": "EV-WEB-CONFIG", "sourceClass": "src-code-delivery", "sourceUri": "src/test/resources/testbehavior/petclinic-818c4136/fixtures/src/main/java/org/springframework/samples/petclinic/system/WebConfiguration.java", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sha256": "d9eb227f4ffcd434b2000ac30fce9b5e341f85e893c4b3536b50fbbc15384b92", "excerpt": "LocaleChangeInterceptor uses a URL lang parameter and SessionLocaleResolver defaults to English; no visible selector is established by this source.", "confidence": "Exact source snapshot; mechanism evidence only"},
+    {"evidenceRef": "EV-SOURCE-MANIFEST", "sourceClass": "src-code-delivery", "sourceUri": "validation/engcim-swarm-v06/baseline/manifests/source-manifest.json", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sha256": "2c49ea9d3851847b0d6c33095070465745a7a592ffb5aa28fb3461884ec00eed", "excerpt": "PKB001 source snapshot, revision, and source-file inventory are frozen and traceable.", "confidence": "Frozen provenance evidence"},
+    {"evidenceRef": "EV-HISTORY", "sourceClass": "src-code-delivery", "sourceUri": "validation/pkb001/datasets/petclinic-delivery-history.json", "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sha256": "87b70439f69bb82cee0139b65108ecce6044aff1a4d1b5ce6324933acbeab2d1", "excerpt": "Cutoff-bounded commit and pull-request history is retained as historical delivery evidence only.", "confidence": "Historical evidence; not Product truth"}
+  ]
+}
