@@ -1,0 +1,72 @@
+{
+  "BIND-PROVENANCE-S05-R2": {
+    "subject": {
+      "subjectRef": "candidate:r2",
+      "repositoryPath": "/Users/herman_mbp2023/engcim-swarm-rc7b-runtime-gated-canonical",
+      "repositoryUrl": "https://github.com/hermanwangd/engcim-rc7b-v03-fixture-20260919.git",
+      "baselineCommit": "6c77175ae4a948a24c1cdd74db83cc6bb10e2401",
+      "candidateCommit": "4cd95d6be709b946e9df601b15fef97f9061bc77"
+    },
+    "evidence": {
+      "evidenceRefs": ["GIT-R2-CANONICAL-PUBLISHED"],
+      "remoteRef": "origin/rc7b-runtime-gated-20260919",
+      "resolvedAt": "2026-09-19T13:16:20Z"
+    }
+  },
+  "BIND-EVIDENCE-S05-R2": {
+    "subject": {
+      "subjectRef": "candidate:r2",
+      "requiredEvidenceRefs": [
+        "DEV-R2-CANONICAL-GIT",
+        "DEV-R2-PUSH",
+        "DEV-R2-SELF-TEST",
+        "DEV-R2-MULTICA-DELIVERY"
+      ]
+    },
+    "evidence": {
+      "evidenceRefs": [
+        "DEV-R2-CANONICAL-GIT",
+        "DEV-R2-PUSH",
+        "DEV-R2-SELF-TEST",
+        "DEV-R2-MULTICA-DELIVERY"
+      ],
+      "evidence": [
+        {
+          "ref": "DEV-R2-CANONICAL-GIT",
+          "source": "git rev-list --parents, git status, git diff --check",
+          "observed": "r2 4cd95d6 parent r1 a1a0ea1; clean worktree",
+          "runRef": "E7C-12/01a0b9c9-01b3-74a4-bcbe-5e7de6428484",
+          "resolvable": true,
+          "valid": true,
+          "sufficient": true
+        },
+        {
+          "ref": "DEV-R2-PUSH",
+          "source": "git push and git ls-remote",
+          "observed": "refs/heads/rc7b-runtime-gated-20260919 -> 4cd95d6be709b946e9df601b15fef97f9061bc77",
+          "runRef": "E7C-12/01a0b9c9-01b3-74a4-bcbe-5e7de6428484",
+          "resolvable": true,
+          "valid": true,
+          "sufficient": true
+        },
+        {
+          "ref": "DEV-R2-SELF-TEST",
+          "source": "node public check and node --check",
+          "observed": "chartLimits().max === 10; exit 0",
+          "runRef": "E7C-12/01a0b9c9-01b3-74a4-bcbe-5e7de6428484",
+          "resolvable": true,
+          "valid": true,
+          "sufficient": true
+        },
+        {
+          "ref": "DEV-R2-MULTICA-DELIVERY",
+          "source": "Multica delivery comment 01a0b9cf-160a-7a20-8494-00fdcd0b2296",
+          "runRef": "01a0b9c9-01b3-74a4-bcbe-5e7de6428484",
+          "resolvable": true,
+          "valid": true,
+          "sufficient": true
+        }
+      ]
+    }
+  }
+}

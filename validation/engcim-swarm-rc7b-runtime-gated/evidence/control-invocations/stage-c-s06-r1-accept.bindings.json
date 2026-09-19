@@ -1,0 +1,38 @@
+[
+  {
+    "bindingRef": "BIND-PROVENANCE-S06-R1",
+    "scopeRef": "E7C-11:r1",
+    "gateRef": "S06-R1-ACCEPT",
+    "controlRef": "CTRL-REPOSITORY-PROVENANCE-001",
+    "subjectRef": "candidate:r1",
+    "evidenceRefs": ["S06-R1-GIT-RESOLVED"]
+  },
+  {
+    "bindingRef": "BIND-EXACT-S06-R1",
+    "scopeRef": "E7C-11:r1",
+    "gateRef": "S06-R1-ACCEPT",
+    "controlRef": "CTRL-EXACT-BINDING-001",
+    "subjectRef": "candidate:r1",
+    "evidenceRefs": ["S06-R1-EXACT-BINDING"]
+  },
+  {
+    "bindingRef": "BIND-INDEPENDENT-S06-R1",
+    "scopeRef": "E7C-11:r1",
+    "gateRef": "S06-R1-ACCEPT",
+    "controlRef": "CTRL-INDEPENDENT-EVALUATION-001",
+    "subjectRef": "candidate:r1",
+    "evidenceRefs": ["S06-R1-FV003-VERIFICATION"]
+  },
+  {
+    "bindingRef": "BIND-EVIDENCE-S06-R1",
+    "scopeRef": "E7C-11:r1",
+    "gateRef": "S06-R1-ACCEPT",
+    "controlRef": "CTRL-EVIDENCE-INTEGRITY-001",
+    "subjectRef": "candidate:r1",
+    "evidenceRefs": [
+      "S06-R1-GIT-CHECKOUT",
+      "S06-R1-FV003-VERIFICATION",
+      "S06-R1-MULTICA-DELIVERY"
+    ]
+  }
+]

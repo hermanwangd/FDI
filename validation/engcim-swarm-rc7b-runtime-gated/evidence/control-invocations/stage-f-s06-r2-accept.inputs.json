@@ -1,0 +1,103 @@
+{
+  "BIND-PROVENANCE-S06-R2": {
+    "subject": {
+      "subjectRef": "candidate:r2",
+      "repositoryPath": "/Users/herman_mbp2023/engcim-swarm-rc7b-runtime-gated-canonical",
+      "repositoryUrl": "https://github.com/hermanwangd/engcim-rc7b-v03-fixture-20260919.git",
+      "baselineCommit": "6c77175ae4a948a24c1cdd74db83cc6bb10e2401",
+      "candidateCommit": "4cd95d6be709b946e9df601b15fef97f9061bc77"
+    },
+    "evidence": {
+      "evidenceRefs": ["S06-R2-GIT-RESOLVED"],
+      "remoteRef": "origin/rc7b-runtime-gated-20260919",
+      "checkoutMode": "fresh-independent-checkout",
+      "resolvedAt": "2026-09-19T13:21:21Z"
+    }
+  },
+  "BIND-EXACT-S06-R2": {
+    "subject": {
+      "subjectRef": "candidate:r2",
+      "revision": "4cd95d6be709b946e9df601b15fef97f9061bc77"
+    },
+    "evidence": {
+      "evidenceRefs": ["S06-R2-EXACT-BINDING"],
+      "boundSubjectRef": "candidate:r2",
+      "boundRevision": "4cd95d6be709b946e9df601b15fef97f9061bc77",
+      "source": "S06 fresh checkout HEAD and git ls-remote exact r2",
+      "runRef": "E7C-13/01a0b9d1-520b-7b92-8a72-b1653ab87e05"
+    }
+  },
+  "BIND-INDEPENDENT-S06-R2": {
+    "subject": {
+      "subjectRef": "candidate:r2",
+      "producerRef": "E7C-12"
+    },
+    "evidence": {
+      "evidenceRefs": ["S06-R2-FV003-VERIFICATION"],
+      "evaluation": {
+        "evaluatorRef": "E7C-13",
+        "producerRef": "E7C-12",
+        "evaluatedSubjectRef": "candidate:r2",
+        "independent": true,
+        "outcome": "PASS / VERIFIED",
+        "evidenceRef": "S06-R2-FV003-VERIFICATION"
+      }
+    }
+  },
+  "BIND-EVIDENCE-S06-R2": {
+    "subject": {
+      "subjectRef": "candidate:r2",
+      "requiredEvidenceRefs": [
+        "S06-R2-GIT-CHECKOUT",
+        "S06-R2-FV003-VERIFICATION",
+        "S06-R2-VALID-CHART-REGRESSION",
+        "S06-R2-MULTICA-DELIVERY"
+      ]
+    },
+    "evidence": {
+      "evidenceRefs": [
+        "S06-R2-GIT-CHECKOUT",
+        "S06-R2-FV003-VERIFICATION",
+        "S06-R2-VALID-CHART-REGRESSION",
+        "S06-R2-MULTICA-DELIVERY"
+      ],
+      "evidence": [
+        {
+          "ref": "S06-R2-GIT-CHECKOUT",
+          "source": "fresh multica repo checkout; git rev-parse; git status",
+          "observed": "HEAD 4cd95d6; parent a1a0ea1; clean tree",
+          "runRef": "E7C-13/01a0b9d1-520b-7b92-8a72-b1653ab87e05",
+          "resolvable": true,
+          "valid": true,
+          "sufficient": true
+        },
+        {
+          "ref": "S06-R2-FV003-VERIFICATION",
+          "source": "sealed Node FV-003 command",
+          "observed": "expected 10; observed 10; exit 0; PASS / VERIFIED",
+          "runRef": "E7C-13/01a0b9d1-520b-7b92-8a72-b1653ab87e05",
+          "resolvable": true,
+          "valid": true,
+          "sufficient": true
+        },
+        {
+          "ref": "S06-R2-VALID-CHART-REGRESSION",
+          "source": "valid-chart regression command",
+          "observed": "{min: 0, max: 10}; exit 0",
+          "runRef": "E7C-13/01a0b9d1-520b-7b92-8a72-b1653ab87e05",
+          "resolvable": true,
+          "valid": true,
+          "sufficient": true
+        },
+        {
+          "ref": "S06-R2-MULTICA-DELIVERY",
+          "source": "Multica S06 r2 delivery comment 01a0b9d5-7442-7b92-a35b-9b475052ba62",
+          "runRef": "E7C-13/01a0b9d1-520b-7b92-8a72-b1653ab87e05",
+          "resolvable": true,
+          "valid": true,
+          "sufficient": true
+        }
+      ]
+    }
+  }
+}
