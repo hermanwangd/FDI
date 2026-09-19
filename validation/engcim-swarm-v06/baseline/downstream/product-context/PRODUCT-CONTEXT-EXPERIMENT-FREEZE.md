@@ -1,13 +1,13 @@
 # Product Context A/B Experiment Freeze
 
-Freeze revision: `product-context-ab-v0.2-final`
+Freeze revision: `product-context-ab-v0.3-final`
 
 ## Conditions
 
 | Condition | Composed context | Raw inputs | Resolver / preload |
 |---|---|---|---|
 | PC0 | unavailable by design | identical SPC-MISSION-V1 corpus | no resolver call |
-| PC1 | `product-context/PC1.yaml`, revision 1 | identical SPC-MISSION-V1 corpus | frozen context supplied; raw fallback permitted and logged |
+| PC1 | `product-context/PC1-v2.yaml`, revision 2 | identical SPC-MISSION-V1 corpus | frozen context supplied; raw fallback permitted and logged |
 | PC1-STALE | `product-context/PC1-STALE.yaml` | identical corpus with current source revision | must fail closed and inspect raw source |
 
 Mission-level effect compares `PC0 → S04 → S05 → S06` with

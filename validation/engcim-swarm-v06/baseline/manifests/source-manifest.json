@@ -8,7 +8,7 @@
       "role": "S01 standalone semantic calibration",
       "compatibilityWith": {"SPC-MISSION-V1": "N/A"},
       "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
-      "sourceAuthority": "historical evidence artifacts; source-level re-adjudication pending",
+      "sourceAuthority": "exact upstream source independently readjudicated; S01 gold revision 2 binds the corrected visible-selector boundary",
       "sourceFiles": [
         {"sourceRef":"S01-REVIEWED-SEMANTICS","path":"validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004.json","sha256":"6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3"},
         {"sourceRef":"S01-REVIEWED-EVIDENCE","path":"validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004-evidence.json","sha256":"3c48228142c21b8ac92558f13cb314673e5b8b49b7856e301934d5acf73956d3"},
@@ -17,7 +17,17 @@
         {"sourceRef":"S01-AI-REVIEW","path":"validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/ai-provisional-review-001.json","sha256":"09b0f023c42f1520e9559dd78c5dd86c7b16bd18a75dace1d980744a7246cbe8"},
         {"sourceRef":"S01-PRODUCT-CANDIDATE","path":"validation/pkb001/datasets/petclinic-product-semantics-candidate.json","sha256":"72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea"},
         {"sourceRef":"S01-MAPPING","path":"validation/pkb001/evaluator/petclinic-818c413/gold-mappings-v2.json","sha256":"22292caf3b8f55ff418b0716dce32da19e93974555ef597da1705674b467c385"}
-      ]
+      ],
+      "sourceReadjudication": {
+        "path": "pk/s01/S01-SOURCE-READJUDICATION-v2.json",
+        "sha256": "b563248cb959fce5bb1423624a15e1db17f919c097ef1042fac5994ce60820b5",
+        "result": "PASS"
+      },
+      "goldRevision": {
+        "path": "pk/s01/S01-SEMANTIC-GOLD-v2.json",
+        "sha256": "5e86eadc2c92ab910dbad17aea4cfb50e4ed12f3179f9ebc1e8721c99617db85",
+        "supersedes": "pk/s01/S01-SEMANTIC-GOLD.json"
+      }
     },
     {
       "datasetRef": "SPC-MISSION-V1",
@@ -40,8 +50,9 @@
       "fixtureRootDigest": {"algorithm":"sha256(sorted hash/path lines without comments)","digest":"dced92652b75ce48fcb02fe5a0f1bf3b2291fa534481166f1fd4930e7dd54d52"},
       "canonicalDownstreamRepository": {
         "url": "https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture.git",
-        "baselineCommit": "2eff5f9f84ca709684bfe0b7c90102268f07a0f0",
-        "ref": "refs/heads/main",
+        "baselineCommit": "4ab29f8dbbf1479f8e9f51f0f5eb3ddd100672a6",
+        "parentCommit": "2eff5f9f84ca709684bfe0b7c90102268f07a0f0",
+        "ref": "refs/heads/validation/s05-fixture-v2-20260920",
         "resolvableAtFreeze": true
       }
     }

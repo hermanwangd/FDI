@@ -1,15 +1,15 @@
 {
   "schemaVersion": "engcim-validation-ground-truth-seal.v0.2",
   "sealRef": "VALIDATION-GROUND-TRUTH-SEAL-V06-001",
-  "status": "NOT_READY",
+  "status": "READY",
   "authority": "EVALUATOR_ONLY",
   "createdAt": "2026-09-20",
   "authorIdentity": "codex-validation-preparer",
   "reviewIdentities": ["codex-baseline-closure-reviewer"],
-  "reviewSessionRef": "codex-s01-s06-closure-20260919",
+  "reviewSessionRef": "codex-s01-s06-correction-20260920",
   "scopedSeals": [
-    {"path":"pk/PK-GROUND-TRUTH-SEAL.json","sha256":"7380d98356e39d59b1fc49edd97312bf4a80743b251b1e8114bedd477e19a9c4"},
-    {"path":"downstream/S04-S06-GROUND-TRUTH-SEAL.json","sha256":"a01bf3545ea880ded053041afea68e7a0366b9e3129868c91d0b1166e85c1cdb"}
+    {"path":"pk/PK-GROUND-TRUTH-SEAL.json","sha256":"21e95dee92f64c6cd5427a42ce46802b553b0fe61b402380b4bcda5a8d5ab384"},
+    {"path":"downstream/S04-S06-GROUND-TRUTH-SEAL.json","sha256":"04b4d522ef3d0ff24289c89dae9fbfc440bab28d6718bbd74e8dc13d5df1ecd8"}
   ],
   "frozenArtifacts": [
     {"path":"gate0/SCENARIO-BASELINE-FREEZE.md","sha256":"a263391d78d06cf66a43fb30aeaf7ef55f831b85ca58753e20afebcbfd9dbef4"},
@@ -24,9 +24,17 @@
     {"path":"gate0/RC7-B-RUNTIME-CONTROL-GATING-CLOSURE.md","sha256":"70d1d8964379249666a44777bb8b23aa95643f975d72b271e0cb73f0613aae1d"}
   ],
   "repositoryCommit":"d2c67f6ab72abe8ba1c89ec5212deef7bff44b08",
+  "correctedBaselineArtifacts":[
+    {"path":"pk/s01/S01-SEMANTIC-GOLD-v2.json","sha256":"5e86eadc2c92ab910dbad17aea4cfb50e4ed12f3179f9ebc1e8721c99617db85"},
+    {"path":"pk/s01/S01-SOURCE-READJUDICATION-v2.json","sha256":"b563248cb959fce5bb1423624a15e1db17f919c097ef1042fac5994ce60820b5"},
+    {"path":"downstream/product-context/PC1-v2.yaml","sha256":"68d290141aa5a4c0cd341544bdcad2e0a12daeb152aca61bd9bdb4a94d6ab6c2"},
+    {"path":"downstream/product-context/PRODUCT-CONTEXT-EXPERIMENT-FREEZE.md","sha256":"02aa545ff5a4b0ed5febfa42cf8191e6cce316e0236ba038b246718ee70e849e"},
+    {"path":"downstream/s05/fixture-source/src/interaction.js","sha256":"36e6ac8bf7908d7bc933f1b60b0db6866748d56fc0889521756541c08e71bc99"},
+    {"path":"manifests/source-manifest.json","sha256":"2c49ea9d3851847b0d6c33095070465745a7a592ffb5aa28fb3461884ec00eed"}
+  ],
   "generation_access":"DENIED",
   "product_knowledge_input":false,
   "evaluator_only":true,
   "runtimeControlClosure":{"path":"gate0/RC7-B-RUNTIME-CONTROL-GATING-RESULT.json","status":"PASS","resultRef":"RC7B-RUNTIME-GATING-CLOSURE-V06-001"},
-  "notReadyReasons":["S01 frozen gold is not source-safe.","S04 Product Context PC1 is semantically inconsistent.","S05 fixture required test fails before execution."]
+  "notReadyReasons":[]
 }

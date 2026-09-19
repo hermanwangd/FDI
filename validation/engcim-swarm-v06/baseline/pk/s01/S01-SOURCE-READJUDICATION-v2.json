@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "engcim-s01-source-readjudication.v0.2",
+  "reviewRef": "S01-SOURCE-READJUDICATION-V06-20260920-V2",
+  "reviewerIdentity": "codex-baseline-closure-reviewer",
+  "reviewSessionRef": "codex-s01-s06-correction-20260920",
+  "createdAt": "2026-09-20T18:00:00Z",
+  "sourceRepositoryUrl": "https://github.com/spring-projects/spring-petclinic.git",
+  "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+  "sourceTree": "0bb31bb92bc1839f6378e832e54c8b4af03e4ee2",
+  "reviewedGoldPath": "pk/s01/S01-SEMANTIC-GOLD-v2.json",
+  "reviewedGoldDigest": "sha256:5e86eadc2c92ab910dbad17aea4cfb50e4ed12f3179f9ebc1e8721c99617db85",
+  "sourceDigestInventory": {
+    "path": "pk/s01/S01-SOURCE-READJUDICATION.json",
+    "sha256": "cfac02f970e6a07685e541f0c2d7ccb2e61e83b4a563149ef1a27db08cc10cae",
+    "sourceFilesSha256": "0ba0c421d88599f3c4b5c6b13e36fab6e0275d0af81cc55e1d6be427e00cd191"
+  },
+  "changedItemReview": {
+    "goldItemRef": "S01-NEGATIVE-001",
+    "criticality": "CRITICAL",
+    "outcome": "SUPPORTED",
+    "evidenceRefs": [
+      "WebConfiguration.java:L13-L18",
+      "WebConfiguration.java:L39-L49",
+      "messages_*.properties",
+      "S01-SEMANTIC-GOLD-v2.json changeSet"
+    ],
+    "finding": "The exact source implements URL-driven locale switching, but does not establish a visible Product UI language selector. The corrected gold rejects the visible-selector claim without denying the implementation mechanism."
+  },
+  "unchangedCriticalItems": {
+    "count": 17,
+    "itemRefs": [
+      "S01-PRODUCT-FACT-001",
+      "S01-CAPABILITY-001",
+      "S01-CAPABILITY-002",
+      "S01-CAPABILITY-003",
+      "S01-CAPABILITY-004",
+      "S01-SCENARIO-001",
+      "S01-SCENARIO-002",
+      "S01-SCENARIO-003",
+      "S01-SCENARIO-004",
+      "S01-SCENARIO-005",
+      "S01-SCENARIO-006",
+      "S01-SCENARIO-007",
+      "S01-SCENARIO-008",
+      "S01-RULE-001",
+      "S01-RULE-002",
+      "S01-NEGATIVE-002",
+      "S01-NEGATIVE-003"
+    ],
+    "sourceGoldItemsSha256": "9a661821b9a3aac862674a68d12975741a2b350dcff1c1197241b3d250dcc358",
+    "allRemainSupportedOrExpectedDisposition": true
+  },
+  "result": "PASS",
+  "resultReason": "The corrected v2 boundary is source-safe and all 17 unchanged critical items retain their prior supported or expected disposition."
+}
