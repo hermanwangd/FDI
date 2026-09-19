@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "engcim-s03-corrected-contract.v0.1",
+  "artifactKind": "S03_CORRECTED_FROZEN_EXECUTION_CONTRACT",
+  "revision": 2,
+  "scenarioRef": "S03-MULTI-REPO-ANALYSIS",
+  "scenarioRevision": "S03-r2-spc-mission-v1",
+  "baseDefinition": {
+    "path": "validation/engcim-swarm-v06/baseline/gate0/scenario-definitions/S03.json",
+    "sha256": "sha256:0ac7bc41bd2f7cd8847b816749cd2aa8861320c1c31cb3644ea740aa794597ce",
+    "definitionDigest": "sha256:a3adf92fa9672eff180b03cc0243db02bb723046d39eac2d1b4f4fde85ebf771",
+    "originalControlRefs": ["CTRL-REPOSITORY-PROVENANCE-001", "CTRL-EVIDENCE-INTEGRITY-001"],
+    "preservedUnmodified": true
+  },
+  "contractResolution": {
+    "status": "RESOLVED_FOR_REVISION_2",
+    "applicabilityMatrix": {
+      "path": "validation/engcim-swarm-v06/baseline/gate0/CONTROL-APPLICABILITY-MATRIX.md",
+      "freezeRevision": "control-applicability-v0.2-final",
+      "scope": "S03",
+      "gate": "realization acceptance",
+      "requiredControls": ["CTRL-REPOSITORY-PROVENANCE-001", "CTRL-EXACT-BINDING-001", "CTRL-EVIDENCE-INTEGRITY-001"]
+    },
+    "bindingFreeze": {
+      "path": "validation/engcim-swarm-v06/baseline/controls/CONTROL-BINDING-FREEZE.md",
+      "freezeRevision": "control-binding-v0.2-final",
+      "bindings": {
+        "CTRL-REPOSITORY-PROVENANCE-001": ["EVID-S03-REPOSITORY-MANIFEST", "EVID-S03-SOURCE-REVISIONS"],
+        "CTRL-EXACT-BINDING-001": ["EVID-S03-ANALYSIS-ANCHOR", "EVID-S03-GOLD"],
+        "CTRL-EVIDENCE-INTEGRITY-001": ["EVID-S03-GOLD", "EVID-S03-SOURCE-MANIFEST"]
+      }
+    },
+    "effectiveControlRefs": ["CTRL-REPOSITORY-PROVENANCE-001", "CTRL-EXACT-BINDING-001", "CTRL-EVIDENCE-INTEGRITY-001"],
+    "predicate": "The effective S03 control set equals the frozen applicability matrix; every required evidence reference resolves to the frozen catalog and is explicitly bound to the revision-2 execution artifacts.",
+    "resolutionNote": "The baseline S03 controlRefs omitted CTRL-EXACT-BINDING-001. Revision 2 uses the frozen global matrix and binding freeze as the governing correction; no baseline file was edited."
+  },
+  "fixtureBinding": {
+    "fixtureRef": "SPC-MISSION-V1",
+    "fixtureRevision": "SPC-MISSION-V1-r1",
+    "authority": "SYNTHETIC_VALIDATION_FIXTURE",
+    "identityKind": "SYNTHETIC_FIXTURE_CONTENT",
+    "fixtureRootDigest": "sha256:dced92652b75ce48fcb02fe5a0f1bf3b2291fa534481166f1fd4930e7dd54d52",
+    "baselineContainerCommit": "229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8",
+    "baselineContainerCommitMeaning": "Immutable enclosing baseline commit only; it is not treated as equivalent to any declared repository pin.",
+    "sourcePolicy": "Each repository is bound to SPC-MISSION-V1-r1 and its repository content digest plus frozen file-level evidence."
+  },
+  "repositoryBindings": [
+    {
+      "repositoryRef": "REPO-chart-management-api",
+      "name": "chart-management-api",
+      "role": "RELEVANT",
+      "effectivePin": {"identityKind": "SYNTHETIC_FIXTURE_CONTENT", "fixtureRef": "SPC-MISSION-V1", "fixtureRevision": "SPC-MISSION-V1-r1", "contentDigest": "sha256:267113736f7c406b1e6abe7d36e2d6dc96846657c273720beeb5a76c80b78f79"},
+      "declaredBaselinePin": "02b5f22eb42e97f8b60f78ecdb962d5ff7c5f2cf",
+      "declaredPinResolution": "NOT_PRESENT_AS_GIT_OBJECT; replaced only by explicit frozen synthetic-fixture binding",
+      "fileEvidenceRefs": ["S03-EVID-API-README", "S03-EVID-API-SOURCE"]
+    },
+    {
+      "repositoryRef": "REPO-chart-viewer",
+      "name": "chart-viewer",
+      "role": "RELEVANT",
+      "effectivePin": {"identityKind": "SYNTHETIC_FIXTURE_CONTENT", "fixtureRef": "SPC-MISSION-V1", "fixtureRevision": "SPC-MISSION-V1-r1", "contentDigest": "sha256:14be9ca89bbdf33884614558602ead8763e333d64a5ea54432f3c77c23a755e5"},
+      "declaredBaselinePin": "890a2246b1ab9386c1c533dc22a7248f0f544154",
+      "declaredPinResolution": "NOT_PRESENT_AS_GIT_OBJECT; replaced only by explicit frozen synthetic-fixture binding",
+      "fileEvidenceRefs": ["S03-EVID-VIEWER-README", "S03-EVID-VIEWER-SOURCE"]
+    },
+    {
+      "repositoryRef": "REPO-spc-deployment",
+      "name": "spc-deployment",
+      "role": "RELEVANT",
+      "effectivePin": {"identityKind": "SYNTHETIC_FIXTURE_CONTENT", "fixtureRef": "SPC-MISSION-V1", "fixtureRevision": "SPC-MISSION-V1-r1", "contentDigest": "sha256:366b3a8f481e5b3eaaadb918ae34407245e1c24c2a0706319b6150045cd103bb"},
+      "declaredBaselinePin": "9638e9c46996033310ed43094e092f8423a59246",
+      "declaredPinResolution": "NOT_PRESENT_AS_GIT_OBJECT; replaced only by explicit frozen synthetic-fixture binding",
+      "fileEvidenceRefs": ["S03-EVID-DEPLOYMENT-README", "S03-EVID-DEPLOYMENT-SOURCE"]
+    },
+    {
+      "repositoryRef": "REPO-distractor-service",
+      "name": "distractor-service",
+      "role": "DISTRACTOR",
+      "effectivePin": {"identityKind": "SYNTHETIC_FIXTURE_CONTENT", "fixtureRef": "SPC-MISSION-V1", "fixtureRevision": "SPC-MISSION-V1-r1", "contentDigest": "sha256:b90457f3e2aeeb91aa8bcdb9cdbb9679d394791006609bb1a91eb4ebffe8f956"},
+      "declaredBaselinePin": "NOT_DECLARED",
+      "declaredPinResolution": "EXPLICIT_FIXTURE_BINDING",
+      "fileEvidenceRefs": ["S03-EVID-DISTRACTOR-README", "S03-EVID-DISTRACTOR-SOURCE"]
+    }
+  ],
+  "generationBoundary": {
+    "sourceLedInputs": ["SPC-MISSION-V1-r1 repository files", "revision-2 corrected contract", "frozen evidence manifest"],
+    "goldUsedForGeneration": false,
+    "goldUsedForComparison": true,
+    "historicalExecutionUsed": false
+  }
+}

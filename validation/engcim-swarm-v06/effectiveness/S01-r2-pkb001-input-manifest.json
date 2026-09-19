@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "engcim-s01-execution-input-manifest.v0.1",
+  "artifactKind": "S01_EXECUTION_INPUT_MANIFEST",
+  "revision": 1,
+  "runId": "01a0bb9d-cba4-749e-9dff-877a16af8736",
+  "scenarioRef": "S01-PRODUCT-KNOWLEDGE",
+  "scenarioRevision": "S01-r2-pkb001",
+  "definitionDigest": "sha256:868777143c176e3beb40881f1a17f96344b5f88335d03e3b00e6114797d49adf",
+  "datasetRef": "PKB001-PETCLINIC",
+  "executionStartedAt": "2026-09-19T21:41:16Z",
+  "artifactCreatedAt": "2026-09-19T21:47:02Z",
+  "authoritativeCheckout": {
+    "path": "/Users/herman_mbp2023/Documents/FDI-s01-s06-effectiveness",
+    "baselineCommit": "229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8",
+    "baselineSeal": "validation/engcim-swarm-v06/baseline/VALIDATION-GROUND-TRUTH-SEAL.json",
+    "baselineStatus": "READY",
+    "baselineValidationCommand": "bash validation/engcim-swarm-v06/baseline/validate_baseline.sh",
+    "baselineValidationResult": "PASS"
+  },
+  "frozenInputs": [
+    {
+      "inputRef": "INPUT-S01-DEFINITION",
+      "sourceClass": "src-test-assets",
+      "role": "scenario contract and output requirements",
+      "path": "validation/engcim-swarm-v06/baseline/gate0/scenario-definitions/S01.json",
+      "sha256": "74221a6273e591391424544857e16de8f951cc131e48152c35067b3238ff445f",
+      "revisionBinding": "S01-r2-pkb001"
+    },
+    {
+      "inputRef": "INPUT-PRODUCT-SEED",
+      "sourceClass": "src-team-seed",
+      "role": "frozen Product Team capability seed; meaning input, not evaluator truth",
+      "path": "validation/pkb001/datasets/petclinic-product-semantics-candidate.json",
+      "sha256": "72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea",
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "authority": "PRODUCT_TEAM/FROZEN"
+    },
+    {
+      "inputRef": "INPUT-PETCLINIC-SOURCE",
+      "sourceClass": "src-code-delivery",
+      "role": "exact upstream source snapshot and source evidence",
+      "repository": "https://github.com/spring-projects/spring-petclinic.git",
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "sourceTree": "0bb31bb92bc1839f6378e832e54c8b4af03e4ee2",
+      "sourceRoot": "src/test/resources/testbehavior/petclinic-818c4136/fixtures/src/main/java",
+      "sourceFileCount": 30,
+      "sourceEvidenceBinding": "validation/pkb001/datasets/petclinic-calibration-candidate.json",
+      "sourceEvidenceSha256": "103fca15071c9f741492c6207f41e68b751e129543f05fd2d63f1c206ae224a7"
+    },
+    {
+      "inputRef": "INPUT-PETCLINIC-TESTS",
+      "sourceClass": "src-test-assets",
+      "role": "frozen test behavior evidence; tests are evidence, not Product truth",
+      "sourceRoot": "src/test/resources/testbehavior/petclinic-818c4136/fixtures/src/test/java",
+      "testFileCount": 20,
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "testEvidenceBoundary": "behavior assertions and negative cases only"
+    },
+    {
+      "inputRef": "INPUT-DELIVERY-HISTORY",
+      "sourceClass": "src-code-delivery",
+      "role": "historical delivery evidence; not Product truth and not future ChangeSurface",
+      "path": "validation/pkb001/datasets/petclinic-delivery-history.json",
+      "sha256": "87b70439f69bb82cee0139b65108ecce6044aff1a4d1b5ce6324933acbeab2d1",
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "historyCutoff": "2026-08-26T10:57:54Z",
+      "commitCount": 1042,
+      "pullRequestCount": 91,
+      "policy": "EXCLUDE_AFTER_CUTOFF"
+    },
+    {
+      "inputRef": "INPUT-SOURCE-MANIFEST",
+      "sourceClass": "src-code-delivery",
+      "role": "frozen source/provenance catalog",
+      "path": "validation/engcim-swarm-v06/baseline/manifests/source-manifest.json",
+      "sha256": "2c49ea9d3851847b0d6c33095070465745a7a592ffb5aa28fb3461884ec00eed",
+      "datasetBinding": "PKB001-PETCLINIC"
+    },
+    {
+      "inputRef": "INPUT-GRAPHIFY-EVIDENCE",
+      "sourceClass": "src-code-delivery",
+      "role": "structural observation only; used for provenance cross-check, not semantic authority",
+      "path": "validation/pkb001/artifacts/petclinic-graph-818c413.json",
+      "sha256": "e1f6b1933c9529623b0ddd8b2d051349bf79b3f9baebe89c89c391c856bf629e",
+      "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+      "validationState": "PROVISIONAL"
+    }
+  ],
+  "frozenEvidenceCatalogEntries": [
+    {
+      "evidenceRef": "S01-EVID-SEMANTICS-004",
+      "sourceClass": "src-team-seed",
+      "path": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004.json",
+      "sha256": "6c854c3d42c348d56720741b573ec88e5d6bd2dc38abb4753540ca23e8aaa9e3",
+      "role": "prior reviewed semantics; excluded from generation and independently re-adjudicated"
+    },
+    {
+      "evidenceRef": "S01-EVID-SEMANTICS-EVIDENCE",
+      "sourceClass": "src-test-assets",
+      "path": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/accepted-semantics-004-evidence.json",
+      "sha256": "3c48228142c21b8ac92558f13cb314673e5b8b49b7856e301934d5acf73956d3",
+      "role": "prior forward-gate evidence; excluded from generation"
+    },
+    {
+      "evidenceRef": "S01-EVID-REVIEW-004",
+      "sourceClass": "src-test-assets",
+      "path": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/review-decisions-004.json",
+      "sha256": "98c46df1ffdf6ce57d37d6d320b644ac25778797b1ad786831f76d94e0d34f4f",
+      "role": "prior review decision evidence; evaluator/adjudication only"
+    },
+    {
+      "evidenceRef": "S01-EVID-ACCEPTANCE-MANIFEST",
+      "sourceClass": "src-test-assets",
+      "path": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/acceptance-manifest-004.json",
+      "sha256": "1b3fbbfd210c2c0d82d74a2579c1980d5de6b047fff56a08cc2b43097c76e2a9",
+      "role": "prior acceptance/governance boundary; evaluator/adjudication only"
+    },
+    {
+      "evidenceRef": "S01-EVID-AI-REVIEW",
+      "sourceClass": "src-test-assets",
+      "path": "validation/pkb001/scenario-review/pkb001-scenarios-petclinic-818c413-20260905-01/ai-provisional-review-001.json",
+      "sha256": "09b0f023c42f1520e9559dd78c5dd86c7b16bd18a75dace1d980744a7246cbe8",
+      "role": "prior provisional review; excluded from generation"
+    },
+    {
+      "evidenceRef": "S01-EVID-PRODUCT-CANDIDATE",
+      "sourceClass": "src-team-seed",
+      "path": "validation/pkb001/datasets/petclinic-product-semantics-candidate.json",
+      "sha256": "72aaacd69f57e0ee4bbb1e9ba04d2f3211d3e73e557730cf57e5fd9988f7cbea",
+      "role": "frozen Product Team seed; included as meaning input"
+    },
+    {
+      "evidenceRef": "S01-EVID-MAPPING-V2",
+      "sourceClass": "src-code-delivery",
+      "path": "validation/pkb001/evaluator/petclinic-818c413/gold-mappings-v2.json",
+      "sha256": "22292caf3b8f55ff418b0716dce32da19e93974555ef597da1705674b467c385",
+      "role": "evaluator realization mapping; excluded from generation and used only for post-generation adjudication"
+    },
+    {
+      "evidenceRef": "S01-SOURCE-READJUDICATION-V2",
+      "sourceClass": "src-test-assets",
+      "path": "validation/engcim-swarm-v06/baseline/pk/s01/S01-SOURCE-READJUDICATION-v2.json",
+      "sha256": "b563248cb959fce5bb1423624a15e1db17f919c097ef1042fac5994ce60820b5",
+      "role": "independent evaluator-only source re-adjudication; post-generation check"
+    }
+  ],
+  "sourceClassificationSummary": {
+    "src-team-seed": ["INPUT-PRODUCT-SEED"],
+    "src-product-docs": [],
+    "src-test-assets": ["INPUT-S01-DEFINITION", "INPUT-PETCLINIC-TESTS"],
+    "src-operations": [],
+    "src-engineering": [],
+    "src-code-delivery": ["INPUT-PETCLINIC-SOURCE", "INPUT-DELIVERY-HISTORY", "INPUT-SOURCE-MANIFEST", "INPUT-GRAPHIFY-EVIDENCE"]
+  },
+  "generationPolicy": {
+    "generationInputs": ["INPUT-S01-DEFINITION", "INPUT-PRODUCT-SEED", "INPUT-PETCLINIC-SOURCE", "INPUT-PETCLINIC-TESTS", "INPUT-DELIVERY-HISTORY", "INPUT-SOURCE-MANIFEST"],
+    "goldExcludedFromGeneration": true,
+    "evaluatorTruthExcludedFromGeneration": true,
+    "priorReviewedSemanticsExcludedFromGeneration": true,
+    "historicalS01S06ExecutionExcluded": true,
+    "historicalNamespacesExcluded": ["validation/engcim-swarm-s01-s06/", "E6V-4", "E6V-5"],
+    "forbiddenInputs": [
+      "validation/engcim-swarm-v06/baseline/pk/s01/S01-SEMANTIC-GOLD-v2.json",
+      "validation/engcim-swarm-v06/baseline/pk/s01/gold-review.md",
+      "validation/engcim-swarm-v06/baseline/VALIDATION-GROUND-TRUTH-SEAL.json",
+      "current_or_historical_execution_outputs",
+      "TKMS MCP",
+      "Azure DevOps MCP",
+      "web knowledge"
+    ],
+    "adjudicationBoundary": "Evaluator-only gold is read only after the fresh claim packet is closed; it is not a generation input."
+  },
+  "runtimeCapabilities": {
+    "tkmsMcp": "NOT_VERIFIED",
+    "azureDevOpsMcp": "NOT_VERIFIED",
+    "graphify": "FROZEN_SOURCE_EVIDENCE_ONLY"
+  }
+}

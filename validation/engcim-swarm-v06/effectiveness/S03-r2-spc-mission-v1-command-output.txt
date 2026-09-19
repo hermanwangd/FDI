@@ -1,0 +1,73 @@
+S03 execution command/output evidence
+runId: 01a0bbd2-7a7e-737b-aabd-bebdca11da50
+scenarioRevision: S03-r2-spc-mission-v1
+fixtureRevision: SPC-MISSION-V1-r1
+baselineCommit: 229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8
+
+$ bash validation/engcim-swarm-v06/baseline/validate_baseline.sh
+PASS: scenario JSON and definition digests
+PASS: S01 semantic coverage and revision 2 gold
+PASS: S01 exact source readjudication revision 2
+PASS: S02/S03 frozen gold and fixture invariants
+PASS: S04 cases and Product Context revision 2
+PASS: S05 required fixture test passes
+PASS: S05 canonical remote, corrected fixture, and isolation
+PASS: independent S01-S06 review decisions are PASS
+PASS: preserved RC7-B runtime-gated control closure is bound
+PASS: fixture checksums
+PASS: scoped and top-level seal references
+PASS: READY seal status matrix and Gate-0 binding are consistent
+S01-S06 BASELINE CHECKS = PASS
+VALIDATION_BASELINE = READY
+
+$ bash /Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-a191b7cf6b46/e6v-13-bebdca11da50/codex-home/skills/pk-repository-analysis/scripts/repo-fetch.sh --config validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-analysis-config.yaml --workdir validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout
+[repo-fetch] local chart-management-api ← /Users/herman_mbp2023/Documents/FDI-s01-s06-effectiveness/validation/engcim-swarm-v06/baseline/pk/s03/fixture/repos/chart-management-api @ 229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8
+[repo-fetch] local chart-viewer ← /Users/herman_mbp2023/Documents/FDI-s01-s06-effectiveness/validation/engcim-swarm-v06/baseline/pk/s03/fixture/repos/chart-viewer @ 229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8
+[repo-fetch] local spc-deployment ← /Users/herman_mbp2023/Documents/FDI-s01-s06-effectiveness/validation/engcim-swarm-v06/baseline/pk/s03/fixture/repos/spc-deployment @ 229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8
+[repo-fetch] local distractor-service ← /Users/herman_mbp2023/Documents/FDI-s01-s06-effectiveness/validation/engcim-swarm-v06/baseline/pk/s03/fixture/repos/distractor-service @ 229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8
+[repo-fetch] manifest.lock 更新：validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/manifest.lock
+
+$ python3 /Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-a191b7cf6b46/e6v-13-bebdca11da50/codex-home/skills/pk-repository-analysis/scripts/analyze-repo.py --repo-dir validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/chart-management-api --repo-name chart-management-api --commit 229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8 --out validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/chart-management-api.jsonl
+[graphify-analyzer] chart-management-api@229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8: 10 observations -> validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/chart-management-api.jsonl
+
+$ python3 /Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-a191b7cf6b46/e6v-13-bebdca11da50/codex-home/skills/pk-repository-analysis/scripts/analyze-repo.py --repo-dir validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/chart-viewer --repo-name chart-viewer --commit 229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8 --out validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/chart-viewer.jsonl
+[graphify-analyzer] chart-viewer@229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8: 9 observations -> validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/chart-viewer.jsonl
+
+$ python3 /Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-a191b7cf6b46/e6v-13-bebdca11da50/codex-home/skills/pk-repository-analysis/scripts/analyze-repo.py --repo-dir validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/spc-deployment --repo-name spc-deployment --commit 229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8 --out validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/spc-deployment.jsonl
+[graphify-analyzer] spc-deployment@229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8: 0 observations -> validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/spc-deployment.jsonl
+
+$ python3 /Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-a191b7cf6b46/e6v-13-bebdca11da50/codex-home/skills/pk-repository-analysis/scripts/analyze-repo.py --repo-dir validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/distractor-service --repo-name distractor-service --commit 229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8 --out validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/distractor-service.jsonl
+[graphify-analyzer] distractor-service@229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8: 4 observations -> validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/distractor-service.jsonl
+
+Manual supplement:
+- manual-s03.jsonl adds the source-grounded ChartConfigInterface object contract and deployment.yaml module/reference observations. All five are PROVISIONAL.
+- synthesized-edges.jsonl adds seven source-grounded cross-repository edges after the automatic correlator's output was inspected; no gold-only edge was emitted.
+
+$ python3 /Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-a191b7cf6b46/e6v-13-bebdca11da50/codex-home/skills/pk-repository-analysis/scripts/correlate-cross-repo.py --observations validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/chart-management-api.jsonl validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/chart-viewer.jsonl validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/spc-deployment.jsonl validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/distractor-service.jsonl validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/manual-s03.jsonl --out validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/correlated-edges.jsonl
+[correlate] 4 repos -> 1 cross-repo edges -> validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/correlated-edges.jsonl
+
+$ python3 /Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-a191b7cf6b46/e6v-13-bebdca11da50/codex-home/skills/pk-repository-analysis/scripts/graph-update.py --graph validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-first --observations validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/chart-management-api.jsonl validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/chart-viewer.jsonl validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/spc-deployment.jsonl validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/distractor-service.jsonl validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/manual-s03.jsonl --edges validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/correlated-edges.jsonl validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/synthesized-edges.jsonl --stale-scope chart-management-api,chart-viewer,spc-deployment,distractor-service
+[graph-update] nodes +21/~1, edges +25/~0, STALE 0; total 21 nodes / 25 edges
+
+$ cp -R validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-first validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-second
+$ python3 /Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-a191b7cf6b46/e6v-13-bebdca11da50/codex-home/skills/pk-repository-analysis/scripts/graph-update.py --graph validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-second --observations validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/chart-management-api.jsonl validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/chart-viewer.jsonl validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/spc-deployment.jsonl validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/distractor-service.jsonl validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/manual-s03.jsonl --edges validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/correlated-edges.jsonl validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/synthesized-edges.jsonl --stale-scope chart-management-api,chart-viewer,spc-deployment,distractor-service
+[graph-update] nodes +0/~0, edges +0/~25, STALE 0; total 21 nodes / 25 edges
+
+$ cmp -s graph-first/nodes.jsonl graph-second/nodes.jsonl && cmp -s graph-first/edges.jsonl graph-second/edges.jsonl
+nodes=IDENTICAL
+edges=IDENTICAL
+
+$ jq -s 'group_by(.nodeType)|map({nodeType:.[0].nodeType,count:length})' graph-first/nodes.jsonl
+[{"nodeType":"CodeEntity","count":5},{"nodeType":"Component","count":4},{"nodeType":"Interface","count":1},{"nodeType":"Module","count":7},{"nodeType":"Repository","count":4}]
+
+$ jq -s 'group_by(.type)|map({type:.[0].type,count:length,evidenceComplete:all(.[];(.evidence|length)>0)})' graph-first/edges.jsonl
+[{"type":"CALLS","count":2,"evidenceComplete":true},{"type":"CONSUMES","count":1,"evidenceComplete":true},{"type":"CONTAINS","count":12,"evidenceComplete":true},{"type":"DEPENDS_ON","count":3,"evidenceComplete":true},{"type":"EXPOSES","count":1,"evidenceComplete":true},{"type":"IMPLEMENTED_IN","count":4,"evidenceComplete":true},{"type":"IMPLEMENTS","count":1,"evidenceComplete":true},{"type":"USES","count":1,"evidenceComplete":true}]
+
+$ sha256sum graph-first/nodes.jsonl graph-first/edges.jsonl graph-second/nodes.jsonl graph-second/edges.jsonl
+430d0a6ac9d4e650b71823cc83b456c1422be484b83f2df3b87f1a9cb9625ecd  graph-first/nodes.jsonl
+7723cf8c0f2ebc3544eb758fff6e6e37d5387ed55e799ab2b328e684c6de11e4  graph-first/edges.jsonl
+430d0a6ac9d4e650b71823cc83b456c1422be484b83f2df3b87f1a9cb9625ecd  graph-second/nodes.jsonl
+7723cf8c0f2ebc3544eb758fff6e6e37d5387ed55e799ab2b328e684c6de11e4  graph-second/edges.jsonl
+
+$ jq -s 'group_by(.validationState)|map({state:.[0].validationState,count:length})' <all five observation JSONL files>
+[{"state":"PROVISIONAL","count":28}]

@@ -1,0 +1,266 @@
+{
+  "schemaVersion": "engcim-s02-execution-result.v0.1",
+  "artifactKind": "S02_EFFECTIVENESS_EXECUTION_RESULT",
+  "revision": 1,
+  "runId": "01a0bbba-b665-7063-bf5b-32a70ded812f",
+  "scenarioRef": "S02-PK-REFRESH",
+  "scenarioRevision": "S02-r2-spc-mission-v1",
+  "definitionDigest": "sha256:e1034e55ef5184eee5fc883f00d0031d1fe0f31f0d0d8165d653c3dc7fc1599e",
+  "datasetRef": "SPC-MISSION-V1",
+  "executionNamespace": "validation/engcim-swarm-v06/effectiveness/",
+  "authority": "EXECUTION_EVIDENCE_ONLY",
+  "executionClassification": "PASS",
+  "progressionClassification": "INCONCLUSIVE_PENDING_REVIEW_AND_VERIFICATION",
+  "executionSummary": "Source-led refresh of the frozen SPC-MISSION-V1 revision produced eight exact delta decisions, preserved unchanged knowledge, updated the changed and new facts, explicitly retired unsupported QA support, and surfaced the conflicting rule without selecting a winner.",
+  "baselineBinding": {
+    "baselineCommit": "229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8",
+    "baselineSeal": "validation/engcim-swarm-v06/baseline/VALIDATION-GROUND-TRUTH-SEAL.json",
+    "baselineSealSha256": "903dd3db777077b5fa753b345ce0b0e4e8bce476b56631be1fa4b0388f324d16",
+    "baselineSealStatus": "READY",
+    "baselineValidationCommand": "bash validation/engcim-swarm-v06/baseline/validate_baseline.sh",
+    "baselineValidationResult": "PASS",
+    "scenarioDefinitionPath": "validation/engcim-swarm-v06/baseline/gate0/scenario-definitions/S02.json",
+    "scenarioDefinitionSha256": "facfc1fb2385022495c0ef74a272b1163509cbf0f06c1570c9f705762a54ac25",
+    "scenarioDefinitionDigest": "sha256:e1034e55ef5184eee5fc883f00d0031d1fe0f31f0d0d8165d653c3dc7fc1599e"
+  },
+  "sourceBinding": {
+    "fixtureRevision": "SPC-MISSION-V1-r1 plus D1-D8",
+    "sourceBundle": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/baseline/source-bundle.json",
+    "sourceBundleSha256": "fd2222f195139384bfb4a02af20a92225c07c6d415bcca2a5de957eaed848a7b",
+    "inputManifest": "validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-input-manifest.json",
+    "inputManifestSha256": "429f9d85417aca8b872b7d2e7405d51fc3cfe2aa09bca0b2efe9734d060c2339",
+    "refreshArtifact": "validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-refresh.json",
+    "refreshArtifactSha256": "ae2a99d8079deaa61ad51d4463855be144498b68b09f7ef319b6d7a41e1fd634",
+    "claimsArtifact": "validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-claims.json",
+    "claimsArtifactSha256": "765507a846a7c0e21182368488e5c7571a984353351f197bfb8f65599f909f42",
+    "sourceRevisionMap": [
+      "S02-SRC-PRODUCT-SPEC: product-spec-r1 -> product-spec-r2",
+      "S02-SRC-QA-SPEC: qa-spec-r1 -> qa-spec-r2",
+      "S02-SRC-REALIZATION-MAP: realization-map-r1 retained for D8 mapping change"
+    ]
+  },
+  "metric": {
+    "metricName": "S02 refresh delta decision fidelity",
+    "goldenSource": "validation/engcim-swarm-v06/baseline/pk/s02/S02-REFRESH-GOLD.json",
+    "goldRef": "S02-REFRESH-GOLD-V06-001",
+    "goldSha256": "8b9ab56d279f1d1afb7f0c1486daeef6a57a34447f4d3b991c94e991700d59b7",
+    "goldAuthority": "EVALUATOR_ONLY",
+    "goldenSampleSize": 8,
+    "criticalSampleSize": 8,
+    "numerator": 8,
+    "denominator": 8,
+    "score": 1.0,
+    "unsupportedOrNearMissPromoted": 0,
+    "claimsWithoutEvidence": 0,
+    "scoringRule": "One-to-one comparison of D1-D8 against the frozen S02 gold by expectedSemanticEffect, expectedGovernanceOutcome, and expectedRevisionOutcome. A decision scores only when it carries the exact source revision(s), resolvable delta evidence, and required boundary behavior: unchanged facts remain active, removed support is stale/review-required, and conflicts retain both claims with no selected winner.",
+    "resultRule": "PASS when all 8 deltas match all three expected outcome fields, all 8 decisions have source revisions and evidence, and no silent conflict winner or unsupported/near-miss claim is emitted; otherwise INCONCLUSIVE or BLOCKED from the missing-evidence classification."
+  },
+  "provenanceMetric": {
+    "metricName": "S02 source revision and evidence binding completeness",
+    "goldenSource": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/ plus S02 input manifest",
+    "sampleSize": 8,
+    "numerator": 8,
+    "denominator": 8,
+    "score": 1.0,
+    "scoringRule": "Every D1-D8 decision must identify sourceRef(s), sourceRevision(s), and a resolvable frozen fixture path; conflict and retirement decisions must also preserve the applicable opposing or removed-support evidence."
+  },
+  "unsupportedOrNearMissOutcomes": {
+    "unsupportedCount": 0,
+    "nearMissCount": 0,
+    "outcomes": [],
+    "note": "No unsupported or near-miss refresh claim was emitted."
+  },
+  "itemAdjudication": [
+    {
+      "deltaRef": "D1",
+      "generatedDecision": "CHANGED / MODIFIED / PROPOSE_REVISION / NEW_KNOWLEDGE_REVISION",
+      "expectedDecision": "MODIFIED / PROPOSE_REVISION / NEW_KNOWLEDGE_REVISION",
+      "match": "PASS",
+      "sourceRevisions": ["product-spec-r1", "product-spec-r2"],
+      "evidence": "baseline/source-bundle.json + D1-semantic-change/delta.json"
+    },
+    {
+      "deltaRef": "D2",
+      "generatedDecision": "NEW / NEW / PROPOSE_REVISION / ADD_KNOWLEDGE_ITEM",
+      "expectedDecision": "NEW / PROPOSE_REVISION / ADD_KNOWLEDGE_ITEM",
+      "match": "PASS",
+      "sourceRevisions": ["product-spec-r2"],
+      "evidence": "D2-new-fact/delta.json"
+    },
+    {
+      "deltaRef": "D3",
+      "generatedDecision": "REMOVED / INSUFFICIENT / MARK_STALE / REQUIRE_SUPPORT_REVIEW",
+      "expectedDecision": "INSUFFICIENT / MARK_STALE / REQUIRE_SUPPORT_REVIEW",
+      "match": "PASS",
+      "sourceRevisions": ["qa-spec-r1", "qa-spec-r2"],
+      "evidence": "D3-only-support-removed/delta.json"
+    },
+    {
+      "deltaRef": "D4",
+      "generatedDecision": "CONFLICTING / CONFLICT / SURFACE_CONFLICT / REQUIRE_HUMAN_DECISION",
+      "expectedDecision": "CONFLICT / SURFACE_CONFLICT / REQUIRE_HUMAN_DECISION",
+      "match": "PASS",
+      "sourceRevisions": ["product-spec-r2", "qa-spec-r2"],
+      "evidence": "D1-semantic-change/delta.json + D4-conflict/delta.json; winner=null"
+    },
+    {
+      "deltaRef": "D5",
+      "generatedDecision": "UNCHANGED / NO_CHANGE / KEEP_ACTIVE / NO_NEW_REVISION",
+      "expectedDecision": "NO_CHANGE / KEEP_ACTIVE / NO_NEW_REVISION",
+      "match": "PASS",
+      "sourceRevisions": ["product-spec-r1", "qa-spec-r1"],
+      "evidence": "baseline/source-bundle.json + D5-no-change/delta.json"
+    },
+    {
+      "deltaRef": "D6",
+      "generatedDecision": "UNCHANGED / NO_CHANGE / KEEP_ACTIVE / UPDATE_PROVENANCE_ONLY",
+      "expectedDecision": "NO_CHANGE / KEEP_ACTIVE / UPDATE_PROVENANCE_ONLY",
+      "match": "PASS",
+      "sourceRevisions": ["product-spec-r1", "product-spec-r2"],
+      "evidence": "D6-revision-only/delta.json"
+    },
+    {
+      "deltaRef": "D7",
+      "generatedDecision": "UNCHANGED / NO_CHANGE / KEEP_ACTIVE / UPDATE_EVIDENCE_SET",
+      "expectedDecision": "NO_CHANGE / KEEP_ACTIVE / UPDATE_EVIDENCE_SET",
+      "match": "PASS",
+      "sourceRevisions": ["product-spec-r1", "qa-spec-r2"],
+      "evidence": "D7-partial-support-loss/delta.json"
+    },
+    {
+      "deltaRef": "D8",
+      "generatedDecision": "UNCHANGED / NO_CHANGE / KEEP_ACTIVE / UPDATE_REALIZATION_ONLY",
+      "expectedDecision": "NO_CHANGE / KEEP_ACTIVE / UPDATE_REALIZATION_ONLY",
+      "match": "PASS",
+      "sourceRevisions": ["realization-map-r1"],
+      "evidence": "D8-realization-only/delta.json"
+    }
+  ],
+  "controlEvidence": [
+    {
+      "controlRef": "CTRL-REPOSITORY-PROVENANCE-001",
+      "gate": "refresh-acceptance",
+      "status": "PASS",
+      "applicability": "TASK_CONTRACT_SUPPLEMENT",
+      "requiredEvidenceRefs": ["EVID-S02-BEFORE-AFTER-SOURCES", "EVID-S02-REVISION-MAP"],
+      "bindings": [
+        {
+          "requiredEvidenceRef": "EVID-S02-BEFORE-AFTER-SOURCES",
+          "frozenPath": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/",
+          "executionRef": "S02-r2-spc-mission-v1-input-manifest.json",
+          "check": "The before-state source bundle and all D1-D8 delta files resolve in the exact frozen checkout and each delta is SHA-256 bound."
+        },
+        {
+          "requiredEvidenceRef": "EVID-S02-REVISION-MAP",
+          "frozenPath": "validation/engcim-swarm-v06/baseline/pk/s02/S02-REFRESH-GOLD.json",
+          "executionRef": "S02-r2-spc-mission-v1-refresh.json",
+          "check": "Every decision records sourceRef(s) and sourceRevision(s), including both sides of the conflict and the removed support."
+        }
+      ],
+      "predicate": "Every S02 source and delta used by the refresh is classified, exact-path bound, and revision traceable."
+    },
+    {
+      "controlRef": "CTRL-EXACT-BINDING-001",
+      "gate": "refresh-acceptance",
+      "status": "PASS",
+      "requiredEvidenceRefs": ["EVID-S02-BEFORE-AFTER-SOURCES", "EVID-S02-REVISION-MAP"],
+      "bindings": [
+        {
+          "requiredEvidenceRef": "EVID-S02-BEFORE-AFTER-SOURCES",
+          "frozenPath": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/",
+          "executionRef": "S02-r2-spc-mission-v1-refresh.json",
+          "check": "D1-D8 decisions are one-to-one with the frozen delta fixture and retain before/after semantics."
+        },
+        {
+          "requiredEvidenceRef": "EVID-S02-REVISION-MAP",
+          "frozenPath": "validation/engcim-swarm-v06/baseline/pk/s02/S02-REFRESH-GOLD.json",
+          "executionRef": "S02-r2-spc-mission-v1-execution-result.json",
+          "check": "All 8/8 decisions match the frozen expected semantic, governance, and revision outcomes."
+        }
+      ],
+      "predicate": "The refreshed knowledge decision is bound to the exact current S02 fixture revision and expected delta mapping."
+    },
+    {
+      "controlRef": "CTRL-EVIDENCE-INTEGRITY-001",
+      "gate": "refresh-acceptance",
+      "status": "PASS",
+      "requiredEvidenceRefs": ["EVID-S02-BEFORE-AFTER-SOURCES", "EVID-S02-GOLD"],
+      "bindings": [
+        {
+          "requiredEvidenceRef": "EVID-S02-BEFORE-AFTER-SOURCES",
+          "frozenPath": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/",
+          "executionRef": "S02-r2-spc-mission-v1-claims.json",
+          "check": "All 8 refresh claims have source and delta evidence; no unsupported or near-miss claim was emitted."
+        },
+        {
+          "requiredEvidenceRef": "EVID-S02-GOLD",
+          "frozenPath": "validation/engcim-swarm-v06/baseline/pk/s02/S02-REFRESH-GOLD.json",
+          "executionRef": "S02-r2-spc-mission-v1-execution-result.json",
+          "check": "Evaluator-only gold is bound by exact SHA-256 and used for the 8-item comparison; its catalog sufficiency remains pending independent review."
+        }
+      ],
+      "predicate": "No refresh claim is emitted without resolvable evidence, and conflict/retirement boundaries remain explicit."
+    }
+  ],
+  "operationalClassifications": {
+    "owningLayer": "S02_REFRESH_EXECUTION",
+    "manualRescue": {
+      "applied": false,
+      "classification": "NONE",
+      "note": "No manual rescue, post-hoc claim insertion, or silent conflict resolution was used."
+    },
+    "retry": {
+      "attempt": 1,
+      "retried": false,
+      "classification": "NONE",
+      "note": "First successful execution attempt."
+    },
+    "blocked": {
+      "classification": "NONE_FOR_EXECUTION; REVIEW_VERIFIER_PENDING_FOR_PROGRESSION",
+      "owner": "separate Reviewer and Verifier gates",
+      "governancePending": "S02-K-RULE-001 conflict requires human decision; this is an expected surfaced outcome, not a silent execution failure."
+    },
+    "externalCapabilityBlockers": [
+      "TKMS MCP NOT_VERIFIED",
+      "Azure DevOps MCP NOT_VERIFIED"
+    ],
+    "baselineOrContractFailure": false
+  },
+  "reviewAndVerification": {
+    "reviewerRun": "PENDING_SEPARATE_GATE",
+    "reviewerResult": "PENDING",
+    "verifierRun": "PENDING_SEPARATE_GATE",
+    "verifierResult": "PENDING",
+    "acceptanceClaimed": false,
+    "childStatusRequired": "in_review"
+  },
+  "commandsAndObservedOutput": [
+    {
+      "command": "bash validation/engcim-swarm-v06/baseline/validate_baseline.sh",
+      "result": "PASS",
+      "observedOutput": "S01-S06 BASELINE CHECKS = PASS; VALIDATION_BASELINE = READY"
+    },
+    {
+      "command": "jq source bundle and D1-D8 delta inputs",
+      "result": "PASS",
+      "observedOutput": "fixture=SPC-MISSION-V1; fixtureRevision=SPC-MISSION-V1-r1; deltaCount=8; sourceRevisions=product-spec-r1->r2, qa-spec-r1->r2, realization-map-r1"
+    },
+    {
+      "command": "jq S02 refresh closure",
+      "result": "PASS",
+      "observedOutput": "decisions=8; changed=1; new=1; removed=1; conflicting=1; unchanged=4; decisionsWithSourceRevision=8; decisionsWithResolvableEvidence=8; silentWinnerSelections=0"
+    },
+    {
+      "command": "jq S02 metric and control closure",
+      "result": "PASS",
+      "observedOutput": "metric=8/8; provenance=8/8; controls=3; controlEvidenceRefs=3 unique; unsupported=0; nearMiss=0"
+    }
+  ],
+  "artifacts": [
+    "validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-input-manifest.json",
+    "validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-refresh.json",
+    "validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-claims.json",
+    "validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-execution-result.json",
+    "validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-command-output.txt"
+  ]
+}

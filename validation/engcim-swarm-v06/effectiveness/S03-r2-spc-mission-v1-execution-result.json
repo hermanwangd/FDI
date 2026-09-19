@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "engcim-s03-execution-result.v0.1",
+  "artifactKind": "S03_EXECUTION_RESULT",
+  "revision": 1,
+  "runId": "01a0bbd2-7a7e-737b-aabd-bebdca11da50",
+  "scenarioRef": "S03-MULTI-REPO-ANALYSIS",
+  "scenarioRevision": "S03-r2-spc-mission-v1",
+  "definitionDigest": "sha256:a3adf92fa9672eff180b03cc0243db02bb723046d39eac2d1b4f4fde85ebf771",
+  "datasetRef": "SPC-MISSION-V1",
+  "authority": "EXECUTION_EVIDENCE_ONLY",
+  "executionClassification": "PASS",
+  "progressionClassification": "INCONCLUSIVE_PENDING_REVIEW_AND_VERIFICATION",
+  "sourceBinding": {
+    "inputManifestPath": "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-input-manifest.json",
+    "inputManifestSha256": "sha256:230e1e4a3bc63d28e4b0b573eba1de52b2004a57a74396a9a755ec260dc8736c",
+    "claimsArtifactPath": "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-claims.json",
+    "claimsArtifactSha256": "sha256:817655fbac4243b86ee544162ede4e819ab82a988b1ab749727b2ca88387fe29",
+    "fixtureRevision": "SPC-MISSION-V1-r1",
+    "checkoutRevision": "229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8",
+    "goldPath": "validation/engcim-swarm-v06/baseline/pk/s03/S03-MULTI-REPO-REALIZATION-GOLD.json",
+    "goldSha256": "sha256:49f26c57da74a75183e33d3045adfd22ab2338b4823de5535a16b67f7190f089",
+    "goldUsedForGeneration": false,
+    "goldUsedForComparison": true
+  },
+  "metric": {
+    "name":"critical-gold-edge-coverage",
+    "sampleSize":5,
+    "numerator":5,
+    "denominator":5,
+    "scoringRule":"All five frozen critical expected edges map to evidence-backed standardized graph edges; CONSUMES_FROM and DEPLOYS_WITH are recorded as explicit aliases to the governed CONSUMES/DEPENDS_ON relation vocabulary."
+  },
+  "provenanceMetric": {
+    "name":"graph-edge-evidence-closure",
+    "sampleSize":25,
+    "numerator":25,
+    "denominator":25,
+    "scoringRule":"Every graph edge has non-empty evidence with evidenceType, detail, sourceRepo, commit, and observedAt."
+  },
+  "repositoryMetric": {
+    "sampleSize":4,
+    "numerator":4,
+    "denominator":4,
+    "scoringRule":"Every repository declared in the frozen manifest was analyzed or explicitly supplemented, checkout-bound, and file-hash-bound; the distractor remains outside the anchor impact set."
+  },
+  "impactMetric": {"sampleSize":3,"numerator":3,"denominator":3,"scoringRule":"All three expected chart-limits impact components are present and exactly match the frozen impact set."},
+  "idempotencyMetric": {"sampleSize":2,"numerator":2,"denominator":2,"scoringRule":"Second graph artifact has identical node and edge bytes, zero duplicate node facts, zero duplicate edge facts, and zero additions."},
+  "unsupportedOrNearMissOutcomes": {
+    "unsupportedCount":2,
+    "nearMissCount":2,
+    "totalNegativeMappings":4,
+    "allNegativeMappingsHeldOut":true,
+    "details":"The distractor repository and notification component remain outside the anchor; viewer→distractor and API→distractor near-miss edges are absent."
+  },
+  "graphArtifacts": {
+    "first": {
+      "nodes":"validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-first/nodes.jsonl",
+      "edges":"validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-first/edges.jsonl",
+      "nodeCount":21,
+      "edgeCount":25,
+      "nodesSha256":"sha256:430d0a6ac9d4e650b71823cc83b456c1422be484b83f2df3b87f1a9cb9625ecd",
+      "edgesSha256":"sha256:7723cf8c0f2ebc3544eb758fff6e6e37d5387ed55e799ab2b328e684c6de11e4"
+    },
+    "second": {
+      "nodes":"validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-second/nodes.jsonl",
+      "edges":"validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-second/edges.jsonl",
+      "nodeCount":21,
+      "edgeCount":25,
+      "nodesSha256":"sha256:430d0a6ac9d4e650b71823cc83b456c1422be484b83f2df3b87f1a9cb9625ecd",
+      "edgesSha256":"sha256:7723cf8c0f2ebc3544eb758fff6e6e37d5387ed55e799ab2b328e684c6de11e4"
+    },
+    "nodesByteIdentical":true,
+    "edgesByteIdentical":true,
+    "duplicateNodeFacts":0,
+    "duplicateEdgeFacts":0,
+    "secondRunAdds":{"nodes":0,"edges":0}
+  },
+  "controlEvidence": [
+    {
+      "controlRef":"CTRL-REPOSITORY-PROVENANCE-001",
+      "status":"PASS",
+      "requiredEvidenceRefs":["EVID-S03-REPOSITORY-MANIFEST","EVID-S03-SOURCE-REVISIONS","EVID-S03-SOURCE-MANIFEST"],
+      "executionEvidence":["validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-input-manifest.json","validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/manifest.lock"],
+      "reviewNote":"Evidence is resolvable and exact; current-revision Reviewer and Verifier gates remain separate from worker execution."
+    },
+    {
+      "controlRef":"CTRL-EVIDENCE-INTEGRITY-001",
+      "status":"PASS",
+      "requiredEvidenceRefs":["EVID-S03-REPOSITORY-MANIFEST","EVID-S03-ANALYSIS-ANCHOR","EVID-S03-GOLD"],
+      "executionEvidence":["validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-claims.json","validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-first/edges.jsonl"],
+      "reviewNote":"Every materialized edge has evidence, every negative mapping is explicit, and evaluator-only gold is comparison-bound; catalog sufficiency still awaits independent review."
+    }
+  ],
+  "operationalClassifications": {
+    "owningLayer":"S03_MULTI_REPO_ANALYSIS_EXECUTION",
+    "manualRescue":{"applied":false,"classification":"NONE","note":"Manual source supplements are declared analyzer observations, not an unsupported post-hoc rescue."},
+    "retry":{"attempt":1,"retried":false,"classification":"NONE"},
+    "blocked":{"classification":"NONE_FOR_EXECUTION; REVIEW_VERIFIER_PENDING_FOR_PROGRESSION","owner":"separate current-revision Reviewer and Verifier gates"},
+    "externalCapabilityBlockers":["TKMS MCP NOT_VERIFIED","Azure DevOps MCP NOT_VERIFIED"],
+    "baselineOrContractFailure":false
+  },
+  "reviewAndVerification": {
+    "reviewerRun":"PENDING_SEPARATE_GATE",
+    "reviewerResult":"PENDING",
+    "reviewedRevision":null,
+    "verifierRun":"PENDING_SEPARATE_GATE",
+    "verifierResult":"PENDING",
+    "verifiedRevision":null,
+    "acceptanceClaimed":false,
+    "childStatusRequired":"in_review"
+  },
+  "commandsAndObservedOutput": [
+    {"command":"bash validation/engcim-swarm-v06/baseline/validate_baseline.sh","result":"PASS","observedOutput":"S01-S06 BASELINE CHECKS = PASS; VALIDATION_BASELINE = READY"},
+    {"command":"bash pk-repository-analysis/scripts/repo-fetch.sh --config S03-r2-spc-mission-v1-analysis-config.yaml --workdir S03-r2-spc-mission-v1-checkout","result":"PASS","observedOutput":"four declared local repositories linked; manifest.lock binds all four to 229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8"},
+    {"command":"python3 pk-repository-analysis/scripts/analyze-repo.py (four manifest repositories)","result":"PASS","observedOutput":"chart-management-api=10 observations; chart-viewer=9; spc-deployment=0 plus manual YAML supplement; distractor-service=4"},
+    {"command":"python3 pk-repository-analysis/scripts/correlate-cross-repo.py (four analyzer outputs plus manual supplement)","result":"PASS","observedOutput":"4 repos -> 1 automatic cross-repo edge; manual source synthesis adds 7 evidence-backed edges"},
+    {"command":"python3 pk-repository-analysis/scripts/graph-update.py --graph graph-first ...","result":"PASS","observedOutput":"nodes +21/~1, edges +25/~0, STALE 0; total 21 nodes / 25 edges"},
+    {"command":"python3 pk-repository-analysis/scripts/graph-update.py --graph graph-second ... (idempotent re-analysis)","result":"PASS","observedOutput":"nodes +0/~0, edges +0/~25, STALE 0; total 21 nodes / 25 edges"},
+    {"command":"cmp graph-first/nodes.jsonl graph-second/nodes.jsonl; cmp graph-first/edges.jsonl graph-second/edges.jsonl","result":"PASS","observedOutput":"nodes=IDENTICAL; edges=IDENTICAL"}
+  ],
+  "artifacts": [
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-input-manifest.json",
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-claims.json",
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-execution-result.json",
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-command-output.txt",
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/manifest.lock",
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/observations/",
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-first/",
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-checkout/graph-second/"
+  ]
+}

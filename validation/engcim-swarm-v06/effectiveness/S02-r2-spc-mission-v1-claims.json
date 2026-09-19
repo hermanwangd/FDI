@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "engcim-s02-claims.v0.1",
+  "artifactKind": "S02_REFRESH_CLAIMS",
+  "revision": 1,
+  "runId": "01a0bbba-b665-7063-bf5b-32a70ded812f",
+  "scenarioRef": "S02-PK-REFRESH",
+  "scenarioRevision": "S02-r2-spc-mission-v1",
+  "definitionDigest": "sha256:e1034e55ef5184eee5fc883f00d0031d1fe0f31f0d0d8165d653c3dc7fc1599e",
+  "datasetRef": "SPC-MISSION-V1",
+  "authority": "PROPOSAL_ONLY",
+  "inputManifest": "validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-input-manifest.json",
+  "refreshArtifact": "validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-refresh.json",
+  "claims": [
+    {
+      "claimId": "S02-RUN1-D1",
+      "deltaRef": "D1",
+      "claimType": "CHANGED_FACT",
+      "knowledgeRef": "S02-K-RULE-001",
+      "statement": "The product-spec revision changes the rule: invalid limits are accepted for preview but not for publication.",
+      "sourceRefs": ["S02-SRC-PRODUCT-SPEC"],
+      "sourceRevisions": ["product-spec-r1", "product-spec-r2"],
+      "governanceOutcome": "PROPOSE_REVISION",
+      "revisionOutcome": "NEW_KNOWLEDGE_REVISION",
+      "evidenceRefs": ["D1-semantic-change/delta.json"]
+    },
+    {
+      "claimId": "S02-RUN1-D2",
+      "deltaRef": "D2",
+      "claimType": "NEW_FACT",
+      "knowledgeRef": "S02-K-FACT-002",
+      "statement": "Chart viewers can display a selected time range.",
+      "sourceRefs": ["S02-SRC-PRODUCT-SPEC"],
+      "sourceRevisions": ["product-spec-r2"],
+      "governanceOutcome": "PROPOSE_REVISION",
+      "revisionOutcome": "ADD_KNOWLEDGE_ITEM",
+      "evidenceRefs": ["D2-new-fact/delta.json"]
+    },
+    {
+      "claimId": "S02-RUN1-D3",
+      "deltaRef": "D3",
+      "claimType": "REMOVED_SUPPORT",
+      "knowledgeRef": "S02-K-RULE-001",
+      "statement": "QA support for S02-K-RULE-001 is removed and no valid support remains in this delta; the affected observation is stale and requires support review.",
+      "sourceRefs": ["S02-SRC-QA-SPEC"],
+      "sourceRevisions": ["qa-spec-r1", "qa-spec-r2"],
+      "governanceOutcome": "MARK_STALE",
+      "revisionOutcome": "REQUIRE_SUPPORT_REVIEW",
+      "evidenceRefs": ["D3-only-support-removed/delta.json"]
+    },
+    {
+      "claimId": "S02-RUN1-D4",
+      "deltaRef": "D4",
+      "claimType": "CONFLICT",
+      "knowledgeRef": "S02-K-RULE-001",
+      "statement": "The QA revision says missing chart limits are tolerated and use defaults, conflicting with the product-spec revision; no winner is selected.",
+      "sourceRefs": ["S02-SRC-PRODUCT-SPEC", "S02-SRC-QA-SPEC"],
+      "sourceRevisions": ["product-spec-r2", "qa-spec-r2"],
+      "governanceOutcome": "SURFACE_CONFLICT",
+      "revisionOutcome": "REQUIRE_HUMAN_DECISION",
+      "selectedWinner": null,
+      "evidenceRefs": ["D1-semantic-change/delta.json", "D4-conflict/delta.json"]
+    },
+    {
+      "claimId": "S02-RUN1-D5",
+      "deltaRef": "D5",
+      "claimType": "UNCHANGED_FACT",
+      "knowledgeRef": "S02-K-RULE-001",
+      "statement": "The no-change delta preserves the existing invalid-limits projection and keeps the fact active.",
+      "sourceRefs": ["S02-SRC-PRODUCT-SPEC", "S02-SRC-QA-SPEC"],
+      "sourceRevisions": ["product-spec-r1", "qa-spec-r1"],
+      "governanceOutcome": "KEEP_ACTIVE",
+      "revisionOutcome": "NO_NEW_REVISION",
+      "evidenceRefs": ["D5-no-change/delta.json", "baseline/source-bundle.json"]
+    },
+    {
+      "claimId": "S02-RUN1-D6",
+      "deltaRef": "D6",
+      "claimType": "PROVENANCE_ONLY_CHANGE",
+      "knowledgeRef": "S02-K-RULE-001",
+      "statement": "The product-spec revision and digest change while the semantic projection remains unchanged; update provenance only.",
+      "sourceRefs": ["S02-SRC-PRODUCT-SPEC"],
+      "sourceRevisions": ["product-spec-r1", "product-spec-r2"],
+      "governanceOutcome": "KEEP_ACTIVE",
+      "revisionOutcome": "UPDATE_PROVENANCE_ONLY",
+      "evidenceRefs": ["D6-revision-only/delta.json"]
+    },
+    {
+      "claimId": "S02-RUN1-D7",
+      "deltaRef": "D7",
+      "claimType": "PARTIAL_SUPPORT_LOSS",
+      "knowledgeRef": "S02-K-RULE-001",
+      "statement": "Removing QA support does not change the semantic fact because product-spec support remains; update the evidence set.",
+      "sourceRefs": ["S02-SRC-PRODUCT-SPEC", "S02-SRC-QA-SPEC"],
+      "sourceRevisions": ["product-spec-r1", "qa-spec-r2"],
+      "governanceOutcome": "KEEP_ACTIVE",
+      "revisionOutcome": "UPDATE_EVIDENCE_SET",
+      "evidenceRefs": ["D7-partial-support-loss/delta.json"]
+    },
+    {
+      "claimId": "S02-RUN1-D8",
+      "deltaRef": "D8",
+      "claimType": "REALIZATION_ONLY_CHANGE",
+      "knowledgeRef": "S02-K-REALIZATION-001",
+      "statement": "The realization mapping changes the consumer from chart-viewer to chart-renderer while the semantic capability remains unchanged.",
+      "sourceRefs": ["S02-SRC-REALIZATION-MAP"],
+      "sourceRevisions": ["realization-map-r1"],
+      "governanceOutcome": "KEEP_ACTIVE",
+      "revisionOutcome": "UPDATE_REALIZATION_ONLY",
+      "evidenceRefs": ["D8-realization-only/delta.json"]
+    }
+  ],
+  "outputBoundaries": {
+    "claims": 8,
+    "claimsWithEvidence": 8,
+    "claimsWithSourceRevisions": 8,
+    "unsupportedClaimsExplicit": 0,
+    "nearMissClaimsExplicit": 0,
+    "conflictingClaimsPreserved": 1,
+    "silentWinnerSelections": 0
+  }
+}

@@ -1,0 +1,79 @@
+$ bash validation/engcim-swarm-v06/baseline/validate_baseline.sh
+PASS: scenario JSON and definition digests
+PASS: S01 semantic coverage and revision 2 gold
+PASS: S01 exact source readjudication revision 2
+PASS: S02/S03 frozen gold and fixture invariants
+PASS: S04 cases and Product Context revision 2
+PASS: S05 required fixture test passes
+PASS: S05 canonical remote, corrected fixture, and isolation
+PASS: independent S01-S06 review decisions are PASS
+PASS: preserved RC7-B runtime-gated control closure is bound
+PASS: fixture checksums
+PASS: scoped and top-level seal references
+PASS: READY seal status matrix and Gate-0 binding are consistent
+S01-S06 BASELINE CHECKS = PASS
+VALIDATION_BASELINE = READY
+
+$ jq -r '"fixture=\(.sourceSnapshot.fixtureRef); fixtureRevision=\(.sourceSnapshot.fixtureRevision); deltaCount=\(.deltaInputs | length); sourceRevisions=\([.sourceSnapshot.sources[] | "\(.sourceRevisionBefore)->\(.sourceRevisionAfter)"] | join(", "))"' validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-input-manifest.json
+fixture=SPC-MISSION-V1; fixtureRevision=SPC-MISSION-V1-r1; deltaCount=8; sourceRevisions=product-spec-r1->product-spec-r2, qa-spec-r1->qa-spec-r2, realization-map-r1->realization-map-r1
+
+$ jq -r '[.decisions[].decisionClass] as $c | "decisions=\($c|length); changed=\([$c[]|select(.=="CHANGED")]|length); new=\([$c[]|select(.=="NEW")]|length); removed=\([$c[]|select(.=="REMOVED")]|length); conflicting=\([$c[]|select(.=="CONFLICTING")]|length); unchanged=\([$c[]|select(.=="UNCHANGED")]|length); decisionsWithSourceRevision=\([.decisions[]|select((.sourceRevisions|length)>0)]|length); decisionsWithResolvableEvidence=\([.decisions[]|select((.evidenceRefs|length)>0)]|length); silentWinnerSelections=\([.decisions[]|select(.silentWinnerSelected==true)]|length)"' validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-refresh.json
+decisions=8; changed=1; new=1; removed=1; conflicting=1; unchanged=4; decisionsWithSourceRevision=8; decisionsWithResolvableEvidence=8; silentWinnerSelections=0
+
+$ jq -r '"metric=\(.metric.numerator)/\(.metric.denominator); provenance=\(.provenanceMetric.numerator)/\(.provenanceMetric.denominator); controls=\(.controlEvidence|length); controlEvidenceRefs=\([.controlEvidence[].requiredEvidenceRefs[]]|unique|length) unique; unsupported=\(.unsupportedOrNearMissOutcomes.unsupportedCount); nearMiss=\(.unsupportedOrNearMissOutcomes.nearMissCount)"' validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-execution-result.json
+metric=8/8; provenance=8/8; controls=3; controlEvidenceRefs=3 unique; unsupported=0; nearMiss=0
+
+$ jq -s 'length' validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-input-manifest.json validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-refresh.json validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-claims.json validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-execution-result.json
+4
+
+$ sha256sum validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-input-manifest.json validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-refresh.json validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-claims.json validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-execution-result.json
+429f9d85417aca8b872b7d2e7405d51fc3cfe2aa09bca0b2efe9734d060c2339  validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-input-manifest.json
+ae2a99d8079deaa61ad51d4463855be144498b68b09f7ef319b6d7a41e1fd634  validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-refresh.json
+765507a846a7c0e21182368488e5c7571a984353351f197bfb8f65599f909f42  validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-claims.json
+2c56c608ce571006c26a02c3d56f82ce5d9790af6a6b5b3ef7e55b1cb55c407b  validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-execution-result.json
+
+$ jq -r '{revision,runId,executionClassification,progressionClassification,metric:[.metric.numerator,.metric.denominator],provenance:[.provenanceMetric.numerator,.provenanceMetric.denominator],controlCount:(.controlEvidence|length),artifactCount:(.artifacts|length)}' validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-execution-result.json
+{
+  "revision": 1,
+  "runId": "01a0bbba-b665-7063-bf5b-32a70ded812f",
+  "executionClassification": "PASS",
+  "progressionClassification": "INCONCLUSIVE_PENDING_REVIEW_AND_VERIFICATION",
+  "metric": [
+    8,
+    8
+  ],
+  "provenance": [
+    8,
+    8
+  ],
+  "controlCount": 3,
+  "artifactCount": 5
+}
+
+$ jq -e '(.revision == 1) and (.executionClassification == "PASS") and (.metric.numerator == 8) and (.metric.denominator == 8) and (.provenanceMetric.numerator == 8) and (.provenanceMetric.denominator == 8) and ((.controlEvidence | length) == 3) and (.unsupportedOrNearMissOutcomes.unsupportedCount == 0) and (.unsupportedOrNearMissOutcomes.nearMissCount == 0)' validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-execution-result.json >/dev/null && echo 'PASS: S02 execution result contract'
+PASS: S02 execution result contract
+
+$ jq -e '(.provenanceClosure.allOutputsBound == true) and ((.decisions | length) == 8) and ([.decisions[].decisionClass] | sort) == ["CHANGED","CONFLICTING","NEW","REMOVED","UNCHANGED","UNCHANGED","UNCHANGED","UNCHANGED"] and ((.conflictRecord.selectedWinner) == null) and (.conflictRecord.silentWinnerSelected == false)' validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-refresh.json >/dev/null && echo 'PASS: S02 refresh decision closure'
+PASS: S02 refresh decision closure
+
+$ jq -e '([.claims[] | select((.evidenceRefs | length) == 0 or (.sourceRevisions | length) == 0)] | length) == 0 and (.outputBoundaries.claimsWithEvidence == 8) and (.outputBoundaries.claimsWithSourceRevisions == 8)' validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-claims.json >/dev/null && echo 'PASS: S02 claim provenance closure'
+PASS: S02 claim provenance closure
+
+$ manifest_sha=$(sha256sum validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-input-manifest.json | awk '{print $1}'); refresh_sha=$(sha256sum validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-refresh.json | awk '{print $1}'); claims_sha=$(sha256sum validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-claims.json | awk '{print $1}'); jq -e --arg m "$manifest_sha" --arg r "$refresh_sha" --arg c "$claims_sha" '(.sourceBinding.inputManifestSha256 == $m) and (.sourceBinding.refreshArtifactSha256 == $r) and (.sourceBinding.claimsArtifactSha256 == $c)' validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-execution-result.json >/dev/null && echo 'PASS: execution result artifact hashes match source bindings'
+PASS: execution result artifact hashes match source bindings
+
+$ bash validation/engcim-swarm-v06/baseline/validate_baseline.sh
+PASS: scenario JSON and definition digests
+PASS: S01 semantic coverage and revision 2 gold
+PASS: S01 exact source readjudication revision 2
+PASS: S02/S03 frozen gold and fixture invariants
+PASS: S04 cases and Product Context revision 2
+PASS: S05 required fixture test passes
+PASS: S05 canonical remote, corrected fixture, and isolation
+PASS: independent S01-S06 review decisions are PASS
+PASS: preserved RC7-B runtime-gated control closure is bound
+PASS: fixture checksums
+PASS: scoped and top-level seal references
+PASS: READY seal status matrix and Gate-0 binding are consistent
+S01-S06 BASELINE CHECKS = PASS
+VALIDATION_BASELINE = READY

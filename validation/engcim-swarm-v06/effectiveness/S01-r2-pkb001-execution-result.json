@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "engcim-s01-execution-result.v0.1",
+  "artifactKind": "S01_EFFECTIVENESS_EXECUTION_RESULT",
+  "revision": 1,
+  "runId": "01a0bb9d-cba4-749e-9dff-877a16af8736",
+  "scenarioRef": "S01-PRODUCT-KNOWLEDGE",
+  "scenarioRevision": "S01-r2-pkb001",
+  "definitionDigest": "sha256:868777143c176e3beb40881f1a17f96344b5f88335d03e3b00e6114797d49adf",
+  "datasetRef": "PKB001-PETCLINIC",
+  "executionNamespace": "validation/engcim-swarm-v06/effectiveness/",
+  "authority": "EXECUTION_EVIDENCE_ONLY",
+  "executionClassification": "PASS",
+  "progressionClassification": "INCONCLUSIVE_PENDING_REVIEW_AND_VERIFICATION",
+  "executionSummary": "Fresh source-led S01 synthesis produced 25 one-to-one semantic claims with claim-level provenance, explicit unsupported/near-miss boundaries, and no generation-time evaluator leakage.",
+  "baselineBinding": {
+    "baselineCommit": "229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8",
+    "baselineSeal": "validation/engcim-swarm-v06/baseline/VALIDATION-GROUND-TRUTH-SEAL.json",
+    "baselineSealStatus": "READY",
+    "baselineValidationResult": "PASS",
+    "scenarioDefinitionPath": "validation/engcim-swarm-v06/baseline/gate0/scenario-definitions/S01.json",
+    "scenarioDefinitionDigest": "sha256:868777143c176e3beb40881f1a17f96344b5f88335d03e3b00e6114797d49adf"
+  },
+  "sourceBinding": {
+    "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "sourceTree": "0bb31bb92bc1839f6378e832e54c8b4af03e4ee2",
+    "sourceRepository": "https://github.com/spring-projects/spring-petclinic.git",
+    "historyCutoff": "2026-08-26T10:57:54Z",
+    "historyPolicy": "EXCLUDE_AFTER_CUTOFF",
+    "inputManifest": "validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-input-manifest.json",
+    "claimsArtifact": "validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-claims.json",
+    "claimsArtifactSha256": "9b48b1e4242c2295424845ef111045029e4e4020a71acb2319c1a617f08c43d4",
+    "inputManifestSha256": "2d8e2b97ccaa597dbf774b202720ff9d3b4351bc76033bb6fec008417121a395"
+  },
+  "generationIsolation": {
+    "goldExcludedFromGeneration": true,
+    "priorReviewedSemanticsExcludedFromGeneration": true,
+    "historicalS01S06ResultsExcluded": true,
+    "tkmsMcp": "NOT_VERIFIED",
+    "azureDevOpsMcp": "NOT_VERIFIED",
+    "goldAdjudicationPhase": "AFTER_FRESH_CLAIM_PACKET_CLOSED",
+    "forbiddenInputAccessed": false
+  },
+  "metric": {
+    "metricName": "S01 semantic claim coverage and boundary fidelity",
+    "goldenSource": "validation/engcim-swarm-v06/baseline/pk/s01/S01-SEMANTIC-GOLD-v2.json",
+    "goldRevision": 2,
+    "goldenSampleSize": 25,
+    "criticalSampleSize": 18,
+    "numerator": 25,
+    "denominator": 25,
+    "score": 1.0,
+    "criticalNumerator": 18,
+    "criticalDenominator": 18,
+    "criticalScore": 1.0,
+    "unsupportedOrNearMissPromoted": 0,
+    "claimsWithoutEvidence": 0,
+    "scoringRule": "One-to-one adjudication against the current S01-r2 semantic item set. A claim scores only when its type, meaning, and authority/boundary disposition match the gold acceptable variants; negative and ambiguity items require an explicit reject/unresolved disposition. Every scored claim must carry at least one resolvable source evidenceRef. No implementation-only detail may score as Product truth.",
+    "resultRule": "PASS when all 18 critical items match, all 25 items are accounted for, no unsupported/near-miss claim is promoted, and all claims have evidence; otherwise INCONCLUSIVE or BLOCKED from the missing evidence classification."
+  },
+  "itemAdjudication": [
+    {"goldItemRef":"S01-PRODUCT-FACT-001","generatedClaimId":"RUN1-PRODUCT-FACT-001","match":"PASS","reason":"Clinic owner/pet/visit/veterinarian boundary is explicit in the frozen seed and source controllers."},
+    {"goldItemRef":"S01-PRODUCT-FACT-002","generatedClaimId":"RUN1-PRODUCT-FACT-002","match":"PASS","reason":"Implementation and history are retained as limitations/evidence, not promoted as semantic meaning."},
+    {"goldItemRef":"S01-CAPABILITY-001","generatedClaimId":"RUN1-CAPABILITY-001","match":"PASS","reason":"Owner lookup, result handling, and detail view are all represented."},
+    {"goldItemRef":"S01-CAPABILITY-002","generatedClaimId":"RUN1-CAPABILITY-002","match":"PASS","reason":"Owner creation and update are represented with identity-preserving routes."},
+    {"goldItemRef":"S01-CAPABILITY-003","generatedClaimId":"RUN1-CAPABILITY-003","match":"PASS","reason":"Owner-scoped pet creation/update, type selection, and conflict handling are represented."},
+    {"goldItemRef":"S01-CAPABILITY-004","generatedClaimId":"RUN1-CAPABILITY-004","match":"PASS","reason":"Dated pet visit with description is represented."},
+    {"goldItemRef":"S01-CAPABILITY-005","generatedClaimId":"RUN1-CAPABILITY-005","match":"PASS","reason":"Veterinarian list, specialties, and paged HTML/resource surfaces are represented."},
+    {"goldItemRef":"S01-SCENARIO-001","generatedClaimId":"RUN1-BEHAVIOR-001","match":"PASS","reason":"Search matches, list state, and owner detail selection are explicit."},
+    {"goldItemRef":"S01-SCENARIO-002","generatedClaimId":"RUN1-BEHAVIOR-002","match":"PASS","reason":"Whitespace normalization is directly supported by controller and test evidence."},
+    {"goldItemRef":"S01-SCENARIO-003","generatedClaimId":"RUN1-BEHAVIOR-003","match":"PASS","reason":"Valid owner creation and redirect behavior are directly supported."},
+    {"goldItemRef":"S01-SCENARIO-004","generatedClaimId":"RUN1-BEHAVIOR-004","match":"PASS","reason":"Valid owner update and redirect behavior are directly supported."},
+    {"goldItemRef":"S01-SCENARIO-005","generatedClaimId":"RUN1-BEHAVIOR-005","match":"PASS","reason":"Valid owner-scoped pet creation and redirect behavior are directly supported."},
+    {"goldItemRef":"S01-SCENARIO-006","generatedClaimId":"RUN1-BEHAVIOR-006","match":"PASS","reason":"Same-owner duplicate name rejection and surfaced field error are explicit."},
+    {"goldItemRef":"S01-SCENARIO-011","generatedClaimId":"RUN1-BEHAVIOR-011","match":"PASS","reason":"Existing-pet update behavior is explicit in controller and tests."},
+    {"goldItemRef":"S01-SCENARIO-007","generatedClaimId":"RUN1-BEHAVIOR-007","match":"PASS","reason":"Valid future visit with description is saved and redirected."},
+    {"goldItemRef":"S01-SCENARIO-008","generatedClaimId":"RUN1-BEHAVIOR-008","match":"PASS","reason":"Not-in-future visit date rejection is explicit and cutoff/timezone remain limited."},
+    {"goldItemRef":"S01-SCENARIO-009","generatedClaimId":"RUN1-BEHAVIOR-009","match":"PASS","reason":"Paged veterinarian browsing and specialty-bearing rows are represented without inventing ordering."},
+    {"goldItemRef":"S01-RULE-001","generatedClaimId":"RUN1-RULE-001","match":"PASS","reason":"Duplicate pet name is constrained within an owner, not globally."},
+    {"goldItemRef":"S01-RULE-002","generatedClaimId":"RUN1-RULE-002","match":"PASS","reason":"Non-future visit dates are rejected while exact cutoff/timezone remain unresolved."},
+    {"goldItemRef":"S01-RULE-003","generatedClaimId":"RUN1-RULE-003","match":"PASS","reason":"Surname query boundary whitespace is stripped before lookup."},
+    {"goldItemRef":"S01-AMBIGUITY-001","generatedClaimId":"RUN1-AMBIGUITY-001","match":"PASS","reason":"Ordering and page-size implementation details are explicitly left unresolved."},
+    {"goldItemRef":"S01-NEGATIVE-001","generatedClaimId":"RUN1-NEGATIVE-001","match":"PASS","reason":"Corrected r2 boundary rejects a visible selector while preserving URL-driven locale switching as a mechanism."},
+    {"goldItemRef":"S01-NEGATIVE-002","generatedClaimId":"RUN1-NEGATIVE-002","match":"PASS","reason":"Repository method/storage details are explicitly not Product truth."},
+    {"goldItemRef":"S01-NEGATIVE-003","generatedClaimId":"RUN1-NEGATIVE-003","match":"PASS","reason":"Global uniqueness is explicitly rejected in favor of same-owner scope."},
+    {"goldItemRef":"S01-NEGATIVE-004","generatedClaimId":"RUN1-NEGATIVE-004","match":"PASS","reason":"Exact cutoff, timezone, ordering, page size, and persistence mechanism remain unresolved."}
+  ],
+  "sourceReadjudication": {
+    "reviewRef": "S01-SOURCE-READJUDICATION-V06-20260920-V2",
+    "reviewerIdentity": "codex-baseline-closure-reviewer",
+    "reviewPath": "validation/engcim-swarm-v06/baseline/pk/s01/S01-SOURCE-READJUDICATION-v2.json",
+    "reviewDigest": "b563248cb959fce5bb1423624a15e1db17f919c097ef1042fac5994ce60820b5",
+    "result": "PASS",
+    "independentCheck": "Fresh claims were generated from source/test evidence before evaluator-only comparison; r2 correction is preserved as the visible-selector boundary, not as a generated input."
+  },
+  "controlEvidence": [
+    {
+      "controlRef": "CTRL-REPOSITORY-PROVENANCE-001",
+      "gate": "source-ingestion",
+      "status": "PASS",
+      "requiredEvidenceRefs": ["EVID-S01-SOURCE-MANIFEST", "EVID-S01-SOURCE-REVISIONS"],
+      "bindings": [
+        {"requiredEvidenceRef":"EVID-S01-SOURCE-MANIFEST","frozenPath":"validation/engcim-swarm-v06/baseline/pk/s01/evidence-manifest.json","executionRef":"S01-r2-pkb001-input-manifest.json","check":"PKB001 source snapshot and exact source revision are resolved."},
+        {"requiredEvidenceRef":"EVID-S01-SOURCE-REVISIONS","frozenPath":"validation/engcim-swarm-v06/baseline/manifests/source-manifest.json","executionRef":"S01-r2-pkb001-input-manifest.json","check":"Source revision 818c4136..., tree 0bb31..., and source-manifest digest are bound."}
+      ],
+      "predicate": "Every source used for S01 is classified and bound to the frozen source revision; no post-cutoff or unbound source was used."
+    },
+    {
+      "controlRef": "CTRL-EVIDENCE-INTEGRITY-001",
+      "gate": "source-ingestion",
+      "status": "PASS",
+      "requiredEvidenceRefs": ["EVID-S01-CLAIM-MAP", "EVID-S01-SOURCE-MANIFEST"],
+      "bindings": [
+        {"requiredEvidenceRef":"EVID-S01-CLAIM-MAP","frozenPath":"validation/engcim-swarm-v06/baseline/pk/s01/S01-SEMANTIC-GOLD.json","executionRef":"S01-r2-pkb001-claims.json","check":"Fresh claim packet has 25/25 claims with evidenceRefs; evaluator gold was not a generation input."},
+        {"requiredEvidenceRef":"EVID-S01-SOURCE-MANIFEST","frozenPath":"validation/engcim-swarm-v06/baseline/pk/s01/evidence-manifest.json","executionRef":"S01-r2-pkb001-input-manifest.json","check":"Claim evidence resolves to classified source/test artifacts and exact source revision."}
+      ],
+      "predicate": "No claim is emitted without provenance; unsupported, near-miss, and implementation-only claims are explicitly bounded."
+    }
+  ],
+  "operationalClassifications": {
+    "owningLayer": "S01_EXECUTION",
+    "manualRescue": {"applied": false, "classification": "NONE", "note": "No manual rescue or post-hoc claim insertion was used."},
+    "retry": {"attempt": 1, "retried": false, "classification": "NONE", "note": "First successful execution attempt."},
+    "blocked": {"classification": "NONE_FOR_EXECUTION; REVIEW_VERIFIER_PENDING_FOR_PROGRESSION", "owner": "separate Reviewer and Verifier gates"},
+    "externalCapabilityBlockers": ["TKMS MCP NOT_VERIFIED", "Azure DevOps MCP NOT_VERIFIED"],
+    "baselineOrContractFailure": false
+  },
+  "reviewAndVerification": {
+    "reviewerRun": "PENDING_SEPARATE_GATE",
+    "reviewerResult": "PENDING",
+    "verifierRun": "PENDING_SEPARATE_GATE",
+    "verifierResult": "PENDING",
+    "acceptanceClaimed": false,
+    "childStatusRequired": "in_review"
+  },
+  "commandsAndObservedOutput": [
+    {"command":"bash validation/engcim-swarm-v06/baseline/validate_baseline.sh","result":"PASS","observedOutput":"S01-S06 BASELINE CHECKS = PASS; VALIDATION_BASELINE = READY"},
+    {"command":"jq source contract, source snapshot, and history summaries","result":"PASS","observedOutput":"S01-r2-pkb001; PKB001-PETCLINIC; source 818c4136...; tree 0bb31...; history 1042 commits/91 PRs; EXCLUDE_AFTER_CUTOFF"},
+    {"command":"jq fresh packet provenance closure","result":"PASS","observedOutput":"claims=25; claimsWithEvidence=25; missingEvidence=[]; evidenceRefs=16; catalogRefs=16"},
+    {"command":"sha256sum execution input and claims artifacts","result":"PASS","observedOutput":"input=2d8e2b97ccaa597dbf774b202720ff9d3b4351bc76033bb6fec008417121a395; claims=9b48b1e4242c2295424845ef111045029e4e4020a71acb2319c1a617f08c43d"}
+  ],
+  "artifacts": [
+    "validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-input-manifest.json",
+    "validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-claims.json",
+    "validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-execution-result.json"
+  ]
+}

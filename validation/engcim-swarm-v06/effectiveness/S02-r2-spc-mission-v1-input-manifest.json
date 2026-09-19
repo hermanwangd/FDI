@@ -1,0 +1,225 @@
+{
+  "schemaVersion": "engcim-s02-execution-input-manifest.v0.1",
+  "artifactKind": "S02_EXECUTION_INPUT_MANIFEST",
+  "revision": 1,
+  "runId": "01a0bbba-b665-7063-bf5b-32a70ded812f",
+  "scenarioRef": "S02-PK-REFRESH",
+  "scenarioRevision": "S02-r2-spc-mission-v1",
+  "definitionDigest": "sha256:e1034e55ef5184eee5fc883f00d0031d1fe0f31f0d0d8165d653c3dc7fc1599e",
+  "datasetRef": "SPC-MISSION-V1",
+  "executionStartedAt": "2026-09-19T22:15:31Z",
+  "artifactCreatedAt": "2026-09-19T22:15:31Z",
+  "authoritativeCheckout": {
+    "path": "/Users/herman_mbp2023/Documents/FDI-s01-s06-effectiveness",
+    "baselineCommit": "229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8",
+    "baselineSeal": "validation/engcim-swarm-v06/baseline/VALIDATION-GROUND-TRUTH-SEAL.json",
+    "baselineSealSha256": "903dd3db777077b5fa753b345ce0b0e4e8bce476b56631be1fa4b0388f324d16",
+    "baselineStatus": "READY",
+    "baselineValidationCommand": "bash validation/engcim-swarm-v06/baseline/validate_baseline.sh",
+    "baselineValidationResult": "PASS"
+  },
+  "frozenInputs": [
+    {
+      "inputRef": "INPUT-S02-DEFINITION",
+      "sourceClass": "src-test-assets",
+      "role": "frozen scenario contract and output requirements",
+      "path": "validation/engcim-swarm-v06/baseline/gate0/scenario-definitions/S02.json",
+      "sha256": "facfc1fb2385022495c0ef74a272b1163509cbf0f06c1570c9f705762a54ac25",
+      "revisionBinding": "S02-r2-spc-mission-v1"
+    },
+    {
+      "inputRef": "INPUT-S02-SOURCE-BUNDLE",
+      "sourceClass": "src-product-docs",
+      "role": "frozen SPC-MISSION-V1 before-state source snapshot",
+      "path": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/baseline/source-bundle.json",
+      "sha256": "fd2222f195139384bfb4a02af20a92225c07c6d415bcca2a5de957eaed848a7b",
+      "revisionBinding": "SPC-MISSION-V1-r1"
+    },
+    {
+      "inputRef": "INPUT-S01-EXECUTION",
+      "sourceClass": "src-test-assets",
+      "role": "prior Product Knowledge execution artifact required by S02",
+      "path": "validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-execution-result.json",
+      "sha256": "515cfbf717eb1101486f081b479e30357f41ecd0663cc69af8601111130d9cd7",
+      "revisionBinding": "S01-r2-pkb001",
+      "upstreamRunId": "01a0bb9d-cba4-749e-9dff-877a16af8736",
+      "executionClassification": "PASS"
+    },
+    {
+      "inputRef": "INPUT-S01-CLAIMS",
+      "sourceClass": "src-test-assets",
+      "role": "prior Product Knowledge claims and evidence closure",
+      "path": "validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-claims.json",
+      "sha256": "9b48b1e4242c2295424845ef111045029e4e4020a71acb2319c1a617f08c43d4",
+      "revisionBinding": "S01-r2-pkb001"
+    },
+    {
+      "inputRef": "INPUT-S01-MANIFEST",
+      "sourceClass": "src-test-assets",
+      "role": "prior Product Knowledge input and provenance manifest",
+      "path": "validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-input-manifest.json",
+      "sha256": "2d8e2b97ccaa597dbf774b202720ff9d3b4351bc76033bb6fec008417121a395",
+      "revisionBinding": "S01-r2-pkb001"
+    },
+    {
+      "inputRef": "INPUT-S02-GOLD",
+      "sourceClass": "src-test-assets",
+      "role": "evaluator-only expected delta mapping; comparison basis after source-led packet",
+      "path": "validation/engcim-swarm-v06/baseline/pk/s02/S02-REFRESH-GOLD.json",
+      "sha256": "8b9ab56d279f1d1afb7f0c1486daeef6a57a34447f4d3b991c94e991700d59b7",
+      "authority": "EVALUATOR_ONLY",
+      "revisionBinding": "SPC-MISSION-V1-r1"
+    }
+  ],
+  "sourceSnapshot": {
+    "fixtureRef": "SPC-MISSION-V1",
+    "fixtureRevision": "SPC-MISSION-V1-r1",
+    "authority": "SYNTHETIC_VALIDATION_FIXTURE",
+    "sourceBundle": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/baseline/source-bundle.json",
+    "sources": [
+      {
+        "sourceRef": "S02-SRC-PRODUCT-SPEC",
+        "sourceClass": "src-product-docs",
+        "sourceRevisionBefore": "product-spec-r1",
+        "sourceRevisionAfter": "product-spec-r2",
+        "changedBy": ["D1", "D2", "D6"]
+      },
+      {
+        "sourceRef": "S02-SRC-QA-SPEC",
+        "sourceClass": "src-test-assets",
+        "sourceRevisionBefore": "qa-spec-r1",
+        "sourceRevisionAfter": "qa-spec-r2",
+        "changedBy": ["D3", "D4", "D7"]
+      },
+      {
+        "sourceRef": "S02-SRC-REALIZATION-MAP",
+        "sourceClass": "src-engineering",
+        "sourceRevisionBefore": "realization-map-r1",
+        "sourceRevisionAfter": "realization-map-r1",
+        "changedBy": ["D8"],
+        "revisionNote": "D8 changes the mapped component while retaining the declared source revision."
+      }
+    ]
+  },
+  "deltaInputs": [
+    {
+      "deltaRef": "D1",
+      "purpose": "semantic change",
+      "path": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/D1-semantic-change/delta.json",
+      "sha256": "4eecf62018ddd38034122dd5ae5eb62305541a71f8a3edd1ecad3a57bc222942",
+      "fixtureRevision": "D1-r1",
+      "sourceRefs": ["S02-SRC-PRODUCT-SPEC"]
+    },
+    {
+      "deltaRef": "D2",
+      "purpose": "new fact",
+      "path": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/D2-new-fact/delta.json",
+      "sha256": "e5925c95a00cc94ad755dc07b3818a51c76e2a3f47d14c1d846aad3c9487de93",
+      "fixtureRevision": "D2-r1",
+      "sourceRefs": ["S02-SRC-PRODUCT-SPEC"]
+    },
+    {
+      "deltaRef": "D3",
+      "purpose": "only support removed",
+      "path": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/D3-only-support-removed/delta.json",
+      "sha256": "550824931889474057c1c2c5de127791366fd0569b6b5e589e17b20f04c85eb3",
+      "fixtureRevision": "D3-r1",
+      "sourceRefs": ["S02-SRC-QA-SPEC"]
+    },
+    {
+      "deltaRef": "D4",
+      "purpose": "conflict",
+      "path": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/D4-conflict/delta.json",
+      "sha256": "7ee6aebb69c6abd944bd2991ec2ffd299b0bf1844ca663859ee8fa56c68fff20",
+      "fixtureRevision": "D4-r1",
+      "sourceRefs": ["S02-SRC-QA-SPEC"]
+    },
+    {
+      "deltaRef": "D5",
+      "purpose": "no change",
+      "path": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/D5-no-change/delta.json",
+      "sha256": "493cf638234f8bc074892e72356329e3cd601da36f27bf8d40cc4ad2ece9ac9b",
+      "fixtureRevision": "D5-r1",
+      "sourceRefs": []
+    },
+    {
+      "deltaRef": "D6",
+      "purpose": "revision-only",
+      "path": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/D6-revision-only/delta.json",
+      "sha256": "65e1dc1499fb5b5b8b0d80c6437dc4d9c239f648d24aa9228e6b361931ee6d33",
+      "fixtureRevision": "D6-r1",
+      "sourceRefs": ["S02-SRC-PRODUCT-SPEC"]
+    },
+    {
+      "deltaRef": "D7",
+      "purpose": "partial support loss",
+      "path": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/D7-partial-support-loss/delta.json",
+      "sha256": "bf295465c34c7b9ef58935db0deca4783f99e2f0b011383b60d686c246037df8",
+      "fixtureRevision": "D7-r1",
+      "sourceRefs": ["S02-SRC-QA-SPEC"]
+    },
+    {
+      "deltaRef": "D8",
+      "purpose": "realization-only",
+      "path": "validation/engcim-swarm-v06/baseline/pk/s02/fixture/D8-realization-only/delta.json",
+      "sha256": "a67871ac18600d9ff8bfa900865cebc82053dcbf9133e2b6dc12ee523bad2e34",
+      "fixtureRevision": "D8-r1",
+      "sourceRefs": ["S02-SRC-REALIZATION-MAP"]
+    }
+  ],
+  "upstreamGate": {
+    "issueRef": "E6V-11",
+    "executionRun": "01a0bb9d-cba4-749e-9dff-877a16af8736",
+    "executionRevision": 1,
+    "executionOutcome": "PASS",
+    "reviewerRun": "01a0bbae-b3b1-74b3-8bde-cef76246525f",
+    "reviewerVerdict": "PASS",
+    "reviewedRevision": 1,
+    "verifierRun": "01a0bbae-b3b8-7eb0-a86b-9f4fd5bc3bb2",
+    "verifierVerdict": "VERIFIED",
+    "verifiedRevision": 1
+  },
+  "generationBoundary": {
+    "sourceLedInputs": [
+      "INPUT-S02-DEFINITION",
+      "INPUT-S02-SOURCE-BUNDLE",
+      "INPUT-S01-EXECUTION",
+      "INPUT-S01-CLAIMS",
+      "INPUT-S01-MANIFEST",
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5",
+      "D6",
+      "D7",
+      "D8"
+    ],
+    "goldUsedForGeneration": false,
+    "goldComparisonPhase": "after source-led refresh packet was closed",
+    "historicalS01S06ExecutionUsed": false,
+    "historicalE6V4E6V5Used": false,
+    "staleS01r1EvidenceUsed": false,
+    "tkmsMcp": "NOT_VERIFIED",
+    "azureDevOpsMcp": "NOT_VERIFIED"
+  },
+  "controlEvidenceCatalog": {
+    "requiredEvidenceCatalog": "validation/engcim-swarm-v06/baseline/controls/required-evidence.json",
+    "requiredEvidenceCatalogSha256": "97c05c4b6aab64c74b07ef35b9e4c488a17cd284559535212d977bed940edfe8",
+    "bindings": [
+      {
+        "controlRef": "CTRL-REPOSITORY-PROVENANCE-001",
+        "evidenceRefs": ["EVID-S02-BEFORE-AFTER-SOURCES", "EVID-S02-REVISION-MAP"],
+        "bindingNote": "Supplemental task-contract provenance binding; all source and delta paths are exact frozen checkout paths with SHA-256 digests."
+      },
+      {
+        "controlRef": "CTRL-EXACT-BINDING-001",
+        "evidenceRefs": ["EVID-S02-BEFORE-AFTER-SOURCES", "EVID-S02-REVISION-MAP"]
+      },
+      {
+        "controlRef": "CTRL-EVIDENCE-INTEGRITY-001",
+        "evidenceRefs": ["EVID-S02-BEFORE-AFTER-SOURCES", "EVID-S02-GOLD"]
+      }
+    ]
+  }
+}
