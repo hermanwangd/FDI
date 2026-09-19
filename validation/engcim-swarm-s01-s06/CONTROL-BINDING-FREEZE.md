@@ -1,0 +1,40 @@
+# S01-S06 Control Binding Freeze
+
+Freeze revision: `control-bindings-r1`  
+Control vocabulary source: `src/main/java/com/featuredeliveryintelligence/fdi/engcim/control/EngineeringControlCatalog.java`
+
+`requiredEvidenceRefs[]` below are identifiers, not evidence claims. Each must
+resolve to run-produced evidence. If a required reference is missing, the
+control result is `INCONCLUSIVE` and the gate is blocked.
+
+| Scope | Gate | Required Control | requiredEvidenceRefs |
+|---|---|---|---|
+| S01 | delivery-acceptance | CTRL-REPOSITORY-PROVENANCE-001 | EVID-S01-REPOSITORY-MANIFEST, EVID-S01-REPOSITORY-REVISION, EVID-S01-PROVENANCE |
+| S01 | delivery-acceptance | CTRL-EVIDENCE-INTEGRITY-001 | EVID-S01-PRODUCT-DOCS, EVID-S01-DELIVERY-HISTORY, EVID-S01-PK-ARTIFACT, EVID-S01-CODE-GRAPH, EVID-S01-PROVENANCE |
+| S02 | refresh-acceptance | CTRL-REPOSITORY-PROVENANCE-001 | EVID-S02-SOURCE-REVISION, EVID-S02-REFRESH-ARTIFACT |
+| S02 | refresh-acceptance | CTRL-EXACT-BINDING-001 | EVID-S02-SOURCE-REVISION, EVID-S02-CHANGED-FACT, EVID-S02-NEW-FACT, EVID-S02-REMOVED-FACT, EVID-S02-CONFLICT, EVID-S02-UNCHANGED-FACT |
+| S02 | refresh-acceptance | CTRL-EVIDENCE-INTEGRITY-001 | EVID-S02-REFRESH-ARTIFACT, EVID-S02-SOURCE-REVISION |
+| S03 | delivery-acceptance | CTRL-REPOSITORY-PROVENANCE-001 | EVID-S03-REPOSITORY-SHA, EVID-S03-GRAPH-R1, EVID-S03-GRAPH-R2 |
+| S03 | delivery-acceptance | CTRL-EVIDENCE-INTEGRITY-001 | EVID-S03-EDGES, EVID-S03-GRAPH-R1, EVID-S03-GRAPH-R2, EVID-S03-IDEMPOTENCY |
+| S04 | artifact-acceptance | CTRL-EXACT-BINDING-001 | EVID-S04-PM-REQUEST, EVID-S04-INTENTION-SPEC, EVID-S04-AUTHORITY |
+| S04 | artifact-acceptance | CTRL-EVIDENCE-INTEGRITY-001 | EVID-S04-SOURCE-DISCOVERY, EVID-S04-AMBIGUITY-CLASSIFICATION, EVID-S04-INTENTION-SPEC, EVID-S04-REVIEW |
+| S05 | before-mutation | CTRL-AUTHORIZATION-001 | EVID-S05-AUTHORITY, EVID-S05-BASELINE, EVID-S05-CANDIDATE |
+| S05 | before-mutation | CTRL-EXECUTION-SAFETY-001 | EVID-S05-AUTHORITY, EVID-S05-BRANCH, EVID-S05-CHANGE-SURFACE, EVID-S05-GUARD |
+| S05 | delivery-acceptance | CTRL-REPOSITORY-PROVENANCE-001 | EVID-S05-REPOSITORY, EVID-S05-BASELINE, EVID-S05-CANDIDATE |
+| S05 | delivery-acceptance | CTRL-EVIDENCE-INTEGRITY-001 | EVID-S05-CANDIDATE, EVID-S05-CHANGE-SURFACE, EVID-S05-SELF-TEST, EVID-S05-DEVELOPMENT-RESULT |
+| S06 | verification-acceptance | CTRL-REPOSITORY-PROVENANCE-001 | EVID-S06-REPOSITORY, EVID-S06-CANDIDATE, EVID-S06-VERIFICATION-RESULT |
+| S06 | verification-acceptance | CTRL-EXACT-BINDING-001 | EVID-S06-CANDIDATE, EVID-S06-FV003-R1, EVID-S06-FRESH-RETEST, EVID-S06-VERIFICATION-RESULT |
+| S06 | verification-acceptance | CTRL-INDEPENDENT-EVALUATION-001 | EVID-S06-PRODUCER, EVID-S06-VERIFIER, EVID-S06-FV003-R1, EVID-S06-FRESH-RETEST |
+| S06 | verification-acceptance | CTRL-EVIDENCE-INTEGRITY-001 | EVID-S06-FV003-R1, EVID-S06-FINDING, EVID-S06-RCA, EVID-S06-CORRECTION, EVID-S06-R2, EVID-S06-FRESH-RETEST, EVID-S06-VERIFICATION-RESULT |
+| Mission | closure | CTRL-FINDING-RESOLUTION-001 | EVID-MISSION-F1, EVID-MISSION-CURRENT-R2, EVID-MISSION-FRESH-S06-R2, EVID-MISSION-EXACT-BINDING |
+
+## Gate semantics
+
+At each gate, all required Control Results must be `SATISFIED`. Any
+`UNSATISFIED` or `INCONCLUSIVE` result prevents progression. Issue status,
+worker comments, and a finished run are never substitutes for a Control Result.
+
+No new S05/S06-specific orchestration behavior is introduced by this matrix.
+The correction handoff remains Scenario Composition behavior; it is not a new
+Control.
+
