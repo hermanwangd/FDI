@@ -1,0 +1,47 @@
+id: sem:spc/chart-management
+pkClass: pk-semantics
+validationState: PROVISIONAL
+confidence: official-document
+sourceClass: src-product-docs
+evidence:
+  - ev:s01-product-training
+  - ev:s01-chart-management-spec
+  - ev:s01-product-rules
+governanceIssueRef: null
+updatedAt: "2026-09-19T14:17:23Z"
+supersedes: null
+supersededBy: null
+
+product: SPC Demo
+capabilities:
+  - id: cap:spc/chart-management
+    name: Chart Management
+    description: SPC Demo capability for configured chart retrieval and viewing.
+    scenarios:
+      - id: scen:spc/chart-management/chart-viewing
+        name: Chart Viewing
+        behaviors:
+          - action: User retrieves a configured chart by identifier through the Chart Management API.
+            expected: The Chart Viewer renders the returned chart definition.
+          - action: A chart cannot be loaded or has an invalid identifier/configuration.
+            expected: The viewer presents a recoverable user error that can be retried or dismissed.
+rules:
+  - id: rule:R-001
+    statement: A chart must reference a valid chart configuration.
+    appliesTo: [scen:spc/chart-management/chart-viewing]
+  - id: rule:R-002
+    statement: Chart Viewer must retrieve chart definitions through Chart Management API.
+    appliesTo: [scen:spc/chart-management/chart-viewing]
+  - id: rule:R-003
+    statement: Viewer failures must present a recoverable user error.
+    appliesTo: [scen:spc/chart-management/chart-viewing]
+  - id: rule:R-004
+    statement: API changes must preserve the published Chart API contract.
+    appliesTo: [cap:spc/chart-management]
+terminology:
+  - term: SPC Demo
+    definition: Synthetic product name used by the frozen validation corpus.
+  - term: Chart Viewing
+    definition: Scenario in which the Chart Viewer retrieves and visualizes a configured SPC chart.
+gapStatus: AMBIGUOUS
+gapNote: "Product documents agree on SPC Demo / Chart Management / Chart Viewing and R-001..R-004, but no Human Authority acceptance has promoted this proposal to durable Product Knowledge; the source corpus is synthetic."

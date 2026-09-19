@@ -1,0 +1,32 @@
+id: real:spc/chart-management-api
+pkClass: pk-realization
+validationState: PROVISIONAL
+confidence: auto-observation
+sourceClass: src-code-delivery
+evidence:
+  - ev:s01-chart-management-spec
+  - ev:s01-repository-manifest
+  - ev:s01-repo-analysis-chart-management-api
+governanceIssueRef: null
+updatedAt: "2026-09-19T14:17:23Z"
+supersedes: null
+supersededBy: null
+
+component: Component:chart-management-api
+realizes:
+  - cap:spc/chart-management
+implementedIn:
+  - Repository:chart-management-api
+exposes:
+  - Interface:chart-management-api/synthetic-chart-management-api
+consumes: []
+dependsOn: []
+codeRegions:
+  - repository: chart-management-api
+    path: openapi.yaml:1-20
+    module: Module:chart-management-api/openapi.yaml
+  - repository: chart-management-api
+    path: app.py:16-27
+    module: Module:chart-management-api/app.py
+gapStatus: AMBIGUOUS
+gapNote: "The API contract is evidenced by product spec and OpenAPI, while a deployed HTTP handler is not present in the pinned fixture; realization remains provisional."

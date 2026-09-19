@@ -1,0 +1,128 @@
+{
+  "artifactId": "artifact:s01-product-knowledge",
+  "scenario": "S01",
+  "revision": 1,
+  "generatedAt": "2026-09-19T14:25:14.010221Z",
+  "finalScenarioStatus": "PARTIAL",
+  "reportPath": "validation/engcim-swarm-s01-s06/scenario-results/S01.md",
+  "runEvidencePath": "validation/engcim-swarm-s01-s06/runs/S01-r1",
+  "sourceClassification": {
+    "classified": {
+      "numerator": 130,
+      "denominator": 130
+    },
+    "s01InScopeIncluded": {
+      "numerator": 115,
+      "denominator": 115
+    },
+    "inventory": "source-inventory/source-classification.md",
+    "checksumFile": "source-inventory/FIXTURE-CHECKSUMS.txt",
+    "tkms": "NOT_VERIFIED",
+    "azureDevOps": "NOT_VERIFIED"
+  },
+  "metrics": {
+    "criticalFactsDirectlyEvidenced": {
+      "numerator": 8,
+      "denominator": 8
+    },
+    "criticalFactsWithoutDirectEvidence": {
+      "numerator": 0,
+      "denominator": 8
+    },
+    "unsupportedAcceptedCriticalFactAssertions": {
+      "numerator": 0,
+      "denominator": 8
+    },
+    "requiredEvidenceReferencesResolvableAndSufficient": {
+      "numerator": 5,
+      "denominator": 5
+    },
+    "schemaValidatedStoreRecords": {
+      "numerator": 58,
+      "denominator": 58
+    },
+    "automaticCrossRepositoryEdges": {
+      "numerator": 0,
+      "denominator": 0,
+      "result": "N/A; no evidence-backed automatic edge emitted"
+    }
+  },
+  "observations": {
+    "productDocuments": 11,
+    "deliveryHistory": 8,
+    "repositoryAnalyzer": 26,
+    "validationState": "PROVISIONAL"
+  },
+  "structuredStore": {
+    "semanticsEntries": 1,
+    "architectureEntries": 1,
+    "realizationEntries": 2,
+    "evidenceRecords": 12,
+    "graphNodes": 20,
+    "graphEdges": 22,
+    "validationCommand": "python3 pk/_schema/validate_store.py --root pk",
+    "validationResult": "PASS: 58 records"
+  },
+  "controls": {
+    "gate": "S01-delivery-acceptance",
+    "proceed": false,
+    "decision": "BLOCKED",
+    "resultRefs": [
+      "ECR-f5346e9f40d90b37a3aab40d",
+      "ECR-aa81bec7c7142a3f8530b93f",
+      "ECR-706d13ac3625cdf80530c855",
+      "ECR-87b33acbf6685793aecb80d9"
+    ],
+    "satisfied": [
+      "ECR-87b33acbf6685793aecb80d9"
+    ],
+    "unsatisfied": [
+      "ECR-f5346e9f40d90b37a3aab40d",
+      "ECR-aa81bec7c7142a3f8530b93f",
+      "ECR-706d13ac3625cdf80530c855"
+    ],
+    "gateArtifact": "controls/runtime-gate/gates/gate-UzAxLWRlbGl2ZXJ5LWFjY2VwdGFuY2U-UzAxLXIx.json"
+  },
+  "review": {
+    "reviewerState": "PENDING_INDEPENDENT_REVIEW",
+    "verifierState": "PENDING_INDEPENDENT_VERIFICATION",
+    "governanceIssueRef": null,
+    "humanAuthorityPromotion": false
+  },
+  "manualRescue": {
+    "count": 1,
+    "childDoneCorrections": 0,
+    "scopeCorrections": 0,
+    "retries": 0,
+    "clarificationTurns": 0,
+    "reworkRounds": 0,
+    "description": "Restored the frozen chart-viewer Git index after a diagnostic status refresh changed the copied fixture index; final checksum verification passed."
+  },
+  "blockers": [
+    {
+      "class": "FIXTURE_ENVIRONMENT",
+      "description": "Local fixture repository origins are rejected by the canonical repository-provenance predicate."
+    },
+    {
+      "class": "AUTHORITY_BOUNDARY",
+      "description": "No Human Authority promotion occurred; all PK entries remain provisional."
+    },
+    {
+      "class": "AMBIGUOUS",
+      "description": "Retryable response-mapping mismatch requires authority review."
+    },
+    {
+      "class": "MISSING_OR_AMBIGUOUS",
+      "description": "Rule Service identity and deployed handler identity are unresolved."
+    },
+    {
+      "class": "NOT_VERIFIED",
+      "description": "TKMS and Azure DevOps channels were unavailable in the fixture run."
+    }
+  ],
+  "authorityBoundary": "This artifact is governed provisional evidence, not promoted Product Truth.",
+  "externalChannels": {
+    "tkms": "NOT_VERIFIED",
+    "azureDevOps": "NOT_VERIFIED"
+  }
+}

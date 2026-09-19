@@ -1,0 +1,244 @@
+[
+  {
+    "observation": {
+      "id": "obs:s01-doc-training-product",
+      "sourceIdentification": {
+        "channel": "file-upload",
+        "sourceClass": "src-product-docs",
+        "documentIdentity": "product-docs/product-training.md",
+        "documentVersion": null,
+        "retrievedAt": "2026-09-19T14:17:23Z",
+        "sourceUri": "file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/product-docs/product-training.md"
+      },
+      "excerpt": "SPC Demo provides statistical process control capabilities.",
+      "derivedContent": {
+        "pkClass": "pk-semantics",
+        "entityType": "Product",
+        "statement": "The product is SPC Demo.",
+        "relatedEntities": ["cap:spc/chart-management", "scen:spc/chart-management/chart-viewing"]
+      },
+      "confidence": "official-document",
+      "validationState": "PROVISIONAL"
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-doc-training-capability",
+      "sourceIdentification": {
+        "channel": "file-upload",
+        "sourceClass": "src-product-docs",
+        "documentIdentity": "product-docs/product-training.md",
+        "documentVersion": null,
+        "retrievedAt": "2026-09-19T14:17:23Z",
+        "sourceUri": "file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/product-docs/product-training.md"
+      },
+      "excerpt": "## Capability\n\nChart Management",
+      "derivedContent": {
+        "pkClass": "pk-semantics",
+        "entityType": "Capability",
+        "statement": "SPC Demo provides the Chart Management capability.",
+        "relatedEntities": ["sem:spc/chart-management"]
+      },
+      "confidence": "official-document",
+      "validationState": "PROVISIONAL"
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-doc-training-scenario",
+      "sourceIdentification": {
+        "channel": "file-upload",
+        "sourceClass": "src-product-docs",
+        "documentIdentity": "product-docs/product-training.md",
+        "documentVersion": null,
+        "retrievedAt": "2026-09-19T14:17:23Z",
+        "sourceUri": "file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/product-docs/product-training.md"
+      },
+      "excerpt": "## Primary scenario\n\nChart Viewing",
+      "derivedContent": {
+        "pkClass": "pk-semantics",
+        "entityType": "Scenario",
+        "statement": "The primary Chart Management scenario is Chart Viewing.",
+        "relatedEntities": ["cap:spc/chart-management"]
+      },
+      "confidence": "official-document",
+      "validationState": "PROVISIONAL"
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-doc-training-behavior",
+      "sourceIdentification": {
+        "channel": "file-upload",
+        "sourceClass": "src-product-docs",
+        "documentIdentity": "product-docs/product-training.md",
+        "documentVersion": null,
+        "retrievedAt": "2026-09-19T14:17:23Z",
+        "sourceUri": "file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/product-docs/product-training.md"
+      },
+      "excerpt": "The Chart Viewer lets users retrieve and visualize configured SPC charts. A valid chart configuration is required before rendering. The viewer calls the Chart Management API and presents a recoverable user error when a chart cannot be loaded.",
+      "derivedContent": {
+        "pkClass": "pk-semantics",
+        "entityType": "Behavior",
+        "statement": "The Chart Viewer retrieves and visualizes a configured SPC chart through the Chart Management API; invalid loading presents a recoverable user error.",
+        "relatedEntities": ["scen:spc/chart-management/chart-viewing", "rule:spc/chart-valid-configuration", "if:spc/chart-management-api"]
+      },
+      "confidence": "official-document",
+      "validationState": "PROVISIONAL"
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-doc-spec-context",
+      "sourceIdentification": {
+        "channel": "file-upload",
+        "sourceClass": "src-product-docs",
+        "documentIdentity": "product-docs/chart-management-spec.md",
+        "documentVersion": "spec-2026-09-19.1",
+        "retrievedAt": "2026-09-19T14:17:23Z",
+        "sourceUri": "file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/product-docs/chart-management-spec.md"
+      },
+      "excerpt": "- Product: SPC Demo\n- Capability: Chart Management\n- Scenario: Chart Viewing",
+      "derivedContent": {
+        "pkClass": "pk-semantics",
+        "entityType": "Scenario",
+        "statement": "The specification binds SPC Demo, Chart Management, and Chart Viewing.",
+        "relatedEntities": ["sem:spc/chart-management"]
+      },
+      "confidence": "official-document",
+      "validationState": "PROVISIONAL"
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-doc-spec-behavior",
+      "sourceIdentification": {
+        "channel": "file-upload",
+        "sourceClass": "src-product-docs",
+        "documentIdentity": "product-docs/chart-management-spec.md",
+        "documentVersion": "spec-2026-09-19.1",
+        "retrievedAt": "2026-09-19T14:17:23Z",
+        "sourceUri": "file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/product-docs/chart-management-spec.md"
+      },
+      "excerpt": "The Chart Viewer retrieves a configured chart by identifier through the Chart Management API and renders the returned definition. An invalid identifier produces a recoverable error that the user can retry or dismiss.",
+      "derivedContent": {
+        "pkClass": "pk-semantics",
+        "entityType": "Behavior",
+        "statement": "The viewer retrieves by identifier through Chart Management API, renders the definition, and produces a retry-or-dismiss recoverable error for an invalid identifier.",
+        "relatedEntities": ["scen:spc/chart-management/chart-viewing", "rule:R-003"]
+      },
+      "confidence": "official-document",
+      "validationState": "PROVISIONAL"
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-doc-spec-rules",
+      "sourceIdentification": {
+        "channel": "file-upload",
+        "sourceClass": "src-product-docs",
+        "documentIdentity": "product-docs/chart-management-spec.md",
+        "documentVersion": "spec-2026-09-19.1",
+        "retrievedAt": "2026-09-19T14:17:23Z",
+        "sourceUri": "file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/product-docs/chart-management-spec.md"
+      },
+      "excerpt": "- R-001: A chart must reference a valid chart configuration.\n- R-002: Chart Viewer must retrieve chart definitions through Chart Management API.\n- R-003: Viewer failures must present a recoverable user error.\n- R-004: API changes must preserve the published Chart API contract.",
+      "derivedContent": {
+        "pkClass": "pk-semantics",
+        "entityType": "Rule",
+        "statement": "The specification defines rules R-001 through R-004 exactly as listed in the excerpt.",
+        "relatedEntities": ["cap:spc/chart-management", "scen:spc/chart-management/chart-viewing"]
+      },
+      "confidence": "official-document",
+      "validationState": "PROVISIONAL"
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-doc-spec-api",
+      "sourceIdentification": {
+        "channel": "file-upload",
+        "sourceClass": "src-engineering",
+        "documentIdentity": "product-docs/chart-management-spec.md#published-api-contract",
+        "documentVersion": "spec-2026-09-19.1",
+        "retrievedAt": "2026-09-19T14:17:23Z",
+        "sourceUri": "file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/product-docs/chart-management-spec.md#published-api-contract"
+      },
+      "excerpt": "`GET /api/charts/{id}`\n\n- `200`: `{ \"id\": string, \"title\": string, \"limits\": { \"ucl\": number, \"lcl\": number } }`\n- `404`: `{ \"code\": \"CHART_NOT_FOUND\", \"message\": string, \"retryable\": false }`\n- `500`: `{ \"code\": \"CHART_SERVICE_UNAVAILABLE\", \"message\": string, \"retryable\": true }`",
+      "derivedContent": {
+        "pkClass": "pk-architecture",
+        "entityType": "Interface",
+        "statement": "The published Chart API exposes GET /api/charts/{id} with the documented 200, 404, and 500 response shapes.",
+        "relatedEntities": ["arch:spc/chart-management-api", "if:chart-management-api/synthetic-chart-management-api"]
+      },
+      "confidence": "official-document",
+      "validationState": "PROVISIONAL"
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-doc-spec-constraints",
+      "sourceIdentification": {
+        "channel": "file-upload",
+        "sourceClass": "src-product-docs",
+        "documentIdentity": "product-docs/chart-management-spec.md",
+        "documentVersion": "spec-2026-09-19.1",
+        "retrievedAt": "2026-09-19T14:17:23Z",
+        "sourceUri": "file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/product-docs/chart-management-spec.md"
+      },
+      "excerpt": "- The change must preserve Chart Management and Chart Viewing compatibility.\n- Chart creation behavior is out of scope for the enhancement fixture.",
+      "derivedContent": {
+        "pkClass": "pk-architecture",
+        "entityType": "Constraint",
+        "statement": "The enhancement must preserve Chart Management/Chart Viewing compatibility and excludes chart creation behavior.",
+        "relatedEntities": ["arch:spc/chart-management-api"]
+      },
+      "confidence": "official-document",
+      "validationState": "PROVISIONAL"
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-doc-rules-machine",
+      "sourceIdentification": {
+        "channel": "file-upload",
+        "sourceClass": "src-product-docs",
+        "documentIdentity": "product-docs/product-rules.yaml",
+        "documentVersion": null,
+        "retrievedAt": "2026-09-19T14:17:23Z",
+        "sourceUri": "file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/product-docs/product-rules.yaml"
+      },
+      "excerpt": "product: SPC Demo\ncapability: Chart Management\nscenario: Chart Viewing\nrules: R-001, R-002, R-003, R-004",
+      "derivedContent": {
+        "pkClass": "pk-semantics",
+        "entityType": "Rule",
+        "statement": "The machine-readable rules source repeats the SPC Demo / Chart Management / Chart Viewing identity and rules R-001..R-004.",
+        "relatedEntities": ["sem:spc/chart-management"]
+      },
+      "confidence": "official-document",
+      "validationState": "PROVISIONAL"
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-doc-sop-boundary",
+      "sourceIdentification": {
+        "channel": "file-upload",
+        "sourceClass": "src-operations",
+        "documentIdentity": "product-docs/troubleshooting-sop.md",
+        "documentVersion": null,
+        "retrievedAt": "2026-09-19T14:17:23Z",
+        "sourceUri": "file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/product-docs/troubleshooting-sop.md"
+      },
+      "excerpt": "If Chart Viewer latency exceeds 800 ms P95:\n\n1. Check Chart Management API latency.\n2. Check downstream Rule Service.\n3. Check recent deployments.",
+      "derivedContent": {
+        "pkClass": "pk-governance",
+        "entityType": "Evidence",
+        "statement": "The operations SOP supplies later troubleshooting evidence and names a downstream Rule Service; it does not establish a current S01 architecture identity.",
+        "relatedEntities": ["arch:spc/chart-management-api", "gap:rule-service-identity"]
+      },
+      "confidence": "official-document",
+      "validationState": "PROVISIONAL"
+    }
+  }
+]

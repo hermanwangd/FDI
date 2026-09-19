@@ -1,0 +1,34 @@
+[
+  {
+    "bindingRef": "BIND-S01-REPOSITORY-PROVENANCE-chart-viewer",
+    "scopeRef": "S01-r1",
+    "gateRef": "S01-delivery-acceptance",
+    "controlRef": "CTRL-REPOSITORY-PROVENANCE-001",
+    "subjectRef": "S01:repository:chart-viewer",
+    "evidenceRefs": ["EVID-S01-REPOSITORY-MANIFEST", "EVID-S01-REPOSITORY-REVISION", "EVID-S01-PROVENANCE"]
+  },
+  {
+    "bindingRef": "BIND-S01-REPOSITORY-PROVENANCE-chart-management-api",
+    "scopeRef": "S01-r1",
+    "gateRef": "S01-delivery-acceptance",
+    "controlRef": "CTRL-REPOSITORY-PROVENANCE-001",
+    "subjectRef": "S01:repository:chart-management-api",
+    "evidenceRefs": ["EVID-S01-REPOSITORY-MANIFEST", "EVID-S01-REPOSITORY-REVISION", "EVID-S01-PROVENANCE"]
+  },
+  {
+    "bindingRef": "BIND-S01-REPOSITORY-PROVENANCE-spc-deployment",
+    "scopeRef": "S01-r1",
+    "gateRef": "S01-delivery-acceptance",
+    "controlRef": "CTRL-REPOSITORY-PROVENANCE-001",
+    "subjectRef": "S01:repository:spc-deployment",
+    "evidenceRefs": ["EVID-S01-REPOSITORY-MANIFEST", "EVID-S01-REPOSITORY-REVISION", "EVID-S01-PROVENANCE"]
+  },
+  {
+    "bindingRef": "BIND-S01-EVIDENCE-INTEGRITY",
+    "scopeRef": "S01-r1",
+    "gateRef": "S01-delivery-acceptance",
+    "controlRef": "CTRL-EVIDENCE-INTEGRITY-001",
+    "subjectRef": "S01:pk-artifact:r1",
+    "evidenceRefs": ["EVID-S01-PRODUCT-DOCS", "EVID-S01-DELIVERY-HISTORY", "EVID-S01-PK-ARTIFACT", "EVID-S01-CODE-GRAPH", "EVID-S01-PROVENANCE"]
+  }
+]

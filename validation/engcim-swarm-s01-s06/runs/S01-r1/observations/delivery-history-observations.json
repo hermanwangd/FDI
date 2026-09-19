@@ -1,0 +1,74 @@
+[
+  {
+    "observation": {
+      "id": "obs:s01-history-epic",
+      "sourceIdentification": {"channel":"file-upload","sourceClass":"src-code-delivery","documentIdentity":"delivery-history/work-items.json#SYN-EPIC-001","documentVersion":null,"retrievedAt":"2026-09-19T14:17:23Z","sourceUri":"file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/delivery-history/work-items.json"},
+      "excerpt": "SYN-EPIC-001 / Epic / SPC User Experience",
+      "derivedContent": {"pkClass":"pk-governance","entityType":"HistoricalDelivery","statement":"The synthetic historical chain starts at Epic SYN-EPIC-001 titled SPC User Experience.","relatedEntities":["SYN-FEAT-014"]},
+      "confidence":"official-document","validationState":"PROVISIONAL","historical":true
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-history-feature",
+      "sourceIdentification": {"channel":"file-upload","sourceClass":"src-code-delivery","documentIdentity":"delivery-history/work-items.json#SYN-FEAT-014","documentVersion":null,"retrievedAt":"2026-09-19T14:17:23Z","sourceUri":"file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/delivery-history/work-items.json"},
+      "excerpt": "SYN-FEAT-014 / Feature / Chart Management Enhancement / parent SYN-EPIC-001",
+      "derivedContent": {"pkClass":"pk-governance","entityType":"HistoricalDelivery","statement":"Feature SYN-FEAT-014 Chart Management Enhancement is a child of the synthetic SPC User Experience Epic.","relatedEntities":["SYN-EPIC-001","SYN-PBI-227"]},
+      "confidence":"official-document","validationState":"PROVISIONAL","historical":true
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-history-pbi",
+      "sourceIdentification": {"channel":"file-upload","sourceClass":"src-code-delivery","documentIdentity":"delivery-history/work-items.json#SYN-PBI-227","documentVersion":null,"retrievedAt":"2026-09-19T14:17:23Z","sourceUri":"file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/delivery-history/work-items.json"},
+      "excerpt": "SYN-PBI-227 / PBI / Improve Chart Viewer interaction / repos chart-viewer, chart-management-api, spc-deployment",
+      "derivedContent": {"pkClass":"pk-governance","entityType":"HistoricalDelivery","statement":"PBI SYN-PBI-227 Improve Chart Viewer interaction names the three in-scope repositories.","relatedEntities":["SYN-FEAT-014","Repository:chart-viewer","Repository:chart-management-api","Repository:spc-deployment"]},
+      "confidence":"official-document","validationState":"PROVISIONAL","historical":true
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-history-pr-viewer",
+      "sourceIdentification": {"channel":"file-upload","sourceClass":"src-code-delivery","documentIdentity":"delivery-history/pull-requests.json#101","documentVersion":null,"retrievedAt":"2026-09-19T14:17:23Z","sourceUri":"file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/delivery-history/pull-requests.json"},
+      "excerpt": "PR 101 / Chart Viewer recoverable load error / chart-viewer / workItem SYN-PBI-227 / commit SYN-COMMIT-A",
+      "derivedContent": {"pkClass":"pk-governance","entityType":"HistoricalDelivery","statement":"Historical PR 101 links the recoverable load error change in chart-viewer to SYN-PBI-227 and SYN-COMMIT-A.","relatedEntities":["SYN-PBI-227","SYN-COMMIT-A"]},
+      "confidence":"official-document","validationState":"PROVISIONAL","historical":true
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-history-pr-api",
+      "sourceIdentification": {"channel":"file-upload","sourceClass":"src-code-delivery","documentIdentity":"delivery-history/pull-requests.json#205","documentVersion":null,"retrievedAt":"2026-09-19T14:17:23Z","sourceUri":"file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/delivery-history/pull-requests.json"},
+      "excerpt": "PR 205 / Publish Chart API error contract / chart-management-api / workItem SYN-PBI-227 / commit SYN-COMMIT-B",
+      "derivedContent": {"pkClass":"pk-governance","entityType":"HistoricalDelivery","statement":"Historical PR 205 links the Chart API error contract change in chart-management-api to SYN-PBI-227 and SYN-COMMIT-B.","relatedEntities":["SYN-PBI-227","SYN-COMMIT-B"]},
+      "confidence":"official-document","validationState":"PROVISIONAL","historical":true
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-history-commit-viewer",
+      "sourceIdentification": {"channel":"file-upload","sourceClass":"src-code-delivery","documentIdentity":"delivery-history/commits.json#SYN-COMMIT-A","documentVersion":null,"retrievedAt":"2026-09-19T14:17:23Z","sourceUri":"file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/delivery-history/commits.json"},
+      "excerpt": "SYN-COMMIT-A / frontend commit A: call Chart Management API / chart-viewer / pullRequest 101",
+      "derivedContent": {"pkClass":"pk-governance","entityType":"HistoricalDelivery","statement":"SYN-COMMIT-A records a historical chart-viewer call to the Chart Management API and links to PR 101.","relatedEntities":["PR:101","Repository:chart-viewer"]},
+      "confidence":"official-document","validationState":"PROVISIONAL","historical":true
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-history-commit-api",
+      "sourceIdentification": {"channel":"file-upload","sourceClass":"src-code-delivery","documentIdentity":"delivery-history/commits.json#SYN-COMMIT-B","documentVersion":null,"retrievedAt":"2026-09-19T14:17:23Z","sourceUri":"file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/delivery-history/commits.json"},
+      "excerpt": "SYN-COMMIT-B / backend commit B: preserve chart contract / chart-management-api / pullRequest 205",
+      "derivedContent": {"pkClass":"pk-governance","entityType":"HistoricalDelivery","statement":"SYN-COMMIT-B records historical preservation of the Chart API contract and links to PR 205.","relatedEntities":["PR:205","Repository:chart-management-api"]},
+      "confidence":"official-document","validationState":"PROVISIONAL","historical":true
+    }
+  },
+  {
+    "observation": {
+      "id": "obs:s01-history-commit-deployment",
+      "sourceIdentification": {"channel":"file-upload","sourceClass":"src-code-delivery","documentIdentity":"delivery-history/commits.json#SYN-COMMIT-C","documentVersion":null,"retrievedAt":"2026-09-19T14:17:23Z","sourceUri":"file:///Users/herman_mbp2023/engcim-swarm-s01-s06-validation-20260919/validation-fixtures/delivery-history/commits.json"},
+      "excerpt": "SYN-COMMIT-C / deployment commit C: wire chart services / spc-deployment / pullRequest null",
+      "derivedContent": {"pkClass":"pk-governance","entityType":"HistoricalDelivery","statement":"SYN-COMMIT-C records historical deployment wiring but has no linked pull request; no PR relation is inferred.","relatedEntities":["Repository:spc-deployment","Gap:missing-pr-for-SYN-COMMIT-C"]},
+      "confidence":"official-document","validationState":"PROVISIONAL","historical":true
+    }
+  }
+]

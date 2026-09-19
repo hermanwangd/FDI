@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pk/_schema/common.schema.json",
+  "title": "PK Store Common Fields",
+  "description": "所有 pk/ store 條目共用的 governance 欄位定義（供其他 schema $ref 引用）。對齊 docs/pk-conceptual-model.md 第 4 節與 docs/pk-storage-and-governance.md。",
+  "$defs": {
+    "validationState": {
+      "type": "string",
+      "enum": ["PROVISIONAL", "VALIDATED", "STALE", "CONFLICTING"],
+      "description": "Observation／條目生命週期狀態（見 skills/pk-correlation-synthesis/SKILL.md）"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["official-document", "meeting-consensus", "personal-share", "auto-observation"],
+      "description": "可信度等級：官方文件 > 會議共識 > 個人分享；auto-observation＝中（自動觀察，待驗證）"
+    },
+    "sourceClass": {
+      "type": "string",
+      "enum": ["src-team-seed", "src-product-docs", "src-test-assets", "src-operations", "src-engineering", "src-code-delivery"],
+      "description": "6 類 Knowledge Source（pk-conceptual-model.md 第 7 節）"
+    },
+    "pkClass": {
+      "type": "string",
+      "enum": ["pk-semantics", "pk-architecture", "pk-realization", "pk-governance"],
+      "description": "四類 PK 主分類"
+    },
+    "governanceFields": {
+      "type": "object",
+      "required": ["id", "pkClass", "validationState", "confidence", "evidence", "governanceIssueRef"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1, "description": "store 內唯一識別，建議格式 <類別前綴>:<path>，如 sem:spc/chart-management"},
+        "pkClass": {"$ref": "#/$defs/pkClass"},
+        "validationState": {"$ref": "#/$defs/validationState"},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "description": "pk/evidence/ 中 Evidence 記錄的 id"},
+          "description": "證據參照列表；同一 fact 從多來源到達時全部列出，不重複建條目"
+        },
+        "governanceIssueRef": {
+          "type": ["string", "null"],
+          "description": "對應的 Multica ProductKB governance issue（id 或 URL）；雙向連結，issue 側以 store_ref 回指。尚無 issue 時為 null"
+        },
+        "sourceClass": {"$ref": "#/$defs/sourceClass"},
+        "updatedAt": {"type": "string", "format": "date-time"},
+        "supersedes": {"type": ["string", "null"], "description": "STALE 取代鏈：本條目取代的舊條目 id"},
+        "supersededBy": {"type": ["string", "null"], "description": "STALE 取代鏈：取代本條目的新條目 id"}
+      }
+    }
+  }
+}

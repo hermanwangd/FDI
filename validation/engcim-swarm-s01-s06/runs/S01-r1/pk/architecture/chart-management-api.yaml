@@ -1,0 +1,57 @@
+id: arch:spc/chart-management-api
+pkClass: pk-architecture
+validationState: PROVISIONAL
+confidence: official-document
+sourceClass: src-engineering
+evidence:
+  - ev:s01-chart-management-spec
+  - ev:s01-repo-analysis-chart-management-api
+  - ev:s01-repository-manifest
+governanceIssueRef: null
+updatedAt: "2026-09-19T14:17:23Z"
+supersedes: null
+supersededBy: null
+
+c4Level: container
+name: chart-management-api
+parent: null
+children: []
+responsibility:
+  owns:
+    - Serving the published Chart API contract for configured chart retrieval.
+    - Returning chart identifiers, titles, and control limits for valid charts.
+  excludes:
+    - Chart Viewer rendering.
+    - Establishing the identity of the downstream Rule Service named by operations evidence.
+relationships: []
+interfaces:
+  - id: if:chart-management-api/synthetic-chart-management-api
+    name: Synthetic Chart Management API
+    kind: api
+    specRef: chart-management-api/openapi.yaml
+    contract:
+      endpoint: GET /api/charts/{id}
+      responses:
+        "200":
+          id: string
+          title: string
+          limits:
+            ucl: number
+            lcl: number
+        "404":
+          code: CHART_NOT_FOUND
+          message: string
+          retryable: false
+        "500":
+          code: CHART_SERVICE_UNAVAILABLE
+          message: string
+          retryable: true
+      sourceRef: product-docs/chart-management-spec.md#published-api-contract
+      validationState: PROVISIONAL
+constraints:
+  - R-004 requires preservation of the published Chart API contract.
+  - Chart creation behavior is out of scope for the enhancement fixture.
+  - The product document describes a recoverable retry-or-dismiss error while the 404 contract says retryable=false; this mismatch remains explicit.
+decisions: []
+gapStatus: AMBIGUOUS
+gapNote: "The Rule Service identity and the relationship to spc-rules-engine are not established by S01 evidence; no unsupported dependency is asserted."
