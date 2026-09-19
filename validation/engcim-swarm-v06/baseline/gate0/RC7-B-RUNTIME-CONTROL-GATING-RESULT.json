@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "engcim-rc7b-runtime-gating-closure.v0.1",
+  "closureRef": "RC7B-RUNTIME-GATING-CLOSURE-V06-001",
+  "status": "PASS",
+  "reviewSessionRef": "codex-s01-s06-closure-20260919",
+  "runtimeImplementationCommit": "c9090701b6b9a4c0270fdf269c723c8e30fc600b",
+  "runtimeImplementationParent": "e5480987cce42b64cdea7c9b19346ed3c3bcd7cc",
+  "runtime": {
+    "workspaceId": "9d1fc96a-0f5b-496d-aecf-c55f0625a6ba",
+    "multicaCli": "0.4.44",
+    "multicaDaemon": "0.4.40",
+    "codexRuntimeId": "7ffd0e8d-3f53-437a-b818-ca88e37ae096",
+    "model": "gpt-5.6-luna"
+  },
+  "repository": {
+    "url": "https://github.com/hermanwangd/engcim-rc7b-v03-fixture-20260919.git",
+    "baseline": "6c77175ae4a948a24c1cdd74db83cc6bb10e2401",
+    "r1": "a1a0ea1489c9dfd9244efd0fbd6d68c84c8a7bcd",
+    "r2": "4cd95d6be709b946e9df601b15fef97f9061bc77"
+  },
+  "gateAssertions": {
+    "actualEvaluatorInvokedAtGovernedGates": true,
+    "failClosedRuntimeRejectionObserved": true,
+    "r1Verification": "FAIL / REFUTED",
+    "findingResolutionBlockedAfterF1": true,
+    "r2PublishedBeforeDeliveryAcceptance": true,
+    "staleR1Rejected": true,
+    "freshR2Verification": "PASS / VERIFIED",
+    "finalFindingResolution": "SATISFIED",
+    "manualChildDoneCount": 0,
+    "acceptedDuplicateCorrectionExecutions": 0
+  },
+  "authoritativeReport": "validation/engcim-swarm-rc7b-runtime-gated/RUNTIME-GATE-RESULTS.md",
+  "authoritativeEvidenceRoot": "validation/engcim-swarm-rc7b-runtime-gated/evidence/control-invocations/",
+  "bindingManifest": "gate0/CONTROL-RUNTIME-BINDING-MANIFEST.json"
+}
