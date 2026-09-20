@@ -18,10 +18,11 @@ Verification result: ../verification/S06-r1-verification-result.yaml
 Verification result SHA-256: e4813b1dc55085c431dad708db05f169a13c454ea9f8926de04f6ac67e582303
 Prior control: CTRL-FINDING-RESOLUTION-001 = UNSATISFIED
 
-[RED CHECK: exact r1 candidate]
+[HISTORICAL RED CHECK: r1 source with correction test harness]
 $ node --test test/chartViewer.test.js
 EXIT_CODE=1
 Observed: 7 tests, 2 passed, 5 failed; missing-ucl, missing-lcl, invalid-ucl, invalid-lcl reported Missing expected exception; frozen max reported 1000 !== 10.
+Evidence qualification: the exact r1 commit `f63aa7ff1037d840c0b9338e455def256956bed2` does not contain `test/chartViewer.test.js`. This historical red run used the r1 source with the correction test harness present in the r2 worktree and is therefore not accepted as exact-r1-commit evidence. The authoritative exact-r1 failure evidence is S06 E6V-31 / F1.
 
 [IMPLEMENTATION]
 Changed exactly two correction paths against r1: src/chartViewer.js and test/chartViewer.test.js.
