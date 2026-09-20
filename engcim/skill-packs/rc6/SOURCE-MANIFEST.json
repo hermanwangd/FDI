@@ -1,0 +1,355 @@
+{
+  "schema": "ENGCIM-SKILL-PACK-CANONICAL-MANIFEST-v1",
+  "packageId": "ENGCIM-Swarm-RC6-CuratedOSS-SkillPack-PCAB",
+  "release": "RC6",
+  "status": "CANONICAL_GIT_SOURCE_BASELINE",
+  "canonicalPath": "engcim/skill-packs/rc6",
+  "baselineGitCommit": null,
+  "baselineGitCommitNote": "The containing Git commit is the release record; this manifest intentionally does not self-reference a commit hash.",
+  "sourceArchive": {
+    "filename": "ENGCIM_Swarm_RC6_CuratedOSS_SkillPack_PCAB.zip",
+    "sha256": "132bb615f9212bfc5a4cbaaa3b90e3c9bfc4d1d921566812b0b650199ad545d3",
+    "packageRoot": "engcim-swarm-package-RC6",
+    "embeddedManifestSha256": "eae1b9390281c82d3d92ffeb66f23f34957db8b5eca6cc57056662297470e295",
+    "embeddedManifestShaScope": "UNKNOWN_SCOPE"
+  },
+  "inventory": {
+    "skillCount": 30,
+    "agentCount": 19,
+    "inventoryFingerprint": "1a4de34647b6e449d0929044779518ddcba5af78266d7b351b113fe2348b888d",
+    "computedManifestFingerprint": "3c08527b5711a69bf7502e746fccf2c77182ca4c60c8641746274fc1b87f518b",
+    "inventoryFingerprintNote": "inventoryFingerprint is the frozen package/workspace parity identity from the 2026-09-20 review; computedManifestFingerprint is the reproducible fingerprint of this manifest's per-skill rows.",
+    "definitionSurface": "skills/*/SKILL.md",
+    "fullPackageSurface": "sourceArchive",
+    "canonicalMaterialization": "entrypoint-and-role-definition-review-surface",
+    "canonicalSkillFileCount": 98,
+    "excludedExecutablePythonFileCount": 15
+  },
+  "skills": [
+    {
+      "name": "artifact-consistency",
+      "entrypoint": "skills/artifact-consistency/SKILL.md",
+      "skillMdSha256": "d27ce19c45e3636715a20e0333ee2a1e297a8d0d22458959e9d7e062feec8c61",
+      "packageTreeSha256": "b9466809f8539791efa45cb9ecea6032feafd882310ea145ad8f2a96d4e549db",
+      "packageFileCount": 3,
+      "canonicalEntrypointSha256": "d27ce19c45e3636715a20e0333ee2a1e297a8d0d22458959e9d7e062feec8c61"
+    },
+    {
+      "name": "changesurface-analysis",
+      "entrypoint": "skills/changesurface-analysis/SKILL.md",
+      "skillMdSha256": "1645fb8678288a02e987e21649505d344d682de84183c656da20984c63719f52",
+      "packageTreeSha256": "2927330c2d165481ab2e7db17ad1adc9ef9a427ccdf9a052516b336b02d35908",
+      "packageFileCount": 4,
+      "canonicalEntrypointSha256": "1645fb8678288a02e987e21649505d344d682de84183c656da20984c63719f52"
+    },
+    {
+      "name": "cicd-automation",
+      "entrypoint": "skills/cicd-automation/SKILL.md",
+      "skillMdSha256": "e6e6b1f7606ba094a674262e37e5357084f56985d7b404758fc1bb5ab82e4de9",
+      "packageTreeSha256": "b5dd2418fc04b9ff49769c207430cd237111cbfd2f9424a792b4ded8ef881a80",
+      "packageFileCount": 4,
+      "canonicalEntrypointSha256": "e6e6b1f7606ba094a674262e37e5357084f56985d7b404758fc1bb5ab82e4de9"
+    },
+    {
+      "name": "code-review-method",
+      "entrypoint": "skills/code-review-method/SKILL.md",
+      "skillMdSha256": "f1ab9c1ba23a76885d7b09cf9531d59c953d0b1278a662e2055dd7a661a50679",
+      "packageTreeSha256": "a4c11609af1a5a7875ae37273392a03087c8063bb8859ed10656bdbd24785abc",
+      "packageFileCount": 3,
+      "canonicalEntrypointSha256": "f1ab9c1ba23a76885d7b09cf9531d59c953d0b1278a662e2055dd7a661a50679"
+    },
+    {
+      "name": "deployment-verification",
+      "entrypoint": "skills/deployment-verification/SKILL.md",
+      "skillMdSha256": "4dc619c1030c938cdda47534cf588cd6c2bda94b4d8fcdf0d04364aa302c1fe7",
+      "packageTreeSha256": "7043e81fd1d9ea8ef75d4c78fa53717cb08506175b73c3db9611aa4d46a1f2bf",
+      "packageFileCount": 2,
+      "canonicalEntrypointSha256": "4dc619c1030c938cdda47534cf588cd6c2bda94b4d8fcdf0d04364aa302c1fe7"
+    },
+    {
+      "name": "execution-guard",
+      "entrypoint": "skills/execution-guard/SKILL.md",
+      "skillMdSha256": "aa8c67bd2aacd2feffc8a9cc7e8572eee0d43ccf4da2011b0ec611fcb28975ef",
+      "packageTreeSha256": "86c63ce5a85aa4a19e79cd521b2910a48425be2f0d6277c9bf46f604968d563b",
+      "packageFileCount": 3,
+      "canonicalEntrypointSha256": "aa8c67bd2aacd2feffc8a9cc7e8572eee0d43ccf4da2011b0ec611fcb28975ef"
+    },
+    {
+      "name": "incident-response",
+      "entrypoint": "skills/incident-response/SKILL.md",
+      "skillMdSha256": "2f785833c40cb5e9d1bae7415d36db5877da2b6d9a0ec2780fc56076174e65ba",
+      "packageTreeSha256": "918f8dc8210a6f1ef50793c381aa52ddf66c9fec8c6b1e2babb008bff1daceff",
+      "packageFileCount": 3,
+      "canonicalEntrypointSha256": "2f785833c40cb5e9d1bae7415d36db5877da2b6d9a0ec2780fc56076174e65ba"
+    },
+    {
+      "name": "multica-cli",
+      "entrypoint": "skills/multica-cli/SKILL.md",
+      "skillMdSha256": "72552abe9e65e7939ea0df1f29970d4ca5a55c2499d44682e93cd2a938aea056",
+      "packageTreeSha256": "1e1f76043c38117e5efb8843860c4eb064f14e33ce580ddba6eb7c411229ee96",
+      "packageFileCount": 1,
+      "canonicalEntrypointSha256": "72552abe9e65e7939ea0df1f29970d4ca5a55c2499d44682e93cd2a938aea056"
+    },
+    {
+      "name": "observability-slo",
+      "entrypoint": "skills/observability-slo/SKILL.md",
+      "skillMdSha256": "e79945d28c721332eca5823a1294b4f563520440a65269b348881844314210d8",
+      "packageTreeSha256": "dfe61c536ef67253a5d34abb40d472640b6f478db1eb13caa6facf19750348d9",
+      "packageFileCount": 4,
+      "canonicalEntrypointSha256": "e79945d28c721332eca5823a1294b4f563520440a65269b348881844314210d8"
+    },
+    {
+      "name": "performance-benchmark",
+      "entrypoint": "skills/performance-benchmark/SKILL.md",
+      "skillMdSha256": "c3d78b483d34c6a09a94a9bcf4d316945332bef95b5a399f7f8675f975cbb24e",
+      "packageTreeSha256": "5353d24ab6ab7bbf81481403e3c0f0e884b4605cf952a6c3d3c58a0aafec5329",
+      "packageFileCount": 2,
+      "canonicalEntrypointSha256": "c3d78b483d34c6a09a94a9bcf4d316945332bef95b5a399f7f8675f975cbb24e"
+    },
+    {
+      "name": "pk-azure-devops-history",
+      "entrypoint": "skills/pk-azure-devops-history/SKILL.md",
+      "skillMdSha256": "68688296f8245eff3976bdc8a706713d9cb59c929cf007e9a4492bf351210f34",
+      "packageTreeSha256": "ab6e86fbf7b1292b27c3f4ce9f3af08dcc7e5153cf79d238e7e89c7a0961213d",
+      "packageFileCount": 1,
+      "canonicalEntrypointSha256": "68688296f8245eff3976bdc8a706713d9cb59c929cf007e9a4492bf351210f34"
+    },
+    {
+      "name": "pk-correlation-synthesis",
+      "entrypoint": "skills/pk-correlation-synthesis/SKILL.md",
+      "skillMdSha256": "7fa914e19b8f0d5c79245ef1ee483ca2e6ca26393266fed80f5e1999f9a819dd",
+      "packageTreeSha256": "4fc46927226367a0204bb1809245579b71382a2ccac7c330ca0fd4bf39421b1c",
+      "packageFileCount": 1,
+      "canonicalEntrypointSha256": "7fa914e19b8f0d5c79245ef1ee483ca2e6ca26393266fed80f5e1999f9a819dd"
+    },
+    {
+      "name": "pk-document-analysis",
+      "entrypoint": "skills/pk-document-analysis/SKILL.md",
+      "skillMdSha256": "2002915fde97d8bf0c7138b4c093eb9ae8b2ae8377a7e171d15ec69b9a956687",
+      "packageTreeSha256": "7c97a1ce63f208f79ad6fc730537433844200a7769e0a8ee9127c21dab1436db",
+      "packageFileCount": 1,
+      "canonicalEntrypointSha256": "2002915fde97d8bf0c7138b4c093eb9ae8b2ae8377a7e171d15ec69b9a956687"
+    },
+    {
+      "name": "pk-file-ingestion",
+      "entrypoint": "skills/pk-file-ingestion/SKILL.md",
+      "skillMdSha256": "aeb6b9407e0cd0eb2a800375d3b8e03d3f9a9b3f2f5c14aac55a7e083a449f33",
+      "packageTreeSha256": "2d920d320e0fb0151e79ce2e8e09cd2dd73b38e2a874650a65b381d66f6dd8dc",
+      "packageFileCount": 16,
+      "canonicalEntrypointSha256": "aeb6b9407e0cd0eb2a800375d3b8e03d3f9a9b3f2f5c14aac55a7e083a449f33"
+    },
+    {
+      "name": "pk-repository-analysis",
+      "entrypoint": "skills/pk-repository-analysis/SKILL.md",
+      "skillMdSha256": "4380eff38d08204b095f8dd351c7fa505997743b955afd06daed504140912534",
+      "packageTreeSha256": "02d87a8ddef9cd25c92c5200c2c910738dfeebba58657741adaa573ac8cb0f24",
+      "packageFileCount": 6,
+      "canonicalEntrypointSha256": "4380eff38d08204b095f8dd351c7fa505997743b955afd06daed504140912534"
+    },
+    {
+      "name": "pk-tkms-ingestion",
+      "entrypoint": "skills/pk-tkms-ingestion/SKILL.md",
+      "skillMdSha256": "db48594ea5eb9883cbfb29bbbbf5d0a30bc3ac11f5876be7918cd06627001970",
+      "packageTreeSha256": "48555565e9101849fae0e3d4c3e15be1ab58d2916791ea3492b4e19c89dc1c82",
+      "packageFileCount": 1,
+      "canonicalEntrypointSha256": "db48594ea5eb9883cbfb29bbbbf5d0a30bc3ac11f5876be7918cd06627001970"
+    },
+    {
+      "name": "pm-intention",
+      "entrypoint": "skills/pm-intention/SKILL.md",
+      "skillMdSha256": "517a4eec491d509eebe605b81f62f1f4738a35f10c79ec42d9cdb8722ce04c8b",
+      "packageTreeSha256": "47e71ed9293a03db8d162eb64ad322ea5d7285a13124e99c11639e6c99146522",
+      "packageFileCount": 3,
+      "canonicalEntrypointSha256": "517a4eec491d509eebe605b81f62f1f4738a35f10c79ec42d9cdb8722ce04c8b"
+    },
+    {
+      "name": "post-change-canary",
+      "entrypoint": "skills/post-change-canary/SKILL.md",
+      "skillMdSha256": "866b026a15d9f827a25e80fb0b1f5f3efe1289716c7e7114b25e0cea618e07ed",
+      "packageTreeSha256": "2db5e0f5538456cdeb0dcc8bba1bd28c15b42baf2f75daa9cfc0f822b3ad1a04",
+      "packageFileCount": 2,
+      "canonicalEntrypointSha256": "866b026a15d9f827a25e80fb0b1f5f3efe1289716c7e7114b25e0cea618e07ed"
+    },
+    {
+      "name": "product-knowledge",
+      "entrypoint": "skills/product-knowledge/SKILL.md",
+      "skillMdSha256": "16afe5467ef8655c9c7d5199e213d5be074269581961e4eb5eb504791d0b1e26",
+      "packageTreeSha256": "2090623bb77266fa6dd8cd8750c417499f7c66b555b7a2ade7999c3ada09d50f",
+      "packageFileCount": 1,
+      "canonicalEntrypointSha256": "16afe5467ef8655c9c7d5199e213d5be074269581961e4eb5eb504791d0b1e26"
+    },
+    {
+      "name": "release-management",
+      "entrypoint": "skills/release-management/SKILL.md",
+      "skillMdSha256": "61de659953781bf07f530475fbd0420967333f00e8f821bc807eebf355ea573d",
+      "packageTreeSha256": "cdb747d066b21df82161ccfe7d2388b8faaa998ab2437dbb2eadc0bebf7f5e5e",
+      "packageFileCount": 4,
+      "canonicalEntrypointSha256": "61de659953781bf07f530475fbd0420967333f00e8f821bc807eebf355ea573d"
+    },
+    {
+      "name": "root-cause-debugging",
+      "entrypoint": "skills/root-cause-debugging/SKILL.md",
+      "skillMdSha256": "83543213486e0d4e37ecd061e6533507836a40006b27b5a515dcc4d938b46530",
+      "packageTreeSha256": "af31a267fa6941378dff8e70c051f72ddfa0bc410cf8d502a6fc020bb86b20b8",
+      "packageFileCount": 3,
+      "canonicalEntrypointSha256": "83543213486e0d4e37ecd061e6533507836a40006b27b5a515dcc4d938b46530"
+    },
+    {
+      "name": "runtime-qa",
+      "entrypoint": "skills/runtime-qa/SKILL.md",
+      "skillMdSha256": "c376170500182170fdcc006fed6004370b24f4223faa75b7f48388645bcacd5e",
+      "packageTreeSha256": "b7fbbbb41385e028e0e84cb2d6b902fa9564a17a4837711f20b8922f23697d60",
+      "packageFileCount": 3,
+      "canonicalEntrypointSha256": "c376170500182170fdcc006fed6004370b24f4223faa75b7f48388645bcacd5e"
+    },
+    {
+      "name": "security-review",
+      "entrypoint": "skills/security-review/SKILL.md",
+      "skillMdSha256": "69f014b61f622315cb1f6d2d533e60a0fad2e228d589f014a385e0bd39f9986b",
+      "packageTreeSha256": "1fdc1b4a434f62e3f952afcc798c081eaa7dfc91d2596de12bee7f9f89fd5c6b",
+      "packageFileCount": 4,
+      "canonicalEntrypointSha256": "69f014b61f622315cb1f6d2d533e60a0fad2e228d589f014a385e0bd39f9986b"
+    },
+    {
+      "name": "software-development",
+      "entrypoint": "skills/software-development/SKILL.md",
+      "skillMdSha256": "5f76e99de4c4d1eccb57d538ab850a2952cc6a92e808fdab9d5d836abbb7ac04",
+      "packageTreeSha256": "3d5a31ac4a7552a8457c3daa9629330a3ecce66b7f0ebdf22a3e02bab6a21492",
+      "packageFileCount": 3,
+      "canonicalEntrypointSha256": "5f76e99de4c4d1eccb57d538ab850a2952cc6a92e808fdab9d5d836abbb7ac04"
+    },
+    {
+      "name": "spec-design",
+      "entrypoint": "skills/spec-design/SKILL.md",
+      "skillMdSha256": "1eed049eeeaa503ad7f24ae8961f460ac90ae90a4a56f9252f5964bda5a92fa7",
+      "packageTreeSha256": "9b0502273d5e3701d66276efbc93cf1d4b5964d620fabc7d988e46c42a2ed62c",
+      "packageFileCount": 4,
+      "canonicalEntrypointSha256": "1eed049eeeaa503ad7f24ae8961f460ac90ae90a4a56f9252f5964bda5a92fa7"
+    },
+    {
+      "name": "swarm-orchestration",
+      "entrypoint": "skills/swarm-orchestration/SKILL.md",
+      "skillMdSha256": "9a80e3714552ada58d32b506b6abf593e34fb8749737d43f5193a113ffd24bfe",
+      "packageTreeSha256": "83fa23d8c06cad39f4dc3cdfc81bf33c2f4e397b5865f4a53f0c7fb49daecfc2",
+      "packageFileCount": 1,
+      "canonicalEntrypointSha256": "9a80e3714552ada58d32b506b6abf593e34fb8749737d43f5193a113ffd24bfe"
+    },
+    {
+      "name": "swarm-telemetry",
+      "entrypoint": "skills/swarm-telemetry/SKILL.md",
+      "skillMdSha256": "44a36a2047303cccac0327cc4218fb6e94aa9f7a75353dee9f462ababfacfb8b",
+      "packageTreeSha256": "0529ca2a02a11a9d23cc64e42fb10bcccb1dd2fe965469eccaa835512506fcda",
+      "packageFileCount": 3,
+      "canonicalEntrypointSha256": "44a36a2047303cccac0327cc4218fb6e94aa9f7a75353dee9f462ababfacfb8b"
+    },
+    {
+      "name": "test-architecture",
+      "entrypoint": "skills/test-architecture/SKILL.md",
+      "skillMdSha256": "eef28362b091c849083ffce8530086b2b44e33de66415278c60860194393c06d",
+      "packageTreeSha256": "85ebe9e205f79f2ab121b9d35c8785405fa60a0c6619a709d2e506064a022358",
+      "packageFileCount": 3,
+      "canonicalEntrypointSha256": "eef28362b091c849083ffce8530086b2b44e33de66415278c60860194393c06d"
+    },
+    {
+      "name": "test-design",
+      "entrypoint": "skills/test-design/SKILL.md",
+      "skillMdSha256": "b0bf47ee4f8b704c61c0043adccfe1942c749052434773d3a728b7e551debce9",
+      "packageTreeSha256": "4b22ea2d3f623db28f51f363c2ee50f295f77db1bf29bb5f1783404339aa6727",
+      "packageFileCount": 5,
+      "canonicalEntrypointSha256": "b0bf47ee4f8b704c61c0043adccfe1942c749052434773d3a728b7e551debce9"
+    },
+    {
+      "name": "verification-protocol",
+      "entrypoint": "skills/verification-protocol/SKILL.md",
+      "skillMdSha256": "807255e6c3b228f948a850772e7777b6f8ab6c6265e27b4da33a4b714bbfca19",
+      "packageTreeSha256": "b4c1193b0505c7a77ff54d3807c0b264e6d2ddaaa0395f0177135680956bbd4e",
+      "packageFileCount": 18,
+      "canonicalEntrypointSha256": "807255e6c3b228f948a850772e7777b6f8ab6c6265e27b4da33a4b714bbfca19"
+    }
+  ],
+  "agents": [
+    {
+      "path": "agents/architect.md",
+      "sha256": "3da012cc8b5850e6ef5639e78cf9aad71f41fde0fe1f806a14fe9358351b17da"
+    },
+    {
+      "path": "agents/backend-dev.md",
+      "sha256": "8afb1a2d1d2a766bbdeb8db6c66d47a2cfaca89c49afcdd481f2af57a19b25f1"
+    },
+    {
+      "path": "agents/coder.md",
+      "sha256": "44fc14ac755908b602a437847bbc753b5ce4775ae964be823a95b87c920e5510"
+    },
+    {
+      "path": "agents/data-analyst.md",
+      "sha256": "8cdecf0abc766b43ca4fe345747b93d410a7581eebd4654622acf85a1d384cac"
+    },
+    {
+      "path": "agents/dba.md",
+      "sha256": "a9d549208aaadd16be606dbb900b3b1d7e8a73a064fbd1ad55b43a3caf7bfcb1"
+    },
+    {
+      "path": "agents/devops.md",
+      "sha256": "8a7c9e8da018bcd835585fad3045d1218e2f852470b7355c938af207a11051f8"
+    },
+    {
+      "path": "agents/frontend-dev.md",
+      "sha256": "183d7a56dcbf8a46e9617bb4fd38976b9abb9e579794c3b2fe15f4e7a7149e67"
+    },
+    {
+      "path": "agents/knowledge-curator.md",
+      "sha256": "b99d6b94eb76cdec2f2031422d1b538b3ce57c4d7d2a65818530c79893a2da75"
+    },
+    {
+      "path": "agents/orchestrator.md",
+      "sha256": "66762a6d7216367e8092bf6ec023a6a2a805920d97c87d20e24c7c85154613f3"
+    },
+    {
+      "path": "agents/performance-engineer.md",
+      "sha256": "1aa49e0b72e17a71ebe278d99e98f48580544b9179d1b4c92ab4ad5903e71b0a"
+    },
+    {
+      "path": "agents/product-manager.md",
+      "sha256": "f937d032d094ddd37e6157ff6f7b58d9c60e19c4ec71e48146e97c1c3e32d0d5"
+    },
+    {
+      "path": "agents/qa-tester.md",
+      "sha256": "54ca880fe0dacec1b0c9d818fb22f51a76b4db58bae98aa274536bed4455280f"
+    },
+    {
+      "path": "agents/release-manager.md",
+      "sha256": "5799e9579923c41b9c5093def27f353fa77c880598db24e2b2ccd94bf7f9dcf5"
+    },
+    {
+      "path": "agents/researcher.md",
+      "sha256": "0fbd589d142f91a57036fcf82a014f0e8c938f3311be2048c3a5c1ada33b2e76"
+    },
+    {
+      "path": "agents/reviewer.md",
+      "sha256": "2d7cbf899ea62016584fac76fbdd72b2654ebf2e596f154db9515d5fbc55371a"
+    },
+    {
+      "path": "agents/security-auditor.md",
+      "sha256": "2f6d823f0165337b601a46d282e20a895cc8771a7a0654b9636c50c25655b46a"
+    },
+    {
+      "path": "agents/sre.md",
+      "sha256": "5f149582843462669f6981feb4177e1671e0eed1f4b3c04aaed2655e05f10d85"
+    },
+    {
+      "path": "agents/verifier.md",
+      "sha256": "09125a4c2521c4b5f987a9d0a1a845f4eeacfa3c6f1b53e5b32d418d4a6cbdbb"
+    },
+    {
+      "path": "agents/writer.md",
+      "sha256": "0a1a821e2c87760325a8f698edc992e43095952277d7cdac2db9e3fca55ef49d"
+    }
+  ],
+  "trackingPolicy": {
+    "archiveIsAuthoritativeForFullPackage": true,
+    "entrypointsAndNonPythonAssetsAreGitReviewable": true,
+    "extractedExecutablePythonNotAddedToFDIJavaSourceTree": true,
+    "runtimeRegistryMustMatchThisManifestBeforeValidation": true,
+    "changesRequireNewManifestRevision": true
+  }
+}
