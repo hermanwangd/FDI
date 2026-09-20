@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "engcim-s05-r2-evidence-receipt.v0.1",
+  "artifactKind": "S05_R2_EVIDENCE_RECEIPT",
+  "receiptRef": "validation/engcim-swarm-v06/effectiveness/initial-v1/evidence-closure/S05-R2-EVIDENCE-RECEIPT.json",
+  "subjectRef": "S05-E6V34-DEVELOPMENT-r2",
+  "candidateRevision": "d58d3848f12d8c1ad1704852d175b9f656ef66e2",
+  "candidateRevisionShort": "d58d384",
+  "reviewedRevision": "d58d3848f12d8c1ad1704852d175b9f656ef66e2",
+  "evidenceRevisionRole": "FDI evidence/reseal commit; not product source revision",
+  "productCandidateRevision": "c51390ca7e748f07201b0ecd28642ee3ea8d686c",
+  "productCandidateTree": "2d3de714bd30552eb572d7e3bfb0f81dbed373a3",
+  "repositoryRef": "https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture.git",
+  "producerRunRef": "multica:issue/E6V-34/run/01a0bcb9-1e07-7a58-ac60-5bd78dfa68d5",
+  "reviewRunRef": "multica:issue/E6V-37/run/01a0bcdd-e28e-7cfd-a118-8aa8397dcdfa",
+  "reviewReceiptRef": "multica:issue/E6V-37/run/01a0bcdd-e28e-7cfd-a118-8aa8397dcdfa",
+  "verificationReceiptRef": "validation/engcim-swarm-v06/effectiveness/initial-v1/evidence-closure/S05-R2-REVERIFICATION.json",
+  "developmentResultRef": "validation/engcim-swarm-v06/effectiveness/s04-s06/development/S05-r2-development-result.yaml",
+  "artifactRefs": [
+    "validation/engcim-swarm-v06/effectiveness/s04-s06/development/S05-r2-development-result.yaml",
+    "validation/engcim-swarm-v06/effectiveness/s04-s06/development/S05-r2-artifact-trace.yaml",
+    "validation/engcim-swarm-v06/effectiveness/s04-s06/development/S05-r2-artifact-checksums.txt",
+    "validation/engcim-swarm-v06/effectiveness/s04-s06/development/S05-r2-change-manifest.json",
+    "validation/engcim-swarm-v06/effectiveness/s04-s06/development/S05-r2-control-evidence.json",
+    "validation/engcim-swarm-v06/effectiveness/s04-s06/development/S05-r2-self-check.txt",
+    "validation/engcim-swarm-v06/effectiveness/s04-s06/verification/S06-r1-defect-report-F1.md",
+    "validation/engcim-swarm-v06/effectiveness/s04-s06/verification/S06-r1-verification-result.yaml"
+  ],
+  "checksumRefs": [
+    {
+      "ref": "S05-r2-artifact-checksums",
+      "path": "validation/engcim-swarm-v06/effectiveness/s04-s06/development/S05-r2-artifact-checksums.txt",
+      "sha256": "050fbe543beaac40f43173a29917bb0263ff3685f84624c4ceec9b6f40bb13d7",
+      "verifiedEntries": 5,
+      "verification": "PASS"
+    },
+    {
+      "ref": "S05-r2-development-result",
+      "path": "validation/engcim-swarm-v06/effectiveness/s04-s06/development/S05-r2-development-result.yaml",
+      "sha256": "ba20b158b18de85ac08ece2f23f2329db2607a120ac791d4cfc12bce333f3faf"
+    },
+    {
+      "ref": "S05-r2-artifact-trace",
+      "path": "validation/engcim-swarm-v06/effectiveness/s04-s06/development/S05-r2-artifact-trace.yaml",
+      "sha256": "56f3f71f9f672f675893be1da704a6eec0baed521549cd29745cec2c7d8c69bb"
+    },
+    {
+      "ref": "F1-r1-defect-report",
+      "path": "validation/engcim-swarm-v06/effectiveness/s04-s06/verification/S06-r1-defect-report-F1.md",
+      "sha256": "e4235a148aed2c9c551678fb6f375cd4a4f23d58e1ade18d7265e0ef3131e001"
+    }
+  ],
+  "controlResultRefs": [
+    "validation/engcim-swarm-v06/baseline/controls/CONTROL-BINDING-FREEZE.md",
+    "validation/engcim-swarm-v06/baseline/controls/required-evidence.json",
+    "validation/engcim-swarm-v06/effectiveness/s04-s06/development/S05-r2-control-evidence.json",
+    "CTRL-AUTHORIZATION-001",
+    "CTRL-EXECUTION-SAFETY-001",
+    "CTRL-REPOSITORY-PROVENANCE-001",
+    "CTRL-EVIDENCE-INTEGRITY-001",
+    "CTRL-FINDING-RESOLUTION-001"
+  ],
+  "findingRefs": [
+    {
+      "findingRef": "F1",
+      "findingType": "FV-003",
+      "status": "OPEN",
+      "boundR1Candidate": "f63aa7ff1037d840c0b9338e455def256956bed2",
+      "digestRef": "validation/engcim-swarm-v06/effectiveness/s04-s06/verification/S06-r1-defect-report-F1.md",
+      "digest": "sha256:e4235a148aed2c9c551678fb6f375cd4a4f23d58e1ade18d7265e0ef3131e001",
+      "correctionBinding": "S05-E6V34-DEVELOPMENT-r2 -> c51390ca7e748f07201b0ecd28642ee3ea8d686c",
+      "resolution": "OPEN_PENDING_FRESH_S06_R2"
+    }
+  ],
+  "requiredEvidenceRefs": [
+    "EVID-S05-AUTHORITY",
+    "EVID-S05-INTENTION-SPEC",
+    "EVID-S05-SCOPE",
+    "EVID-S05-BRANCH",
+    "EVID-S05-GUARD",
+    "EVID-S05-REPOSITORY",
+    "EVID-S05-BASELINE",
+    "EVID-S05-CANDIDATE",
+    "EVID-S05-PUBLICATION",
+    "EVID-S05-SELF-TEST",
+    "EVID-S05-DEVELOPMENT-RESULT",
+    "EVID-MISSION-F1",
+    "EVID-MISSION-CURRENT-CANDIDATE",
+    "EVID-MISSION-FRESH-S06",
+    "EVID-MISSION-EXACT-BINDING"
+  ],
+  "createdAt": "2026-09-20T06:10:14Z",
+  "sourceEvidenceCommit": "d58d3848f12d8c1ad1704852d175b9f656ef66e2",
+  "sourceEvidenceCommitObjectType": "commit",
+  "evidencePackagingRepair": {
+    "scope": "validation-only YAML quoting repair for independent parser compatibility",
+    "sourceArtifactOriginalSha256": "b7fb9f7dd1a549e276ca06f458cffb4b5e8c9e3b997701fc9182b5b2c373770c",
+    "sourceArtifactCanonicalSha256": "ba20b158b18de85ac08ece2f23f2329db2607a120ac791d4cfc12bce333f3faf",
+    "semanticFieldsChanged": false,
+    "productImplementationChanged": false,
+    "sourceEvidenceCommitPreserved": true
+  },
+  "reviewerResult": {
+    "issueRef": "E6V-37",
+    "runRef": "01a0bcdd-e28e-7cfd-a118-8aa8397dcdfa",
+    "outcome": "PASS",
+    "revision": 2,
+    "metadataCapacityNote": "reviewedRevision was not persisted in parent metadata because Multica metadata reached the practical 50-key limit"
+  },
+  "verifierResultAtCreation": {
+    "issueRef": "E6V-38",
+    "runRef": "01a0bcdd-e2bc-7a8c-9e90-116ff76cb24c",
+    "outcome": "PARTIAL",
+    "reason": "Independent verifier could not resolve the FDI reseal files in its checkout; this receipt is the handoff repair input, not a VERIFIED verdict"
+  },
+  "closureStatusAtCreation": "S05_R2_EVIDENCE_CLOSURE_PENDING_FRESH_VERIFIER",
+  "currentVerifierResult": {
+    "issueRef": "E6V-38",
+    "runRef": "01a0bd7b-c5bf-7576-8cb1-bef4c62c6a7b",
+    "outcome": "VERIFIED",
+    "trace": "PASS",
+    "checksums": "5/5",
+    "productFocusedTests": "7/7",
+    "productFullTests": "9/9"
+  },
+  "currentS05EvidenceClosure": "PASS"
+}

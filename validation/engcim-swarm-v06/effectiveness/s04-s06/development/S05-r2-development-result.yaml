@@ -100,8 +100,8 @@ implementation:
       behavior: Reproduce missing/invalid limits, valid rendering, and frozen max checks.
   preservedInteractionSourceSha256: 36e6ac8bf7908d7bc933f1b60b0db6866748d56fc0889521756541c08e71bc99
   preservedBehavior:
-    - openSelectedChart returns {action: OPENED, chartId} for a selected chart.
-    - classifyChartResponse(404) returns {status: 404, retryable: false}.
+    - "openSelectedChart returns {action: OPENED, chartId} for a selected chart."
+    - "classifyChartResponse(404) returns {status: 404, retryable: false}."
 verificationEvidence:
   - ref: S05-r2-self-check.txt
     command: node --test test/chartViewer.test.js

@@ -1,0 +1,16 @@
+{
+  "schemaVersion":"engcim-finding-ledger.v0.1",
+  "artifactKind":"FINDING_LEDGER",
+  "asOf":"2026-09-20T06:54:00Z",
+  "entries":[
+    {"ref":"F1 / FV-003","classification":"RESOLVED","transition":"OPEN -> RESOLVED after fresh S06 r2 PASS / VERIFIED","evidence":"F1-FINDING-RESOLUTION.json; S06-R2-VERIFICATION-RESULT.json"},
+    {"ref":"S05 r2 evidence integrity","classification":"RESOLVED","transition":"OPEN / BLOCKING -> RESOLVED after S05 verifier VERIFIED","evidence":"S05-R2-REVERIFICATION.json"},
+    {"ref":"S05 r1 artifact trace","classification":"FIXED_AT_R2","transition":"r2 trace contains top-level registry and checksum registry","evidence":"S05-r2-artifact-trace.yaml"},
+    {"ref":"S05 r1 red-test evidence","classification":"STALE / INVALIDATED","transition":"not accepted as current r2 evidence","evidence":"S05-R2-EVIDENCE-GAP-INVENTORY.md"},
+    {"ref":"S04 PK source instability","classification":"RESOLVED_BY_CLEAN_RERUN","transition":"governance follow-up remains","evidence":"S04 clean rerun control evidence"},
+    {"ref":"S02 knowledge conflict","classification":"EXPECTED_GOVERNANCE_FINDING","transition":"preserved historical classification","evidence":"S02 phase evidence"}
+  ],
+  "noHistoryRewrite":true,
+  "currentS06R2":"PASS / VERIFIED",
+  "phase2Execution":"READY_FOR_FINAL_EFFECTIVENESS_REVIEW"
+}
