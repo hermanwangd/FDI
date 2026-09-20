@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "engcim-scenario-effectiveness-result.v0.1",
+  "scenarioRef": "S06-VERIFICATION-TESTING",
+  "scenarioRevision": "S06-r2-spc-mission-v1",
+  "executionStatus": "COMPLETED_R1_AND_R2",
+  "domainVerdict": "PASS",
+  "effectivenessResult": "PASS",
+  "r1": {
+    "executionStatus":"COMPLETED",
+    "domainVerdict":"FAIL / REFUTED",
+    "effectivenessResult":"PASS",
+    "candidate":"f63aa7ff1037d840c0b9338e455def256956bed2",
+    "producerRunRef":"multica:issue/E6V-31/run/01a0bca1-6294-7ee2-8f17-5696de3f7aad",
+    "reviewRef":"multica:issue/E6V-33/run/01a0bcb0-1a9e-7294-a844-870aed72d8c8",
+    "reviewVerdict":"PASS@1",
+    "verificationRef":"multica:issue/E6V-32/run/01a0bcb0-1a67-75bb-9f22-3bac6dc95dcb",
+    "verificationVerdict":"VERIFIED@1",
+    "finding":"F1 / FV-003 OPEN",
+    "findingResolution":"UNSATISFIED",
+    "reason":"Verifier correctly reproduced seeded defect; candidate FAIL is the expected domain finding, not an execution-effectiveness failure."
+  },
+  "r2": {
+    "executionStatus":"COMPLETED",
+    "domainVerdict":"PASS / VERIFIED",
+    "effectivenessResult":"PASS",
+    "candidate":"c51390ca7e748f07201b0ecd28642ee3ea8d686c",
+    "tree":"2d3de714bd30552eb572d7e3bfb0f81dbed373a3",
+    "producer":"multica:issue/E6V-39/run/01a0bd86-5258-7312-a1a6-c4878a085a66",
+    "reviewer":"multica:issue/E6V-40/run/01a0bd94-7aba-7d58-bca5-cb7b125143fb / PASS",
+    "verifier":"multica:issue/E6V-41/run/01a0bd94-7a94-7d68-83f0-5b3c97c574d1 / VERIFIED",
+    "requiredChecks":"8/8 passed; full suite 9/9 passed",
+    "staleR1ReviewAccepted":0,
+    "staleR1VerificationAccepted":0,
+    "staleBinding":"REJECTED"
+  },
+  "findingResolution": {
+    "ref":"F1 / FV-003",
+    "digest":"sha256:e4235a148aed2c9c551678fb6f375cd4a4f23d58e1ade18d7265e0ef3131e001",
+    "status":"SATISFIED / RESOLVED",
+    "control":"CTRL-FINDING-RESOLUTION-001",
+    "evidence":"validation/engcim-swarm-v06/effectiveness/initial-v1/evidence-closure/F1-FINDING-RESOLUTION.json"
+  },
+  "evidenceRefs":[
+    "validation/engcim-swarm-v06/effectiveness/initial-v1/evidence-closure/S06-R2-STALE-EVIDENCE-CHECK.md",
+    "validation/engcim-swarm-v06/effectiveness/initial-v1/evidence-closure/S06-R2-VERIFICATION-RESULT.json",
+    "validation/engcim-swarm-v06/effectiveness/initial-v1/evidence-closure/F1-FINDING-RESOLUTION.json",
+    "multica:issue/E6V-39",
+    "multica:issue/E6V-40",
+    "multica:issue/E6V-41"
+  ]
+}

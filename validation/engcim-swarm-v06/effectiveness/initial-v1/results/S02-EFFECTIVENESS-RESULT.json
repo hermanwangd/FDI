@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "engcim-scenario-effectiveness-result.v0.1",
+  "scenarioRef": "S02-PK-REFRESH",
+  "scenarioRevision": "S02-r2-spc-mission-v1",
+  "executionStatus": "COMPLETED",
+  "domainVerdict": "PASS",
+  "effectivenessResult": "PASS",
+  "executionRunRef": "multica:issue/E6V-12/run/01a0bbba-b665-7063-bf5b-32a70ded812f",
+  "review": {"issueRef":"E6V-12","runRef":"multica:issue/E6V-12/run/01a0bbc8-7c3a-7bf9-ac0e-f8e3df2d7fff","verdict":"PASS","reviewedRevision":1},
+  "verification": {"issueRef":"E6V-12","runRef":"multica:issue/E6V-12/run/01a0bbc8-7c44-7948-a061-b4cb94dd5ec5","verdict":"VERIFIED","verifiedRevision":1},
+  "deltaClassification": {
+    "allDeltas": {"numerator":8,"denominator":8,"evidence":"S02 execution itemAdjudication"},
+    "semanticChangeDetection": {"numerator":8,"denominator":8,"evidence":"S02 refresh decisions D1-D8"},
+    "falseSemanticChangeRate": {"numerator":0,"denominator":8,"evidence":"S02 execution unsupported/near-miss outcomes and D5-D8"},
+    "staleInvalidation": {"numerator":1,"denominator":1,"evidence":"S02 refresh D3 retirementRecord"},
+    "unchangedSemanticPreservation": {"numerator":4,"denominator":4,"evidence":"S02 refresh D5-D8"},
+    "multiSourceSupportPreservation": {"numerator":1,"denominator":1,"evidence":"S02 refresh D7"},
+    "conflictPreservation": {"numerator":1,"denominator":1,"evidence":"S02 refresh D4 conflictRecord; winner=null"},
+    "realizationVsSemanticsSeparation": {"numerator":1,"denominator":1,"evidence":"S02 refresh D8"},
+    "evidenceRevisionCorrectness": {"numerator":8,"denominator":8,"evidence":"S02 provenanceMetric"}
+  },
+  "idempotency": {"status":"NOT_SEPARATELY_REGISTERED_IN_FROZEN_S02_CRITERIA","evidence":"S02 scenario definition outputRequirements and successCriteria"},
+  "governanceFinding": {"ref":"S02-K-RULE-001 conflict","classification":"EXPECTED_GOVERNANCE_FINDING","winnerSelected":false},
+  "controls": ["CTRL-REPOSITORY-PROVENANCE-001=PASS","CTRL-EXACT-BINDING-001=PASS","CTRL-EVIDENCE-INTEGRITY-001=PASS"],
+  "limitations": ["TKMS MCP NOT_VERIFIED","Azure DevOps MCP NOT_VERIFIED"],
+  "evidenceRefs": [
+    "validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-execution-result.json",
+    "validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-refresh.json",
+    "validation/engcim-swarm-v06/effectiveness/S02-r2-spc-mission-v1-claims.json",
+    "validation/engcim-swarm-v06/baseline/pk/s02/S02-REFRESH-GOLD.json",
+    "multica:issue/E6V-12"
+  ]
+}

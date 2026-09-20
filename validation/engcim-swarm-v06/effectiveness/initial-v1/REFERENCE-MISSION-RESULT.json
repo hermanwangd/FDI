@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "engcim-reference-integrated-mission-result.v0.1",
+  "missionRef": "context://mission/01a0bc12-80d3-7d33-825f-83ad412f0d92",
+  "classification": "PASS",
+  "topology": [
+    "S02",
+    "S03",
+    "Product Context",
+    "S04",
+    "S05 r1",
+    "S06 r1 FAIL / REFUTED",
+    "F1",
+    "S05 r2",
+    "stale-r1 rejection",
+    "fresh S06 r2",
+    "Finding Resolution",
+    "mission closure"
+  ],
+  "scenarioResults": {
+    "S02":"PASS",
+    "S03":"PASS@r2",
+    "S04":"PASS on clean rerun",
+    "S05":"PASS at r2 after evidence closure",
+    "S06":"PASS at r2; r1 seeded defect correctly detected"
+  },
+  "compositionChecks": {
+    "s01PetclinicInserted":false,
+    "s04WaitDecisionResume":"PASS",
+    "s05ToS06R1":"PASS",
+    "f1ToCorrection":"PASS",
+    "staleR1Rejected":"PASS",
+    "freshR2Verified":"PASS",
+    "findingResolutionOnlyAtClosure":"PASS",
+    "directS06SpecificS05InvocationEvidence":false,
+    "controlGateBypass":0,
+    "acceptedCorrectionSequences":1
+  },
+  "evidenceRefs": [
+    "results/S02-EFFECTIVENESS-RESULT.json",
+    "results/S03-EFFECTIVENESS-RESULT.json",
+    "results/S04-EFFECTIVENESS-RESULT.json",
+    "results/S05-EFFECTIVENESS-RESULT.json",
+    "results/S06-EFFECTIVENESS-RESULT.json",
+    "evidence-closure/F1-FINDING-RESOLUTION.json",
+    "multica:issue/E6V-14",
+    "multica:issue/E6V-39"
+  ]
+}

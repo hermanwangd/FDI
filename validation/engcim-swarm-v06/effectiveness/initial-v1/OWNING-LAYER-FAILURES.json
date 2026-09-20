@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "engcim-owning-layer-failures.v0.1",
+  "failures": [
+    {
+      "ref":"S04-PK-SOURCE-INSTABILITY",
+      "owningLayer":"FIXTURE_ENVIRONMENT",
+      "classification":"RESOLVED_BY_CLEAN_RERUN",
+      "evidence":"E6V-15 initial mutation; E6V-23 immutable snapshot clean rerun",
+      "remainingGap":"source-stability governance follow-up"
+    },
+    {
+      "ref":"S05-R1-ARTIFACT-TRACE",
+      "owningLayer":"EVIDENCE",
+      "classification":"FIXED_AT_R2",
+      "evidence":"S05 r1 E6V-27 REVISE; S05 r2 trace/checksum closure"
+    },
+    {
+      "ref":"S05-R1-RED-TEST-QUALIFICATION",
+      "owningLayer":"EVIDENCE",
+      "classification":"STALE_INVALIDATED",
+      "evidence":"exact r1 commit did not contain test/chartViewer.test.js; preserved in S05 r2 self-check"
+    },
+    {
+      "ref":"MULTICA-METADATA-CAPACITY",
+      "owningLayer":"RUNTIME",
+      "classification":"RECOVERED_LIMITATION",
+      "evidence":"durable receipt refs used after practical 50-key parent metadata limit",
+      "remainingGap":"not a permanent runtime architecture decision"
+    },
+    {
+      "ref":"S02-K-RULE-001-CONFLICT",
+      "owningLayer":"CONTEXT",
+      "classification":"EXPECTED_GOVERNANCE_FINDING",
+      "evidence":"S02 D4 conflictRecord with winner=null"
+    },
+    {
+      "ref":"PC1-STALE-EXECUTION-EVIDENCE",
+      "owningLayer":"CONTEXT",
+      "classification":"UNMEASURED_SUPPORTING_GAP",
+      "evidence":"PC1-STALE frozen safety artifact exists, but no controlled execution result was preserved"
+    },
+    {
+      "ref":"SKILL-AB-CELLS",
+      "owningLayer":"SKILL",
+      "classification":"NOT_EXECUTED",
+      "evidence":"0/0 controlled cells; frozen 2x2 minimum not met"
+    }
+  ],
+  "noProductDefectDiscoveredInFinalR2":"The S06 r1 product defect was corrected in the governed candidate r2 and independently verified; no new product defect was repaired during adjudication."
+}

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "engcim-scenario-effectiveness-result.v0.1",
+  "scenarioRef": "S03-MULTI-REPO-ANALYSIS",
+  "scenarioRevision": "S03-r2-spc-mission-v1",
+  "executionStatus": "COMPLETED_AFTER_ACCEPTED_R2_RERUN",
+  "domainVerdict": "PASS",
+  "effectivenessResult": "PASS",
+  "firstObserved": {
+    "runRef":"multica:issue/E6V-13/run/01a0bbd2-7a7e-737b-aabd-bebdca11da50",
+    "executionStatus":"PASS",
+    "metric":"5/5 critical edges; 25/25 evidence-backed edges; 4/4 repositories; 3/3 impact components; idempotency 2/2",
+    "accepted":false
+  },
+  "finalAccepted": {
+    "runRef":"multica:issue/E6V-13/run/01a0bbeb-fd53-7620-845f-003dec14ad63",
+    "reviewRef":"multica:issue/E6V-13/run/01a0bbfa-5230-7c1b-997c-bbf1c34b4d79",
+    "verificationRef":"multica:issue/E6V-13/run/01a0bbfa-5237-7c0d-b624-3d1f705286d9",
+    "reviewVerdict":"PASS",
+    "verificationVerdict":"VERIFIED",
+    "acceptedRevision":2
+  },
+  "metrics": {
+    "scenarioToComponentRecallPrecision":"5/5 critical gold edges; 5/5 exact accepted mappings",
+    "repositoryRecallPrecision":"4/4 repositories; distractor excluded from anchor",
+    "criticalDependencyRecall":"3/3 impact components",
+    "dependencyPrecision":"25/25 evidence-backed graph edges",
+    "typedEdgeAccuracy":"25/25 typed edges with evidence",
+    "criticalImpactRecall":"3/3",
+    "impactPrecision":"3/3",
+    "negativeMappingRejection":"4/4 unsupported or near-miss mappings held out",
+    "provenanceBackedEdgeCoverage":"25/25",
+    "exactSourceRevisionBinding":"4/4 synthetic fixture repositories bound to SPC-MISSION-V1-r1",
+    "repeatedRunSemanticConsistency":"2/2 graph artifacts byte-identical; duplicate facts 0; additions 0"
+  },
+  "rerunReason":"Reviewer-corrected contract and explicit synthetic-fixture identity resolution; frozen baseline definition preserved.",
+  "frameworkWeakness":"No; the rerun was a bounded contract/fixture identity correction and was independently reviewed and verified.",
+  "controls": ["CTRL-REPOSITORY-PROVENANCE-001=PASS","CTRL-EXACT-BINDING-001=PASS","CTRL-EVIDENCE-INTEGRITY-001=PASS"],
+  "limitations": ["TKMS MCP NOT_VERIFIED","Azure DevOps MCP NOT_VERIFIED"],
+  "evidenceRefs": [
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-execution-result.json",
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-r2-execution-result.json",
+    "validation/engcim-swarm-v06/effectiveness/S03-r2-spc-mission-v1-r2-checkout/graph-first/edges.jsonl",
+    "validation/engcim-swarm-v06/baseline/pk/s03/S03-MULTI-REPO-REALIZATION-GOLD.json",
+    "multica:issue/E6V-13"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "engcim-final-review-baseline-binding.v0.1",
+  "reviewDate": "2026-09-20",
+  "reviewCheckout": {
+    "commit": "26a09d2233a09af7f1d3e67a86ac1f249680584b",
+    "branch": "codex/initial-effectiveness-baseline-freeze",
+    "mode": "read-only adjudication plus result consolidation"
+  },
+  "readyBaseline": {
+    "mergeCommit": "229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8",
+    "topLevelSeal": "validation/engcim-swarm-v06/baseline/VALIDATION-GROUND-TRUTH-SEAL.json",
+    "topLevelSealSha256": "903dd3db777077b5fa753b345ce0b0e4e8bce476b56631be1fa4b0388f324d16",
+    "status": "READY"
+  },
+  "phase2Evidence": {
+    "mergeCommit": "26a09d2233a09af7f1d3e67a86ac1f249680584b",
+    "status": "RESOLVED_BY_EXISTING_EVIDENCE_AND_MULTICA_RECEIPTS"
+  },
+  "scopedSeals": {
+    "pk": {
+      "path": "validation/engcim-swarm-v06/baseline/pk/PK-GROUND-TRUTH-SEAL.json",
+      "sha256": "21e95dee92f64c6cd5427a42ce46802b553b0fe61b402380b4bcda5a8d5ab384"
+    },
+    "downstream": {
+      "path": "validation/engcim-swarm-v06/baseline/downstream/S04-S06-GROUND-TRUTH-SEAL.json",
+      "sha256": "04b4d522ef3d0ff24289c89dae9fbfc440bab28d6718bbd74e8dc13d5df1ecd8"
+    }
+  },
+  "canonicalS05Fixture": {
+    "repository": "https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture.git",
+    "baselineCommit": "4ab29f8dbbf1479f8e9f51f0f5eb3ddd100672a6",
+    "ref": "refs/heads/validation/s05-fixture-v2-20260920",
+    "baselineTree": "4d5b25de8f1de6b955ce9fdde200b4d3d5139486"
+  },
+  "finalCandidates": {
+    "s05FdiEvidenceRevision": "d58d3848f12d8c1ad1704852d175b9f656ef66e2",
+    "s05ProductCandidate": "c51390ca7e748f07201b0ecd28642ee3ea8d686c",
+    "s05ProductTree": "2d3de714bd30552eb572d7e3bfb0f81dbed373a3",
+    "s06R2Candidate": "c51390ca7e748f07201b0ecd28642ee3ea8d686c"
+  },
+  "bindingStatus": "EXACT"
+}

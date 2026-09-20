@@ -1,0 +1,58 @@
+{
+  "schemaVersion":"engcim-effectiveness-summary.v0.1",
+  "baselineIdentity": {
+    "readyBaselineCommit":"229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8",
+    "phase2EvidenceCommit":"26a09d2233a09af7f1d3e67a86ac1f249680584b",
+    "bindingFile":"FINAL-REVIEW-BASELINE-BINDING.json"
+  },
+  "scenarioResults": {
+    "S01":{"executionStatus":"COMPLETED","domainVerdict":"PASS","effectivenessResult":"PASS"},
+    "S02":{"executionStatus":"COMPLETED","domainVerdict":"PASS","effectivenessResult":"PASS"},
+    "S03":{"executionStatus":"COMPLETED_AFTER_ACCEPTED_R2_RERUN","domainVerdict":"PASS","effectivenessResult":"PASS"},
+    "S04":{"executionStatus":"COMPLETED_AFTER_CLEAN_RERUN","domainVerdict":"PASS","effectivenessResult":"PASS"},
+    "S05":{"executionStatus":"COMPLETED_AFTER_EVIDENCE_RESEAL","domainVerdict":"PASS","effectivenessResult":"PASS","r1":"INCONCLUSIVE evidence gate; r2 PASS"},
+    "S06":{"executionStatus":"COMPLETED_R1_AND_R2","domainVerdict":"PASS at r2; r1 FAIL/REFUTED finding expected","effectivenessResult":"PASS"}
+  },
+  "productKnowledgeEffectiveness":{"result":"PASS","dimensions":{"PK-E1":"PASS","PK-E2":"PASS","PK-E3":"PASS","PK-E4":"PASS","PK-E5":"PASS_WITH_GOVERNANCE_FOLLOWUP","PK-E6":"PASS"}},
+  "productContextEffectiveness":{"result":"PARTIAL","reason":"PC0/PC1 clean rerun passed, but PC1-STALE had no controlled execution result"},
+  "skillEffectiveness":{"result":"INCONCLUSIVE","profiles":{"pk-repository-analysis":"INCONCLUSIVE 0/0","pm-intention":"INCONCLUSIVE 0/0","test-architecture":"INCONCLUSIVE 0/0","root-cause-debugging":"INCONCLUSIVE 0/0"}},
+  "controlEffectiveness":{"result":"PASS","requiredFinalPathApplications":18,"satisfiedFinalPathApplications":18,"bypasses":0,"controlBypassRate":"0/18"},
+  "runtimeEffectiveness":{"result":"PASS","metadataCapacity":"RECOVERED_LIMITATION","manualChildDone":0,"acceptedDuplicateCorrectionExecutions":0},
+  "compositionEffectiveness":{"result":"PASS","acceptedCorrectionSequences":1,"staleR1Accepted":0,"findingResolutionAtClosureOnly":true},
+  "evidenceEffectiveness":{"result":"PASS","s05RequiredEvidence":"15/15","s05RuntimeRequiredEvidence":"11/11","s05R2Verifier":"VERIFIED","s06R2Verifier":"VERIFIED"},
+  "sharedPrimitiveReuse":{"result":"PASS","bespokeScenarioRuntimeCode":0,"bespokeControlCode":0},
+  "referenceMission":{"result":"PASS","file":"REFERENCE-MISSION-RESULT.json"},
+  "findings": {
+    "F1 / FV-003":"RESOLVED",
+    "S05 r2 evidence integrity":"RESOLVED",
+    "S05 r1 artifact trace":"FIXED_AT_R2",
+    "S05 r1 red-test evidence":"STALE / INVALIDATED",
+    "S04 PK source instability":"RESOLVED_BY_CLEAN_RERUN + governance follow-up",
+    "S02 knowledge conflict":"EXPECTED_GOVERNANCE_FINDING",
+    "Multica metadata capacity":"OPEN_PLATFORM_LIMITATION / RECOVERED_LIMITATION"
+  },
+  "owningLayerFailures":"OWNING-LAYER-FAILURES.json",
+  "mandatoryPrimaryGates": {
+    "Validation Baseline Freeze Gate":"PASS",
+    "RC7-B Runtime Control Gating Gate":"PASS",
+    "S01-S06 Scenario Effectiveness Gate":"PASS",
+    "Product Knowledge Effectiveness Gate":"PASS",
+    "Control Effectiveness Gate":"PASS",
+    "Runtime Effectiveness Gate":"PASS",
+    "Evidence Effectiveness Gate":"PASS",
+    "Reference Integrated Mission Gate":"PASS"
+  },
+  "supportingGates": {
+    "Product Context Effectiveness":"PARTIAL",
+    "Skill Effectiveness":"INCONCLUSIVE",
+    "Shared Primitive Reuse":"PASS",
+    "Composition Effectiveness":"PASS"
+  },
+  "finalClassification":"ENGCIM SWARM CORE EFFECTIVE",
+  "architectureFreezeRecommendation": {
+    "answer":"YES",
+    "safeToFreeze":["frozen baseline/seal model","scenario contract shape","Control applicability and fail-closed gating","WAIT/resume and Reviewer/Verifier fan-in semantics","exact revision/evidence receipt handoff","stale-evidence rejection and Finding Resolution ordering"],
+    "notFrozenByThisReview":["Skill A/B uplift claims","PC1-STALE measured effectiveness","PK source-lock remediation","Multica metadata redesign","holdout/generalization/scaling"]
+  },
+  "noWeightedAggregateScore":true
+}
