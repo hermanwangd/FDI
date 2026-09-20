@@ -1,0 +1,150 @@
+# API 契約骨架（OpenAPI 3.0）
+# 用法：複製本檔，替換所有 <…> 佔位符。
+# 規則：每個 operation 必須有 summary / parameters 範圍註記 / 成功回應 / 所有錯誤碼對應的回應。
+# 實作可能產生的失敗若不在 responses 中，契約視為不完整。
+
+openapi: 3.0.3
+info:
+  title: <API 名稱>
+  version: <v1>                # 破壞性變更必須升大版本
+  description: |
+    <一段話：此 API 供誰使用、解決什麼問題>
+    擁有者模組：<mod-a>
+    SPEC：<SPEC 編號或連結>
+
+servers:
+  - url: https://<host>/<base-path>/v1
+
+tags:
+  - name: <domain>
+    description: <…>
+
+paths:
+  /<resources>:
+    post:
+      tags: [<domain>]
+      summary: <動詞開頭的一句話>
+      description: |
+        前置條件：<呼叫方必須滿足的狀態>
+        冪等性：<天然冪等 / 冪等鍵 Idempotency-Key header / 拒絕重複>
+        副作用：<寫入什麼、發出什麼事件>
+      operationId: <createResource>
+      parameters:
+        - name: Idempotency-Key          # 若宣告冪等鍵策略則保留，否則刪除此參數
+          in: header
+          required: false
+          schema: { type: string, maxLength: 128 }
+          description: 重試去重鍵；同鍵重複請求回傳首次結果
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/<Resource>CreateRequest' }
+      responses:
+        '201':
+          description: 建立成功
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/<Resource>' }
+        '400':
+          $ref: '#/components/responses/BadRequest'        # DOM-001 參數非法
+        '401':
+          $ref: '#/components/responses/Unauthorized'      # DOM-401 未認證
+        '403':
+          $ref: '#/components/responses/Forbidden'         # DOM-403 無權限
+        '409':
+          $ref: '#/components/responses/Conflict'          # DOM-002 狀態衝突/重複
+        '429':
+          $ref: '#/components/responses/TooManyRequests'   # DOM-429 超過速率限制
+        '500':
+          $ref: '#/components/responses/InternalError'     # DOM-500 內部失敗
+
+    get:
+      tags: [<domain>]
+      summary: <查詢列表；必須有分頁上限>
+      operationId: <listResources>
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+        - name: cursor
+          in: query
+          required: false
+          schema: { type: string }
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/<Resource>Page' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '500': { $ref: '#/components/responses/InternalError' }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: <JWT>
+
+  schemas:
+    # 錯誤回應體固定 schema —— 全域一致，不許各端點自創
+    Error:
+      type: object
+      required: [code, message, retryable]
+      properties:
+        code:      { type: string, example: '<DOM>-001', description: 機器可讀錯誤碼，對應 SPEC 錯誤碼表 }
+        message:   { type: string, description: 人可讀訊息；不得含堆疊/內部路徑 }
+        retryable: { type: boolean, description: 呼叫方是否可原樣重試 }
+        details:   { type: object, additionalProperties: true }
+
+    <Resource>:
+      type: object
+      required: [id, status]
+      properties:
+        id:        { type: string, format: uuid }
+        status:    { type: string, enum: [<A>, <B>, <C>], description: 狀態機見 SPEC 資料模型不變式 }
+        createdAt: { type: string, format: date-time }
+        # 敏感欄位在此用 description 標註（個資/機敏），供安審與日誌脫敏對照
+
+    <Resource>CreateRequest:
+      type: object
+      required: [<field>]
+      properties:
+        <field>:
+          type: string
+          minLength: 1
+          maxLength: 64          # 每個欄位必須有範圍，不許無界 string
+          example: '<範例值>'
+
+    <Resource>Page:
+      type: object
+      required: [items]
+      properties:
+        items:      { type: array, items: { $ref: '#/components/schemas/<Resource>' } }
+        nextCursor: { type: string, nullable: true }
+
+  responses:
+    BadRequest:
+      description: 參數非法（錯誤碼 <DOM>-001，retryable=false）
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    Unauthorized:
+      description: 未認證（<DOM>-401）
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    Forbidden:
+      description: 已認證但無權限（<DOM>-403）
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    Conflict:
+      description: 狀態衝突／重複建立（<DOM>-002，retryable=false）
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    TooManyRequests:
+      description: 超過速率限制（retryable=true，需退避）
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    InternalError:
+      description: 服務端錯誤（<DOM>-500，retryable=true，需退避）
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+
+security:
+  - bearerAuth: []

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pk/_schema/architecture-entry.schema.json",
+  "title": "Architecture Knowledge Entry",
+  "description": "pk/architecture/ 條目 schema：C4-compatible 架構模型（System / Container / Component / Responsibility / Relationship / Interface / Constraint / Decision）。YAML 或 JSON。",
+  "type": "object",
+  "allOf": [{"$ref": "common.schema.json#/$defs/governanceFields"}],
+  "required": ["id", "pkClass", "validationState", "confidence", "evidence", "governanceIssueRef", "c4Level", "name", "responsibility"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^arch:"},
+    "pkClass": {"const": "pk-architecture"},
+    "c4Level": {
+      "type": "string",
+      "enum": ["system-context", "container", "component"],
+      "description": "C4 層級"
+    },
+    "name": {"type": "string"},
+    "parent": {"type": ["string", "null"], "description": "上層 arch: 條目 id（System 層為 null）"},
+    "children": {"type": "array", "items": {"type": "string"}, "description": "下層 arch: 條目 id"},
+    "responsibility": {
+      "type": "object",
+      "required": ["owns"],
+      "properties": {
+        "owns": {"type": "array", "items": {"type": "string"}, "description": "負責什麼"},
+        "excludes": {"type": "array", "items": {"type": "string"}, "description": "不負責什麼"}
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["direction", "target", "description"],
+        "properties": {
+          "direction": {"type": "string", "enum": ["outgoing", "incoming"]},
+          "target": {"type": "string", "description": "對方 arch: 條目 id 或外部系統名"},
+          "description": {"type": "string"}
+        }
+      }
+    },
+    "interfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "kind"],
+        "properties": {
+          "id": {"type": "string", "description": "如 if:chart-management-api/charts-rest"},
+          "name": {"type": "string"},
+          "kind": {"type": "string", "enum": ["api", "event", "data-contract"]},
+          "specRef": {"type": ["string", "null"], "description": "OpenAPI／schema 檔的可回溯位址（repo 路徑或 URI）"}
+        }
+      }
+    },
+    "constraints": {"type": "array", "items": {"type": "string"}},
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["decision", "rationale"],
+        "properties": {
+          "decision": {"type": "string"},
+          "rationale": {"type": "string"},
+          "alternativesRejected": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}
