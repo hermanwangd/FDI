@@ -1,5 +1,10 @@
 # FDI Software Factory
 
+The active ENGCIM Swarm Core v1.0 architecture is documented in
+[`docs/engcim-swarm/ENGCIM-SWARM-CORE-ARCHITECTURE-FREEZE-v1.0.md`](docs/engcim-swarm/ENGCIM-SWARM-CORE-ARCHITECTURE-FREEZE-v1.0.md)
+and the corresponding model is in
+[`docs/engcim-swarm/ENGCIM-SWARM-MODEL-v1.0.md`](docs/engcim-swarm/ENGCIM-SWARM-MODEL-v1.0.md).
+
 ## Purpose
 
 FDI Software Factory turns governed Product Knowledge into verifiable Feature
@@ -38,13 +43,18 @@ and evidence support the controls but do not override them. Everything under
 ```text
 Product Sources
       ↓
-Product Knowledge
-      ↓ Resolved Product Context
-Feature Delivery: T1 → T2 → T3 → T4
-                         ↓
-                  Execution Boundary
-                         ↓
-                   Execution Plane
+Product Knowledge (accepted, exact-versioned)
+      ↓
+Engineering Scenario
+├── Product Context
+├── Skills
+├── Controls
+├── Evidence Contract
+├── Execution Record
+└── optional Software Delivery Profile
+        T1 → T2 → T3 → T4
+                ↓
+        generic Execution Plane runtime
 ```
 
 - **Human Authority** owns Product meaning, material scope and architecture
@@ -52,10 +62,18 @@ Feature Delivery: T1 → T2 → T3 → T4
   closure.
 - **Product Knowledge** turns heterogeneous sources into observations and
   proposals; only Human Authority acceptance creates durable Product Knowledge.
-- **Feature Delivery Plane** owns the five controls, T1–T4 progression,
-  engineering contracts, replanning, correctness routing, and closure proposals.
+  Accepted Product Knowledge is reusable across applicable Engineering
+  Scenarios through exact-versioned, provenance-bound Product Context.
+- **Engineering Scenario** is the reusable composition boundary for Product
+  Context, Skills, Controls, evidence, and execution. It does not assume every
+  Scenario is software delivery.
+- **Software Delivery Profile** is optional. When present, it owns the
+  existing T1–T4 progression, engineering contracts, replanning, correctness
+  routing, and closure proposals. T1–T4 do not govern all Scenarios.
 - **Execution Plane** executes approved WorkItems, coordinates eligible
   parallelism, retry, review, integration, regression, and evidence assembly.
+  Multica may provide this generic runtime but is not an authority identity or
+  Core contract dependency.
 
 The Software Factory analyzes verified independent-review, verification,
 execution, delivery, and KPI evidence to recommend bounded improvements to
@@ -67,29 +85,48 @@ Knowledge paths.
 
 Unrelated Backlog items may execute in separate lanes when each has an exact
 envelope, isolated workspace, non-overlapping mutation ownership, independent
-evidence and closure, and a bounded share of the aggregate resource limit. The
-five active controls remain singletons maintained by one serialized Feature
-Delivery Plane owner.
+evidence and closure, and a bounded share of the aggregate resource limit.
+Active Control state remains serialized and maintained by one Feature Delivery
+Plane owner.
 
 The current Execution Plane runtime may be Multica. Core contracts depend only
 on the role boundary, never on a vendor, model, agent, or orchestration product.
 
+The validated Phase 2 Control vocabulary is:
+
+```text
+CTRL-AUTHORIZATION-001
+CTRL-EXECUTION-SAFETY-001
+CTRL-REPOSITORY-PROVENANCE-001
+CTRL-EXACT-BINDING-001
+CTRL-INDEPENDENT-EVALUATION-001
+CTRL-EVIDENCE-INTEGRITY-001
+CTRL-FINDING-RESOLUTION-001
+```
+
+Control applicability and required evidence remain governed by the frozen
+validation baseline.
+
 ## Delivery flow
 
 ```text
-Accepted Product Knowledge
-→ T1 IntentSpec + frozen Acceptance Criteria
-→ T2 System Analysis + ChangeSurface + TechnicalDesign + DeliverySpec
-→ T3 ExecutionPlan DAG + WorkItems
-→ Execution Plane implementation and integration
-→ T4 PASS | FAIL | INCONCLUSIVE
-→ ENGINEERING_READY when PASS
+Engineering Scenario
+→ exact Product Context, Skills, Controls, and evidence binding
+→ optional Software Delivery Profile:
+   T1 IntentSpec + frozen Acceptance Criteria
+   → T2 System Analysis + ChangeSurface + TechnicalDesign + DeliverySpec
+   → T3 ExecutionPlan DAG + WorkItems
+   → Execution Plane implementation and integration
+   → T4 PASS | FAIL | INCONCLUSIVE
+   → ENGINEERING_READY when PASS
 ```
 
-T4 failure normally returns to T3 remediation/replanning. A TechnicalDesign
-defect returns to T2. T1 Acceptance Criteria never change merely to make T4
-pass; a Product-intent change stops the current cycle and requires Human
-Authority to create a new IntentSpec and delivery cycle.
+For a Scenario with a Software Delivery Profile, T4 failure normally returns
+to T3 remediation/replanning. A TechnicalDesign defect returns to T2. T1
+Acceptance Criteria never change merely to make T4 pass; a Product-intent
+change stops the current cycle and requires Human Authority to create a new
+IntentSpec and delivery cycle. Scenarios without the profile do not inherit
+these T1–T4 stages.
 
 ## Product Knowledge boundary
 

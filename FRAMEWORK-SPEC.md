@@ -5,10 +5,11 @@
 ## 1. Objective
 
 The framework governs the path from heterogeneous Product evidence to governed
-Product Knowledge and from accepted Product Knowledge to evidence-backed Feature
-delivery. It must measure whether Product Knowledge improves delivery without
-allowing evidence, structure, history, tests, or agents to manufacture Product
-truth.
+Product Knowledge and from accepted Product Knowledge to applicable Engineering
+Scenarios. A Scenario may declare an optional Software Delivery Profile for
+evidence-backed Feature delivery. The framework must measure whether Product
+Knowledge improves delivery without allowing evidence, structure, history,
+tests, or agents to manufacture Product truth.
 
 Normative terms `MUST`, `MUST NOT`, `SHOULD`, and `MAY` express requirement
 strength.
@@ -20,34 +21,44 @@ strength.
 | `AUTH-001` | Human Authority owns Product meaning and material authority decisions. |
 | `AUTH-002` | Tools and engineering evidence cannot establish Product truth automatically. |
 | `AUTH-003` | Authority is assigned by responsibility plane, not software identity. |
+| `SCN-001` | Engineering Scenario is the reusable composition boundary for context, Skills, Controls, evidence, and execution. |
+| `SCN-002` | Scenario scope, revision, applicability, limitations, and required evidence are explicit and fail closed when unresolved. |
+| `SKILL-001` | Skills are bounded reusable capabilities with explicit inputs, outputs, limitations, and revisions. |
+| `SKILL-002` | A Skill cannot publish Product truth, weaken a Control, or create authority. |
+| `CTRL-001` | Controls are fail-closed gates with independently resolvable evidence and a canonical result status. |
+| `CTRL-002` | Canonical Control results are exactly `SATISFIED | UNSATISFIED | INCONCLUSIVE`. |
 | `PK-001` | Product sources become observations and proposals before accepted knowledge. |
 | `PK-002` | Proposal, accepted, rejected, and superseded knowledge states remain distinct. |
 | `PK-003` | Product Context is exact-versioned, provenance-bound, and fail-closed. |
 | `PK-004` | Reverse discovery remains proposal-only. |
 | `PK-005` | Delivery evidence can propose learning but cannot publish Product truth. |
 | `CSI-001` | Verified, evidence-bound delivery findings may recommend system improvements, but every resulting change uses existing authority, planning, execution, verification, and Product Knowledge paths. |
-| `FD-T1-001` | T1 produces immutable Product intent and Acceptance Criteria. |
-| `FD-T1-002` | Acceptance Criteria cannot be weakened within a delivery cycle. |
-| `FD-T2-001` | T2 performs System Analysis, ChangeSurface, TechnicalDesign, and DeliverySpec. |
-| `FD-T2-002` | DeliverySpec owns AcceptanceCriterion-to-DeliveryRequirement traceability. |
-| `FD-T2-003` | ChangeSurface supports deterministic overlap evaluation. |
-| `FD-T2-004` | Only `SPEC_READY` proceeds to T3; conflict or insufficiency is `BLOCKED`. |
-| `FD-T3-001` | ExecutionPlan is an immutable engineering DAG. |
-| `FD-T3-002` | RequirementCoverage explicitly maps DeliveryRequirements to WorkItems. |
-| `FD-T3-003` | WorkItem is a vendor-neutral executable engineering contract. |
-| `FD-T3-004` | ChangeClaim is a hard mutation authorization boundary. |
-| `FD-T3-005` | Parallel eligibility requires dependency safety and mutation safety. |
-| `FD-T3-006` | WorkItemResult binds the exact executed contract and execution facts. |
-| `FD-T3-007` | Retry and replan remain separate authority decisions. |
+| `FD-T1-001` | Under an SD profile, T1 produces immutable Product intent and Acceptance Criteria. |
+| `FD-T1-002` | Under an SD profile, Acceptance Criteria cannot be weakened within a delivery cycle. |
+| `FD-T2-001` | Under an SD profile, T2 performs System Analysis, ChangeSurface, TechnicalDesign, and DeliverySpec. |
+| `FD-T2-002` | Under an SD profile, DeliverySpec owns AcceptanceCriterion-to-DeliveryRequirement traceability. |
+| `FD-T2-003` | Under an SD profile, ChangeSurface supports deterministic overlap evaluation. |
+| `FD-T2-004` | Under an SD profile, only `SPEC_READY` proceeds to T3; conflict or insufficiency is `BLOCKED`. |
+| `FD-T3-001` | Under an SD profile, ExecutionPlan is an immutable engineering DAG. |
+| `FD-T3-002` | Under an SD profile, RequirementCoverage explicitly maps DeliveryRequirements to WorkItems. |
+| `FD-T3-003` | Under an SD profile, WorkItem is a vendor-neutral executable engineering contract. |
+| `FD-T3-004` | Under an SD profile, ChangeClaim is a hard mutation authorization boundary. |
+| `FD-T3-005` | Under an SD profile, parallel eligibility requires dependency safety and mutation safety. |
+| `FD-T3-006` | Under an SD profile, WorkItemResult binds the exact executed contract and execution facts. |
+| `FD-T3-007` | Under an SD profile, retry and replan remain separate authority decisions. |
 | `EXEC-001` | Execution Plane schedules, executes, reviews, integrates, and reports without changing engineering authority. |
 | `EXEC-002` | Materialization creates a portable envelope without creating authority. |
 | `EXEC-003` | Independent execution lanes may progress concurrently only with explicit ownership, dependency, isolation, and aggregate-resource safety. |
+| `EXEC-004` | Runtime identity is generic and cannot create Scenario, authority, or Control semantics. |
 | `EVID-001` | Evidence binds exact inputs, outputs, revisions, generation method, and digests. |
+| `PK-006` | Accepted Product Knowledge is reusable across applicable Scenarios through exact-versioned, provenance-bound Product Context. |
+| `SD-001` | Software Delivery Profile is optional and is the only profile that activates the existing `FD-T1-*` through `FD-T4-*` requirements. |
+| `SD-002` | `FD-T1-*` through `FD-T4-*` do not govern Scenarios that do not declare the Software Delivery Profile. |
 | `PORT-001` | Cross-baseline change export is exact-revision, cross-file, reference-only, and fail-closed. |
-| `FD-T4-001` | T4 independently evaluates the integrated candidate. |
-| `FD-T4-002` | Correctness verdict is exactly `PASS | FAIL | INCONCLUSIVE`. |
-| `FD-T4-003` | Revision routing cannot silently modify T1. |
-| `FD-T4-004` | `PASS` means `ENGINEERING_READY`, not delivered. |
+| `FD-T4-001` | Under an SD profile, T4 independently evaluates the integrated candidate. |
+| `FD-T4-002` | Under an SD profile, correctness verdict is exactly `PASS | FAIL | INCONCLUSIVE`. |
+| `FD-T4-003` | Under an SD profile, revision routing cannot silently modify T1. |
+| `FD-T4-004` | Under an SD profile, `PASS` means `ENGINEERING_READY`, not delivered. |
 | `SF-EVAL-001` | The MVP compares Code Only with Product Knowledge under a frozen isolated protocol. |
 | `TECH-001` | Framework code uses Java 17/Spring Boot 3.4.1; external Graphify remains behind the provider boundary. |
 
@@ -56,15 +67,23 @@ strength.
 ```text
 Product Sources
       ↓
-Product Knowledge
-      ↓ Resolved Product Context
-Feature Delivery
-T1 → T2 → T3 → T4
-          ↓
-   Execution Boundary
-          ↓
-    Execution Plane
+Product Knowledge (accepted, exact-versioned)
+      ↓
+Engineering Scenario
+├── Product Context
+├── Skills
+├── Controls
+├── Evidence Contract
+├── Execution Record
+└── optional Software Delivery Profile
+        T1 → T2 → T3 → T4
+                ↓
+        generic Execution Plane runtime
 ```
+
+T1–T4 are Software Delivery Profile stages, not a universal lifecycle for
+every Engineering Scenario. Multica may bind to the generic Execution Plane
+runtime; it is not an authority identity or a Core contract dependency.
 
 ### AUTH-001 — Human Authority
 
@@ -82,17 +101,111 @@ MAY independently publish durable Product truth.
 
 ### AUTH-003 — Plane independence
 
-The Feature Delivery Plane MUST own project truth, T1–T4 progression,
-engineering contracts, replanning, T4 routing, and closure preparation. The
-Execution Plane MUST treat active controls and approved engineering contracts as
-read-only. Multica is the current runtime binding, not an authority identity or
-core contract dependency.
+The Engineering Scenario MUST own the composition of applicable Product
+Context, Skills, Controls, evidence obligations, and execution binding. When a
+Scenario declares the Software Delivery Profile, the Feature Delivery Plane
+MUST own project truth, T1–T4 progression, engineering contracts, replanning,
+T4 routing, and closure preparation for that profile. The Execution Plane MUST
+treat active Controls and approved engineering contracts as read-only. Multica
+is a generic runtime binding, not an authority identity or core contract
+dependency.
 
 The framework MUST NOT introduce a Factory Control, DeliveryRun, Workcell,
 Provider hierarchy, execution lease, agent run, job, or task domain merely to
 duplicate lifecycle or scheduling already owned by Feature Delivery and the
 Execution Plane. A future abstraction requires demonstrated independent
 ownership, identity, lifecycle, persistence, or stable cross-module contract.
+
+## 3A. Scenario-first Core contracts
+
+### SCN-001 — Engineering Scenario
+
+An Engineering Scenario is the reusable composition boundary for one bounded
+objective. It MUST bind an immutable `scenarioRef` and `scenarioRevision`, an
+objective and scope, applicable Product Context, required Skills, required
+Controls, an evidence contract, and an execution binding. It MAY bind an
+optional Software Delivery Profile.
+
+### SCN-002 — Scenario resolution
+
+Scenario scope, applicability, limitations, conflicts, and required evidence
+MUST be explicit. Missing or conflicting authority MUST fail closed. A
+Scenario MUST NOT inherit T1–T4 merely because it uses the generic Execution
+Plane runtime.
+
+### SKILL-001 — Reusable bounded capability
+
+A Skill MUST declare its revision, capability boundary, inputs, outputs, and
+limitations. Skills MAY analyze, transform, plan, or verify within that
+boundary and SHOULD be reusable across applicable Scenarios.
+
+### SKILL-002 — Skill authority boundary
+
+A Skill MUST NOT publish Product truth, change Scenario scope, weaken a Control,
+or promote an unsupported result. Skill output remains subject to the Scenario
+and applicable Controls.
+
+### CTRL-001 — Fail-closed Control
+
+A Control MUST bind a subject, required evidence, a result reference, and an
+independently resolvable outcome. An unresolved required evidence reference
+cannot be treated as a satisfied gate.
+
+### CTRL-002 — Control status
+
+Canonical Control status is exactly:
+
+```text
+SATISFIED | UNSATISFIED | INCONCLUSIVE
+```
+
+`UNSATISFIED` and `INCONCLUSIVE` block the affected progression unless an
+existing, explicitly authorized route handles the state. A review, comment,
+issue status, or producer claim is not a substitute for a Control result.
+
+### EXEC-004 — Runtime neutrality
+
+The Execution Plane runtime MUST remain generic. `runtimeRef` identifies the
+execution mechanism, not authority, Scenario semantics, or Control lifecycle.
+Multica is an allowed runtime binding but is not a Core domain contract.
+
+### PK-006 — Reusable Product Knowledge
+
+Accepted Product Knowledge MUST be exact-versioned and provenance-bound before
+it resolves into Product Context. The same accepted knowledge MAY be reused by
+multiple applicable Scenarios; each Scenario retains its own applicability,
+limitations, conflicts, and evidence binding.
+
+### SD-001 — Optional Software Delivery Profile
+
+The Software Delivery Profile is optional. It is the only profile that
+activates the existing `FD-T1-*`, `FD-T2-*`, `FD-T3-*`, and `FD-T4-*`
+requirements.
+
+### SD-002 — T1–T4 scope
+
+`FD-T1-*` through `FD-T4-*` apply only within a declared Software Delivery
+Profile. They do not govern Engineering Scenarios that do not declare that
+profile. Existing `FD-T*` identifiers and their historical evidence remain
+unchanged.
+
+### Canonical Phase 2 Control vocabulary
+
+The validated Core vocabulary uses these exact Control names:
+
+```text
+CTRL-AUTHORIZATION-001
+CTRL-EXECUTION-SAFETY-001
+CTRL-REPOSITORY-PROVENANCE-001
+CTRL-EXACT-BINDING-001
+CTRL-INDEPENDENT-EVALUATION-001
+CTRL-EVIDENCE-INTEGRITY-001
+CTRL-FINDING-RESOLUTION-001
+```
+
+Applicability and required evidence remain governed by the frozen validation
+baseline. This specification does not rewrite those bindings or historical
+results.
 
 ## 4. Product Knowledge
 
@@ -164,7 +277,11 @@ Reusable Product Knowledge capabilities are:
 - `PA-Codebase-Inventory`
 - `PA-Historical-Delivery`
 
-## 5. T1 — Intention
+## 5. Software Delivery Profile — T1 — Intention
+
+The following `FD-T1-*` through `FD-T4-*` requirements apply only when the
+Engineering Scenario declares the Software Delivery Profile. They are not a
+universal lifecycle for other Scenario types.
 
 ### FD-T1-001 — IntentSpec
 
@@ -186,7 +303,7 @@ Changing Product intent or Acceptance Criteria requires Human Authority to stop
 the current cycle, create a new IntentSpec revision, and start a new delivery
 cycle.
 
-## 6. T2 — Specify
+## 6. Software Delivery Profile — T2 — Specify
 
 ### FD-T2-001 — Reasoning sequence
 
@@ -235,7 +352,7 @@ SPEC_READY | BLOCKED
 
 Only a complete, internally consistent DeliverySpec may proceed to T3.
 
-## 7. T3 — Execution planning
+## 7. Software Delivery Profile — T3 — Execution planning
 
 ### FD-T3-001 — ExecutionPlan
 
@@ -496,7 +613,7 @@ fail closed or remain explicitly excluded metadata; a partial package MUST NOT
 be published. The exporter MUST NOT mutate, merge, cherry-pick, or execute code
 in the receiving repository.
 
-## 9. T4 — Correctness
+## 9. Software Delivery Profile — T4 — Correctness
 
 ### FD-T4-001 — Independent verification
 
@@ -545,7 +662,7 @@ ENGINEERING_READY != DELIVERED
   Product Context.
 
 Both arms MUST use the same frozen Feature demand, Acceptance Criteria, source
-revision, T1–T4 contracts, evaluator truth, model/tool class, budget, stopping
+revision, Software Delivery Profile T1–T4 contracts, evaluator truth, model/tool class, budget, stopping
 rules, and measurement definitions. Contexts, workspaces, prompts, sessions,
 artifacts, and evidence stores MUST remain isolated.
 
