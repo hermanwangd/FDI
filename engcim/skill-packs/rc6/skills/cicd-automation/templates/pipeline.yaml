@@ -1,0 +1,121 @@
+# 通用 CI/CD Pipeline 模板（語言中立）
+# ============================================================
+# 用法：把本檔映射到目標 CI 系統（GitHub Actions / Azure Pipelines / GitLab CI…）。
+# 所有標註 <REPLACE: …> 的地方是替換點；其餘結構（階段順序、gate、證據留存）應保留。
+# 原則：lint → test → build → (security scan) → deploy → verify；同一產物走全程。
+
+pipeline:
+  name: <REPLACE: 專案名>-ci-cd
+  triggers:
+    - pull_request        # PR：跑到 test + build + scan，不部署
+    - push_to_main        # main：全程，部署到 dev
+    - tag_release         # tag：部署到 staging/prod（含批准 gate）
+
+  variables:
+    BUILD_VERSION: ${GIT_SHA}          # 產物版本戳 = commit SHA，全程不變
+    ARTIFACT_DIGEST: ""                # build 階段產出，deploy 階段比對
+
+  stages:
+
+    # ---------- lint：擋風格漂移與靜態錯誤 ----------
+    - stage: lint
+      fail_fast: true                  # 失敗即停，不浪費後續資源
+      steps:
+        - run: <REPLACE: 語言的 lint 指令，如 `ruff check .` / `eslint .` / `golangci-lint run`>
+        - run: <REPLACE: 格式檢查，如 `--check` 模式；規則集版本要 pin>
+      evidence: lint-report.txt        # 每個階段都留證據檔
+
+    # ---------- test：擋功能回歸 ----------
+    - stage: test
+      needs: [lint]
+      steps:
+        - run: <REPLACE: 單元測試，如 `pytest --junitxml=unit.xml`>
+        - run: <REPLACE: 整合測試（可用 service container 起依賴）>
+        - run: <REPLACE: 契約測試（對 OpenAPI/proto 契約），無則刪除>
+        - name: coverage-gate
+          run: <REPLACE: 覆蓋率門檻檢查，如 `--cov-fail-under=<N>`；門檻寫進 README>
+      flaky_policy: 隔離並開 issue 追蹤；禁止用 retry 掩蓋
+      evidence: [unit.xml, integration.xml, coverage.xml]
+
+    # ---------- build：產出唯一部署單元 ----------
+    - stage: build
+      needs: [test]
+      steps:
+        - run: <REPLACE: 建構指令；依賴由 lockfile 鎖定>
+        - name: stamp-version
+          run: <REPLACE: 把 ${GIT_SHA} 寫入產物（版本檔或 label）>
+        - name: record-digest
+          run: <REPLACE: 計算產物 digest 寫入 ARTIFACT_DIGEST>
+        - name: publish-artifact
+          run: <REPLACE: 推到 artifact registry / container registry>
+      evidence: artifact-digest.txt    # deploy 階段必須比對同一 digest
+
+    # ---------- security scan：擋已知 CVE 與洩漏 secret ----------
+    - stage: security-scan
+      needs: [build]
+      steps:
+        - run: <REPLACE: gitleaks detect（指令骨架見 skills/security-review/scripts/security-tools.md）>
+        - run: <REPLACE: trivy fs / image，HIGH,CRITICAL 阻斷>
+      gate: High+ finding 阻斷 pipeline；報告存檔為產物附件
+      evidence: [gitleaks-report.json, trivy-report.json]
+
+    # ---------- deploy：依環境策略推進 ----------
+    - stage: deploy-dev
+      needs: [security-scan]
+      condition: push_to_main
+      environment: dev
+      steps:
+        - name: preflight
+          run: <REPLACE: 部署前檢查清單的自動化部分：變數就緒、digest 一致、遷移相容>
+        - run: <REPLACE: 部署指令（helm/kubectl/compose/平台 CLI）>
+        - name: emit-event
+          run: <REPLACE: 發部署事件到觀測系統（供 S09）>
+
+    - stage: deploy-staging
+      needs: [verify-dev]
+      condition: tag_release
+      environment: staging
+      steps: <同 deploy-dev>
+
+    - stage: deploy-prod
+      needs: [verify-staging]
+      environment: prod
+      approval: manual                 # 人類批准 gate，不可移除；批准者與記錄依組織規範
+      strategy:
+        type: <REPLACE: rolling / blue-green / canary>
+        canary_steps: <REPLACE: 如 5% → 25% → 100%，每步觀察 N 分鐘；不適用則刪除>
+      steps: <同 deploy-dev>
+
+    # ---------- verify：部署後冒煙，失敗自動回滾 ----------
+    - stage: verify-dev
+      needs: [deploy-dev]
+      steps:
+        - run: <REPLACE: 健康檢查，如 `curl -fsS https://<host>/healthz`>
+        - run: <REPLACE: 關鍵路徑探測（核心 API 一筆真實呼叫）>
+      on_failure: rollback-dev         # verify 失敗 → 自動回滾
+      evidence: smoke-result.txt
+
+    - stage: verify-staging
+      needs: [deploy-staging]
+      steps: <同 verify-dev>
+      on_failure: rollback-staging
+
+    - stage: verify-prod
+      needs: [deploy-prod]
+      steps: <同 verify-dev，另加：觀察金絲雀指標 N 分鐘（若用 canary）>
+      on_failure: rollback-prod
+
+  # ---------- 回滾：redeploy 前一個好版本 ----------
+  rollback:
+    principle: 回滾 = 重新部署前一個好產物；不是往前緊急修
+    steps:
+      - run: <REPLACE: 取出 PREVIOUS_GOOD_DIGEST（每次成功部署後更新）>
+      - run: <REPLACE: 部署 PREVIOUS_GOOD_DIGEST 到同環境>
+      - run: <REPLACE: 資料遷移倒回腳本（若本次含破壞性遷移；否則註明「向前相容，免倒回」）>
+      - run: <REPLACE: 告警 + 建立 incident 記錄（S10）>
+    evidence: rollback-log.txt
+
+# 通用戒律（刪除前請三思）：
+# 1. 不許在 pipeline 中印 secret；變數來源見 env.example 規範。
+# 2. prod 部署的是與 staging 相同 digest 的產物，不重新 build。
+# 3. 每個 stage 的 evidence 檔要隨 build 存檔，供 Verifier 重現。

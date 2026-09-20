@@ -1,0 +1,13 @@
+requirements:
+  - id: R-001
+    probability: 2
+    impact: 3
+    blocking: true
+    evidence:
+      - id: test-R-001
+        status: PASS
+nfr:
+  - id: latency-p95
+    targetDefined: true
+    evidenceStatus: PASS
+waivers: []

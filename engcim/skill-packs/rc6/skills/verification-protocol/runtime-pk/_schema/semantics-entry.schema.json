@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pk/_schema/semantics-entry.schema.json",
+  "title": "Product Semantics Entry",
+  "description": "pk/semantics/ 條目 schema：每檔一個 capability 語意樹（Product / Capability / Scenario / Behavior / Rule / Terminology）。YAML 或 JSON，套用本 schema。",
+  "type": "object",
+  "allOf": [{"$ref": "common.schema.json#/$defs/governanceFields"}],
+  "required": ["id", "pkClass", "validationState", "confidence", "evidence", "governanceIssueRef", "product", "capabilities"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^sem:"},
+    "pkClass": {"const": "pk-semantics"},
+    "product": {"type": "string", "description": "根 Product / Sub-product 名"},
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/capability"}
+    },
+    "rules": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/rule"},
+      "description": "跨 Scenario 恆成立的 Rule / Invariant"
+    },
+    "terminology": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["term", "definition"],
+        "properties": {
+          "term": {"type": "string"},
+          "definition": {"type": "string"}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "capability": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": {"type": "string", "description": "store 內唯一，如 cap:spc/chart-management"},
+        "name": {"type": "string"},
+        "description": {"type": "string"},
+        "scenarios": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "name"],
+            "properties": {
+              "id": {"type": "string"},
+              "name": {"type": "string"},
+              "behaviors": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["action", "expected"],
+                  "properties": {
+                    "action": {"type": "string"},
+                    "expected": {"type": "string"}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/capability"},
+          "description": "巢狀子 Capability"
+        }
+      }
+    },
+    "rule": {
+      "type": "object",
+      "required": ["id", "statement"],
+      "properties": {
+        "id": {"type": "string", "description": "如 rule:spc/chart-title-required"},
+        "statement": {"type": "string"},
+        "appliesTo": {"type": "array", "items": {"type": "string"}, "description": "適用的 Capability / Scenario id"}
+      }
+    }
+  }
+}
