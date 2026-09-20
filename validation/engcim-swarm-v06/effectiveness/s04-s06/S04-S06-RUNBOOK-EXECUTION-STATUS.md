@@ -27,7 +27,7 @@ This is a current execution record, not a promoted effectiveness result. The dow
 - S06 r1 independently evaluated the exact r1 candidate and reproduced FV-003. Candidate verdict: `FAIL / REFUTED`; finding F1 remains open. E6V-32/E6V-33 gates completed.
 - Governed correction E6V-34 delivered the distinct product r2:
   `c51390ca7e748f07201b0ecd28642ee3ea8d686c`.
-- r2 is published on the canonical fixture remote as `agent/swarm-coder/e6v-34-s05-r2` and PR #2; no r3 branch, commit, or PR was accepted.
+- r2 is published on the canonical fixture remote as `agent/swarm-coder/e6v-34-s05-r2` and PR #2. No product r3 branch, commit, or PR was accepted. A local FDI evidence branch named `agent/swarm-coder/e6v-34-s05-r3` points to the old evidence commit `4781066`; it is not a product candidate revision and is not promoted.
 - Product r2 behavior independently passes the focused and full product tests.
 
 ## Current blocker
@@ -46,7 +46,7 @@ The parent fan-in also hit Multica's 50-key metadata ceiling while recording the
 
 - No manual child `done` was used.
 - No duplicate accepted correction execution occurred; E6V-34 is the single correction child.
-- Follow-up runs that proposed product r3 were cancelled before any product mutation or publication. The governed product identity remains r2; the remote has only r2 branch/PR refs.
+- Follow-up runs that proposed product r3 were cancelled before any product mutation or publication. The governed product identity remains r2; the product remote has only r2 branch/PR refs. The local FDI evidence-only r3-named branch remains unpromoted and must not be treated as product r3.
 - Workspace repo registry did not contain the fixture; S05 used an isolated canonical clone. This remains an environment limitation to report, not a provenance waiver.
 - TKMS MCP and Azure DevOps MCP remain `NOT_VERIFIED`.
 
