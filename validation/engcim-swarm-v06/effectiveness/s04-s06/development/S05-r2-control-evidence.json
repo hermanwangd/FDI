@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "engcim-s05-development-control-evidence.v0.1",
+  "artifactKind": "S05_R2_CONTROL_EVIDENCE",
+  "revision": 2,
+  "resultRef": "S05-E6V34-DEVELOPMENT-r2",
+  "candidateRef": "c51390ca7e748f07201b0ecd28642ee3ea8d686c",
+  "upstreamCandidateRef": "f63aa7ff1037d840c0b9338e455def256956bed2",
+  "findingBinding": {
+    "findingRef": "F1",
+    "sourceResultRef": "S06-E6V31-VERIFICATION-r1",
+    "sourceResultPath": "../verification/S06-r1-verification-result.yaml",
+    "sourceResultSha256": "e4813b1dc55085c431dad708db05f169a13c454ea9f8926de04f6ac67e582303",
+    "controlRef": "CTRL-FINDING-RESOLUTION-001"
+  },
+  "controls": [
+    {
+      "controlRef": "CTRL-REPOSITORY-PROVENANCE-001",
+      "status": "PASS",
+      "requiredEvidenceRefs": ["EVID-S05-R2-REPOSITORY", "EVID-S05-R2-CANDIDATE", "EVID-S05-R2-CHECKOUT"],
+      "evidence": ["S05-r2-development-result.yaml", "S05-r2-change-manifest.json", "S05-r2-self-check.txt"],
+      "basis": "The exact r1 candidate, distinct r2 commit/tree, correction branch, published ref, PR, dedicated worktree, and clean post-commit state are recorded."
+    },
+    {
+      "controlRef": "CTRL-EXACT-BINDING-001",
+      "status": "PASS",
+      "requiredEvidenceRefs": ["EVID-S06-F1", "EVID-S06-CANDIDATE", "EVID-S05-R2-CANDIDATE"],
+      "evidence": ["S05-r2-development-result.yaml", "S05-r2-change-manifest.json", "S05-r2-artifact-trace.yaml"],
+      "basis": "F1, S06 r1 revision 1, the exact r1 commit/tree, and the corrected r2 commit/tree are bound by immutable hashes and paths."
+    },
+    {
+      "controlRef": "CTRL-EXECUTION-SAFETY-001",
+      "status": "PASS",
+      "requiredEvidenceRefs": ["EVID-S05-R2-BRANCH", "EVID-S05-R2-GUARD", "EVID-S05-R2-CHANGE-SURFACE"],
+      "evidence": ["S05-r2-change-manifest.json", "S05-r2-self-check.txt"],
+      "basis": "A dedicated non-default correction worktree was preflighted; guarded paths and commands passed; only the governed viewer source and focused test were changed."
+    },
+    {
+      "controlRef": "CTRL-EVIDENCE-INTEGRITY-001",
+      "status": "PASS",
+      "requiredEvidenceRefs": ["EVID-S05-R2-SELF-TEST", "EVID-S05-R2-DEVELOPMENT-RESULT", "EVID-S05-R2-TRACE", "EVID-S05-R2-CHECKSUMS"],
+      "evidence": ["S05-r2-development-result.yaml", "S05-r2-self-check.txt", "S05-r2-artifact-trace.yaml", "S05-r2-artifact-checksums.txt"],
+      "basis": "Red/green TDD output, full regression output, provenance output, trace entries, and SHA-256 seals are retained; missing or mismatched required evidence fails closed."
+    },
+    {
+      "controlRef": "CTRL-FINDING-RESOLUTION-001",
+      "status": "UNSATISFIED",
+      "requiredEvidenceRefs": ["EVID-MISSION-F1", "EVID-MISSION-CURRENT-CANDIDATE", "EVID-MISSION-FRESH-S06", "EVID-MISSION-EXACT-BINDING"],
+      "evidence": ["S05-r2-development-result.yaml", "S05-r2-change-manifest.json", "../verification/S06-r1-verification-result.yaml"],
+      "basis": "This correction produces distinct r2 and local self-check evidence, but the independent S06 r2 execution and current Reviewer/Verifier gates are intentionally not claimed here."
+    }
+  ],
+  "missingOrDeferredEvidence": [
+    {
+      "ref": "S06-r2-independent-verification",
+      "status": "NOT_VERIFIED",
+      "reason": "Downstream S06 must independently evaluate the exact r2 candidate after current-revision gates."
+    },
+    {
+      "ref": "TKMS-MCP",
+      "status": "NOT_VERIFIED",
+      "reason": "Preserved upstream limitation; not required for the local fixture correction."
+    },
+    {
+      "ref": "Azure-DevOps-MCP",
+      "status": "NOT_VERIFIED",
+      "reason": "Preserved upstream limitation; not required for the local fixture correction."
+    }
+  ],
+  "gateClaim": "S05 r2 correction delivery is complete and reviewable; no S06 r2 verification or Finding Resolution is claimed."
+}
