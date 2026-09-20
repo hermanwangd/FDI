@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "engcim-s05-development-change-manifest.v0.1",
+  "artifactKind": "S05_R2_CHANGE_MANIFEST",
+  "revision": 2,
+  "resultRef": "S05-E6V34-DEVELOPMENT-r2",
+  "canonicalRepository": "https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture.git",
+  "upstreamCandidateRef": "f63aa7ff1037d840c0b9338e455def256956bed2",
+  "upstreamCandidateTree": "4d5b25de8f1de6b955ce9fdde200b4d3d5139486",
+  "candidateRef": "c51390ca7e748f07201b0ecd28642ee3ea8d686c",
+  "candidateTree": "2d3de714bd30552eb572d7e3bfb0f81dbed373a3",
+  "candidateBranch": "agent/swarm-coder/e6v-34-s05-r2",
+  "candidateRemoteRef": "refs/heads/agent/swarm-coder/e6v-34-s05-r2",
+  "candidatePublished": true,
+  "pullRequest": "https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture/pull/2",
+  "workspace": {
+    "identity": "fdi-e6v34-s05-r2",
+    "mode": "dedicated-isolated-git-worktree",
+    "defaultBranchUntouched": true,
+    "preflight": "PASS",
+    "cleanAfterCommit": true
+  },
+  "producer": {
+    "issueRef": "E6V-34",
+    "issueId": "01a0bcb9-1ded-703e-aef6-c1052c1216b2",
+    "parentRef": "E6V-26",
+    "agentId": "32d261fd-2283-48ce-b029-87dbb779e9a7",
+    "workspaceId": "44625a34-7b76-41f1-8ce8-a191b7cf6b46"
+  },
+  "findingBinding": {
+    "findingRef": "F1",
+    "findingType": "FV-003",
+    "sourceIssueRef": "E6V-31",
+    "sourceRevision": 1,
+    "defectReport": {
+      "path": "../verification/S06-r1-defect-report-F1.md",
+      "sha256": "e4235a148aed2c9c551678fb6f375cd4a4f23d58e1ade18d7265e0ef3131e001"
+    },
+    "verificationResult": {
+      "path": "../verification/S06-r1-verification-result.yaml",
+      "sha256": "e4813b1dc55085c431dad708db05f169a13c454ea9f8926de04f6ac67e582303"
+    },
+    "controlRef": "CTRL-FINDING-RESOLUTION-001",
+    "priorStatus": "UNSATISFIED"
+  },
+  "changedFiles": [
+    {
+      "path": "src/chartViewer.js",
+      "change": "M",
+      "beforeSha256": "187d592afdc9828ae9f943cc7d5a669b7d6d59810ffdd561e0905f862abd5e70",
+      "afterSha256": "0d2032c6dbe06cf39db0ed43114d40f42d7e84dda8a7c697b4b7b7c59f2f1bdc",
+      "scope": "FV-003 validation and frozen chart max"
+    },
+    {
+      "path": "test/chartViewer.test.js",
+      "change": "A",
+      "beforeSha256": null,
+      "afterSha256": "a9cca5ef1ceb89033422e3193a1ac54d2802981d003b38c9d0792704d2f440c9",
+      "scope": "FV-003 and regression self-checks"
+    }
+  ],
+  "preservedRequiredPaths": {
+    "src/interaction.js": "36e6ac8bf7908d7bc933f1b60b0db6866748d56fc0889521756541c08e71bc99",
+    "test/interaction.test.js": "preserved from upstream candidate",
+    "package.json": "preserved from upstream candidate"
+  },
+  "scopeResult": "ALLOWED_CORRECTION_PATHS_ONLY",
+  "implementationSummary": "Reject malformed chart limits, restore chartLimits().max to 10, and add reproducible regression tests while preserving the r1 interaction contract.",
+  "failClosedPolicy": {
+    "requiredEvidence": [
+      "S05-r2-development-result.yaml",
+      "S05-r2-self-check.txt",
+      "S05-r2-control-evidence.json",
+      "S05-r2-artifact-trace.yaml",
+      "S05-r2-artifact-checksums.txt"
+    ],
+    "missingOrDigestMismatch": "DELIVERY_INVALID"
+  }
+}

@@ -1,0 +1,79 @@
+S05-E6V34-DEVELOPMENT-r2 SELF-CHECK
+
+Canonical repository: https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture.git
+Correction workspace identity: fdi-e6v34-s05-r2
+Correction branch: agent/swarm-coder/e6v-34-s05-r2
+Upstream r1 candidate: f63aa7ff1037d840c0b9338e455def256956bed2
+Upstream r1 tree: 4d5b25de8f1de6b955ce9fdde200b4d3d5139486
+Corrected r2 candidate: c51390ca7e748f07201b0ecd28642ee3ea8d686c
+Corrected r2 tree: 2d3de714bd30552eb572d7e3bfb0f81dbed373a3
+Pull request: https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture/pull/2
+
+[UPSTREAM F1 BINDING]
+Finding: F1 / FV-003
+S06 issue: E6V-31 revision 1
+Defect report: ../verification/S06-r1-defect-report-F1.md
+Defect report SHA-256: e4235a148aed2c9c551678fb6f375cd4a4f23d58e1ade18d7265e0ef3131e001
+Verification result: ../verification/S06-r1-verification-result.yaml
+Verification result SHA-256: e4813b1dc55085c431dad708db05f169a13c454ea9f8926de04f6ac67e582303
+Prior control: CTRL-FINDING-RESOLUTION-001 = UNSATISFIED
+
+[HISTORICAL RED CHECK: r1 source with correction test harness]
+$ node --test test/chartViewer.test.js
+EXIT_CODE=1
+Observed: 7 tests, 2 passed, 5 failed; missing-ucl, missing-lcl, invalid-ucl, invalid-lcl reported Missing expected exception; frozen max reported 1000 !== 10.
+Evidence qualification: the exact r1 commit `f63aa7ff1037d840c0b9338e455def256956bed2` does not contain `test/chartViewer.test.js`. This historical red run used the r1 source with the correction test harness present in the r2 worktree and is therefore not accepted as exact-r1-commit evidence. The authoritative exact-r1 failure evidence is S06 E6V-31 / F1.
+
+[IMPLEMENTATION]
+Changed exactly two correction paths against r1: src/chartViewer.js and test/chartViewer.test.js.
+src/chartViewer.js now requires finite numeric limits.ucl and limits.lcl, throws INVALID_CHART_CONFIGURATION otherwise, and returns chartLimits().max = 10.
+src/interaction.js remains unchanged from r1; selected-chart opening and HTTP 404 classification are preserved.
+
+[GREEN CHECK: focused correction self-check]
+$ node --test test/chartViewer.test.js
+EXIT_CODE=0
+Observed: 7 tests, 7 pass, 0 fail, 0 cancelled, 0 skipped.
+Cases: missing configuration; missing/invalid ucl/lcl; valid numeric rendering; frozen max=10.
+
+[GREEN CHECK: full fixture suite]
+$ npm test
+EXIT_CODE=0
+Observed: 9 tests, 9 pass, 0 fail, 0 cancelled, 0 skipped.
+Cases: all correction checks plus selected-chart opening and HTTP 404 retryable=false.
+Runtime: Node v22.22.0; npm 10.9.4.
+
+[REPOSITORY PREFLIGHT]
+$ bash /Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-a191b7cf6b46/e6v-34-5bd78dfa68d5/codex-home/skills/software-development/scripts/repo-preflight.sh
+Observed: PASS; branch=agent/swarm-coder/e6v-34-s05-r2; head=c51390ca7e748f07201b0ecd28642ee3ea8d686c; default=main.
+
+[PROVENANCE]
+$ git diff --check f63aa7ff1037d840c0b9338e455def256956bed2..c51390ca7e748f07201b0ecd28642ee3ea8d686c
+EXIT_CODE=0
+Observed: no whitespace errors.
+
+$ git diff --name-status f63aa7ff1037d840c0b9338e455def256956bed2..c51390ca7e748f07201b0ecd28642ee3ea8d686c
+EXIT_CODE=0
+M	src/chartViewer.js
+A	test/chartViewer.test.js
+
+$ git status --porcelain=v1
+EXIT_CODE=0
+Observed: empty output after removing the temporary PR body file; correction worktree clean.
+
+$ git ls-remote origin refs/heads/agent/swarm-coder/e6v-34-s05-r2
+EXIT_CODE=0
+c51390ca7e748f07201b0ecd28642ee3ea8d686c	refs/heads/agent/swarm-coder/e6v-34-s05-r2
+
+[GUARD EVIDENCE]
+Observed execution-guard ALLOW for the correction worktree, changed source/test paths, branch creation, commit, and publication commands. No default-branch mutation or destructive command was used.
+
+[EVIDENCE INTEGRITY]
+$ sha256sum -c S05-r2-artifact-checksums.txt
+EXIT_CODE=0
+Observed: S05_R2_CHECKSUMS=5/5; all listed DevelopmentResult, manifest, control, trace, and self-check artifacts match.
+
+[DOWNSTREAM BOUNDARY]
+S06 r2 verification: NOT_VERIFIED; not dispatched or claimed by this correction run.
+Current-revision Reviewer/Verifier gates: required downstream; not claimed by this correction run.
+TKMS MCP: NOT_VERIFIED.
+Azure DevOps MCP: NOT_VERIFIED.

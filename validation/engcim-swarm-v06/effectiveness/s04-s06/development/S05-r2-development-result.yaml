@@ -1,0 +1,142 @@
+schemaVersion: engcim-s05-development-result.v0.2
+artifactKind: S05_DEVELOPMENT_RESULT
+ref: S05-E6V34-DEVELOPMENT-r2
+revision: 2
+scenarioRef: S05-SOFTWARE-DEVELOPMENT
+scenarioRevision: S05-r2-correction
+scenarioDefinitionDigest: sha256:92506de13f40097b9068520480b3351d9e60e9ba602f25c987bc57ae0bd4a9a1
+outcome: COMPLETED
+deliveryStatus: DELIVERED
+producer:
+  issueRef: E6V-34
+  issueId: 01a0bcb9-1ded-703e-aef6-c1052c1216b2
+  agentId: 32d261fd-2283-48ce-b029-87dbb779e9a7
+  workspaceId: 44625a34-7b76-41f1-8ce8-a191b7cf6b46
+  workspaceIdentity: fdi-e6v34-s05-r2
+  branch: agent/swarm-coder/e6v-34-s05-r2
+correction:
+  parentRef: E6V-26
+  parentIssueId: 01a0bc62-a6f7-74bd-a940-498449ecc28b
+  correctionChildRef: E6V-34
+  productCandidateRevision: r2
+  upstreamCandidateRevision: r1
+  upstreamCandidateCommit: f63aa7ff1037d840c0b9338e455def256956bed2
+  upstreamCandidateTree: 4d5b25de8f1de6b955ce9fdde200b4d3d5139486
+  findingRef: F1
+  findingType: FV-003
+  findingStatusBeforeCorrection: OPEN
+  findingEvidence:
+    issueRef: E6V-31
+    issueId: 01a0bca1-627d-72c7-812c-879fb9884036
+    revision: 1
+    defectReport: ../verification/S06-r1-defect-report-F1.md
+    defectReportSha256: e4235a148aed2c9c551678fb6f375cd4a4f23d58e1ade18d7265e0ef3131e001
+    verificationResult: ../verification/S06-r1-verification-result.yaml
+    verificationResultSha256: e4813b1dc55085c431dad708db05f169a13c454ea9f8926de04f6ac67e582303
+    commandOutput: ../verification/S06-r1-command-output.txt
+    commandOutputSha256: f0c6bd1b40278891300e9a5963a7ed89f71354b2997428a11c248d177e4c115f
+    inputManifest: ../verification/S06-r1-input-manifest.json
+    inputManifestSha256: 277690039204a9a9941b2630ab07cbfc8443e89dc6cb9f591cf0284dc1362e01
+    controlEvidence: ../verification/S06-r1-control-evidence.json
+    controlEvidenceSha256: f5ba60582657abd7c5223b2cc256d12633a38b0596011ddfcd617a43915c2bbd
+    artifactTrace: ../verification/S06-r1-artifact-trace.yaml
+    artifactTraceSha256: 246cd81ecd81afe9a0eb8750b910c9340431c747a1029d6cb40f1ce67f5e1fc9
+  controlRef: CTRL-FINDING-RESOLUTION-001
+  controlStatusAfterCorrection: UNSATISFIED_PENDING_INDEPENDENT_S06_R2
+handoff:
+  authorizedS04ParentRef: E6V-23
+  authorizedS04ParentIssueId: 01a0bc41-b140-7943-a40a-ceb70ac6caf8
+  authorizedS04Revision: 1
+  authorizedRunRef: 01a0bc41-b156-783a-ab76-680473ec1491
+  authorizedImplementation: true
+  authorizationRefs:
+    - INT-E6V23-PC0-B-r2
+    - INT-E6V23-PC1-B-r2
+  priorDevelopmentResult: S05-r1-development-result.yaml
+  priorDevelopmentResultSha256: 691378b631f5fefc790dbc852f9fa1767da99e604d36dd9c302f38578eb51356
+  priorEvidenceCorrectionCommit: dd8786482c0bcc4d6244c37fa3e98a91031bfc42
+productIntent:
+  product: SPC Demo
+  capability: Chart Management
+  scenario: Chart Viewing
+  acceptanceIntent:
+    - Missing or invalid limits.ucl/limits.lcl throws INVALID_CHART_CONFIGURATION and does not render a valid chart.
+    - chartLimits().max equals 10.
+    - Selected-chart opening remains one interaction and HTTP 404 remains retryable=false.
+    - Valid numeric chart limits remain renderable.
+  nonGoals:
+    - Independent S06 r2 verification or Finding Resolution gate closure.
+    - Deployment administration, unrelated chart creation, and unrelated user flows.
+    - TKMS or Azure DevOps verification.
+repository:
+  canonicalUrl: https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture.git
+  baselineCommit: f63aa7ff1037d840c0b9338e455def256956bed2
+  baselineTree: 4d5b25de8f1de6b955ce9fdde200b4d3d5139486
+  candidateCommit: c51390ca7e748f07201b0ecd28642ee3ea8d686c
+  candidateTree: 2d3de714bd30552eb572d7e3bfb0f81dbed373a3
+  candidateBranch: agent/swarm-coder/e6v-34-s05-r2
+  candidateRemoteRef: refs/heads/agent/swarm-coder/e6v-34-s05-r2
+  candidatePublished: true
+  pullRequest: https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture/pull/2
+  workspaceIdentity: fdi-e6v34-s05-r2
+  workspaceMode: dedicated-isolated-git-worktree
+  defaultBranchUntouched: true
+  worktreeCleanAfterCommit: true
+  changedFiles:
+    - src/chartViewer.js
+    - test/chartViewer.test.js
+  preservedFiles:
+    - src/interaction.js
+    - test/interaction.test.js
+implementation:
+  changedFiles:
+    - path: src/chartViewer.js
+      beforeSha256: 187d592afdc9828ae9f943cc7d5a669b7d6d59810ffdd561e0905f862abd5e70
+      afterSha256: 0d2032c6dbe06cf39db0ed43114d40f42d7e84dda8a7c697b4b7b7c59f2f1bdc
+      behavior: Validate finite numeric ucl/lcl and restore max=10.
+    - path: test/chartViewer.test.js
+      beforeSha256: null
+      afterSha256: a9cca5ef1ceb89033422e3193a1ac54d2802981d003b38c9d0792704d2f440c9
+      behavior: Reproduce missing/invalid limits, valid rendering, and frozen max checks.
+  preservedInteractionSourceSha256: 36e6ac8bf7908d7bc933f1b60b0db6866748d56fc0889521756541c08e71bc99
+  preservedBehavior:
+    - "openSelectedChart returns {action: OPENED, chartId} for a selected chart."
+    - "classifyChartResponse(404) returns {status: 404, retryable: false}."
+verificationEvidence:
+  - ref: S05-r2-self-check.txt
+    command: node --test test/chartViewer.test.js
+    exitCode: 0
+    summary: 7 tests passed, 0 failed.
+  - ref: S05-r2-self-check.txt
+    command: npm test
+    exitCode: 0
+    summary: 9 tests passed, 0 failed.
+  - ref: S05-r2-self-check.txt
+    command: git diff --check f63aa7ff1037d840c0b9338e455def256956bed2..c51390ca7e748f07201b0ecd28642ee3ea8d686c
+    exitCode: 0
+    summary: No whitespace errors; correction diff is src/chartViewer.js plus test/chartViewer.test.js.
+  - ref: S05-r2-self-check.txt
+    command: bash software-development/scripts/repo-preflight.sh
+    exitCode: 0
+    summary: Dedicated non-default correction worktree preflight passed.
+openFindings:
+  - ref: F1
+    status: OPEN_PENDING_INDEPENDENT_S06_R2
+    detail: The correction satisfies the local product self-checks, but this run does not claim independent S06 r2 verification or Finding Resolution.
+  - ref: CTRL-FINDING-RESOLUTION-001
+    status: UNSATISFIED
+    detail: Current-revision Reviewer and Verifier gates plus fresh S06 r2 execution are required downstream.
+  - ref: TKMS-MCP
+    status: NOT_VERIFIED
+    detail: Preserved upstream limitation; no TKMS authority was invented.
+  - ref: Azure-DevOps-MCP
+    status: NOT_VERIFIED
+    detail: Preserved upstream limitation; no Azure DevOps authority was invented.
+downstreamVerification:
+  required: true
+  owner: S06
+  exactCandidate: c51390ca7e748f07201b0ecd28642ee3ea8d686c
+  expectedNextPath: Independent current-revision Reviewer and Verifier gates, then fresh S06 r2 verification of F1.
+  dispatchClaimed: false
+  verificationClaimed: false
+  findingResolutionClaimed: false

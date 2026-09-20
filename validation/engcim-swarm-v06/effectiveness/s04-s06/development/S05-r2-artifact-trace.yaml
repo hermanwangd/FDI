@@ -1,0 +1,115 @@
+schemaVersion: engcim-s05-development-artifact-trace.v0.1
+artifactKind: S05_R2_ARTIFACT_TRACE
+revision: 2
+resultRef: S05-E6V34-DEVELOPMENT-r2
+artifacts:
+  - ref: S06-r1-F1
+    path: ../verification/S06-r1-defect-report-F1.md
+    revision: 1
+    sha256: e4235a148aed2c9c551678fb6f375cd4a4f23d58e1ade18d7265e0ef3131e001
+  - ref: S06-E6V31-VERIFICATION-r1
+    path: ../verification/S06-r1-verification-result.yaml
+    revision: 1
+    sha256: e4813b1dc55085c431dad708db05f169a13c454ea9f8926de04f6ac67e582303
+  - ref: S06-r1-input-manifest
+    path: ../verification/S06-r1-input-manifest.json
+    revision: 1
+    sha256: 277690039204a9a9941b2630ab07cbfc8443e89dc6cb9f591cf0284dc1362e01
+  - ref: S06-r1-command-output
+    path: ../verification/S06-r1-command-output.txt
+    revision: 1
+    sha256: f0c6bd1b40278891300e9a5963a7ed89f71354b2997428a11c248d177e4c115f
+  - ref: S06-r1-test
+    path: ../verification/S06-r1-verification.test.mjs
+    revision: 1
+    sha256: 373246b098dc18d9d4ab115786376c5f657882a560cc4af2d926fffe414dac58
+  - ref: S06-r1-controls
+    path: ../verification/S06-r1-control-evidence.json
+    revision: 1
+    sha256: f5ba60582657abd7c5223b2cc256d12633a38b0596011ddfcd617a43915c2bbd
+  - ref: S05-E6V26-DEVELOPMENT-r1
+    path: S05-r1-development-result.yaml
+    revision: 1
+    sha256: 691378b631f5fefc790dbc852f9fa1767da99e604d36dd9c302f38578eb51356
+  - ref: S05-r1-change-manifest
+    path: S05-r1-change-manifest.json
+    revision: 1
+    sha256: 8f2b1afe5df6a083e882297ed44c55ec9a49f5ade98c66d94e2c1b560a1379af
+  - ref: S04-CLEAN-COMPARISON-r1
+    path: ../clean-rerun/S04-r2-spc-mission-v1-clean-rerun-comparison.json
+    revision: 1
+    sha256: 591e157ec21e2b2b2293684611b9f4d8a41d2176244ed857d22172e3db42c14f
+  - ref: S04-CLEAN-CONTROLS-r1
+    path: ../clean-rerun/S04-r2-spc-mission-v1-clean-rerun-control-evidence.json
+    revision: 1
+    sha256: b941ca95877d638c3eb85a6d26daaa5df2f96544633415ae3f0556b3ecffda18
+  - ref: INT-E6V23-PC0-B-r2
+    path: ../clean-rerun/S04-r2-spc-mission-v1-PC0-case-b-intention-spec-r2.yaml
+    revision: 2
+    sha256: fb5773be682c5e8f16b5d1e607848cb7b953737520e168097838140dfa47a3d4
+  - ref: INT-E6V23-PC1-B-r2
+    path: ../clean-rerun/S04-r2-spc-mission-v1-PC1-case-b-intention-spec-r2.yaml
+    revision: 2
+    sha256: 6e17ce558214a032e5ba8028a95671a31e49ebfea03836526dfac38336ecdacb
+  - ref: S05-E6V34-DEVELOPMENT-r2
+    path: S05-r2-development-result.yaml
+    revision: 2
+  - ref: S05-r2-change-manifest
+    path: S05-r2-change-manifest.json
+    revision: 2
+  - ref: S05-r2-self-check
+    path: S05-r2-self-check.txt
+    revision: 2
+  - ref: S05-r2-controls
+    path: S05-r2-control-evidence.json
+    revision: 2
+  - ref: S05-r2-artifact-checksums
+    path: S05-r2-artifact-checksums.txt
+    revision: 2
+  - ref: S05-r2-artifact-trace
+    path: S05-r2-artifact-trace.yaml
+    revision: 2
+links:
+  - from: S06-r1-F1
+    fromRevision: 1
+    to: S05-E6V34-DEVELOPMENT-r2
+    relation: BINDS_CORRECTION_TARGET
+  - from: S06-E6V31-VERIFICATION-r1
+    fromRevision: 1
+    to: S05-E6V34-DEVELOPMENT-r2
+    relation: BINDS_EXACT_UPSTREAM_FINDING
+  - from: S05-E6V26-DEVELOPMENT-r1
+    fromRevision: 1
+    to: S05-E6V34-DEVELOPMENT-r2
+    relation: CORRECTS_PRODUCT_CANDIDATE
+  - from: INT-E6V23-PC0-B-r2
+    fromRevision: 2
+    to: S05-E6V34-DEVELOPMENT-r2
+    relation: PRESERVES_AUTHORIZED_ACCEPTANCE_INTENT
+  - from: INT-E6V23-PC1-B-r2
+    fromRevision: 2
+    to: S05-E6V34-DEVELOPMENT-r2
+    relation: PRESERVES_AUTHORIZED_ACCEPTANCE_INTENT
+  - from: S05-E6V34-DEVELOPMENT-r2
+    fromRevision: 2
+    to: S05-r2-change-manifest
+    relation: PRODUCES_CANDIDATE_PROVENANCE
+  - from: S05-E6V34-DEVELOPMENT-r2
+    fromRevision: 2
+    to: S05-r2-self-check
+    relation: PRODUCES_SELF_CHECK
+  - from: S05-E6V34-DEVELOPMENT-r2
+    fromRevision: 2
+    to: S05-r2-controls
+    relation: BINDS_CONTROLS
+requirements:
+  - id: AC-S05-R2-01
+    artifactRefs: [S05-E6V34-DEVELOPMENT-r2, S05-r2-change-manifest]
+  - id: AC-S05-R2-02
+    artifactRefs: [S06-r1-F1, S05-r2-self-check, S05-E6V34-DEVELOPMENT-r2]
+  - id: AC-S05-R2-03
+    artifactRefs: [S05-r2-self-check, S05-r2-change-manifest]
+  - id: AC-S05-R2-04
+    artifactRefs: [S05-r2-controls, S05-r2-artifact-checksums, S05-r2-artifact-trace]
+  - id: AC-S05-R2-05
+    artifactRefs: [S05-E6V34-DEVELOPMENT-r2, S05-r2-change-manifest]

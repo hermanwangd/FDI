@@ -1,0 +1,139 @@
+schemaVersion: engcim-s05-development-result.v0.2
+artifactKind: S05_DEVELOPMENT_RESULT
+ref: S05-E6V26-DEVELOPMENT-r1
+revision: 1
+scenarioRef: S05-SOFTWARE-DEVELOPMENT
+scenarioRevision: S05-r1
+scenarioDefinitionDigest: sha256:92506de13f40097b9068520480b3351d9e60e9ba602f25c987bc57ae0bd4a9a1
+outcome: COMPLETED
+deliveryStatus: DELIVERED
+producer:
+  issueRef: E6V-26
+  issueId: 01a0bc62-a6f7-74bd-a940-498449ecc28b
+  agentId: 32d261fd-2283-48ce-b029-87dbb779e9a7
+  workspaceId: 44625a34-7b76-41f1-8ce8-a191b7cf6b46
+  workspaceIdentity: fdi-s05-fixture-r1
+  branch: agent/swarm-coder/e6v-26-s05-r1-baseline
+handoff:
+  parentRef: E6V-23
+  parentIssueId: 01a0bc41-b140-7943-a40a-ceb70ac6caf8
+  revision: 1
+  governedRunRef: 01a0bc41-b156-783a-ab76-680473ec1491
+  currentGate: COMPLETED
+  controlStatus: SATISFIED
+  reviewer:
+    issueRef: E6V-25
+    revision: 1
+    verdict: PASS
+    resultRef: 01a0bc56-cced-7624-8dfe-33e1f0706dbd
+  verifier:
+    issueRef: E6V-24
+    revision: 1
+    verdict: VERIFIED
+    resultRef: 01a0bc59-5150-76b8-9063-95535acf660d
+  exactArtifacts:
+    - validation/engcim-swarm-v06/effectiveness/s04-s06/clean-rerun/S04-r2-spc-mission-v1-clean-rerun-input-manifest.json
+    - validation/engcim-swarm-v06/effectiveness/s04-s06/clean-rerun/S04-r2-spc-mission-v1-clean-rerun-PC0-execution-result.json
+    - validation/engcim-swarm-v06/effectiveness/s04-s06/clean-rerun/S04-r2-spc-mission-v1-clean-rerun-PC1-execution-result.json
+    - validation/engcim-swarm-v06/effectiveness/s04-s06/clean-rerun/S04-r2-spc-mission-v1-clean-rerun-comparison.json
+    - validation/engcim-swarm-v06/effectiveness/s04-s06/clean-rerun/S04-r2-spc-mission-v1-clean-rerun-control-evidence.json
+    - validation/engcim-swarm-v06/effectiveness/s04-s06/clean-rerun/S04-r2-spc-mission-v1-clean-rerun-artifact-trace.yaml
+  intentionSpecs:
+    - ref: INT-E6V23-PC0-A-r1
+      path: validation/engcim-swarm-v06/effectiveness/s04-s06/clean-rerun/S04-r2-spc-mission-v1-PC0-case-a-intention-spec-r1.yaml
+      revision: 1
+    - ref: INT-E6V23-PC0-B-r2
+      path: validation/engcim-swarm-v06/effectiveness/s04-s06/clean-rerun/S04-r2-spc-mission-v1-PC0-case-b-intention-spec-r2.yaml
+      revision: 2
+    - ref: INT-E6V23-PC1-A-r1
+      path: validation/engcim-swarm-v06/effectiveness/s04-s06/clean-rerun/S04-r2-spc-mission-v1-PC1-case-a-intention-spec-r1.yaml
+      revision: 1
+    - ref: INT-E6V23-PC1-B-r2
+      path: validation/engcim-swarm-v06/effectiveness/s04-s06/clean-rerun/S04-r2-spc-mission-v1-PC1-case-b-intention-spec-r2.yaml
+      revision: 2
+implementationAuthorization:
+  authorized: true
+  basis: exact explicit DecisionResponse A1 resolves Q1 and Q2
+  decisionRef: S04-DECISION-RESPONSE-A1
+  source: both PC0 and PC1 Case B revision 2 IntentionSpecs
+  downstreamDispatchGate: current S04 Reviewer, Verifier, and Control fan-in completed
+productIntent:
+  product: SPC Demo
+  capability: Chart Management
+  scenario: Chart Viewing
+  acceptanceIntent:
+    - Given a selected valid chart in the chart list, one user interaction opens the chart.
+    - Given HTTP 404 from chart retrieval, the externally visible retryable value remains false.
+    - Given missing or invalid chart limits, the configuration is not treated as a valid rendered chart.
+  constraints:
+    - Preserve the published Chart API contract (R-004).
+    - Chart Viewer retrieves chart definitions through Chart Management API (R-002).
+    - A chart must reference a valid chart configuration (R-001).
+    - Do not change chart-limit semantics.
+  nonGoals:
+    - Unrelated chart creation behavior.
+    - Deployment administration, notifications, and unrelated user flows.
+    - Changing HTTP 404 retryability.
+repository:
+  canonicalUrl: https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture.git
+  frozenFixtureRef: refs/heads/validation/s05-fixture-v2-20260920
+  frozenFixtureRevision: 4ab29f8dbbf1479f8e9f51f0f5eb3ddd100672a6
+  frozenParentRevision: 2eff5f9f84ca709684bfe0b7c90102268f07a0f0
+  baselineCommit: 2eff5f9f84ca709684bfe0b7c90102268f07a0f0
+  candidateCommit: f63aa7ff1037d840c0b9338e455def256956bed2
+  candidateTree: 4d5b25de8f1de6b955ce9fdde200b4d3d5139486
+  candidateBranch: agent/swarm-coder/e6v-26-s05-r1-baseline
+  candidateRemoteRef: refs/heads/agent/swarm-coder/e6v-26-s05-r1-baseline
+  candidatePublished: true
+  pullRequest: https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture/pull/1
+  changedFiles:
+    - src/interaction.js
+  changeSurface: src/interaction.js only
+  forbiddenBeforeCorrection:
+    - src/chartViewer.js
+    - test/interaction.test.js
+  candidateWorktree: clean
+implementation:
+  changedFile: src/interaction.js
+  before: "export selectChart returning {selectedChartId, action: SELECTED}"
+  after: "export openSelectedChart returning {action: OPENED, chartId}"
+  preservedBehavior: "classifyChartResponse(404) returns {status: 404, retryable: false}"
+  seededDefectPreserved: "src/chartViewer.js chartLimits().max remains 1000 for S06 FV-003 evaluation"
+  sourceBeforeSha256: 2a3dff6ebee189ff34549d320b565c0b24d7c6e5babcca69f3c67d9f2ca339b0
+  sourceAfterSha256: 36e6ac8bf7908d7bc933f1b60b0db6866748d56fc0889521756541c08e71bc99
+verificationEvidence:
+  - ref: S05-r1-self-check.txt
+    command: npm test
+    baselineExitCode: 1
+    candidateExitCode: 0
+    candidateSummary: 2 tests passed, 0 failed
+  - ref: S05-r1-self-check.txt
+    command: bash validation/engcim-swarm-v06/baseline/validate_baseline.sh
+    exitCode: 0
+    summary: S01-S06 BASELINE CHECKS = PASS; VALIDATION_BASELINE = READY
+  - ref: S05-r1-self-check.txt
+    command: exact-format clean-rerun checksum loop
+    exitCode: 0
+    summary: CLEAN_RERUN_CHECKSUMS=13/13
+  - ref: S05-r1-self-check.txt
+    command: git diff --check and exact changed-file diff
+    exitCode: 0
+    summary: only src/interaction.js changed; no whitespace errors
+controlEvidence: S05-r1-control-evidence.json
+artifactTrace: S05-r1-artifact-trace.yaml
+openFindings:
+  - ref: FV-003
+    status: DEFERRED_TO_S06
+    detail: S06 must independently reproduce the seeded chart-limit defect at exact r1; this S05 result does not claim verification PASS or Finding Resolution.
+  - ref: PK-GOVERNANCE
+    status: PRESERVED_GAP
+    detail: Upstream PK views remain PROVISIONAL/AMBIGUOUS where recorded; no Product Knowledge authority was invented.
+  - ref: EXTERNAL_CAPABILITIES
+    status: NOT_VERIFIED
+    detail: TKMS MCP and Azure DevOps MCP were not verified.
+downstreamVerification:
+  required: true
+  owner: S06
+  exactCandidate: f63aa7ff1037d840c0b9338e455def256956bed2
+  expectedNextPath: S06 r1 independent evaluation, FV-003 finding, governed correction handoff, and fresh r2 verification
+  dispatchClaimed: false

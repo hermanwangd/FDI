@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "engcim-s05-development-control-evidence.v0.1",
+  "artifactKind": "S05_R1_CONTROL_EVIDENCE",
+  "revision": 1,
+  "resultRef": "S05-E6V26-DEVELOPMENT-r1",
+  "handoffBinding": {
+    "parentRef": "E6V-23",
+    "parentIssueId": "01a0bc41-b140-7943-a40a-ceb70ac6caf8",
+    "handoffRevision": 1,
+    "governedRunRef": "01a0bc41-b156-783a-ab76-680473ec1491",
+    "currentGate": "COMPLETED",
+    "controlStatus": "SATISFIED",
+    "reviewer": {"issueRef": "E6V-25", "revision": 1, "verdict": "PASS", "resultRef": "01a0bc56-cced-7624-8dfe-33e1f0706dbd"},
+    "verifier": {"issueRef": "E6V-24", "revision": 1, "verdict": "VERIFIED", "resultRef": "01a0bc59-5150-76b8-9063-95535acf660d"}
+  },
+  "controls": [
+    {
+      "controlRef": "CTRL-AUTHORIZATION-001",
+      "phase": "before-mutation",
+      "requiredEvidenceRefs": ["EVID-S05-AUTHORITY", "EVID-S05-BASELINE", "EVID-S05-CANDIDATE"],
+      "resolvedEvidenceRefs": ["S04-r2-spc-mission-v1-PC0-case-b-intention-spec-r2.yaml", "S04-r2-spc-mission-v1-PC1-case-b-intention-spec-r2.yaml", "S05-r1-change-manifest.json"],
+      "capturedOutcome": "SATISFIED",
+      "basis": "Both exact S04 Case B r2 IntentionSpecs set implementationAuthorized=true from DecisionResponse A1; candidate scope matches the frozen S05 gold."
+    },
+    {
+      "controlRef": "CTRL-EXECUTION-SAFETY-001",
+      "phase": "before-mutation",
+      "requiredEvidenceRefs": ["EVID-S05-AUTHORITY", "EVID-S05-BRANCH", "EVID-S05-CHANGE-SURFACE", "EVID-S05-GUARD"],
+      "resolvedEvidenceRefs": ["S05-r1-change-manifest.json", "S05-r1-self-check.txt"],
+      "capturedOutcome": "SATISFIED",
+      "basis": "Dedicated non-default branch, execution-guard ALLOW records, one authorized source path, and no forbidden-path diff."
+    },
+    {
+      "controlRef": "CTRL-REPOSITORY-PROVENANCE-001",
+      "phase": "delivery-acceptance",
+      "requiredEvidenceRefs": ["EVID-S05-REPOSITORY", "EVID-S05-BASELINE", "EVID-S05-CANDIDATE"],
+      "resolvedEvidenceRefs": ["S05-r1-change-manifest.json", "S05-r1-self-check.txt"],
+      "capturedOutcome": "SATISFIED",
+      "basis": "Full baseline/candidate SHAs, tree SHA, branch, published remote ref, and PR are recorded and candidate checkout is clean."
+    },
+    {
+      "controlRef": "CTRL-EVIDENCE-INTEGRITY-001",
+      "phase": "delivery-acceptance",
+      "requiredEvidenceRefs": ["EVID-S05-CANDIDATE", "EVID-S05-CHANGE-SURFACE", "EVID-S05-SELF-TEST", "EVID-S05-DEVELOPMENT-RESULT"],
+      "resolvedEvidenceRefs": ["S05-r1-change-manifest.json", "S05-r1-self-check.txt", "S05-r1-development-result.yaml", "S05-r1-artifact-trace.yaml"],
+      "capturedOutcome": "SATISFIED",
+      "basis": "Candidate diff, source digests, red/green test evidence, baseline seal recheck, and exact artifact trace are retained."
+    },
+    {
+      "controlRef": "CTRL-EXACT-BINDING-001",
+      "phase": "delivery-acceptance",
+      "requiredEvidenceRefs": ["EVID-S05-AUTHORITY", "EVID-S05-CANDIDATE", "EVID-S05-DEVELOPMENT-RESULT"],
+      "resolvedEvidenceRefs": ["S05-r1-development-result.yaml", "S05-r1-change-manifest.json"],
+      "capturedOutcome": "SATISFIED",
+      "basis": "Candidate behavior and changed path are bound to the PC0/PC1 r2 acceptance intent and exact S04 governed run."
+    }
+  ],
+  "missingOrDeferredEvidence": [
+    {"ref": "S06-independent-verification", "status": "DEFERRED", "reason": "S06 must independently evaluate exact r1 and run the governed FV-003 correction loop."},
+    {"ref": "TKMS-MCP", "status": "NOT_VERIFIED", "reason": "Preserved upstream limitation; not required for this local fixture implementation."},
+    {"ref": "Azure-DevOps-MCP", "status": "NOT_VERIFIED", "reason": "Preserved upstream limitation; not required for this local fixture implementation."}
+  ],
+  "gateClaim": "S05 r1 delivery evidence is complete; no S06 verification or Finding Resolution is claimed."
+}
