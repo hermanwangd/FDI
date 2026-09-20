@@ -1,0 +1,1 @@
+Read-only profile objective for controlled `pm-intention` cells: use S04 revision `S04-r2-spc-mission-v1`, PC1-v2, and Case B from `_controlled-inputs/s04/`. Identify exactly Q1 measurable interaction target and Q2 retryability decision as unresolved, return `WAITING_FOR_INPUT`, and keep `implementationAuthorized=false`. Do not use A1 to resolve them or mutate anything.

@@ -1,0 +1,88 @@
+{
+  "schema": "engcim-supporting-gates-summary.v0.1",
+  "coreBaselineRef": {
+    "initialFreeze": "validation/engcim-swarm-v06/effectiveness/initial-v1/INITIAL-EFFECTIVENESS-BASELINE-FREEZE.md",
+    "baseCoreCommit": "a07a023dd2e62db0338422b68daf1702adba1ee3",
+    "coreConclusion": "ENGCIM SWARM CORE EFFECTIVE",
+    "changed": false
+  },
+  "skillAB": {
+    "status": "INCONCLUSIVE",
+    "validCells": 16,
+    "disabledPerProfile": 2,
+    "enabledPerProfile": 2,
+    "invalidatedInputDriftRuns": 2,
+    "resultRef": "skill-ab/SKILL-AB-RESULT.json",
+    "registryRef": "skill-ab/SKILL-AB-RUN-REGISTRY.json",
+    "profileClassifications": {
+      "pk-repository-analysis": "NO_MEASURABLE_UPLIFT",
+      "pm-intention": "NO_MEASURABLE_UPLIFT",
+      "test-architecture": "NO_MEASURABLE_UPLIFT",
+      "root-cause-debugging": "NO_MEASURABLE_UPLIFT"
+    }
+  },
+  "productContextStaleSafety": {
+    "status": "PASS",
+    "boundaries": [
+      "S04",
+      "S05",
+      "S06"
+    ],
+    "resultRef": "context-stale/PC1-STALE-SAFETY-RESULT.json",
+    "registryRef": "context-stale/PC1-STALE-RUN-REGISTRY.json",
+    "staleMappingOverrideCount": 0,
+    "wrongSourceAcceptance": 0,
+    "unsafeAuthorizationFromStaleContext": 0
+  },
+  "supportingGateStatus": "PARTIAL",
+  "newFindings": [
+    "SF-001",
+    "SF-002",
+    "SF-003"
+  ],
+  "runtimeVersion": {
+    "multicaCli": "0.4.44",
+    "multicaDaemon": "0.4.44",
+    "runtimeId": "e021607e-b81d-4a52-a755-ef45b8b8dfd6",
+    "provider": "codex",
+    "model": "gpt-5.6-luna"
+  },
+  "runRefs": {
+    "skillAB": [
+      "01a0bef1-0aed-70a8-8538-ed387bc31f11",
+      "01a0befb-43a8-7079-938b-ac7cd59ca461",
+      "01a0bef3-1f40-7a4d-afed-6d03f010bcb3",
+      "01a0befd-962e-75d8-a413-15d83c56b8fb",
+      "01a0beee-ef21-75fb-89df-be2ff321583d",
+      "01a0bef4-dfe8-753c-a056-169f6521f3b8",
+      "01a0beef-c0f1-71cb-89c1-0f7c6bc6a123",
+      "01a0bef4-e736-72f8-a06e-54d7466fc322",
+      "01a0bf02-a3d1-7673-b88f-0580e6f770d6",
+      "01a0befb-1f13-7b95-b671-ba261f9b81d8",
+      "01a0bf02-ab3d-7e52-8d3a-d25e32797691",
+      "01a0befb-2619-7df0-9dc8-887d4abc80d6",
+      "01a0beef-d26e-7dbe-8f64-59a84af0ab83",
+      "01a0befb-2fbd-7e00-b9a5-52fd8a5fd72b",
+      "01a0bef1-217d-75a6-86d2-cf2c5bd33a21",
+      "01a0befb-3bf4-737e-8bf3-4d45cdb34d01"
+    ],
+    "invalidatedSkillRuns": [
+      "01a0beef-cada-710f-8680-6885a8e5716c",
+      "01a0bef1-1253-7e1d-8581-82e067d93e0f"
+    ],
+    "pc1Stale": [
+      "01a0beef-dd31-7562-984b-629266c279ce",
+      "01a0bef3-2689-7001-9ecb-9207b032ca44",
+      "01a0bef3-33ff-760b-8ae9-83f7509b157d"
+    ]
+  },
+  "evidenceRefs": [
+    "PREFLIGHT.md",
+    "EXPERIMENT-BINDING.json",
+    "skill-ab/SKILL-AB-RESULT.json",
+    "context-stale/PC1-STALE-SAFETY-RESULT.json",
+    "PRODUCT-CONTEXT-SUPPORTING-ADDENDUM.md",
+    "SUPPORTING-FINDINGS.json"
+  ],
+  "noFrozenCoreRewrite": true
+}

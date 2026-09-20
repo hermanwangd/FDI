@@ -1,0 +1,14 @@
+{
+  "scenarioRef": "S04-PM-INTENTION",
+  "datasetRef": "SPC-MISSION-V1",
+  "name": "PM Intention Spec",
+  "goal": "Transform PM intent into a validated Intention Spec without inventing identity, retry, scope, or authorization decisions.",
+  "inputRequirements": ["PM Case A complete intent", "PM Case B ambiguous intent", "S01/S02 relevant knowledge", "S03 realization mapping"],
+  "contextRequirements": ["product/capability/scenario mapping", "authoritative evidence", "known gaps and conflicts", "human decision boundary"],
+  "skillRefs": ["pm-intention", "product-knowledge", "artifact-consistency", "swarm-orchestration"],
+  "controlRefs": ["CTRL-EXACT-BINDING-001", "CTRL-EVIDENCE-INTEGRITY-001"],
+  "outputRequirements": ["Intention Spec", "ambiguity classification", "evidence references", "product-level delta", "non-goals", "acceptance intent", "implementation authorization state"],
+  "successCriteria": ["complete intent is mapped correctly", "ambiguous identity/retry/scope is resolved only from evidence or remains explicitly blocking", "no unsupported PM decision is invented", "Intention Spec is revisioned and evidence-bound", "implementation authorization is not weakened"],
+  "scenarioRevision": "S04-r2-spc-mission-v1",
+  "definitionDigest": "sha256:e791edb85a7db82d6ad53f3457c8a2247f755025a46d36ecf7956387e0629319"
+}

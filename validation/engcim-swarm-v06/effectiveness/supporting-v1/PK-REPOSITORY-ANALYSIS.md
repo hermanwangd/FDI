@@ -1,0 +1,1 @@
+Read-only profile objective for controlled `pk-repository-analysis` cells: use S01 revision `S01-r2-pkb001` and the allow-listed `_controlled-inputs/s01/` package to produce semantic Product Knowledge reasoning with claim-level evidence and explicit limitations. Do not ingest or mutate ProductKB; do not claim unavailable Azure/TKMS evidence; do not read gold or other cells.

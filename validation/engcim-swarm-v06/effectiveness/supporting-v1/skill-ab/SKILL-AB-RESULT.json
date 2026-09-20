@@ -1,0 +1,789 @@
+{
+  "schema": "engcim-supporting-skill-ab-result.v0.1",
+  "baseCoreCommit": "a07a023dd2e62db0338422b68daf1702adba1ee3",
+  "frozenConclusion": "ENGCIM SWARM CORE EFFECTIVE",
+  "protocol": "skill-ab-v0.2-final",
+  "validCells": 16,
+  "invalidatedInputDriftRuns": 2,
+  "profiles": [
+    {
+      "profile": "pk-repository-analysis",
+      "canonicalSkill": {
+        "multicaSkillId": "a94e7698-38f4-4d77-8132-f68fdbab34a4",
+        "sha256": "4380eff38d08204b095f8dd351c7fa505997743b955afd06daed504140912534",
+        "source": "engcim/skill-packs/rc6/skills/pk-repository-analysis/SKILL.md"
+      },
+      "disabled": {
+        "n": 2,
+        "cells": [
+          {
+            "cell": "D1",
+            "issueRef": "E6V-47",
+            "runRef": "01a0bef1-0aed-70a8-8538-ed387bc31f11",
+            "metrics": {
+              "correctness": {
+                "numerator": 10,
+                "denominator": 10
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 10
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 10
+              },
+              "evidenceCompleteness": {
+                "numerator": 10,
+                "denominator": 10
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          },
+          {
+            "cell": "D2",
+            "issueRef": "E6V-59",
+            "runRef": "01a0befb-43a8-7079-938b-ac7cd59ca461",
+            "metrics": {
+              "correctness": {
+                "numerator": 10,
+                "denominator": 10
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 10
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 10
+              },
+              "evidenceCompleteness": {
+                "numerator": 10,
+                "denominator": 10
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          }
+        ],
+        "aggregate": {
+          "n": 2,
+          "correctness": {
+            "numerator": 20,
+            "denominator": 20,
+            "rate": 1
+          },
+          "criticalOmissionCount": {
+            "numerator": 0,
+            "denominator": 20,
+            "rate": 0
+          },
+          "unsupportedAssertionCount": {
+            "numerator": 0,
+            "denominator": 20,
+            "rate": 0
+          },
+          "evidenceCompleteness": {
+            "numerator": 20,
+            "denominator": 20,
+            "rate": 1
+          },
+          "reworkCount": {
+            "total": 0,
+            "mean": 0
+          },
+          "clarificationCount": {
+            "total": 0,
+            "mean": 0
+          }
+        }
+      },
+      "enabled": {
+        "n": 2,
+        "cells": [
+          {
+            "cell": "E1",
+            "issueRef": "E6V-50",
+            "runRef": "01a0bef3-1f40-7a4d-afed-6d03f010bcb3",
+            "metrics": {
+              "correctness": {
+                "numerator": 10,
+                "denominator": 10
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 10
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 10
+              },
+              "evidenceCompleteness": {
+                "numerator": 10,
+                "denominator": 10
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          },
+          {
+            "cell": "E2",
+            "issueRef": "E6V-60",
+            "runRef": "01a0befd-962e-75d8-a413-15d83c56b8fb",
+            "metrics": {
+              "correctness": {
+                "numerator": 10,
+                "denominator": 10
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 10
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 10
+              },
+              "evidenceCompleteness": {
+                "numerator": 10,
+                "denominator": 10
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          }
+        ],
+        "aggregate": {
+          "n": 2,
+          "correctness": {
+            "numerator": 20,
+            "denominator": 20,
+            "rate": 1
+          },
+          "criticalOmissionCount": {
+            "numerator": 0,
+            "denominator": 20,
+            "rate": 0
+          },
+          "unsupportedAssertionCount": {
+            "numerator": 0,
+            "denominator": 20,
+            "rate": 0
+          },
+          "evidenceCompleteness": {
+            "numerator": 20,
+            "denominator": 20,
+            "rate": 1
+          },
+          "reworkCount": {
+            "total": 0,
+            "mean": 0
+          },
+          "clarificationCount": {
+            "total": 0,
+            "mean": 0
+          }
+        }
+      },
+      "directionalDeltas": {
+        "correctnessRate": 0,
+        "criticalOmissionRate": 0,
+        "unsupportedAssertionRate": 0,
+        "evidenceCompletenessRate": 0,
+        "reworkMean": 0,
+        "clarificationMean": 0
+      },
+      "instability": {
+        "status": "STABLE",
+        "validRepetitionsPerArm": 2,
+        "materialWithinArmConflict": false
+      },
+      "classification": "NO_MEASURABLE_UPLIFT"
+    },
+    {
+      "profile": "pm-intention",
+      "canonicalSkill": {
+        "multicaSkillId": "a4971697-1c65-4519-aff2-75332b310699",
+        "sha256": "517a4eec491d509eebe605b81f62f1f4738a35f10c79ec42d9cdb8722ce04c8b",
+        "source": "engcim/skill-packs/rc6/skills/pm-intention/SKILL.md"
+      },
+      "disabled": {
+        "n": 2,
+        "cells": [
+          {
+            "cell": "D1",
+            "issueRef": "E6V-42",
+            "runRef": "01a0beee-ef21-75fb-89df-be2ff321583d",
+            "metrics": {
+              "correctness": {
+                "numerator": 4,
+                "denominator": 4
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 4
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 4
+              },
+              "evidenceCompleteness": {
+                "numerator": 4,
+                "denominator": 4
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          },
+          {
+            "cell": "D2",
+            "issueRef": "E6V-53",
+            "runRef": "01a0bef4-dfe8-753c-a056-169f6521f3b8",
+            "metrics": {
+              "correctness": {
+                "numerator": 4,
+                "denominator": 4
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 4
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 4
+              },
+              "evidenceCompleteness": {
+                "numerator": 4,
+                "denominator": 4
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          }
+        ],
+        "aggregate": {
+          "n": 2,
+          "correctness": {
+            "numerator": 8,
+            "denominator": 8,
+            "rate": 1
+          },
+          "criticalOmissionCount": {
+            "numerator": 0,
+            "denominator": 8,
+            "rate": 0
+          },
+          "unsupportedAssertionCount": {
+            "numerator": 0,
+            "denominator": 8,
+            "rate": 0
+          },
+          "evidenceCompleteness": {
+            "numerator": 8,
+            "denominator": 8,
+            "rate": 1
+          },
+          "reworkCount": {
+            "total": 0,
+            "mean": 0
+          },
+          "clarificationCount": {
+            "total": 0,
+            "mean": 0
+          }
+        }
+      },
+      "enabled": {
+        "n": 2,
+        "cells": [
+          {
+            "cell": "E1",
+            "issueRef": "E6V-43",
+            "runRef": "01a0beef-c0f1-71cb-89c1-0f7c6bc6a123",
+            "metrics": {
+              "correctness": {
+                "numerator": 4,
+                "denominator": 4
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 4
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 4
+              },
+              "evidenceCompleteness": {
+                "numerator": 4,
+                "denominator": 4
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          },
+          {
+            "cell": "E2",
+            "issueRef": "E6V-54",
+            "runRef": "01a0bef4-e736-72f8-a06e-54d7466fc322",
+            "metrics": {
+              "correctness": {
+                "numerator": 4,
+                "denominator": 4
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 4
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 4
+              },
+              "evidenceCompleteness": {
+                "numerator": 4,
+                "denominator": 4
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          }
+        ],
+        "aggregate": {
+          "n": 2,
+          "correctness": {
+            "numerator": 8,
+            "denominator": 8,
+            "rate": 1
+          },
+          "criticalOmissionCount": {
+            "numerator": 0,
+            "denominator": 8,
+            "rate": 0
+          },
+          "unsupportedAssertionCount": {
+            "numerator": 0,
+            "denominator": 8,
+            "rate": 0
+          },
+          "evidenceCompleteness": {
+            "numerator": 8,
+            "denominator": 8,
+            "rate": 1
+          },
+          "reworkCount": {
+            "total": 0,
+            "mean": 0
+          },
+          "clarificationCount": {
+            "total": 0,
+            "mean": 0
+          }
+        }
+      },
+      "directionalDeltas": {
+        "correctnessRate": 0,
+        "criticalOmissionRate": 0,
+        "unsupportedAssertionRate": 0,
+        "evidenceCompletenessRate": 0,
+        "reworkMean": 0,
+        "clarificationMean": 0
+      },
+      "instability": {
+        "status": "STABLE",
+        "validRepetitionsPerArm": 2,
+        "materialWithinArmConflict": false
+      },
+      "classification": "NO_MEASURABLE_UPLIFT"
+    },
+    {
+      "profile": "test-architecture",
+      "canonicalSkill": {
+        "multicaSkillId": "bfb25f67-c6fd-443a-a790-bf3f2384bf09",
+        "sha256": "eef28362b091c849083ffce8530086b2b44e33de66415278c60860194393c06",
+        "source": "engcim/skill-packs/rc6/skills/test-architecture/SKILL.md"
+      },
+      "disabled": {
+        "n": 2,
+        "cells": [
+          {
+            "cell": "D1",
+            "issueRef": "E6V-61",
+            "runRef": "01a0bf02-a3d1-7673-b88f-0580e6f770d6",
+            "metrics": {
+              "correctness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "evidenceCompleteness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          },
+          {
+            "cell": "D2",
+            "issueRef": "E6V-55",
+            "runRef": "01a0befb-1f13-7b95-b671-ba261f9b81d8",
+            "metrics": {
+              "correctness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "evidenceCompleteness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          }
+        ],
+        "aggregate": {
+          "n": 2,
+          "correctness": {
+            "numerator": 10,
+            "denominator": 10,
+            "rate": 1
+          },
+          "criticalOmissionCount": {
+            "numerator": 0,
+            "denominator": 10,
+            "rate": 0
+          },
+          "unsupportedAssertionCount": {
+            "numerator": 0,
+            "denominator": 10,
+            "rate": 0
+          },
+          "evidenceCompleteness": {
+            "numerator": 10,
+            "denominator": 10,
+            "rate": 1
+          },
+          "reworkCount": {
+            "total": 0,
+            "mean": 0
+          },
+          "clarificationCount": {
+            "total": 0,
+            "mean": 0
+          }
+        }
+      },
+      "enabled": {
+        "n": 2,
+        "cells": [
+          {
+            "cell": "E1",
+            "issueRef": "E6V-62",
+            "runRef": "01a0bf02-ab3d-7e52-8d3a-d25e32797691",
+            "metrics": {
+              "correctness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "evidenceCompleteness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          },
+          {
+            "cell": "E2",
+            "issueRef": "E6V-56",
+            "runRef": "01a0befb-2619-7df0-9dc8-887d4abc80d6",
+            "metrics": {
+              "correctness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "evidenceCompleteness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          }
+        ],
+        "aggregate": {
+          "n": 2,
+          "correctness": {
+            "numerator": 10,
+            "denominator": 10,
+            "rate": 1
+          },
+          "criticalOmissionCount": {
+            "numerator": 0,
+            "denominator": 10,
+            "rate": 0
+          },
+          "unsupportedAssertionCount": {
+            "numerator": 0,
+            "denominator": 10,
+            "rate": 0
+          },
+          "evidenceCompleteness": {
+            "numerator": 10,
+            "denominator": 10,
+            "rate": 1
+          },
+          "reworkCount": {
+            "total": 0,
+            "mean": 0
+          },
+          "clarificationCount": {
+            "total": 0,
+            "mean": 0
+          }
+        }
+      },
+      "directionalDeltas": {
+        "correctnessRate": 0,
+        "criticalOmissionRate": 0,
+        "unsupportedAssertionRate": 0,
+        "evidenceCompletenessRate": 0,
+        "reworkMean": 0,
+        "clarificationMean": 0
+      },
+      "instability": {
+        "status": "STABLE",
+        "validRepetitionsPerArm": 2,
+        "materialWithinArmConflict": false
+      },
+      "classification": "NO_MEASURABLE_UPLIFT"
+    },
+    {
+      "profile": "root-cause-debugging",
+      "canonicalSkill": {
+        "multicaSkillId": "9f058e93-22bf-47d9-bdcb-2b9dcfbfde2e",
+        "sha256": "83543213486e0d4e37ecd061e6533507836a40006b27b5a515dcc4d938b46530",
+        "source": "engcim/skill-packs/rc6/skills/root-cause-debugging/SKILL.md"
+      },
+      "disabled": {
+        "n": 2,
+        "cells": [
+          {
+            "cell": "D1",
+            "issueRef": "E6V-45",
+            "runRef": "01a0beef-d26e-7dbe-8f64-59a84af0ab83",
+            "metrics": {
+              "correctness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "evidenceCompleteness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          },
+          {
+            "cell": "D2",
+            "issueRef": "E6V-57",
+            "runRef": "01a0befb-2fbd-7e00-b9a5-52fd8a5fd72b",
+            "metrics": {
+              "correctness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "evidenceCompleteness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          }
+        ],
+        "aggregate": {
+          "n": 2,
+          "correctness": {
+            "numerator": 10,
+            "denominator": 10,
+            "rate": 1
+          },
+          "criticalOmissionCount": {
+            "numerator": 0,
+            "denominator": 10,
+            "rate": 0
+          },
+          "unsupportedAssertionCount": {
+            "numerator": 0,
+            "denominator": 10,
+            "rate": 0
+          },
+          "evidenceCompleteness": {
+            "numerator": 10,
+            "denominator": 10,
+            "rate": 1
+          },
+          "reworkCount": {
+            "total": 0,
+            "mean": 0
+          },
+          "clarificationCount": {
+            "total": 0,
+            "mean": 0
+          }
+        }
+      },
+      "enabled": {
+        "n": 2,
+        "cells": [
+          {
+            "cell": "E1",
+            "issueRef": "E6V-49",
+            "runRef": "01a0bef1-217d-75a6-86d2-cf2c5bd33a21",
+            "metrics": {
+              "correctness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "evidenceCompleteness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          },
+          {
+            "cell": "E2",
+            "issueRef": "E6V-58",
+            "runRef": "01a0befb-3bf4-737e-8bf3-4d45cdb34d01",
+            "metrics": {
+              "correctness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "criticalOmissionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "unsupportedAssertionCount": {
+                "numerator": 0,
+                "denominator": 5
+              },
+              "evidenceCompleteness": {
+                "numerator": 5,
+                "denominator": 5
+              },
+              "reworkCount": 0,
+              "clarificationCount": 0
+            }
+          }
+        ],
+        "aggregate": {
+          "n": 2,
+          "correctness": {
+            "numerator": 10,
+            "denominator": 10,
+            "rate": 1
+          },
+          "criticalOmissionCount": {
+            "numerator": 0,
+            "denominator": 10,
+            "rate": 0
+          },
+          "unsupportedAssertionCount": {
+            "numerator": 0,
+            "denominator": 10,
+            "rate": 0
+          },
+          "evidenceCompleteness": {
+            "numerator": 10,
+            "denominator": 10,
+            "rate": 1
+          },
+          "reworkCount": {
+            "total": 0,
+            "mean": 0
+          },
+          "clarificationCount": {
+            "total": 0,
+            "mean": 0
+          }
+        }
+      },
+      "directionalDeltas": {
+        "correctnessRate": 0,
+        "criticalOmissionRate": 0,
+        "unsupportedAssertionRate": 0,
+        "evidenceCompletenessRate": 0,
+        "reworkMean": 0,
+        "clarificationMean": 0
+      },
+      "instability": {
+        "status": "STABLE",
+        "validRepetitionsPerArm": 2,
+        "materialWithinArmConflict": false
+      },
+      "classification": "NO_MEASURABLE_UPLIFT"
+    }
+  ],
+  "overallSkillSupportingGate": "INCONCLUSIVE",
+  "overallReason": "All four profiles completed valid 2x2 cells without material correctness or safety regression, but no frozen metric showed consistent directional improvement. Per pre-registration this is NO_MEASURABLE_UPLIFT, not a Skill PASS; the supporting gate remains INCONCLUSIVE.",
+  "statisticalClaim": "none; n=2 per arm is descriptive only"
+}

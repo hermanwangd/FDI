@@ -1,0 +1,47 @@
+{
+  "schema": "engcim-supporting-findings.v0.1",
+  "baseCoreCommit": "a07a023dd2e62db0338422b68daf1702adba1ee3",
+  "noAutoFix": true,
+  "findings": [
+    {
+      "id": "SF-001",
+      "primaryOwner": "FIXTURE_ENVIRONMENT",
+      "status": "INVALIDATED_AND_CONTAINED",
+      "severity": "blocking-to-initial-test-architecture-runs",
+      "title": "Initial test-architecture D1/E1 used the wrong r1 fixture revision",
+      "description": "The initial D1/E1 runs used r1-fixture-source at a07a023... instead of the required exact r1 candidate f63aa7.... Their outputs are preserved but excluded. Replacement D1/E1 runs used the exact candidate and form the valid arm estimates.",
+      "evidenceRefs": [
+        "skill-ab/test-architecture/D1/INVALID-INPUT-DRIFT.md",
+        "skill-ab/test-architecture/E1/INVALID-INPUT-DRIFT.md",
+        "skill-ab/SKILL-AB-RUN-REGISTRY.json"
+      ],
+      "action": "record and exclude; no product/code/fixture source mutation"
+    },
+    {
+      "id": "SF-002",
+      "primaryOwner": "SKILL",
+      "status": "OBSERVED_NO_MEASURABLE_UPLIFT",
+      "severity": "supporting-gate",
+      "title": "Enabled canonical Skill attachments show no measurable uplift",
+      "description": "All four profiles complete valid 2x2 cells with no material correctness or safety regression, but no frozen metric improves consistently in both enabled repetitions. This is not a Skill PASS claim.",
+      "evidenceRefs": [
+        "skill-ab/SKILL-AB-RESULT.json",
+        "skill-ab/SKILL-AB-RESULT.md"
+      ],
+      "action": "retain as supporting result; do not enhance Skill source or reinterpret as core failure"
+    },
+    {
+      "id": "SF-003",
+      "primaryOwner": "EVIDENCE",
+      "status": "LIMITATION",
+      "severity": "input-limitation",
+      "title": "TKMS and Azure DevOps MCP evidence remained unavailable",
+      "description": "The frozen protocol excludes these providers for this batch. No Skill or Product Context pass claim relies on them.",
+      "evidenceRefs": [
+        "PREFLIGHT.md",
+        "EXPERIMENT-BINDING.json"
+      ],
+      "action": "record limitation; no provider/runtime change"
+    }
+  ]
+}

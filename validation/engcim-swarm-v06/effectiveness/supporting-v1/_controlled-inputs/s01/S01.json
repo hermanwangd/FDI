@@ -1,0 +1,15 @@
+{
+  "scenarioRef": "S01-PRODUCT-KNOWLEDGE",
+  "name": "Product Knowledge",
+  "datasetRef": "PKB001-PETCLINIC",
+  "datasetRole": "standalone semantic calibration; not SPC-MISSION-V1 input",
+  "goal": "Build a governed, evidence-backed semantic knowledge baseline from the frozen Petclinic source, tests, delivery history, and source evidence.",
+  "inputRequirements": ["Petclinic source evidence", "Petclinic tests", "delivery-history", "source manifest"],
+  "contextRequirements": ["Petclinic product boundary", "capability and behavior evidence", "source provenance", "authority boundary"],
+  "skillRefs": ["product-knowledge", "pk-file-ingestion", "pk-document-analysis", "pk-repository-analysis", "pk-correlation-synthesis", "artifact-consistency"],
+  "controlRefs": ["CTRL-REPOSITORY-PROVENANCE-001", "CTRL-EVIDENCE-INTEGRITY-001"],
+  "outputRequirements": ["PRODUCT_FACT", "CAPABILITY", "BEHAVIOR_SCENARIO", "PRODUCT_RULE_OR_CONSTRAINT", "claim-level evidence/provenance"],
+  "successCriteria": ["every frozen source is classified", "every critical semantic item has source evidence", "unsupported and near-miss claims are explicit", "prior reviewed semantics are independently re-adjudicated", "gold is excluded from generation inputs"],
+  "scenarioRevision": "S01-r2-pkb001",
+  "definitionDigest": "sha256:868777143c176e3beb40881f1a17f96344b5f88335d03e3b00e6114797d49adf"
+}

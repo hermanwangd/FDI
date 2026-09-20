@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "engcim-supporting-controlled-input-boundaries.v0.1",
+  "policy": "allow-list-only",
+  "sharedRuntime": "e021607e-b81d-4a52-a755-ef45b8b8dfd6",
+  "packages": {
+    "s01": {
+      "purpose": "Skill A/B pk-repository-analysis cells",
+      "allow": ["S01.json", "petclinic-product-semantics-candidate.json", "petclinic-delivery-history.json", "source-manifest.json", "petclinic-graph-818c413.json", "petclinic-source-main/**", "petclinic-source-test/**"],
+      "exclude": ["S01-SEMANTIC-GOLD.json", "gold-review.md", "VALIDATION-GROUND-TRUTH-SEAL.json", "other-arm-output", "historical-execution-output", "TKMS MCP", "Azure DevOps MCP"],
+      "sourceRevisions": {"petclinic": "818c4136ea971c21674525f9053de0d9c7ad8cfe", "sourceTree": "0bb31bb92bc1839f6378e832e54c8b4af03e4ee2"}
+    },
+    "s04": {
+      "purpose": "Skill A/B pm-intention cells",
+      "allow": ["S04.json", "case-b-ambiguous.md", "chart-viewer-enhancement-request.md", "PC1-v2.yaml", "source-corpus/**"],
+      "exclude": ["S04 gold/review", "DecisionResponse A1", "other-arm-output", "historical-execution-output", "S06 evaluator-only/**", "future r2 correction"],
+      "context": "PC1-v2 / revision 2; raw SPC-MISSION-V1 source remains available"
+    },
+    "s06-test-architecture": {
+      "purpose": "Skill A/B test-architecture cells",
+      "allow": ["S06.json", "PC1-v2.yaml", "case-b-ambiguous.md", "chart-viewer-enhancement-request.md", "source-corpus/**", "r1-fixture-source/**"],
+      "exclude": ["S06-VERIFICATION-GOLD.json", "evaluator-only/**", "F1 expected finding text", "final r2 correction", "future r2 candidate", "hidden verifier implementation", "other-arm-output"],
+      "candidate": "r1 historical source binding is f63aa7ff1037d840c0b9338e455def256956bed2"
+    },
+    "s06-root-cause-debugging": {
+      "purpose": "Skill A/B root-cause-debugging cells",
+      "allow": ["S06.json", "PC1-v2.yaml", "case-b-ambiguous.md", "chart-viewer-enhancement-request.md", "source-corpus/**", "r1-candidate-exact/**", "f1-evidence/S06-r1-defect-report-F1.md"],
+      "exclude": ["S06-VERIFICATION-GOLD.json", "evaluator-only/**", "final r2 patch", "final r2 candidate", "future S06 r2 result", "evaluator answer", "other-arm-output"],
+      "candidate": {"commit": "f63aa7ff1037d840c0b9338e455def256956bed2", "tree": "4d5b25de8f1de6b955ce9fdde200b4d3d5139486"},
+      "f1Evidence": {"attachmentId": "01a0bcad-875c-75c0-aacb-73eea8108d47", "sha256": "e4235a148aed2c9c551678fb6f375cd4a4f23d58e1ade18d7265e0ef3131e001"}
+    },
+    "context-stale": {
+      "purpose": "PC1-STALE S04/S05/S06 safety probes",
+      "allow": ["S04.json", "S05.json", "S06.json", "PC1-STALE.yaml", "case-b-ambiguous.md", "chart-viewer-enhancement-request.md", "decision-response-a.json", "raw-source-corpus/**", "current-candidate-exact/**"],
+      "exclude": ["PC1-v2 as replacement", "S04/S05/S06 gold", "other-arm-output", "historical evaluator verdicts", "mutation/publication/canonical update"],
+      "currentCandidate": {"commit": "c51390ca7e748f07201b0ecd28642ee3ea8d686c", "tree": "2d3de714bd30552eb572d7e3bfb0f81dbed373a3"},
+      "staleContextSha256": "770cab5eac2c04158148d2f9d80bf2fd11188325d32f28aa0d425ff6be8dd5ba",
+      "authorizedUpstreamSha256": "3418800d91053a932d6d24cff1bce59369b898221a4ce212c3d27c0469b2bc1b"
+    }
+  }
+}

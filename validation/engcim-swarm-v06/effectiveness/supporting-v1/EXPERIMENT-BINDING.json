@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "engcim-supporting-gates-experiment-binding.v0.1",
+  "namespace": "validation/engcim-swarm-v06/effectiveness/supporting-v1",
+  "baseCoreCommit": "a07a023dd2e62db0338422b68daf1702adba1ee3",
+  "skillProtocol": "skill-ab-v0.2-final",
+  "productContextProtocol": "product-context-ab-v0.3-final",
+  "runtime": {
+    "multicaCli": "0.4.44",
+    "multicaDaemon": "0.4.44",
+    "codexRuntime": "0.4.40",
+    "runtimeId": "e021607e-b81d-4a52-a755-ef45b8b8dfd6",
+    "provider": "codex",
+    "model": "gpt-5.6-luna",
+    "workspaceId": "44625a34-7b76-41f1-8ce8-a191b7cf6b46"
+  },
+  "skillSources": {
+    "pk-repository-analysis": {
+      "multicaSkillId": "a94e7698-38f4-4d77-8132-f68fdbab34a4",
+      "localPath": "engcim/skill-packs/rc6/skills/pk-repository-analysis/SKILL.md",
+      "sha256": "4380eff38d08204b095f8dd351c7fa505997743b955afd06daed504140912534"
+    },
+    "pm-intention": {
+      "multicaSkillId": "a4971697-1c65-4519-aff2-75332b310699",
+      "localPath": "engcim/skill-packs/rc6/skills/pm-intention/SKILL.md",
+      "sha256": "517a4eec491d509eebe605b81f62f1f4738a35f10c79ec42d9cdb8722ce04c8b"
+    },
+    "test-architecture": {
+      "multicaSkillId": "bfb25f67-c6fd-443a-a790-bf3f2384bf09",
+      "localPath": "engcim/skill-packs/rc6/skills/test-architecture/SKILL.md",
+      "sha256": "eef28362b091c849083ffce8530086b2b44e33de66415278c60860194393c06"
+    },
+    "root-cause-debugging": {
+      "multicaSkillId": "9f058e93-22bf-47d9-bdcb-2b9dcfbfde2e",
+      "localPath": "engcim/skill-packs/rc6/skills/root-cause-debugging/SKILL.md",
+      "sha256": "83543213486e0d4e37ecd061e6533507836a40006b27b5a515dcc4d938b46530"
+    }
+  },
+  "skillAB": {
+    "profiles": [
+      {"profile": "pk-repository-analysis", "scenarioRef": "S01-PRODUCT-KNOWLEDGE", "scenarioRevision": "S01-r2-pkb001", "role": "Swarm Knowledge Curator"},
+      {"profile": "pm-intention", "scenarioRef": "S04-PM-INTENTION", "scenarioRevision": "S04-r2-spc-mission-v1", "role": "Swarm Product Manager"},
+      {"profile": "test-architecture", "scenarioRef": "S06-VERIFICATION-TESTING", "scenarioRevision": "S06-r2-spc-mission-v1", "role": "Swarm QA Tester"},
+      {"profile": "root-cause-debugging", "scenarioRef": "S06-VERIFICATION-TESTING", "scenarioRevision": "S06-r2-spc-mission-v1", "role": "Swarm Backend Dev"}
+    ],
+    "arms": {"disabled": "DISABLED_FOR_AB", "enabled": "ENABLED"},
+    "cellsPerArmAndProfile": 2,
+    "minimumCells": 16,
+    "sameWithinProfile": ["scenario", "inputs", "context", "role", "model", "provider", "runtime", "objective", "criteria", "evaluatorBoundary"],
+    "onlyChangedVariable": "targetSkillAttachment"
+  },
+  "pc1Stale": {
+    "contextRef": "CTX-SPC-MISSION-V1",
+    "contextRevision": "1-stale",
+    "boundaries": ["S04", "S05", "S06"],
+    "rawSource": "SPC-MISSION-V1-r1",
+    "excludedFromMainUpliftScore": true
+  },
+  "prohibitedMutations": ["frozen core artifacts", "scenario definitions", "Skill source", "Control definitions", "Product Context source", "runtime", "fixture", "product code", "gold", "thresholds", "denominators", "canonical product candidate"]
+}
