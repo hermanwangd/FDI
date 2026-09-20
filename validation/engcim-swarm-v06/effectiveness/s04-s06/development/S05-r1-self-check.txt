@@ -51,3 +51,9 @@ Observed: CLEAN_RERUN_CHECKSUMS=13/13.
 [WORKTREE]
 Candidate checkout after commit/push: clean.
 Authoritative FDI checkout pre-existing changes were not staged or altered; new S05 evidence is isolated below the development namespace.
+
+[ARTIFACT TRACEABILITY CORRECTION: delivery revision 2]
+$ python3 scripts/check_traceability.py validation/engcim-swarm-v06/effectiveness/s04-s06/development/S05-r1-artifact-trace.yaml
+EXIT_CODE=0
+Observed: PASS artifact trace; 10 registry entries cover all 23 link/requirement references, including the exact S04 comparison/controls, PC0/PC1 Case B r2 IntentionSpecs, S05 result, manifest, self-check, control evidence, and trace.
+Path check: all registry paths resolve against the authoritative FDI checkout; corrected trace SHA256 is fbf020d6b2c5d3861bafd8c19da35befa6b2e76f16758df05f4a36abc6fe9640.

@@ -2,6 +2,37 @@ schemaVersion: engcim-s05-development-artifact-trace.v0.1
 artifactKind: S05_R1_ARTIFACT_TRACE
 revision: 1
 resultRef: S05-E6V26-DEVELOPMENT-r1
+artifacts:
+  - ref: S04-CLEAN-COMPARISON-r1
+    path: ../clean-rerun/S04-r2-spc-mission-v1-clean-rerun-comparison.json
+    revision: 1
+  - ref: S04-CLEAN-CONTROLS-r1
+    path: ../clean-rerun/S04-r2-spc-mission-v1-clean-rerun-control-evidence.json
+    revision: 1
+  - ref: INT-E6V23-PC0-B-r2
+    path: ../clean-rerun/S04-r2-spc-mission-v1-PC0-case-b-intention-spec-r2.yaml
+    revision: 2
+  - ref: INT-E6V23-PC1-B-r2
+    path: ../clean-rerun/S04-r2-spc-mission-v1-PC1-case-b-intention-spec-r2.yaml
+    revision: 2
+  - ref: S05-E6V26-DEVELOPMENT-r1
+    path: S05-r1-development-result.yaml
+    revision: 1
+  - ref: S05-r1-development-result.yaml
+    path: S05-r1-development-result.yaml
+    revision: 1
+  - ref: S05-r1-change-manifest.json
+    path: S05-r1-change-manifest.json
+    revision: 1
+  - ref: S05-r1-self-check.txt
+    path: S05-r1-self-check.txt
+    revision: 1
+  - ref: S05-r1-control-evidence.json
+    path: S05-r1-control-evidence.json
+    revision: 1
+  - ref: S05-r1-artifact-trace.yaml
+    path: S05-r1-artifact-trace.yaml
+    revision: 1
 links:
   - from: S04-CLEAN-COMPARISON-r1
     fromRevision: 1
