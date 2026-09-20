@@ -1,0 +1,53 @@
+S05-E6V26-DEVELOPMENT-r1 SELF-CHECK
+
+Canonical repository: https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture.git
+Dedicated workspace identity: fdi-s05-fixture-r1
+Branch: agent/swarm-coder/e6v-26-s05-r1-baseline
+Baseline: 2eff5f9f84ca709684bfe0b7c90102268f07a0f0
+Candidate: f63aa7ff1037d840c0b9338e455def256956bed2
+Candidate tree: 4d5b25de8f1de6b955ce9fdde200b4d3d5139486
+
+[RED CHECK: frozen parent baseline]
+$ git switch -c agent/swarm-coder/e6v-26-s05-r1-baseline 2eff5f9f84ca709684bfe0b7c90102268f07a0f0
+$ npm test
+EXIT_CODE=1
+Observed: SyntaxError; requested module '../src/interaction.js' does not provide an export named 'openSelectedChart'.
+
+[IMPLEMENTATION]
+Changed exactly one source path: src/interaction.js
+Diff against baseline: M src/interaction.js
+Forbidden paths unchanged: src/chartViewer.js, test/interaction.test.js
+
+[GREEN CHECK: candidate]
+$ npm test
+EXIT_CODE=0
+Observed: 2 tests, 2 pass, 0 fail, 0 cancelled, 0 skipped.
+Cases: opens a selected chart in one interaction; preserves HTTP 404 as retryable=false.
+Runtime: Node v22.22.0; npm 10.9.4.
+
+[REPOSITORY PREFLIGHT]
+$ bash software-development/scripts/repo-preflight.sh
+Observed: PASS; branch=validation/s05-fixture-v2-20260920; head=4ab29f8dbbf1479f8e9f51f0f5eb3ddd100672a6; default=main.
+Candidate branch was subsequently created from the exact parent baseline and published.
+
+[GUARD EVIDENCE]
+Observed execution-guard ALLOW for the dedicated checkout, branch creation, source path, and candidate publication command. No default-branch mutation or destructive command was used.
+
+[CANDIDATE PUBLICATION]
+$ git ls-remote origin refs/heads/agent/swarm-coder/e6v-26-s05-r1-baseline
+f63aa7ff1037d840c0b9338e455def256956bed2	refs/heads/agent/swarm-coder/e6v-26-s05-r1-baseline
+PR: https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture/pull/1
+
+[PROJECT BASELINE RECHECK]
+$ bash validation/engcim-swarm-v06/baseline/validate_baseline.sh
+EXIT_CODE=0
+Observed: S01-S06 BASELINE CHECKS = PASS; VALIDATION_BASELINE = READY.
+
+[UPSTREAM S04 CLEAN-RERUN INTEGRITY]
+$ custom exact-format checksum loop over S04-r2-spc-mission-v1-clean-rerun-artifact-checksums.txt
+EXIT_CODE=0
+Observed: CLEAN_RERUN_CHECKSUMS=13/13.
+
+[WORKTREE]
+Candidate checkout after commit/push: clean.
+Authoritative FDI checkout pre-existing changes were not staged or altered; new S05 evidence is isolated below the development namespace.

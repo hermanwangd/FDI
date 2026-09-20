@@ -1,0 +1,40 @@
+schemaVersion: engcim-s05-development-artifact-trace.v0.1
+artifactKind: S05_R1_ARTIFACT_TRACE
+revision: 1
+resultRef: S05-E6V26-DEVELOPMENT-r1
+links:
+  - from: S04-CLEAN-COMPARISON-r1
+    fromRevision: 1
+    to: S05-E6V26-DEVELOPMENT-r1
+    relation: AUTHORIZES_IMPLEMENTATION_HANDOFF
+  - from: INT-E6V23-PC0-B-r2
+    fromRevision: 2
+    to: S05-E6V26-DEVELOPMENT-r1
+    relation: BINDS_ACCEPTANCE_INTENT
+  - from: INT-E6V23-PC1-B-r2
+    fromRevision: 2
+    to: S05-E6V26-DEVELOPMENT-r1
+    relation: BINDS_ACCEPTANCE_INTENT
+  - from: S05-E6V26-DEVELOPMENT-r1
+    fromRevision: 1
+    to: S05-r1-change-manifest.json
+    relation: PRODUCES_CANDIDATE_PROVENANCE
+  - from: S05-E6V26-DEVELOPMENT-r1
+    fromRevision: 1
+    to: S05-r1-self-check.txt
+    relation: PRODUCES_SELF_CHECK
+  - from: S05-E6V26-DEVELOPMENT-r1
+    fromRevision: 1
+    to: S05-r1-control-evidence.json
+    relation: BINDS_CONTROLS
+requirements:
+  - id: AC-S05-01
+    artifactRefs: [S05-r1-change-manifest.json, S05-r1-control-evidence.json]
+  - id: AC-S05-02
+    artifactRefs: [INT-E6V23-PC0-B-r2, INT-E6V23-PC1-B-r2, S05-r1-change-manifest.json]
+  - id: AC-S05-03
+    artifactRefs: [S05-r1-self-check.txt]
+  - id: AC-S05-04
+    artifactRefs: [S04-CLEAN-CONTROLS-r1, S05-r1-control-evidence.json, S05-r1-artifact-trace.yaml]
+  - id: AC-S05-05
+    artifactRefs: [S05-r1-development-result.yaml, S05-r1-change-manifest.json]

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "engcim-s05-development-change-manifest.v0.1",
+  "artifactKind": "S05_R1_CHANGE_MANIFEST",
+  "revision": 1,
+  "resultRef": "S05-E6V26-DEVELOPMENT-r1",
+  "canonicalRepository": "https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture.git",
+  "baselineRef": "2eff5f9f84ca709684bfe0b7c90102268f07a0f0",
+  "candidateRef": "f63aa7ff1037d840c0b9338e455def256956bed2",
+  "candidateTree": "4d5b25de8f1de6b955ce9fdde200b4d3d5139486",
+  "candidateBranch": "agent/swarm-coder/e6v-26-s05-r1-baseline",
+  "candidateRemoteRef": "refs/heads/agent/swarm-coder/e6v-26-s05-r1-baseline",
+  "candidatePublished": true,
+  "pullRequest": "https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture/pull/1",
+  "workspace": {
+    "identity": "fdi-s05-fixture-r1",
+    "mode": "dedicated-isolated-git-checkout",
+    "defaultBranchUntouched": true,
+    "preflight": "PASS"
+  },
+  "producer": {
+    "issueRef": "E6V-26",
+    "issueId": "01a0bc62-a6f7-74bd-a940-498449ecc28b",
+    "agentId": "32d261fd-2283-48ce-b029-87dbb779e9a7",
+    "workspaceId": "44625a34-7b76-41f1-8ce8-a191b7cf6b46"
+  },
+  "changedFiles": [
+    {
+      "path": "src/interaction.js",
+      "change": "M",
+      "beforeSha256": "2a3dff6ebee189ff34549d320b565c0b24d7c6e5babcca69f3c67d9f2ca339b0",
+      "afterSha256": "36e6ac8bf7908d7bc933f1b60b0db6866748d56fc0889521756541c08e71bc99"
+    }
+  ],
+  "unchangedRequiredPaths": [
+    "src/chartViewer.js",
+    "test/interaction.test.js",
+    "package.json"
+  ],
+  "scopeResult": "ALLOWED_PATH_ONLY",
+  "implementationSummary": "Expose openSelectedChart with the frozen OPENED/chartId result shape; preserve classifyChartResponse(404) as retryable=false."
+}
