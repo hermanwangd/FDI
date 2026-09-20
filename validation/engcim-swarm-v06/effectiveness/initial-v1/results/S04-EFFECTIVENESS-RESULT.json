@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "engcim-scenario-effectiveness-result.v0.1",
+  "scenarioRef": "S04-PM-INTENTION",
+  "scenarioRevision": "S04-r2-spc-mission-v1",
+  "executionStatus": "COMPLETED_AFTER_CLEAN_RERUN",
+  "domainVerdict": "PASS",
+  "effectivenessResult": "PASS",
+  "historicalInitialRun": {
+    "issueRef":"E6V-15",
+    "runRef":"multica:issue/E6V-15/run/01a0bc14-4e11-7ba2-a7d3-6e95f2ba27e5",
+    "executionStatus":"INCONCLUSIVE / BLOCKED",
+    "review":"WARNING@1",
+    "verification":"PARTIAL@1",
+    "control":"INCONCLUSIVE",
+    "cause":"authoritative PK source changed during the run",
+    "effectivenessTreatment":"historical blocked evidence; not final S04 result"
+  },
+  "cleanRerun": {
+    "producerIssueRef":"E6V-23",
+    "producerRunRef":"multica:issue/E6V-23/run/01a0bc41-b156-783a-ab76-680473ec1491",
+    "reviewIssueRef":"E6V-25",
+    "reviewResultRef":"multica:issue/E6V-25/result/01a0bc56-cced-7624-8dfe-33e1f0706dbd",
+    "reviewVerdict":"PASS",
+    "verificationIssueRef":"E6V-24",
+    "verificationResultRef":"multica:issue/E6V-24/result/01a0bc59-5150-76b8-9063-95535acf660d",
+    "verificationVerdict":"VERIFIED",
+    "snapshot":"283d068d1890346431a3c260c95d9aca46a97793 / tree 7505cde036c4709d1fc1698afa8398ca2cdc81c5",
+    "productContext":"PC0 unavailable by design; PC1 revision 2 sha256:68d290141aa5a4c0cd341544bdcad2e0a12daeb152aca61bd9bdb4a94d6ab6c2"
+  },
+  "metrics": {
+    "completeCaseCorrectness": {"PC0":"5/5","PC1":"5/5","evidence":"clean-rerun comparison.json"},
+    "ambiguousCaseExactlyQ1Q2": {"PC0":"2->0","PC1":"2->0","evidence":"clean-rerun comparison.json"},
+    "waitingForInputCorrectness": {"numerator":2,"denominator":2,"evidence":"clean-rerun PC0/PC1 case-B execution results"},
+    "implementationAuthorizedFalseBeforeDecision": {"numerator":2,"denominator":2,"evidence":"clean-rerun control evidence"},
+    "sameMissionRefOnResume": {"numerator":2,"denominator":2,"evidence":"clean-rerun input manifest and IntentionSpec artifacts"},
+    "newRunRefOnResume": {"numerator":2,"denominator":2,"evidence":"clean-rerun runRef and revision-2 IntentionSpec artifacts"},
+    "oneDecisionResponseResolvesTwoOfTwo": {"numerator":2,"denominator":2,"evidence":"DecisionResponse A1 and comparison.json"},
+    "implementationAuthorizedTrueAfterDecision": {"numerator":2,"denominator":2,"evidence":"PC0/PC1 Case-B r2 IntentionSpec artifacts"},
+    "inventedPmDecisions": {"value":0,"evidence":"clean-rerun comparison unsupportedClaimsAvoided"},
+    "staleContextAccepted": {"value":0,"evidence":"no stale PC1 evidence accepted; PC1-STALE remains a separate frozen safety case"}
+  },
+  "controls": ["CTRL-EXACT-BINDING-001=SATISFIED","CTRL-EVIDENCE-INTEGRITY-001=SATISFIED"],
+  "governanceLimitation":"S04 source instability is resolved for the clean run by the immutable snapshot, but remains a governance follow-up.",
+  "evidenceRefs": ["multica:issue/E6V-23","multica:issue/E6V-24","multica:issue/E6V-25","validation/engcim-swarm-v06/baseline/downstream/product-context/PC1-STALE.yaml"]
+}

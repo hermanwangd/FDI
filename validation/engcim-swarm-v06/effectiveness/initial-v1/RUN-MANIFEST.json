@@ -1,0 +1,20 @@
+{
+  "schemaVersion":"engcim-run-manifest.v0.1",
+  "manifestRef":"validation/engcim-swarm-v06/effectiveness/initial-v1/RUN-MANIFEST.json",
+  "sourcePolicy":"existing execution, gate, receipt, and Multica evidence only",
+  "readyBaselineCommit":"229f104c7aa8ec17dd3d24ff35b7911abf7c9fc8",
+  "phase2EvidenceCommit":"26a09d2233a09af7f1d3e67a86ac1f249680584b",
+  "missionRef":"context://mission/01a0bc12-80d3-7d33-825f-83ad412f0d92",
+  "runCount":18,
+  "preservedClasses":["PASS","FAIL / REFUTED","BLOCKED","INCONCLUSIVE","PARTIAL","REVISE","CANCELLED","STALE","CLEAN_RERUN"],
+  "requiredPreservedRuns":{
+    "s04Initial":"E6V-15 / 01a0bc14-4e11-7ba2-a7d3-6e95f2ba27e5",
+    "s04CleanRerun":"E6V-23 / 01a0bc41-b156-783a-ab76-680473ec1491",
+    "s05VerifierPartial":"E6V-38 / 01a0bcdd-e2bc-7a8c-9e90-116ff76cb24c",
+    "cancelledYamlParser":"01a0bd74-4a01-71b9-a70c-34d89b8342d2",
+    "s05VerifierFreshVerified":"E6V-38 / 01a0bd7b-c5bf-7576-8cb1-bef4c62c6a7b",
+    "s06R1":"E6V-31 / 01a0bca1-6294-7ee2-8f17-5696de3f7aad",
+    "s06R2":"E6V-39 / 01a0bd86-5258-7312-a1a6-c4878a085a66"
+  },
+  "historicalIntegrity":"Failed, blocked, partial, cancelled, stale, and superseded records are referenced; none is deleted or relabeled as a final accepted run."
+}

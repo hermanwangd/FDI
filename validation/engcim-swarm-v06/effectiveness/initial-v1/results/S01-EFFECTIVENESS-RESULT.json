@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "engcim-scenario-effectiveness-result.v0.1",
+  "scenarioRef": "S01-PRODUCT-KNOWLEDGE",
+  "scenarioRevision": "S01-r2-pkb001",
+  "executionStatus": "COMPLETED",
+  "domainVerdict": "PASS",
+  "effectivenessResult": "PASS",
+  "executionRunRef": "multica:issue/E6V-11/run/01a0bb9d-cba4-749e-9dff-877a16af8736",
+  "review": {
+    "issueRef": "E6V-11",
+    "runRef": "multica:issue/E6V-11/run/01a0bbae-b3b1-74b3-8bde-cef76246525f",
+    "verdict": "PASS",
+    "reviewedRevision": 1
+  },
+  "verification": {
+    "issueRef": "E6V-11",
+    "runRef": "multica:issue/E6V-11/run/01a0bbae-b3b8-7eb0-a86b-9f4fd5bc3bb2",
+    "verdict": "VERIFIED",
+    "verifiedRevision": 1
+  },
+  "metrics": [
+    {"name":"Source Coverage","numerator":25,"denominator":25,"evidence":"S01-r2-pkb001-claims.json claimsWithEvidence"},
+    {"name":"Critical Product Fact Recall","numerator":1,"denominator":1,"evidence":"S01-SOURCE-READJUDICATION-v2.json unchangedCriticalItems and changedItemReview"},
+    {"name":"Critical Capability Recall","numerator":4,"denominator":4,"evidence":"S01-SOURCE-READJUDICATION-v2.json plus S01 execution itemAdjudication"},
+    {"name":"Critical Behavior Scenario Recall","numerator":8,"denominator":8,"evidence":"S01-SOURCE-READJUDICATION-v2.json plus S01 execution itemAdjudication"},
+    {"name":"Critical Product Rule/Constraint Recall","numerator":2,"denominator":2,"evidence":"S01-SOURCE-READJUDICATION-v2.json plus S01 execution itemAdjudication"},
+    {"name":"Semantic Precision","numerator":25,"denominator":25,"evidence":"S01 execution itemAdjudication"},
+    {"name":"Claim-to-Evidence Accuracy","numerator":25,"denominator":25,"evidence":"S01 claims artifact claimsWithEvidence and evidenceCatalog"},
+    {"name":"Provenance Coverage","numerator":25,"denominator":25,"evidence":"S01 claims artifact provenance and CTRL-EVIDENCE-INTEGRITY-001"},
+    {"name":"Unsupported Accepted Assertion Count","value":0,"evidence":"S01 execution unsupportedOrNearMissPromoted"},
+    {"name":"Semantic Boundary Violation Count","value":0,"evidence":"S01 execution itemAdjudication and corrected S01 gold"},
+    {"name":"Ambiguity Preservation Accuracy","numerator":1,"denominator":1,"evidence":"S01-AMBIGUITY-001 execution itemAdjudication"},
+    {"name":"Governance Disposition Accuracy","numerator":25,"denominator":25,"evidence":"S01 execution itemAdjudication against evaluator-only S01 gold"},
+    {"name":"Parent Aggregation Completion","numerator":1,"denominator":1,"evidence":"E6V-11 fan-in result PASS/PASS@1/VERIFIED@1"}
+  ],
+  "generationIntegrity": {
+    "goldExcludedFromGeneration": true,
+    "priorReviewedSemanticsExcluded": true,
+    "forbiddenInputAccessed": false,
+    "sourceRevision": "818c4136ea971c21674525f9053de0d9c7ad8cfe",
+    "sourceTree": "0bb31bb92bc1839f6378e832e54c8b4af03e4ee2"
+  },
+  "controls": ["CTRL-REPOSITORY-PROVENANCE-001=PASS","CTRL-EVIDENCE-INTEGRITY-001=PASS"],
+  "limitations": ["TKMS MCP NOT_VERIFIED","Azure DevOps MCP NOT_VERIFIED"],
+  "evidenceRefs": [
+    "validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-execution-result.json",
+    "validation/engcim-swarm-v06/effectiveness/S01-r2-pkb001-claims.json",
+    "validation/engcim-swarm-v06/baseline/pk/s01/S01-SEMANTIC-GOLD-v2.json",
+    "multica:issue/E6V-11"
+  ]
+}

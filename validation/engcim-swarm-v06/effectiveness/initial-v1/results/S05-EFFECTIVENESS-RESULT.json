@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "engcim-scenario-effectiveness-result.v0.1",
+  "scenarioRef": "S05-SOFTWARE-DEVELOPMENT",
+  "scenarioRevision": "S05-r2-spc-mission-v1",
+  "executionStatus": "COMPLETED_AFTER_EVIDENCE_RESEAL",
+  "domainVerdict": "PASS",
+  "effectivenessResult": "PASS",
+  "r1": {
+    "executionStatus":"COMPLETED",
+    "domainVerdict":"REVISE_FOR_EVIDENCE_INTEGRITY",
+    "effectivenessResult":"INCONCLUSIVE",
+    "candidate":"f63aa7ff1037d840c0b9338e455def256956bed2",
+    "producerRunRef":"multica:issue/E6V-26/run/01a0bc62-a740-7192-aa0d-7c3106ee66ea",
+    "reviewRef":"multica:issue/E6V-27/run/01a0bc73-c85a-7401-837f-fe3d34866633",
+    "reviewVerdict":"REVISE",
+    "verificationRef":"multica:issue/E6V-28/run/01a0bc75-77ff-736b-b952-dc9beb750f8a",
+    "verificationVerdict":"VERIFIED",
+    "weaknesses":["top-level artifact registry gap","red-test evidence not reproducible from exact r1 commit","r1 review/verification stale after r2"]
+  },
+  "r2": {
+    "executionStatus":"COMPLETED",
+    "domainVerdict":"PASS",
+    "effectivenessResult":"PASS",
+    "fdiEvidenceRevision":"d58d3848f12d8c1ad1704852d175b9f656ef66e2",
+    "productCandidate":"c51390ca7e748f07201b0ecd28642ee3ea8d686c",
+    "productTree":"2d3de714bd30552eb572d7e3bfb0f81dbed373a3",
+    "producerRunRef":"multica:issue/E6V-34/run/01a0bcb9-1e07-7a58-ac60-5bd78dfa68d5",
+    "reviewIssueRef":"E6V-37",
+    "reviewReceiptRef":"multica:issue/E6V-37/run/01a0bcdd-e28e-7cfd-a118-8aa8397dcdfa",
+    "reviewVerdict":"PASS",
+    "verificationIssueRef":"E6V-38",
+    "verificationReceiptRef":"multica:issue/E6V-38/run/01a0bd7b-c5bf-7576-8cb1-bef4c62c6a7b",
+    "verificationVerdict":"VERIFIED",
+    "focusedTests":"7/7",
+    "fullTests":"9/9",
+    "artifactTrace":"PASS; registry 10/10",
+    "checksums":"5/5"
+  },
+  "controls": {
+    "authorization":"SATISFIED",
+    "executionSafety":"SATISFIED",
+    "repositoryProvenance":"SATISFIED",
+    "evidenceIntegrity":"SATISFIED",
+    "outOfScopeMutation":0,
+    "duplicateAcceptedExecution":0,
+    "manualChildDone":0,
+    "requiredEvidenceRefs":"15/15 overall; 11/11 S05 runtime subset"
+  },
+  "platformLimitation":"Multica practical 50-key metadata capacity was recovered with durable receipt refs; it did not cause an unrecovered contract failure.",
+  "evidenceRefs":[
+    "validation/engcim-swarm-v06/effectiveness/initial-v1/evidence-closure/S05-R2-EVIDENCE-RECEIPT.json",
+    "validation/engcim-swarm-v06/effectiveness/initial-v1/evidence-closure/S05-R2-REVERIFICATION.json",
+    "validation/engcim-swarm-v06/effectiveness/initial-v1/evidence-closure/S05-R2-REQUIRED-EVIDENCE-RESOLUTION.json",
+    "multica:issue/E6V-37/run/01a0bcdd-e28e-7cfd-a118-8aa8397dcdfa",
+    "multica:issue/E6V-38/run/01a0bd7b-c5bf-7576-8cb1-bef4c62c6a7b"
+  ]
+}
