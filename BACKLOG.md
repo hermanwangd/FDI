@@ -4,6 +4,19 @@ This is the active Spec-to-work ledger. A Backlog state does not authorize
 execution. Human Authority selects the parent item; the Feature Delivery Plane
 then writes one bounded `IMPLEMENTATION-PLAN.md` and execution envelope.
 
+## Architecture baseline
+
+`ENGCIM Swarm Core v1.0` is the active architecture documentation baseline
+merged in PR #84 at `664bfb1f1a59c2b383ac3301363b35fb591f22fe` from reviewed
+head `71b78ac6bd8000a66e69740d89649c9d478b5f2d`. The freeze adds the
+Scenario-first Core model, keeps Product Knowledge reusable across applicable
+Scenarios, scopes T1–T4 to the optional Software Delivery Profile, and keeps
+Multica as a generic runtime.
+
+This is a documentation baseline only. It does not authorize a new execution,
+holdout/generalization, production readiness, parent closure, or changes to
+the active Backlog selections below.
+
 ## Active ledger
 
 | Backlog ID | Type | Requirement binding | Outcome | Status | Dependency / evidence |

@@ -1,5 +1,17 @@
 # Software Factory Implementation Plan
 
+## Architecture baseline
+
+`ENGCIM Swarm Core v1.0` is merged in PR #84 at
+`664bfb1f1a59c2b383ac3301363b35fb591f22fe`; the reviewed documentation head
+is `71b78ac6bd8000a66e69740d89649c9d478b5f2d`. The active architecture is
+Scenario-first, with reusable Product Knowledge, an optional Software Delivery
+Profile for T1–T4, and Multica retained as a generic runtime.
+
+This freeze is documentation-only. It does not change the current selection,
+authorize formal holdout or generalization, change thresholds or denominators,
+or close any active Backlog item.
+
 ## Current selection
 
 `SF-BL-005-RESTASSURED-STATUS-DIALECT-001` completed its bounded delivery and FDP intake. PR50 squash-integrated the independently reviewed clean candidate as `39723313af6c05b3a46215242903e5d0f51a6a9b`; the merged tree exactly matches reviewed candidate tree `ba8ac687155323252b0d558b22faee36c4942801`. The bounded change recognizes a single literal `statusCode(int)` only on the same supported RestAssured MockMvc request chain after existing request, route, ambiguity, entity, and action gates. It must not infer business conditions from a generic 4xx response. Source-backed expected diagnostic impact is unsupported dialect 12→0 and accepted 0→1; these are diagnostic expectations, not recall or precision.
