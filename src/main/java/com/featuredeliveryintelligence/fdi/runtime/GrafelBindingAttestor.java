@@ -1,4 +1,5 @@
 package com.featuredeliveryintelligence.fdi.runtime;
+import com.featuredeliveryintelligence.fdi.shared.*;
 import java.time.Instant;import java.util.*;import java.util.function.Function;
 public final class GrafelBindingAttestor implements SnapshotBindingAttestor{
  private final Function<Map<String,Object>,Map<String,Object>>probe;private final String adapterVersion;

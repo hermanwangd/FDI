@@ -1,5 +1,7 @@
 package com.featuredeliveryintelligence.fdi.runtime;
 
+import com.featuredeliveryintelligence.fdi.shared.*;
+
 import java.io.IOException;
 import java.nio.file.*;
 import java.security.MessageDigest;

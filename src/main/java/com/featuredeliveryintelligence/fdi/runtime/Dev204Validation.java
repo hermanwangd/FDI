@@ -1,4 +1,5 @@
 package com.featuredeliveryintelligence.fdi.runtime;
+import com.featuredeliveryintelligence.fdi.shared.*;
 import com.fasterxml.jackson.core.type.TypeReference;import com.fasterxml.jackson.databind.*;import java.io.*;import java.nio.charset.StandardCharsets;import java.nio.file.*;import java.security.MessageDigest;import java.util.*;
 public final class Dev204Validation{
  private static final ObjectMapper J=new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT).configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS,true);private static final Set<String>S=Set.of("PASS","FAIL","N/A");private Dev204Validation(){}

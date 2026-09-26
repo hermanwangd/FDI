@@ -1,4 +1,5 @@
 package com.featuredeliveryintelligence.fdi.runtime;
+import com.featuredeliveryintelligence.fdi.shared.*;
 import java.util.*;
 public final class FeatureDiscovery {
  private FeatureDiscovery() {}
