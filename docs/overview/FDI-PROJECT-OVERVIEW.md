@@ -8,7 +8,7 @@
 
 ## Standalone governing-source materialization
 
-This standalone baseline physically vendors the active governing source content under `governance/approved/` and materializes the locked FT-T2 surface under `contracts/ft-t2/`, `skills/ft-t2/`, and `workflows/ft-t2/`. `governance/locks/approved-source-lock.json` resolves every active module ID to a bundle-local path and digest. Multica MUST NOT treat a module ID without a resolvable local file as sufficient authority.
+This standalone baseline physically vendors the active governing source content under `governance/approved/` and materializes the locked FT-T2 surface under `contracts/public/ft-t2/`, `agent/skills/ft-t2/`, and `agent/workflows/ft-t2/`. `governance/locks/approved-source-lock.json` resolves every active module ID to a bundle-local path and digest. Multica MUST NOT treat a module ID without a resolvable local file as sufficient authority.
 
 ---
 
@@ -1218,19 +1218,19 @@ fdi-clean-project-baseline-v0.4.8.3/
 │   ├── overview/
 │   └── planning/
 │
-├── contracts/                          ← machine-readable schemas
+├── contracts/public/                   ← machine-readable public schemas
 │   ├── layer1/
 │   ├── ft-t2/
 │   ├── layer2/
-│   ├── structural-intelligence/
-│   └── source-integration/
+│   ├── structural/
+│   └── source/
 │
-├── skills/                             ← governed Agent procedures
+├── agent/skills/                       ← governed Agent procedures
 │   ├── layer1/
 │   ├── ft-t2/
 │   └── layer2/
 │
-├── workflows/                          ← Product-level workflows
+├── agent/workflows/                    ← Product-level workflows
 │   ├── BOOTSTRAP-PRODUCT.md
 │   ├── MAINTAIN-PRODUCT.md
 │   └── DEVELOP-FEATURE.md

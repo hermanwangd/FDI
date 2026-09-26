@@ -11,8 +11,8 @@ Every tracked or proposed path must have exactly one primary classification. Cla
 | `governance/CURRENT`, `governance/GOVERNING-SOURCES.md`, `governance/baselines/`, `governance/locks/` | Governance index, baselines, and locks | Defines active governance resolution | Preserve exact IDs and revision bindings |
 | `governance/approved/**` | Approved governing semantics | Governing content; stronger than explanatory docs | Byte-preserving changes only through explicit governance work |
 | `docs/architecture/decisions/**` | Architecture decisions | Decision records, subject to status and applicability | Record status, evidence, and rollback boundaries |
-| `contracts/**` | Executable/public/provider contracts | Schemas and contract surfaces used by code or agents | Validate JSON/schema consumers after changes |
-| `skills/**`, `workflows/**` | Agent procedures | Operational instructions and workflows | Keep procedures separate from executable Java |
+| `contracts/public/**`, `contracts/providers/**` | Executable/public/provider contracts | Schemas and contract surfaces used by code or agents | Validate JSON/schema consumers after changes |
+| `agent/skills/**`, `agent/workflows/**` | Agent procedures | Operational instructions and workflows | Keep procedures separate from executable Java |
 | `src/main/**`, `src/test/**` | Java runtime and tests | Executable implementation and automated verification | Java 17/Spring Boot 3.4.1; verify affected tests |
 | `scripts/**`, `tests/**` | Closed migration baseline | Legacy wrappers/tests retained during Java migration | Do not add new framework behavior here |
 | `docs/**` | Candidate, explanatory, review, and planning docs | Informative unless explicitly linked as authority | Label status; do not silently promote to governance |

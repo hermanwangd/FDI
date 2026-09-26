@@ -16,6 +16,6 @@ FT-T2 physical surface:
 - Contract Markdown: 6
 - Contract JSON Schemas: 6
 - Skill Markdown: 5
-- Workflow: `workflows/ft-t2/FEATURE-CLOSURE.md`
+- Workflow: `agent/workflows/ft-t2/FEATURE-CLOSURE.md`
 
 The local digest is authoritative for this standalone baseline. Archival reconciliation with exact upstream stored bytes remains a separate DEV-218 task and must not be used to reinterpret these locked semantics.

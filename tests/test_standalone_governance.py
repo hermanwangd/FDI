@@ -16,12 +16,12 @@ def test_five_single_source_hashes_match():
     for m in lock()['modules']:
         if 'sha256' in m: assert sha(ROOT/m['local_path'])==m['sha256']
 def test_ft_t2_surface_counts():
-    assert len(list((ROOT/'contracts/ft-t2').glob('*.md')))==6
-    assert len(list((ROOT/'contracts/ft-t2').glob('*.schema.json')))==6
-    assert len(list((ROOT/'skills/ft-t2').glob('*/SKILL.md')))==5
-    assert (ROOT/'workflows/ft-t2/FEATURE-CLOSURE.md').exists()
+    assert len(list((ROOT/'contracts/public/ft-t2').glob('*.md')))==6
+    assert len(list((ROOT/'contracts/public/ft-t2').glob('*.schema.json')))==6
+    assert len(list((ROOT/'agent/skills/ft-t2').glob('*/SKILL.md')))==5
+    assert (ROOT/'agent/workflows/ft-t2/FEATURE-CLOSURE.md').exists()
 def test_ft_t2_modern_vocabulary():
-    paths=list((ROOT/'contracts/ft-t2').glob('*.md'))+list((ROOT/'skills/ft-t2').glob('*/SKILL.md'))+[ROOT/'workflows/ft-t2/FEATURE-CLOSURE.md',ROOT/'governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md']
+    paths=list((ROOT/'contracts/public/ft-t2').glob('*.md'))+list((ROOT/'agent/skills/ft-t2').glob('*/SKILL.md'))+[ROOT/'agent/workflows/ft-t2/FEATURE-CLOSURE.md',ROOT/'governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md']
     text='\n'.join(p.read_text() for p in paths)
     assert 'CLOSED_WITHIN_DECLARED_SCOPE' in text
     assert 'ACCEPT_CLOSED_WITHIN_DECLARED_SCOPE' in text
@@ -35,8 +35,8 @@ def test_overview_and_handoff_exist():
     assert (ROOT/'agent/handoff/MULTICA-HANDOFF.md').exists()
     assert (ROOT/'agent/handoff/MULTICA-PROJECT-PROMPT.txt').exists()
 def test_no_governing_placeholder_readmes():
-    assert not (ROOT/'contracts/layer1/README.md').exists()
-    assert not (ROOT/'contracts/ft-t2/README.md').exists()
+    assert not (ROOT/'contracts/public/layer1/README.md').exists()
+    assert not (ROOT/'contracts/public/ft-t2/README.md').exists()
 
 def test_repository_navigation_entrypoints():
     for relative in ('AGENTS.md', 'docs/README.md', 'docs/FILE-CLASSIFICATION.md'):
@@ -49,8 +49,8 @@ def test_repository_navigation_entrypoints():
 
 def test_file_classification_covers_active_path_families():
     classification=(ROOT/'docs/FILE-CLASSIFICATION.md').read_text()
-    for family in ('governance/', 'governance/approved/', 'contracts/', 'skills/',
-                   'workflows/', 'src/', 'scripts/', 'tests/', 'docs/',
+    for family in ('governance/', 'governance/approved/', 'contracts/public/', 'agent/skills/',
+                   'agent/workflows/', 'src/', 'scripts/', 'tests/', 'docs/',
                    'validation/', 'engcim/skill-packs/', 'release/', 'tmp/'):
         assert f'`{family}' in classification
 
