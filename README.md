@@ -7,13 +7,13 @@ This is a **self-contained FDI project baseline for Multica**. It fixes the v0.4
 1. [`AGENTS.md`](AGENTS.md)
 2. [`docs/README.md`](docs/README.md)
 3. [`docs/FILE-CLASSIFICATION.md`](docs/FILE-CLASSIFICATION.md)
-4. [`PROJECT-OVERVIEW.md`](PROJECT-OVERVIEW.md)
+4. [`docs/overview/FDI-PROJECT-OVERVIEW.md`](docs/overview/FDI-PROJECT-OVERVIEW.md)
 5. [`governance/CURRENT`](governance/CURRENT)
 6. [`governance/approved-source-lock.json`](governance/approved-source-lock.json)
 7. [`governance/GOVERNING-SOURCES.md`](governance/GOVERNING-SOURCES.md)
-8. [`STATUS.json`](STATUS.json)
-9. [`DEVELOPMENT-BACKLOG.md`](DEVELOPMENT-BACKLOG.md)
-10. [`MULTICA-HANDOFF.md`](MULTICA-HANDOFF.md)
+8. [`docs/planning/STATUS.json`](docs/planning/STATUS.json)
+9. [`docs/planning/DEVELOPMENT-BACKLOG.md`](docs/planning/DEVELOPMENT-BACKLOG.md)
+10. [`agent/handoff/MULTICA-HANDOFF.md`](agent/handoff/MULTICA-HANDOFF.md)
 
 ## Standalone invariant
 

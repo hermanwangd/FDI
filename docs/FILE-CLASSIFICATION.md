@@ -7,10 +7,10 @@ Every tracked or proposed path must have exactly one primary classification. Cla
 | Path family | Classification | Authority rule | Change rule |
 | --- | --- | --- | --- |
 | `README.md`, `AGENTS.md`, `pom.xml`, `mvnw`, `.mvn/` | Repository entry/build | Navigation and build entry points | Keep concise; update references when paths move |
-| `PROJECT-OVERVIEW.md`, `STATUS.json`, `DEVELOPMENT-BACKLOG.md`, `MULTICA-*` | Active project controls | Current orientation, status, backlog, and handoff | Update only when the corresponding project truth changes |
+| `docs/overview/FDI-PROJECT-OVERVIEW.md`, `docs/planning/STATUS.json`, `docs/planning/DEVELOPMENT-BACKLOG.md`, `agent/handoff/MULTICA-*` | Active project controls | Current orientation, status, backlog, and handoff | Update only when the corresponding project truth changes |
 | `governance/CURRENT`, `governance/GOVERNING-SOURCES.md`, `governance/baselines/` | Governance index and baselines | Defines active governance resolution | Preserve exact IDs and revision bindings |
 | `specs/approved/**` | Approved governing semantics | Governing content; stronger than explanatory docs | Byte-preserving changes only through explicit governance work |
-| `governance/decisions/**` | Architecture decisions | Decision records, subject to status and applicability | Record status, evidence, and rollback boundaries |
+| `docs/architecture/decisions/**` | Architecture decisions | Decision records, subject to status and applicability | Record status, evidence, and rollback boundaries |
 | `contracts/**` | Executable/public/provider contracts | Schemas and contract surfaces used by code or agents | Validate JSON/schema consumers after changes |
 | `skills/**`, `workflows/**` | Agent procedures | Operational instructions and workflows | Keep procedures separate from executable Java |
 | `src/main/**`, `src/test/**` | Java runtime and tests | Executable implementation and automated verification | Java 17/Spring Boot 3.4.1; verify affected tests |

@@ -8,7 +8,7 @@ Continue FDI development from this standalone project **without external governi
 
 1. Run `python scripts/verify_standalone_bundle.py .`.
 2. Require `PASS` for authority resolution, hashes, FT-T2 counts, Markdown tree completeness, schema parsing, and manifest integrity.
-3. Read `PROJECT-OVERVIEW.md` and `governance/GOVERNING-SOURCES.md`.
+3. Read `docs/overview/FDI-PROJECT-OVERVIEW.md` and `governance/GOVERNING-SOURCES.md`.
 4. Do not edit governing L1/L2/FT-T2 semantics unless a later explicitly approved governing revision is supplied.
 
 ## Non-negotiable architecture

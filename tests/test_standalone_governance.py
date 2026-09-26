@@ -31,8 +31,9 @@ def test_all_markdown_basename_is_in_project_tree():
     for p in ROOT.rglob('*.md'): assert p.name in tree
 def test_overview_and_handoff_exist():
     assert (ROOT/'PROJECT-OVERVIEW.md').exists()
-    assert (ROOT/'MULTICA-HANDOFF.md').exists()
-    assert (ROOT/'MULTICA-PROJECT-PROMPT.txt').exists()
+    assert (ROOT/'docs/overview/FDI-PROJECT-OVERVIEW.md').exists()
+    assert (ROOT/'agent/handoff/MULTICA-HANDOFF.md').exists()
+    assert (ROOT/'agent/handoff/MULTICA-PROJECT-PROMPT.txt').exists()
 def test_no_governing_placeholder_readmes():
     assert not (ROOT/'contracts/layer1/README.md').exists()
     assert not (ROOT/'contracts/ft-t2/README.md').exists()
@@ -42,7 +43,8 @@ def test_repository_navigation_entrypoints():
         assert (ROOT/relative).exists()
     readme=(ROOT/'README.md').read_text()
     for link in ('AGENTS.md', 'docs/README.md', 'docs/FILE-CLASSIFICATION.md',
-                 'PROJECT-OVERVIEW.md', 'governance/CURRENT', 'STATUS.json'):
+                 'docs/overview/FDI-PROJECT-OVERVIEW.md', 'governance/CURRENT',
+                 'docs/planning/STATUS.json'):
         assert link in readme
 
 def test_file_classification_covers_active_path_families():

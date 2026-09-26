@@ -17,9 +17,9 @@ Read these entry points before making project-level changes:
 1. `README.md`
 2. `docs/README.md`
 3. `docs/FILE-CLASSIFICATION.md`
-4. `PROJECT-OVERVIEW.md`
+4. `docs/overview/FDI-PROJECT-OVERVIEW.md`
 5. `governance/CURRENT`
-6. `STATUS.json`
+6. `docs/planning/STATUS.json`
 
 The classification document determines whether a file is governing authority, candidate documentation, executable code, agent procedure, validation evidence, or generated release material. Do not infer authority from filenames, version labels, archives, or old worktrees.
 

@@ -6,13 +6,13 @@ This directory contains explanatory, candidate, review, and planning material. I
 
 Read these in order when the task concerns project scope, governance, or delivery status:
 
-1. [`PROJECT-OVERVIEW.md`](../PROJECT-OVERVIEW.md)
+1. [`FDI-PROJECT-OVERVIEW.md`](overview/FDI-PROJECT-OVERVIEW.md)
 2. [`governance/CURRENT`](../governance/CURRENT)
 3. [`governance/approved-source-lock.json`](../governance/approved-source-lock.json)
 4. [`governance/GOVERNING-SOURCES.md`](../governance/GOVERNING-SOURCES.md)
-5. [`STATUS.json`](../STATUS.json)
-6. [`DEVELOPMENT-BACKLOG.md`](../DEVELOPMENT-BACKLOG.md)
-7. [`MULTICA-HANDOFF.md`](../MULTICA-HANDOFF.md)
+5. [`STATUS.json`](planning/STATUS.json)
+6. [`DEVELOPMENT-BACKLOG.md`](planning/DEVELOPMENT-BACKLOG.md)
+7. [`MULTICA-HANDOFF.md`](../agent/handoff/MULTICA-HANDOFF.md)
 
 ## Documentation zones
 
@@ -22,7 +22,7 @@ Read these in order when the task concerns project scope, governance, or deliver
 - `proposals/`: proposals that are not automatically approved authority.
 - `prompts/`: reviewed prompt material.
 - `superpowers/`: design and execution plans; plans are not authorization by themselves.
-- Top-level candidate specifications and review notes: retained during the staged reorganization and moved only with reference updates.
+- `overview/`, `specifications/`, `architecture/`, `planning/`, and `reviews/`: classified documentation zones; none automatically overrides governance.
 
 The authoritative path rule for all current and future files is [`FILE-CLASSIFICATION.md`](FILE-CLASSIFICATION.md).
 
