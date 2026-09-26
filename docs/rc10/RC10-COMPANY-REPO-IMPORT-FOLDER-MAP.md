@@ -6,6 +6,12 @@ This document proposes the future company-repository layout for importing the
 ENGCIM RC6 → RC10 implementation. It does not change the current RC10
 implementation lineage, runtime authority, or active workspace overlay.
 
+The path-by-path pre-move inventory is recorded in
+[`RC10-COMPANY-REPO-IMPORT-MANIFEST.json`](RC10-COMPANY-REPO-IMPORT-MANIFEST.json).
+Each entry records source path, destination, action, authority, SHA-256 and
+size; live state and root-owned files are explicitly classified rather than
+silently moved.
+
 ## 1. Decision
 
 Use three ENGCIM bounded domains:
