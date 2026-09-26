@@ -20,13 +20,16 @@ from active workspace/runtime evidence.
 | 7 | Live Multica/Claude runtime receipts | Required for active-runtime adoption claims |
 
 The original checkout at `/Users/herman_mbp2023/Documents/Feature-Delivery-Intelligence`
-is dirty and is not the implementation source for this matrix. The current
-implementation worktree is:
+is dirty and is not the implementation source for this matrix. The matrix
+snapshot was recorded from this implementation worktree:
 
 ```text
 /Users/herman_mbp2023/.codex/worktrees/fdi-rc10-implementation/Feature-Delivery-Intelligence
 branch: codex/fdi-rc10-implementation
-HEAD: 2479634f3500cfa6949fb58773287d6faf1abadd
+HEAD at matrix snapshot: d50dc32
+
+Later commits are implementation history after this matrix snapshot and must
+not be silently substituted for the recorded baseline.
 ```
 
 ### Status vocabulary
@@ -70,14 +73,14 @@ HEAD: 2479634f3500cfa6949fb58773287d6faf1abadd
 | R16 | Supervisor bootstrap and runtime lifecycle | `.claude` runbooks, environment state, identity/digest/smoke and lifecycle implementation | v0.5.20 runbooks/state materialized; read-only CLI/auth/workspace qualification recorded; activation identity/smoke unresolved | `PARTIAL` | Discover exact runtime activation and prove active package identity/smoke |
 | R17 | Multica CLI, not invented MCP/subcommands | CLI help discovery and persisted command templates | Installed CLI help mapped all six required operation templates and persisted them in environment state | `LOCAL_PASS` | Use the templates only for an authorized mission; command discovery is not execution evidence |
 | R18 | Runtime identity requires revision and package digest | Active/last-known-good package identity | Local report hashes; no active runtime state | `MISSING` | Capture active runtime identity and smoke result |
-| R19 | Workspace/project/agent/skill/instruction/scenario configuration | Materialized runtime layout and effective configuration | Runtime composition manifest plus live registry gate: workspace, two projects, runtime, 19 agents, 31 skills, instructions and S01–S10 resources | `LOCAL_PASS` | Verify composition through a live mission, not only read-only state |
+| R19 | Workspace/project/agent/skill/instruction/scenario configuration | Materialized runtime layout and effective configuration | Runtime composition manifest plus live read-only registry gate: workspace, two projects, runtime, 19 agents, 31 skills, instructions and S01–S10 resources | `PARTIAL` | Verify composition through a live mission, not only read-only state |
 | R20 | Swarm agents use selectable model, including requested Kimi K27 coding option | Model selector in workspace/agent configuration plus effective run evidence | All 19 existing Swarm agents report `kimi-code/kimi-for-coding`; exact K27 version label is not exposed | `PARTIAL` | Confirm provider/version identity or record the provider limitation |
 | R21 | Runtime package v0.5.20 matches manifest and compatible r9 baseline | 29-file package manifest/digest and compatibility check | Exact snapshot and active overlay are materialized; source ZIP digest recorded in runtime report | `LOCAL_PASS` | Keep snapshot/overlay hash check in release gate |
 | R22 | RC6 S01–S06 and existing skill/control/runtime behavior remain valid | RC6 regression plus scenario receipts | RC6 self-test and local compatibility test pass | `PARTIAL` | Live scenario execution and fresh receipts remain absent |
 | R23 | T01–T12 repeatable integration tests | Deterministic Java test suite | 12 tests plus additional local tests | `LOCAL_PASS` | Tests are not live runtime evidence |
 | R24 | Java 17 implementation and policy | Java 17 runtime execution and `JavaOnlySourcePolicyTests` | POM targets 17; tests ran on OpenJDK 23 | `BLOCKED_EXTERNAL` | Run the same suite on an actual Java 17 runtime |
 | R25 | Required RC10 reports/package/evidence manifest | Reports, candidate package, hashes and verifier output | Reports/package/manifest exist and local verifier passes | `LOCAL_PASS` | Rebuild after active runtime materialization and attach live receipts |
-| R26 | Authoritative repo/worktree integration | Clean approved checkout, exact baseline and reviewable change set | Implementation worktree clean; original checkout dirty | `PARTIAL` | Human/review decision required before merge or promotion |
+| R26 | Authoritative repo/worktree integration | Exact baseline and reviewable change set | Implementation worktree contains the RC10 change set and is dirty; original checkout is also dirty | `PARTIAL` | Human/review decision required before merge or promotion |
 
 ## 4. Supervisor runtime package materialization gap
 
@@ -144,7 +147,7 @@ Mission
 
 - [x] Add the exact 29 supplied runtime files to the approved active workspace surface.
 - [x] Verify package manifest hashes.
-- [x] Preserve the Supervisor/Swarm/tKMS/Memory authority boundaries.
+- [~] Preserve the Supervisor/Swarm/tKMS/Memory authority boundaries in local contracts; an independent materialization diff/invariant check remains open.
 
 **Verification:** package digest, manifest check, and instruction/state schema validation.
 
@@ -169,10 +172,10 @@ Mission
 **Acceptance criteria:**
 
 - [x] Discover commands from installed CLI help and persist all six required operation templates.
-- [x] Verify workspace/project reads before writes.
+- [~] Define and verify the read-before-write guard through read-only preflight; live write-path proof remains open.
 - [ ] Capture active package identity, revision, digest, install root and smoke status.
 
-**Verification:** read-only bootstrap reaches `BOOTSTRAP_READY` or records an explicit `BLOCKED_*` state. Active package identity and smoke status are a separate gate and cannot be marked complete by bootstrap alone.
+**Verification:** read-only bootstrap reaches `BOOTSTRAP_READY` or records an explicit `BLOCKED_*` state. Active package identity, smoke status and live write-path behavior are separate gates and cannot be marked complete by bootstrap alone.
 
 **Dependencies:** Task 2 and Task 3.
 
@@ -180,13 +183,11 @@ Mission
 
 **Acceptance criteria:**
 
-- [~] Persist Mission Learning Source as source material, not final knowledge; the local contract and external adapter are ready, but no live mission evidence exists.
+- [x] Prepare Mission Learning Source as source material, not final knowledge; the local contract and external adapter are ready, while live evidence is intentionally deferred to Task 6.
 - [x] Create and bind the correct workspace-level `WorkspaceKnowledge` project.
 - [x] Define capture receipt and provenance/evidence attribution at the adapter boundary.
-- [ ] Prove live Mission Learning Source capture and later-Mission retrieval/reuse.
-- [ ] Prove workspace isolation with a negative cross-workspace read/retrieval test.
 
-**Verification:** live capture/retrieval receipts with provenance attribution, plus a negative cross-workspace test.
+**Verification:** local lifecycle/adapter contract validation and an explicit record that live capture/retrieval has not yet been claimed.
 
 **Dependencies:** Task 4.
 
@@ -195,6 +196,8 @@ Mission
 **Acceptance criteria:**
 
 - [ ] Execute every scenario whose contract requires live runtime; record a per-scenario applicability decision for T01–T12 and do not treat local contract tests as live receipts.
+- [ ] Execute one authorized Mission and produce live Mission Learning Source → WorkspaceKnowledge capture/retrieval receipts with provenance.
+- [ ] Prove later-Mission reuse and workspace isolation with a negative cross-workspace read/retrieval test.
 - [x] Re-run local RC6 S01–S06/skill/control compatibility checks and package self-test.
 - [ ] Run the test suite on Java 17.
 - [x] Rebuild candidate package and evidence manifest.
