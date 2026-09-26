@@ -1,6 +1,6 @@
 # FDI Documentation Index
 
-This directory contains explanatory, candidate, review, and planning material. It does not override the approved governing sources resolved by `governance/CURRENT` and `governance/approved-source-lock.json`.
+This directory contains explanatory, candidate, review, and planning material. It does not override the approved governing sources resolved by `governance/CURRENT` and `governance/locks/approved-source-lock.json`.
 
 ## Mandatory project entry points
 
@@ -8,7 +8,7 @@ Read these in order when the task concerns project scope, governance, or deliver
 
 1. [`FDI-PROJECT-OVERVIEW.md`](overview/FDI-PROJECT-OVERVIEW.md)
 2. [`governance/CURRENT`](../governance/CURRENT)
-3. [`governance/approved-source-lock.json`](../governance/approved-source-lock.json)
+3. [`governance/locks/approved-source-lock.json`](../governance/locks/approved-source-lock.json)
 4. [`governance/GOVERNING-SOURCES.md`](../governance/GOVERNING-SOURCES.md)
 5. [`STATUS.json`](planning/STATUS.json)
 6. [`DEVELOPMENT-BACKLOG.md`](planning/DEVELOPMENT-BACKLOG.md)

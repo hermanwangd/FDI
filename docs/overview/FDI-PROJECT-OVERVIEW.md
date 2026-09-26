@@ -3,12 +3,12 @@
 **Project baseline:** `fdi-clean-project-baseline-v0.4.8.3`  
 **Document role:** Single-entry project orientation / master project view  
 **Audience:** FDI developers, Product/Platform owners, Multica agents, reviewers, and new contributors  
-**Authority:** Orientation only. Governing semantics remain in the approved sources referenced by `governance/CURRENT`, `governance/baselines/DB-0001.yaml`, `governance/GOVERNING-SOURCES.md`, and `governance/approved-source-lock.json`.
+**Authority:** Orientation only. Governing semantics remain in the approved sources referenced by `governance/CURRENT`, `governance/baselines/GB-0001.yaml`, `governance/GOVERNING-SOURCES.md`, and `governance/locks/approved-source-lock.json`.
 
 
 ## Standalone governing-source materialization
 
-This standalone baseline physically vendors the active governing source content under `specs/approved/` and materializes the locked FT-T2 surface under `contracts/ft-t2/`, `skills/ft-t2/`, and `workflows/ft-t2/`. `governance/approved-source-lock.json` resolves every active module ID to a bundle-local path and digest. Multica MUST NOT treat a module ID without a resolvable local file as sufficient authority.
+This standalone baseline physically vendors the active governing source content under `governance/approved/` and materializes the locked FT-T2 surface under `contracts/ft-t2/`, `skills/ft-t2/`, and `workflows/ft-t2/`. `governance/locks/approved-source-lock.json` resolves every active module ID to a bundle-local path and digest. Multica MUST NOT treat a module ID without a resolvable local file as sufficient authority.
 
 ---
 
@@ -745,8 +745,8 @@ When sources conflict, FDI asks **which source has authority for the disputed cl
 
 ```text
 governance/CURRENT
-governance/baselines/DB-0001.yaml
-governance/approved-source-lock.json
+governance/baselines/GB-0001.yaml
+governance/locks/approved-source-lock.json
 governance/GOVERNING-SOURCES.md
 ```
 
@@ -1208,8 +1208,8 @@ fdi-clean-project-baseline-v0.4.8.3/
 ├── governance/                         ← authority / baselines / ADRs
 │   ├── CURRENT
 │   ├── baselines/
-│   ├── approved-source-lock.json
-│   └── approved-source-lock.json
+│   ├── approved/
+│   └── locks/approved-source-lock.json
 │
 ├── docs/                               ← human-readable contracts/design
 │   ├── architecture/decisions/
@@ -1262,7 +1262,7 @@ For a new human or Agent:
 
 1. **`docs/overview/FDI-PROJECT-OVERVIEW.md`** — understand the full system.
 2. `governance/CURRENT` — identify the active baseline.
-3. `governance/baselines/DB-0001.yaml` — inspect the governing set.
+3. `governance/baselines/GB-0001.yaml` — inspect the governing set.
 4. `governance/GOVERNING-SOURCES.md` — understand authority/source precedence.
 5. `docs/planning/STATUS.json` — inspect current implementation and external gates.
 6. `docs/planning/DEVELOPMENT-BACKLOG.md` — inspect next actions.

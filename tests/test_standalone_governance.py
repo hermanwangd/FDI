@@ -2,7 +2,7 @@ import json, hashlib
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
-def lock(): return json.loads((ROOT/'governance/approved-source-lock.json').read_text())
+def lock(): return json.loads((ROOT/'governance/locks/approved-source-lock.json').read_text())
 def test_six_governing_modules_are_local():
     mods={m['id']:m for m in lock()['modules']}
     assert set(mods)=={'L1-SEM','L1-IO','L2-FWK','L2-PROFILE','L2-MAINT','FT-T2'}
@@ -21,7 +21,7 @@ def test_ft_t2_surface_counts():
     assert len(list((ROOT/'skills/ft-t2').glob('*/SKILL.md')))==5
     assert (ROOT/'workflows/ft-t2/FEATURE-CLOSURE.md').exists()
 def test_ft_t2_modern_vocabulary():
-    paths=list((ROOT/'contracts/ft-t2').glob('*.md'))+list((ROOT/'skills/ft-t2').glob('*/SKILL.md'))+[ROOT/'workflows/ft-t2/FEATURE-CLOSURE.md',ROOT/'specs/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md']
+    paths=list((ROOT/'contracts/ft-t2').glob('*.md'))+list((ROOT/'skills/ft-t2').glob('*/SKILL.md'))+[ROOT/'workflows/ft-t2/FEATURE-CLOSURE.md',ROOT/'governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md']
     text='\n'.join(p.read_text() for p in paths)
     assert 'CLOSED_WITHIN_DECLARED_SCOPE' in text
     assert 'ACCEPT_CLOSED_WITHIN_DECLARED_SCOPE' in text
@@ -49,7 +49,7 @@ def test_repository_navigation_entrypoints():
 
 def test_file_classification_covers_active_path_families():
     classification=(ROOT/'docs/FILE-CLASSIFICATION.md').read_text()
-    for family in ('governance/', 'specs/approved/', 'contracts/', 'skills/',
+    for family in ('governance/', 'governance/approved/', 'contracts/', 'skills/',
                    'workflows/', 'src/', 'scripts/', 'tests/', 'docs/',
                    'validation/', 'engcim/skill-packs/', 'release/', 'tmp/'):
         assert f'`{family}' in classification
