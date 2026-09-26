@@ -37,6 +37,21 @@ def test_no_governing_placeholder_readmes():
     assert not (ROOT/'contracts/layer1/README.md').exists()
     assert not (ROOT/'contracts/ft-t2/README.md').exists()
 
+def test_repository_navigation_entrypoints():
+    for relative in ('AGENTS.md', 'docs/README.md', 'docs/FILE-CLASSIFICATION.md'):
+        assert (ROOT/relative).exists()
+    readme=(ROOT/'README.md').read_text()
+    for link in ('AGENTS.md', 'docs/README.md', 'docs/FILE-CLASSIFICATION.md',
+                 'PROJECT-OVERVIEW.md', 'governance/CURRENT', 'STATUS.json'):
+        assert link in readme
+
+def test_file_classification_covers_active_path_families():
+    classification=(ROOT/'docs/FILE-CLASSIFICATION.md').read_text()
+    for family in ('governance/', 'specs/approved/', 'contracts/', 'skills/',
+                   'workflows/', 'src/', 'scripts/', 'tests/', 'docs/',
+                   'validation/', 'engcim/skill-packs/', 'release/', 'tmp/'):
+        assert f'`{family}' in classification
+
 
 def test_markdown_inventory_is_exact():
     actual=sorted(p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*.md") if not any(x in {".pytest_cache","__pycache__",".git"} for x in p.relative_to(ROOT).parts))
