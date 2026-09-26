@@ -39,12 +39,12 @@ for banned in ['PROVISIONALLY_COMPLETE','ACCEPT_PROVISIONALLY_COMPLETE','closure
 for required_token in ['CLOSED_WITHIN_DECLARED_SCOPE','SPEC_READY | BLOCKED','ACCEPT_CLOSED_WITHIN_DECLARED_SCOPE']:
     ok('FT-T2 contains '+required_token,required_token in active_ft,required_token)
 # 3. all markdowns listed in project tree
-pt=root/'PROJECT-TREE.txt'; ok('PROJECT-TREE exists',pt.exists())
+pt=root/'release'/'PROJECT-TREE.txt'; ok('PROJECT-TREE exists',pt.exists())
 tree=pt.read_text() if pt.exists() else ''
-md=sorted(p.relative_to(root).as_posix() for p in root.rglob('*.md') if not any(x in {'.git','.pytest_cache','__pycache__'} for x in p.relative_to(root).parts))
+md=sorted(p.relative_to(root).as_posix() for p in root.rglob('*.md') if not any(x in {'.git','.pytest_cache','__pycache__','target'} for x in p.relative_to(root).parts) and not ('.mvn' in p.relative_to(root).parts and any(x.startswith('apache-maven-') for x in p.relative_to(root).parts)))
 missing=[rel for rel in md if Path(rel).name not in tree]
 ok('all Markdown files appear in PROJECT-TREE',not missing,f'missing={missing[:20]}')
-mdi=root/'MARKDOWN-INVENTORY.txt'
+mdi=root/'release'/'MARKDOWN-INVENTORY.txt'
 ok('MARKDOWN-INVENTORY exists',mdi.exists())
 if mdi.exists():
     inv=[x.strip() for x in mdi.read_text().splitlines() if x.strip()]
@@ -65,12 +65,15 @@ py=[str(p) for p in root.rglob('*.py') if '__pycache__' not in p.parts]
 r=subprocess.run([sys.executable,'-m','py_compile',*py],capture_output=True,text=True)
 ok('Python packaging tools compile',r.returncode==0,r.stderr[-1000:])
 # 6. manifest integrity
-man=root/'MANIFEST.json'; ok('MANIFEST exists',man.exists())
+man=root/'release'/'MANIFEST.json'; ok('MANIFEST exists',man.exists())
 if man.exists():
     m=json.loads(man.read_text()); listed={e['path']:e for e in m['files']}
     actual=[]
     for p in root.rglob('*'):
-        if p.is_file() and p.name!='MANIFEST.json' and not any(x in {'.git','__pycache__','.pytest_cache'} for x in p.relative_to(root).parts): actual.append(p.relative_to(root).as_posix())
+        rel=p.relative_to(root)
+        if (p.is_file() and p.name!='MANIFEST.json'
+                and not any(x in {'.git','__pycache__','.pytest_cache','target'} for x in rel.parts)
+                and not ('.mvn' in rel.parts and any(x.startswith('apache-maven-') for x in rel.parts))): actual.append(rel.as_posix())
     ok('manifest path set exact',set(listed)==set(actual),f'missing={set(actual)-set(listed)}, extra={set(listed)-set(actual)}')
     bad=[]
     for rel,e in listed.items():

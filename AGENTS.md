@@ -27,7 +27,7 @@ The classification document determines whether a file is governing authority, ca
 
 - Implement all new executable FDI framework behavior in Java 17 with Spring Boot 3.4.1.
 - Do not add `.py` or `.pyi` source files, and do not add features to legacy Python wrappers.
-- Treat the tracked Python files under `scripts/` and `tests/` as a closed migration baseline. Port remaining active consumers to Java before removing Python sources or Python-only tests.
+- Treat the tracked Python files under `tooling/` and `tests/` as a closed migration baseline. Port remaining active consumers to Java before removing Python sources or Python-only tests.
 - Keep external Python providers, including Graphify, behind the Java provider boundary.
 - Run `JavaOnlySourcePolicyTests` with the Java 17 test suite before claiming completion.
 

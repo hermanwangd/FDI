@@ -39,7 +39,7 @@ MAVEN_OPTS='-Xmx2g' ./mvnw test
 MAVEN_OPTS='-Xmx2g' ./mvnw package
 ```
 
-The Python files under `scripts/` remain package/governance wrappers; all active runtime implementation is Java.
+The Python files under `tooling/` remain package/governance wrappers; all active runtime implementation is Java.
 
 DEV-204 commands are available through the executable Spring Boot JAR:
 

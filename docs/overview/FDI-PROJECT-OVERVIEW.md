@@ -1236,19 +1236,24 @@ fdi-clean-project-baseline-v0.4.8.3/
 │   └── DEVELOP-FEATURE.md
 │
 ├── src/main/java/                      ← Java 17 / Spring Boot reference runtime
-│   ├── product_intelligence/
-│   ├── structural_intelligence/
-│   └── source_integration/
+│   └── com/featuredeliveryintelligence/fdi/
+│       ├── application/
+│       ├── feature/
+│       ├── product/
+│       ├── shared/
+│       ├── structural/
+│       └── validation/
 │
-├── templates/product-intelligence/     ← Product-owned PK Git repo template
+├── templates/product-instance/         ← Product-owned PK Git repo template
 │
 ├── validation/
 │   ├── dev204/                         ← behavioral RED/GREEN validation
-│   └── f001/                           ← four-arm calibration
+│   └── deterministic/                  ← bounded deterministic guard protocols
 │
 ├── config/                             ← Multica / Grafel / Azure examples
-├── scripts/                            ← verification / packaging helpers
+├── tooling/                            ← verification / packaging / migration helpers
 ├── tests/
+├── release/                            ← generated release metadata
 └── archive/                            ← non-active recovery/superseded material
 ```
 

@@ -27,7 +27,7 @@ def test_ft_t2_modern_vocabulary():
     assert 'ACCEPT_CLOSED_WITHIN_DECLARED_SCOPE' in text
     assert 'PROVISIONALLY_COMPLETE' not in text
 def test_all_markdown_basename_is_in_project_tree():
-    tree=(ROOT/'PROJECT-TREE.txt').read_text()
+    tree=(ROOT/'release/PROJECT-TREE.txt').read_text()
     for p in ROOT.rglob('*.md'): assert p.name in tree
 def test_overview_and_handoff_exist():
     assert (ROOT/'PROJECT-OVERVIEW.md').exists()
@@ -50,12 +50,17 @@ def test_repository_navigation_entrypoints():
 def test_file_classification_covers_active_path_families():
     classification=(ROOT/'docs/FILE-CLASSIFICATION.md').read_text()
     for family in ('governance/', 'governance/approved/', 'contracts/public/', 'agent/skills/',
-                   'agent/workflows/', 'src/', 'scripts/', 'tests/', 'docs/',
+                   'agent/workflows/', 'src/', 'tooling/', 'tests/', 'docs/',
                    'validation/', 'engcim/skill-packs/', 'release/', 'tmp/'):
         assert f'`{family}' in classification
 
 
 def test_markdown_inventory_is_exact():
     actual=sorted(p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*.md") if not any(x in {".pytest_cache","__pycache__",".git"} for x in p.relative_to(ROOT).parts))
-    inv=[x.strip() for x in (ROOT/"MARKDOWN-INVENTORY.txt").read_text().splitlines() if x.strip()]
+    inv=[x.strip() for x in (ROOT/"release/MARKDOWN-INVENTORY.txt").read_text().splitlines() if x.strip()]
     assert inv==actual
+
+def test_release_metadata_has_no_root_copies():
+    for name in ('MANIFEST.json', 'MARKDOWN-INVENTORY.txt', 'PROJECT-TREE.txt', 'VERIFICATION-SUMMARY.json'):
+        assert (ROOT/'release'/name).exists()
+        assert not (ROOT/name).exists()

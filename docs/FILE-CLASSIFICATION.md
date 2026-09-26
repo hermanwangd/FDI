@@ -14,13 +14,13 @@ Every tracked or proposed path must have exactly one primary classification. Cla
 | `contracts/public/**`, `contracts/providers/**` | Executable/public/provider contracts | Schemas and contract surfaces used by code or agents | Validate JSON/schema consumers after changes |
 | `agent/skills/**`, `agent/workflows/**` | Agent procedures | Operational instructions and workflows | Keep procedures separate from executable Java |
 | `src/main/**`, `src/test/**` | Java runtime and tests | Executable implementation and automated verification | Java 17/Spring Boot 3.4.1; verify affected tests |
-| `scripts/**`, `tests/**` | Closed migration baseline | Legacy wrappers/tests retained during Java migration | Do not add new framework behavior here |
+| `tooling/**`, `tests/**` | Closed migration baseline | Packaging, verification, migration wrappers, and tests retained during Java migration | Do not add new framework behavior here |
 | `docs/**` | Candidate, explanatory, review, and planning docs | Informative unless explicitly linked as authority | Label status; do not silently promote to governance |
 | `validation/**` | Validation definitions, fixtures, and evidence | Supports a bounded run; not authority by itself | Bind to exact inputs, revisions, and receipts |
 | `engcim/skill-packs/**` | Sealed release/runtime baselines | ZIP plus manifest and reviewable materialization | Preserve archive checksum and baseline scope |
 | `config/**` | Runtime/example configuration | Configuration contract and examples | Keep secrets out; validate consumers |
 | `templates/**` | Reusable generation templates | Input material for prepared artifacts | Keep generated outputs elsewhere |
-| `MANIFEST.json`, `MARKDOWN-INVENTORY.txt`, `PROJECT-TREE.txt`, `VERIFICATION-SUMMARY.json` | Generated release metadata | Derived indexes, not source authority | Regenerate after path changes; do not hand-edit |
+| `release/MANIFEST.json`, `release/MARKDOWN-INVENTORY.txt`, `release/PROJECT-TREE.txt`, `release/VERIFICATION-SUMMARY.json` | Generated release metadata | Derived indexes, not source authority | Regenerate after path changes; do not hand-edit |
 | `release/**` | Release bundles and catalogs | Packaged outputs and release metadata | Keep source definitions outside release outputs |
 | `output/**` | Generated or run-scoped output | Not authoritative unless separately promoted with receipt | Classify each retained report; do not bulk-commit |
 | `tmp/**`, `target/**`, `.pytest_cache/**`, `.fdi-work/**` | Local/generated scratch | Never canonical repository authority | Ignore or remove only after inventory and recovery check |
