@@ -1,9 +1,9 @@
-package com.featuredeliveryintelligence.fdi;
+package com.featuredeliveryintelligence.fdi.application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.featuredeliveryintelligence.fdi")
 public class FdiApplication {
     public static void main(String[] args) {
         if (Dev204Cli.handles(args)) return;

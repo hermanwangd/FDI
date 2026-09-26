@@ -1,7 +1,10 @@
-package com.featuredeliveryintelligence.fdi.runtime;
+package com.featuredeliveryintelligence.fdi;
 
 import static org.assertj.core.api.Assertions.*;
 
+import com.featuredeliveryintelligence.fdi.feature.RuntimeCapabilities;
+import com.featuredeliveryintelligence.fdi.structural.graphify.*;
+import com.featuredeliveryintelligence.fdi.validation.VerificationAccounting;
 import java.util.*;
 import org.junit.jupiter.api.Test;
 
