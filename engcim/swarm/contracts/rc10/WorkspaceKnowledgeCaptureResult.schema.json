@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ENGCIM-WORKSPACE-KNOWLEDGE-CAPTURE-RESULT-v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "captureRef",
+    "knowledgeRef",
+    "workspaceRef",
+    "projectRef",
+    "proposalRef",
+    "sourceRefs",
+    "evidenceRefs",
+    "capturedAt"
+  ],
+  "properties": {
+    "captureRef": { "type": "string", "minLength": 1 },
+    "knowledgeRef": { "type": "string", "minLength": 1 },
+    "workspaceRef": { "type": "string", "minLength": 1 },
+    "projectRef": { "type": "string", "minLength": 1 },
+    "proposalRef": { "type": "string", "minLength": 1 },
+    "sourceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "capturedAt": { "type": "string", "minLength": 1 }
+  }
+}

@@ -6,6 +6,9 @@ ignore={'.git','__pycache__','.pytest_cache','target'}
 def included(p):
     rel=p.relative_to(root)
     return (p.is_file() and p.resolve()!=out.resolve() and p.name!='MANIFEST.json'
+            and not (rel.parts and rel.parts[0] == '.claude')
+            and rel.as_posix() != 'CLAUDE.md'
+            and rel.as_posix() != 'release/RC10-CANDIDATE-PACKAGE.zip'
             and not any(x in ignore for x in rel.parts)
             and not ('.mvn' in rel.parts and any(x.startswith('apache-maven-') for x in rel.parts)))
 entries=[]

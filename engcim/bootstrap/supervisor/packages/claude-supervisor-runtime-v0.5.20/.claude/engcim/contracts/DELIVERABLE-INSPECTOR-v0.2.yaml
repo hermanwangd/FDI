@@ -1,0 +1,167 @@
+contract:
+  id: ENGCIM-DELIVERABLE-INSPECTOR
+  version: '0.2'
+  status: DRAFT_FOR_LIVE_VALIDATION
+  role: Supervisor
+  purpose: Perform deep, evidence-backed inspection of actual Scenario deliverables. The Inspector must reject shallow, stale,
+    inconsistent, unsupported, or downstream-unusable outputs even when issues are DONE/COMPLETED.
+  authority_rule: The versioned Scenario Deliverable Contract is authoritative. A Target may add stricter criteria but may
+    not weaken the Deliverable Contract.
+non_negotiable_rules:
+- Inspect raw deliverable content, not only issue summaries, comments, status, snippets, or producer summaries.
+- Freeze the inspected subject/revisions before evaluation.
+- Inspect all explicitly linked artifacts that collectively constitute the deliverable.
+- Load the upstream artifacts/context needed to judge correctness and completeness.
+- Do not infer missing architecture, flows, interfaces, evidence, or traceability.
+- A conditional requirement may be NOT_APPLICABLE only when applicability is explicitly justified by evidence.
+- If required inspection evidence is inaccessible, return BLOCKED/INCONCLUSIVE rather than PASS.
+- Do not jump from a deliverable symptom directly to root cause; inspection produces findings, Supervisor performs RCA.
+inspection_inputs:
+  required:
+  - scenarioRef
+  - scenarioRevision
+  - workspaceRef
+  - anchorIssueRef
+  - deliverableContractVersion
+  resolve_when_applicable:
+  - raw actual deliverable artifacts
+  - upstream IntentSpec / ChangeSurface / DeliverySpec
+  - resolved Product Context revision/digest
+  - repository/candidate revisions
+  - Scenario/plan/task requirements actually given to Swarm
+  - execution/runtime/package revision
+  - evidence/provenance refs
+inspection_scope:
+  anchor_rule: Start from one explicit anchor issue. Follow only explicit parent/child/dependency/artifact/evidence links
+    required to reconstruct the deliverable and its governing inputs.
+  forbidden:
+  - Unbounded workspace scanning
+  - Using chat memory as evidence
+  - Inspecting only the issue description when the deliverable is stored elsewhere
+  - Substituting a nearby or easier case for the selected anchor case
+  - Inventing missing refs or revisions
+inspection_protocol:
+  P0_SCOPE_AND_FRESHNESS:
+    objective: Prove exactly what is being inspected.
+    checks:
+    - scenario identity/revision resolves
+    - anchor issue resolves
+    - runtime/package revision that produced output is known
+    - artifact revisions/digests are known when available
+    - upstream governing artifact revisions are known
+    - no required evidence is stale or bound to another candidate/revision
+  P1_FULL_ARTIFACT_READ:
+    objective: Read the actual engineering output, not a summary.
+    checks:
+    - load complete relevant artifact sections
+    - aggregate split deliverables across explicitly linked artifacts
+    - record unreadable/missing sections
+    - distinguish artifact content from issue commentary
+  P2_CONTRACT_CONFORMANCE:
+    objective: Check every applicable BLOCKER rule in the Scenario Deliverable Contract.
+    checks:
+    - required structure exists
+    - required semantics are substantive rather than label-only
+    - conditional requirements have evidence-backed applicability decision
+    - mandatory views/relations answer the engineering questions they are intended to answer
+  P3_CROSS_ARTIFACT_CONSISTENCY:
+    objective: Check that the deliverable agrees with governing upstream artifacts and itself.
+    checks:
+    - Intent/delta agrees with design
+    - ChangeSurface agrees with affected components/interfaces/repos
+    - DeliverySpec/Acceptance Criteria agree with design claims
+    - same entity/revision names do not conflict across artifacts
+    - no unexplained scope expansion or omission
+  P4_TRACEABILITY_AND_COVERAGE:
+    objective: Prove coverage from requirement to deliverable content.
+    checks:
+    - every material upstream requirement is represented or explicitly dispositioned
+    - design/change refs resolve
+    - acceptance criteria have traceable design/verification coverage where required
+    - important claims have evidence/provenance
+    - report uncovered requirements explicitly
+  P5_DOWNSTREAM_USABILITY_CHALLENGE:
+    objective: Determine whether the next engineer can act without redoing the producer's primary analysis.
+    challenge_questions:
+    - What materially changes and why?
+    - Which components/interfaces/repos are affected?
+    - What is the As-Is and To-Be architecture/flow?
+    - What contracts/data/state/failure behavior change?
+    - How does the design trace to the requested delta and acceptance criteria?
+    - What material questions would the downstream engineer still need to rediscover?
+    failure_rule: If a downstream engineer must rediscover a material architecture/design decision before implementation,
+      the deliverable is DOWNSTREAM_NOT_USABLE.
+  P6_ADVERSARIAL_SECOND_PASS:
+    objective: Actively search for shallow or misleading completion.
+    checks:
+    - labels/headings exist but substantive answer is missing
+    - generic prose could apply to many systems
+    - diagram/view exists but omits named affected entities/relationships
+    - N/A claims are unsupported
+    - issue claims complete but raw artifact contradicts it
+    - artifact is stale relative to current candidate/runtime
+    - producer claim is the only support for correctness
+s05_deep_inspection:
+  mandatory_questions:
+  - Does the deliverable show affected As-Is and To-Be architecture, not just a change list?
+  - For each affected component, are responsibility, current behavior, required change, interactions, and state/data impact
+    clear?
+  - When interfaces/contracts are affected, are provider, consumer, contract/schema/protocol delta clear?
+  - Is there at least one concrete to-be main flow?
+  - For cross-component/repo flow, is there a sequence/interaction view?
+  - Are validation/dependency/invalid-input/fail-close or fallback behaviors addressed where relevant?
+  - Are major technical decisions/constraints explicit where they affect implementation?
+  - Does IntentSpec.delta trace to design changes and Acceptance Criteria?
+  - Does ChangeSurface match what the design claims will change?
+  - Can an implementation engineer begin without redoing system analysis/design?
+  shallow_examples:
+  - modify API / update frontend / add tests
+  - frontend calls backend and database
+  - update component A and B
+  - architecture diagram containing boxes without responsibilities or changed relationships
+criterion_result:
+  allowed:
+  - PASS
+  - FAIL
+  - INCONCLUSIVE
+  - NOT_APPLICABLE
+  not_applicable_rule: NOT_APPLICABLE requires an explicit rationale plus evidence showing the condition does not apply. Absence
+    of content is not proof of NOT_APPLICABLE.
+finding_types:
+- MISSING_CONTENT
+- SHALLOW_CONTENT
+- BROKEN_TRACEABILITY
+- INVALID_EVIDENCE
+- STALE_EVIDENCE
+- INCONSISTENT_CONTENT
+- UNSUPPORTED_CLAIM
+- UNRESOLVED_GAP
+- CONDITIONAL_NOT_PROVEN
+- DOWNSTREAM_NOT_USABLE
+- BLOCKED_INPUT
+finding_minimum:
+- failed rule/criterion
+- expected condition
+- actual observed condition
+- artifact/evidence refs
+- why it matters downstream
+inspection_output:
+  required_sections:
+  - Inspection Scope
+  - Artifact/Evidence Inventory
+  - Criterion Matrix
+  - Cross-Artifact Consistency
+  - Traceability/Coverage
+  - Downstream Usability Challenge
+  - Findings
+  - Overall Outcome
+  overall_outcomes:
+  - ACCEPTABLE
+  - INCOMPLETE_DELIVERABLE
+  - INVALID_EVIDENCE
+  - INCONSISTENT_DELIVERABLE
+  - BLOCKED
+  acceptance_rule: ACCEPTABLE requires all applicable BLOCKER rules to PASS, no unresolved material cross-artifact inconsistency,
+    sufficient fresh evidence, and downstream usability.
+regression_rule: After improvement, re-inspect the same frozen-input/replay case with fresh evidence. Do not close using pre-improvement
+  inspection evidence.

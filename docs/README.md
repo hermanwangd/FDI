@@ -28,7 +28,7 @@ The authoritative path rule for all current and future files is [`FILE-CLASSIFIC
 
 ## ENGCIM skill-pack distinction
 
-- [`engcim/skill-packs/rc6`](../engcim/skill-packs/rc6/CANONICAL-SOURCE.md) is the original RC6 PCAB source baseline.
-- [`engcim/skill-packs/rc6-runtime-baseline-v1`](../engcim/skill-packs/rc6-runtime-baseline-v1/CANONICAL-SOURCE.md) is the derived runtime-routing baseline, tagged separately as `engcim-swarm-rc6-runtime-baseline-v1`.
+- [`engcim/swarm/baselines/rc6/skill-pack`](../engcim/swarm/baselines/rc6/skill-pack/CANONICAL-SOURCE.md) is the original RC6 PCAB source baseline.
+- [`engcim/swarm/baselines/rc6/runtime`](../engcim/swarm/baselines/rc6/runtime/CANONICAL-SOURCE.md) is the derived runtime-routing baseline, tagged separately as `engcim-swarm-rc6-runtime-baseline-v1`.
 
 These are related but are not interchangeable authorities.

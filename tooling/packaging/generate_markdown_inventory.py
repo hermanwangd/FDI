@@ -11,7 +11,7 @@ IGNORED_PARTS = {".git", ".pytest_cache", "__pycache__", "target"}
 
 def included(path: Path, root: Path) -> bool:
     rel = path.relative_to(root)
-    return path.suffix == ".md" and not any(part in IGNORED_PARTS for part in rel.parts) and not (
+    return path.suffix == ".md" and rel.as_posix() != "CLAUDE.md" and not (rel.parts and rel.parts[0] == ".claude") and not any(part in IGNORED_PARTS for part in rel.parts) and not (
         ".mvn" in rel.parts and any(part.startswith("apache-maven-") for part in rel.parts)
     )
 

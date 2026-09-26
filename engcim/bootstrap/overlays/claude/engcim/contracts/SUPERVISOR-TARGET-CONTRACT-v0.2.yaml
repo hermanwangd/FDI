@@ -1,0 +1,57 @@
+contract:
+  id: ENGCIM-SUPERVISOR-TARGET
+  version: '0.2'
+  status: DRAFT_FOR_LIVE_VALIDATION
+  purpose: Define an evidence-evaluable target that Claude Supervisor drives ENGCIM Swarm toward, using Diagnosis plus ranked
+    Improvement Direction analysis for each iteration.
+target:
+  required:
+  - targetRef
+  - objective
+  - scope
+  - successCriteria
+  - constraints
+  - stopConditions
+  fields:
+    targetRef: string
+    objective: string
+    scope: string[]
+    successCriteria:
+    - criterionRef: string
+      statement: string
+      expected: string
+      evidenceRequirements: string[]
+    constraints: string[]
+    stopConditions: string[]
+rules:
+- Freeze the target before the first improvement iteration.
+- Do not weaken success criteria to obtain success.
+- Do not change Product intent or Acceptance Criteria without Human Authority.
+- Use fresh evidence after an improvement.
+- Stop when target is achieved, blocked, regressed, cancelled, or repeated iterations make no measurable progress.
+target_driven_improvement:
+  loop:
+  - BASELINE_TARGET
+  - IDENTIFY_MATERIAL_GAPS
+  - DIAGNOSIS
+  - IMPROVEMENT_DIRECTION_ANALYSIS
+  - SELECT_HIGHEST_VALUE_JUSTIFIED_DIRECTION
+  - IMPROVEMENT_MISSION
+  - SWARM_EXECUTION
+  - RUNTIME_UPGRADE_IF_APPLICABLE
+  - FRESH_REEVALUATION
+  - NEXT_OPPORTUNITY_OR_STOP
+  opportunity_rule: When multiple target gaps exist, Supervisor should select the improvement direction that is best supported
+    and is expected to produce the highest reusable target progress with the smallest justified scope. It must not simply
+    select the first failed criterion.
+  after_each_iteration:
+  - Re-evaluate the complete target using fresh evidence.
+  - Detect regression in criteria that previously passed.
+  - Re-run Improvement Direction Analysis against the new state; do not automatically repeat the previous direction.
+  - If target remains unmet, identify the next highest-value justified improvement opportunity.
+  - Stop when target is achieved, blocked, regressed, cancelled, or no evidence-backed improvement direction remains.
+  anti_local_optimum:
+  - Do not repeatedly optimize one criterion while a higher-impact blocker remains.
+  - Do not keep changing Core merely because a prior Core change helped once.
+  - Do not keep changing the same Skill/Control/Scenario when fresh evidence points elsewhere.
+  - Do not trade away previously satisfied target criteria.

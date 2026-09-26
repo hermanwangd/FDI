@@ -1,0 +1,25 @@
+contract:
+  id: ENGCIM-IMPROVEMENT-MISSION
+  version: '0.2'
+  status: DRAFT_FOR_LIVE_VALIDATION
+  purpose: Minimal handoff from Claude Supervisor to ENGCIM Swarm after evidence-backed Diagnosis and ranked Improvement Direction
+    analysis.
+required_fields:
+- problem
+- diagnosis
+- improvementDirection
+- proposal
+- successCriteria
+- evidenceRefs
+- constraints
+semantics:
+  problem: Observed failure, quality gap, or target gap.
+  diagnosis: Evidence-backed explanation of what happened and why; may remain partially uncertain.
+  improvementDirection: Selected improvement surface from the fixed catalog, with ranked alternatives retained in Supervisor
+    evidence.
+  proposal: What should conceptually improve at the selected direction; not internal Swarm decomposition.
+  successCriteria: Observable conditions Swarm must prove.
+  evidenceRefs: Workspace/issues/artifacts/runtime evidence supporting the Diagnosis and direction selection.
+  constraints: Boundaries that must not be weakened or bypassed.
+rule: Supervisor selects/ranks the improvement direction; ENGCIM Swarm owns implementation planning, engineering changes,
+  tests, regression, package build, and engineering verification.

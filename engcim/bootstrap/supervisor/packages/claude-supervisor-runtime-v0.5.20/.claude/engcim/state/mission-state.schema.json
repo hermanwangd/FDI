@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ENGCIM-SUPERVISOR-MISSION-STATE-v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "missionRef",
+    "status",
+    "currentPhase",
+    "artifactRefs",
+    "evidenceRefs",
+    "openFindings",
+    "lastCompletedAction",
+    "activeRuntimePackageDigest",
+    "lastKnownGoodRuntimePackageDigest"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "0.2"
+    },
+    "missionRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceRef": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "ACTIVE",
+        "BLOCKED",
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
+    "currentPhase": {
+      "enum": [
+        "BOOTSTRAP",
+        "RUN",
+        "SUPERVISE",
+        "IMPROVE",
+        "UPGRADE_RUNTIME",
+        "VERIFY"
+      ]
+    },
+    "targetRef": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "improvementIteration": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "activeRuntimeRevision": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "lastKnownGoodRuntimeRevision": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "artifactRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "openFindings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "lastCompletedAction": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "activeRuntimePackageDigest": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "lastKnownGoodRuntimePackageDigest": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

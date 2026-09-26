@@ -1,0 +1,655 @@
+contract:
+  id: ENGCIM-S01-S06-DELIVERABLE-CONTRACT
+  version: '0.1'
+  status: DRAFT_FOR_FREEZE
+  purpose: Machine-checkable deliverable quality overlay for ENGCIM S01-S06. This contract does not rewrite the frozen S01-r1
+    through S06-r1 scenario identities.
+  principles:
+  - Issue status COMPLETED is not sufficient evidence of deliverable completeness.
+  - Artifact existence is not sufficient evidence of semantic completeness.
+  - A deliverable must be usable by its downstream consumer without re-performing the producer's primary analysis.
+  - Critical claims must be traceable to source, revision, or evidence.
+  - Mandatory rules fail closed when evidence is missing or unresolved.
+  result_enum:
+  - ACCEPTABLE
+  - INCOMPLETE_DELIVERABLE
+  - INVALID_EVIDENCE
+  - INCONSISTENT_DELIVERABLE
+  - BLOCKED
+  severity_enum:
+  - BLOCKER
+  - MAJOR
+  - MINOR
+  evaluation_mode_enum:
+  - DETERMINISTIC
+  - SEMANTIC
+  - HYBRID
+  rule_types:
+  - FIELD_EXISTS
+  - NON_EMPTY
+  - MIN_COUNT
+  - REFS_RESOLVE
+  - TRACEABILITY_COMPLETE
+  - VIEW_PRESENT
+  - RELATION_PRESENT
+  - REVISION_BOUND
+  - NO_UNEXPLAINED_CONFLICT
+  - SEMANTIC_SUFFICIENCY
+  - DOWNSTREAM_USABLE
+  - IDEMPOTENT
+  - CONDITIONAL
+common_gates:
+  G1_STRUCTURE:
+    description: Required sections/artifacts exist.
+    severity: BLOCKER
+  G2_SEMANTIC_COMPLETENESS:
+    description: Content answers the engineering questions owned by the scenario.
+    severity: BLOCKER
+  G3_TRACEABILITY:
+    description: Important conclusions trace to upstream context, source, revision, or evidence.
+    severity: BLOCKER
+  G4_CONSISTENCY:
+    description: Artifact is internally consistent and does not conflict with upstream governing artifacts without explicit
+      disposition.
+    severity: BLOCKER
+  G5_DOWNSTREAM_USABILITY:
+    description: The next engineering role can continue without redoing the producer's primary analysis.
+    severity: BLOCKER
+  G6_EVIDENCE_QUALITY:
+    description: Critical claims are supported by resolvable, revision-bound evidence.
+    severity: BLOCKER
+evaluation_policy:
+  default_outcome: ACCEPTABLE
+  rules:
+  - when: any BLOCKER rule fails because required content is missing or shallow
+    outcome: INCOMPLETE_DELIVERABLE
+  - when: any BLOCKER evidence/provenance/revision rule fails
+    outcome: INVALID_EVIDENCE
+  - when: mandatory artifacts contradict each other or governing upstream artifacts
+    outcome: INCONSISTENT_DELIVERABLE
+  - when: required input/context is unavailable and cannot be resolved within authorized scope
+    outcome: BLOCKED
+  completed_issue_override: A Multica issue or child issue marked COMPLETED does not override this contract.
+scenarios:
+  S01:
+    scenarioRef: S01-PRODUCT-KNOWLEDGE
+    frozenScenarioRevision: S01-r1
+    name: Product Knowledge
+    primary_deliverable: GovernedProductKnowledgeBaseline
+    required_sections:
+    - product_semantics
+    - product_architecture
+    - product_flows
+    - product_realization
+    - governance_and_evidence
+    - gaps_and_conflicts
+    mandatory_views:
+    - capability_scenario_map
+    - product_architecture_view
+    - key_product_flow_view
+    - component_interface_view
+    - component_repository_realization_map
+    - product_level_code_graph
+    - evidence_conflict_gap_report
+    rules:
+    - id: S01-R01
+      gate: G1_STRUCTURE
+      type: NON_EMPTY
+      path: product_semantics.capabilities
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S01-R02
+      gate: G2_SEMANTIC_COMPLETENESS
+      type: RELATION_PRESENT
+      relation: Capability -> Scenario -> Behavior
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S01-R03
+      gate: G1_STRUCTURE
+      type: VIEW_PRESENT
+      view: product_architecture_view
+      required_content:
+      - system_or_container
+      - component_or_module
+      - responsibility
+      - dependency
+      - interface
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S01-R04
+      gate: G2_SEMANTIC_COMPLETENESS
+      type: VIEW_PRESENT
+      view: key_product_flow_view
+      required_content:
+      - trigger_or_actor
+      - component_or_service_interactions
+      - rule_or_decision
+      - result
+      severity: BLOCKER
+      evaluation: SEMANTIC
+    - id: S01-R05
+      gate: G3_TRACEABILITY
+      type: TRACEABILITY_COMPLETE
+      trace: Capability/Scenario/Rule -> Component -> Repository -> Module/CodeEntity
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S01-R06
+      gate: G6_EVIDENCE_QUALITY
+      type: REVISION_BOUND
+      subjects:
+      - important_entities
+      - important_relationships
+      required_fields:
+      - sourceRef
+      - sourceRevision
+      - confidence
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S01-R07
+      gate: G4_CONSISTENCY
+      type: NO_UNEXPLAINED_CONFLICT
+      required_gap_classes:
+      - MISSING
+      - AMBIGUOUS
+      - CONFLICTING
+      - STALE
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S01-R08
+      gate: G5_DOWNSTREAM_USABILITY
+      type: DOWNSTREAM_USABLE
+      consumer: S04/S05/S06
+      criterion: Product Context can be resolved with semantics, architecture, realization, interfaces, evidence, and visible
+        gaps without rebuilding the baseline analysis.
+      severity: BLOCKER
+      evaluation: SEMANTIC
+  S02:
+    scenarioRef: S02-PK-REFRESH
+    frozenScenarioRevision: S02-r1
+    name: PK Refresh
+    primary_deliverable: RefreshedProductKnowledgeWithDelta
+    required_sections:
+    - baseline_binding
+    - delta
+    - impact_analysis
+    - refreshed_views
+    - conflict_gap_reconciliation
+    - idempotence_evidence
+    rules:
+    - id: S02-R01
+      gate: G1_STRUCTURE
+      type: NON_EMPTY
+      path: delta
+      required_classes:
+      - UNCHANGED
+      - ADDED
+      - CHANGED
+      - REMOVED
+      - CONFLICTING
+      - STALE
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S02-R02
+      gate: G3_TRACEABILITY
+      type: TRACEABILITY_COMPLETE
+      per_delta_item_required:
+      - entityRef
+      - before
+      - after
+      - reasonOrEvidence
+      - sourceRevision
+      - affectedRelationships
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S02-R03
+      gate: G2_SEMANTIC_COMPLETENESS
+      type: SEMANTIC_SUFFICIENCY
+      criterion: Changed knowledge includes downstream impact across semantics, architecture, interface, repo, rule, or test
+        where applicable.
+      severity: BLOCKER
+      evaluation: SEMANTIC
+    - id: S02-R04
+      gate: G4_CONSISTENCY
+      type: CONDITIONAL
+      condition: a knowledge item or relationship changed
+      requirement: all affected views are refreshed consistently
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S02-R05
+      gate: G4_CONSISTENCY
+      type: NO_UNEXPLAINED_CONFLICT
+      required_buckets:
+      - resolved
+      - still_unresolved
+      - newly_introduced
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S02-R06
+      gate: G6_EVIDENCE_QUALITY
+      type: IDEMPOTENT
+      criterion: Re-analysis of the same source revisions produces no semantic delta.
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S02-R07
+      gate: G5_DOWNSTREAM_USABILITY
+      type: DOWNSTREAM_USABLE
+      consumer: ProductContext resolver
+      criterion: Refreshed PK can be consumed without uncertainty about which baseline facts changed or remained authoritative.
+      severity: BLOCKER
+      evaluation: SEMANTIC
+  S03:
+    scenarioRef: S03-MULTI-REPO-ANALYSIS
+    frozenScenarioRevision: S03-r1
+    name: Multi-Repo Analysis
+    primary_deliverable: ProductLevelCodeGraph
+    required_sections:
+    - repository_inventory
+    - multi_repo_topology
+    - component_repo_mapping
+    - cross_repo_dependency_graph
+    - interface_map
+    - cross_repo_flows
+    - analysis_gaps
+    - idempotence_evidence
+    mandatory_views:
+    - multi_repo_topology
+    - cross_repo_dependency_graph
+    - at_least_one_cross_repo_flow
+    rules:
+    - id: S03-R01
+      gate: G6_EVIDENCE_QUALITY
+      type: REVISION_BOUND
+      subjects:
+      - repositories
+      required_fields:
+      - repositoryRef
+      - exactRevision
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S03-R02
+      gate: G1_STRUCTURE
+      type: VIEW_PRESENT
+      view: multi_repo_topology
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S03-R03
+      gate: G3_TRACEABILITY
+      type: TRACEABILITY_COMPLETE
+      trace: Component -> Repository -> Module -> important CodeEntity
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S03-R04
+      gate: G2_SEMANTIC_COMPLETENESS
+      type: SEMANTIC_SUFFICIENCY
+      required_dependency_classes:
+      - API
+      - EVENT_OR_MESSAGE
+      - SHARED_SCHEMA
+      - DATABASE
+      - CONFIGURATION
+      - ARTIFACT_OR_DEPLOYMENT
+      - LIBRARY
+      criterion: Applicable cross-repo dependencies are identified, not merely repositories listed.
+      severity: BLOCKER
+      evaluation: SEMANTIC
+    - id: S03-R05
+      gate: G1_STRUCTURE
+      type: MIN_COUNT
+      path: cross_repo_flows
+      min: 1
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S03-R06
+      gate: G2_SEMANTIC_COMPLETENESS
+      type: SEMANTIC_SUFFICIENCY
+      criterion: At least one major flow identifies trigger, involved repos/components, interaction mechanism, persistence/side
+        effects, and outcome.
+      severity: BLOCKER
+      evaluation: SEMANTIC
+    - id: S03-R07
+      gate: G4_CONSISTENCY
+      type: NO_UNEXPLAINED_CONFLICT
+      required_gap_classes:
+      - UNRESOLVED_DEPENDENCY
+      - DYNAMIC_BINDING
+      - UNKNOWN_EXTERNAL_SYSTEM
+      - MISSING_SOURCE
+      - AMBIGUOUS_OWNERSHIP
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S03-R08
+      gate: G6_EVIDENCE_QUALITY
+      type: IDEMPOTENT
+      criterion: Re-analysis of identical pinned revisions produces no unexplained semantic graph delta.
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S03-R09
+      gate: G5_DOWNSTREAM_USABILITY
+      type: DOWNSTREAM_USABLE
+      consumer: S05 system analysis/design
+      criterion: A designer can determine affected components, repositories, interfaces, and major dependency paths without
+        re-analyzing the repositories from scratch.
+      severity: BLOCKER
+      evaluation: SEMANTIC
+  S04:
+    scenarioRef: S04-PM-INTENTION
+    frozenScenarioRevision: S04-r1
+    name: PM Intention Spec
+    primary_deliverable: IntentSpec
+    required_sections:
+    - intent_identity
+    - target_capability_scenario
+    - baseline
+    - delta
+    - desired_outcome
+    - acceptance_criteria
+    - assumptions_gaps_decisions
+    - context_references
+    rules:
+    - id: S04-R01
+      gate: G1_STRUCTURE
+      type: FIELD_EXISTS
+      required_fields:
+      - intentRef
+      - sourceRef
+      - targetCapability
+      - targetScenario
+      - baseline
+      - delta
+      - desiredOutcome
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S04-R02
+      gate: G3_TRACEABILITY
+      type: TRACEABILITY_COMPLETE
+      trace: PM request -> baseline Product Context -> explicit delta
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S04-R03
+      gate: G2_SEMANTIC_COMPLETENESS
+      type: SEMANTIC_SUFFICIENCY
+      criterion: Delta states current behavior, requested change, and expected future behavior.
+      severity: BLOCKER
+      evaluation: SEMANTIC
+    - id: S04-R04
+      gate: G2_SEMANTIC_COMPLETENESS
+      type: SEMANTIC_SUFFICIENCY
+      criterion: Acceptance criteria are observable, testable, and traceable to intent/delta.
+      severity: BLOCKER
+      evaluation: SEMANTIC
+    - id: S04-R05
+      gate: G4_CONSISTENCY
+      type: FIELD_EXISTS
+      required_fields:
+      - confirmedFacts
+      - assumptions
+      - openQuestions
+      - blockingGaps
+      - decisionsNeeded
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S04-R06
+      gate: G3_TRACEABILITY
+      type: REFS_RESOLVE
+      required_context_refs:
+      - Capability
+      - Scenario
+      - Behavior
+      - Rule
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S04-R07
+      gate: G5_DOWNSTREAM_USABILITY
+      type: DOWNSTREAM_USABLE
+      consumer: S05
+      criterion: S05 can begin system analysis without re-interpreting the PM request or inventing missing product-level intent.
+      severity: BLOCKER
+      evaluation: SEMANTIC
+    boundary:
+    - S04 does not own Technical Design.
+    - S04 must not invent authorization, implementation scope, retry policy, or repository mutation decisions.
+  S05:
+    scenarioRef: S05-SOFTWARE-DEVELOPMENT
+    frozenScenarioRevision: S05-r1
+    name: Software Development
+    primary_deliverable: DesignAndSoftwareCandidate
+    required_sections:
+    - change_surface
+    - technical_design
+    - delivery_spec
+    - implementation_contract
+    - development_result
+    rules:
+    - id: S05-R01
+      gate: G1_STRUCTURE
+      type: FIELD_EXISTS
+      path: change_surface
+      required_fields:
+      - componentRefs
+      - interfaceRefs
+      - repoRefs
+      - dependencyRefs
+      - impactReason
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S05-R02
+      gate: G2_SEMANTIC_COMPLETENESS
+      type: VIEW_PRESENT
+      path: technical_design
+      view: affected_architecture_delta
+      required_content:
+      - as_is
+      - to_be
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S05-R03
+      gate: G2_SEMANTIC_COMPLETENESS
+      type: SEMANTIC_SUFFICIENCY
+      path: technical_design.component_changes
+      criterion: Each affected component states responsibility, current behavior, required change, interactions, and relevant
+        state/data impact.
+      severity: BLOCKER
+      evaluation: SEMANTIC
+    - id: S05-R04
+      gate: G2_SEMANTIC_COMPLETENESS
+      type: CONDITIONAL
+      condition: interfaces/contracts are affected
+      requirement: interface delta identifies provider, consumer, protocol/contract/schema, and change semantics
+      severity: BLOCKER
+      evaluation: SEMANTIC
+    - id: S05-R05
+      gate: G1_STRUCTURE
+      type: MIN_COUNT
+      path: technical_design.main_flows
+      min: 1
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S05-R06
+      gate: G2_SEMANTIC_COMPLETENESS
+      type: CONDITIONAL
+      condition: main flow crosses components or repositories
+      requirement: at least one sequence/interaction view is present
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S05-R07
+      gate: G2_SEMANTIC_COMPLETENESS
+      type: SEMANTIC_SUFFICIENCY
+      path: technical_design.failure_and_boundary_behavior
+      criterion: Relevant validation failure, dependency failure, invalid input, and fail-close/fallback behavior are addressed.
+      severity: BLOCKER
+      evaluation: SEMANTIC
+    - id: S05-R08
+      gate: G3_TRACEABILITY
+      type: TRACEABILITY_COMPLETE
+      trace: IntentSpec.delta -> designChangeRef -> AcceptanceCriterion
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S05-R09
+      gate: G1_STRUCTURE
+      type: FIELD_EXISTS
+      path: delivery_spec
+      required_fields:
+      - requiredBehavior
+      - constraints
+      - acceptanceCriteria
+      - verificationRequirements
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S05-R10
+      gate: G3_TRACEABILITY
+      type: TRACEABILITY_COMPLETE
+      trace: IntentSpec.delta -> TechnicalDesign.changeRef -> ImplementationBacklog.designChangeRefs -> ExecutionPlan.traceability
+        -> WorkItem
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S05-R11
+      gate: G6_EVIDENCE_QUALITY
+      type: REVISION_BOUND
+      path: development_result
+      required_fields:
+      - exactRepoRevisions
+      - changedFilesOrComponents
+      - prOrChangeRefs
+      - buildEvidence
+      - selfCheckEvidence
+      - implementationSummary
+      - unresolvedIssues
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S05-R12
+      gate: G5_DOWNSTREAM_USABILITY
+      type: DOWNSTREAM_USABLE
+      consumer: developer/S06
+      criterion: A developer can implement from the design without redoing system design, and S06 can derive verification
+        scope from the same DeliverySpec and exact candidate.
+      severity: BLOCKER
+      evaluation: SEMANTIC
+    hard_failure_rule: If Technical Design lacks affected architecture delta, component design, applicable interface design,
+      and a main flow, the deliverable is INCOMPLETE_DELIVERABLE even when code/build exists.
+  S06:
+    scenarioRef: S06-VERIFICATION-TESTING
+    frozenScenarioRevision: S06-r1
+    name: Verification & Testing
+    primary_deliverable: VerificationResult
+    required_sections:
+    - verification_scope
+    - verification_design
+    - acceptance_coverage_matrix
+    - test_evidence
+    - findings
+    - verification_result
+    - correction_regression
+    rules:
+    - id: S06-R01
+      gate: G3_TRACEABILITY
+      type: TRACEABILITY_COMPLETE
+      trace: candidate revision + IntentSpec + DeliverySpec + AcceptanceCriteria + VerificationRequirements + ChangeSurface
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S06-R02
+      gate: G2_SEMANTIC_COMPLETENESS
+      type: SEMANTIC_SUFFICIENCY
+      path: verification_design
+      criterion: For each verification area, state what is verified, why, test level, and required evidence.
+      severity: BLOCKER
+      evaluation: SEMANTIC
+    - id: S06-R03
+      gate: G1_STRUCTURE
+      type: FIELD_EXISTS
+      path: verification_design
+      required_baseline_categories:
+      - functional
+      - integration
+      - regression
+      - contract_or_interface
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S06-R04
+      gate: G2_SEMANTIC_COMPLETENESS
+      type: CONDITIONAL
+      condition: change risk requires additional assurance
+      requirement: include applicable security/performance/migration/compatibility verification or explicitly justify exclusion
+      severity: MAJOR
+      evaluation: SEMANTIC
+    - id: S06-R05
+      gate: G3_TRACEABILITY
+      type: TRACEABILITY_COMPLETE
+      path: acceptance_coverage_matrix
+      required_columns:
+      - acceptanceCriterionRef
+      - testOrCheckRef
+      - candidateRevision
+      - evidenceRef
+      - result
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S06-R06
+      gate: G2_SEMANTIC_COMPLETENESS
+      type: FIELD_EXISTS
+      path: findings[*]
+      required_fields:
+      - findingRef
+      - candidateRevision
+      - expected
+      - actual
+      - evidenceRef
+      - impact
+      - probableOwningLayer
+      - status
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S06-R07
+      gate: G6_EVIDENCE_QUALITY
+      type: REVISION_BOUND
+      criterion: PASS/FAIL/INCONCLUSIVE evidence must be bound to the exact evaluated candidate revision.
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S06-R08
+      gate: G4_CONSISTENCY
+      type: SEMANTIC_SUFFICIENCY
+      criterion: Any failed acceptance criterion yields overall FAIL; with no FAIL, any INCONCLUSIVE yields overall INCONCLUSIVE;
+        only all PASS yields PASS.
+      severity: BLOCKER
+      evaluation: DETERMINISTIC
+    - id: S06-R09
+      gate: G6_EVIDENCE_QUALITY
+      type: CONDITIONAL
+      condition: a corrected revision follows a failed revision
+      requirement: rerun original failed case + affected regression with fresh evidence bound to the corrected revision
+      severity: BLOCKER
+      evaluation: HYBRID
+    - id: S06-R10
+      gate: G5_DOWNSTREAM_USABILITY
+      type: DOWNSTREAM_USABLE
+      consumer: Human approval / correction routing
+      criterion: The result explains exactly what passed/failed/inconclusive, on which revision, with enough evidence to decide
+        closure or correction.
+      severity: BLOCKER
+      evaluation: SEMANTIC
+supervisor_integration:
+  input:
+  - scenarioRef
+  - scenarioRevision
+  - anchorIssueRef
+  - actualDeliverableRefs
+  - actualEvidenceRefs
+  - resolvedProductContextRef
+  - applicableDeliverableContractVersion
+  evaluation_flow:
+  - resolve_expected_contract
+  - collect_actual_artifacts
+  - run_deterministic_checks
+  - run_semantic_checks
+  - aggregate_findings
+  - classify_outcome
+  - if_failed_then_diagnose_root_cause
+  root_cause_classes:
+  - SCENARIO_CONTRACT_GAP
+  - PLANNING_OR_ORCHESTRATION_PROPAGATION_GAP
+  - CONTEXT_GAP
+  - SKILL_CAPABILITY_GAP
+  - AGENT_EXECUTION_GAP
+  - RUNTIME_OR_BINDING_GAP
+  - EVIDENCE_OR_PROVENANCE_GAP
+  completion_rule: Supervisor must not declare improvement complete until the original failing deliverable case passes this
+    contract and the applicable regression scope passes with fresh evidence.

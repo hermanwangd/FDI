@@ -1,0 +1,246 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ENGCIM-SUPERVISOR-ENVIRONMENT-STATE-v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "qualifiedAt",
+    "multica",
+    "runtime",
+    "repositories"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "0.2"
+    },
+    "qualifiedAt": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "multica": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cliPath",
+        "cliVersion",
+        "cliDigest",
+        "authStatus",
+        "workspaceAccess",
+        "workspaceRef",
+        "commandDiscoveryStatus",
+        "commandTemplates"
+      ],
+      "properties": {
+        "cliPath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cliVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cliDigest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "authStatus": {
+          "enum": [
+            "UNKNOWN",
+            "READY",
+            "NOT_READY"
+          ]
+        },
+        "workspaceAccess": {
+          "enum": [
+            "UNKNOWN",
+            "READY",
+            "NOT_READY"
+          ]
+        },
+        "workspaceRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "commandDiscoveryStatus": {
+          "enum": [
+            "UNKNOWN",
+            "READY",
+            "BLOCKED"
+          ]
+        },
+        "commandTemplates": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "workspaceInspect",
+            "issueInspect",
+            "issueRelations",
+            "artifactEvidenceRead",
+            "missionSubmit",
+            "missionStatus"
+          ],
+          "properties": {
+            "workspaceInspect": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "issueInspect": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "issueRelations": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "artifactEvidenceRead": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "missionSubmit": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "missionStatus": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activeRevision",
+        "activePackageRef",
+        "activePackageDigest",
+        "installRoot",
+        "activationMethodRef",
+        "lastKnownGoodRevision",
+        "lastKnownGoodPackageRef",
+        "lastKnownGoodPackageDigest",
+        "lastSmokeStatus",
+        "lastSmokeAt",
+        "lastUpgradeAt"
+      ],
+      "properties": {
+        "activeRevision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "activePackageRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "activePackageDigest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "installRoot": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "activationMethodRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lastKnownGoodRevision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lastKnownGoodPackageRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lastKnownGoodPackageDigest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lastSmokeStatus": {
+          "enum": [
+            "UNKNOWN",
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "lastSmokeAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lastUpgradeAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "repositories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "repoRef",
+          "path"
+        ],
+        "properties": {
+          "repoRef": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "lastVerifiedRevision": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

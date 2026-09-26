@@ -39,9 +39,6 @@ Feature-Delivery-Intelligence/
 │       ├── DEVELOP-FEATURE.md
 │       └── MAINTAIN-PRODUCT.md
 ├── config/
-│   ├── multica/
-│   │   ├── MAPPING.md
-│   │   └── PROJECT-INSTRUCTIONS.md
 │   ├── azure-repos.example.yaml
 │   ├── grafel.example.yaml
 │   └── product-intelligence.example.yaml
@@ -73,9 +70,6 @@ Feature-Delivery-Intelligence/
 │       │   ├── ProductAssetRef.schema.json
 │       │   ├── ResolvedContextRef.schema.json
 │       │   └── SourceSnapshotSet.schema.json
-│       ├── rc10/
-│       │   ├── MissionLearningSource.schema.json
-│       │   └── WorkspaceKnowledgeProposal.schema.json
 │       ├── source/
 │       │   └── RepositorySourceConfig.schema.json
 │       └── structural/
@@ -183,13 +177,16 @@ Feature-Delivery-Intelligence/
 │   │   ├── runtime-neutral-delivery-kit.sha256
 │   │   └── runtime-neutral-delivery-kit.zip
 │   ├── rc10/
+│   │   ├── RC10-COMPANY-REPO-IMPORT-FOLDER-MAP.md
+│   │   ├── RC10-COMPANY-REPO-IMPORT-MANIFEST.json
 │   │   ├── RC10-EVIDENCE-MANIFEST.md
 │   │   ├── RC10-IMPLEMENTATION-PLAN.md
 │   │   ├── RC10-IMPLEMENTATION-REPORT.md
 │   │   ├── RC10-INTEGRATION-TEST-REPORT.md
 │   │   ├── RC10-REGRESSION-REPORT.md
 │   │   ├── RC10-REMAINDER-GAP-REPORT.md
-│   │   └── RC6-TO-RC10-GAP-REPORT.md
+│   │   ├── RC6-TO-RC10-GAP-REPORT.md
+│   │   └── RC6-TO-RC10-SOURCE-TO-RUNTIME-GAP-MATRIX.md
 │   ├── specifications/
 │   │   ├── framework/
 │   │   │   ├── product-intelligence/
@@ -216,504 +213,696 @@ Feature-Delivery-Intelligence/
 │   ├── FILE-CLASSIFICATION.md
 │   └── README.md
 ├── engcim/
-│   └── skill-packs/
-│       ├── rc6/
-│       │   ├── agents/
-│       │   │   ├── architect.md
-│       │   │   ├── backend-dev.md
-│       │   │   ├── coder.md
-│       │   │   ├── data-analyst.md
-│       │   │   ├── dba.md
-│       │   │   ├── devops.md
-│       │   │   ├── frontend-dev.md
-│       │   │   ├── knowledge-curator.md
-│       │   │   ├── orchestrator.md
-│       │   │   ├── performance-engineer.md
-│       │   │   ├── product-manager.md
-│       │   │   ├── qa-tester.md
-│       │   │   ├── release-manager.md
-│       │   │   ├── researcher.md
-│       │   │   ├── reviewer.md
-│       │   │   ├── security-auditor.md
-│       │   │   ├── sre.md
-│       │   │   ├── verifier.md
-│       │   │   └── writer.md
-│       │   ├── skills/
-│       │   │   ├── artifact-consistency/
-│       │   │   │   ├── scripts/
-│       │   │   │   ├── templates/
-│       │   │   │   │   └── artifact-trace.yaml
-│       │   │   │   └── SKILL.md
-│       │   │   ├── changesurface-analysis/
-│       │   │   │   ├── scripts/
-│       │   │   │   │   └── query-code-graph.sh
-│       │   │   │   ├── templates/
-│       │   │   │   │   └── changesurface-report.md
-│       │   │   │   └── SKILL.md
-│       │   │   ├── cicd-automation/
-│       │   │   │   ├── scripts/
-│       │   │   │   │   └── install-autopilot-cron.sh
-│       │   │   │   ├── templates/
-│       │   │   │   │   ├── env.example
-│       │   │   │   │   └── pipeline.yaml
-│       │   │   │   └── SKILL.md
-│       │   │   ├── code-review-method/
-│       │   │   │   ├── references/
-│       │   │   │   │   └── review-checklist.md
-│       │   │   │   ├── templates/
-│       │   │   │   │   └── review-verdict.md
-│       │   │   │   └── SKILL.md
-│       │   │   ├── deployment-verification/
-│       │   │   │   ├── templates/
-│       │   │   │   │   └── deployment-result.yaml
-│       │   │   │   └── SKILL.md
-│       │   │   ├── execution-guard/
-│       │   │   │   ├── scripts/
-│       │   │   │   └── SKILL.md
-│       │   │   ├── incident-response/
-│       │   │   │   ├── templates/
-│       │   │   │   │   ├── postmortem.md
-│       │   │   │   │   └── runbook.md
-│       │   │   │   └── SKILL.md
-│       │   │   ├── multica-cli/
-│       │   │   │   └── SKILL.md
-│       │   │   ├── observability-slo/
-│       │   │   │   ├── references/
-│       │   │   │   │   └── alerting-patterns.md
-│       │   │   │   ├── templates/
-│       │   │   │   │   ├── health-report.md
-│       │   │   │   │   └── slo-definition.yaml
-│       │   │   │   └── SKILL.md
-│       │   │   ├── performance-benchmark/
-│       │   │   │   ├── scripts/
-│       │   │   │   └── SKILL.md
-│       │   │   ├── pk-azure-devops-history/
-│       │   │   │   └── SKILL.md
-│       │   │   ├── pk-correlation-synthesis/
-│       │   │   │   └── SKILL.md
-│       │   │   ├── pk-document-analysis/
-│       │   │   │   └── SKILL.md
-│       │   │   ├── pk-file-ingestion/
-│       │   │   │   ├── runtime-pk/
-│       │   │   │   │   ├── _schema/
-│       │   │   │   │   │   ├── architecture-entry.schema.json
-│       │   │   │   │   │   ├── code-graph.schema.json
-│       │   │   │   │   │   ├── common.schema.json
-│       │   │   │   │   │   ├── evidence-record.schema.json
-│       │   │   │   │   │   ├── realization-entry.schema.json
-│       │   │   │   │   │   └── semantics-entry.schema.json
-│       │   │   │   │   ├── architecture/
-│       │   │   │   │   │   └── chart-management-api.yaml
-│       │   │   │   │   ├── code-graph/
-│       │   │   │   │   │   ├── edges.jsonl
-│       │   │   │   │   │   └── nodes.jsonl
-│       │   │   │   │   ├── evidence/
-│       │   │   │   │   │   ├── repo-analysis-chart-api.yaml
-│       │   │   │   │   │   └── spc-training-2024.yaml
-│       │   │   │   │   ├── realization/
-│       │   │   │   │   │   └── chart-management-api.yaml
-│       │   │   │   │   ├── semantics/
-│       │   │   │   │   │   └── spc-chart-management.yaml
-│       │   │   │   │   └── README.md
-│       │   │   │   └── SKILL.md
-│       │   │   ├── pk-repository-analysis/
-│       │   │   │   ├── scripts/
-│       │   │   │   │   ├── repo-fetch.sh
-│       │   │   │   │   └── self-test.sh
-│       │   │   │   └── SKILL.md
-│       │   │   ├── pk-tkms-ingestion/
-│       │   │   │   └── SKILL.md
-│       │   │   ├── pm-intention/
-│       │   │   │   ├── scripts/
-│       │   │   │   ├── templates/
-│       │   │   │   │   └── intention-spec.yaml
-│       │   │   │   └── SKILL.md
-│       │   │   ├── post-change-canary/
-│       │   │   │   ├── scripts/
-│       │   │   │   └── SKILL.md
-│       │   │   ├── product-knowledge/
-│       │   │   │   └── SKILL.md
-│       │   │   ├── release-management/
-│       │   │   │   ├── templates/
-│       │   │   │   │   ├── changelog.md
-│       │   │   │   │   ├── release-checklist.md
-│       │   │   │   │   └── rollback-plan.md
-│       │   │   │   └── SKILL.md
-│       │   │   ├── root-cause-debugging/
-│       │   │   │   ├── scripts/
-│       │   │   │   ├── templates/
-│       │   │   │   │   └── rca-report.md
-│       │   │   │   └── SKILL.md
-│       │   │   ├── runtime-qa/
-│       │   │   │   ├── templates/
-│       │   │   │   │   └── runtime-qa-report.md
-│       │   │   │   └── SKILL.md
-│       │   │   ├── security-review/
-│       │   │   │   ├── references/
-│       │   │   │   │   └── owasp-cwe-map.md
-│       │   │   │   ├── scripts/
-│       │   │   │   │   └── security-tools.md
-│       │   │   │   ├── templates/
-│       │   │   │   │   └── security-report.md
-│       │   │   │   └── SKILL.md
-│       │   │   ├── software-development/
-│       │   │   │   ├── scripts/
-│       │   │   │   │   └── repo-preflight.sh
-│       │   │   │   ├── templates/
-│       │   │   │   │   └── development-result.yaml
-│       │   │   │   └── SKILL.md
-│       │   │   ├── spec-design/
-│       │   │   │   ├── templates/
-│       │   │   │   │   ├── adr.md
-│       │   │   │   │   ├── openapi-skeleton.yaml
-│       │   │   │   │   └── spec.md
-│       │   │   │   └── SKILL.md
-│       │   │   ├── swarm-orchestration/
-│       │   │   │   └── SKILL.md
-│       │   │   ├── swarm-telemetry/
-│       │   │   │   ├── scripts/
-│       │   │   │   │   └── collect-mission-metrics.sh
-│       │   │   │   ├── templates/
-│       │   │   │   │   └── mission-metrics-report.md
-│       │   │   │   └── SKILL.md
-│       │   │   ├── test-architecture/
-│       │   │   │   ├── scripts/
-│       │   │   │   ├── templates/
-│       │   │   │   │   └── quality-gate.yaml
-│       │   │   │   └── SKILL.md
-│       │   │   ├── test-design/
-│       │   │   │   ├── references/
-│       │   │   │   │   └── techniques-cheatsheet.md
-│       │   │   │   ├── scripts/
-│       │   │   │   │   └── coverage-commands.md
-│       │   │   │   ├── templates/
-│       │   │   │   │   ├── defect-report.md
-│       │   │   │   │   └── test-plan.md
-│       │   │   │   └── SKILL.md
-│       │   │   ├── verification-protocol/
-│       │   │   │   ├── runtime-pk/
-│       │   │   │   │   ├── _schema/
-│       │   │   │   │   │   ├── architecture-entry.schema.json
-│       │   │   │   │   │   ├── code-graph.schema.json
-│       │   │   │   │   │   ├── common.schema.json
-│       │   │   │   │   │   ├── evidence-record.schema.json
-│       │   │   │   │   │   ├── realization-entry.schema.json
-│       │   │   │   │   │   └── semantics-entry.schema.json
-│       │   │   │   │   ├── architecture/
-│       │   │   │   │   │   └── chart-management-api.yaml
-│       │   │   │   │   ├── code-graph/
-│       │   │   │   │   │   ├── edges.jsonl
-│       │   │   │   │   │   └── nodes.jsonl
-│       │   │   │   │   ├── evidence/
-│       │   │   │   │   │   ├── repo-analysis-chart-api.yaml
-│       │   │   │   │   │   └── spc-training-2024.yaml
-│       │   │   │   │   ├── realization/
-│       │   │   │   │   │   └── chart-management-api.yaml
-│       │   │   │   │   ├── semantics/
-│       │   │   │   │   │   └── spc-chart-management.yaml
-│       │   │   │   │   └── README.md
-│       │   │   │   ├── templates/
-│       │   │   │   │   ├── verification-evidence.md
-│       │   │   │   │   └── verification-plan.md
-│       │   │   │   └── SKILL.md
-│       │   │   └── rc6-self-test.sh
-│       │   ├── CANONICAL-SOURCE.md
-│       │   ├── ENGCIM_Swarm_RC6_CuratedOSS_SkillPack_PCAB.zip
-│       │   ├── RC6-PACKAGE-MANIFEST.json
-│       │   ├── RC6-README.md
-│       │   └── SOURCE-MANIFEST.json
-│       ├── rc6-runtime-baseline-v1/
-│       │   ├── package/
-│       │   │   └── engcim-swarm-package-RC6/
-│       │   │       ├── agents/
-│       │   │       │   ├── architect.md
-│       │   │       │   ├── backend-dev.md
-│       │   │       │   ├── coder.md
-│       │   │       │   ├── data-analyst.md
-│       │   │       │   ├── dba.md
-│       │   │       │   ├── devops.md
-│       │   │       │   ├── frontend-dev.md
-│       │   │       │   ├── knowledge-curator.md
-│       │   │       │   ├── orchestrator.md
-│       │   │       │   ├── performance-engineer.md
-│       │   │       │   ├── product-manager.md
-│       │   │       │   ├── qa-tester.md
-│       │   │       │   ├── release-manager.md
-│       │   │       │   ├── researcher.md
-│       │   │       │   ├── reviewer.md
-│       │   │       │   ├── security-auditor.md
-│       │   │       │   ├── sre.md
-│       │   │       │   ├── verifier.md
-│       │   │       │   └── writer.md
-│       │   │       ├── benchmarks/
-│       │   │       │   ├── product-context-fixtures/
-│       │   │       │   │   └── SPC-DEMO-BASELINE-CONTEXT.yaml
-│       │   │       │   ├── PRODUCT-CONTEXT-AB-TEST.md
-│       │   │       │   └── RC6-B0-B1-BENCHMARK.md
-│       │   │       ├── config/
-│       │   │       │   ├── mcp-sources.example.yaml
-│       │   │       │   ├── repositories.example.yaml
-│       │   │       │   └── swarm-execution.example.yaml
-│       │   │       ├── docs/
-│       │   │       │   ├── child-completion-modes.md
-│       │   │       │   ├── graphify-level-analyzer.md
-│       │   │       │   ├── mcp-access-modes.md
-│       │   │       │   ├── multica-cli-verification.md
-│       │   │       │   ├── pk-conceptual-model.md
-│       │   │       │   ├── pk-ingestion.md
-│       │   │       │   ├── pk-storage-and-governance.md
-│       │   │       │   ├── rc6-curated-oss-skill-pack.md
-│       │   │       │   ├── scenarios.md
-│       │   │       │   └── swarm-execution-model.md
-│       │   │       ├── examples/
-│       │   │       │   ├── azure-devops-multirepo-ingestion.md
-│       │   │       │   ├── file-upload-ingestion.md
-│       │   │       │   ├── first-mission.md
-│       │   │       │   ├── product-knowledge-demo.md
-│       │   │       │   ├── rc5-autonomous-fanin-regression.md
-│       │   │       │   ├── scenario-walkthrough.md
-│       │   │       │   └── tkms-ingestion.md
-│       │   │       ├── pk/
-│       │   │       │   ├── _schema/
-│       │   │       │   │   ├── architecture-entry.schema.json
-│       │   │       │   │   ├── code-graph.schema.json
-│       │   │       │   │   ├── common.schema.json
-│       │   │       │   │   ├── evidence-record.schema.json
-│       │   │       │   │   ├── realization-entry.schema.json
-│       │   │       │   │   ├── semantics-entry.schema.json
-│       │   │       │   │   └── validate_store.py
-│       │   │       │   ├── architecture/
-│       │   │       │   │   └── chart-management-api.yaml
-│       │   │       │   ├── code-graph/
-│       │   │       │   │   ├── edges.jsonl
-│       │   │       │   │   └── nodes.jsonl
-│       │   │       │   ├── evidence/
-│       │   │       │   │   ├── repo-analysis-chart-api.yaml
-│       │   │       │   │   └── spc-training-2024.yaml
-│       │   │       │   ├── realization/
-│       │   │       │   │   └── chart-management-api.yaml
-│       │   │       │   ├── semantics/
-│       │   │       │   │   └── spc-chart-management.yaml
-│       │   │       │   └── README.md
-│       │   │       ├── skills/
-│       │   │       │   ├── artifact-consistency/
-│       │   │       │   │   ├── scripts/
-│       │   │       │   │   │   └── check_traceability.py
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   └── artifact-trace.yaml
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── changesurface-analysis/
-│       │   │       │   │   ├── scripts/
-│       │   │       │   │   │   ├── query-code-graph.py
-│       │   │       │   │   │   └── query-code-graph.sh
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   └── changesurface-report.md
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── cicd-automation/
-│       │   │       │   │   ├── scripts/
-│       │   │       │   │   │   └── install-autopilot-cron.sh
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   ├── env.example
-│       │   │       │   │   │   └── pipeline.yaml
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── code-review-method/
-│       │   │       │   │   ├── references/
-│       │   │       │   │   │   └── review-checklist.md
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   └── review-verdict.md
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── deployment-verification/
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   └── deployment-result.yaml
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── execution-guard/
-│       │   │       │   │   ├── scripts/
-│       │   │       │   │   │   ├── check_command.py
-│       │   │       │   │   │   └── check_path.py
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── incident-response/
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   ├── postmortem.md
-│       │   │       │   │   │   └── runbook.md
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── multica-cli/
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── observability-slo/
-│       │   │       │   │   ├── references/
-│       │   │       │   │   │   └── alerting-patterns.md
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   ├── health-report.md
-│       │   │       │   │   │   └── slo-definition.yaml
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── performance-benchmark/
-│       │   │       │   │   ├── scripts/
-│       │   │       │   │   │   └── compare_metrics.py
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── pk-azure-devops-history/
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── pk-correlation-synthesis/
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── pk-document-analysis/
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── pk-file-ingestion/
-│       │   │       │   │   ├── runtime-pk/
-│       │   │       │   │   │   ├── _schema/
-│       │   │       │   │   │   │   ├── architecture-entry.schema.json
-│       │   │       │   │   │   │   ├── code-graph.schema.json
-│       │   │       │   │   │   │   ├── common.schema.json
-│       │   │       │   │   │   │   ├── evidence-record.schema.json
-│       │   │       │   │   │   │   ├── realization-entry.schema.json
-│       │   │       │   │   │   │   ├── semantics-entry.schema.json
-│       │   │       │   │   │   │   └── validate_store.py
-│       │   │       │   │   │   ├── architecture/
-│       │   │       │   │   │   │   └── chart-management-api.yaml
-│       │   │       │   │   │   ├── code-graph/
-│       │   │       │   │   │   │   ├── edges.jsonl
-│       │   │       │   │   │   │   └── nodes.jsonl
-│       │   │       │   │   │   ├── evidence/
-│       │   │       │   │   │   │   ├── repo-analysis-chart-api.yaml
-│       │   │       │   │   │   │   └── spc-training-2024.yaml
-│       │   │       │   │   │   ├── realization/
-│       │   │       │   │   │   │   └── chart-management-api.yaml
-│       │   │       │   │   │   ├── semantics/
-│       │   │       │   │   │   │   └── spc-chart-management.yaml
-│       │   │       │   │   │   └── README.md
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── pk-repository-analysis/
-│       │   │       │   │   ├── scripts/
-│       │   │       │   │   │   ├── analyze-repo.py
-│       │   │       │   │   │   ├── correlate-cross-repo.py
-│       │   │       │   │   │   ├── graph-update.py
-│       │   │       │   │   │   ├── repo-fetch.sh
-│       │   │       │   │   │   └── self-test.sh
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── pk-tkms-ingestion/
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── pm-intention/
-│       │   │       │   │   ├── scripts/
-│       │   │       │   │   │   └── validate_intention_spec.py
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   └── intention-spec.yaml
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── post-change-canary/
-│       │   │       │   │   ├── scripts/
-│       │   │       │   │   │   └── canary_gate.py
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── product-knowledge/
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── release-management/
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   ├── changelog.md
-│       │   │       │   │   │   ├── release-checklist.md
-│       │   │       │   │   │   └── rollback-plan.md
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── root-cause-debugging/
-│       │   │       │   │   ├── scripts/
-│       │   │       │   │   │   └── hypothesis_log.py
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   └── rca-report.md
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── runtime-qa/
-│       │   │       │   │   ├── scripts/
-│       │   │       │   │   │   └── http_smoke.py
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   └── runtime-qa-report.md
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── scenario-playbooks/
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── security-review/
-│       │   │       │   │   ├── references/
-│       │   │       │   │   │   └── owasp-cwe-map.md
-│       │   │       │   │   ├── scripts/
-│       │   │       │   │   │   └── security-tools.md
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   └── security-report.md
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── software-development/
-│       │   │       │   │   ├── scripts/
-│       │   │       │   │   │   └── repo-preflight.sh
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   └── development-result.yaml
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── spec-design/
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   ├── adr.md
-│       │   │       │   │   │   ├── openapi-skeleton.yaml
-│       │   │       │   │   │   └── spec.md
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── swarm-orchestration/
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── swarm-telemetry/
-│       │   │       │   │   ├── scripts/
-│       │   │       │   │   │   └── collect-mission-metrics.sh
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   └── mission-metrics-report.md
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── test-architecture/
-│       │   │       │   │   ├── scripts/
-│       │   │       │   │   │   └── quality_gate.py
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   └── quality-gate.yaml
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── test-design/
-│       │   │       │   │   ├── references/
-│       │   │       │   │   │   └── techniques-cheatsheet.md
-│       │   │       │   │   ├── scripts/
-│       │   │       │   │   │   └── coverage-commands.md
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   ├── defect-report.md
-│       │   │       │   │   │   └── test-plan.md
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   ├── verification-protocol/
-│       │   │       │   │   ├── runtime-pk/
-│       │   │       │   │   │   ├── _schema/
-│       │   │       │   │   │   │   ├── architecture-entry.schema.json
-│       │   │       │   │   │   │   ├── code-graph.schema.json
-│       │   │       │   │   │   │   ├── common.schema.json
-│       │   │       │   │   │   │   ├── evidence-record.schema.json
-│       │   │       │   │   │   │   ├── realization-entry.schema.json
-│       │   │       │   │   │   │   ├── semantics-entry.schema.json
-│       │   │       │   │   │   │   └── validate_store.py
-│       │   │       │   │   │   ├── architecture/
-│       │   │       │   │   │   │   └── chart-management-api.yaml
-│       │   │       │   │   │   ├── code-graph/
-│       │   │       │   │   │   │   ├── edges.jsonl
-│       │   │       │   │   │   │   └── nodes.jsonl
-│       │   │       │   │   │   ├── evidence/
-│       │   │       │   │   │   │   ├── repo-analysis-chart-api.yaml
-│       │   │       │   │   │   │   └── spc-training-2024.yaml
-│       │   │       │   │   │   ├── realization/
-│       │   │       │   │   │   │   └── chart-management-api.yaml
-│       │   │       │   │   │   ├── semantics/
-│       │   │       │   │   │   │   └── spc-chart-management.yaml
-│       │   │       │   │   │   └── README.md
-│       │   │       │   │   ├── templates/
-│       │   │       │   │   │   ├── verification-evidence.md
-│       │   │       │   │   │   └── verification-plan.md
-│       │   │       │   │   └── SKILL.md
-│       │   │       │   └── rc6-self-test.sh
-│       │   │       ├── RC3-CHANGES.md
-│       │   │       ├── RC4-CHANGES.md
-│       │   │       ├── RC5-CHANGES.md
-│       │   │       ├── RC5-STATIC-VERIFICATION.md
-│       │   │       ├── RC6-CHANGES.md
-│       │   │       ├── RC6-PACKAGE-MANIFEST.json
-│       │   │       ├── RC6-STATIC-VERIFICATION.md
-│       │   │       ├── README.md
-│       │   │       ├── requirements-pk.txt
-│       │   │       ├── setup.sh
-│       │   │       ├── squad-instructions.md
-│       │   │       ├── THIRD_PARTY_REFERENCE_NOTICES.md
-│       │   │       ├── verification-report-RC2.md
-│       │   │       ├── verification-report-RC3.md
-│       │   │       ├── verification-report-RC5.md
-│       │   │       ├── verification-report.md
-│       │   │       └── verify.sh
-│       │   ├── CANONICAL-SOURCE.md
-│       │   ├── ENGCIM_Swarm_RC6_RuntimeBaseline_v1.zip
-│       │   ├── ENGCIM_Swarm_RC6_RuntimeBaseline_v1.zip.sha256
-│       │   ├── README.md
-│       │   └── SOURCE-MANIFEST.json
+│   ├── bootstrap/
+│   │   ├── config-examples/
+│   │   │   └── engcim-swarm-model-selection.env
+│   │   ├── multica/
+│   │   │   ├── MAPPING.md
+│   │   │   └── PROJECT-INSTRUCTIONS.md
+│   │   ├── overlays/
+│   │   │   └── claude/
+│   │   │       └── engcim/
+│   │   │           ├── contracts/
+│   │   │           │   ├── DELIVERABLE-INSPECTOR-v0.2.yaml
+│   │   │           │   ├── ENGCIM-SWARM-V1-COMPONENT-CONTRACT.md
+│   │   │           │   ├── IMPROVEMENT-DIRECTION-CATALOG-v0.1.yaml
+│   │   │           │   ├── IMPROVEMENT-MISSION-v0.2.yaml
+│   │   │           │   ├── KNOWLEDGE-AUTHORITY-BOUNDARY-r9.md
+│   │   │           │   ├── KNOWLEDGE-BUILDING-PATTERN-r9.md
+│   │   │           │   ├── S01-S06-DELIVERABLE-CONTRACT-v0.1.yaml
+│   │   │           │   ├── SUPERVISOR-DIAGNOSIS-CONTRACT-v0.2.yaml
+│   │   │           │   ├── SUPERVISOR-EXECUTION-IDENTITY-RULES-v0.1.md
+│   │   │           │   ├── SUPERVISOR-MISSION-CLOSURE-v0.1.md
+│   │   │           │   ├── SUPERVISOR-MISSION-LEARNING-SOURCE-v0.1.md
+│   │   │           │   ├── SUPERVISOR-SHIFT-LEFT-DIAGNOSIS-v0.1.md
+│   │   │           │   ├── SUPERVISOR-TARGET-CONTRACT-v0.2.yaml
+│   │   │           │   └── SUPERVISOR-TKMS-IO-v0.1.md
+│   │   │           └── skills/
+│   │   │               ├── IMPROVEMENT-DIAGNOSIS-v0.1.md
+│   │   │               ├── MULTICA-CLI-RUNBOOK-v0.1.md
+│   │   │               ├── README.md
+│   │   │               ├── RUNTIME-LIFECYCLE-RUNBOOK-v0.1.md
+│   │   │               └── WORKSPACE-BOOTSTRAP-RUNBOOK-v0.1.md
+│   │   ├── state-templates/
+│   │   │   ├── mission-state/
+│   │   │   │   └── TEMPLATE.json
+│   │   │   ├── environment-state.schema.json
+│   │   │   ├── mission-state.schema.json
+│   │   │   ├── model-selection.schema.json
+│   │   │   └── runtime-composition.schema.json
+│   │   ├── supervisor/
+│   │   │   └── packages/
+│   │   │       └── claude-supervisor-runtime-v0.5.20/
+│   │   │           ├── .claude/
+│   │   │           │   └── engcim/
+│   │   │           │       ├── contracts/
+│   │   │           │       │   ├── DELIVERABLE-INSPECTOR-v0.2.yaml
+│   │   │           │       │   ├── ENGCIM-SWARM-V1-COMPONENT-CONTRACT.md
+│   │   │           │       │   ├── IMPROVEMENT-DIRECTION-CATALOG-v0.1.yaml
+│   │   │           │       │   ├── IMPROVEMENT-MISSION-v0.2.yaml
+│   │   │           │       │   ├── KNOWLEDGE-AUTHORITY-BOUNDARY-r9.md
+│   │   │           │       │   ├── KNOWLEDGE-BUILDING-PATTERN-r9.md
+│   │   │           │       │   ├── S01-S06-DELIVERABLE-CONTRACT-v0.1.yaml
+│   │   │           │       │   ├── SUPERVISOR-DIAGNOSIS-CONTRACT-v0.2.yaml
+│   │   │           │       │   ├── SUPERVISOR-EXECUTION-IDENTITY-RULES-v0.1.md
+│   │   │           │       │   ├── SUPERVISOR-MISSION-CLOSURE-v0.1.md
+│   │   │           │       │   ├── SUPERVISOR-MISSION-LEARNING-SOURCE-v0.1.md
+│   │   │           │       │   ├── SUPERVISOR-SHIFT-LEFT-DIAGNOSIS-v0.1.md
+│   │   │           │       │   ├── SUPERVISOR-TARGET-CONTRACT-v0.2.yaml
+│   │   │           │       │   └── SUPERVISOR-TKMS-IO-v0.1.md
+│   │   │           │       ├── skills/
+│   │   │           │       │   ├── IMPROVEMENT-DIAGNOSIS-v0.1.md
+│   │   │           │       │   ├── MULTICA-CLI-RUNBOOK-v0.1.md
+│   │   │           │       │   ├── README.md
+│   │   │           │       │   ├── RUNTIME-LIFECYCLE-RUNBOOK-v0.1.md
+│   │   │           │       │   └── WORKSPACE-BOOTSTRAP-RUNBOOK-v0.1.md
+│   │   │           │       ├── state/
+│   │   │           │       │   ├── mission-state/
+│   │   │           │       │   │   └── TEMPLATE.json
+│   │   │           │       │   ├── environment-state.json
+│   │   │           │       │   ├── environment-state.schema.json
+│   │   │           │       │   └── mission-state.schema.json
+│   │   │           │       ├── targets/
+│   │   │           │       │   └── S05-DESIGN-QUALITY-v1.yaml
+│   │   │           │       └── supervisor.md
+│   │   │           ├── CLAUDE.md
+│   │   │           ├── HARDENING-REVIEW-v0.5.6.md
+│   │   │           ├── MANIFEST.yaml
+│   │   │           └── README.md
+│   │   └── README.md
+│   ├── swarm/
+│   │   ├── baselines/
+│   │   │   ├── rc6/
+│   │   │   │   ├── runtime/
+│   │   │   │   │   ├── package/
+│   │   │   │   │   │   └── engcim-swarm-package-RC6/
+│   │   │   │   │   │       ├── agents/
+│   │   │   │   │   │       │   ├── architect.md
+│   │   │   │   │   │       │   ├── backend-dev.md
+│   │   │   │   │   │       │   ├── coder.md
+│   │   │   │   │   │       │   ├── data-analyst.md
+│   │   │   │   │   │       │   ├── dba.md
+│   │   │   │   │   │       │   ├── devops.md
+│   │   │   │   │   │       │   ├── frontend-dev.md
+│   │   │   │   │   │       │   ├── knowledge-curator.md
+│   │   │   │   │   │       │   ├── orchestrator.md
+│   │   │   │   │   │       │   ├── performance-engineer.md
+│   │   │   │   │   │       │   ├── product-manager.md
+│   │   │   │   │   │       │   ├── qa-tester.md
+│   │   │   │   │   │       │   ├── release-manager.md
+│   │   │   │   │   │       │   ├── researcher.md
+│   │   │   │   │   │       │   ├── reviewer.md
+│   │   │   │   │   │       │   ├── security-auditor.md
+│   │   │   │   │   │       │   ├── sre.md
+│   │   │   │   │   │       │   ├── verifier.md
+│   │   │   │   │   │       │   └── writer.md
+│   │   │   │   │   │       ├── benchmarks/
+│   │   │   │   │   │       │   ├── product-context-fixtures/
+│   │   │   │   │   │       │   │   └── SPC-DEMO-BASELINE-CONTEXT.yaml
+│   │   │   │   │   │       │   ├── PRODUCT-CONTEXT-AB-TEST.md
+│   │   │   │   │   │       │   └── RC6-B0-B1-BENCHMARK.md
+│   │   │   │   │   │       ├── config/
+│   │   │   │   │   │       │   ├── mcp-sources.example.yaml
+│   │   │   │   │   │       │   ├── repositories.example.yaml
+│   │   │   │   │   │       │   └── swarm-execution.example.yaml
+│   │   │   │   │   │       ├── docs/
+│   │   │   │   │   │       │   ├── child-completion-modes.md
+│   │   │   │   │   │       │   ├── graphify-level-analyzer.md
+│   │   │   │   │   │       │   ├── mcp-access-modes.md
+│   │   │   │   │   │       │   ├── multica-cli-verification.md
+│   │   │   │   │   │       │   ├── pk-conceptual-model.md
+│   │   │   │   │   │       │   ├── pk-ingestion.md
+│   │   │   │   │   │       │   ├── pk-storage-and-governance.md
+│   │   │   │   │   │       │   ├── rc6-curated-oss-skill-pack.md
+│   │   │   │   │   │       │   ├── scenarios.md
+│   │   │   │   │   │       │   └── swarm-execution-model.md
+│   │   │   │   │   │       ├── examples/
+│   │   │   │   │   │       │   ├── azure-devops-multirepo-ingestion.md
+│   │   │   │   │   │       │   ├── file-upload-ingestion.md
+│   │   │   │   │   │       │   ├── first-mission.md
+│   │   │   │   │   │       │   ├── product-knowledge-demo.md
+│   │   │   │   │   │       │   ├── rc5-autonomous-fanin-regression.md
+│   │   │   │   │   │       │   ├── scenario-walkthrough.md
+│   │   │   │   │   │       │   └── tkms-ingestion.md
+│   │   │   │   │   │       ├── pk/
+│   │   │   │   │   │       │   ├── _schema/
+│   │   │   │   │   │       │   │   ├── architecture-entry.schema.json
+│   │   │   │   │   │       │   │   ├── code-graph.schema.json
+│   │   │   │   │   │       │   │   ├── common.schema.json
+│   │   │   │   │   │       │   │   ├── evidence-record.schema.json
+│   │   │   │   │   │       │   │   ├── realization-entry.schema.json
+│   │   │   │   │   │       │   │   ├── semantics-entry.schema.json
+│   │   │   │   │   │       │   │   └── validate_store.py
+│   │   │   │   │   │       │   ├── architecture/
+│   │   │   │   │   │       │   │   └── chart-management-api.yaml
+│   │   │   │   │   │       │   ├── code-graph/
+│   │   │   │   │   │       │   │   ├── edges.jsonl
+│   │   │   │   │   │       │   │   └── nodes.jsonl
+│   │   │   │   │   │       │   ├── evidence/
+│   │   │   │   │   │       │   │   ├── repo-analysis-chart-api.yaml
+│   │   │   │   │   │       │   │   └── spc-training-2024.yaml
+│   │   │   │   │   │       │   ├── realization/
+│   │   │   │   │   │       │   │   └── chart-management-api.yaml
+│   │   │   │   │   │       │   ├── semantics/
+│   │   │   │   │   │       │   │   └── spc-chart-management.yaml
+│   │   │   │   │   │       │   └── README.md
+│   │   │   │   │   │       ├── skills/
+│   │   │   │   │   │       │   ├── artifact-consistency/
+│   │   │   │   │   │       │   │   ├── scripts/
+│   │   │   │   │   │       │   │   │   └── check_traceability.py
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   └── artifact-trace.yaml
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── changesurface-analysis/
+│   │   │   │   │   │       │   │   ├── scripts/
+│   │   │   │   │   │       │   │   │   ├── query-code-graph.py
+│   │   │   │   │   │       │   │   │   └── query-code-graph.sh
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   └── changesurface-report.md
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── cicd-automation/
+│   │   │   │   │   │       │   │   ├── scripts/
+│   │   │   │   │   │       │   │   │   └── install-autopilot-cron.sh
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   ├── env.example
+│   │   │   │   │   │       │   │   │   └── pipeline.yaml
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── code-review-method/
+│   │   │   │   │   │       │   │   ├── references/
+│   │   │   │   │   │       │   │   │   └── review-checklist.md
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   └── review-verdict.md
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── deployment-verification/
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   └── deployment-result.yaml
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── execution-guard/
+│   │   │   │   │   │       │   │   ├── scripts/
+│   │   │   │   │   │       │   │   │   ├── check_command.py
+│   │   │   │   │   │       │   │   │   └── check_path.py
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── incident-response/
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   ├── postmortem.md
+│   │   │   │   │   │       │   │   │   └── runbook.md
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── multica-cli/
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── observability-slo/
+│   │   │   │   │   │       │   │   ├── references/
+│   │   │   │   │   │       │   │   │   └── alerting-patterns.md
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   ├── health-report.md
+│   │   │   │   │   │       │   │   │   └── slo-definition.yaml
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── performance-benchmark/
+│   │   │   │   │   │       │   │   ├── scripts/
+│   │   │   │   │   │       │   │   │   └── compare_metrics.py
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── pk-azure-devops-history/
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── pk-correlation-synthesis/
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── pk-document-analysis/
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── pk-file-ingestion/
+│   │   │   │   │   │       │   │   ├── runtime-pk/
+│   │   │   │   │   │       │   │   │   ├── _schema/
+│   │   │   │   │   │       │   │   │   │   ├── architecture-entry.schema.json
+│   │   │   │   │   │       │   │   │   │   ├── code-graph.schema.json
+│   │   │   │   │   │       │   │   │   │   ├── common.schema.json
+│   │   │   │   │   │       │   │   │   │   ├── evidence-record.schema.json
+│   │   │   │   │   │       │   │   │   │   ├── realization-entry.schema.json
+│   │   │   │   │   │       │   │   │   │   ├── semantics-entry.schema.json
+│   │   │   │   │   │       │   │   │   │   └── validate_store.py
+│   │   │   │   │   │       │   │   │   ├── architecture/
+│   │   │   │   │   │       │   │   │   │   └── chart-management-api.yaml
+│   │   │   │   │   │       │   │   │   ├── code-graph/
+│   │   │   │   │   │       │   │   │   │   ├── edges.jsonl
+│   │   │   │   │   │       │   │   │   │   └── nodes.jsonl
+│   │   │   │   │   │       │   │   │   ├── evidence/
+│   │   │   │   │   │       │   │   │   │   ├── repo-analysis-chart-api.yaml
+│   │   │   │   │   │       │   │   │   │   └── spc-training-2024.yaml
+│   │   │   │   │   │       │   │   │   ├── realization/
+│   │   │   │   │   │       │   │   │   │   └── chart-management-api.yaml
+│   │   │   │   │   │       │   │   │   ├── semantics/
+│   │   │   │   │   │       │   │   │   │   └── spc-chart-management.yaml
+│   │   │   │   │   │       │   │   │   └── README.md
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── pk-repository-analysis/
+│   │   │   │   │   │       │   │   ├── scripts/
+│   │   │   │   │   │       │   │   │   ├── analyze-repo.py
+│   │   │   │   │   │       │   │   │   ├── correlate-cross-repo.py
+│   │   │   │   │   │       │   │   │   ├── graph-update.py
+│   │   │   │   │   │       │   │   │   ├── repo-fetch.sh
+│   │   │   │   │   │       │   │   │   └── self-test.sh
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── pk-tkms-ingestion/
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── pm-intention/
+│   │   │   │   │   │       │   │   ├── scripts/
+│   │   │   │   │   │       │   │   │   └── validate_intention_spec.py
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   └── intention-spec.yaml
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── post-change-canary/
+│   │   │   │   │   │       │   │   ├── scripts/
+│   │   │   │   │   │       │   │   │   └── canary_gate.py
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── product-knowledge/
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── release-management/
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   ├── changelog.md
+│   │   │   │   │   │       │   │   │   ├── release-checklist.md
+│   │   │   │   │   │       │   │   │   └── rollback-plan.md
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── root-cause-debugging/
+│   │   │   │   │   │       │   │   ├── scripts/
+│   │   │   │   │   │       │   │   │   └── hypothesis_log.py
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   └── rca-report.md
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── runtime-qa/
+│   │   │   │   │   │       │   │   ├── scripts/
+│   │   │   │   │   │       │   │   │   └── http_smoke.py
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   └── runtime-qa-report.md
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── scenario-playbooks/
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── security-review/
+│   │   │   │   │   │       │   │   ├── references/
+│   │   │   │   │   │       │   │   │   └── owasp-cwe-map.md
+│   │   │   │   │   │       │   │   ├── scripts/
+│   │   │   │   │   │       │   │   │   └── security-tools.md
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   └── security-report.md
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── software-development/
+│   │   │   │   │   │       │   │   ├── scripts/
+│   │   │   │   │   │       │   │   │   └── repo-preflight.sh
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   └── development-result.yaml
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── spec-design/
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   ├── adr.md
+│   │   │   │   │   │       │   │   │   ├── openapi-skeleton.yaml
+│   │   │   │   │   │       │   │   │   └── spec.md
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── swarm-orchestration/
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── swarm-telemetry/
+│   │   │   │   │   │       │   │   ├── scripts/
+│   │   │   │   │   │       │   │   │   └── collect-mission-metrics.sh
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   └── mission-metrics-report.md
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── test-architecture/
+│   │   │   │   │   │       │   │   ├── scripts/
+│   │   │   │   │   │       │   │   │   └── quality_gate.py
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   └── quality-gate.yaml
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── test-design/
+│   │   │   │   │   │       │   │   ├── references/
+│   │   │   │   │   │       │   │   │   └── techniques-cheatsheet.md
+│   │   │   │   │   │       │   │   ├── scripts/
+│   │   │   │   │   │       │   │   │   └── coverage-commands.md
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   ├── defect-report.md
+│   │   │   │   │   │       │   │   │   └── test-plan.md
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   ├── verification-protocol/
+│   │   │   │   │   │       │   │   ├── runtime-pk/
+│   │   │   │   │   │       │   │   │   ├── _schema/
+│   │   │   │   │   │       │   │   │   │   ├── architecture-entry.schema.json
+│   │   │   │   │   │       │   │   │   │   ├── code-graph.schema.json
+│   │   │   │   │   │       │   │   │   │   ├── common.schema.json
+│   │   │   │   │   │       │   │   │   │   ├── evidence-record.schema.json
+│   │   │   │   │   │       │   │   │   │   ├── realization-entry.schema.json
+│   │   │   │   │   │       │   │   │   │   ├── semantics-entry.schema.json
+│   │   │   │   │   │       │   │   │   │   └── validate_store.py
+│   │   │   │   │   │       │   │   │   ├── architecture/
+│   │   │   │   │   │       │   │   │   │   └── chart-management-api.yaml
+│   │   │   │   │   │       │   │   │   ├── code-graph/
+│   │   │   │   │   │       │   │   │   │   ├── edges.jsonl
+│   │   │   │   │   │       │   │   │   │   └── nodes.jsonl
+│   │   │   │   │   │       │   │   │   ├── evidence/
+│   │   │   │   │   │       │   │   │   │   ├── repo-analysis-chart-api.yaml
+│   │   │   │   │   │       │   │   │   │   └── spc-training-2024.yaml
+│   │   │   │   │   │       │   │   │   ├── realization/
+│   │   │   │   │   │       │   │   │   │   └── chart-management-api.yaml
+│   │   │   │   │   │       │   │   │   ├── semantics/
+│   │   │   │   │   │       │   │   │   │   └── spc-chart-management.yaml
+│   │   │   │   │   │       │   │   │   └── README.md
+│   │   │   │   │   │       │   │   ├── templates/
+│   │   │   │   │   │       │   │   │   ├── verification-evidence.md
+│   │   │   │   │   │       │   │   │   └── verification-plan.md
+│   │   │   │   │   │       │   │   └── SKILL.md
+│   │   │   │   │   │       │   └── rc6-self-test.sh
+│   │   │   │   │   │       ├── RC3-CHANGES.md
+│   │   │   │   │   │       ├── RC4-CHANGES.md
+│   │   │   │   │   │       ├── RC5-CHANGES.md
+│   │   │   │   │   │       ├── RC5-STATIC-VERIFICATION.md
+│   │   │   │   │   │       ├── RC6-CHANGES.md
+│   │   │   │   │   │       ├── RC6-PACKAGE-MANIFEST.json
+│   │   │   │   │   │       ├── RC6-STATIC-VERIFICATION.md
+│   │   │   │   │   │       ├── README.md
+│   │   │   │   │   │       ├── requirements-pk.txt
+│   │   │   │   │   │       ├── setup.sh
+│   │   │   │   │   │       ├── squad-instructions.md
+│   │   │   │   │   │       ├── THIRD_PARTY_REFERENCE_NOTICES.md
+│   │   │   │   │   │       ├── verification-report-RC2.md
+│   │   │   │   │   │       ├── verification-report-RC3.md
+│   │   │   │   │   │       ├── verification-report-RC5.md
+│   │   │   │   │   │       ├── verification-report.md
+│   │   │   │   │   │       └── verify.sh
+│   │   │   │   │   ├── CANONICAL-SOURCE.md
+│   │   │   │   │   ├── ENGCIM_Swarm_RC6_RuntimeBaseline_v1.zip
+│   │   │   │   │   ├── ENGCIM_Swarm_RC6_RuntimeBaseline_v1.zip.sha256
+│   │   │   │   │   ├── README.md
+│   │   │   │   │   └── SOURCE-MANIFEST.json
+│   │   │   │   └── skill-pack/
+│   │   │   │       ├── agents/
+│   │   │   │       │   ├── architect.md
+│   │   │   │       │   ├── backend-dev.md
+│   │   │   │       │   ├── coder.md
+│   │   │   │       │   ├── data-analyst.md
+│   │   │   │       │   ├── dba.md
+│   │   │   │       │   ├── devops.md
+│   │   │   │       │   ├── frontend-dev.md
+│   │   │   │       │   ├── knowledge-curator.md
+│   │   │   │       │   ├── orchestrator.md
+│   │   │   │       │   ├── performance-engineer.md
+│   │   │   │       │   ├── product-manager.md
+│   │   │   │       │   ├── qa-tester.md
+│   │   │   │       │   ├── release-manager.md
+│   │   │   │       │   ├── researcher.md
+│   │   │   │       │   ├── reviewer.md
+│   │   │   │       │   ├── security-auditor.md
+│   │   │   │       │   ├── sre.md
+│   │   │   │       │   ├── verifier.md
+│   │   │   │       │   └── writer.md
+│   │   │   │       ├── skills/
+│   │   │   │       │   ├── artifact-consistency/
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   └── artifact-trace.yaml
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── changesurface-analysis/
+│   │   │   │       │   │   ├── scripts/
+│   │   │   │       │   │   │   └── query-code-graph.sh
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   └── changesurface-report.md
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── cicd-automation/
+│   │   │   │       │   │   ├── scripts/
+│   │   │   │       │   │   │   └── install-autopilot-cron.sh
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   ├── env.example
+│   │   │   │       │   │   │   └── pipeline.yaml
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── code-review-method/
+│   │   │   │       │   │   ├── references/
+│   │   │   │       │   │   │   └── review-checklist.md
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   └── review-verdict.md
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── deployment-verification/
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   └── deployment-result.yaml
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── execution-guard/
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── incident-response/
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   ├── postmortem.md
+│   │   │   │       │   │   │   └── runbook.md
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── multica-cli/
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── observability-slo/
+│   │   │   │       │   │   ├── references/
+│   │   │   │       │   │   │   └── alerting-patterns.md
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   ├── health-report.md
+│   │   │   │       │   │   │   └── slo-definition.yaml
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── performance-benchmark/
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── pk-azure-devops-history/
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── pk-correlation-synthesis/
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── pk-document-analysis/
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── pk-file-ingestion/
+│   │   │   │       │   │   ├── runtime-pk/
+│   │   │   │       │   │   │   ├── _schema/
+│   │   │   │       │   │   │   │   ├── architecture-entry.schema.json
+│   │   │   │       │   │   │   │   ├── code-graph.schema.json
+│   │   │   │       │   │   │   │   ├── common.schema.json
+│   │   │   │       │   │   │   │   ├── evidence-record.schema.json
+│   │   │   │       │   │   │   │   ├── realization-entry.schema.json
+│   │   │   │       │   │   │   │   └── semantics-entry.schema.json
+│   │   │   │       │   │   │   ├── architecture/
+│   │   │   │       │   │   │   │   └── chart-management-api.yaml
+│   │   │   │       │   │   │   ├── code-graph/
+│   │   │   │       │   │   │   │   ├── edges.jsonl
+│   │   │   │       │   │   │   │   └── nodes.jsonl
+│   │   │   │       │   │   │   ├── evidence/
+│   │   │   │       │   │   │   │   ├── repo-analysis-chart-api.yaml
+│   │   │   │       │   │   │   │   └── spc-training-2024.yaml
+│   │   │   │       │   │   │   ├── realization/
+│   │   │   │       │   │   │   │   └── chart-management-api.yaml
+│   │   │   │       │   │   │   ├── semantics/
+│   │   │   │       │   │   │   │   └── spc-chart-management.yaml
+│   │   │   │       │   │   │   └── README.md
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── pk-repository-analysis/
+│   │   │   │       │   │   ├── scripts/
+│   │   │   │       │   │   │   ├── repo-fetch.sh
+│   │   │   │       │   │   │   └── self-test.sh
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── pk-tkms-ingestion/
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── pm-intention/
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   └── intention-spec.yaml
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── post-change-canary/
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── product-knowledge/
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── release-management/
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   ├── changelog.md
+│   │   │   │       │   │   │   ├── release-checklist.md
+│   │   │   │       │   │   │   └── rollback-plan.md
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── root-cause-debugging/
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   └── rca-report.md
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── runtime-qa/
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   └── runtime-qa-report.md
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── security-review/
+│   │   │   │       │   │   ├── references/
+│   │   │   │       │   │   │   └── owasp-cwe-map.md
+│   │   │   │       │   │   ├── scripts/
+│   │   │   │       │   │   │   └── security-tools.md
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   └── security-report.md
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── software-development/
+│   │   │   │       │   │   ├── scripts/
+│   │   │   │       │   │   │   └── repo-preflight.sh
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   └── development-result.yaml
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── spec-design/
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   ├── adr.md
+│   │   │   │       │   │   │   ├── openapi-skeleton.yaml
+│   │   │   │       │   │   │   └── spec.md
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── swarm-orchestration/
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── swarm-telemetry/
+│   │   │   │       │   │   ├── scripts/
+│   │   │   │       │   │   │   └── collect-mission-metrics.sh
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   └── mission-metrics-report.md
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── test-architecture/
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   └── quality-gate.yaml
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── test-design/
+│   │   │   │       │   │   ├── references/
+│   │   │   │       │   │   │   └── techniques-cheatsheet.md
+│   │   │   │       │   │   ├── scripts/
+│   │   │   │       │   │   │   └── coverage-commands.md
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   ├── defect-report.md
+│   │   │   │       │   │   │   └── test-plan.md
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   ├── verification-protocol/
+│   │   │   │       │   │   ├── runtime-pk/
+│   │   │   │       │   │   │   ├── _schema/
+│   │   │   │       │   │   │   │   ├── architecture-entry.schema.json
+│   │   │   │       │   │   │   │   ├── code-graph.schema.json
+│   │   │   │       │   │   │   │   ├── common.schema.json
+│   │   │   │       │   │   │   │   ├── evidence-record.schema.json
+│   │   │   │       │   │   │   │   ├── realization-entry.schema.json
+│   │   │   │       │   │   │   │   └── semantics-entry.schema.json
+│   │   │   │       │   │   │   ├── architecture/
+│   │   │   │       │   │   │   │   └── chart-management-api.yaml
+│   │   │   │       │   │   │   ├── code-graph/
+│   │   │   │       │   │   │   │   ├── edges.jsonl
+│   │   │   │       │   │   │   │   └── nodes.jsonl
+│   │   │   │       │   │   │   ├── evidence/
+│   │   │   │       │   │   │   │   ├── repo-analysis-chart-api.yaml
+│   │   │   │       │   │   │   │   └── spc-training-2024.yaml
+│   │   │   │       │   │   │   ├── realization/
+│   │   │   │       │   │   │   │   └── chart-management-api.yaml
+│   │   │   │       │   │   │   ├── semantics/
+│   │   │   │       │   │   │   │   └── spc-chart-management.yaml
+│   │   │   │       │   │   │   └── README.md
+│   │   │   │       │   │   ├── templates/
+│   │   │   │       │   │   │   ├── verification-evidence.md
+│   │   │   │       │   │   │   └── verification-plan.md
+│   │   │   │       │   │   └── SKILL.md
+│   │   │   │       │   └── rc6-self-test.sh
+│   │   │   │       ├── CANONICAL-SOURCE.md
+│   │   │   │       ├── ENGCIM_Swarm_RC6_CuratedOSS_SkillPack_PCAB.zip
+│   │   │   │       ├── RC6-PACKAGE-MANIFEST.json
+│   │   │   │       ├── RC6-README.md
+│   │   │   │       └── SOURCE-MANIFEST.json
+│   │   │   └── README.md
+│   │   ├── contracts/
+│   │   │   └── rc10/
+│   │   │       ├── MissionLearningSource.schema.json
+│   │   │       ├── WorkspaceKnowledgeCaptureResult.schema.json
+│   │   │       └── WorkspaceKnowledgeProposal.schema.json
+│   │   ├── src/
+│   │   │   ├── main/
+│   │   │   │   └── java/
+│   │   │   │       └── com/
+│   │   │   │           └── featuredeliveryintelligence/
+│   │   │   │               └── fdi/
+│   │   │   │                   ├── application/
+│   │   │   │                   │   ├── Dev204Cli.java
+│   │   │   │                   │   └── FdiApplication.java
+│   │   │   │                   ├── feature/
+│   │   │   │                   │   ├── FeatureDiscovery.java
+│   │   │   │                   │   ├── FeatureKnowledgePlan.java
+│   │   │   │                   │   └── RuntimeCapabilities.java
+│   │   │   │                   ├── orchestration/
+│   │   │   │                   │   ├── BindingReceipt.java
+│   │   │   │                   │   ├── ClarificationRequiredException.java
+│   │   │   │                   │   ├── ClaudeSupervisorGateway.java
+│   │   │   │                   │   ├── ControlResult.java
+│   │   │   │                   │   ├── GovernedWorkspaceKnowledge.java
+│   │   │   │                   │   ├── InMemoryWorkspaceKnowledgeRepository.java
+│   │   │   │                   │   ├── IntakeStatus.java
+│   │   │   │                   │   ├── KnowledgeConflict.java
+│   │   │   │                   │   ├── KnowledgeCorrelation.java
+│   │   │   │                   │   ├── KnowledgeGovernanceDecision.java
+│   │   │   │                   │   ├── KnowledgeObservation.java
+│   │   │   │                   │   ├── KnowledgeRoute.java
+│   │   │   │                   │   ├── KnowledgeRoutingDecision.java
+│   │   │   │                   │   ├── KnowledgeType.java
+│   │   │   │                   │   ├── LearningCandidate.java
+│   │   │   │                   │   ├── Mission.java
+│   │   │   │                   │   ├── MissionClosureSummary.java
+│   │   │   │                   │   ├── MissionExecutionEnvelope.java
+│   │   │   │                   │   ├── MissionIntake.java
+│   │   │   │                   │   ├── MissionIntakeDecision.java
+│   │   │   │                   │   ├── MissionLearningSource.java
+│   │   │   │                   │   ├── MissionLearningSourceFactory.java
+│   │   │   │                   │   ├── MissionRequest.java
+│   │   │   │                   │   ├── MissionState.java
+│   │   │   │                   │   ├── MulticaExecutionPort.java
+│   │   │   │                   │   ├── MulticaRuntimeBinding.java
+│   │   │   │                   │   ├── MulticaWorkspaceKnowledgePort.java
+│   │   │   │                   │   ├── MulticaWorkspaceKnowledgeRepository.java
+│   │   │   │                   │   ├── ObservationState.java
+│   │   │   │                   │   ├── OperationalMulticaPort.java
+│   │   │   │                   │   ├── OperationalReceipt.java
+│   │   │   │                   │   ├── ProductKnowledgeProposal.java
+│   │   │   │                   │   ├── RuntimeBindingPort.java
+│   │   │   │                   │   ├── SupervisorMulticaAction.java
+│   │   │   │                   │   ├── SupervisorMulticaActionType.java
+│   │   │   │                   │   ├── SupervisorMulticaBoundary.java
+│   │   │   │                   │   ├── SupervisorSubmissionResult.java
+│   │   │   │                   │   ├── SupervisorSubmissionStatus.java
+│   │   │   │                   │   ├── SupervisorWorkspaceLifecycle.java
+│   │   │   │                   │   ├── SwarmKnowledgeGateway.java
+│   │   │   │                   │   ├── SwarmKnowledgeLifecycle.java
+│   │   │   │                   │   ├── SwarmMissionGateway.java
+│   │   │   │                   │   ├── VerificationResult.java
+│   │   │   │                   │   ├── WorkItemResult.java
+│   │   │   │                   │   ├── WorkspaceKnowledgeCaptureReceiptRepository.java
+│   │   │   │                   │   ├── WorkspaceKnowledgeCaptureResult.java
+│   │   │   │                   │   ├── WorkspaceKnowledgeLifecycleResult.java
+│   │   │   │                   │   ├── WorkspaceKnowledgeProjectRef.java
+│   │   │   │                   │   ├── WorkspaceKnowledgeProjectResolver.java
+│   │   │   │                   │   ├── WorkspaceKnowledgeProposal.java
+│   │   │   │                   │   ├── WorkspaceKnowledgeRepository.java
+│   │   │   │                   │   ├── WorkspaceRuntimeSnapshot.java
+│   │   │   │                   │   └── WorkspaceRuntimeState.java
+│   │   │   │                   ├── product/
+│   │   │   │                   │   ├── ProductKnowledgeMaintenance.java
+│   │   │   │                   │   ├── ProductSemantics.java
+│   │   │   │                   │   └── RealizationTraversal.java
+│   │   │   │                   ├── shared/
+│   │   │   │                   │   ├── RuntimeContractException.java
+│   │   │   │                   │   └── RuntimeMaps.java
+│   │   │   │                   ├── structural/
+│   │   │   │                   │   ├── api/
+│   │   │   │                   │   │   ├── CodeIntelligenceProvider.java
+│   │   │   │                   │   │   └── SnapshotBindingAttestor.java
+│   │   │   │                   │   ├── graphify/
+│   │   │   │                   │   │   ├── GrafelAdapter.java
+│   │   │   │                   │   │   ├── GrafelBindingAttestor.java
+│   │   │   │                   │   │   ├── GrafelBindingEvidence.java
+│   │   │   │                   │   │   └── GrafelTransport.java
+│   │   │   │                   │   ├── StructuralIntelligence.java
+│   │   │   │                   │   └── StructuralMaintenance.java
+│   │   │   │                   └── validation/
+│   │   │   │                       ├── CanonicalBaseGate.java
+│   │   │   │                       ├── Dev204Validation.java
+│   │   │   │                       └── VerificationAccounting.java
+│   │   │   └── test/
+│   │   │       └── java/
+│   │   │           └── com/
+│   │   │               └── featuredeliveryintelligence/
+│   │   │                   └── fdi/
+│   │   │                       ├── application/
+│   │   │                       │   └── FdiApplicationTests.java
+│   │   │                       ├── orchestration/
+│   │   │                       │   ├── KnowledgePipelineTests.java
+│   │   │                       │   ├── LearningBoundaryTests.java
+│   │   │                       │   ├── MissionFlowTests.java
+│   │   │                       │   ├── MulticaWorkspaceKnowledgeRepositoryTests.java
+│   │   │                       │   ├── SupervisorBoundaryTests.java
+│   │   │                       │   ├── SupervisorLifecycleTests.java
+│   │   │                       │   ├── SupervisorPathTests.java
+│   │   │                       │   └── WorkspaceKnowledgeLifecycleTests.java
+│   │   │                       ├── JavaOnlySourcePolicyTests.java
+│   │   │                       ├── PackageArchitectureTests.java
+│   │   │                       ├── Rc6CompatibilityTests.java
+│   │   │                       ├── ReviewRegressionTests.java
+│   │   │                       └── RuntimeMigrationTests.java
+│   │   └── pom.xml
+│   └── targets/
+│       ├── scenarios/
+│       │   └── S05-DESIGN-QUALITY-v1.yaml
 │       └── README.md
 ├── governance/
 │   ├── approved/
@@ -739,108 +928,7 @@ Feature-Delivery-Intelligence/
 │   ├── MANIFEST.json
 │   ├── MARKDOWN-INVENTORY.txt
 │   ├── PROJECT-TREE.txt
-│   ├── RC10-CANDIDATE-PACKAGE.zip
 │   └── VERIFICATION-SUMMARY.json
-├── src/
-│   ├── main/
-│   │   └── java/
-│   │       └── com/
-│   │           └── featuredeliveryintelligence/
-│   │               └── fdi/
-│   │                   ├── application/
-│   │                   │   ├── Dev204Cli.java
-│   │                   │   └── FdiApplication.java
-│   │                   ├── feature/
-│   │                   │   ├── FeatureDiscovery.java
-│   │                   │   ├── FeatureKnowledgePlan.java
-│   │                   │   └── RuntimeCapabilities.java
-│   │                   ├── orchestration/
-│   │                   │   ├── BindingReceipt.java
-│   │                   │   ├── ClarificationRequiredException.java
-│   │                   │   ├── ClaudeSupervisorGateway.java
-│   │                   │   ├── ControlResult.java
-│   │                   │   ├── GovernedWorkspaceKnowledge.java
-│   │                   │   ├── InMemoryWorkspaceKnowledgeRepository.java
-│   │                   │   ├── IntakeStatus.java
-│   │                   │   ├── KnowledgeConflict.java
-│   │                   │   ├── KnowledgeCorrelation.java
-│   │                   │   ├── KnowledgeGovernanceDecision.java
-│   │                   │   ├── KnowledgeObservation.java
-│   │                   │   ├── KnowledgeRoute.java
-│   │                   │   ├── KnowledgeRoutingDecision.java
-│   │                   │   ├── KnowledgeType.java
-│   │                   │   ├── LearningCandidate.java
-│   │                   │   ├── Mission.java
-│   │                   │   ├── MissionClosureSummary.java
-│   │                   │   ├── MissionExecutionEnvelope.java
-│   │                   │   ├── MissionIntake.java
-│   │                   │   ├── MissionIntakeDecision.java
-│   │                   │   ├── MissionLearningSource.java
-│   │                   │   ├── MissionLearningSourceFactory.java
-│   │                   │   ├── MissionRequest.java
-│   │                   │   ├── MissionState.java
-│   │                   │   ├── MulticaExecutionPort.java
-│   │                   │   ├── MulticaRuntimeBinding.java
-│   │                   │   ├── ObservationState.java
-│   │                   │   ├── OperationalMulticaPort.java
-│   │                   │   ├── OperationalReceipt.java
-│   │                   │   ├── ProductKnowledgeProposal.java
-│   │                   │   ├── RuntimeBindingPort.java
-│   │                   │   ├── SupervisorMulticaAction.java
-│   │                   │   ├── SupervisorMulticaActionType.java
-│   │                   │   ├── SupervisorMulticaBoundary.java
-│   │                   │   ├── SupervisorSubmissionResult.java
-│   │                   │   ├── SupervisorSubmissionStatus.java
-│   │                   │   ├── SupervisorWorkspaceLifecycle.java
-│   │                   │   ├── SwarmKnowledgeGateway.java
-│   │                   │   ├── SwarmMissionGateway.java
-│   │                   │   ├── VerificationResult.java
-│   │                   │   ├── WorkItemResult.java
-│   │                   │   ├── WorkspaceKnowledgeProposal.java
-│   │                   │   ├── WorkspaceKnowledgeRepository.java
-│   │                   │   ├── WorkspaceRuntimeSnapshot.java
-│   │                   │   └── WorkspaceRuntimeState.java
-│   │                   ├── product/
-│   │                   │   ├── ProductKnowledgeMaintenance.java
-│   │                   │   ├── ProductSemantics.java
-│   │                   │   └── RealizationTraversal.java
-│   │                   ├── shared/
-│   │                   │   ├── RuntimeContractException.java
-│   │                   │   └── RuntimeMaps.java
-│   │                   ├── structural/
-│   │                   │   ├── api/
-│   │                   │   │   ├── CodeIntelligenceProvider.java
-│   │                   │   │   └── SnapshotBindingAttestor.java
-│   │                   │   ├── graphify/
-│   │                   │   │   ├── GrafelAdapter.java
-│   │                   │   │   ├── GrafelBindingAttestor.java
-│   │                   │   │   ├── GrafelBindingEvidence.java
-│   │                   │   │   └── GrafelTransport.java
-│   │                   │   ├── StructuralIntelligence.java
-│   │                   │   └── StructuralMaintenance.java
-│   │                   └── validation/
-│   │                       ├── CanonicalBaseGate.java
-│   │                       ├── Dev204Validation.java
-│   │                       └── VerificationAccounting.java
-│   └── test/
-│       └── java/
-│           └── com/
-│               └── featuredeliveryintelligence/
-│                   └── fdi/
-│                       ├── application/
-│                       │   └── FdiApplicationTests.java
-│                       ├── orchestration/
-│                       │   ├── KnowledgePipelineTests.java
-│                       │   ├── LearningBoundaryTests.java
-│                       │   ├── MissionFlowTests.java
-│                       │   ├── SupervisorBoundaryTests.java
-│                       │   ├── SupervisorLifecycleTests.java
-│                       │   └── SupervisorPathTests.java
-│                       ├── JavaOnlySourcePolicyTests.java
-│                       ├── PackageArchitectureTests.java
-│                       ├── Rc6CompatibilityTests.java
-│                       ├── ReviewRegressionTests.java
-│                       └── RuntimeMigrationTests.java
 ├── templates/
 │   └── product-instance/
 │       └── README.md

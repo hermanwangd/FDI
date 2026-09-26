@@ -11,7 +11,8 @@ from pathlib import Path
 
 
 def java_test_summary(root: Path) -> str:
-    reports = sorted((root / "target" / "surefire-reports").glob("TEST-*.xml"))
+    module_reports = sorted(root.glob("engcim/*/target/surefire-reports/TEST-*.xml"))
+    reports = module_reports or sorted((root / "target" / "surefire-reports").glob("TEST-*.xml"))
     tests = failures = errors = skipped = 0
     for report in reports:
         suite = ET.parse(report).getroot()

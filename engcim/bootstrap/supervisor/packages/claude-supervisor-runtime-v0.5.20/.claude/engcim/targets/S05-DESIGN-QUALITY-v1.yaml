@@ -1,0 +1,89 @@
+target:
+  targetRef: S05-DESIGN-QUALITY-v1
+  version: '1.1'
+  status: FROZEN_FOR_TARGET_DRIVEN_VALIDATION
+  revisionNote: v1.1 corrects contractRef ENGCIM-DELIVERABLE-INSPECTOR 0.1 to 0.2 (Inspector v0.1 was removed from the active package in runtime v0.5.6). No success criteria, constraints, or stop conditions changed.
+  objective: Make S05 Technical Design implementation-ready so a downstream engineer can implement without re-performing the
+    producer's primary system analysis or design.
+  scope:
+    scenarioRefs:
+    - S05-SOFTWARE-DEVELOPMENT
+    capabilityRefs:
+    - technical-design
+    contractRefs:
+    - ENGCIM-S01-S06-DELIVERABLE-CONTRACT@0.1
+    - ENGCIM-DELIVERABLE-INSPECTOR@0.2
+    workspaceRefs: []
+    repoRefs: []
+  successCriteria:
+  - criterionRef: S05DQ-C01
+    statement: S05 deliverable receives ACCEPTABLE from Deliverable Inspector.
+    evaluator: DELIVERABLE_CONTRACT
+    expected: ACCEPTABLE
+    evidenceRequirements:
+    - current inspection result
+    severity: BLOCKER
+  - criterionRef: S05DQ-C02
+    statement: Affected architecture delta contains usable As-Is and To-Be views.
+    evaluator: SEMANTIC_REVIEW
+    expected: PRESENT_AND_USABLE
+    evidenceRequirements:
+    - affected architecture view
+    severity: BLOCKER
+  - criterionRef: S05DQ-C03
+    statement: Every materially affected component states responsibility, current behavior, required change, interactions,
+      and relevant state/data impact.
+    evaluator: SEMANTIC_REVIEW
+    expected: COMPLETE_FOR_AFFECTED_COMPONENTS
+    evidenceRequirements:
+    - component design sections
+    severity: BLOCKER
+  - criterionRef: S05DQ-C04
+    statement: When interfaces/contracts are affected, provider/consumer and contract delta are explicit.
+    evaluator: COMPOSITE
+    expected: COMPLETE_WHEN_APPLICABLE
+    evidenceRequirements:
+    - interface design or N/A rationale
+    severity: BLOCKER
+  - criterionRef: S05DQ-C05
+    statement: At least one main to-be interaction flow is present.
+    evaluator: SEMANTIC_REVIEW
+    expected: PRESENT_AND_USABLE
+    evidenceRequirements:
+    - main flow view
+    severity: BLOCKER
+  - criterionRef: S05DQ-C06
+    statement: A sequence/interaction view is present when the main flow crosses components or repositories.
+    evaluator: COMPOSITE
+    expected: PRESENT_WHEN_APPLICABLE
+    evidenceRequirements:
+    - sequence view or N/A rationale
+    severity: BLOCKER
+  - criterionRef: S05DQ-C07
+    statement: IntentSpec.delta traces through designChangeRef to Acceptance Criteria.
+    evaluator: COMPOSITE
+    expected: TRACEABILITY_COMPLETE
+    evidenceRequirements:
+    - traceability map
+    severity: BLOCKER
+  - criterionRef: S05DQ-C08
+    statement: A downstream developer can implement without redoing primary system analysis/design.
+    evaluator: SEMANTIC_REVIEW
+    expected: DOWNSTREAM_USABLE
+    evidenceRequirements:
+    - downstream usability assessment
+    severity: BLOCKER
+  constraints:
+  - Do not weaken S05 Deliverable Contract.
+  - Do not change Product intent or Acceptance Criteria.
+  - Do not broaden authorized mutation scope.
+  - Do not bypass evidence/provenance requirements.
+  - Do not declare success from issue DONE/COMPLETED state.
+  - Do not replace missing design depth with generic prose.
+  stopConditions:
+  - all success criteria achieved with fresh evidence
+  - Human Authority decision required and unavailable
+  - required source/context/evidence unavailable
+  - a new BLOCKER regression is introduced
+  - safe authorized correction path exhausted
+  - repeated iterations produce no measurable progress

@@ -6,6 +6,11 @@ def ok(name, cond, detail=''):
     checks.append((name,cond,detail));
     if not cond: errors.append(f'{name}: {detail}')
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+def is_local_control_state(p):
+    parts=p.relative_to(root).parts
+    return (bool(parts) and parts[0]=='.claude') or p.relative_to(root).as_posix()=='CLAUDE.md'
+def is_local_candidate_archive(p):
+    return p.relative_to(root).as_posix()=='release/RC10-CANDIDATE-PACKAGE.zip'
 # 1. authority lock
 lock_path=root/'governance/locks/approved-source-lock.json'
 ok('approved-source-lock exists',lock_path.exists(),str(lock_path))
@@ -41,7 +46,7 @@ for required_token in ['CLOSED_WITHIN_DECLARED_SCOPE','SPEC_READY | BLOCKED','AC
 # 3. all markdowns listed in project tree
 pt=root/'release'/'PROJECT-TREE.txt'; ok('PROJECT-TREE exists',pt.exists())
 tree=pt.read_text() if pt.exists() else ''
-md=sorted(p.relative_to(root).as_posix() for p in root.rglob('*.md') if not any(x in {'.git','.pytest_cache','__pycache__','target'} for x in p.relative_to(root).parts) and not ('.mvn' in p.relative_to(root).parts and any(x.startswith('apache-maven-') for x in p.relative_to(root).parts)))
+md=sorted(p.relative_to(root).as_posix() for p in root.rglob('*.md') if not is_local_control_state(p) and not any(x in {'.git','.pytest_cache','__pycache__','target'} for x in p.relative_to(root).parts) and not ('.mvn' in p.relative_to(root).parts and any(x.startswith('apache-maven-') for x in p.relative_to(root).parts)))
 missing=[rel for rel in md if Path(rel).name not in tree]
 ok('all Markdown files appear in PROJECT-TREE',not missing,f'missing={missing[:20]}')
 mdi=root/'release'/'MARKDOWN-INVENTORY.txt'
@@ -52,16 +57,17 @@ if mdi.exists():
 # Stronger count marker: every markdown basename line count can collide, so verifier also writes exact inventory elsewhere through manifest.
 # 4. JSON/schema parse
 for p in root.rglob('*.json'):
-    if p.name=='MANIFEST.json': continue
+    if p.name=='MANIFEST.json' or is_local_control_state(p): continue
     try: json.loads(p.read_text())
     except Exception as e: errors.append(f'JSON parse {p.relative_to(root)}: {e}')
 ok('all JSON parse',not any(e.startswith('JSON parse') for e in errors))
 # 5. Java runtime identity and Python packaging-tool compile
-pom=(root/'pom.xml').read_text() if (root/'pom.xml').exists() else ''
+pom_paths=[root/'pom.xml', root/'engcim/swarm/pom.xml']
+pom='\n'.join(p.read_text() for p in pom_paths if p.exists())
 ok('Java 17 compiler release','<maven.compiler.release>17</maven.compiler.release>' in pom)
 ok('Spring Boot 3.4.1','<version>3.4.1</version>' in pom)
 ok('Python runtime removed',not (root/'src/fdi').exists())
-py=[str(p) for p in root.rglob('*.py') if '__pycache__' not in p.parts]
+py=[str(p) for p in root.rglob('*.py') if '__pycache__' not in p.parts and not is_local_control_state(p)]
 r=subprocess.run([sys.executable,'-m','py_compile',*py],capture_output=True,text=True)
 ok('Python packaging tools compile',r.returncode==0,r.stderr[-1000:])
 # 6. manifest integrity
@@ -71,7 +77,7 @@ if man.exists():
     actual=[]
     for p in root.rglob('*'):
         rel=p.relative_to(root)
-        if (p.is_file() and p.name!='MANIFEST.json'
+        if (p.is_file() and p.name!='MANIFEST.json' and not is_local_control_state(p) and not is_local_candidate_archive(p)
                 and not any(x in {'.git','__pycache__','.pytest_cache','target'} for x in rel.parts)
                 and not ('.mvn' in rel.parts and any(x.startswith('apache-maven-') for x in rel.parts))): actual.append(rel.as_posix())
     ok('manifest path set exact',set(listed)==set(actual),f'missing={set(actual)-set(listed)}, extra={set(listed)-set(actual)}')

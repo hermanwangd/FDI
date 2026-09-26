@@ -1,0 +1,65 @@
+contract:
+  id: ENGCIM-SUPERVISOR-DIAGNOSIS
+  version: '0.2'
+  status: DRAFT_FOR_LIVE_VALIDATION
+  purpose: Require hypothesis-driven causal diagnosis against the canonical ENGCIM Swarm v1.0 component model before improvement
+    routing.
+componentModelRef: ENGCIM-SWARM-V1-COMPONENT-CONTRACT.md
+allowedOwningComponents:
+- PRODUCT_KNOWLEDGE
+- PRODUCT_CONTEXT
+- SCENARIO
+- ENGINEERING_SKILL
+- ENGINEERING_CONTROL
+- SWARM_CORE
+- RUNTIME_BINDING
+- MULTICA_RUNTIME
+requiredOutput:
+  problem: Observed material finding/problem.
+  hypotheses: Small set of plausible causal hypotheses; do not audit all components by default.
+  targetedEvidence: Evidence selected to discriminate among hypotheses.
+  causalChain: Evidence-backed chain from source/requirement through the observed failure.
+  owningComponent: Required only when owningScope=COMPONENT; otherwise null.
+  failureMode: Specific failure mode supported by evidence.
+  confidence: HIGH|MEDIUM|LOW
+  evidenceRefs: Exact evidence references.
+  rejectedHypotheses: Rejected alternatives and why.
+  improvementDirection: Recommended improvement surface; may differ from owningComponent.
+  improvementProposal: Conceptual correction, not Swarm internal implementation topology.
+  successCriteria: Fresh evidence required to prove correction.
+  owningScope: COMPONENT|ENVIRONMENT|PROCESS|HUMAN
+rules:
+- Diagnosis is hypothesis-driven, not a mandatory sequential audit of all components.
+- The first component where a failure is visible is not necessarily the owning component.
+- owningComponent identifies causal ownership; improvementDirection identifies the highest-value reusable correction surface.
+- Do not default to SWARM_CORE.
+- MULTICA_RUNTIME is external to ENGCIM Swarm v1.0.
+- Do not force environment, process, or human-owned failures into the 7+1 component model.
+- Supervisor v0.1 ProblemClass is superseded for active diagnosis; historical evidence remains immutable.
+- Supervisor produces Mission Learning Source; ENGCIM Swarm owns Workspace Knowledge Building.
+- Supervisor verifies WorkspaceKnowledge capture result/provenance; it does not directly persist WorkspaceKnowledge.
+- Direct tKMS Platform/Product Knowledge I/O is owned by Supervisor; Product Knowledge writes remain governed.
+- ENGCIM Swarm must not directly read/write tKMS.
+allowedOwningScopes:
+- COMPONENT
+- ENVIRONMENT
+- PROCESS
+- HUMAN
+taxonomyMigration:
+  RUNTIME_CONTRACT:
+  - SWARM_CORE
+  - RUNTIME_BINDING
+  - MULTICA_RUNTIME
+  ENGINEERING_CONTROL:
+  - ENGINEERING_CONTROL
+  ENGINEERING_CAPABILITY:
+  - ENGINEERING_SKILL
+  - diagnose actual owner
+  SCENARIO_COMPOSITION:
+  - SCENARIO
+  - PRODUCT_CONTEXT
+  PRODUCT_KNOWLEDGE:
+  - PRODUCT_KNOWLEDGE
+  - PRODUCT_CONTEXT
+  FIXTURE_OR_ENVIRONMENT:
+  - owningScope=ENVIRONMENT

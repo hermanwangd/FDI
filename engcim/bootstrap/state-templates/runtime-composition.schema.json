@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://engcim.local/contracts/rc10/runtime-composition.schema.json",
+  "type": "object",
+  "required": ["schemaVersion", "compositionRef", "workspace", "runtime", "projects", "sources", "orchestration", "agentBindings", "skillRegistry", "knowledgeBoundary", "validation"],
+  "properties": {
+    "schemaVersion": {"type": "string", "const": "0.1"},
+    "compositionRef": {"type": "string", "minLength": 1},
+    "status": {"type": "string", "minLength": 1},
+    "workspace": {"$ref": "#/$defs/ref"},
+    "runtime": {"type": "object", "required": ["id", "provider", "modelIdentifier"], "properties": {"id": {"type": "string"}, "provider": {"type": "string"}, "expectedStatus": {"type": "string"}, "modelLabel": {"type": "string"}, "modelIdentifier": {"type": "string"}, "exactModelVersionStatus": {"type": "string"}}},
+    "projects": {"type": "object", "required": ["productKnowledge", "workspaceKnowledge"], "additionalProperties": {"$ref": "#/$defs/ref"}},
+    "sources": {"type": "object", "additionalProperties": {"type": "string"}},
+    "orchestration": {"type": "object", "required": ["squad", "leader", "engineeringPath", "scenarioRefs"], "properties": {"squad": {"type": "string"}, "leader": {"type": "string"}, "engineeringPath": {"type": "array", "items": {"type": "string"}}, "operationalSupervisorPath": {"type": "array", "items": {"type": "string"}}, "directSupervisorEngineeringBypass": {"type": "boolean"}, "scenarioRefs": {"type": "array", "items": {"type": "string"}}}},
+    "agentBindings": {"type": "array", "minItems": 19, "items": {"type": "object", "required": ["name", "skills"], "properties": {"name": {"type": "string"}, "skills": {"type": "array", "items": {"type": "string"}}}}},
+    "skillRegistry": {"type": "object", "required": ["expectedCount", "required"], "properties": {"expectedCount": {"type": "integer", "minimum": 1}, "required": {"type": "array", "items": {"type": "string"}}}},
+    "knowledgeBoundary": {"type": "object", "required": ["missionLearningSourceOwner", "workspaceKnowledgeBuilder", "workspaceKnowledgePersistence", "workspaceKnowledgeRetrieval", "directMissionToTkms", "directSwarmToTkms"]},
+    "validation": {"type": "object", "required": ["script", "mode"]}
+  },
+  "$defs": {
+    "ref": {"type": "object", "required": ["id"], "properties": {"id": {"type": "string", "minLength": 1}, "name": {"type": "string"}, "title": {"type": "string"}, "role": {"type": "string"}, "source": {"type": "string"}}}
+  }
+}

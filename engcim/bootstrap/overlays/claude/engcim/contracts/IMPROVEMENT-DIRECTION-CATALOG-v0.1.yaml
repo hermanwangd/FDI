@@ -1,0 +1,90 @@
+catalog:
+  id: ENGCIM-IMPROVEMENT-DIRECTION-CATALOG
+  version: '0.1'
+  status: DRAFT_FOR_LIVE_VALIDATION
+  purpose: Provide a fixed set of candidate improvement surfaces so Supervisor diagnosis does not prematurely collapse every
+    problem into Core/runtime changes.
+directions:
+- id: PRODUCT_KNOWLEDGE
+  question: Is durable product truth/context incomplete, stale, inconsistent, or poorly structured?
+- id: USER_INPUT
+  question: Is the initiating user input missing material information or expressing the target ambiguously?
+- id: PM_INTENTION
+  question: Is product-level intent/delta/acceptance meaning inadequately specified or propagated?
+- id: PRODUCT_CONTEXT
+  question: Is the resolved context supplied to the engineering work incomplete, stale, or incorrectly selected?
+- id: ARCHITECTURE
+  question: Is system analysis/architecture understanding or representation insufficient?
+- id: DESIGN
+  question: Is the technical design itself incomplete, shallow, inconsistent, or downstream-unusable?
+- id: ENGINEERING_SKILL
+  question: Is a reusable reasoning/engineering capability missing or ineffective?
+- id: ENGINEERING_CONTROL
+  question: Is a reusable governance/enforcement rule missing, misbound, mistimed, or incorrectly evaluated?
+- id: SCENARIO
+  question: Is Scenario composition missing required context, Skill, Control, output, or completion semantics?
+- id: SWARM_CORE
+  question: Is shared ENGCIM Swarm Core behavior the reusable owning surface?
+- id: RUNTIME_BINDING
+  question: Is ENGCIM-to-Multica binding, context/evidence transport, or runtime integration defective?
+- id: MULTICA_RUNTIME
+  question: Is the generic Multica runtime contract/capability itself defective or unavailable?
+- id: FIXTURE_TEST_ASSET
+  question: Is the fixture, test data, test asset, or expected evidence defective/inadequate?
+- id: ENVIRONMENT
+  question: Is repository/tool/auth/workspace/environment availability or configuration the cause?
+- id: PROCESS
+  question: Is a human/engineering operating process or SOP the better improvement surface?
+- id: HUMAN_DECISION
+  question: Is a product/approval/risk decision required rather than an engineering correction?
+selection_rules:
+- Diagnosis must consider all materially plausible directions before recommending one.
+- Do not recommend SWARM_CORE merely because it is reusable or writable.
+- 'ENGINEERING_CONTROL is distinct from ENGINEERING_SKILL and SCENARIO: Control owns reusable governance/enforcement semantics.'
+- Multiple directions may contribute; rank them rather than forcing a single cause.
+- Prefer the direction that best explains the evidence and provides the highest reusable improvement with the smallest justified
+  scope.
+- If evidence cannot distinguish leading directions, keep the recommendation INCONCLUSIVE and request/collect discriminating
+  evidence.
+ranking_model:
+  principle: Rank candidates with an evidence-backed ordinal rubric. Do not manufacture a numeric score when the evidence
+    cannot support precise weighting.
+  dimensions:
+    impact:
+      HIGH: Likely to materially improve the target/problem across the affected case(s).
+      MEDIUM: Meaningful but partial improvement.
+      LOW: Limited or cosmetic effect on the target/problem.
+    confidence:
+      HIGH: Direct evidence strongly supports this direction.
+      MEDIUM: Evidence supports it but important uncertainty remains.
+      LOW: Plausible hypothesis with weak/discriminating evidence missing.
+    reusability:
+      HIGH: Improvement benefits multiple cases/scenarios/products or a shared capability.
+      MEDIUM: Reusable within a bounded scenario/capability family.
+      LOW: Primarily one-off/local.
+    changeScope:
+      SMALL: Bounded change with limited blast radius.
+      MEDIUM: Multiple artifacts/components/capabilities affected.
+      LARGE: Shared/core/runtime or broad product/process change with high blast radius.
+  selection_order:
+  - Reject candidates contradicted by evidence or outside authorized scope.
+  - Prefer HIGH confidence over speculative directions.
+  - Among similarly supported candidates, prefer higher expected impact.
+  - Among similarly impactful candidates, prefer higher reusability.
+  - Among otherwise comparable candidates, prefer smaller justified change scope.
+  - Do not prefer a smaller scope when it merely treats a symptom and leaves the evidenced reusable cause intact.
+  - If two leading directions remain materially tied, mark the recommendation INCONCLUSIVE and gather discriminating evidence.
+  required_candidate_output:
+  - direction
+  - evidenceFor
+  - evidenceAgainst
+  - impact
+  - confidence
+  - reusability
+  - changeScope
+  - rationale
+  recommended_output:
+    selectedDirection: catalog direction | INCONCLUSIVE
+    whySelected: string
+    alternatives: ranked candidate refs/directions
+    discriminatingEvidenceNeeded: string[]
