@@ -35,6 +35,29 @@ Implement the smallest RC10 candidate that makes the required boundaries executa
 - Run existing Maven, Java-only, standalone governance, and release checks.
 - Produce implementation, integration, regression, and evidence reports plus an RC10 candidate package.
 
+### WP5 — Complete the missing Supervisor path
+
+- Add a Supervisor adapter for intake assessment, targeted clarification, Mission submission, and closure-summary creation.
+- Keep Supervisor outside Swarm semantics and retain only operational Multica actions on its direct port.
+
+### WP6 — Complete Runtime Binding and lifecycle contracts
+
+- Carry constraints, acceptance criteria, workspace, mission, request, and revision in an immutable execution envelope.
+- Add a Multica execution port/adapter without claiming a live external call.
+- Model workspace bootstrap, runtime upgrade, and rollback state transitions behind the operational boundary.
+
+### WP7 — Complete Swarm-owned knowledge building
+
+- Add evidence-backed observations, correlation, conflict detection, synthesis, governance, persistence, and workspace-scoped retrieval.
+- Preserve the distinction between MissionLearningSource, Product Knowledge, and WorkspaceKnowledge.
+- Correct `limitations` to be a list of strings in both Java and JSON contracts.
+
+### WP8 — Complete routing and RC6 compatibility evidence
+
+- Emit a typed routing decision for every allowed knowledge destination, including Skill, Control, Swarm Core, Runtime Binding, Product Knowledge, Multica issue, and Mission history.
+- Add S01–S06/skill/control compatibility checks and lifecycle regression tests without rewriting RC6 artifacts.
+- Rebuild the candidate ZIP and all release metadata only after the remediation passes.
+
 ## Acceptance matrix
 
 | Test | Required proof |

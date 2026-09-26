@@ -13,8 +13,13 @@ public record MissionClosureSummary(
         if (closureSummaryRef == null || closureSummaryRef.isBlank()) throw new IllegalArgumentException("closureSummaryRef is required");
         if (missionRef == null || missionRef.isBlank()) throw new IllegalArgumentException("missionRef is required");
         if (workspaceRef == null || workspaceRef.isBlank()) throw new IllegalArgumentException("workspaceRef is required");
-        subjectRefs = List.copyOf(subjectRefs == null ? List.of() : subjectRefs);
-        sourceRefs = List.copyOf(sourceRefs == null ? List.of() : sourceRefs);
-        evidenceRefs = List.copyOf(evidenceRefs == null ? List.of() : evidenceRefs);
+        subjectRefs = requiredRefs(subjectRefs, "subjectRefs");
+        sourceRefs = requiredRefs(sourceRefs, "sourceRefs");
+        evidenceRefs = requiredRefs(evidenceRefs, "evidenceRefs");
+    }
+
+    private static List<String> requiredRefs(List<String> refs, String field) {
+        if (refs == null || refs.isEmpty()) throw new IllegalArgumentException(field + " is required");
+        return List.copyOf(refs);
     }
 }

@@ -35,10 +35,11 @@ The final evidence run must regenerate release tree/inventory/summary/manifest i
 
 ## Completed verification snapshot
 
-- `MAVEN_OPTS='-Xmx2g' ./mvnw -q clean test`: exit 0; 25/25 tests passed.
+- `MAVEN_OPTS='-Xmx2g' ./mvnw -q clean test`: exit 0; 36/36 tests passed after remediation.
 - `python3 -m pytest -q tests/test_standalone_governance.py`: 12 passed.
 - `python3 tooling/verification/verify_standalone_bundle.py .`: 61 PASS / 0 FAIL.
-- `release/VERIFICATION-SUMMARY.json`: Java 25 PASS / 0 FAIL, governance 12 PASS / 0 FAIL, standalone 61 PASS / 0 FAIL.
+- `bash engcim/skill-packs/rc6-runtime-baseline-v1/package/engcim-swarm-package-RC6/skills/rc6-self-test.sh`: exit 0.
+- `release/VERIFICATION-SUMMARY.json`: Java 36 PASS / 0 FAIL, governance 12 PASS / 0 FAIL, standalone 61 PASS / 0 FAIL.
 
 ## Explicit non-claims
 

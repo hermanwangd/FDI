@@ -1,7 +1,7 @@
 package com.featuredeliveryintelligence.fdi.orchestration;
 
-/** Provider-neutral Runtime Binding port; a real Multica adapter belongs outside this contract. */
+/** External Multica execution port. A live client is supplied by the execution environment. */
 @FunctionalInterface
-public interface RuntimeBindingPort {
+public interface MulticaExecutionPort {
     BindingReceipt execute(MissionExecutionEnvelope execution);
 }

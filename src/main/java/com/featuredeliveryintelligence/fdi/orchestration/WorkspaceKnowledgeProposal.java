@@ -11,7 +11,7 @@ public record WorkspaceKnowledgeProposal(
         String statement,
         String scope,
         String applicability,
-        String limitations,
+        List<String> limitations,
         List<String> evidenceRefs,
         List<String> conflictRefs) {
     public WorkspaceKnowledgeProposal {
@@ -24,7 +24,7 @@ public record WorkspaceKnowledgeProposal(
         evidenceRefs = requiredRefs(evidenceRefs, "evidenceRefs");
         conflictRefs = List.copyOf(conflictRefs == null ? List.of() : conflictRefs);
         applicability = applicability == null ? "" : applicability;
-        limitations = limitations == null ? "" : limitations;
+        limitations = List.copyOf(limitations == null ? List.of() : limitations);
     }
 
     private static List<String> requiredRefs(List<String> refs, String field) {

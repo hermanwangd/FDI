@@ -29,6 +29,7 @@ class LearningBoundaryTests {
         assertThat(proposal.knowledgeType()).isEqualTo(KnowledgeType.PROCEDURAL);
         assertThat(proposal.sourceRefs()).isEqualTo(source.sourceRefs());
         assertThat(proposal.evidenceRefs()).isEqualTo(source.evidenceRefs());
+        assertThat(proposal.limitations()).containsExactly("requires governance review");
     }
 
     @Test
@@ -49,6 +50,9 @@ class LearningBoundaryTests {
         SwarmKnowledgeGateway gateway = new SwarmKnowledgeGateway();
 
         assertThat(gateway.classify(candidate)).isEqualTo(KnowledgeRoute.PRODUCT_KNOWLEDGE_PROPOSAL);
+        ProductKnowledgeProposal productProposal = gateway.productKnowledgeProposal(source, candidate);
+        assertThat(productProposal.requiresProductGovernance()).isTrue();
+        assertThat(productProposal.evidenceRefs()).isEqualTo(source.evidenceRefs());
         assertThatThrownBy(() -> gateway.propose(source, candidate)).hasMessageContaining("Product Knowledge");
     }
 

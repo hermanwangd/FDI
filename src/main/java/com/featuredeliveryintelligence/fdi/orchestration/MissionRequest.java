@@ -26,10 +26,13 @@ public record MissionRequest(
         if (blank(projectRef)) missing.add("projectRef");
         if (blank(scope)) missing.add("scope");
         if (blank(goal)) missing.add("goal");
-        if (constraints.isEmpty()) missing.add("constraints");
         if (acceptanceCriteria.isEmpty()) missing.add("acceptanceCriteria");
-        if (blank(requestedRevision)) missing.add("requestedRevision");
         return List.copyOf(missing);
+    }
+
+    public MissionRequest withRequestedRevision(String revision) {
+        return new MissionRequest(requestRef, workspaceRef, projectRef, scope, goal,
+                constraints, acceptanceCriteria, revision);
     }
 
     private static boolean blank(String value) { return value == null || value.isBlank(); }

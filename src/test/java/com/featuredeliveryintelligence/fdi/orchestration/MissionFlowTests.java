@@ -11,16 +11,20 @@ import org.junit.jupiter.api.Test;
 class MissionFlowTests {
     @Test
     void T01_completeRequestCrossesMissionSwarmBindingAndMultica() {
-        var received = new ArrayList<Mission>();
-        RuntimeBindingPort binding = mission -> {
-            received.add(mission);
+        var received = new ArrayList<MissionExecutionEnvelope>();
+        RuntimeBindingPort binding = execution -> {
+            received.add(execution);
             return new BindingReceipt("binding:multica", "multica:exec-1", "rev-17", "COMMITTED", List.of("evidence:1"));
         };
 
         Mission mission = new MissionIntake().formulate(request());
         WorkItemResult result = new SwarmMissionGateway(binding).execute(mission);
 
-        assertThat(received).containsExactly(mission);
+        assertThat(received).singleElement().satisfies(execution -> {
+            assertThat(execution.missionRef()).isEqualTo(mission.missionRef());
+            assertThat(execution.constraints()).isEqualTo(request().constraints());
+            assertThat(execution.acceptanceCriteria()).isEqualTo(request().acceptanceCriteria());
+        });
         assertThat(result.missionRef()).isEqualTo("mission:req-1");
         assertThat(result.workspaceRef()).isEqualTo("workspace-a");
         assertThat(result.runtimeBindingRef()).isEqualTo("binding:multica");
@@ -35,7 +39,7 @@ class MissionFlowTests {
         assertThatThrownBy(() -> new MissionIntake().formulate(incomplete))
                 .isInstanceOf(ClarificationRequiredException.class)
                 .hasMessageContaining("goal")
-                .hasMessageContaining("constraints");
+                .hasMessageContaining("acceptanceCriteria");
         assertThat(calls).isEmpty();
     }
 
@@ -51,17 +55,19 @@ class MissionFlowTests {
 
     @Test
     void T06_bindingReceivesExactMissionIdentityAndRevision() {
-        var seen = new ArrayList<Mission>();
-        RuntimeBindingPort binding = mission -> {
-            seen.add(mission);
-            return new BindingReceipt("binding:1", "multica:1", mission.request().requestedRevision(), "COMMITTED", List.of("e:1"));
+        var seen = new ArrayList<MissionExecutionEnvelope>();
+        RuntimeBindingPort binding = execution -> {
+            seen.add(execution);
+            return new BindingReceipt("binding:1", "multica:1", execution.executionRevision(), "COMMITTED", List.of("e:1"));
         };
 
         Mission mission = new MissionIntake().formulate(request());
         WorkItemResult result = new SwarmMissionGateway(binding).execute(mission);
 
         assertThat(seen.get(0).missionRef()).isEqualTo(mission.missionRef());
-        assertThat(seen.get(0).request().workspaceRef()).isEqualTo("workspace-a");
+        assertThat(seen.get(0).workspaceRef()).isEqualTo("workspace-a");
+        assertThat(seen.get(0).constraints()).containsExactly("no live dispatch");
+        assertThat(seen.get(0).acceptanceCriteria()).containsExactly("T01 passes");
         assertThat(result.executionRevision()).isEqualTo("rev-17");
     }
 

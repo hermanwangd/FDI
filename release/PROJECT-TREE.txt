@@ -188,6 +188,7 @@ Feature-Delivery-Intelligence/
 │   │   ├── RC10-IMPLEMENTATION-REPORT.md
 │   │   ├── RC10-INTEGRATION-TEST-REPORT.md
 │   │   ├── RC10-REGRESSION-REPORT.md
+│   │   ├── RC10-REMAINDER-GAP-REPORT.md
 │   │   └── RC6-TO-RC10-GAP-REPORT.md
 │   ├── specifications/
 │   │   ├── framework/
@@ -239,6 +240,7 @@ Feature-Delivery-Intelligence/
 │       │   │   └── writer.md
 │       │   ├── skills/
 │       │   │   ├── artifact-consistency/
+│       │   │   │   ├── scripts/
 │       │   │   │   ├── templates/
 │       │   │   │   │   └── artifact-trace.yaml
 │       │   │   │   └── SKILL.md
@@ -266,6 +268,7 @@ Feature-Delivery-Intelligence/
 │       │   │   │   │   └── deployment-result.yaml
 │       │   │   │   └── SKILL.md
 │       │   │   ├── execution-guard/
+│       │   │   │   ├── scripts/
 │       │   │   │   └── SKILL.md
 │       │   │   ├── incident-response/
 │       │   │   │   ├── templates/
@@ -282,6 +285,7 @@ Feature-Delivery-Intelligence/
 │       │   │   │   │   └── slo-definition.yaml
 │       │   │   │   └── SKILL.md
 │       │   │   ├── performance-benchmark/
+│       │   │   │   ├── scripts/
 │       │   │   │   └── SKILL.md
 │       │   │   ├── pk-azure-devops-history/
 │       │   │   │   └── SKILL.md
@@ -320,10 +324,12 @@ Feature-Delivery-Intelligence/
 │       │   │   ├── pk-tkms-ingestion/
 │       │   │   │   └── SKILL.md
 │       │   │   ├── pm-intention/
+│       │   │   │   ├── scripts/
 │       │   │   │   ├── templates/
 │       │   │   │   │   └── intention-spec.yaml
 │       │   │   │   └── SKILL.md
 │       │   │   ├── post-change-canary/
+│       │   │   │   ├── scripts/
 │       │   │   │   └── SKILL.md
 │       │   │   ├── product-knowledge/
 │       │   │   │   └── SKILL.md
@@ -334,6 +340,7 @@ Feature-Delivery-Intelligence/
 │       │   │   │   │   └── rollback-plan.md
 │       │   │   │   └── SKILL.md
 │       │   │   ├── root-cause-debugging/
+│       │   │   │   ├── scripts/
 │       │   │   │   ├── templates/
 │       │   │   │   │   └── rca-report.md
 │       │   │   │   └── SKILL.md
@@ -370,6 +377,7 @@ Feature-Delivery-Intelligence/
 │       │   │   │   │   └── mission-metrics-report.md
 │       │   │   │   └── SKILL.md
 │       │   │   ├── test-architecture/
+│       │   │   │   ├── scripts/
 │       │   │   │   ├── templates/
 │       │   │   │   │   └── quality-gate.yaml
 │       │   │   │   └── SKILL.md
@@ -731,6 +739,7 @@ Feature-Delivery-Intelligence/
 │   ├── MANIFEST.json
 │   ├── MARKDOWN-INVENTORY.txt
 │   ├── PROJECT-TREE.txt
+│   ├── RC10-CANDIDATE-PACKAGE.zip
 │   └── VERIFICATION-SUMMARY.json
 ├── src/
 │   ├── main/
@@ -748,28 +757,49 @@ Feature-Delivery-Intelligence/
 │   │                   ├── orchestration/
 │   │                   │   ├── BindingReceipt.java
 │   │                   │   ├── ClarificationRequiredException.java
+│   │                   │   ├── ClaudeSupervisorGateway.java
 │   │                   │   ├── ControlResult.java
+│   │                   │   ├── GovernedWorkspaceKnowledge.java
+│   │                   │   ├── InMemoryWorkspaceKnowledgeRepository.java
+│   │                   │   ├── IntakeStatus.java
+│   │                   │   ├── KnowledgeConflict.java
+│   │                   │   ├── KnowledgeCorrelation.java
+│   │                   │   ├── KnowledgeGovernanceDecision.java
+│   │                   │   ├── KnowledgeObservation.java
 │   │                   │   ├── KnowledgeRoute.java
+│   │                   │   ├── KnowledgeRoutingDecision.java
 │   │                   │   ├── KnowledgeType.java
 │   │                   │   ├── LearningCandidate.java
 │   │                   │   ├── Mission.java
 │   │                   │   ├── MissionClosureSummary.java
+│   │                   │   ├── MissionExecutionEnvelope.java
 │   │                   │   ├── MissionIntake.java
+│   │                   │   ├── MissionIntakeDecision.java
 │   │                   │   ├── MissionLearningSource.java
 │   │                   │   ├── MissionLearningSourceFactory.java
 │   │                   │   ├── MissionRequest.java
 │   │                   │   ├── MissionState.java
+│   │                   │   ├── MulticaExecutionPort.java
+│   │                   │   ├── MulticaRuntimeBinding.java
+│   │                   │   ├── ObservationState.java
 │   │                   │   ├── OperationalMulticaPort.java
 │   │                   │   ├── OperationalReceipt.java
+│   │                   │   ├── ProductKnowledgeProposal.java
 │   │                   │   ├── RuntimeBindingPort.java
 │   │                   │   ├── SupervisorMulticaAction.java
 │   │                   │   ├── SupervisorMulticaActionType.java
 │   │                   │   ├── SupervisorMulticaBoundary.java
+│   │                   │   ├── SupervisorSubmissionResult.java
+│   │                   │   ├── SupervisorSubmissionStatus.java
+│   │                   │   ├── SupervisorWorkspaceLifecycle.java
 │   │                   │   ├── SwarmKnowledgeGateway.java
 │   │                   │   ├── SwarmMissionGateway.java
 │   │                   │   ├── VerificationResult.java
 │   │                   │   ├── WorkItemResult.java
-│   │                   │   └── WorkspaceKnowledgeProposal.java
+│   │                   │   ├── WorkspaceKnowledgeProposal.java
+│   │                   │   ├── WorkspaceKnowledgeRepository.java
+│   │                   │   ├── WorkspaceRuntimeSnapshot.java
+│   │                   │   └── WorkspaceRuntimeState.java
 │   │                   ├── product/
 │   │                   │   ├── ProductKnowledgeMaintenance.java
 │   │                   │   ├── ProductSemantics.java
@@ -800,11 +830,15 @@ Feature-Delivery-Intelligence/
 │                       ├── application/
 │                       │   └── FdiApplicationTests.java
 │                       ├── orchestration/
+│                       │   ├── KnowledgePipelineTests.java
 │                       │   ├── LearningBoundaryTests.java
 │                       │   ├── MissionFlowTests.java
-│                       │   └── SupervisorBoundaryTests.java
+│                       │   ├── SupervisorBoundaryTests.java
+│                       │   ├── SupervisorLifecycleTests.java
+│                       │   └── SupervisorPathTests.java
 │                       ├── JavaOnlySourcePolicyTests.java
 │                       ├── PackageArchitectureTests.java
+│                       ├── Rc6CompatibilityTests.java
 │                       ├── ReviewRegressionTests.java
 │                       └── RuntimeMigrationTests.java
 ├── templates/

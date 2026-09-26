@@ -12,7 +12,8 @@ public final class SwarmMissionGateway {
 
     public WorkItemResult execute(Mission mission) {
         Objects.requireNonNull(mission, "mission is required");
-        BindingReceipt receipt = runtimeBinding.execute(mission);
+        MissionExecutionEnvelope execution = MissionExecutionEnvelope.from(mission);
+        BindingReceipt receipt = runtimeBinding.execute(execution);
         return new WorkItemResult(
                 mission.missionRef(),
                 mission.request().requestRef(),
