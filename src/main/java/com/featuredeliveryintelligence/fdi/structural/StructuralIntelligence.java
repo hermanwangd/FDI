@@ -1,4 +1,4 @@
-package com.featuredeliveryintelligence.fdi.runtime;
+package com.featuredeliveryintelligence.fdi.structural;
 
 import com.featuredeliveryintelligence.fdi.shared.*;
 import java.nio.charset.StandardCharsets;
