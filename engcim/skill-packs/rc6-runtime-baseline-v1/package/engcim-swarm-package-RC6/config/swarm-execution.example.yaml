@@ -1,0 +1,16 @@
+# ENGCIM Swarm RC5 execution policy
+childCompletion:
+  # supported: reviewed_state (default)
+  # experimental: terminal_done (requires external integration/completion controller)
+  mode: reviewed_state
+
+fanIn:
+  policy: ALL_REQUIRED
+  truthSource: execution_review_verification_state
+  parentWakeup: structured_child_event
+  nativeStageBarrier: optional_wakeup_only
+
+terminalDoneExperimental:
+  enabled: false
+  authority: external_integration
+  parentMayAutoDone: false

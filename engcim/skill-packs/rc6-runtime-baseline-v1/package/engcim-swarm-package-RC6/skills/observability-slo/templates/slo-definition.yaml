@@ -1,0 +1,38 @@
+# SLO 定義檔（一個 SLO 一份；入庫 src-operations；變更屬治理動作需人類批准）
+slo:
+  name: <journey-availability | journey-latency | ...>
+  service: <服務名>
+  userJourney: <關鍵使用者旅程，如「下單」「查詢訂單」>
+  owner: Swarm SRE
+  lastReviewed: <YYYY-MM-DD>
+
+  sli:
+    type: availability | latency | freshness
+    # 操作化定義：分子/分母必須可由資料來源直接算出，不含糊
+    definition: |
+      <例：availability = 5xx 以外且 latency <= 500ms 的請求數 / 總請求數>
+    dataSource: <Prometheus 查詢 / log pipeline / 連結>
+    measurementWindow: 30d        # rolling window
+
+  target:
+    value: 99.9                   # 百分比；依據見下
+    rationale: <使用者容忍度／歷史 baseline 連結；為何不是更高或更低>
+
+  errorBudget:
+    policy: |
+      <budget 耗盡時：凍結什麼、誰批准、如何解除>
+    # 例：30d 視窗 99.9% → 每月允許 ≈43.2 分鐘全斷或等價錯誤量
+
+  alerts:
+    - name: <slo-fast-burn>
+      symptom: <使用者可見的影響描述>
+      condition: burn_rate(1h) >= 14.4 and burn_rate(5m) >= 14.4   # 多視窗骨架，以監控系統語法為準
+      severity: SEV2
+      runbook: <runbook 連結（incident-response/templates/runbook.md）>
+      action: <收到者第一步做什麼>
+    - name: <slo-slow-burn>
+      symptom: <……>
+      condition: burn_rate(3d) >= 1
+      severity: SEV3（工單追蹤，不頁面）
+      runbook: <連結>
+      action: <……>

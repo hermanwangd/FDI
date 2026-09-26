@@ -1,0 +1,13 @@
+artifacts:
+  - ref: INT-1
+    revision: 2
+  - ref: DEV-1
+    revision: 1
+links:
+  - from: INT-1
+    fromRevision: 2
+    to: DEV-1
+    relation: IMPLEMENTED_BY
+requirements:
+  - id: AC-1
+    artifactRefs: [DEV-1]

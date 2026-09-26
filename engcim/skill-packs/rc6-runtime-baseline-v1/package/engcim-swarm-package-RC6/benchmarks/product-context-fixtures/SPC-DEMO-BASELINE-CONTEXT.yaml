@@ -1,0 +1,60 @@
+# Benchmark fixture only — not a canonical ENGCIM schema.
+contextRef: CTX-SPC-DEMO-B0
+contextRevision: 1
+product:
+  name: SPC Demo
+capability:
+  name: Chart Management
+scenario:
+  name: Chart Viewing
+
+semantics:
+  objective: Retrieve and visualize configured SPC charts.
+  rules:
+    - id: R-001
+      text: A chart must reference a valid chart configuration.
+    - id: R-002
+      text: Chart Viewer retrieves chart definitions through Chart Management API.
+    - id: R-003
+      text: Viewer failures present a recoverable user error.
+    - id: R-004
+      text: API changes preserve the published Chart API contract.
+  nonGoals:
+    - Unrelated chart creation behavior.
+
+architecture:
+  components:
+    - chart-viewer
+    - chart-management-api
+    - spc-deployment
+  interfaces:
+    - ref: ChartAPI
+      endpoint: GET /api/charts/{id}
+
+realization:
+  repoComponentMap:
+    - repo: chart-viewer
+      component: chart-viewer
+    - repo: chart-management-api
+      component: chart-management-api
+    - repo: spc-deployment
+      component: spc-deployment
+  codeGraphSlice:
+    - from: chart-viewer.getChart
+      relation: CONSUMES
+      to: ChartAPI
+    - from: ChartAPI
+      relation: IMPLEMENTED_IN
+      to: chart-management-api.get_chart
+
+evidenceRefs:
+  - product-training.md
+  - chart-management-spec.md
+  - repository-manifest.yaml
+
+sourceSnapshot:
+  productDocsRevision: synthetic-v1
+  repositories:
+    chart-viewer: REPLACE_WITH_TEST_SHA
+    chart-management-api: REPLACE_WITH_TEST_SHA
+    spc-deployment: REPLACE_WITH_TEST_SHA

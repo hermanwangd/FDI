@@ -1,0 +1,56 @@
+# mcp-sources.yaml — MCP access policy + source capability mapping
+# Modes: auto (default), runtime_native, multica_managed.
+# MCP_MODE overrides access.mode.
+
+access:
+  mode: auto
+  autoProvisionManagedFallback: false
+  recordAccessModeInProvenance: true
+
+# Used only by multica_managed, or auto with autoProvisionManagedFallback=true.
+servers:
+  tkms:
+    description: TKMS MCP server (optional Multica-managed fallback)
+    server_config:
+      command: <tkms MCP server command>
+      args: ["<arg1>", "<arg2>"]
+      env:
+        TKMS_TOKEN: ${TKMS_PAT}
+  azure-devops:
+    description: Azure DevOps MCP server (optional Multica-managed fallback)
+    server_config:
+      command: <azure devops MCP server command>
+      args: ["<arg1>", "<arg2>", "<organization>"]
+      env:
+        ADO_PAT: ${AZURE_DEVOPS_PAT}
+
+# Capability contract; runtimeServerHints are discovery hints, never hardcoded tool names.
+# server/*Tool fields are only for Multica-managed fallback.
+capabilities:
+  tkms:
+    capability: product-document-source
+    requiredOperations: [search, retrieve, metadata]
+    optionalOperations: [version]
+    runtimeServerHints: [tkms, knowledge, document]
+    server: tkms
+    searchTool: <actual search tool name>
+    documentTool: <actual retrieve/metadata tool name>
+    versionTool: ""
+  azureDevOps:
+    capability: software-delivery-history
+    requiredOperations: [work_items, pull_requests, commits, repositories]
+    runtimeServerHints: [azure-devops, ado, azure]
+    server: azure-devops
+    organization: <Azure DevOps organization>
+    project: <Azure DevOps project>
+    workItemTool: <actual work-item tool name>
+    pullRequestTool: <actual PR tool name>
+    commitTool: <actual commit tool name>
+    repositoryTool: <actual repository tool name>
+
+# Resolver:
+# auto/runtime_native -> inspect tools actually visible in the current runtime.
+# auto -> if insufficient, try existing Multica-managed assignment.
+# multica_managed -> use assigned Multica MCP tools only.
+# Missing required operation -> MCP_CAPABILITY_UNAVAILABLE.
+# Provenance: accessMode, runtimeProvider, mcpServerRef, toolName, retrievedAt.

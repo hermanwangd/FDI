@@ -1,0 +1,53 @@
+# repositories.yaml — Repository Manifest（canonical 格式）
+#
+# 用途：宣告「哪些 repo 屬於本產品範圍」，是 pk-repository-analysis skill
+# 多 repo 分析的唯一輸入清單。
+#
+# 重要邊界（對齊 docs/pk-conceptual-model.md 第 8 節四層模型）：
+# - 本 manifest 是 **Source 層的範圍宣告**，不是 Code Graph。
+#   它只說「這些 repo 屬於產品」，不含任何 Component／Module／Dependency
+#   知識——那些要經過 Code Analysis → Observation → Synthesis 才會產生。
+# - manifest 本身入庫時是一份上傳文件（走 pk-file-ingestion 情境 C），
+#   產出「產品範圍包含哪些 Repository」的 Observation，再經 synthesis
+#   成為 Repository node（pk-realization）；manifest 不直接變成 PK。
+# - 一個 repo 列在這裡 ≠ 它與其他 repo 有依賴；跨 repo 依賴必須有
+#   證據（API usage、OpenAPI client、event contract 等，見
+#   skills/pk-repository-analysis/SKILL.md）才會進 Code Graph。
+#
+# 格式：YAML 是 canonical 格式；部署方若以 JSON／CSV 提供同樣欄位
+# （product + repositories[].name/location）也可接受，adapter 會正規化
+# 為同一結構，但套件內的範例與文件一律以 YAML 為準。
+
+# ---- 最小範例（單一 repo） ----
+product: SPC
+repositories:
+  - name: chart-management-api
+    location: <git url>   # 例：https://dev.azure.com/<org>/<project>/_git/chart-management-api
+
+# ---- 完整範例（多 repo 產品，4 個 repo） ----
+# 取消註解並改為實際值。欄位說明：
+#   name        repo 的短名，作為 Code Graph Repository node 的識別名
+#   location    git clone URL 或 Azure DevOps repo 位址
+#   role        （可選）自由描述，僅作分析時的提示，不直接成為 PK
+#   defaultBranch （可選）分析基準分支，缺省為 repo 預設分支
+#
+# product: SPC
+# repositories:
+#   - name: chart-management-api        # 後端 API service
+#     location: https://dev.azure.com/<org>/<project>/_git/chart-management-api
+#     role: backend API
+#     defaultBranch: main
+#   - name: chart-viewer-web            # 前端 SPA
+#     location: https://dev.azure.com/<org>/<project>/_git/chart-viewer-web
+#     role: frontend
+#   - name: spc-rules-engine            # 規則引擎 service
+#     location: https://dev.azure.com/<org>/<project>/_git/spc-rules-engine
+#     role: backend service
+#   - name: spc-helm-charts             # 部署設定
+#     location: https://dev.azure.com/<org>/<project>/_git/spc-helm-charts
+#     role: deployment config
+#
+# 多 repo 是強制的：分析時先 per-repo 各自產出 Observation，
+# 再做 cross-repo correlation（跨 repo 依賴需逐條附證據與 provenance），
+# 最後 synthesize 成 product-level Code Graph。流程見
+# skills/pk-repository-analysis/SKILL.md 與 docs/pk-ingestion.md。
