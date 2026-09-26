@@ -1,6 +1,7 @@
 package com.featuredeliveryintelligence.fdi.runtime;
 
 import com.featuredeliveryintelligence.fdi.shared.*;
+import com.featuredeliveryintelligence.fdi.structural.api.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.*;
 import java.util.function.BiFunction;
