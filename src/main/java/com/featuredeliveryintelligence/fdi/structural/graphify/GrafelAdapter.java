@@ -1,7 +1,8 @@
-package com.featuredeliveryintelligence.fdi.runtime;
+package com.featuredeliveryintelligence.fdi.structural.graphify;
 
 import com.featuredeliveryintelligence.fdi.shared.*;
 import com.featuredeliveryintelligence.fdi.structural.api.*;
+import com.featuredeliveryintelligence.fdi.runtime.StructuralIntelligence;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.*;
 import java.util.function.BiFunction;
