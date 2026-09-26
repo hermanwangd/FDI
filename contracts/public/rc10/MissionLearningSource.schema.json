@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://engcim.example/contracts/rc10/mission-learning-source.schema.json",
+  "title": "MissionLearningSource",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "learningSourceRef",
+    "workspaceRef",
+    "missionRef",
+    "closureSummaryRef",
+    "subjectRefs",
+    "sourceRefs",
+    "evidenceRefs"
+  ],
+  "properties": {
+    "learningSourceRef": { "type": "string", "minLength": 1 },
+    "workspaceRef": { "type": "string", "minLength": 1 },
+    "missionRef": { "type": "string", "minLength": 1 },
+    "closureSummaryRef": { "type": "string", "minLength": 1 },
+    "subjectRefs": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 },
+    "sourceRefs": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 },
+    "evidenceRefs": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 }
+  }
+}

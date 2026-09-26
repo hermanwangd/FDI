@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://engcim.example/contracts/rc10/workspace-knowledge-proposal.schema.json",
+  "title": "WorkspaceKnowledgeProposal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "proposalRef",
+    "workspaceRef",
+    "sourceRefs",
+    "knowledgeType",
+    "statement",
+    "scope",
+    "applicability",
+    "limitations",
+    "evidenceRefs",
+    "conflictRefs"
+  ],
+  "properties": {
+    "proposalRef": { "type": "string", "minLength": 1 },
+    "workspaceRef": { "type": "string", "minLength": 1 },
+    "sourceRefs": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 },
+    "knowledgeType": { "enum": ["SEMANTIC", "PROCEDURAL"] },
+    "statement": { "type": "string", "minLength": 1 },
+    "scope": { "type": "string", "minLength": 1 },
+    "applicability": { "type": "string" },
+    "limitations": { "type": "string" },
+    "evidenceRefs": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 },
+    "conflictRefs": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+  }
+}

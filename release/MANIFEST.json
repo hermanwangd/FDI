@@ -242,6 +242,16 @@
       "size": 705
     },
     {
+      "path": "contracts/public/rc10/MissionLearningSource.schema.json",
+      "sha256": "08d7a67a316293390aa779dcc25b1b6f8bee628e6ee39785a77e84947a12f741",
+      "size": 972
+    },
+    {
+      "path": "contracts/public/rc10/WorkspaceKnowledgeProposal.schema.json",
+      "sha256": "3ff65a78c7a5345430b2312e1d2c7d7b56fbac469b72e491c68441e074209943",
+      "size": 1137
+    },
+    {
       "path": "contracts/public/source/RepositorySourceConfig.schema.json",
       "sha256": "eef11af4cee25eec1f231ecb1b94d396e0379d3f7a5a442f3f564e316f3bf727",
       "size": 883
@@ -640,6 +650,36 @@
       "path": "docs/proposals/runtime-neutral-delivery-kit.zip",
       "sha256": "cbceb1a82c52c552d40008e374a093b2da1cc356b5efaeffaea3818e3ce9bc6f",
       "size": 136489
+    },
+    {
+      "path": "docs/rc10/RC10-EVIDENCE-MANIFEST.md",
+      "sha256": "e0c525b67cabcd801ec194a0ebe7dded35b1301a157c539cce7488a96935bc14",
+      "size": 2180
+    },
+    {
+      "path": "docs/rc10/RC10-IMPLEMENTATION-PLAN.md",
+      "sha256": "49d296d821a611042957f34b8fcf0c16573ebd20b5b84e6a993bb5ac268f8e75",
+      "size": 3333
+    },
+    {
+      "path": "docs/rc10/RC10-IMPLEMENTATION-REPORT.md",
+      "sha256": "25f2395e4713bf5cb730d1277ce7f0fe4181536b36afa6cdc3d880faa8f11701",
+      "size": 2620
+    },
+    {
+      "path": "docs/rc10/RC10-INTEGRATION-TEST-REPORT.md",
+      "sha256": "cabb5c82176bce5c7d1b148df20ff9a9df0f8660ed54c21a51960fa2391056ab",
+      "size": 1653
+    },
+    {
+      "path": "docs/rc10/RC10-REGRESSION-REPORT.md",
+      "sha256": "b828824ae7c228f025acc9489732b631fae06b7ff4d62e7edac3df1ccd2c4570",
+      "size": 1208
+    },
+    {
+      "path": "docs/rc10/RC6-TO-RC10-GAP-REPORT.md",
+      "sha256": "b107242878d0df97d24598dfdcb67963190bb39249481157decafdeb0fd2d273",
+      "size": 7287
     },
     {
       "path": "docs/specifications/framework/product-intelligence/PRODUCT-INTELLIGENCE-STORE.md",
@@ -2348,17 +2388,27 @@
     },
     {
       "path": "release/MARKDOWN-INVENTORY.txt",
-      "sha256": "e7734c887f92ba93cac38d2a0e460d935440afc1a28fb6a2891b9ccb9c8a0f98",
-      "size": 22036
+      "sha256": "b376d2c0ae502c5fb5d733d318894427487867f88baca2f16561de493f6eda62",
+      "size": 22305
     },
     {
       "path": "release/PROJECT-TREE.txt",
-      "sha256": "c38c23638d7f698e9720ccc8ff9ebdf393f70365ffcfb4842fdcbdd0f8837ec8",
-      "size": 47088
+      "sha256": "94bf39be416fa9e43f8e3980b8526642e4cdd9531351ccb4a1d90b462aa39886",
+      "size": 49389
+    },
+    {
+      "path": "release/RC10-CANDIDATE-PACKAGE/README.md",
+      "sha256": "c8716478968d6ceb32d5417866743ad175eeb7f3520117720541b6cdf0815010",
+      "size": 1022
+    },
+    {
+      "path": "release/RC10-CANDIDATE-PACKAGE.zip",
+      "sha256": "5a416052d65665cc08fde4c2567440dda11c9401affc307f7e71d7048387d040",
+      "size": 28129
     },
     {
       "path": "release/VERIFICATION-SUMMARY.json",
-      "sha256": "4930eed9a8a9a6f069a3f9581e194556028fb0b4c15d207ce5b6a67525d9c1b3",
+      "sha256": "da5a3b5b02f36bab5599a3e010dfc6f5ea0f594c9e585d17db0ef1cfa32ce0c9",
       "size": 935
     },
     {
@@ -2385,6 +2435,126 @@
       "path": "src/main/java/com/featuredeliveryintelligence/fdi/feature/RuntimeCapabilities.java",
       "sha256": "269ef40c34707d5ed13e84341e5ab80f288f8f15932245ba62418f4515056a59",
       "size": 4587
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/BindingReceipt.java",
+      "sha256": "808fa5f31749e3c23dd17cd2f46a78a052be9fc68b77142002e00e38c7c310e2",
+      "size": 964
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/ClarificationRequiredException.java",
+      "sha256": "435e68e5715333ffeea2dfb277626c79f04e3bd1e8ea7cf60f7f0a612b36f682",
+      "size": 302
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/ControlResult.java",
+      "sha256": "4c34009ca4374a81ff25d67aac0a4fbfd2f4a44a6f3ee823b7724d84e734acc0",
+      "size": 239
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/KnowledgeRoute.java",
+      "sha256": "e236a550965ffc3c95d651f0fec6ac2162ca6ddcb764879eec05f1ef7379dd74",
+      "size": 359
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/KnowledgeType.java",
+      "sha256": "a958282da8e1460e65239f0fea531b7519b7900abdacc047f2f2f1e058590d56",
+      "size": 111
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/LearningCandidate.java",
+      "sha256": "cf8af4f4a696472c7b78f6d9d690362e7b52af6aefceb53c6ba4dc3fe6bce6f5",
+      "size": 846
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/Mission.java",
+      "sha256": "0b6b2daee2512fd950b1d397009f993210c0bc7e2d3c912b1bc1d88d2d221ed0",
+      "size": 522
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/MissionClosureSummary.java",
+      "sha256": "ed780fe336b8761c53e5ab92e98ccddd4730d8d3311dfb3bcc72893e22841298",
+      "size": 985
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/MissionIntake.java",
+      "sha256": "2b4d1e7576fa902d555e9a9d26a916eba8c45dc86c568c52f831c0fce93a51fa",
+      "size": 539
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/MissionLearningSource.java",
+      "sha256": "a8badb72a61e86cec3295f3a5667d0c1812e186ebea6588de63107ca60cd9bab",
+      "size": 1279
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/MissionLearningSourceFactory.java",
+      "sha256": "28d8a051f6f175d1f769fcc70c9b6aff76f4bd7cc0fde2bf3a841abe5e489328",
+      "size": 707
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/MissionRequest.java",
+      "sha256": "d26928694999abbd64ed98d99ce927b6ab503f5c38d2ddd7ee28290f41c2ccab",
+      "size": 1445
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/MissionState.java",
+      "sha256": "8601961e548a6f170ab3adf6385456f55dc9da80305151a7b9ecc6e84e0a281d",
+      "size": 95
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/OperationalMulticaPort.java",
+      "sha256": "9ffc5a81c56d18d8ab0bf69f26f9ce6385d20937ce73fa223ec1006476170009",
+      "size": 189
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/OperationalReceipt.java",
+      "sha256": "d7a5098b7fe7a918fe66ac39f8c4a51a85c02ab95ed97db764f8d6857ca0f79b",
+      "size": 130
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/RuntimeBindingPort.java",
+      "sha256": "f9dcbdf5a1b55bd2cb4615de35b99793cdca8f1958ecf244472aa1f8cadc563f",
+      "size": 266
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/SupervisorMulticaAction.java",
+      "sha256": "69b531782a736832c7dd1c01e859ef8098dc40d03466ba357de397dd8f891036",
+      "size": 645
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/SupervisorMulticaActionType.java",
+      "sha256": "6fe74a2a113b66608021f11bcbc58cf290fe872c7bdd9eb48bf6ea48ccdc3571",
+      "size": 308
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/SupervisorMulticaBoundary.java",
+      "sha256": "b84425ef007a2f84f8881b43f4d88e3535af9200fb7916e631c9612e098886cb",
+      "size": 989
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/SwarmKnowledgeGateway.java",
+      "sha256": "c05721064f4b20138133b82bb9349a107d2e6d5bff14310089413ebaa66658dc",
+      "size": 2389
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/SwarmMissionGateway.java",
+      "sha256": "e29b8a94b3c41670b24e3df333de4db76f52d6626b3bcdba32d5953f71cfbc45",
+      "size": 1015
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/VerificationResult.java",
+      "sha256": "b1f3d914ffa617a9b44348c73b63441f458dfd07cbfe8a0ce99f27e4a4e57b1f",
+      "size": 381
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/WorkItemResult.java",
+      "sha256": "d4b0297f01bd347b18f0b5fcba5fe20da6d74a6ef34193775e7df68ea09e2ec0",
+      "size": 573
+    },
+    {
+      "path": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/WorkspaceKnowledgeProposal.java",
+      "sha256": "7679f262c0ffc2f4999b25feb7de87405fee24eb4cd007f3aee62257cdbb0019",
+      "size": 1588
     },
     {
       "path": "src/main/java/com/featuredeliveryintelligence/fdi/product/ProductKnowledgeMaintenance.java",
@@ -2490,6 +2660,21 @@
       "path": "src/test/java/com/featuredeliveryintelligence/fdi/application/FdiApplicationTests.java",
       "sha256": "8019332a8bd8fa462d4a0b0d877ad9456d7e5dcb3e88f36c3f3a155a05dcb54b",
       "size": 234
+    },
+    {
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/orchestration/LearningBoundaryTests.java",
+      "sha256": "4e2b41de09e9edc267cd18c771e20257cae57fefe8c6e5f2bf0c38f9279df138",
+      "size": 3473
+    },
+    {
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/orchestration/MissionFlowTests.java",
+      "sha256": "31ffe6167d7c6d8d402ddaf044eeaaba870a11f8c2dc59dd855d5c9f8ccf42d2",
+      "size": 3695
+    },
+    {
+      "path": "src/test/java/com/featuredeliveryintelligence/fdi/orchestration/SupervisorBoundaryTests.java",
+      "sha256": "4ed17f313c46d3ceda6d7a26440a498bccae287773a95b67ee20d4cffa5674ab",
+      "size": 1811
     },
     {
       "path": "templates/product-instance/README.md",
