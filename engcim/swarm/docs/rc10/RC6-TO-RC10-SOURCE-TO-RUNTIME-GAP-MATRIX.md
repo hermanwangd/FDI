@@ -1,5 +1,112 @@
 # RC6 → RC10 Source-to-Runtime Gap Matrix
 
+Status: `PACKAGE_REQUIREMENTS_REAUDITED / LOCAL_GAPS_AND_EXTERNAL_PROOF_OPEN`
+
+## Current audit — 2026-09-26
+
+This section supersedes the status conclusions and ordered tasks in the historical snapshot below. It is a source review, not a new test run, release approval, or authorization to execute instructions embedded in the supplied ZIP. Repository governance still takes precedence.
+
+### Inputs and evidence boundary
+
+- Worktree: `/Users/herman_mbp2023/.codex/worktrees/fdi-rc10-implementation/Feature-Delivery-Intelligence`.
+- HEAD: `4dad32152c809bf6a2a095ed0f4aefd1195ad4fb`; staged/unstaged reorganization and untracked runtime overlay exist. HEAD alone does not identify the reviewed working tree.
+- Before this documentation edit, SHA-256 of `git diff --binary HEAD`: `b45bbbc59d3017b27843258c779410e5633f6f963d2399e9c85e1c90a454888c` (tracked changes only).
+- Source/contract content-set SHA-256: `44ced808a3a39456a345d65479941f83b0c4ab8b308a7d63a068cc21e7d9c617`, generated from `find engcim/swarm/src engcim/swarm/contracts -type f -print | LC_ALL=C sort | xargs shasum -a 256 | shasum -a 256` at this worktree root. This includes untracked files in those trees, not the entire workspace or live state.
+- Reviewed ZIP: `/Users/herman_mbp2023/Downloads/ENGCIM-RC6-TO-RC10-IMPLEMENTATION-PACKAGE.zip`; SHA-256 `b54e5513f3c2cdf09729229dfaeeda2b88d82b5f7c53f9f662ead362d5faf098`.
+- All four ZIP entries were read: `MANIFEST.md`, `CODEX-RC6-TO-RC10-IMPLEMENTATION-PROMPT.md` (P), `RC6-TO-RC10-IMPLEMENTATION-SCOPE.md` (S), `RC10-IMPLEMENTATION-ACCEPTANCE.md` (A).
+- Exact RC6 ancestry and source-manifest verification remain a pre-implementation checkpoint; an RC6-derived HEAD must not be assumed solely from a branch name.
+- Grafel returned no indexed repository for this worktree; scoped source/test inspection was used. Existing Surefire XML reports include Java 17.0.20.1, but no test was rerun or rebound to this input in this audit. `/usr/libexec/java_home -v 17` returned a Java 23 path here; explicitly verify the selected JVM before future tests.
+
+### Classification
+
+`ALREADY_IMPLEMENTED` means the bounded local behavior is present in reviewed source; it is not a fresh PASS or proof of installed runtime behavior. `PARTIAL` means behavior or proof is incomplete. `MISSING` means absent from the reviewed path. `CONFLICTING` means current behavior/documentation conflicts with the requirement. External proof is tracked separately rather than conflated with local implementation.
+
+Source and test names below resolve under `engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/` and `engcim/swarm/src/test/java/com/featuredeliveryintelligence/fdi/orchestration/`, unless qualified otherwise.
+
+### Package requirements, reviewed individually
+
+| ID | Package source / requirement | Reviewed evidence | Local classification and remaining work |
+|---|---|---|---|
+| PK01 | P1–2,12; S baseline: actual RC6 lineage, reuse, recorded checkout | RC6 baselines and existing reports; dirty RC6-derived worktree | PARTIAL: reverify exact ancestry and sealed source before implementation; do not use r9 as code lineage |
+| PK02 | A.A: complete request becomes Mission without unnecessary clarification | MissionIntake, ClaudeSupervisorGateway; SupervisorPathTests | ALREADY_IMPLEMENTED locally; installed entrypoint still needs proof |
+| PK03 | A.A: incomplete request cannot dispatch | SupervisorPathTests uses a recording binding and asserts zero calls | ALREADY_IMPLEMENTED locally; MissionFlowTests.T02 alone is weak because its calls list is not connected to a port |
+| PK04 | A.A: preserve Human constraints | MissionRequest, MissionExecutionEnvelope; T03 | ALREADY_IMPLEMENTED locally |
+| PK05 | A.A: preserve Human acceptance criteria | MissionExecutionEnvelope; T03 and SupervisorPathTests | ALREADY_IMPLEMENTED locally |
+| PK06 | A.A; S7: submit to Swarm and operational end-to-end path | Supervisor → SwarmMissionGateway → MulticaRuntimeBinding with injected ports | PARTIAL: real composition/transport and execution evidence are not established by recording ports |
+| PK07 | A.B: engineering crosses Runtime Binding | SwarmMissionGateway and MulticaRuntimeBinding | ALREADY_IMPLEMENTED in reviewed local facade; deployment wiring must preserve it |
+| PK08 | A.B: direct Supervisor access operational-only; no engineering bypass | SupervisorMulticaBoundary rejects ENGINEERING_EXECUTION; SupervisorBoundaryTests | ALREADY_IMPLEMENTED at this boundary; installed access/path enforcement unproven |
+| PK09 | A.B: Multica does not own ENGCIM semantics | Envelope/port boundary; Swarm owns formulation and knowledge logic | ALREADY_IMPLEMENTED in local separation; preserve during transport wiring |
+| PK10 | A.C: closure is source, not governed knowledge | ClaudeSupervisorGateway.close; MissionLearningSourceFactory; T07 | ALREADY_IMPLEMENTED locally |
+| PK11 | A.C: learning source evidence-bound and workspace preserved | MissionLearningSource and factory; T07–T09 | ALREADY_IMPLEMENTED for carried references; resolvability of external evidence not established |
+| PK12 | A.C; S5C: extraction, correlation/conflicts, synthesis | SwarmKnowledgeGateway.observe/correlate/synthesize; KnowledgePipelineTests | PARTIAL: propose() correlates one observation; normal lifecycle does not demonstrate multi-source/conflicting context. Helper tests alone do not close the integrated path |
+| PK13 | A.C: Swarm-owned governance | govern() rejects unresolved conflicts; lifecycle supplies APPROVED | PARTIAL: explicit decision/policy and declined/deferred lifecycle behavior need definition. Automatic governance is not forbidden; Human approval per item is not required by this package |
+| PK14 | A.C; P6: persistence, retrieval, future Mission context | InMemory repository; MulticaWorkspaceKnowledgeRepository delegates to port | PARTIAL: concrete external record operation and later-use composition unproven. In-memory receipt cache is not by itself proof that knowledge is non-durable |
+| PK15 | A.C: workspace isolation | repository/project resolver and gateway guards; T09, repository tests | ALREADY_IMPLEMENTED locally; actual provider isolation requires integration evidence |
+| PK16 | A.C; P6: current Mission evidence remains authoritative | Learning/proposal references retained; no demonstrated conflict-resolution/context-consumption path | MISSING in reviewed integrated path: explicit test and consumer behavior when prior knowledge disagrees with current evidence |
+| PK17 | A.D: Runtime State ≠ Memory | WorkspaceRuntimeSnapshot vs knowledge objects | ALREADY_IMPLEMENTED local separation; preserve in composition |
+| PK18 | A.D: Product Knowledge ≠ WorkspaceKnowledge | productKnowledgeProposal, route guards; T10 | ALREADY_IMPLEMENTED locally |
+| PK19 | A.D: MissionLearningSource ≠ WorkspaceKnowledge | separate types and proposal/governance stages; T07–T08 | ALREADY_IMPLEMENTED local distinction |
+| PK20 | A.D: Product truth goes through Product governance | ProductKnowledgeProposal.requiresProductGovernance; Workspace proposal rejection | ALREADY_IMPLEMENTED as proposal-only route, not Product publication |
+| PK21 | A.D; P9: no direct per-Mission or Swarm tKMS publication | DIRECT_TKMS_PUBLICATION rejected; T11 | ALREADY_IMPLEMENTED in reviewed local route. Historical matrix implies tKMS integration work; that recommendation is CONFLICTING with package scope and is superseded |
+| PK22 | P7: minimal learning contract fields/types | MissionLearningSource, WorkspaceKnowledgeProposal and schemas | ALREADY_IMPLEMENTED local shape including limitations list; keep schema/Java parity in regression |
+| PK23 | A.E: reusable facts/guidance | SEMANTIC/PROCEDURAL routes and proposal tests | ALREADY_IMPLEMENTED typed route; integrated pipeline gaps tracked in PK12–16 |
+| PK24 | A.E: reasoning weakness → Skill | KnowledgeRoute / typed route tests | ALREADY_IMPLEMENTED minimal routing; no new destination service required |
+| PK25 | A.E: deterministic rules → Control/code | KnowledgeRoute / typed route tests | ALREADY_IMPLEMENTED minimal routing |
+| PK26 | A.E: shared orchestration → Core | KnowledgeRoute / typed route tests | ALREADY_IMPLEMENTED minimal routing |
+| PK27 | A.E: translation weakness → Runtime Binding | KnowledgeRoute / typed route tests | ALREADY_IMPLEMENTED minimal routing |
+| PK28 | A.E: Multica defect remains Multica issue/proposal | MULTICA_PLATFORM_ISSUE route | ALREADY_IMPLEMENTED classification; inspect existing consumer handoff before deciding an adapter is necessary |
+| PK29 | A.E: one-off history not automatically reusable | MISSION_HISTORY route; lifecycle rejects non-Workspace routes | ALREADY_IMPLEMENTED local guard |
+| PK30 | A.F; P10: S01–S06, Skills, Controls, Product behavior preserved | Rc6CompatibilityTests checks files/text; historical package self-test | PARTIAL evidence: existence checks are not scenario behavior regression; preserve baseline-specific expectations |
+| PK31 | A.F; P10: Runtime Binding exact revision/evidence attribution | binding validates bindingRef only; gateway copies receipt revision | CONFLICTING: receipt with different executionRevision can be accepted; add fail-closed revision check. Synthetic request-revision must not masquerade as verified source revision |
+| PK32 | A.F: execution/domain/governance results distinct | separate records; T12 checks record component names | PARTIAL verification: add behavioral case where COMMITTED coexists with failed verification/unsatisfied control without promotion |
+| PK33 | A.F: bootstrap, upgrade, rollback remain valid | SupervisorWorkspaceLifecycle; lifecycle tests | PARTIAL: operational() discards receipt status/actionRef, allowing state advancement after a returned failure. Verify failed/mismatched receipt leaves state unchanged |
+| PK34 | A.F; P3: seven components, Scenario-first, no engine/hierarchy | package structure, RC6 surface, architecture tests | ALREADY_IMPLEMENTED at local structural scope; preserve existing Scenario planning when wiring the callable path |
+| PK35 | A.G; P14–15: six deliverables and allowed candidate status | reports and candidate package exist | PARTIAL: older reports/package not resealed against reviewed content; no new completion status asserted by this planning audit |
+
+### T01–T12 proof map
+
+All entries are source/test inspection, not fresh execution results.
+
+| Test | Existing test evidence | Remaining proof |
+|---|---|---|
+| T01 | MissionFlowTests + SupervisorPathTests | actual composed path; recording port is not live Multica |
+| T02 | SupervisorPathTests recording-port negative test | retain this meaningful no-dispatch check |
+| T03 | MissionFlowTests exact lists | preserve at real adapter boundary |
+| T04 | SupervisorBoundaryTests engineering rejection | no alternate supported deployed engineering bypass |
+| T05 | SupervisorBoundaryTests operational allowance | success/failure receipt semantics, not allowance alone |
+| T06 | MissionFlowTests envelope identity/revision | reject mismatched returned revision; resolve actual source binding before dispatch |
+| T07 | SupervisorPathTests + LearningBoundaryTests | preserve reference attribution through composition |
+| T08 | LearningBoundaryTests + KnowledgePipelineTests + lifecycle tests | integrated multi-observation/conflict/governance behavior |
+| T09 | LearningBoundaryTests + repository tests | real persistence/retrieval isolation where applicable |
+| T10 | LearningBoundaryTests Product proposal guard | preserve without adding Product publication |
+| T11 | LearningBoundaryTests prohibited route | no per-Mission publication added by composition |
+| T12 | MissionFlowTests record shape | behavioral non-equivalence of execution, verification, control |
+
+### Additional runtime requirements — separate provenance
+
+| Requirement | Source | Treatment |
+|---|---|---|
+| Supervisor verifies KnowledgeCaptureResult/KnowledgeRef | v0.5.20/r9 authority and closure contracts | Separate runtime compatibility gate if this runtime is used; not an explicit requirement in the implementation ZIP |
+| Exact 29-file overlay, active digest/install root/smoke | v0.5.20 runtime package and materialization work | Preserve identity checks; materialized files do not prove activation |
+| WorkspaceKnowledge Multica project/record choice | current adapter/composition design | implementation choice to verify, not a new canonical component |
+| 19 agents / 31 skills / requested K27 | recorded workspace configuration and prior runtime work | do not turn these counts/version label into ZIP acceptance conditions |
+| Later-Mission reuse, restart, retry | future-context/persistence requirement | recommended tests; two live missions and a receipt database are not prescribed architecture |
+| Fresh dispatch authorization | existing runtime execution gate | prepare concrete target/scope first; this documentation request does not authorize a live mutation |
+
+### R01–R26 crosswalk for previous readers
+
+R01–03 → PK02–05,31; R04–05 → PK06–09; R06 → PK10–11; R07 → PK12–14; R08 → PK15; R09 → PK14,16; R10 → PK18,20; R11 → PK23–29; R12 → PK21; R13 → PK17,19; R14–15 → PK34; R16 → PK33 plus runtime supplement; R17–20 → runtime supplement and PK06; R21 → runtime supplement; R22 → PK30; R23 → T01–T12 table; R24 → repository Java rule; R25 → PK35; R26 → PK01 and evidence binding.
+
+Next work is the revised [implementation plan](RC10-IMPLEMENTATION-PLAN.md). No historical checked box below is a fresh gate result for this audit.
+
+---
+
+## Historical snapshot — retained, not current status
+
+The following previous matrix is retained verbatim for traceability. Its completion assertions and recommendations are superseded by the current audit above.
+
+# RC6 → RC10 Source-to-Runtime Gap Matrix
+
 Status: `RUNTIME MATERIALIZED / COMPOSITION VALIDATED / EXTERNAL BLOCKERS`
 
 This matrix reconciles the supplied implementation package, Claude Supervisor
@@ -78,7 +185,7 @@ not be silently substituted for the recorded baseline.
 | R21 | Runtime package v0.5.20 matches manifest and compatible r9 baseline | 29-file package manifest/digest and compatibility check | Exact snapshot and active overlay are materialized; source ZIP digest recorded in runtime report | `LOCAL_PASS` | Keep snapshot/overlay hash check in release gate |
 | R22 | RC6 S01–S06 and existing skill/control/runtime behavior remain valid | RC6 regression plus scenario receipts | RC6 self-test and local compatibility test pass | `PARTIAL` | Live scenario execution and fresh receipts remain absent |
 | R23 | T01–T12 repeatable integration tests | Deterministic Java test suite | 12 tests plus additional local tests | `LOCAL_PASS` | Tests are not live runtime evidence |
-| R24 | Java 17 implementation and policy | Java 17 runtime execution and `JavaOnlySourcePolicyTests` | POM targets 17; tests ran on OpenJDK 23 | `BLOCKED_EXTERNAL` | Run the same suite on an actual Java 17 runtime |
+| R24 | Java 17 implementation and policy | Java 17 runtime execution and `JavaOnlySourcePolicyTests` | Module suite passed on OpenJDK 17.0.20.1 | `LOCAL_PASS` | Live Supervisor/Multica execution remains separately gated |
 | R25 | Required RC10 reports/package/evidence manifest | Reports, candidate package, hashes and verifier output | Reports/package/manifest exist and local verifier passes | `LOCAL_PASS` | Rebuild after active runtime materialization and attach live receipts |
 | R26 | Authoritative repo/worktree integration | Exact baseline and reviewable change set | Implementation worktree contains the RC10 change set and is dirty; original checkout is also dirty | `PARTIAL` | Human/review decision required before merge or promotion |
 
@@ -95,7 +202,7 @@ active `.claude` overlay:
 | Supervisor operational skills | bootstrap, Multica CLI, runtime lifecycle, improvement diagnosis | `MATERIALIZED` |
 | State | environment state, environment schema, mission state template/schema | `MATERIALIZED` |
 | Scenario/target contract | S01–S06 deliverable contract, S05 target | `MATERIALIZED` |
-| Package integrity | `MANIFEST.yaml`, README, hardening review | `MANIFEST.yaml` hash verification passed for the materialized snapshot |
+| Package integrity | `engcim/bootstrap/supervisor/packages/claude-supervisor-runtime-v0.5.20/MANIFEST.yaml`, README, hardening review | `MANIFEST.yaml` hash verification passed for the materialized snapshot |
 
 This is the largest current gap. The Java RC10 contracts cannot replace these
 workspace-level instructions and state files.
@@ -199,7 +306,7 @@ Mission
 - [ ] Execute one authorized Mission and produce live Mission Learning Source → WorkspaceKnowledge capture/retrieval receipts with provenance.
 - [ ] Prove later-Mission reuse and workspace isolation with a negative cross-workspace read/retrieval test.
 - [x] Re-run local RC6 S01–S06/skill/control compatibility checks and package self-test.
-- [ ] Run the test suite on Java 17.
+- [x] Run the module test suite and `JavaOnlySourcePolicyTests` on OpenJDK 17.0.20.1.
 - [x] Rebuild candidate package and evidence manifest.
 
 **Verification:** fresh receipts, exact revisions, package hashes, and one allowed completion status.
@@ -223,16 +330,16 @@ Mission
 
 - [ ] Live Mission and WorkspaceKnowledge path has receipts.
 - [x] RC6 S01–S06/skill/control regression evidence is fresh.
-- [ ] Java 17 runtime evidence is fresh.
+- [x] Java 17 module-test evidence is fresh for this worktree revision.
 - [ ] Candidate is classified `RC10_IMPLEMENTED_READY_FOR_REVIEW` or `RC10_IMPLEMENTED_WITH_BLOCKERS`.
 
 ## 8. Current recommendation
 
-The local implementation and runtime composition are connected and tested.
-The next slice is external validation: obtain fresh Human authorization, run one
-authorized Mission using the discovered Multica operation templates, and produce
-a real Mission Learning Source → WorkspaceKnowledge capture/retrieval receipt.
-In parallel, capture the active package identity/smoke receipt and run the suite
-on a Java 17 runtime. Until those receipts exist, the candidate is locally
-materialized and composition-validated but is not an externally validated Swarm
-runtime.
+The local implementation and runtime composition are connected and tested,
+including the module suite on Java 17. The next slice is external validation:
+obtain fresh Human authorization, run one authorized Mission using the
+discovered Multica operation templates, and produce a real Mission Learning
+Source → WorkspaceKnowledge capture/retrieval receipt. Also capture the active
+package identity/smoke receipt. Until those receipts exist, the candidate is
+locally materialized and composition-validated but is not an externally
+validated Swarm runtime.

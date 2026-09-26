@@ -1,9 +1,16 @@
 {
   "manifest_version": "rc10-company-import-v1",
-  "status": "PRE_MOVE_PATH_BY_PATH_INVENTORY",
+  "status": "PHASE_2_IMPORT_RECONCILED",
   "generated_from_revision": "1a2fc62",
-  "source_root": "/Users/herman_mbp2023/.codex/worktrees/fdi-rc10-implementation/Feature-Delivery-Intelligence",
+  "source_root": ".",
   "scope": "ENGCIM RC6-to-RC10 import surface plus explicit root keep/exclude controls",
+  "manifest_file": {
+    "source": "docs/rc10/RC10-COMPANY-REPO-IMPORT-MANIFEST.json",
+    "destination": "engcim/swarm/docs/rc10/RC10-COMPANY-REPO-IMPORT-MANIFEST.json",
+    "authority": "SWARM_IMPORT_MANIFEST",
+    "hash_source": "release/MANIFEST.json",
+    "self_hash_excluded": true
+  },
   "entries": [
     {
       "source": "src/main/java/com/featuredeliveryintelligence/fdi/application/Dev204Cli.java",
@@ -618,8 +625,8 @@
       "destination": "engcim/swarm/src/test/java/com/featuredeliveryintelligence/fdi/Rc6CompatibilityTests.java",
       "action": "MOVE_PHASE_1",
       "authority": "SWARM_EXECUTABLE",
-      "sha256": "7adff43902f089a2415593ef2170bb2230cf06aba62a10113edbbe2f9d23b343",
-      "size_bytes": 1908
+      "sha256": "e3d2e8d38e340067a695677ca50ed94d891995805717e6ce8d6030253c30a895",
+      "size_bytes": 1868
     },
     {
       "source": "src/test/java/com/featuredeliveryintelligence/fdi/ReviewRegressionTests.java",
@@ -3741,8 +3748,8 @@
       "destination": "",
       "action": "EXCLUDE_LIVE_STATE",
       "authority": "ENVIRONMENT_RUNTIME_STATE",
-      "sha256": "ae67b7c5d96af0550ddede7094cc238124904fedf5b39c4b9fd75769cf2d05c7",
-      "size_bytes": 5767,
+      "sha256": "d6e55d66fd08adb02f4643553222da24b4683f828aa91cd48b591051c77e6dde",
+      "size_bytes": 5740,
       "note": "Retain locally for the active workspace; do not import as company source."
     },
     {
@@ -3750,107 +3757,134 @@
       "destination": "engcim/swarm/docs/rc10/RC10-COMPANY-REPO-IMPORT-FOLDER-MAP.md",
       "action": "MOVE_PHASE_2",
       "authority": "SWARM_DELIVERY_EVIDENCE",
-      "sha256": "792f0a11118c6bf54f96a0224cca58e99fbda7f6e129fbff5b290b411891734d",
-      "size_bytes": 6740,
-      "note": "Keep current docs/rc10 path until references and generated metadata are updated."
+      "sha256": "0ff31f5eb51acdcc354500af2c0ba65b05bdd758df0a8d1c686d993d3faf3366",
+      "size_bytes": 8377,
+      "note": "Moved in Phase 2; destination hash records the reconciled file after path-reference updates."
     },
     {
       "source": "docs/rc10/RC10-EVIDENCE-MANIFEST.md",
       "destination": "engcim/swarm/docs/rc10/RC10-EVIDENCE-MANIFEST.md",
       "action": "MOVE_PHASE_2",
       "authority": "SWARM_DELIVERY_EVIDENCE",
-      "sha256": "8a28378b67a41584495bf3c3a45ed69c8734dadd9b5340225162710b048166ed",
-      "size_bytes": 3789,
-      "note": "Keep current docs/rc10 path until references and generated metadata are updated."
+      "sha256": "794676832ca18f366f96fbbb85b221b57a59dccf0515ab66f2e67bb74bd0f3f7",
+      "size_bytes": 4358,
+      "note": "Moved in Phase 2; destination hash records the reconciled file after path-reference updates."
     },
     {
       "source": "docs/rc10/RC10-IMPLEMENTATION-PLAN.md",
       "destination": "engcim/swarm/docs/rc10/RC10-IMPLEMENTATION-PLAN.md",
       "action": "MOVE_PHASE_2",
       "authority": "SWARM_DELIVERY_EVIDENCE",
-      "sha256": "302c17a7cb7938a89caed1faa877c8ec9150054a3eccb47bcf575777f8abf2e5",
-      "size_bytes": 4806,
-      "note": "Keep current docs/rc10 path until references and generated metadata are updated."
+      "sha256": "9aa8469f4722a61aee4b47ce978bd49b334b20230c0252701202b339536d3c82",
+      "size_bytes": 19003,
+      "note": "Moved in Phase 2; destination hash records the reconciled file after path-reference updates."
     },
     {
       "source": "docs/rc10/RC10-IMPLEMENTATION-REPORT.md",
       "destination": "engcim/swarm/docs/rc10/RC10-IMPLEMENTATION-REPORT.md",
       "action": "MOVE_PHASE_2",
       "authority": "SWARM_DELIVERY_EVIDENCE",
-      "sha256": "9c0284c76d7454ed1f2feb0000975b974c882015bfaba1db0a7fdda3ad894047",
-      "size_bytes": 6785,
-      "note": "Keep current docs/rc10 path until references and generated metadata are updated."
+      "sha256": "b3c4ecbfac0fd9469d4f07f8e83abbf4cc8cf19f5fa9c038405104937a61c2db",
+      "size_bytes": 6894,
+      "note": "Moved in Phase 2; destination hash records the reconciled file after path-reference updates."
     },
     {
       "source": "docs/rc10/RC10-INTEGRATION-TEST-REPORT.md",
       "destination": "engcim/swarm/docs/rc10/RC10-INTEGRATION-TEST-REPORT.md",
       "action": "MOVE_PHASE_2",
       "authority": "SWARM_DELIVERY_EVIDENCE",
-      "sha256": "c416856c04b0b4e8aa22779365cc30a7dd90c22f927fa924177ff97f005756ab",
-      "size_bytes": 3428,
-      "note": "Keep current docs/rc10 path until references and generated metadata are updated."
+      "sha256": "9ef685a8276f75257095854a35defe9006d5430bf399c49dae24847ed18abb5e",
+      "size_bytes": 3442,
+      "note": "Moved in Phase 2; destination hash records the reconciled file after path-reference updates."
     },
     {
       "source": "docs/rc10/RC10-REGRESSION-REPORT.md",
       "destination": "engcim/swarm/docs/rc10/RC10-REGRESSION-REPORT.md",
       "action": "MOVE_PHASE_2",
       "authority": "SWARM_DELIVERY_EVIDENCE",
-      "sha256": "776a9cf8f4a47379c0dc104931636c6ee12d089fa8dc937dcec5e768f730ac03",
-      "size_bytes": 1883,
-      "note": "Keep current docs/rc10 path until references and generated metadata are updated."
+      "sha256": "01d62819e4ebacb966910541bfb97d4fee50145ac00f28d42de0987cc05ee80f",
+      "size_bytes": 1869,
+      "note": "Moved in Phase 2; destination hash records the reconciled file after path-reference updates."
     },
     {
       "source": "docs/rc10/RC10-REMAINDER-GAP-REPORT.md",
       "destination": "engcim/swarm/docs/rc10/RC10-REMAINDER-GAP-REPORT.md",
       "action": "MOVE_PHASE_2",
       "authority": "SWARM_DELIVERY_EVIDENCE",
-      "sha256": "c321173d7a0dfbff05b485d5ceb61dc100799d60b69bddde0e7f79b9dae7ff7d",
-      "size_bytes": 3215,
-      "note": "Keep current docs/rc10 path until references and generated metadata are updated."
+      "sha256": "b526cb04905e7021a75386613d922e6837f8588b15d2101f03ac30751c59326c",
+      "size_bytes": 3217,
+      "note": "Moved in Phase 2; destination hash records the reconciled file after path-reference updates."
     },
     {
-      "source": "docs/rc10/RC10-RUNTIME-MATERIALIZATION.md",
+      "source": "NEW:engcim/swarm/docs/rc10/RC10-RUNTIME-MATERIALIZATION.md",
       "destination": "engcim/swarm/docs/rc10/RC10-RUNTIME-MATERIALIZATION.md",
-      "action": "MOVE_PHASE_2",
+      "action": "ADD_PHASE_2",
       "authority": "SWARM_DELIVERY_EVIDENCE",
-      "sha256": "38e956ad4b49843109f2aa19208076ffc5d9018766484adb4477d235412f1b75",
-      "size_bytes": 3683,
-      "note": "Keep current docs/rc10 path until references and generated metadata are updated."
+      "sha256": "ad9d3a6dc629f3e7d1e0ec3903b2713d7feabf39930049b1729e84330eafe637",
+      "size_bytes": 3701,
+      "note": "Created in Phase 2; it had no source path at the fixed point."
     },
     {
       "source": "docs/rc10/RC6-TO-RC10-GAP-REPORT.md",
       "destination": "engcim/swarm/docs/rc10/RC6-TO-RC10-GAP-REPORT.md",
       "action": "MOVE_PHASE_2",
       "authority": "SWARM_DELIVERY_EVIDENCE",
-      "sha256": "b107242878d0df97d24598dfdcb67963190bb39249481157decafdeb0fd2d273",
-      "size_bytes": 7287,
-      "note": "Keep current docs/rc10 path until references and generated metadata are updated."
+      "sha256": "244e56a3dabfeb3b4c4f9a6ef6b2352b503b1157269d827e95cb66661d9e0c7f",
+      "size_bytes": 7293,
+      "note": "Moved in Phase 2; destination hash records the reconciled file after path-reference updates."
     },
     {
       "source": "docs/rc10/RC6-TO-RC10-SOURCE-TO-RUNTIME-GAP-MATRIX.md",
       "destination": "engcim/swarm/docs/rc10/RC6-TO-RC10-SOURCE-TO-RUNTIME-GAP-MATRIX.md",
       "action": "MOVE_PHASE_2",
       "authority": "SWARM_DELIVERY_EVIDENCE",
-      "sha256": "f9222732a8fbd55bd7af79029731ccbeae6cbfb7e7f134bebe8a969094f5652c",
-      "size_bytes": 18304,
-      "note": "Keep current docs/rc10 path until references and generated metadata are updated."
+      "sha256": "3af35ae5c0620eff009e4a4a5063a3a13282ec13e6ec8065c7821eda0f12b241",
+      "size_bytes": 32333,
+      "note": "Moved in Phase 2; destination hash records the reconciled file after path-reference updates."
     },
     {
-      "source": "tooling/verification/verify_swarm_runtime.sh",
+      "source": "NEW:engcim/swarm/tooling/verification/verify_swarm_runtime.sh",
       "destination": "engcim/swarm/tooling/verification/verify_swarm_runtime.sh",
-      "action": "MOVE_PHASE_2",
+      "action": "ADD_PHASE_2",
       "authority": "SWARM_RUNTIME_VERIFIER",
-      "sha256": "d2d9d5beac28513d82427afc15dbc71991ed540870c0856f7031341990bd03af",
-      "size_bytes": 3765,
-      "note": "Keep root compatibility path during Phase 1."
+      "sha256": "731d4aed7455f70f662f2c653e2d373959802eda4c08fe899d629db7deff011e",
+      "size_bytes": 3771,
+      "note": "Created in Phase 2; its active workspace state input remains local and excluded."
+    },
+    {
+      "source": "NEW:engcim/swarm/src/test/java/com/featuredeliveryintelligence/fdi/CompanyImportManifestTests.java",
+      "destination": "engcim/swarm/src/test/java/com/featuredeliveryintelligence/fdi/CompanyImportManifestTests.java",
+      "action": "ADD_PHASE_2",
+      "authority": "SWARM_IMPORT_MANIFEST_VERIFIER",
+      "sha256": "b4f00687b5e733585b6dec0ac1b8924cbf8256bf37c161326c7db31c3496fb64",
+      "size_bytes": 7892,
+      "note": "Created as a Java 17 JUnit verifier to comply with the repository source policy."
+    },
+    {
+      "source": "release/RC10-CANDIDATE-PACKAGE/README.md",
+      "destination": "engcim/swarm/release/RC10-CANDIDATE-PACKAGE/README.md",
+      "action": "MOVE_PHASE_2",
+      "authority": "SWARM_CANDIDATE_INDEX",
+      "sha256": "837ca4ca64b0fe0eaadb033d95732e983eed1163bf793e2a10badcf925b4273b",
+      "size_bytes": 1839,
+      "note": "Review index moved; root-generated repository metadata remains at root."
+    },
+    {
+      "source": "release/RC10-CANDIDATE-PACKAGE.zip",
+      "destination": "",
+      "action": "EXCLUDE_LOCAL_CANDIDATE",
+      "authority": "LOCAL_CANDIDATE_ARCHIVE_WITH_ACTIVE_STATE",
+      "sha256": "c8445713f0e51031a4649ddbe58e9bc1f70f94df0e18852c11622f2a9fb14f92",
+      "size_bytes": 2327100,
+      "note": "Archive includes live .claude workspace state. Retain as local review evidence; do not import into company repository."
     },
     {
       "source": "pom.xml",
       "destination": "",
       "action": "KEEP_ROOT_UPDATE_IN_PHASE_1",
       "authority": "COMPANY_BUILD_ENTRYPOINT",
-      "sha256": "a0d762bec6a48cc81655d498b139bfbc6a7dec0d40001363ca450a5ffecebb28",
-      "size_bytes": 1416,
+      "sha256": "1d6bcdd2e0a75f4b902d65f42aa05709507c85c99a65fa5bf843fff12414ebcb",
+      "size_bytes": 596,
       "note": "Replaced by portable parent/module wiring in Phase 1; root remains the company aggregator."
     },
     {
@@ -3865,28 +3899,33 @@
     {
       "source": "CLAUDE.md",
       "destination": "",
-      "action": "KEEP_ROOT_UPDATE_IN_PHASE_1",
+      "action": "EXCLUDE_LOCAL_CONTROL",
       "authority": "ACTIVE_WORKSPACE_ENTRYPOINT",
       "sha256": "8e1fe4c33b6771ee719dd73e8fb2d825bf2e777a8729764afad4c40786f35ac5",
       "size_bytes": 12605,
-      "note": "Keep as active local compatibility overlay; bootstrap source is separately materialized."
+      "note": "Retain only as an active local compatibility overlay; do not import into the company repository. Bootstrap source is separately materialized."
     },
     {
       "source": "docs/FILE-CLASSIFICATION.md",
       "destination": "",
       "action": "KEEP_ROOT_UPDATE_IN_PHASE_1",
       "authority": "COMPANY_CLASSIFICATION_POLICY",
-      "sha256": "928edd09c9e8e6640d84e18799d2f06a057ae748de5813c3a56c421da15628ab",
-      "size_bytes": 4244,
+      "sha256": "2dff094d8eeb21eb0daf734b6b8f285c8485a36690ac05bc9960c7a4f4760225",
+      "size_bytes": 5525,
       "note": "Keep root and update path families after the move."
     }
   ],
   "summary": {
-    "total_entries": 482,
+    "total_entries": 485,
     "move_phase_1": 439,
     "move_phase_1_compat_symlink": 25,
-    "move_phase_2": 11,
+    "move_phase_2": 10,
+    "add_phase_2": 3,
     "exclude_live_state": 3,
-    "keep_root_update": 4
-  }
+    "exclude_local_candidate": 1,
+    "exclude_local_control": 1,
+    "keep_root_update": 3,
+    "manifest_self_record": 1
+  },
+  "reconciled_after": "source baseline 1a2fc62 plus Phase 1 and Phase 2 moves, additions and path-reference updates"
 }

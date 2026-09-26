@@ -32,3 +32,9 @@ The authoritative path rule for all current and future files is [`FILE-CLASSIFIC
 - [`engcim/swarm/baselines/rc6/runtime`](../engcim/swarm/baselines/rc6/runtime/CANONICAL-SOURCE.md) is the derived runtime-routing baseline, tagged separately as `engcim-swarm-rc6-runtime-baseline-v1`.
 
 These are related but are not interchangeable authorities.
+
+## ENGCIM RC10 delivery
+
+The current RC6-to-RC10 implementation evidence and company import map are
+indexed under [`engcim/swarm/docs/rc10`](../engcim/swarm/docs/rc10/RC6-TO-RC10-SOURCE-TO-RUNTIME-GAP-MATRIX.md).
+The folder map remains a proposal and does not itself grant company adoption.

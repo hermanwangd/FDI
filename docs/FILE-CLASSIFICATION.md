@@ -15,16 +15,19 @@ Every tracked or proposed path must have exactly one primary classification. Cla
 | `engcim/swarm/contracts/**` | ENGCIM executable/public contracts | RC6/RC10 schemas and Swarm boundary surfaces | Validate affected Java/schema consumers after changes |
 | `agent/skills/**`, `agent/workflows/**` | Agent procedures | Operational instructions and workflows | Keep procedures separate from executable Java |
 | `engcim/swarm/src/main/**`, `engcim/swarm/src/test/**` | ENGCIM Java runtime and tests | Executable implementation and automated verification | Java 17/Spring Boot 3.4.1; verify affected tests |
+| `engcim/swarm/tooling/verification/**` | ENGCIM import/runtime verification | Swarm composition gate and path-by-path import manifest verifier | Keep repository root as an explicit input; verify destination hashes |
 | `tooling/**`, `tests/**` | FDI-wide tooling and closed migration baseline | Repository packaging, governance verification, migration wrappers, and tests | Do not add Java framework behavior here |
 | `docs/**` | Candidate, explanatory, review, and planning docs | Informative unless explicitly linked as authority | Label status; do not silently promote to governance |
+| `engcim/swarm/docs/rc10/**` | ENGCIM delivery evidence | RC10 plan, reports, import map/manifest, and source-to-runtime matrix | Evidence is revision-scoped; keep authority and external blockers explicit |
 | `validation/**` | Validation definitions, fixtures, and evidence | Supports a bounded run; not authority by itself | Bind to exact inputs, revisions, and receipts |
 | `engcim/swarm/baselines/**` | Sealed RC6 release/runtime baselines | ZIP plus manifest and reviewable materialization | Preserve archive checksum and baseline scope |
 | `engcim/bootstrap/**` | Supervisor/Multica bootstrap source | Runtime package, overlay source, schemas/templates and operational configuration | Keep live workspace state outside source authority |
 | `engcim/targets/**` | ENGCIM target definitions | Scenario, workspace and project target inputs | Keep separate from proposals and Maven build output |
+| `engcim/swarm/release/**` | ENGCIM candidate index and release evidence | Swarm-scoped review/package materials | Exclude root live `.claude` state and local candidate ZIP from importable archives |
 | `config/**` | Runtime/example configuration | Configuration contract and examples | Keep secrets out; validate consumers |
 | `templates/**` | Reusable generation templates | Input material for prepared artifacts | Keep generated outputs elsewhere |
 | `release/MANIFEST.json`, `release/MARKDOWN-INVENTORY.txt`, `release/PROJECT-TREE.txt`, `release/VERIFICATION-SUMMARY.json` | Repository-wide generated metadata | FDI repository indexes, not ENGCIM release authority | Keep at root and regenerate after path changes |
-| `release/**` | FDI-wide release artifacts | Repository-level packaged outputs and metadata | Keep source definitions outside generated release outputs |
+| `release/**` | FDI-wide release artifacts | Repository-level packaged outputs and metadata | Keep source definitions outside generated outputs; exclude local state and ENGCIM candidate ZIP |
 | `output/**` | Generated or run-scoped output | Not authoritative unless separately promoted with receipt | Classify each retained report; do not bulk-commit |
 | `tmp/**`, `target/**`, `.pytest_cache/**`, `.fdi-work/**` | Local/generated scratch | Never canonical repository authority | Ignore or remove only after inventory and recovery check |
 | `.agent/**`, `.codeium/**`, `.grafel/**`, `.kiro/**`, editor rule files | Local/tool integration state | Track only when deliberately adopted as shared project policy | Default to local configuration; review before committing |

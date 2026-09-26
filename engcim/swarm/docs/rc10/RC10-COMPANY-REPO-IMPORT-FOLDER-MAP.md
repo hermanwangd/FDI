@@ -1,6 +1,6 @@
 # RC10 Company-Repository Import Folder Map
 
-Status: `PROPOSED / NOT ACTIVE AUTHORITY`
+Status: `PROPOSED / LOCAL IMPORT CANDIDATE / NOT ACTIVE COMPANY AUTHORITY`
 
 This document proposes the future company-repository layout for importing the
 ENGCIM RC6 → RC10 implementation. It does not change the current RC10
@@ -9,8 +9,10 @@ implementation lineage, runtime authority, or active workspace overlay.
 The path-by-path pre-move inventory is recorded in
 [`RC10-COMPANY-REPO-IMPORT-MANIFEST.json`](RC10-COMPANY-REPO-IMPORT-MANIFEST.json).
 Each entry records source path, destination, action, authority, SHA-256 and
-size; live state and root-owned files are explicitly classified rather than
-silently moved.
+size; the manifest records its own destination and authority separately, with
+its digest resolved through the repository-wide `release/MANIFEST.json` to
+avoid a self-hash cycle. Live state and root-owned files are explicitly
+classified rather than silently moved.
 
 ## 1. Decision
 
@@ -26,8 +28,9 @@ engcim/targets/    scenario, workspace, project and target definitions
 than one scenario/workspace/project target. It is runtime configuration, not a
 proposal area and not a Maven build-output directory.
 
-The proposal itself remains under `docs/rc10/` until a company documentation
-authority assigns it a different location.
+This proposal and its path-level manifest now reside under
+`engcim/swarm/docs/rc10/`. Their location does not promote the proposal to
+company authority.
 
 ## 2. Proposed tree
 
@@ -89,7 +92,8 @@ directory remains generated/ignored and must not be confused with
 | `engcim/skill-packs/rc6/**` | `engcim/swarm/baselines/rc6/skill-pack/**` | sealed RC6 baseline |
 | `engcim/skill-packs/rc6-runtime-baseline-v1/**` | `engcim/swarm/baselines/rc6/runtime/**` | materialized RC6 runtime baseline |
 | RC6 → RC10 source ZIP and extracted docs | `engcim/swarm/baselines/source-packages/rc6-to-rc10/**` | immutable implementation input |
-| `docs/rc10/**` | `engcim/swarm/docs/rc10/**` | implementation reports and evidence |
+| `docs/rc10/**` | `engcim/swarm/docs/rc10/**` | implementation reports, evidence, and import proposal |
+| New Phase 2 artifact | `engcim/swarm/docs/rc10/RC10-RUNTIME-MATERIALIZATION.md` | runtime materialization evidence; not a move |
 | `engcim/runtime-packages/**` | `engcim/bootstrap/supervisor/packages/**` | exact Supervisor runtime package |
 | `.claude/engcim/contracts/**` | `engcim/bootstrap/overlays/claude/engcim/contracts/**` | deployable Supervisor contracts |
 | `.claude/engcim/skills/**` | `engcim/bootstrap/overlays/claude/engcim/skills/**` | deployable Supervisor procedures |
@@ -97,7 +101,11 @@ directory remains generated/ignored and must not be confused with
 | `.claude/engcim/targets/**` | `engcim/targets/scenarios/**` | target definitions |
 | `config/multica/**` | `engcim/bootstrap/multica/**` | Multica operational configuration |
 | model-selection `.env` template | `engcim/bootstrap/config-examples/**` | example only; no credentials |
-| `release/**` | `engcim/swarm/release/**` | generated release metadata/artifacts |
+| `release/RC10-CANDIDATE-PACKAGE/README.md` | `engcim/swarm/release/RC10-CANDIDATE-PACKAGE/README.md` | ENGCIM candidate review index |
+| Repository-wide `release/MANIFEST.json`, `MARKDOWN-INVENTORY.txt`, `PROJECT-TREE.txt`, `VERIFICATION-SUMMARY.json` | stay at repository root | FDI-wide generated indexes |
+| `release/RC10-CANDIDATE-PACKAGE.zip` | excluded from company import | Current archive contains active `.claude` workspace state; replace only with a curated source package |
+| New Phase 2 artifact | `engcim/swarm/tooling/verification/verify_swarm_runtime.sh` | ENGCIM live runtime composition verifier |
+| New Phase 2 artifact | `engcim/swarm/src/test/java/com/featuredeliveryintelligence/fdi/CompanyImportManifestTests.java` | Java 17 JUnit path/hash verifier |
 
 ## 4. Files that remain outside the three domains
 
@@ -139,9 +147,13 @@ manifest or receipt, not silently promoted into source authority.
 
 ### Phase 2 — Reference and build migration
 
-- Update packaging, verification, manifest and documentation references.
-- Add the `engcim/swarm` Maven module to the company parent build.
-- Generate project tree, Markdown inventory and release metadata from the new paths.
+- Move ENGCIM RC10 documentation, the Swarm composition/import verifiers, and
+  the candidate review index into `engcim/swarm/`; update their references.
+- Keep FDI-wide packaging tools and repository-wide generated indexes at root.
+- Do not import the existing full-repository candidate ZIP because it embeds
+  live `.claude` state; create a curated package in a later packaging slice.
+- Generate project tree, Markdown inventory and root release metadata from the
+  new paths.
 
 ### Phase 3 — Verification checkpoint
 

@@ -18,7 +18,7 @@ This report records the gap between the exact RC6 implementation baseline and th
 | Implementation worktree | `/Users/herman_mbp2023/.codex/worktrees/fdi-rc10-implementation/Feature-Delivery-Intelligence` |
 | Implementation branch | `codex/fdi-rc10-implementation` |
 | Baseline state | clean before RC10 changes; baseline Maven and standalone governance checks passed |
-| Java evidence | POM targets Java 17; baseline execution used local OpenJDK 23.0.2, so this is not JDK 17 runtime evidence |
+| Java evidence | Baseline execution used OpenJDK 23.0.2; the current module suite was subsequently verified on OpenJDK 17.0.20.1 |
 | Scope boundary | RC6 to RC10 candidate implementation only; no live Claude Supervisor or Multica dispatch |
 
 The original checkout at `/Users/herman_mbp2023/Documents/Feature-Delivery-Intelligence` is dirty and is intentionally not used as the implementation source. Its untracked RC7-like candidates were not copied into this worktree.

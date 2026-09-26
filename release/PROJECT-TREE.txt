@@ -176,17 +176,6 @@ Feature-Delivery-Intelligence/
 │   │   │   └── START-HERE.md
 │   │   ├── runtime-neutral-delivery-kit.sha256
 │   │   └── runtime-neutral-delivery-kit.zip
-│   ├── rc10/
-│   │   ├── RC10-COMPANY-REPO-IMPORT-FOLDER-MAP.md
-│   │   ├── RC10-COMPANY-REPO-IMPORT-MANIFEST.json
-│   │   ├── RC10-EVIDENCE-MANIFEST.md
-│   │   ├── RC10-IMPLEMENTATION-PLAN.md
-│   │   ├── RC10-IMPLEMENTATION-REPORT.md
-│   │   ├── RC10-INTEGRATION-TEST-REPORT.md
-│   │   ├── RC10-REGRESSION-REPORT.md
-│   │   ├── RC10-REMAINDER-GAP-REPORT.md
-│   │   ├── RC6-TO-RC10-GAP-REPORT.md
-│   │   └── RC6-TO-RC10-SOURCE-TO-RUNTIME-GAP-MATRIX.md
 │   ├── specifications/
 │   │   ├── framework/
 │   │   │   ├── product-intelligence/
@@ -789,6 +778,22 @@ Feature-Delivery-Intelligence/
 │   │   │       ├── MissionLearningSource.schema.json
 │   │   │       ├── WorkspaceKnowledgeCaptureResult.schema.json
 │   │   │       └── WorkspaceKnowledgeProposal.schema.json
+│   │   ├── docs/
+│   │   │   └── rc10/
+│   │   │       ├── RC10-COMPANY-REPO-IMPORT-FOLDER-MAP.md
+│   │   │       ├── RC10-COMPANY-REPO-IMPORT-MANIFEST.json
+│   │   │       ├── RC10-EVIDENCE-MANIFEST.md
+│   │   │       ├── RC10-IMPLEMENTATION-PLAN.md
+│   │   │       ├── RC10-IMPLEMENTATION-REPORT.md
+│   │   │       ├── RC10-INTEGRATION-TEST-REPORT.md
+│   │   │       ├── RC10-REGRESSION-REPORT.md
+│   │   │       ├── RC10-REMAINDER-GAP-REPORT.md
+│   │   │       ├── RC10-RUNTIME-MATERIALIZATION.md
+│   │   │       ├── RC6-TO-RC10-GAP-REPORT.md
+│   │   │       └── RC6-TO-RC10-SOURCE-TO-RUNTIME-GAP-MATRIX.md
+│   │   ├── release/
+│   │   │   └── RC10-CANDIDATE-PACKAGE/
+│   │   │       └── README.md
 │   │   ├── src/
 │   │   │   ├── main/
 │   │   │   │   └── java/
@@ -894,12 +899,17 @@ Feature-Delivery-Intelligence/
 │   │   │                       │   ├── SupervisorLifecycleTests.java
 │   │   │                       │   ├── SupervisorPathTests.java
 │   │   │                       │   └── WorkspaceKnowledgeLifecycleTests.java
+│   │   │                       ├── CompanyImportManifestTests.java
 │   │   │                       ├── JavaOnlySourcePolicyTests.java
 │   │   │                       ├── PackageArchitectureTests.java
 │   │   │                       ├── Rc6CompatibilityTests.java
 │   │   │                       ├── ReviewRegressionTests.java
 │   │   │                       └── RuntimeMigrationTests.java
-│   │   └── pom.xml
+│   │   ├── tooling/
+│   │   │   └── verification/
+│   │   │       └── verify_swarm_runtime.sh
+│   │   ├── pom.xml
+│   │   └── README.md
 │   └── targets/
 │       ├── scenarios/
 │       │   └── S05-DESIGN-QUALITY-v1.yaml
@@ -923,8 +933,6 @@ Feature-Delivery-Intelligence/
 │   ├── GOVERNING-CONTENT-MATERIALIZATION-REPORT.md
 │   └── GOVERNING-SOURCES.md
 ├── release/
-│   ├── RC10-CANDIDATE-PACKAGE/
-│   │   └── README.md
 │   ├── MANIFEST.json
 │   ├── MARKDOWN-INVENTORY.txt
 │   ├── PROJECT-TREE.txt

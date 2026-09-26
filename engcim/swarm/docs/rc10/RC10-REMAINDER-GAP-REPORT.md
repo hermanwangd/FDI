@@ -21,4 +21,4 @@ The local gaps above are now addressed by the current working tree: Supervisor s
 
 ## Corrected completion interpretation
 
-The earlier `d7d30c8` candidate was not implementation-complete under the supplied package definition. After this remediation, live Claude Supervisor/Multica execution and independent Java 17 runtime evidence remain separate external blockers; they must not be represented as local completion.
+The earlier `d7d30c8` candidate was not implementation-complete under the supplied package definition. After this remediation, live Claude Supervisor/Multica execution remains an external blocker; it must not be represented as local completion. The Java 17 module suite has since passed locally.
