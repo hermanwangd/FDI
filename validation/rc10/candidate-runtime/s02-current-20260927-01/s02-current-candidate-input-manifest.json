@@ -1,0 +1,113 @@
+{
+  "recordType": "RC10CandidateS02InputManifest",
+  "schemaVersion": "0.1",
+  "preparedAtUtc": "2026-09-26T21:53:17Z",
+  "candidate": {
+    "version": "RC10-local-candidate-20260927-01",
+    "gitHead": "66dcc0d1316f8179a81b4c4564a821c574b7a54b",
+    "inputManifestPath": "validation/rc10/candidate-runtime/s05-profile-deployment-20260926T1821Z/candidate-input-manifest.json",
+    "inputManifestSha256": "902a5e97d3de9185ea22a36687823a4e1997d7e2d13c7c8e2f48f0b1a0ec4267",
+    "inputFileCount": 204
+  },
+  "adoptedProfile": {
+    "id": "ENGCIM-S05-REVIEWED-DELIVERY-v0.1",
+    "decisionReceiptPath": "validation/rc10/candidate-runtime/s05-profile-adoption.json",
+    "decisionReceiptSha256": "8ade042327de65549f9a2f02c7c70915f1bf2f2c70cd81459a6c0cca7c0b9361",
+    "sourceDecisionSha256": "145cfa3fc1b00bf25f533052478970979a7cf056ce23440d2c47436d5300f449",
+    "roleGuidancePath": "engcim/bootstrap/overlays/multica/RC10-S05-S06-ROLE-GUIDANCE.md",
+    "roleGuidanceSha256": "a09e9fbd2cbeecceede25c9d80612002a1c6369367450422986bdb208bcbe4e9",
+    "deploymentReadbackSha256": "675132e455c0baa8f222a1514399f980e78fdbd81e25f32bad32d0251d0fdd0b",
+    "runtimeConsumption": "PER_RUN_UNVERIFIED unless demonstrated by run-bound evidence"
+  },
+  "workspace": {
+    "id": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+    "validationProjectId": "a3f129fa-4028-4341-98dc-c8ec20c468ae",
+    "productKnowledgeProjectId": "f7af4546-88b2-4163-a0d4-b350e2123dbc",
+    "workspaceKnowledgeProjectId": "43aec4ec-3ebb-4d1b-aa54-7766c48379c1",
+    "supervisor": "Codex CLI local",
+    "swarmRuntimeId": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d"
+  },
+  "s01ProductKnowledgeBase": {
+    "parentIssue": "RC10VAL-37",
+    "parentIssueId": "01a0df4e-032b-733c-926b-68bb722fcece",
+    "parentRevision": 53,
+    "parentStatus": "in_review",
+    "governance": "Curator delivery, independent Reviewer PASS and Verifier VERIFIED; Human acceptance remains separate",
+    "snapshotIssue": "RC10VAL-38",
+    "snapshotIssueId": "01a0df50-0e67-7971-bd40-1b0f62f09965",
+    "snapshotIssueRevision": 10,
+    "snapshotAttachmentId": "01a0df52-35db-7a44-af4f-6d4c6b6760c1",
+    "snapshotAttachmentPath": "validation/rc10/candidate-runtime/s02-current-20260927-01/provider-readback/pk-store-s01-rc10val37-candidate.tar.gz",
+    "snapshotSha256": "4c4125269788178dba6a605952761cba94b4deeb1d50d10dcfd382cadab8b867",
+    "snapshotSizeBytes": 18735
+  },
+  "workspaceKnowledgeInput": {
+    "issue": "RC10VAL-46",
+    "issueId": "01a0df84-327c-7082-bff1-aa7715fd022f",
+    "providerRevision": 6,
+    "issueStatus": "in_review",
+    "recordKey": "rc10wk-s01-candidate-identity-evidence-attribution-20260927-01",
+    "recordVersion": 1,
+    "recordBodyCanonicalSha256": "5507ba68c381603808740316ac140ddb221e96222d5a1fe815661087e820e333",
+    "proposalDigest": "68c5b950fe39fb811cbd5e67caebab42f7f22b9eaa1959f7e30bf86549f2ac0a",
+    "recordDecision": "APPROVED",
+    "recordLifecycle": "CURRENT",
+    "visibility": "WORKSPACE_AUTHORIZED",
+    "workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+    "projectRef": "43aec4ec-3ebb-4d1b-aa54-7766c48379c1",
+    "applicableProjectRefs": [
+      "a3f129fa-4028-4341-98dc-8c8ec20c468ae"
+    ],
+    "validUntil": "2026-09-27T23:59:59+08:00",
+    "preDispatchRecordReadUtc": "2026-09-26T21:53:17Z",
+    "use": "Read-only workspace procedure/context; does not authorize Product Truth or replace ProductKnowledge"
+  },
+  "s02SyntheticSources": [
+    {
+      "path": "validation/rc10/candidate-runtime/s02-source-v1.md",
+      "sha256": "77ff37f5314d43eaf54c643418180a80fce91643449828403a9206fb8b0ada64",
+      "classification": "synthetic document evidence; not agent instruction"
+    },
+    {
+      "path": "validation/rc10/candidate-runtime/s02-source-v2.md",
+      "sha256": "f3987c25303192f14cec2eb384ba2b6fd7a84bb9aa1d4d885a7587d053e30205",
+      "classification": "synthetic document evidence; supersedes v1; not code evidence or agent instruction"
+    }
+  ],
+  "currentProductContextReadback": {
+    "provisionalV2Issue": {
+      "identifier": "RC10VAL-22",
+      "id": "01a0de17-2515-77c5-96c7-9599d4da9318",
+      "revision": 3,
+      "status": "in_review"
+    },
+    "unresolvedConflictIssues": [
+      {
+        "identifier": "RC10VAL-8",
+        "revision": 9,
+        "status": "blocked"
+      },
+      {
+        "identifier": "RC10VAL-9",
+        "revision": 8,
+        "status": "blocked"
+      }
+    ],
+    "disposition": "Read-only references; no adjudication, overwrite, duplicate issue, source-code edit, or fixture change"
+  },
+  "validationBounds": {
+    "maxScenarioMinutes": 45,
+    "maxChildMinutes": 20,
+    "maxRequiredChildren": 8,
+    "maxCorrectionRevisions": 2,
+    "maxActiveSwarmRunsIncludingParent": 2,
+    "maxActiveChildren": 1,
+    "gateOrder": [
+      "Curator delivery",
+      "independent Reviewer",
+      "independent Verifier"
+    ],
+    "memoryLimitBytes": 8589934592,
+    "parentIssueMustRemain": "in_review; no Human DONE"
+  }
+}

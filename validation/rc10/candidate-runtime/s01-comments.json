@@ -1,0 +1,20 @@
+[
+  {
+    "attachments": [],
+    "author_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+    "author_type": "agent",
+    "content": "## Deployment envelope receipt (Orchestrator)\n\n- candidateVersion: RC10-local-candidate-20260926-01\n- snapshotSha256: acaea4171d257754204aba8d1e5a1e267226bcadad0e779d6982c93567e89e2e\n- addendumSha256: 2115a331595d9ced7a4da11ae57dd6df264fa454a7edc7272b226b30629f7ead\n- role: orchestrator (agent 809ffefe-3fc4-4686-8401-a8dd50285840)\n- workspace: 0b02adb6-a395-46bd-bd92-6fec14dee20e; execution project: a3f129fa-4028-4341-98dc-c8ec20c468ae; ProductKB project: f7af4546-88b2-4163-a0d4-b350e2123dbc; WorkspaceKnowledge project: 43aec4ec-3ebb-4d1b-aa54-7766c48379c1\n\nEnvelope received matches the Mission's expected values — not BLOCKED. Executing S01 only.\n\n## Dispatch — S01 worker\n\n[@Swarm Knowledge Curator](mention://agent/c38a925f-171b-4c24-91c2-68329ae42654) you are the S01 worker (REQUIRED). Report your own effective deployment envelope (role, snapshot, addendum digest) at the top of your delivery.\n\nWork from this issue's attachments: `s01-source-bundle.md` is the exact source (compare actual bytes/hashes against the pinned revision 2eff5f9f84ca709684bfe0b7c90102268f07a0f0 of the chart-viewer fixture; the Validation project resource pins the same repo/rev). `pk-store-s01-rc10val4.tar.gz` is prior baseline evidence for reuse/dedup only — never overwrite it; attach candidate evidence/version history to existing ProductKB fact identities instead. RC10VAL-4 (01a0dd0f-2eea-7180-a1d3-43e65e790662) stays intact.\n\nDeliverables (per issue body \"Required outputs and gates\" 1–2):\n- Candidate-bound GovernedProductKnowledgeBaseline: traced source/observation/entry table, dedup outcome of the repeated README (same-source duplicate, not corroboration), explicit preservation of the two seeded conflicts (README max=10 vs code max=1000; missing `openSelectedChart` export vs frozen test) with governance disposition. Do not fix source or silently choose a product truth.\n- A separate candidate PK snapshot using the existing RC6 pk schemas/validator, with source hashes, entry/observation IDs, governance issue refs and structured-store backlinks. Attach the exact machine-readable pk store archive plus validator stdout, with file hashes and command/exit status. Report only executed checks.\n- Run the fixture's node test and report the result honestly: it is expected to fail from seeded contract defects — record that as an observation, not as a candidate S01 store/schema failure and not as a software PASS.\n- No tKMS / Azure DevOps access (not authorized). No S02–S06 work. 20-minute child budget.\n\nOn delivery, move this issue to `in_review` and post a `## Swarm Child Event` on this parent (eventRef/childRef=curator/event=delivery/revision=1/resultRef/outcome) mentioning me. Reviewer and Verifier runs follow your delivery — do not self-review. Parent wake-up target: this issue 01a0dd73-7d75-7295-aeb1-a83905eb2312, orchestrator mention `[@Swarm Orchestrator](mention://agent/809ffefe-3fc4-4686-8401-a8dd50285840)`.",
+    "created_at": "2026-09-26T11:24:00Z",
+    "id": "01a0dd75-335b-7117-bba9-156059bbb9ae",
+    "issue_id": "01a0dd73-7d75-7295-aeb1-a83905eb2312",
+    "parent_id": null,
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0dd73-d527-739d-9b06-ebe71eb52caa",
+    "type": "comment",
+    "updated_at": "2026-09-26T11:24:00Z"
+  }
+]

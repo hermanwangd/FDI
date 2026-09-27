@@ -1,0 +1,63 @@
+PASS approved-source-lock exists 
+PASS all governing IDs present 
+PASS L1-SEM local_path exists 
+PASS L1-SEM non-placeholder content 
+PASS L1-SEM sha256 
+PASS L1-IO local_path exists 
+PASS L1-IO non-placeholder content 
+PASS L1-IO sha256 
+PASS L2-FWK local_path exists 
+PASS L2-FWK non-placeholder content 
+PASS L2-FWK sha256 
+PASS L2-PROFILE local_path exists 
+PASS L2-PROFILE non-placeholder content 
+PASS L2-PROFILE sha256 
+PASS L2-MAINT local_path exists 
+PASS L2-MAINT non-placeholder content 
+PASS L2-MAINT sha256 
+PASS FT-T2 local_path exists 
+PASS FT-T2 non-placeholder content 
+PASS FT-T2 tree path governance/approved/ft-t2/FT-T2-GOVERNING-SURFACE.md 
+PASS FT-T2 tree path contracts/public/ft-t2/CandidateRepoSet.md 
+PASS FT-T2 tree path contracts/public/ft-t2/CandidateRepoSet.schema.json 
+PASS FT-T2 tree path contracts/public/ft-t2/ChangeSurfaceSet.md 
+PASS FT-T2 tree path contracts/public/ft-t2/ChangeSurfaceSet.schema.json 
+PASS FT-T2 tree path contracts/public/ft-t2/ClosurePackage.md 
+PASS FT-T2 tree path contracts/public/ft-t2/ClosurePackage.schema.json 
+PASS FT-T2 tree path contracts/public/ft-t2/ClosureReview.md 
+PASS FT-T2 tree path contracts/public/ft-t2/ClosureReview.schema.json 
+PASS FT-T2 tree path contracts/public/ft-t2/EvidenceRecord.md 
+PASS FT-T2 tree path contracts/public/ft-t2/EvidenceRecord.schema.json 
+PASS FT-T2 tree path contracts/public/ft-t2/IntentSpec.md 
+PASS FT-T2 tree path contracts/public/ft-t2/IntentSpec.schema.json 
+PASS FT-T2 tree path agent/skills/ft-t2/changesurface-investigation/SKILL.md 
+PASS FT-T2 tree path agent/skills/ft-t2/closure-review/SKILL.md 
+PASS FT-T2 tree path agent/skills/ft-t2/dependency-closure/SKILL.md 
+PASS FT-T2 tree path agent/skills/ft-t2/feature-intent-analysis/SKILL.md 
+PASS FT-T2 tree path agent/skills/ft-t2/repo-discovery/SKILL.md 
+PASS FT-T2 tree path agent/workflows/ft-t2/FEATURE-CLOSURE.md 
+PASS FT-T2 tree digest 
+PASS FT-T2 six contract md 
+PASS FT-T2 six schemas 
+PASS FT-T2 five skills 
+PASS FT-T2 workflow exists 
+PASS FT-T2 bans PROVISIONALLY_COMPLETE 
+PASS FT-T2 bans ACCEPT_PROVISIONALLY_COMPLETE 
+PASS FT-T2 bans closure_status: OPEN|PARTIAL|CLOSED
+ 
+PASS FT-T2 contains CLOSED_WITHIN_DECLARED_SCOPE 
+PASS FT-T2 contains SPEC_READY | BLOCKED 
+PASS FT-T2 contains ACCEPT_CLOSED_WITHIN_DECLARED_SCOPE 
+PASS PROJECT-TREE exists 
+PASS all Markdown files appear in PROJECT-TREE 
+PASS MARKDOWN-INVENTORY exists 
+PASS MARKDOWN-INVENTORY exact path set 
+PASS all JSON parse 
+PASS Java 17 compiler release 
+PASS Spring Boot 3.4.1 
+PASS Python runtime removed 
+PASS Python packaging tools compile 
+PASS MANIFEST exists 
+PASS manifest path set exact 
+PASS manifest digests 
+RESULT: 61 PASS / 0 FAIL

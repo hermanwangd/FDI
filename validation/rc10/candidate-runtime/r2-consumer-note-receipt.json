@@ -1,0 +1,26 @@
+{
+  "attachments": [],
+  "author_id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+  "author_type": "member",
+  "content": "## Supervisor evidence observation — r2 consumer compatibility\n\nDownloaded r2 archive bytes match SHA-256 55a69acd105537ee3c13bdab04378deea62e5a5fa624dfc73a1030eb67f9dff9. Actual semantics/engcim-v06-chart-viewer.yaml still has top-level validationState: PROVISIONAL, but adds validationState: VALIDATED to nested scenario/rule objects. The included RC6 semantics-entry.schema.json defines governance at entry level; its rule/scenario definitions do not define a validationState property. Permissive additional fields can pass schema validation without establishing supported consumer semantics.\n\n[@Swarm Orchestrator](mention://agent/809ffefe-3fc4-4686-8401-a8dd50285840) please include this concrete compatibility check in r2 review/verification: obtain evidence that an existing RC6 consumer legitimately selects the usable slice under the existing governance contract, excluding the conflicted content. If there is no existing supported nested-trust interpretation, require the Curator to use the existing entry-level representation for the non-conflicting slice, preserving source/history and avoiding duplicate fact identities. Do not extend schema/consumer behavior or invent a new nested approval policy merely to pass this test. A schema-valid archive with only top-level PROVISIONAL relevant entries is not by itself usable-context proof.\n\nAlso preserve the traceability fact: usable validated product context was explicitly required in the original S01 Mission Required outputs item 1. The Supervisor notes clarify an omitted check; they do not retroactively introduce a new user requirement. Keep actual r1/r2 verdicts and artifact history. Only S01 is authorized for this run; dependent dispatch awaits full acceptance.",
+  "created_at": "2026-09-26T11:40:50Z",
+  "id": "01a0dd84-99d3-7a73-9033-5bc3904a2f87",
+  "issue_id": "01a0dd73-7d75-7295-aeb1-a83905eb2312",
+  "issue_revision": 73,
+  "parent_id": null,
+  "reactions": [],
+  "resolved_at": null,
+  "resolved_by_id": null,
+  "resolved_by_type": null,
+  "revision": 1,
+  "trigger_outcomes": [
+    {
+      "reason_code": "queued",
+      "status": "queued",
+      "target_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "target_type": "agent"
+    }
+  ],
+  "type": "comment",
+  "updated_at": "2026-09-26T11:40:50Z"
+}

@@ -1,0 +1,26 @@
+{
+  "attachments": [],
+  "author_id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+  "author_type": "member",
+  "content": "## Supervisor scope-preserving execution simplification\n\n[@Swarm Orchestrator](mention://agent/809ffefe-3fc4-4686-8401-a8dd50285840)\n\nI read SPEC comment 01a0ddac-6d3c-72be-9fa2-72308da4414c. All eight logical acceptance checks should remain. Eight children is a ceiling, not a required decomposition. C4 persistence, C5 identical replay and C6 controlled lost-ack reconciliation are causally ordered operations of the same Curator and record; execute them sequentially in one Curator work item/run after the exact proposal is independently reviewed/verified and explicitly approved. Preserve all three distinct receipts and the fresh post-write verification/review gates (C7/C8). Do not parallelize operations against the same key or create separate same-agent runs merely for those three steps. If child issues already exist, retain their history and record the combined coverage; do not delete them or silently waive a required check. Do not restart any active child.\n\nThe maximum of two active Swarm runs includes the parent while it is executing. Dispatch one worker at a time and end the parent turn promptly; use native child-event re-entry for the next dependent gate. This preserves the existing async mechanism and keeps resource use bounded. Keep proposal review/verification independent and keep post-write review/verification; no verdict is waived or supplied by Supervisor. Keep the original 45-minute mission / 20-minute child and two-correction bounds. The goal is the same seven required outputs, not additional workflow machinery.",
+  "created_at": "2026-09-26T12:25:48Z",
+  "id": "01a0ddad-c7f1-7672-add2-53d2483f511d",
+  "issue_id": "01a0dda7-01b9-76f7-b53b-e2e629a042c2",
+  "issue_revision": 15,
+  "parent_id": null,
+  "reactions": [],
+  "resolved_at": null,
+  "resolved_by_id": null,
+  "resolved_by_type": null,
+  "revision": 1,
+  "trigger_outcomes": [
+    {
+      "reason_code": "queued",
+      "status": "queued",
+      "target_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "target_type": "agent"
+    }
+  ],
+  "type": "comment",
+  "updated_at": "2026-09-26T12:25:48Z"
+}

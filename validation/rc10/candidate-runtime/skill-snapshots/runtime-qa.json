@@ -1,0 +1,29 @@
+{
+  "config": {},
+  "content": "---\nname: runtime-qa\ndescription: Use when verification requires exercising a running UI/API/service rather than only reading tests; captures real interactions, logs, screenshots or HTTP evidence, and reproducible failures (S06/S08)\n---\n\n# Runtime QA\n\nPurpose: execute the system as a user/client would and produce evidence.\n\n## Execution selection\n\n1. Browser UI available → use Playwright if installed.\n2. HTTP/API target → use `scripts/http_smoke.py` or project-native API tests.\n3. CLI/service → execute its real public interface.\n4. If the target cannot be run, return BLOCKED; do not substitute a paper test plan.\n\n## Browser workflow\n\n- start required server(s) using project-native commands;\n- wait for readiness, not an arbitrary sleep when a health endpoint is available;\n- inspect rendered state before hard-coding selectors;\n- execute the intended flow;\n- capture console errors and failed network requests;\n- capture screenshot/evidence for failures and critical acceptance points;\n- rerun the same flow after any fix.\n\n## API workflow\n\nExample:\n\n```bash\npython3 scripts/http_smoke.py \\\n  --url http://localhost:8080/api/health \\\n  --expect-status 200\n```\n\n## Required report\n\nUse `templates/runtime-qa-report.md`.\n\nEvery PASS must name:\n- target/build/revision;\n- command/script used;\n- actual observed result;\n- evidence location.\n\nA written test plan without execution evidence is not Runtime QA.\n",
+  "created_at": "2026-09-26T09:13:13Z",
+  "created_by": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+  "description": "Use when verification requires exercising a running UI/API/service rather than only reading tests; captures real interactions, logs, screenshots or HTTP evidence, and reproducible failures (S06/S08)",
+  "files": [
+    {
+      "content": "#!/usr/bin/env python3\nimport argparse, json, sys, urllib.request, urllib.error, time\np=argparse.ArgumentParser()\np.add_argument(\"--url\", required=True)\np.add_argument(\"--expect-status\", type=int, default=200)\np.add_argument(\"--timeout\", type=float, default=10)\nargs=p.parse_args()\nstarted=time.time()\ntry:\n    with urllib.request.urlopen(args.url, timeout=args.timeout) as r:\n        body=r.read(2048).decode(\"utf-8\",\"replace\")\n        status=r.status\nexcept urllib.error.HTTPError as e:\n    status=e.code; body=e.read(2048).decode(\"utf-8\",\"replace\")\nexcept Exception as e:\n    print(json.dumps({\"result\":\"FAIL\",\"error\":str(e)})); raise SystemExit(1)\nout={\"url\":args.url,\"status\":status,\"expected\":args.expect_status,\"elapsedMs\":round((time.time()-started)*1000,1),\"bodySample\":body}\nout[\"result\"]=\"PASS\" if status==args.expect_status else \"FAIL\"\nprint(json.dumps(out,ensure_ascii=False))\nraise SystemExit(0 if out[\"result\"]==\"PASS\" else 1)\n",
+      "created_at": "2026-09-26T09:13:13Z",
+      "id": "7c5d7fa3-bba9-4e69-853f-ae0206088afb",
+      "path": "scripts/http_smoke.py",
+      "skill_id": "1ad73f60-eabd-4070-ab93-3e0b02b1394c",
+      "updated_at": "2026-09-26T09:13:13Z"
+    },
+    {
+      "content": "# Runtime QA Report\n\n## Target\n## Environment / revision\n## Executed flows\n## Commands / automation\n## Evidence\n## Findings\n## Result\n",
+      "created_at": "2026-09-26T09:13:14Z",
+      "id": "1871bf7e-b65e-41b4-a91f-038bae09ab2d",
+      "path": "templates/runtime-qa-report.md",
+      "skill_id": "1ad73f60-eabd-4070-ab93-3e0b02b1394c",
+      "updated_at": "2026-09-26T09:13:14Z"
+    }
+  ],
+  "id": "1ad73f60-eabd-4070-ab93-3e0b02b1394c",
+  "name": "runtime-qa",
+  "updated_at": "2026-09-26T09:13:13Z",
+  "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+}

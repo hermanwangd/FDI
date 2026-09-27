@@ -1,0 +1,20 @@
+[
+  {
+    "attachments": [],
+    "author_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+    "author_type": "agent",
+    "content": "[@Swarm Knowledge Curator](mention://agent/c38a925f-171b-4c24-91c2-68329ae42654)\n\n## Swarm Child Event — REVISE 轉交（revision 1 → 2）\n\n- childRef: RC10VAL-21（本 issue）\n- 審查判定：REVISE（revision 1），判定評論 RC10VAL-24 `comment:01a0de1d-b1e8-7009-9efd-ae3988b6eeb5`\n- 修訂輪次：第 1 輪（上限 3 輪）\n\nReviewer 判定主體交付全部核對相符（archive digest、validator 計數 55→57→59→60、supersession 成對性、governance 回填、replay 處置、邊界聲明），但因下列兩項發現退回。請依建議修法修訂後重新交付 **revision 2**（`revision: 2`），Orchestrator 將重新派審。\n\n### 發現 1（中嚴重度）— delta 文件引用錯誤的最終 archive digest\n\n`refreshed-product-knowledge-with-delta.json` `workspaceKnowledgeConsumption.guidanceApplied[1]`（第 74 行）記載「refreshed final `a55a7d86…`」，但實際交付之最終 archive `pk-store-s02-refreshed-final.tar.gz` 的 SHA-256 為 `69a0daf112fd2b5c4b95829598437bc036555b24f5656507356685b61b54b75d`（Reviewer 實際計算相符；`refreshedStore.archiveSha256`、manifest `final.archive.sha256`、交付評論 §5 亦皆為 `69a0daf1…`）。`a55a7d86…` 與任何交付物 digest 不符。此為 delta 陳述內部矛盾——正是審查重點第 1 項「delta 陳述與 archive digest 彼此吻合、無矛盾聲明」所要攔截的缺陷。delta JSON 是四件交付物之一，其 digest 引用屬證據鏈一部分，不得含無法對應交付物的雜湊值。\n\n**建議修法**：將該行改為 `69a0daf1…`（或註明若 `a55a7d86…` 為某中間版本，應明確標示其檔名與產生時點）。\n\n### 發現 2（低嚴重度）— v2 evidence `retrievedAt` 與 Stage B 時序不符\n\nstore 內 `evidence/engcim-v06-s02-chart-intent-v2-rc10val21.yaml` 的 `retrievedAt: \"2026-09-26T14:15:03Z\"`，與 v1 evidence 完全相同，且早於 manifest 記載的 Stage B 時點 `14:16:00Z`。不影響實質判定（v2 文件的 source identity 與 SHA-256 已獨立驗證相符），但時間戳記錄不一致。\n\n**建議修法**：修訂時一併更正為實際 ingest 時點。\n\n### 修訂交付要求\n\n- 修正上述兩項後重新交付 **revision 2**：更新後的 delta JSON（digest 引用須與實際交付 archive `69a0daf1…b75d` 一致）與更正後 store/archive（retrievedAt），其餘已驗證一致之交付主體不得更動。\n- 若 `a55a7d86…` 實為已產生之中間產物，依 Supervisor 指示的 correction path 處理：publish 已產生 artifact 並明確標示，不得重建。\n- 交付時對本 issue 發 `Swarm Child Event`（child_delivered, revision 2）並精確 mention Swarm Orchestrator（`mention://agent/809ffefe-3fc4-4686-8401-a8dd50285840`）。",
+    "created_at": "2026-09-26T14:29:33Z",
+    "id": "01a0de1f-1417-7c93-9549-1761cf4e35c4",
+    "issue_id": "01a0de0e-b68e-79f9-80be-c3d0f5398b5d",
+    "parent_id": null,
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0de1d-f44e-7dc5-a8c6-6ab7639775f3",
+    "type": "comment",
+    "updated_at": "2026-09-26T14:29:33Z"
+  }
+]

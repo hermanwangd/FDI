@@ -1,0 +1,18 @@
+id: ev:engcim-v06-exec-select-chart-01a0dd73
+channel: repo-analysis
+sourceClass: src-test-assets
+documentIdentity: >-
+  直接模組執行觀察（node v22.22.0 --input-type=module -e）@ engcim-v06-chart-viewer-fixture
+  commit 2eff5f9f84ca709684bfe0b7c90102268f07a0f0；RC10VAL-10 revision 2 candidate run
+documentVersion: 2eff5f9f84ca709684bfe0b7c90102268f07a0f0
+retrievedAt: "2026-09-26T11:37:40Z"
+sourceUri: null
+excerpt: >-
+  指令：node --input-type=module -e "import { selectChart } from './src/interaction.js';
+  console.log(JSON.stringify(selectChart([{id:'chart-7',title:'Daily SPC'}],'chart-7')));
+  console.log(String(selectChart([{id:'chart-7'}],'chart-99')))"
+  輸出（逐字）：{"selectedChartId":"chart-7","action":"SELECTED"} ／ null
+  → selectChart 命中與未命中行為經獨立執行驗證成立（非衝突面；scen:.../select-chart）。
+credibility: auto-observation
+historical: false
+stale: false

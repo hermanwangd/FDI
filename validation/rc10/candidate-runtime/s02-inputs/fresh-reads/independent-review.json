@@ -1,0 +1,20 @@
+[
+  {
+    "attachments": [],
+    "author_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+    "author_type": "agent",
+    "content": "判定：PASS（revision 3）\n\n### 審查範圍\n- RC10VAL-15 record body，fresh scoped read，provider revision 10（2026-09-26T13:18:32Z `created_at` 已獨立核對）\n- RC10VAL-15 audit comment `01a0ddec-0879-71ac-91c5-c5a5dbed15f5`（v2 bytes/digest 保留）與 version-history comment `01a0dddf-19f7-7657-98d6-2985a42b34ea`\n- RC10VAL-17 delivery comment `01a0ddec-cffa-7125-a542-e4c3b07953f0` 及 C4fix task package（契約來源）\n- RC10VAL-12 CaptureResult comment `01a0ddec-63b0-75c3-9e72-67f5170cca59`\n\n### 發現\n1. [低] RC10VAL-15 issue 標題仍為 `...-20260926-01 v2 (APPROVED)`，而 body 已是 recordVersion 3。標題屬 issue metadata、非 record body 授權 delta 的一部分，不阻塞；建議 Orchestrator 知情，後續可由人類整理時更新標題。\n2. [低] v2→v3 完整 byte-diff 我無法獨立重算（無 provider body history 讀取路徑）；但 audit comment 明列單一欄位變更，`proposal` 內容與 r2 採用版（canonical digest `5fba147a…4176e`）結構一致，digest 重算聲明由並行 C5b Verifier 覆核。屬證據限制，非缺陷。\n\n### 驗收標準對照\n1. **修正最小性** — 滿足。Fresh read（rev 10）確認 `governance.evidenceRefs[2]` = `run:01a0ddcd-3d0b-7dc3-ae46-305889037b53`（完整 provider identity），兩個 comment ref 未變；v2 digest `9d32e827…d124` 保留於 additive audit comment，無歷史重寫、無判定重貼（r1 歷史與 excluded variant 記錄皆原樣保留）。\n2. **CaptureResult schema 符合度** — 滿足。恰好 8 個契約欄位、無額外欄位（`additionalProperties=false` 成立）、全部 nonempty；`capturedAt` = `2026-09-26T13:18:32Z`，與我獨立讀到的 RC10VAL-15 `created_at` 一致（證據基礎，非報告時間）；`knowledgeRef` 綁 issue id + `@rev:10`（read 時 provider revision 正確）；refs 皆可解析，`evidenceRefs` 與修正後 record 完全一致。\n3. **無 scope creep** — 滿足。scalar index `rc10RecordVersion=3`、lifecycle CURRENT、decision APPROVED + decisionRef `rc10wk-s01-govdecision-20260926-01` 保留（additive re-binding，未新增未授權決策）；excluded variant `9358f1cd…` 仍在 limitations 記載並標示 excluded；conflictRefs 維持 empty；無 ProductKB 更動跡象。\n4. **判定格式** — 滿足。本判定綁定 revision 3。\n\n### 判定理由\n兩項交付物均符合契約與最小 diff 要求；capturedAt 證據基礎與 provider revision 經我本人 fresh read 獨立核對一致。僅存兩項低嚴重度觀察（標題滯後、v2 byte-diff 依賴 audit comment 記載），皆不阻塞整合，故給 PASS（revision 3）。",
+    "created_at": "2026-09-26T13:38:03Z",
+    "id": "01a0ddef-ee2f-7154-a377-b0e1f7654d3f",
+    "issue_id": "01a0ddee-618a-73da-95d6-0d148c2c3f0a",
+    "parent_id": null,
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0ddee-61a2-7010-9f55-7aa9f0423c6d",
+    "type": "comment",
+    "updated_at": "2026-09-26T13:38:03Z"
+  }
+]

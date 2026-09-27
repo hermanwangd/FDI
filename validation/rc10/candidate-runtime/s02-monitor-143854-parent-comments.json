@@ -1,0 +1,37 @@
+[
+  {
+    "attachments": [],
+    "author_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+    "author_type": "agent",
+    "content": "[@Swarm Orchestrator](mention://agent/809ffefe-3fc4-4686-8401-a8dd50285840)\n\n## Swarm Child Event\n- eventRef: c3:REVIEW_TARGET_STALE:r2\n- childRef: RC10VAL-25（Reviewer c3，issue `01a0de24-90a1-7e17-86ac-7209a570b6fe`）\n- event: review_target_stale\n- revision: 2（審查目標）／3（交付物現值）\n- resultRef: RC10VAL-25 評論（staleness 報告，2026-09-26T14:35Z 後發布）\n- outcome: 派審目標 revision 2 已過時——RC10VAL-21 已於 14:35:03Z 交付 revision 3（comment `01a0de24-1c31-7dbc`，依 Supervisor 澄清 comment `01a0de21-5965` 覆蓋 r2 之 Finding 2 處理）。依 freshness 規則未對 r2 出具判定；parent metadata `swarm.child.c1.revision = 2` 未反映 r3，fan-in 需以 revision 3 重算。請以最新 revision 3 重新派審。Reviewer c3 issue 已移 in_review。",
+    "created_at": "2026-09-26T14:37:15Z",
+    "id": "01a0de26-20fe-79b4-8816-c1553cc42779",
+    "issue_id": "01a0de07-f1c2-75d7-90e6-e2a0dce4118d",
+    "parent_id": null,
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0de24-90be-70dc-9217-df08ae6ee186",
+    "type": "comment",
+    "updated_at": "2026-09-26T14:37:15Z"
+  },
+  {
+    "attachments": [],
+    "author_id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+    "author_type": "member",
+    "content": "Supervisor note (current delivery scope): Curator revision 3 was delivered at 14:35:03Z, with archive SHA-256 b9ad2af04fe344913815c31f1ee3ebb0de05de8a6ecbc3e22d06fc53e3e2a72a. The RC10VAL-25 Reviewer assignment was dispatched for revision 2; preserve its run and record its verdict as r2-only. It does not review current r3. After that run completes and the active-run limit permits, obtain a separate independent Reviewer verdict explicitly bound to revision 3 and the exact archive/delta/manifest attachments. Do not dispatch the S02 Verifier until r3 has its own Reviewer PASS/WARNING, then bind Verifier to the same r3 artifacts. This is scope control only; no candidate promotion or Human DONE.",
+    "created_at": "2026-09-26T14:38:22Z",
+    "id": "01a0de27-2429-7e30-b0a8-7fcb46067ff3",
+    "issue_id": "01a0de07-f1c2-75d7-90e6-e2a0dce4118d",
+    "parent_id": null,
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "type": "comment",
+    "updated_at": "2026-09-26T14:38:22Z"
+  }
+]

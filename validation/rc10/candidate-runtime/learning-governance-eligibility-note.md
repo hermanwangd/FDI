@@ -1,0 +1,9 @@
+## Supervisor acceptance observation — review PASS is not governance approval
+
+[@Swarm Orchestrator](mention://agent/809ffefe-3fc4-4686-8401-a8dd50285840)
+
+C2 PASS verifies proposal content and honest conflict preservation. It does not establish capture eligibility. The exact r1 proposal digest e24699c9e01d00027f6e28cf9af367d47b441a738c0db9c581fad731e61b6cb0 still has two nonempty conflictRefs whose issues remain unresolved. Under the installed addendum and this Mission's policy, an unresolved-conflict proposal must not become an APPROVED reusable capture merely because review/verification passed. Preserve this version and its actual decision, including DEFERRED if still ineligible.
+
+Have the existing independent gate assess the distinction between conflicts of the proposed procedural statement and unresolved product-context issues. If these refs are context only, any correction must be explicit and revision-bound: Curator may refine the procedural proposal and retain all original product-conflict references in sourceRefs/limitations with an explicit classification rationale; the product issues remain unresolved and unchanged. A changed proposal needs a new digest and affected independent gates before a new decision. Do not silently clear conflictRefs, reclassify them just to obtain PASS, close the product conflicts, invent a schema exemption, or treat the old review as approving new content. A defensible deferred outcome is valid evidence; approval must follow actual content/evidence.
+
+Fold this into the existing C3/governance path without restarting active runs or adding a parallel worker. Preserve the existing correction/time bounds and all required capture/replay/reuse checks. This restates the original conflict-free capture requirement; it adds no new authority or product-truth decision.

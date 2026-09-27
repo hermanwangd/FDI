@@ -1,0 +1,94 @@
+{
+  "observedAt": "2026-09-26T12:28:28.316484+00:00",
+  "run": "01a0ddac-eb93-7b13-8335-ae5dc3a8ca5d",
+  "issueId": "01a0ddac-eb7a-7288-849a-eb75fb015eb0",
+  "requiredWorkspace": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+  "status": "EXPLICIT_FLAG_OMISSIONS_OBSERVED_SCOPE_OUTCOME_REQUIRES_REVIEW",
+  "limitation": "A missing flag does not prove a foreign workspace was accessed; inspect runtime scope and returned provider identities. Existing addendum requires explicit selection on every call. Do not infer effective enforcement from the envelope alone.",
+  "commands": [
+    {
+      "seq": 3,
+      "createdAt": "2026-09-26T12:25:03.475493Z",
+      "command": "multica issue get 01a0ddac-eb7a-7288-849a-eb75fb015eb0 --output json",
+      "hasExplicitWorkspaceFlag": false
+    },
+    {
+      "seq": 5,
+      "createdAt": "2026-09-26T12:25:04.189409Z",
+      "command": "multica issue comment list 01a0ddac-eb7a-7288-849a-eb75fb015eb0 --roots-only --summary --compact --output json",
+      "hasExplicitWorkspaceFlag": false
+    },
+    {
+      "seq": 19,
+      "createdAt": "2026-09-26T12:25:19.249264Z",
+      "command": "multica issue comment list 01a0dda7-01b9-76f7-b53b-e2e629a042c2 --roots-only --summary --compact --output json",
+      "hasExplicitWorkspaceFlag": false
+    },
+    {
+      "seq": 21,
+      "createdAt": "2026-09-26T12:25:19.990074Z",
+      "command": "multica issue get 01a0dda7-01b9-76f7-b53b-e2e629a042c2 --output json | python3 -c \"import json,sys; d=json.load(sys.stdin); print(d.get('description',''))\" | head -100",
+      "hasExplicitWorkspaceFlag": false
+    },
+    {
+      "seq": 27,
+      "createdAt": "2026-09-26T12:25:24.302759Z",
+      "command": "multica attachment --help 2>&1 | head -30",
+      "hasExplicitWorkspaceFlag": false
+    },
+    {
+      "seq": 29,
+      "createdAt": "2026-09-26T12:25:28.025074Z",
+      "command": "multica attachment download --help 2>&1 | head -20; mkdir -p c1-inputs",
+      "hasExplicitWorkspaceFlag": false
+    },
+    {
+      "seq": 31,
+      "createdAt": "2026-09-26T12:25:46.789795Z",
+      "command": "multica attachment download 01a0dda7-8dc9-7d26-a488-4682a4d48f82 -o ./c1-inputs && multica attachment download 01a0dda7-000b-74db-9302-b72a64b739f0 -o ./c1-inputs && multica attachment download 01a0dda7-00e0-7a72-a521-9c4f115a3fc2 -o ./c1-inputs && ls -la c1-inputs",
+      "hasExplicitWorkspaceFlag": false
+    },
+    {
+      "seq": 44,
+      "createdAt": "2026-09-26T12:26:01.970624Z",
+      "command": "multica issue comment list 01a0dd73-7d75-7295-aeb1-a83905eb2312 --roots-only --summary --compact --output json | python3 -c \"\nimport json,sys\nfor c in json.load(sys.stdin):\n    print(c['id'], c['created_at'], c['content'][:120].replace(chr(10),' '))\n\"",
+      "hasExplicitWorkspaceFlag": false
+    },
+    {
+      "seq": 46,
+      "createdAt": "2026-09-26T12:26:10.586276Z",
+      "command": "multica issue comment list 01a0dd73-7d75-7295-aeb1-a83905eb2312 --since 2026-09-26T11:30:00Z --output json --compact 2>/dev/null | python3 -c \"\nimport json,sys\ndata=json.load(sys.stdin)\nitems = data if isinstance(data,list) else data.get('comments',data)\nfor c in items:\n    print('===', c.get('id'), c.get('created_at'))\n    print((c.get('content') or '')[:2500])\n    print()\n\" 2>/dev/null | head -150",
+      "hasExplicitWorkspaceFlag": false
+    },
+    {
+      "seq": 63,
+      "createdAt": "2026-09-26T12:26:42.634632Z",
+      "command": "multica issue --help 2>&1 | sed -n '1,40p'",
+      "hasExplicitWorkspaceFlag": false
+    },
+    {
+      "seq": 67,
+      "createdAt": "2026-09-26T12:26:55.508817Z",
+      "command": "multica issue search \"RC10VAL-8\" --output json --compact 2>/dev/null | python3 -c \"\nimport json,sys\nd=json.load(sys.stdin)\nitems = d if isinstance(d,list) else d.get('issues',d.get('results',[]))\nfor i in items:\n    print(i.get('identifier'), i.get('id'), i.get('title'))\n\"",
+      "hasExplicitWorkspaceFlag": false
+    },
+    {
+      "seq": 69,
+      "createdAt": "2026-09-26T12:26:59.355755Z",
+      "command": "multica issue search --help 2>&1 | head -20",
+      "hasExplicitWorkspaceFlag": false
+    },
+    {
+      "seq": 71,
+      "createdAt": "2026-09-26T12:27:08.776634Z",
+      "command": "multica issue search \"RC10VAL-8\" --output json --include-closed 2>/dev/null | python3 -c \"\nimport json,sys\nd=json.load(sys.stdin)\nitems = d if isinstance(d,list) else d.get('issues',d.get('results',[]))\nfor i in items[:8]:\n    print(i.get('identifier'), i.get('id'), '|', i.get('title'))\n\"; multica issue search \"RC10VAL-9\" --output json --include-closed 2>/dev/null | python3 -c \"\nimport json,sys\nd=json.load(sys.stdin)\nitems = d if isinstance(d,list) else d.get('issues',d.get('results',[]))\nfor i in items[:8]:\n    print(i.get('identifier'), i.get('id'), '|', i.get('title'))\n\"",
+      "hasExplicitWorkspaceFlag": false
+    },
+    {
+      "seq": 75,
+      "createdAt": "2026-09-26T12:27:17.258083Z",
+      "command": "multica issue search \"8\" --output json --include-closed 2>/dev/null | python3 -c \"\nimport json,sys\nd=json.load(sys.stdin)\nitems = d if isinstance(d,list) else d.get('issues',d.get('results',[]))\nfor i in items[:5]:\n    print(i.get('identifier'), i.get('id'), '|', i.get('title'))\n\"",
+      "hasExplicitWorkspaceFlag": false
+    }
+  ]
+}

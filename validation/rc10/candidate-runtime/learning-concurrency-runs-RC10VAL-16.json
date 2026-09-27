@@ -1,0 +1,59 @@
+[
+  {
+    "agent_id": "043dc4fa-412c-46cc-a27b-bc302d584e97",
+    "attempt": 1,
+    "attribution": {
+      "delegated_from_task_id": "01a0ddd4-a3fb-7381-a2a0-8ff368be23cc",
+      "evidence": {
+        "kind": "issue_assignment",
+        "ref_id": "01a0dde5-96b1-7530-8490-3d6426e801e1"
+      },
+      "initiator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "originator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "precise": true,
+      "source": "delegation"
+    },
+    "completed_at": "2026-09-26T13:28:54Z",
+    "created_at": "2026-09-26T13:26:46Z",
+    "delivered_comment_ids": [],
+    "dispatched_at": "2026-09-26T13:26:46Z",
+    "error": null,
+    "id": "01a0dde5-96c4-7c0b-8bd9-658a7c95d04b",
+    "issue_id": "01a0dde5-96b1-7530-8490-3d6426e801e1",
+    "kind": "direct",
+    "max_attempts": 2,
+    "priority": 0,
+    "relative_work_dir": "engcim-swar-6fec14dee20e/rc10val-16-658a7c95d04b/workdir",
+    "result": {
+      "output": "C5 postwrite 驗證完成，結論 **VERIFIED**。\n\n- **R1 成立**：readback 重算 proposalDigest = `5fba147a…4176e`（4122-byte canonical，sorted keys / compact separators / UTF-8 unescaped），governance 完整綁定 recordKey/v2/digest/decisionRef/actorRef/decidedAt/policyRef/evidenceRefs，索引五項與 body 一致。\n- **R2 成立**：by-key scoped query 在 project `43aec4ec…` 恰好回一筆（RC10VAL-15），workspace 身分正確。\n- **R3 成立**：history comment 存在（記載 r1 取代、採用 canonical、排除變體），body 重算 digest 無漂移。\n- **R4 成立（盡力舉證）**：RC10VAL-8/9 自 09:5xZ 後無活動、未被裁決；所有可檢查面無 foreign-write 跡象。\n- **R5 成立**：proposal 位元組對應 canonical 5fba147a；被排除變體 9358f1cd 在 body limitations 與 history comment 均有記載。\n\n交付動作：驗證報告已貼至 RC10VAL-16（comment `01a0dde7-3c7d`），structured event 已發至 parent RC10VAL-11 並 mention Orchestrator，RC10VAL-16 狀態設為 `in_review`，臨時檔案已清理。",
+      "pr_url": "",
+      "session_id": "session_0a49721d-bb92-4d84-b3f8-f4926cfea3b7",
+      "work_dir": "/Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-6fec14dee20e/rc10val-16-658a7c95d04b/workdir"
+    },
+    "runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+    "started_at": "2026-09-26T13:26:46Z",
+    "status": "completed",
+    "usage": [
+      {
+        "cache_read_tokens": 519168,
+        "cache_write_tokens": 0,
+        "input_tokens": 32248,
+        "model": "kimi-code/kimi-for-coding",
+        "output_tokens": 6716,
+        "provider": "kimi"
+      }
+    ],
+    "work_dir": "/Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-6fec14dee20e/rc10val-16-658a7c95d04b/workdir",
+    "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+  }
+]

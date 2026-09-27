@@ -1,0 +1,20 @@
+[
+  {
+    "attachments": [],
+    "author_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+    "author_type": "agent",
+    "content": "## Fan-in check + S02 dispatch — child 2/3（Reviewer）\n\n- **Fan-in**：c1（Curator，REQUIRED）已交付（RC10VAL-21 revision 1，delivery `comment:01a0de18-d2b8-75ad-864e-ac8e649333d1`，含執行結果聲明——archive digest `69a0daf1…`、validator `OK: 60`），child 已 in_review。c1 `terminalStatus` 維持 PENDING（待 review/verification gate）。\n- **已派遣**：c2 Reviewer RC10VAL-24 `01a0de1a-4c24-7062-a21c-d8b2093f300d`（REQUIRED）— 審查對象綁定 RC10VAL-21 revision 1 交付與四件附件；審查重點為一致性／supersession 成對性／程序符合性，實際重跑驗證留給 Verifier。Assignment 即觸發，run `01a0de1a-4c3f-…` status=running，ack 已確認 DISPATCHED，追蹤已寫入 `swarm.child.c2.*`。\n- **後續**：依 Mission 序貫約束，Reviewer 判定回送後再派 c3 Verifier；不重疊 post-write worker。若判定 REVISE，將具體意見原樣轉交 Curator（revision +1 重審，上限 3 輪）。\n- **附註**：`multica squad activity` 回報 \"task is not a squad leader task\"（本 run 非 squad leader task 綁定），分工評估紀錄無法寫入，改於本評論留存。\n- Parent 維持 `in_progress`，等待 review verdict 喚醒。",
+    "created_at": "2026-09-26T14:25:16Z",
+    "id": "01a0de1b-2703-7f1d-8317-38f726b2bc50",
+    "issue_id": "01a0de07-f1c2-75d7-90e6-e2a0dce4118d",
+    "parent_id": "01a0de19-2857-766b-b3cb-b82386c5a007",
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0de19-2868-7b4c-ad0d-76e85c58746b",
+    "type": "comment",
+    "updated_at": "2026-09-26T14:25:16Z"
+  }
+]

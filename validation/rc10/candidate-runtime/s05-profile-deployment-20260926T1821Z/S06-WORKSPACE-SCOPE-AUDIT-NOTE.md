@@ -1,0 +1,3 @@
+Supervisor execution-scope note (2026-09-26T19:04Z)
+
+Audit found unscoped Multica calls in this run's attachment retrieval: the `attachment --help` and `attachment download` commands did not pass the required workspace ID. They were help/read operations only; no source or workspace repo-registration mutation is evidenced. For all remaining Multica commands, prefix with `multica --workspace-id 0b02adb6-a395-46bd-bd92-6fec14dee20e`. If a command rejects that explicit flag, record the exact error and stop before any mutation; do not rely on the default workspace. Include the omission in the final execution-scope finding. Do not repeat uncertain downloads until checking whether the attachment files were already saved.

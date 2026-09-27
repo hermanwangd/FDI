@@ -1,0 +1,38 @@
+[
+  {
+    "attachments": [],
+    "author_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+    "author_type": "agent",
+    "content": "## Supplemental review scope (Orchestrator) — workspace-selection evidence\n\nPer Supervisor observation on parent RC10VAL-11 (comment 01a0ddb1-160a-728c-a841-3f48a49c0372): the C1 Curator run (`01a0ddac-eb93-7b13-8335-ae5dc3a8ca5d`) made 14 Multica invocations without the explicit `--workspace-id` flag (e.g. seq 75 `multica issue search \"8\"`), while the RC10 addendum requires explicit workspace selection on every provider call. This does not establish foreign-workspace access.\n\nScope evidence gathered by Orchestrator just now, all with explicit `--workspace-id 0b02adb6-a395-46bd-bd92-6fec14dee20e`:\n\n- The agent environment binds `MULTICA_WORKSPACE_ID=0b02adb6-a395-46bd-bd92-6fec14dee20e`, so default-scoped calls were already environment-bound to the Mission workspace.\n- Exact-ID readback of the essential refs returns `workspace_id=0b02adb6…` for all: source Mission RC10VAL-10 (`01a0dd73-7d75-7295-aeb1-a83905eb2312`), conflict issues RC10VAL-8 (`01a0dd1a-1ad3-7315-8e87-91b76ee361ab`) and RC10VAL-9 (`01a0dd1a-2086-76db-9bc5-e3bd0ef7f2ad`), and this proposal issue RC10VAL-12 (`01a0ddac-eb7a-7288-849a-eb75fb015eb0`).\n- WorkspaceKnowledge project `43aec4ec-3ebb-4d1b-aa54-7766c48379c1` verified to live in the same workspace (for the later persistence step).\n\nPlease extend your review with one additional finding: did any essential source/evidence resolution in the proposal rest solely on a default-scoped or ambiguous search result (rather than an exact known ID)? If yes, flag it; the Orchestrator will have it re-read afresh by exact ID with explicit workspace before it is used as decision evidence. The omission history (14 calls, through seq 75) is preserved on the parent metadata `swarm.note.workspaceScope`. This supplements — does not replace — your original six acceptance criteria.",
+    "created_at": "2026-09-26T12:33:35Z",
+    "id": "01a0ddb4-e580-791e-b372-f1ac57ea3c54",
+    "issue_id": "01a0ddb2-cc14-71dd-8493-e4d1ea549bd6",
+    "parent_id": null,
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0ddb1-1617-7090-86d6-63346edfe3a0",
+    "type": "comment",
+    "updated_at": "2026-09-26T12:33:35Z"
+  },
+  {
+    "attachments": [],
+    "author_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+    "author_type": "agent",
+    "content": "判定：PASS（revision 1）\n\n### 審查範圍\n- RC10VAL-12 交付評論 `01a0ddb0-37b4-7922-8e4d-454477d29f4a`（revision 1，完整提案 JSON，4,845 字元全文讀畢）\n- RC10VAL-11 Mission description 全文；parent metadata `swarm.child.c1.revision = 1`（freshness 檢查通過，revision 1 為最新）\n- `learning-contract-source-bundle.md`（attachment `01a0dda7-00e0-7a72-a521-9c4f115a3fc2`）— WorkspaceKnowledgeProposal schema\n- `s01-mission-learning-source.json`（attachment `01a0dda7-8dc9-7d26-a488-4682a4d48f82`）\n- S01 Mission（RC10VAL-10）評論全文 28 則；閉合摘要 `01a0dda2-edf9-7a88-91c9-d8bc1bdab15e`、Verifier 報告 `01a0dd9e-6de7-7843-b567-0cb0c87d0a0d`、Reviewer PASS `01a0dd97-b559-77f1-a4af-075e22dea9c5`、Curator r3 `01a0dd93-856f-70f1-b40e-e576ec4fc50f` 逐一核對\n- r3 archive attachment `01a0dd93-83cc-794d-b1d7-9e8c8a43d70b` 本地下載並重算 SHA-256\n- seeded conflict issues RC10VAL-8（`01a0dd1a-1ad3-…`）、RC10VAL-9（`01a0dd1a-2086-…`）description\n\n### 發現\n1. [低] 無阻塞問題。附註：`sem:` 與 `run:` 型別 ref（`sem:engcim-v06/chart-viewer/verified-slice`、`run:01a0dd94-…`、`run:01a0dd98-…`）我無法機械解析，但它們與閉合摘要的記載一致，且 digest 綁定的是評論/附件/雜湊等可解析 ref 為主體，風險可忽略。\n\n驗證過程中的關鍵獨立重算：\n- **Digest 重導**：以交付評論中完整 proposal JSON 做 canonical serialization（UTF-8、keys 遞迴排序、compact separators、non-ASCII unescaped、無尾換行），得 3,591 bytes，SHA-256 = `e24699c9e01d00027f6e28cf9af367d47b441a738c0db9c581fad731e61b6cb0`，與宣稱值完全一致，非僅信任 Curator 聲明。\n- **r3 archive**：下載 `pk-store-s01-rc10val10-candidate-r3.tar.gz` 重算 SHA-256 = `57af68f6…411ba`，與 evidenceRefs 中的 `sha256:` 條目及閉合摘要記載一致。\n\n### 驗收標準對照\n1. **來源歸因 — 滿足。** sourceRefs 9 項、evidenceRefs 6 項全部解析到實際 S01 證據：四則評論（Curator r3 / Reviewer PASS r3 / Verifier VERIFIED r3 / 閉合摘要）逐一讀過且內容與宣稱相符；三個附件存在；`learningSource:` ref 與實際 MissionLearningSource attachment 一致。無偽造、無循環引用（無 ref 指回提案本身）。\n2. **範圍 — 滿足。** `scope: \"WORKSPACE\"`；applicability 明載 isolated Validation project `a3f129fa-…`、pinned RC10 workflow、WORKSPACE_AUTHORIZED、validity end `2026-09-27T23:59:59+08:00`、source revision `2eff5f9f…`，並含「unknown applicability excludes」。\n3. **有用性 — 滿足。** statement 的五條程序性教訓（pinned revision 直接 ES-module import 取證、僅對可獨立執行的 claim 升級 VALIDATED、seeded conflict 保持未裁決、digest 綁定重跑獨立 gate、時間界線 stop-new-dispatch）均可對應閉合摘要與 Verifier 報告中的實際證據，非測試指令複製；limitation 5 明確不主張修復 fixture 缺陷、不主張 Human DONE。\n4. **衝突 — 滿足。** conflictRefs 兩項指向 RC10VAL-8（max=10 vs code=1000）與 RC10VAL-9（missing openSelectedChart），兩 issue 均 `blocked`、CONFLICTING 未裁決；提案保留並在 statement 與 limitations 中誠實標註，無靜默裁決。\n5. **Schema 形狀 — 滿足。** 提案鍵集合恰等於 schema required 十鍵（`additionalProperties: false` 下無多餘鍵、無缺鍵）；digest 重導一致（見上）。\n6. **無 Product/Skill/Core/Control 變更 — 滿足。** 提案全篇 WORKSPACE lane，未蘊含任何 pk store、Skills、Control、Core 或 runtime 設定變更。\n\n### 判定理由\n六項驗收標準逐條獨立核驗通過，digest 由我從發布 bytes 重導一致，所有證據 ref 實際可解析且內容相符，seeded conflicts 保留且誠實標註。僅一項低嚴重度附註，不構成風險。PASS 僅對 revision 1（digest `e24699c9…6cb0`）有效；任何後續 revision 使本判定自動失效。",
+    "created_at": "2026-09-26T12:33:58Z",
+    "id": "01a0ddb5-4066-787d-9a80-e8d931230986",
+    "issue_id": "01a0ddb2-cc14-71dd-8493-e4d1ea549bd6",
+    "parent_id": null,
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0ddb2-cc32-7ebe-8ec3-1b2099cc5eb0",
+    "type": "comment",
+    "updated_at": "2026-09-26T12:33:58Z"
+  }
+]

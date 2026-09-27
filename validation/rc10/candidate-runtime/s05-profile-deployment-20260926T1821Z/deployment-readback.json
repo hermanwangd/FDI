@@ -1,0 +1,41 @@
+{
+  "recordType": "RC10CandidateProfileDeploymentReadback",
+  "recordedAtUtc": "2026-09-26T18:37:56Z",
+  "candidateVersion": "RC10-local-candidate-20260927-01",
+  "candidateInputManifestSha256": "902a5e97d3de9185ea22a36687823a4e1997d7e2d13c7c8e2f48f0b1a0ec4267",
+  "profileId": "ENGCIM-S05-REVIEWED-DELIVERY-v0.1",
+  "profileSource": "engcim/bootstrap/overlays/multica/RC10-S05-S06-ROLE-GUIDANCE.md",
+  "profileSourceSha256": "a09e9fbd2cbeecceede25c9d80612002a1c6369367450422986bdb208bcbe4e9",
+  "adoptionReceipt": "validation/rc10/candidate-runtime/s05-profile-adoption.json",
+  "adoptionReceiptSha256": "8ade042327de65549f9a2f02c7c70915f1bf2f2c70cd81459a6c0cca7c0b9361",
+  "workspaceId": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+  "configuredRoleReadbacks": {
+    "orchestrator": {
+      "agentId": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "beforeInstructionSha256": "b48d6cd809d001f7b87800e191a3c1beacfa2ece322dcac1f9d53cae3e73dfb1",
+      "configuredInstructionSha256": "b3b29cd7f56cbed065f20923e97210a37e7c404739593718dbd7ddaba1c0b472",
+      "desiredInstructionSha256": "b3b29cd7f56cbed065f20923e97210a37e7c404739593718dbd7ddaba1c0b472",
+      "settingsPreserved": true,
+      "readbackFile": "agent-orchestrator-after.json"
+    },
+    "architect": {
+      "agentId": "668dadac-fd7a-4523-855a-f6a842301555",
+      "beforeInstructionSha256": "b585628c253e21a93452df6b62e224accfb36c91f1a995e421ac0155c97f6184",
+      "configuredInstructionSha256": "e6c8861bd1ab0bfb95b2863e15870e31f1e95ccf40538d5fa45c46139955c6a9",
+      "desiredInstructionSha256": "e6c8861bd1ab0bfb95b2863e15870e31f1e95ccf40538d5fa45c46139955c6a9",
+      "settingsPreserved": true,
+      "readbackFile": "agent-architect-after.json"
+    },
+    "reviewer": {
+      "agentId": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "beforeInstructionSha256": "41aa25fdbe66a88b6d0ee6b0df26ed43dbf034a4375aa942e9991dab06eda610",
+      "configuredInstructionSha256": "16d15bc328b39a05c30c8d79c82e0c8e4b47dead055833157d6e86c195aa1964",
+      "desiredInstructionSha256": "16d15bc328b39a05c30c8d79c82e0c8e4b47dead055833157d6e86c195aa1964",
+      "settingsPreserved": true,
+      "readbackFile": "agent-reviewer-after.json"
+    }
+  },
+  "consumptionStatus": "NOT_YET_EVIDENCED",
+  "scope": "Only existing Orchestrator, Architect, Reviewer instruction fields in the isolated validation workspace. No Curator or other agent changed; no production action.",
+  "sourceAuthority": "Configured readback proves persisted agent configuration only; actual per-run profile loading/consumption is not yet established."
+}

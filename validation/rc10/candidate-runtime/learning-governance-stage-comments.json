@@ -1,0 +1,37 @@
+[
+  {
+    "attachments": [],
+    "author_id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+    "author_type": "member",
+    "content": "## Supervisor observation — existing workspace selection requirement\n\n[@Swarm Orchestrator](mention://agent/809ffefe-3fc4-4686-8401-a8dd50285840)\n\nWhile C1 run 01a0ddac-eb93-7b13-8335-ae5dc3a8ca5d is executing, provider-visible terminal tool calls through 2026-09-26T12:28 show 14 Multica invocations without the explicit --workspace-id flag (for example seq 75: multica issue search \"8\" ...). The deployed RC10 addendum requires every provider call to select Mission workspace 0b02adb6-a395-46bd-bd92-6fec14dee20e explicitly. An envelope acknowledgment alone does not prove this behavior.\n\nThis observation does NOT establish foreign-workspace access; the native agent environment may already bind the workspace. Include it in the existing independent proposal review/verification, inspect the actual environment-bound scope and returned provider identities, and preserve the omission history. Require explicit workspace selection for subsequent calls, especially persistence, scoped listing and readback. If any essential source resolution relied only on a default or an ambiguous search, have it read afresh by exact known ID with the explicit workspace before using it as evidence. Do not infer read scope from a successful CLI exit.\n\nDo not restart the active C1 run or add a parallel worker just for this note. Fold the correction and scope evidence into existing stage gates / the next dependent work item. Preserve proposal identity and all required independent verdicts; no schema, agent configuration, runtime, source-snapshot or knowledge-store changes are authorized by this note. This is a check of the already-deployed requirement, not a new governing policy.",
+    "created_at": "2026-09-26T12:29:25Z",
+    "id": "01a0ddb1-160a-728c-a841-3f48a49c0372",
+    "issue_id": "01a0dda7-01b9-76f7-b53b-e2e629a042c2",
+    "parent_id": null,
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "type": "comment",
+    "updated_at": "2026-09-26T12:29:25Z"
+  },
+  {
+    "attachments": [],
+    "author_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+    "author_type": "agent",
+    "content": "## Fan-in check — C1 delivered; C2 Reviewer dispatched\n\nRebuilt tracking state from metadata + child issues:\n\n- **C1** (Curator proposal, RC10VAL-12): delivered, revision 1 — schema-conformant WORKSPACE/PROCEDURAL proposal, canonical digest `e24699c9…6cb0` (independently re-derived), seeded conflicts preserved unadjudicated. `terminalStatus` stays **PENDING**: it completes only after review PASS + verification VERIFIED on this revision.\n- **C2** (Reviewer, RC10VAL-13): **DISPATCHED** just now — run `01a0ddb2-cc32-7ebe-8ec3-1b2099cc5eb0`, status running. Scope: independent review of the exact digest (attribution, scope, usefulness, conflict preservation, schema shape, no Product/Skill/Core/Control mutation), verdict bound to revision 1.\n\nPer the accepted sequential plan (one worker at a time): C3 Verifier follows the C2 verdict; then the explicit APPROVED/DEFERRED decision (with actorRef/decisionRef/policyRef/evidenceRefs binding digest + recordKey/version); then the combined C4/C5/C6 Curator item (persist + readback, identical replay, controlled lost-ack reconciliation — three distinct receipts); then C7/C8 post-write gates; then integration.\n\nTwo notes: `multica squad activity` refused to record (`task is not a squad leader task` — this mention-triggered run isn't recognized as a leader task), so the dispatch rationale is captured here instead. Parent stays `in_progress`; no further action until the next child event.",
+    "created_at": "2026-09-26T12:31:58Z",
+    "id": "01a0ddb3-6a82-7f04-9b2c-82898a16e605",
+    "issue_id": "01a0dda7-01b9-76f7-b53b-e2e629a042c2",
+    "parent_id": "01a0ddb0-69a0-7a2d-ac42-ebf3e993dda1",
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0ddb0-69b0-717d-8453-ea4e1a6c3b73",
+    "type": "comment",
+    "updated_at": "2026-09-26T12:31:58Z"
+  }
+]

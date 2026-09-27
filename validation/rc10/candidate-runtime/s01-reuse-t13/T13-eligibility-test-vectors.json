@@ -1,0 +1,95 @@
+{
+  "schema": "RC10_T13_SYNTHETIC_ELIGIBILITY_TEST_VECTORS_v1",
+  "candidate": "RC10-local-candidate-20260927-01",
+  "candidateInputManifestSha256": "a89ea0e608f48d59c6161d3d4e54ad105d1c24e2b383c352f90ebcd3ba6b0962",
+  "testOnly": true,
+  "authority": "NONE; counterfactual policy inputs only; not provider records, not WorkspaceKnowledge, not approved evidence",
+  "consumer": {
+    "workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+    "projectRef": "a3f129fa-4028-4341-98dc-c8ec20c468ae",
+    "workspaceKnowledgeProjectRef": "43aec4ec-3ebb-4d1b-aa54-7766c48379c1",
+    "role": "Swarm Orchestrator"
+  },
+  "nonTargetPredicatesAssumedForRuleIsolation": [
+    "provider identity resolved",
+    "body and scalar indexes agree",
+    "governance decision is bound to the exact key/version/content",
+    "required source, closure and evidence refs resolve",
+    "repository revision matches the Mission",
+    "record is unique unless the vector explicitly tests duplicates"
+  ],
+  "vectors": [
+    {
+      "id": "wrong-workspace",
+      "targetPredicate": "provider workspace and body workspaceRef must equal the Mission workspace",
+      "facts": {"workspaceRef": "synthetic-foreign-workspace", "projectRef": "43aec4ec-3ebb-4d1b-aa54-7766c48379c1", "decision": "APPROVED", "lifecycle": "CURRENT", "applicableProjectRefs": ["a3f129fa-4028-4341-98dc-c8ec20c468ae"], "visibility": "WORKSPACE_AUTHORIZED", "freshnessValid": true},
+      "expected": "EXCLUDE_WORKSPACE_MISMATCH"
+    },
+    {
+      "id": "wrong-consumer-project",
+      "targetPredicate": "consumer project must be explicitly listed in applicableProjectRefs",
+      "facts": {"workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e", "projectRef": "43aec4ec-3ebb-4d1b-aa54-7766c48379c1", "decision": "APPROVED", "lifecycle": "CURRENT", "applicableProjectRefs": ["synthetic-other-project"], "visibility": "WORKSPACE_AUTHORIZED", "freshnessValid": true},
+      "expected": "EXCLUDE_PROJECT_NOT_APPLICABLE"
+    },
+    {
+      "id": "deferred-decision",
+      "targetPredicate": "governance decision must be APPROVED",
+      "facts": {"workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e", "decision": "DEFERRED", "lifecycle": "CURRENT", "applicableProjectRefs": ["a3f129fa-4028-4341-98dc-c8ec20c468ae"], "visibility": "WORKSPACE_AUTHORIZED", "freshnessValid": true},
+      "expected": "EXCLUDE_NOT_APPROVED"
+    },
+    {
+      "id": "rejected-decision",
+      "targetPredicate": "governance decision must be APPROVED",
+      "facts": {"workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e", "decision": "REJECTED", "lifecycle": "CURRENT", "applicableProjectRefs": ["a3f129fa-4028-4341-98dc-c8ec20c468ae"], "visibility": "WORKSPACE_AUTHORIZED", "freshnessValid": true},
+      "expected": "EXCLUDE_NOT_APPROVED"
+    },
+    {
+      "id": "stale-lifecycle",
+      "targetPredicate": "lifecycle must be CURRENT",
+      "facts": {"workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e", "decision": "APPROVED", "lifecycle": "STALE", "applicableProjectRefs": ["a3f129fa-4028-4341-98dc-c8ec20c468ae"], "visibility": "WORKSPACE_AUTHORIZED", "freshnessValid": false},
+      "expected": "EXCLUDE_STALE"
+    },
+    {
+      "id": "expired-validity",
+      "targetPredicate": "validity interval must include fetchedAt",
+      "facts": {"workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e", "decision": "APPROVED", "lifecycle": "CURRENT", "applicableProjectRefs": ["a3f129fa-4028-4341-98dc-c8ec20c468ae"], "visibility": "WORKSPACE_AUTHORIZED", "validUntil": "2020-01-01T00:00:00Z", "freshnessValid": false},
+      "expected": "EXCLUDE_EXPIRED"
+    },
+    {
+      "id": "visibility-denied",
+      "targetPredicate": "visibility must authorize this Mission and role",
+      "facts": {"workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e", "decision": "APPROVED", "lifecycle": "CURRENT", "applicableProjectRefs": ["a3f129fa-4028-4341-98dc-c8ec20c468ae"], "visibility": "ROLE_RESTRICTED", "permittedRoles": ["synthetic-other-role"], "freshnessValid": true},
+      "expected": "EXCLUDE_VISIBILITY_DENIED"
+    },
+    {
+      "id": "unknown-freshness",
+      "targetPredicate": "unknown freshness or applicability excludes the record",
+      "facts": {"workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e", "decision": "APPROVED", "lifecycle": "CURRENT", "applicableProjectRefs": ["a3f129fa-4028-4341-98dc-c8ec20c468ae"], "visibility": "WORKSPACE_AUTHORIZED", "freshnessKnown": false, "repositoryRevision": "unknown"},
+      "expected": "EXCLUDE_UNKNOWN_FRESHNESS"
+    },
+    {
+      "id": "unresolved-conflict",
+      "targetPredicate": "unresolved conflicts exclude a record from reusable context",
+      "facts": {"workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e", "decision": "APPROVED", "lifecycle": "CURRENT", "applicableProjectRefs": ["a3f129fa-4028-4341-98dc-c8ec20c468ae"], "visibility": "WORKSPACE_AUTHORIZED", "freshnessValid": true, "conflictRefs": ["synthetic-unresolved-conflict"], "conflictsResolved": false},
+      "expected": "EXCLUDE_UNRESOLVED_CONFLICT"
+    },
+    {
+      "id": "body-index-mismatch",
+      "targetPredicate": "body and scalar indexes must agree on record identity, version, decision and lifecycle",
+      "facts": {"workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e", "decision": "APPROVED", "lifecycle": "CURRENT", "applicableProjectRefs": ["a3f129fa-4028-4341-98dc-c8ec20c468ae"], "visibility": "WORKSPACE_AUTHORIZED", "freshnessValid": true, "bodyIndexAgreement": false},
+      "expected": "EXCLUDE_INCONSISTENT_RECORD"
+    },
+    {
+      "id": "unreconciled-duplicate-key",
+      "targetPredicate": "exactly one canonical record per key; unreconciled duplicates exclude every match",
+      "facts": {"recordKey": "synthetic-duplicate-key", "providerIssueRefs": ["synthetic-row-a", "synthetic-row-b"], "contentDigestsDiffer": true, "canonicalRecordCount": 2, "allOtherPredicatesPass": true},
+      "expected": "EXCLUDE_ALL_DUPLICATE_MATCHES"
+    },
+    {
+      "id": "current-evidence-conflict",
+      "targetPredicate": "current Mission evidence wins or raises an explicit unresolved decision; no silent knowledge override",
+      "facts": {"recordWouldOtherwiseBeEligible": true, "syntheticKnowledgeStatement": "synthetic claim A", "syntheticCurrentMissionEvidence": "synthetic contradictory claim B", "sourceRefsPresent": true},
+      "expected": "CURRENT_EVIDENCE_WINS_OR_EXPLICIT_UNRESOLVED; DO_NOT_SILENTLY_OVERRIDE"
+    }
+  ]
+}

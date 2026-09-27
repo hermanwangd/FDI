@@ -1,0 +1,20 @@
+[
+  {
+    "attachments": [],
+    "author_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+    "author_type": "agent",
+    "content": "## Fan-in \u2014 C4fix delivered; APPROVED decision re-bound to recordVersion 3; final two gates dispatched (C5b + C6, parallel)\n\n**C4fix (RC10VAL-17) accepted as WorkItemResult** (delivery `01a0ddec-cffa`, Curator run `01a0dde9-f3da`): both bounded deliverables complete \u2014 record correction to recordVersion 3 (only `governance.evidenceRefs[2]` \u2192 full run id; body digest `9d32e827\u2026d124` \u2192 `46fd7a04\u20268306`; v2 bytes preserved in audit comment `01a0ddec-0879`) and the schema-shaped `WorkspaceKnowledgeCaptureResult` (RC10VAL-12 comment `01a0ddec-63b0`; `capturedAt` evidence-based from record `created_at` 2026-09-26T13:18:32Z).\n\n**Decision addendum (Orchestrator, additive \u2014 same decisionRef `rc10wk-s01-govdecision-20260926-01`):** fresh scoped readback of RC10VAL-15 (provider revision 10) confirms the v3 governance block binds recordKey `rc10wk-s01-verified-slice-procedure-20260926-01` / recordVersion 3 / proposalDigest `5fba147a9bc32231fa3cea99d04eb7300390485de340bc1521cbd35f89b4176e`, decision APPROVED, actor `809ffefe-\u202640285840`, policy refs intact, evidenceRefs now all full identities. Body and scalar indexes agree (recordVersion 3, APPROVED, CURRENT). Old approval does not silently authorize new content \u2014 this addendum explicitly binds the v3 content; no new decision invented, correction budget 2/2 consumed.\n\n**Dispatched in parallel (final gates before the 13:45:00Z hard stop):**\n- **RC10VAL-18 \u2014 C5b** (Swarm Verifier): delta-only verification of the v3 correction + CaptureResult schema/claims. Ack **DISPATCHED**, run `01a0ddee-5b22-792b-b46f-b8e0fb15f33b` running since 13:36:20Z.\n- **RC10VAL-19 \u2014 C6** (Swarm Reviewer): review of C4fix minimality + CaptureResult conformance, verdict bound to revision 3. Ack **DISPATCHED**, run `01a0ddee-61a2-7010-9f55-7aa9f0423c6d` running since 13:36:22Z.\n- Routing per `01a0ddcd-3c51`: single trigger path, plain-UUID callback, leader mention created by the worker in its completed event only. Explicit `--workspace-id` on every provider call, per `01a0ddc1-251e` / `01a0ddb1-160a`.\n\n## Swarm Tracking (comment downgrade \u2014 metadata at 50 keys)\n\n| child | ref | role | required | revision | dispatch | terminal |\n|---|---|---|---|---|---|---|\n| c1 | RC10VAL-12 | Knowledge Curator | REQUIRED | 2 | run `01a0ddc1-7db8` | COMPLETED (WARNING@2 + VERIFIED@2, canonical `05ca`/`5fba147a`) |\n| c2 | RC10VAL-13 | Reviewer | REQUIRED | 2 | run `01a0ddc5-83eb` | COMPLETED (WARNING@2) |\n| c3 | RC10VAL-14 | Verifier | REQUIRED | 2 | run `01a0ddcd-3d0b` | COMPLETED (VERIFIED@2) |\n| c4combined | RC10VAL-15/12 | Knowledge Curator | REQUIRED | v3 | run `01a0dddb-caa5` | DELIVERED, pending C5b+C6 gates |\n| c4fix | RC10VAL-17 | Knowledge Curator | REQUIRED | v3 corr | run `01a0dde9-f3da` | DELIVERED, pending C5b+C6 gates |\n| c5 | RC10VAL-16 | Verifier | REQUIRED | 2 | run `01a0dde5-96c4` | COMPLETED (VERIFIED, no open findings) |\n| c5b | RC10VAL-18 | Verifier | REQUIRED | 3 | run `01a0ddee-5b22` RUNNING | PENDING |\n| c6 | RC10VAL-19 | Reviewer | REQUIRED | 3 | run `01a0ddee-61a2` RUNNING | PENDING |\n\nALL_REQUIRED not yet satisfied \u2014 c5b and c6 pending; no parent advancement. On their events: recompute fan-in; if both pass, integrate once (final report) and move parent to `in_review`. If the 13:45:00Z hard stop is reached first, report actual handles and stop new dispatch per the execution envelope.",
+    "created_at": "2026-09-26T13:36:59Z",
+    "id": "01a0ddee-f2c2-7e47-989c-b1c7918b41fc",
+    "issue_id": "01a0dda7-01b9-76f7-b53b-e2e629a042c2",
+    "parent_id": "01a0dde7-6a14-7bb9-afbe-c0dd4bf096e3",
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0dde7-6a2b-7dc6-af36-ae6e525c6c19",
+    "type": "comment",
+    "updated_at": "2026-09-26T13:36:59Z"
+  }
+]

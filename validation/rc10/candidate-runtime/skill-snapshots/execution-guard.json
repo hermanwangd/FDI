@@ -1,0 +1,29 @@
+{
+  "config": {},
+  "content": "---\nname: execution-guard\ndescription: Use before mutating repositories, deployment/configuration, or production-adjacent resources to enforce allowed paths and reject dangerous commands; mandatory for S05/S08/S10 mutations\n---\n\n# Execution Guard\n\nPurpose: convert safety guidance into deterministic pre-execution checks.\n\nThis skill does not replace platform authorization. It adds a fail-closed guard that agents must call before risky shell commands or writes.\n\n## Required policy inputs\n\n- `ENGCIM_ALLOWED_ROOTS`: colon-separated allowed filesystem roots\n- current repository / branch\n- optional `ENGCIM_DEFAULT_BRANCHES` (default `main:master`)\n\n## Path guard\n\nBefore Write/Edit operations when the runtime cannot enforce a native pre-tool hook:\n\n```bash\npython3 scripts/check_path.py \u003ctarget-path\u003e\n```\n\nA path outside every allowed root is denied.\n\n## Command guard\n\nBefore destructive or repository-mutating shell commands:\n\n```bash\npython3 scripts/check_command.py -- \"\u003cshell command\u003e\"\n```\n\nHard-deny examples include:\n- recursive delete of `/`, home, or an allowed-root parent;\n- force push to `main` / `master`;\n- `git reset --hard` without explicit override;\n- `DROP TABLE` / `DROP DATABASE`;\n- `terraform destroy`;\n- broad `kubectl delete`;\n- destructive commands targeting paths outside allowed roots.\n\nUnknown high-risk commands return REVIEW rather than silent allow.\n\n## Default behavior\n\n- ALLOW: execute.\n- REVIEW: stop and surface the command plus reason to the controlling workflow.\n- DENY: do not execute.\n\nThe ordinary Worker must never bypass DENY by rewriting the command into an equivalent destructive form.\n",
+  "created_at": "2026-09-26T09:12:34Z",
+  "created_by": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+  "description": "Use before mutating repositories, deployment/configuration, or production-adjacent resources to enforce allowed paths and reject dangerous commands; mandatory for S05/S08/S10 mutations",
+  "files": [
+    {
+      "content": "#!/usr/bin/env python3\nimport os, re, shlex, sys\n\ndef main():\n    args = sys.argv[1:]\n    if args and args[0] == \"--\": args = args[1:]\n    cmd = \" \".join(args).strip()\n    if not cmd:\n        print(\"DENY empty command\"); return 1\n    low = cmd.lower()\n    hard = [\n        (r'\\brm\\s+-[^\\n]*r[^\\n]*f[^\\n]*\\s+/(?:\\s|$)', \"recursive delete of root\"),\n        (r'\\brm\\s+-[^\\n]*r[^\\n]*f[^\\n]*\\s+~(?:/|\\s|$)', \"recursive delete of home\"),\n        (r'\\bgit\\s+push\\b[^\\n]*(--force|-f)\\b[^\\n]*(\\bmain\\b|\\bmaster\\b)', \"force push to default branch\"),\n        (r'\\bgit\\s+reset\\s+--hard\\b', \"git reset --hard\"),\n        (r'\\bdrop\\s+(table|database)\\b', \"destructive SQL\"),\n        (r'\\bterraform\\s+destroy\\b', \"terraform destroy\"),\n        (r'\\bkubectl\\s+delete\\s+(namespace|ns|all)\\b', \"broad kubernetes delete\"),\n    ]\n    for pat, why in hard:\n        if re.search(pat, low):\n            if os.environ.get(\"ENGCIM_GUARD_OVERRIDE\") == \"ALLOW_EXPLICIT\":\n                print(f\"REVIEW override requested: {why}\")\n                return 3\n            print(f\"DENY {why}\")\n            return 1\n    warn = [\n        (r'\\bgit\\s+push\\b[^\\n]*(--force-with-lease)\\b', \"force-with-lease\"),\n        (r'\\brm\\s+-[^\\n]*r', \"recursive delete\"),\n        (r'\\bkubectl\\s+delete\\b', \"kubernetes delete\"),\n        (r'\\bhelm\\s+uninstall\\b', \"helm uninstall\"),\n        (r'\\btruncate\\s+table\\b', \"truncate table\"),\n    ]\n    for pat, why in warn:\n        if re.search(pat, low):\n            print(f\"REVIEW {why}\")\n            return 3\n    print(\"ALLOW\")\n    return 0\n\nif __name__ == \"__main__\":\n    raise SystemExit(main())\n",
+      "created_at": "2026-09-26T09:12:35Z",
+      "id": "cf326668-70f2-408a-a908-873e628179de",
+      "path": "scripts/check_command.py",
+      "skill_id": "fac82b0d-d9a2-4999-9c2a-e773c85af7c7",
+      "updated_at": "2026-09-26T09:12:35Z"
+    },
+    {
+      "content": "#!/usr/bin/env python3\nimport os, sys\nfrom pathlib import Path\n\ndef main():\n    if len(sys.argv) != 2:\n        print(\"usage: check_path.py \u003cpath\u003e\", file=sys.stderr); return 2\n    roots = [Path(p).expanduser().resolve() for p in os.environ.get(\"ENGCIM_ALLOWED_ROOTS\",\"\").split(\":\") if p]\n    if not roots:\n        print(\"DENY no ENGCIM_ALLOWED_ROOTS configured\"); return 1\n    target = Path(sys.argv[1]).expanduser().resolve()\n    for root in roots:\n        try:\n            target.relative_to(root)\n            print(f\"ALLOW path={target} root={root}\")\n            return 0\n        except ValueError:\n            pass\n    print(f\"DENY path outside allowed roots: {target}\")\n    return 1\n\nif __name__ == \"__main__\":\n    raise SystemExit(main())\n",
+      "created_at": "2026-09-26T09:12:36Z",
+      "id": "92092210-9dd2-44b5-bc08-c5de77aa6916",
+      "path": "scripts/check_path.py",
+      "skill_id": "fac82b0d-d9a2-4999-9c2a-e773c85af7c7",
+      "updated_at": "2026-09-26T09:12:36Z"
+    }
+  ],
+  "id": "fac82b0d-d9a2-4999-9c2a-e773c85af7c7",
+  "name": "execution-guard",
+  "updated_at": "2026-09-26T09:12:34Z",
+  "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+}

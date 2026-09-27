@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pk/_schema/evidence-record.schema.json",
+  "title": "Evidence Record",
+  "description": "pk/evidence/ 記錄 schema：知識的證據與出處脈絡（source／provenance／retrieval timestamp）。YAML 或 JSON，每檔一筆。對齊 docs/pk-ingestion.md 第 4–5 節的 Observation provenance 欄位。",
+  "type": "object",
+  "required": ["id", "channel", "sourceClass", "documentIdentity", "retrievedAt", "credibility"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^ev:", "description": "如 ev:spc-training-2024"},
+    "channel": {
+      "type": "string",
+      "enum": ["file-upload", "tkms", "azure-devops", "repo-analysis", "team-seed"],
+      "description": "輸入通道（docs/pk-ingestion.md 第 2 節）"
+    },
+    "sourceClass": {"$ref": "common.schema.json#/$defs/sourceClass"},
+    "documentIdentity": {"type": "string", "description": "文件／work item／PR／commit／repo@commit 識別"},
+    "documentVersion": {"type": ["string", "null"], "description": "版本或 commit hash；查無填 null（不得編造）"},
+    "retrievedAt": {"type": "string", "format": "date-time", "description": "擷取時間戳 ISO 8601（必填；STALE 判斷的關鍵輸入）"},
+    "sourceUri": {"type": ["string", "null"], "description": "可回溯位址"},
+    "excerpt": {"type": "string", "description": "原文摘錄（逐字）"},
+    "credibility": {"$ref": "common.schema.json#/$defs/confidence"},
+    "historical": {"type": "boolean", "description": "true＝historical evidence（Azure DevOps 歷史交付），不得直接當未來 ChangeSurface 答案"},
+    "stale": {"type": "boolean", "description": "來源已過時時標 true；記錄保留不刪，供追溯與衝突分析"}
+  }
+}

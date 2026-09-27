@@ -209,29 +209,32 @@ Feature-Delivery-Intelligence/
 │   │   │   ├── MAPPING.md
 │   │   │   └── PROJECT-INSTRUCTIONS.md
 │   │   ├── overlays/
-│   │   │   └── claude/
-│   │   │       └── engcim/
-│   │   │           ├── contracts/
-│   │   │           │   ├── DELIVERABLE-INSPECTOR-v0.2.yaml
-│   │   │           │   ├── ENGCIM-SWARM-V1-COMPONENT-CONTRACT.md
-│   │   │           │   ├── IMPROVEMENT-DIRECTION-CATALOG-v0.1.yaml
-│   │   │           │   ├── IMPROVEMENT-MISSION-v0.2.yaml
-│   │   │           │   ├── KNOWLEDGE-AUTHORITY-BOUNDARY-r9.md
-│   │   │           │   ├── KNOWLEDGE-BUILDING-PATTERN-r9.md
-│   │   │           │   ├── S01-S06-DELIVERABLE-CONTRACT-v0.1.yaml
-│   │   │           │   ├── SUPERVISOR-DIAGNOSIS-CONTRACT-v0.2.yaml
-│   │   │           │   ├── SUPERVISOR-EXECUTION-IDENTITY-RULES-v0.1.md
-│   │   │           │   ├── SUPERVISOR-MISSION-CLOSURE-v0.1.md
-│   │   │           │   ├── SUPERVISOR-MISSION-LEARNING-SOURCE-v0.1.md
-│   │   │           │   ├── SUPERVISOR-SHIFT-LEFT-DIAGNOSIS-v0.1.md
-│   │   │           │   ├── SUPERVISOR-TARGET-CONTRACT-v0.2.yaml
-│   │   │           │   └── SUPERVISOR-TKMS-IO-v0.1.md
-│   │   │           └── skills/
-│   │   │               ├── IMPROVEMENT-DIAGNOSIS-v0.1.md
-│   │   │               ├── MULTICA-CLI-RUNBOOK-v0.1.md
-│   │   │               ├── README.md
-│   │   │               ├── RUNTIME-LIFECYCLE-RUNBOOK-v0.1.md
-│   │   │               └── WORKSPACE-BOOTSTRAP-RUNBOOK-v0.1.md
+│   │   │   ├── claude/
+│   │   │   │   └── engcim/
+│   │   │   │       ├── contracts/
+│   │   │   │       │   ├── DELIVERABLE-INSPECTOR-v0.2.yaml
+│   │   │   │       │   ├── ENGCIM-SWARM-V1-COMPONENT-CONTRACT.md
+│   │   │   │       │   ├── IMPROVEMENT-DIRECTION-CATALOG-v0.1.yaml
+│   │   │   │       │   ├── IMPROVEMENT-MISSION-v0.2.yaml
+│   │   │   │       │   ├── KNOWLEDGE-AUTHORITY-BOUNDARY-r9.md
+│   │   │   │       │   ├── KNOWLEDGE-BUILDING-PATTERN-r9.md
+│   │   │   │       │   ├── S01-S06-DELIVERABLE-CONTRACT-v0.1.yaml
+│   │   │   │       │   ├── SUPERVISOR-DIAGNOSIS-CONTRACT-v0.2.yaml
+│   │   │   │       │   ├── SUPERVISOR-EXECUTION-IDENTITY-RULES-v0.1.md
+│   │   │   │       │   ├── SUPERVISOR-MISSION-CLOSURE-v0.1.md
+│   │   │   │       │   ├── SUPERVISOR-MISSION-LEARNING-SOURCE-v0.1.md
+│   │   │   │       │   ├── SUPERVISOR-SHIFT-LEFT-DIAGNOSIS-v0.1.md
+│   │   │   │       │   ├── SUPERVISOR-TARGET-CONTRACT-v0.2.yaml
+│   │   │   │       │   └── SUPERVISOR-TKMS-IO-v0.1.md
+│   │   │   │       └── skills/
+│   │   │   │           ├── IMPROVEMENT-DIAGNOSIS-v0.1.md
+│   │   │   │           ├── MULTICA-CLI-RUNBOOK-v0.1.md
+│   │   │   │           ├── README.md
+│   │   │   │           ├── RUNTIME-LIFECYCLE-RUNBOOK-v0.1.md
+│   │   │   │           └── WORKSPACE-BOOTSTRAP-RUNBOOK-v0.1.md
+│   │   │   └── multica/
+│   │   │       ├── RC10-S05-S06-ROLE-GUIDANCE.md
+│   │   │       └── RC10-WORKSPACE-LEARNING.md
 │   │   ├── state-templates/
 │   │   │   ├── mission-state/
 │   │   │   │   └── TEMPLATE.json
@@ -597,6 +600,7 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   └── writer.md
 │   │   │   │       ├── skills/
 │   │   │   │       │   ├── artifact-consistency/
+│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   ├── templates/
 │   │   │   │       │   │   │   └── artifact-trace.yaml
 │   │   │   │       │   │   └── SKILL.md
@@ -624,6 +628,7 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   │   │   └── deployment-result.yaml
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── execution-guard/
+│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── incident-response/
 │   │   │   │       │   │   ├── templates/
@@ -640,6 +645,7 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   │   │   └── slo-definition.yaml
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── performance-benchmark/
+│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── pk-azure-devops-history/
 │   │   │   │       │   │   └── SKILL.md
@@ -678,10 +684,12 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   ├── pk-tkms-ingestion/
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── pm-intention/
+│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   ├── templates/
 │   │   │   │       │   │   │   └── intention-spec.yaml
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── post-change-canary/
+│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── product-knowledge/
 │   │   │   │       │   │   └── SKILL.md
@@ -692,6 +700,7 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   │   │   └── rollback-plan.md
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── root-cause-debugging/
+│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   ├── templates/
 │   │   │   │       │   │   │   └── rca-report.md
 │   │   │   │       │   │   └── SKILL.md
@@ -728,6 +737,7 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   │   │   └── mission-metrics-report.md
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── test-architecture/
+│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   ├── templates/
 │   │   │   │       │   │   │   └── quality-gate.yaml
 │   │   │   │       │   │   └── SKILL.md
@@ -846,7 +856,6 @@ Feature-Delivery-Intelligence/
 │   │   │   │                   │   ├── SupervisorMulticaBoundary.java
 │   │   │   │                   │   ├── SupervisorSubmissionResult.java
 │   │   │   │                   │   ├── SupervisorSubmissionStatus.java
-│   │   │   │                   │   ├── SupervisorWorkspaceLifecycle.java
 │   │   │   │                   │   ├── SwarmKnowledgeGateway.java
 │   │   │   │                   │   ├── SwarmKnowledgeLifecycle.java
 │   │   │   │                   │   ├── SwarmMissionGateway.java
@@ -858,9 +867,7 @@ Feature-Delivery-Intelligence/
 │   │   │   │                   │   ├── WorkspaceKnowledgeProjectRef.java
 │   │   │   │                   │   ├── WorkspaceKnowledgeProjectResolver.java
 │   │   │   │                   │   ├── WorkspaceKnowledgeProposal.java
-│   │   │   │                   │   ├── WorkspaceKnowledgeRepository.java
-│   │   │   │                   │   ├── WorkspaceRuntimeSnapshot.java
-│   │   │   │                   │   └── WorkspaceRuntimeState.java
+│   │   │   │                   │   └── WorkspaceKnowledgeRepository.java
 │   │   │   │                   ├── product/
 │   │   │   │                   │   ├── ProductKnowledgeMaintenance.java
 │   │   │   │                   │   ├── ProductSemantics.java
@@ -894,9 +901,9 @@ Feature-Delivery-Intelligence/
 │   │   │                       │   ├── KnowledgePipelineTests.java
 │   │   │                       │   ├── LearningBoundaryTests.java
 │   │   │                       │   ├── MissionFlowTests.java
+│   │   │                       │   ├── MulticaRuntimeBindingReceiptTests.java
 │   │   │                       │   ├── MulticaWorkspaceKnowledgeRepositoryTests.java
 │   │   │                       │   ├── SupervisorBoundaryTests.java
-│   │   │                       │   ├── SupervisorLifecycleTests.java
 │   │   │                       │   ├── SupervisorPathTests.java
 │   │   │                       │   └── WorkspaceKnowledgeLifecycleTests.java
 │   │   │                       ├── CompanyImportManifestTests.java
@@ -961,50 +968,1134 @@ Feature-Delivery-Intelligence/
 │   │   ├── FDI-v0.4.7.1-ABLATION-PROTOCOL.md
 │   │   ├── OPTION-B-PAIRED-REPLAY-PROTOCOL-v0.1.md
 │   │   └── REALIZATION-TRAVERSAL-GUARD-SPEC-v0.1.md
-│   └── dev204/
-│       ├── fixtures/
-│       │   ├── DEV204-CR-01-green-packet.json
-│       │   ├── DEV204-CR-01-red-packet.json
-│       │   ├── DEV204-CR-01-reviewer-rubric.json
-│       │   ├── DEV204-CSI-01-green-packet.json
-│       │   ├── DEV204-CSI-01-red-packet.json
-│       │   ├── DEV204-CSI-01-reviewer-rubric.json
-│       │   ├── DEV204-DC-01-green-packet.json
-│       │   ├── DEV204-DC-01-red-packet.json
-│       │   ├── DEV204-DC-01-reviewer-rubric.json
-│       │   ├── DEV204-FDI-SI-01-green-packet.json
-│       │   ├── DEV204-FDI-SI-01-red-packet.json
-│       │   ├── DEV204-FDI-SI-01-reviewer-rubric.json
-│       │   ├── DEV204-FIA-01-green-packet.json
-│       │   ├── DEV204-FIA-01-red-packet.json
-│       │   ├── DEV204-FIA-01-reviewer-rubric.json
-│       │   ├── DEV204-FT-T1-01-green-packet.json
-│       │   ├── DEV204-FT-T1-01-red-packet.json
-│       │   ├── DEV204-FT-T1-01-reviewer-rubric.json
-│       │   ├── DEV204-FT-T2-01-green-packet.json
-│       │   ├── DEV204-FT-T2-01-red-packet.json
-│       │   ├── DEV204-FT-T2-01-reviewer-rubric.json
-│       │   ├── DEV204-ONB-01-green-packet.json
-│       │   ├── DEV204-ONB-01-red-packet.json
-│       │   ├── DEV204-ONB-01-reviewer-rubric.json
-│       │   ├── DEV204-OPT-B-01-green-packet.json
-│       │   ├── DEV204-OPT-B-01-red-packet.json
-│       │   ├── DEV204-OPT-B-01-reviewer-rubric.json
-│       │   ├── DEV204-PA-CB-01-green-packet.json
-│       │   ├── DEV204-PA-CB-01-red-packet.json
-│       │   ├── DEV204-PA-CB-01-reviewer-rubric.json
-│       │   ├── DEV204-PA-DH-01-green-packet.json
-│       │   ├── DEV204-PA-DH-01-red-packet.json
-│       │   ├── DEV204-PA-DH-01-reviewer-rubric.json
-│       │   ├── DEV204-RD-01-green-packet.json
-│       │   ├── DEV204-RD-01-red-packet.json
-│       │   └── DEV204-RD-01-reviewer-rubric.json
-│       ├── scenarios/
-│       │   ├── EXECUTION-GUIDE-v0.4.7.1.md
-│       │   ├── SCENARIOS-v0.4.7.1.json
-│       │   └── VALIDATION-PLAN-v0.4.7.1.json
-│       └── schemas/
-│           └── execution-record-v0.2.schema.json
+│   ├── dev204/
+│   │   ├── fixtures/
+│   │   │   ├── DEV204-CR-01-green-packet.json
+│   │   │   ├── DEV204-CR-01-red-packet.json
+│   │   │   ├── DEV204-CR-01-reviewer-rubric.json
+│   │   │   ├── DEV204-CSI-01-green-packet.json
+│   │   │   ├── DEV204-CSI-01-red-packet.json
+│   │   │   ├── DEV204-CSI-01-reviewer-rubric.json
+│   │   │   ├── DEV204-DC-01-green-packet.json
+│   │   │   ├── DEV204-DC-01-red-packet.json
+│   │   │   ├── DEV204-DC-01-reviewer-rubric.json
+│   │   │   ├── DEV204-FDI-SI-01-green-packet.json
+│   │   │   ├── DEV204-FDI-SI-01-red-packet.json
+│   │   │   ├── DEV204-FDI-SI-01-reviewer-rubric.json
+│   │   │   ├── DEV204-FIA-01-green-packet.json
+│   │   │   ├── DEV204-FIA-01-red-packet.json
+│   │   │   ├── DEV204-FIA-01-reviewer-rubric.json
+│   │   │   ├── DEV204-FT-T1-01-green-packet.json
+│   │   │   ├── DEV204-FT-T1-01-red-packet.json
+│   │   │   ├── DEV204-FT-T1-01-reviewer-rubric.json
+│   │   │   ├── DEV204-FT-T2-01-green-packet.json
+│   │   │   ├── DEV204-FT-T2-01-red-packet.json
+│   │   │   ├── DEV204-FT-T2-01-reviewer-rubric.json
+│   │   │   ├── DEV204-ONB-01-green-packet.json
+│   │   │   ├── DEV204-ONB-01-red-packet.json
+│   │   │   ├── DEV204-ONB-01-reviewer-rubric.json
+│   │   │   ├── DEV204-OPT-B-01-green-packet.json
+│   │   │   ├── DEV204-OPT-B-01-red-packet.json
+│   │   │   ├── DEV204-OPT-B-01-reviewer-rubric.json
+│   │   │   ├── DEV204-PA-CB-01-green-packet.json
+│   │   │   ├── DEV204-PA-CB-01-red-packet.json
+│   │   │   ├── DEV204-PA-CB-01-reviewer-rubric.json
+│   │   │   ├── DEV204-PA-DH-01-green-packet.json
+│   │   │   ├── DEV204-PA-DH-01-red-packet.json
+│   │   │   ├── DEV204-PA-DH-01-reviewer-rubric.json
+│   │   │   ├── DEV204-RD-01-green-packet.json
+│   │   │   ├── DEV204-RD-01-red-packet.json
+│   │   │   └── DEV204-RD-01-reviewer-rubric.json
+│   │   ├── scenarios/
+│   │   │   ├── EXECUTION-GUIDE-v0.4.7.1.md
+│   │   │   ├── SCENARIOS-v0.4.7.1.json
+│   │   │   └── VALIDATION-PLAN-v0.4.7.1.json
+│   │   └── schemas/
+│   │       └── execution-record-v0.2.schema.json
+│   └── rc10/
+│       ├── candidate-runtime/
+│       │   ├── learning-input-download/
+│       │   │   └── pk-store-s01-rc10val10-candidate-r3.tar.gz
+│       │   ├── s01-candidate-20260927/
+│       │   │   └── revision-1/
+│       │   │       ├── governed-pk-baseline-rc10val37-s01.md
+│       │   │       ├── node-test-output.txt
+│       │   │       ├── pk-store-s01-rc10val37-candidate.tar.gz
+│       │   │       └── validator-stdout.txt
+│       │   ├── s01-learning-20260927/
+│       │   │   ├── provider-readback/
+│       │   │   │   ├── authorized-visible-context-rc10val47-v2.json
+│       │   │   │   ├── authorized-visible-context-rc10val47.json
+│       │   │   │   ├── candidate-input-manifest.json
+│       │   │   │   ├── mission-learning-source.json
+│       │   │   │   └── workspace-knowledge-proposal-rc10val42.json
+│       │   │   ├── mission-learning-source.json
+│       │   │   └── MISSION-REQUEST.md
+│       │   ├── s01-r1-artifacts/
+│       │   │   └── pk-store-s01-rc10val10-candidate.tar.gz
+│       │   ├── s01-r2-artifacts/
+│       │   │   └── pk-store-s01-rc10val10-candidate-r2.tar.gz
+│       │   ├── s01-r3-artifacts/
+│       │   │   ├── artifact-hash-verification.json
+│       │   │   ├── pk-store-s01-rc10val10-candidate-r3.tar.gz
+│       │   │   ├── validator-stdout-r3.txt
+│       │   │   └── verifier-validator-stdout-r3.txt
+│       │   ├── s01-reuse-t13/
+│       │   │   ├── mission.md
+│       │   │   └── T13-eligibility-test-vectors.json
+│       │   ├── s02-current-20260927-01/
+│       │   │   ├── provider-readback/
+│       │   │   │   ├── r10-readback/
+│       │   │   │   │   ├── archive-file-hashes.txt
+│       │   │   │   │   ├── archive-member-list.txt
+│       │   │   │   │   ├── pk-store-s02-rc10val52-candidate.tar.gz
+│       │   │   │   │   ├── refreshed-product-knowledge-with-delta-report.md
+│       │   │   │   │   └── validator-output-s02-rc10val52.txt
+│       │   │   │   ├── archive-file-hashes.txt
+│       │   │   │   ├── pk-store-s01-rc10val37-candidate.tar.gz
+│       │   │   │   ├── pk-store-s02-rc10val52-candidate.tar.gz
+│       │   │   │   ├── refreshed-product-knowledge-with-delta-report.md
+│       │   │   │   ├── replay-idempotence-evidence.log
+│       │   │   │   ├── s02-authorized-visible-context-rc10val51-v1.json
+│       │   │   │   ├── s02-supervisor-package-integrity-check.json
+│       │   │   │   ├── s02-supervisor-package-integrity-comment.md
+│       │   │   │   └── validator-output-s02-rc10val52.txt
+│       │   │   ├── identity-correction-comment.md
+│       │   │   ├── MISSION-REQUEST-v2.md
+│       │   │   ├── MISSION-REQUEST.md
+│       │   │   ├── s02-current-candidate-input-manifest-v2.json
+│       │   │   └── s02-current-candidate-input-manifest.json
+│       │   ├── s02-delivery/
+│       │   │   ├── final-store/
+│       │   │   │   └── pk/
+│       │   │   │       ├── _schema/
+│       │   │   │       │   ├── architecture-entry.schema.json
+│       │   │   │       │   ├── code-graph.schema.json
+│       │   │   │       │   ├── common.schema.json
+│       │   │   │       │   ├── evidence-record.schema.json
+│       │   │   │       │   ├── realization-entry.schema.json
+│       │   │   │       │   ├── semantics-entry.schema.json
+│       │   │   │       │   └── validate_store.py
+│       │   │   │       ├── architecture/
+│       │   │   │       │   ├── chart-management-api.yaml
+│       │   │   │       │   └── engcim-v06-chart-viewer.yaml
+│       │   │   │       ├── code-graph/
+│       │   │   │       │   ├── edges.jsonl
+│       │   │   │       │   └── nodes.jsonl
+│       │   │   │       ├── evidence/
+│       │   │   │       │   ├── engcim-v06-exec-chart-limits-min-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-exec-classify-response-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-exec-render-chart-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-exec-select-chart-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-chartviewer-js-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-chartviewer-js.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-js-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-js.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-test-js-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-test-js.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-node-test-run-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-package-json-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-package-json.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-readme-duplicate-dedup-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-readme-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-readme.yaml
+│       │   │   │       │   ├── engcim-v06-s02-chart-intent-v1-rc10val21.yaml
+│       │   │   │       │   ├── engcim-v06-s02-chart-intent-v2-rc10val21.yaml
+│       │   │   │       │   ├── engcim-v06-s02-chart-intent-v2-replay-dedup-rc10val21.yaml
+│       │   │   │       │   ├── repo-analysis-chart-api.yaml
+│       │   │   │       │   └── spc-training-2024.yaml
+│       │   │   │       ├── realization/
+│       │   │   │       │   ├── chart-management-api.yaml
+│       │   │   │       │   └── engcim-v06-chart-viewer.yaml
+│       │   │   │       ├── semantics/
+│       │   │   │       │   ├── engcim-v06-chart-viewer-product-intent-v2.yaml
+│       │   │   │       │   ├── engcim-v06-chart-viewer-product-intent.yaml
+│       │   │   │       │   ├── engcim-v06-chart-viewer-verified-slice.yaml
+│       │   │   │       │   ├── engcim-v06-chart-viewer.yaml
+│       │   │   │       │   └── spc-chart-management.yaml
+│       │   │   │       └── README.md
+│       │   │   ├── 01a0de18-ce91-7ade-8d3a-ba93e9251d89-download.txt
+│       │   │   ├── 01a0de18-cf85-7c25-8a8e-8f113dc2bd1c-download.txt
+│       │   │   ├── 01a0de18-d10c-7909-babf-1e95d0fc44e3-download.txt
+│       │   │   ├── 01a0de18-d1ed-753c-b342-fff8e8cd2cca-download.txt
+│       │   │   ├── pk-store-s02-refreshed-final.tar.gz
+│       │   │   ├── refreshed-product-knowledge-with-delta.json
+│       │   │   ├── s02-staged-manifest.json
+│       │   │   └── validator-final-stdout.log
+│       │   ├── s02-delivery-r2/
+│       │   │   ├── 01a0de21-3714-7de8-9f6a-b9bc214bb503-download.txt
+│       │   │   ├── 01a0de21-37ff-7ae2-8dc0-89e05f7fc66f-download.txt
+│       │   │   ├── 01a0de21-3978-787e-ba59-19f6e773539b-download.txt
+│       │   │   ├── 01a0de21-3a4e-751d-9662-68d781be28f6-download.txt
+│       │   │   ├── pk-store-s02-refreshed-final.tar.gz
+│       │   │   ├── refreshed-product-knowledge-with-delta.json
+│       │   │   ├── s02-staged-manifest.json
+│       │   │   └── validator-final-stdout.log
+│       │   ├── s02-delivery-r3/
+│       │   │   ├── final-store/
+│       │   │   │   └── pk/
+│       │   │   │       ├── _schema/
+│       │   │   │       │   ├── architecture-entry.schema.json
+│       │   │   │       │   ├── code-graph.schema.json
+│       │   │   │       │   ├── common.schema.json
+│       │   │   │       │   ├── evidence-record.schema.json
+│       │   │   │       │   ├── realization-entry.schema.json
+│       │   │   │       │   ├── semantics-entry.schema.json
+│       │   │   │       │   └── validate_store.py
+│       │   │   │       ├── architecture/
+│       │   │   │       │   ├── chart-management-api.yaml
+│       │   │   │       │   └── engcim-v06-chart-viewer.yaml
+│       │   │   │       ├── code-graph/
+│       │   │   │       │   ├── edges.jsonl
+│       │   │   │       │   └── nodes.jsonl
+│       │   │   │       ├── evidence/
+│       │   │   │       │   ├── engcim-v06-exec-chart-limits-min-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-exec-classify-response-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-exec-render-chart-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-exec-select-chart-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-chartviewer-js-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-chartviewer-js.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-js-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-js.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-test-js-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-test-js.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-node-test-run-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-package-json-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-package-json.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-readme-duplicate-dedup-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-readme-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-readme.yaml
+│       │   │   │       │   ├── engcim-v06-s02-chart-intent-v1-rc10val21.yaml
+│       │   │   │       │   ├── engcim-v06-s02-chart-intent-v2-rc10val21.yaml
+│       │   │   │       │   ├── engcim-v06-s02-chart-intent-v2-replay-dedup-rc10val21.yaml
+│       │   │   │       │   ├── repo-analysis-chart-api.yaml
+│       │   │   │       │   └── spc-training-2024.yaml
+│       │   │   │       ├── realization/
+│       │   │   │       │   ├── chart-management-api.yaml
+│       │   │   │       │   └── engcim-v06-chart-viewer.yaml
+│       │   │   │       ├── semantics/
+│       │   │   │       │   ├── engcim-v06-chart-viewer-product-intent-v2.yaml
+│       │   │   │       │   ├── engcim-v06-chart-viewer-product-intent.yaml
+│       │   │   │       │   ├── engcim-v06-chart-viewer-verified-slice.yaml
+│       │   │   │       │   ├── engcim-v06-chart-viewer.yaml
+│       │   │   │       │   └── spc-chart-management.yaml
+│       │   │   │       └── README.md
+│       │   │   ├── 01a0de24-18cf-7982-918f-92721bd556e4-download.txt
+│       │   │   ├── 01a0de24-19b5-77ec-8f91-07de16a05234-download.txt
+│       │   │   ├── 01a0de24-1a9b-7d3b-9eb2-c593e375a085-download.txt
+│       │   │   ├── 01a0de24-1b63-7eb7-98f2-94f8e982fc70-download.txt
+│       │   │   ├── pk-store-s02-refreshed-final.tar.gz
+│       │   │   ├── refreshed-product-knowledge-with-delta.json
+│       │   │   ├── s02-staged-manifest.json
+│       │   │   └── validator-final-stdout.log
+│       │   ├── s02-inputs/
+│       │   │   ├── fresh-reads/
+│       │   │   │   ├── capture-result.json
+│       │   │   │   ├── independent-review.json
+│       │   │   │   ├── independent-verification.json
+│       │   │   │   ├── learning-final-report.json
+│       │   │   │   ├── learning-parent.json
+│       │   │   │   ├── productkb-issues.json
+│       │   │   │   ├── productkb-project.json
+│       │   │   │   ├── productkb-RC10VAL-4.json
+│       │   │   │   ├── productkb-RC10VAL-5.json
+│       │   │   │   ├── productkb-RC10VAL-6.json
+│       │   │   │   ├── productkb-RC10VAL-7.json
+│       │   │   │   ├── productkb-RC10VAL-8.json
+│       │   │   │   ├── productkb-RC10VAL-9.json
+│       │   │   │   ├── wk-issues.json
+│       │   │   │   ├── wk-project.json
+│       │   │   │   └── wk-record.json
+│       │   │   ├── provider-attachment-roundtrip/
+│       │   │   │   ├── learning-capture-result-validation.json
+│       │   │   │   ├── learning-capture-result.json
+│       │   │   │   ├── pk-store-s01-rc10val10-candidate-r3.tar.gz
+│       │   │   │   ├── s02-authorized-visible-context-receipt.json
+│       │   │   │   ├── s02-source-manifest.json
+│       │   │   │   ├── s02-source-v1.md
+│       │   │   │   └── s02-source-v2.md
+│       │   │   ├── s01-store/
+│       │   │   │   └── pk/
+│       │   │   │       ├── _schema/
+│       │   │   │       │   ├── architecture-entry.schema.json
+│       │   │   │       │   ├── code-graph.schema.json
+│       │   │   │       │   ├── common.schema.json
+│       │   │   │       │   ├── evidence-record.schema.json
+│       │   │   │       │   ├── realization-entry.schema.json
+│       │   │   │       │   ├── semantics-entry.schema.json
+│       │   │   │       │   └── validate_store.py
+│       │   │   │       ├── architecture/
+│       │   │   │       │   ├── chart-management-api.yaml
+│       │   │   │       │   └── engcim-v06-chart-viewer.yaml
+│       │   │   │       ├── code-graph/
+│       │   │   │       │   ├── edges.jsonl
+│       │   │   │       │   └── nodes.jsonl
+│       │   │   │       ├── evidence/
+│       │   │   │       │   ├── engcim-v06-exec-chart-limits-min-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-exec-classify-response-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-exec-render-chart-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-exec-select-chart-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-chartviewer-js-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-chartviewer-js.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-js-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-js.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-test-js-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-test-js.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-node-test-run-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-package-json-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-package-json.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-readme-duplicate-dedup-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-readme-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-readme.yaml
+│       │   │   │       │   ├── repo-analysis-chart-api.yaml
+│       │   │   │       │   └── spc-training-2024.yaml
+│       │   │   │       ├── realization/
+│       │   │   │       │   ├── chart-management-api.yaml
+│       │   │   │       │   └── engcim-v06-chart-viewer.yaml
+│       │   │   │       ├── semantics/
+│       │   │   │       │   ├── engcim-v06-chart-viewer-verified-slice.yaml
+│       │   │   │       │   ├── engcim-v06-chart-viewer.yaml
+│       │   │   │       │   └── spc-chart-management.yaml
+│       │   │   │       └── README.md
+│       │   │   ├── pk-store-s01-rc10val10-candidate-r3.tar.gz
+│       │   │   └── workspace-knowledge-record-readback.json
+│       │   ├── s02-output-roundtrip/
+│       │   │   ├── final-store/
+│       │   │   │   └── pk/
+│       │   │   │       ├── _schema/
+│       │   │   │       │   ├── architecture-entry.schema.json
+│       │   │   │       │   ├── code-graph.schema.json
+│       │   │   │       │   ├── common.schema.json
+│       │   │   │       │   ├── evidence-record.schema.json
+│       │   │   │       │   ├── realization-entry.schema.json
+│       │   │   │       │   ├── semantics-entry.schema.json
+│       │   │   │       │   └── validate_store.py
+│       │   │   │       ├── architecture/
+│       │   │   │       │   ├── chart-management-api.yaml
+│       │   │   │       │   └── engcim-v06-chart-viewer.yaml
+│       │   │   │       ├── code-graph/
+│       │   │   │       │   ├── edges.jsonl
+│       │   │   │       │   └── nodes.jsonl
+│       │   │   │       ├── evidence/
+│       │   │   │       │   ├── engcim-v06-exec-chart-limits-min-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-exec-classify-response-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-exec-render-chart-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-exec-select-chart-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-chartviewer-js-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-chartviewer-js.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-js-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-js.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-test-js-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-interaction-test-js.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-node-test-run-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-package-json-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-package-json.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-readme-duplicate-dedup-01a0dd73.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-readme-rc10val10.yaml
+│       │   │   │       │   ├── engcim-v06-fixture-readme.yaml
+│       │   │   │       │   ├── engcim-v06-s02-chart-intent-v1-rc10val21.yaml
+│       │   │   │       │   ├── engcim-v06-s02-chart-intent-v2-rc10val21.yaml
+│       │   │   │       │   ├── engcim-v06-s02-chart-intent-v2-replay-dedup-rc10val21.yaml
+│       │   │   │       │   ├── repo-analysis-chart-api.yaml
+│       │   │   │       │   └── spc-training-2024.yaml
+│       │   │   │       ├── realization/
+│       │   │   │       │   ├── chart-management-api.yaml
+│       │   │   │       │   └── engcim-v06-chart-viewer.yaml
+│       │   │   │       ├── semantics/
+│       │   │   │       │   ├── engcim-v06-chart-viewer-product-intent-v2.yaml
+│       │   │   │       │   ├── engcim-v06-chart-viewer-product-intent.yaml
+│       │   │   │       │   ├── engcim-v06-chart-viewer-verified-slice.yaml
+│       │   │   │       │   ├── engcim-v06-chart-viewer.yaml
+│       │   │   │       │   └── spc-chart-management.yaml
+│       │   │   │       └── README.md
+│       │   │   ├── local-independent-validator.stdout
+│       │   │   ├── pk-store-s02-refreshed-final.tar.gz
+│       │   │   ├── refreshed-product-knowledge-with-delta.json
+│       │   │   ├── s02-staged-manifest.json
+│       │   │   └── validator-final-stdout.log
+│       │   ├── s02-preflight-r3-20260926/
+│       │   │   └── pk-store-s02-refreshed-final.tar.gz
+│       │   ├── s04/
+│       │   │   └── s04-intentspec-r1.yaml
+│       │   ├── s05-profile-deployment-20260926T1821Z/
+│       │   │   ├── final-verification/
+│       │   │   │   ├── java17-rerun-20260927T005722Z/
+│       │   │   │   │   └── maven-test.log
+│       │   │   │   ├── governance-tests-profile-reports.log
+│       │   │   │   ├── java17-final-post-doc-reconciliation.log
+│       │   │   │   ├── java17-final-post-timestamp-reconciliation.log
+│       │   │   │   ├── java17-final-s03-doc-reconciliation.log
+│       │   │   │   ├── java17-full-20260927T0934+0800.log
+│       │   │   │   ├── java17-full-20260927T0955+0800.log
+│       │   │   │   ├── java17-maven-test.log
+│       │   │   │   ├── java17-profile-adoption-reports.log
+│       │   │   │   ├── java17-source-policy-profile-check.log
+│       │   │   │   └── standalone-verifier-profile-reports.log
+│       │   │   ├── s06-qa-evidence/
+│       │   │   │   ├── baseline-run-stderr.txt
+│       │   │   │   ├── baseline-run-stdout.txt
+│       │   │   │   ├── direct-exec-chartviewer.txt
+│       │   │   │   ├── direct-exec-interaction.txt
+│       │   │   │   └── qa-delivery-comment.json
+│       │   │   ├── active-runs-architect-before.json
+│       │   │   ├── active-runs-orchestrator-before.json
+│       │   │   ├── active-runs-pre-s06.json
+│       │   │   ├── active-runs-reviewer-before.json
+│       │   │   ├── agent-architect-after.instructions.txt
+│       │   │   ├── agent-architect-after.json
+│       │   │   ├── agent-architect-before.instructions.txt
+│       │   │   ├── agent-architect-before.json
+│       │   │   ├── agent-architect-desired.instructions.txt
+│       │   │   ├── agent-architect-predeploy.json
+│       │   │   ├── agent-architect-tasks-predeploy.json
+│       │   │   ├── agent-curator-before.instructions.txt
+│       │   │   ├── agent-curator-before.json
+│       │   │   ├── agent-orchestrator-after.instructions.txt
+│       │   │   ├── agent-orchestrator-after.json
+│       │   │   ├── agent-orchestrator-before.instructions.txt
+│       │   │   ├── agent-orchestrator-before.json
+│       │   │   ├── agent-orchestrator-desired.instructions.txt
+│       │   │   ├── agent-orchestrator-predeploy.json
+│       │   │   ├── agent-orchestrator-tasks-predeploy.json
+│       │   │   ├── agent-reviewer-after.instructions.txt
+│       │   │   ├── agent-reviewer-after.json
+│       │   │   ├── agent-reviewer-before.instructions.txt
+│       │   │   ├── agent-reviewer-before.json
+│       │   │   ├── agent-reviewer-desired.instructions.txt
+│       │   │   ├── agent-reviewer-predeploy.json
+│       │   │   ├── agent-reviewer-tasks-predeploy.json
+│       │   │   ├── candidate-input-manifest-r2.json
+│       │   │   ├── candidate-input-manifest-r2.sha256
+│       │   │   ├── candidate-input-manifest.json
+│       │   │   ├── candidate-input-manifest.sha256
+│       │   │   ├── candidate-r1-to-r2-applicability-audit.json
+│       │   │   ├── deployment-intent.json
+│       │   │   ├── deployment-readback.json
+│       │   │   ├── fixture-source-readback.json
+│       │   │   ├── issues-before.json
+│       │   │   ├── issues-postdeploy.json
+│       │   │   ├── pk8.json
+│       │   │   ├── pk9.json
+│       │   │   ├── projects-before.json
+│       │   │   ├── RUN-EXECUTION-ADDENDUM.md
+│       │   │   ├── RUN-SPEC.md
+│       │   │   ├── s04.json
+│       │   │   ├── s05-issue-create-response.json
+│       │   │   ├── S05-MISSION-REQUEST.md
+│       │   │   ├── S06-BASELINE-DIAGNOSTIC-REQUEST.md
+│       │   │   ├── S06-F1-REVALIDATION.json
+│       │   │   ├── s06-issue-create-response.json
+│       │   │   ├── S06-SEQUENCE-CORRECTION.md
+│       │   │   ├── S06-WORKSPACE-SCOPE-AUDIT-NOTE.md
+│       │   │   ├── squad.json
+│       │   │   ├── T13-U1-VERIFICATION-ATTEMPT-2.json
+│       │   │   ├── T13-U1-VERIFICATION-ATTEMPT-2.md
+│       │   │   ├── workspace-before.json
+│       │   │   └── workspace-predeploy.json
+│       │   ├── s05-reuse-freshness-review/
+│       │   │   ├── c1-r2-01a0dfee-6b74-749a-b413-d42449e9b74b.md
+│       │   │   ├── c1-r2-comments.json
+│       │   │   ├── c1-r2-supervisor-observation.md
+│       │   │   ├── c1-r3-01a0dffe-d72e-7502-85e6-19214a598943.md
+│       │   │   ├── c1-run-messages.json
+│       │   │   ├── c2-r2-verdict.json
+│       │   │   ├── c2-r3-01a0e003-d00f-7a97-9711-d96e610e85c6.md
+│       │   │   ├── c4-r1-delivery.json
+│       │   │   ├── c4-review-01a0e008-6031-7d81-a414-806f28903833.md
+│       │   │   ├── c4-review-after.json
+│       │   │   ├── c4-review-before.json
+│       │   │   ├── c4-review-current-authority.md
+│       │   │   ├── c4-review-update-receipt.json
+│       │   │   ├── checkpoint.json
+│       │   │   ├── i7-alignment-audit.json
+│       │   │   ├── i7-current-bytes-audit.json
+│       │   │   ├── java17-report-audit.json
+│       │   │   ├── parent-after-current-authority.json
+│       │   │   ├── parent-before-current-authority.json
+│       │   │   ├── parent-c2-reconciliation-after.json
+│       │   │   ├── parent-c2-reconciliation-update.json
+│       │   │   ├── parent-current-authority-update-receipt.json
+│       │   │   ├── parent-r2-observation-update.json
+│       │   │   ├── parent-updated-current-authority.md
+│       │   │   ├── RC10VAL-30-after.json
+│       │   │   ├── RC10VAL-30-before.json
+│       │   │   ├── RC10VAL-30-description-c2-reconciliation.md
+│       │   │   ├── RC10VAL-30-description-with-r2-observation.md
+│       │   │   ├── RC10VAL-30-description.md
+│       │   │   ├── RC10VAL-30-update-receipt.json
+│       │   │   ├── RC10VAL-37-alignment-readback.json
+│       │   │   ├── RC10VAL-47-alignment-readback.json
+│       │   │   ├── RC10VAL-50-alignment-readback.json
+│       │   │   ├── RC10VAL-51-alignment-readback.json
+│       │   │   ├── RC10VAL-58-after.json
+│       │   │   ├── RC10VAL-58-before.json
+│       │   │   ├── RC10VAL-58-description.md
+│       │   │   ├── RC10VAL-58-update-receipt.json
+│       │   │   ├── RC10VAL-59-after.json
+│       │   │   ├── RC10VAL-59-before.json
+│       │   │   ├── RC10VAL-59-description-with-observations.md
+│       │   │   ├── RC10VAL-59-update-receipt.json
+│       │   │   ├── RC10VAL-60-alignment-readback.json
+│       │   │   ├── s02-family-active.json
+│       │   │   ├── s02-final-fanin.json
+│       │   │   ├── s02-parent.json
+│       │   │   ├── s02-review-r10.json
+│       │   │   ├── s02-verifier-runs.json
+│       │   │   ├── s02-verify-r10.json
+│       │   │   ├── s05-family-active.json
+│       │   │   ├── s06-c5-verification-01a0e00c-1384-763d-8bd4-a2da328cea73.md
+│       │   │   ├── supervisor-correction-handoff.md
+│       │   │   ├── wk-independent-digest-check.json
+│       │   │   ├── wk-project-fresh-read-summary.json
+│       │   │   └── wk-project-fresh-read.json
+│       │   ├── skill-snapshots/
+│       │   │   ├── artifact-consistency.json
+│       │   │   ├── changesurface-analysis.json
+│       │   │   ├── cicd-automation.json
+│       │   │   ├── code-review-method.json
+│       │   │   ├── deployment-verification.json
+│       │   │   ├── execution-guard.json
+│       │   │   ├── incident-response.json
+│       │   │   ├── multica-cli.json
+│       │   │   ├── observability-slo.json
+│       │   │   ├── performance-benchmark.json
+│       │   │   ├── pk-azure-devops-history.json
+│       │   │   ├── pk-correlation-synthesis.json
+│       │   │   ├── pk-document-analysis.json
+│       │   │   ├── pk-file-ingestion.json
+│       │   │   ├── pk-repository-analysis.json
+│       │   │   ├── pk-tkms-ingestion.json
+│       │   │   ├── pm-intention.json
+│       │   │   ├── post-change-canary.json
+│       │   │   ├── product-knowledge.json
+│       │   │   ├── release-management.json
+│       │   │   ├── root-cause-debugging.json
+│       │   │   ├── runtime-qa.json
+│       │   │   ├── security-review.json
+│       │   │   ├── software-development.json
+│       │   │   ├── spec-design.json
+│       │   │   ├── swarm-orchestration.json
+│       │   │   ├── swarm-telemetry.json
+│       │   │   ├── test-architecture.json
+│       │   │   ├── test-design.json
+│       │   │   └── verification-protocol.json
+│       │   ├── acceptance-note-events.jsonl
+│       │   ├── acceptance-note-receipt.json
+│       │   ├── acceptance-note-stderr.log
+│       │   ├── acceptance-note-summary.md
+│       │   ├── agent-809ffefe-3fc4-4686-8401-a8dd50285840.json
+│       │   ├── agent-809ffefe-3fc4-4686-8401-a8dd50285840.stderr.txt
+│       │   ├── agent-c38a925f-171b-4c24-91c2-68329ae42654.json
+│       │   ├── agent-c38a925f-171b-4c24-91c2-68329ae42654.stderr.txt
+│       │   ├── agents.json
+│       │   ├── agents.stderr.txt
+│       │   ├── before-create-scoped-issues-0.json
+│       │   ├── before-create-scoped-issues-0.stderr.txt
+│       │   ├── candidate-input-manifest.json
+│       │   ├── candidate-input-manifest.sha256
+│       │   ├── candidate-input-snapshot.tar.gz
+│       │   ├── candidate-source-recheck-learning.json
+│       │   ├── curator-candidate.md
+│       │   ├── curator-original.md
+│       │   ├── current-c4fix-active.json
+│       │   ├── current-c4fix-comments.json
+│       │   ├── current-parent-active.json
+│       │   ├── current-parent-comments.json
+│       │   ├── deploy-dispatch-events.jsonl
+│       │   ├── deploy-dispatch-stderr.log
+│       │   ├── deploy-dispatch-summary.md
+│       │   ├── deployment-intent.json
+│       │   ├── deployment-verified.json
+│       │   ├── fixture-local-root.txt
+│       │   ├── fresh-active-RC10VAL-1.json
+│       │   ├── fresh-active-RC10VAL-1.stderr.txt
+│       │   ├── fresh-active-RC10VAL-2.json
+│       │   ├── fresh-active-RC10VAL-2.stderr.txt
+│       │   ├── fresh-active-RC10VAL-3.json
+│       │   ├── fresh-active-RC10VAL-3.stderr.txt
+│       │   ├── fresh-active-RC10VAL-4.json
+│       │   ├── fresh-active-RC10VAL-4.stderr.txt
+│       │   ├── fresh-active-RC10VAL-5.json
+│       │   ├── fresh-active-RC10VAL-5.stderr.txt
+│       │   ├── fresh-active-RC10VAL-6.json
+│       │   ├── fresh-active-RC10VAL-6.stderr.txt
+│       │   ├── fresh-active-RC10VAL-7.json
+│       │   ├── fresh-active-RC10VAL-7.stderr.txt
+│       │   ├── fresh-active-RC10VAL-8.json
+│       │   ├── fresh-active-RC10VAL-8.stderr.txt
+│       │   ├── fresh-active-RC10VAL-9.json
+│       │   ├── fresh-active-RC10VAL-9.stderr.txt
+│       │   ├── fresh-agents.json
+│       │   ├── fresh-agents.stderr.txt
+│       │   ├── fresh-issues-0.json
+│       │   ├── fresh-issues-0.stderr.txt
+│       │   ├── help-agent-get.stderr.txt
+│       │   ├── help-agent-get.txt
+│       │   ├── help-agent-list.stderr.txt
+│       │   ├── help-agent-list.txt
+│       │   ├── help-agent-update.stderr.txt
+│       │   ├── help-agent-update.txt
+│       │   ├── help-issue-assign.stderr.txt
+│       │   ├── help-issue-assign.txt
+│       │   ├── help-issue-comment-add.stderr.txt
+│       │   ├── help-issue-comment-add.txt
+│       │   ├── help-issue-create.stderr.txt
+│       │   ├── help-issue-create.txt
+│       │   ├── help-issue-list.stderr.txt
+│       │   ├── help-issue-list.txt
+│       │   ├── help-issue-metadata-set.stderr.txt
+│       │   ├── help-issue-metadata-set.txt
+│       │   ├── help-issue-runs.stderr.txt
+│       │   ├── help-issue-runs.txt
+│       │   ├── help-issue-update.stderr.txt
+│       │   ├── help-issue-update.txt
+│       │   ├── help-project-list.stderr.txt
+│       │   ├── help-project-list.txt
+│       │   ├── help-runtime-list.stderr.txt
+│       │   ├── help-runtime-list.txt
+│       │   ├── help-workspace-get.stderr.txt
+│       │   ├── help-workspace-get.txt
+│       │   ├── help-workspace.stderr.txt
+│       │   ├── help-workspace.txt
+│       │   ├── immediate-pre-update-curator.json
+│       │   ├── immediate-pre-update-curator.stderr.txt
+│       │   ├── immediate-pre-update-orchestrator.json
+│       │   ├── immediate-pre-update-orchestrator.stderr.txt
+│       │   ├── issues.json
+│       │   ├── issues.stderr.txt
+│       │   ├── java17-checkpoint.log
+│       │   ├── learning-active-s01.json
+│       │   ├── learning-active-s01.stderr.txt
+│       │   ├── learning-after-spec-comments.json
+│       │   ├── learning-assignment-receipt.json
+│       │   ├── learning-assignment-receipt.stderr.txt
+│       │   ├── learning-attachment-refs.json
+│       │   ├── learning-authorship-c1-comments.json
+│       │   ├── learning-authorship-c1-issue.json
+│       │   ├── learning-authorship-c1-runs.json
+│       │   ├── learning-authorship-parent-comments.json
+│       │   ├── learning-authorship-parent-issue.json
+│       │   ├── learning-authorship-parent-runs.json
+│       │   ├── learning-authorship-resource-check.json
+│       │   ├── learning-before-assignment-active.json
+│       │   ├── learning-before-assignment-active.stderr.txt
+│       │   ├── learning-before-assignment-agents.json
+│       │   ├── learning-before-assignment-agents.stderr.txt
+│       │   ├── learning-bounded-continuation-events.jsonl
+│       │   ├── learning-bounded-continuation-note.md
+│       │   ├── learning-bounded-continuation-receipt.json
+│       │   ├── learning-bounded-continuation-stderr.log
+│       │   ├── learning-bounded-continuation-summary.md
+│       │   ├── learning-bounded-execution-note.md
+│       │   ├── learning-c1-comments.json
+│       │   ├── learning-c1-proposal-r1-canonical.json
+│       │   ├── learning-c1-proposal-r1-inspection.json
+│       │   ├── learning-c1-proposal-r1.json
+│       │   ├── learning-c1-provider-scope-observation.json
+│       │   ├── learning-c1-r2-comments.json
+│       │   ├── learning-c1-r2-delivery-comments.json
+│       │   ├── learning-c1-revision-active.json
+│       │   ├── learning-c2-active.json
+│       │   ├── learning-c2-comments.json
+│       │   ├── learning-c3-active.json
+│       │   ├── learning-c3-comments.json
+│       │   ├── learning-c3-provider-scope-observation.json
+│       │   ├── learning-c3-r2-run-messages.json
+│       │   ├── learning-c3-r2-scope-observation.json
+│       │   ├── learning-c3-trace-note-receipt.json
+│       │   ├── learning-c3-trace-qualification-note.md
+│       │   ├── learning-c3-trace-supervisor-events.jsonl
+│       │   ├── learning-c3-trace-supervisor-stderr.log
+│       │   ├── learning-c3-trace-supervisor-summary.md
+│       │   ├── learning-c4-comments.json
+│       │   ├── learning-c4-parent-receipts.json
+│       │   ├── learning-c5b-results.json
+│       │   ├── learning-canonical-disposition-parent.json
+│       │   ├── learning-canonical-disposition-verifier.json
+│       │   ├── learning-capture-adoption.json
+│       │   ├── learning-capture-capture-active.json
+│       │   ├── learning-capture-fix-active.json
+│       │   ├── learning-capture-knowledge-list.json
+│       │   ├── learning-capture-mission.draft.md
+│       │   ├── learning-capture-mission.md
+│       │   ├── learning-capture-result-comments.json
+│       │   ├── learning-capture-result-validation.json
+│       │   ├── learning-capture-result.json
+│       │   ├── learning-child-inventory.json
+│       │   ├── learning-child-mention-scope-events.jsonl
+│       │   ├── learning-child-mention-scope-stderr.log
+│       │   ├── learning-child-mention-scope-summary.md
+│       │   ├── learning-command-outcomes.jsonl
+│       │   ├── learning-concurrency-children.json
+│       │   ├── learning-concurrency-disposition.json
+│       │   ├── learning-concurrency-observation-events.jsonl
+│       │   ├── learning-concurrency-observation-stderr.log
+│       │   ├── learning-concurrency-observation-summary.md
+│       │   ├── learning-concurrency-overrun-note.md
+│       │   ├── learning-concurrency-overrun-receipt.json
+│       │   ├── learning-concurrency-parent-readback.json
+│       │   ├── learning-concurrency-runs-parent.json
+│       │   ├── learning-concurrency-runs-RC10VAL-12.json
+│       │   ├── learning-concurrency-runs-RC10VAL-13.json
+│       │   ├── learning-concurrency-runs-RC10VAL-14.json
+│       │   ├── learning-concurrency-runs-RC10VAL-16.json
+│       │   ├── learning-concurrency-runs-RC10VAL-17.json
+│       │   ├── learning-concurrency-runs-RC10VAL-18.json
+│       │   ├── learning-concurrency-runs-RC10VAL-19.json
+│       │   ├── learning-continuation-c1-comments.json
+│       │   ├── learning-continuation-monitor.json
+│       │   ├── learning-continuation-parent-active.json
+│       │   ├── learning-continuation-parent-comments.json
+│       │   ├── learning-continuation-parent.json
+│       │   ├── learning-continuation-resource-inspection.json
+│       │   ├── learning-continuation-verifier-active.json
+│       │   ├── learning-contract-source-bundle.md
+│       │   ├── learning-create-receipt.json
+│       │   ├── learning-create-receipt.stderr.txt
+│       │   ├── learning-current-comments.json
+│       │   ├── learning-current-comments.stderr.txt
+│       │   ├── learning-current-runs-reobservation.json
+│       │   ├── learning-current-runs.json
+│       │   ├── learning-current-runs.stderr.txt
+│       │   ├── learning-current-s01.json
+│       │   ├── learning-current-s01.stderr.txt
+│       │   ├── learning-dispatch-issue.json
+│       │   ├── learning-dispatch-issue.stderr.txt
+│       │   ├── learning-dispatch-runs.json
+│       │   ├── learning-dispatch-runs.stderr.txt
+│       │   ├── learning-dispatch-summary.json
+│       │   ├── learning-duplicate-run-before.json
+│       │   ├── learning-duplicate-run-cancel-receipt.json
+│       │   ├── learning-duplicate-run-comment-receipt.json
+│       │   ├── learning-duplicate-run-disposition.json
+│       │   ├── learning-duplicate-run-note.md
+│       │   ├── learning-duplicate-run-readback.json
+│       │   ├── learning-duplicate-run-supervisor-events.jsonl
+│       │   ├── learning-duplicate-run-supervisor-stderr.log
+│       │   ├── learning-duplicate-run-supervisor-summary.md
+│       │   ├── learning-exact-scope-readback.json
+│       │   ├── learning-final-comments.json
+│       │   ├── learning-final-rss-inspection.json
+│       │   ├── learning-final-runs.json
+│       │   ├── learning-final-s01-active.json
+│       │   ├── learning-final-s01-active.stderr.txt
+│       │   ├── learning-first-record-observation.json
+│       │   ├── learning-governance-comments.json
+│       │   ├── learning-governance-eligibility-note.md
+│       │   ├── learning-governance-note-receipt.json
+│       │   ├── learning-governance-note-supervisor-events.jsonl
+│       │   ├── learning-governance-note-supervisor-stderr.log
+│       │   ├── learning-governance-note-supervisor-summary.md
+│       │   ├── learning-governance-response.json
+│       │   ├── learning-governance-stage-comments.json
+│       │   ├── learning-hard-stop-inspection.json
+│       │   ├── learning-help-download.stderr.txt
+│       │   ├── learning-help-download.txt
+│       │   ├── learning-help-update.stderr.txt
+│       │   ├── learning-help-update.txt
+│       │   ├── learning-help-upload.stderr.txt
+│       │   ├── learning-help-upload.txt
+│       │   ├── learning-live-runs-20260926T122047Z.json
+│       │   ├── learning-monitor-1302-active.json
+│       │   ├── learning-monitor-1302-comments.json
+│       │   ├── learning-monitor-active.json
+│       │   ├── learning-monitor-comments.json
+│       │   ├── learning-parent-results.json
+│       │   ├── learning-phase1-final-fanin-state.json
+│       │   ├── learning-post-review-comments.json
+│       │   ├── learning-postwrite-acceptance-note-receipt.json
+│       │   ├── learning-postwrite-acceptance-note.md
+│       │   ├── learning-postwrite-active.json
+│       │   ├── learning-postwrite-contract-check-events.jsonl
+│       │   ├── learning-postwrite-contract-check-stderr.log
+│       │   ├── learning-postwrite-contract-check-summary.md
+│       │   ├── learning-postwrite-dispatch-comments.json
+│       │   ├── learning-postwrite-inspect-c1-comments.json
+│       │   ├── learning-postwrite-inspect-c1.json
+│       │   ├── learning-postwrite-inspect-parent-comments.json
+│       │   ├── learning-postwrite-inspect-parent.json
+│       │   ├── learning-postwrite-inspect-record-comments.json
+│       │   ├── learning-postwrite-inspect-record.json
+│       │   ├── learning-postwrite-observation.json
+│       │   ├── learning-postwrite-verdict-r1.json
+│       │   ├── learning-provider-scope-note-receipt.json
+│       │   ├── learning-provider-scope-note.md
+│       │   ├── learning-provider-scope-supervisor-events.jsonl
+│       │   ├── learning-provider-scope-supervisor-stderr.log
+│       │   ├── learning-provider-scope-supervisor-summary.md
+│       │   ├── learning-r1-decision-comments.json
+│       │   ├── learning-r2-affected-gates-note.md
+│       │   ├── learning-r2-authorship-correction-note.md
+│       │   ├── learning-r2-authorship-correction-receipt.json
+│       │   ├── learning-r2-authorship-disposition.json
+│       │   ├── learning-r2-authorship-inspection.json
+│       │   ├── learning-r2-authorship-supervisor-events.jsonl
+│       │   ├── learning-r2-authorship-supervisor-stderr.log
+│       │   ├── learning-r2-authorship-supervisor-summary.md
+│       │   ├── learning-r2-review-authorship-addendum-receipt.json
+│       │   ├── learning-r2-review-authorship-addendum.md
+│       │   ├── learning-r2-review-authorship-comments.json
+│       │   ├── learning-r2-scope-note-receipt.json
+│       │   ├── learning-r2-scope-supervisor-events.jsonl
+│       │   ├── learning-r2-scope-supervisor-stderr.log
+│       │   ├── learning-r2-scope-supervisor-summary.md
+│       │   ├── learning-record-v3-observation.json
+│       │   ├── learning-reuse-acceptance-matrix.md
+│       │   ├── learning-rss-inspection.json
+│       │   ├── learning-scope-note-receipt.json
+│       │   ├── learning-scope-note-supervisor-events.jsonl
+│       │   ├── learning-scope-note-supervisor-stderr.log
+│       │   ├── learning-scope-note-supervisor-summary.md
+│       │   ├── learning-scope-response-comments.json
+│       │   ├── learning-scoped-issues-0.json
+│       │   ├── learning-scoped-issues-0.stderr.txt
+│       │   ├── learning-source-shape-check.json
+│       │   ├── learning-source-upload-receipt.json
+│       │   ├── learning-source-upload-receipt.stderr.txt
+│       │   ├── learning-supervisor-events.jsonl
+│       │   ├── learning-supervisor-instructions.md
+│       │   ├── learning-supervisor-stderr.log
+│       │   ├── learning-supervisor-summary.md
+│       │   ├── learning-time-bound-inspection.json
+│       │   ├── learning-update-receipt.json
+│       │   ├── learning-update-receipt.stderr.txt
+│       │   ├── learning-v3-delivery-parent.json
+│       │   ├── learning-workspaceknowledge-before.json
+│       │   ├── orchestrator-candidate.md
+│       │   ├── orchestrator-original.md
+│       │   ├── post-update-curator.json
+│       │   ├── post-update-curator.stderr.txt
+│       │   ├── post-update-orchestrator.json
+│       │   ├── post-update-orchestrator.stderr.txt
+│       │   ├── pre-update-curator.json
+│       │   ├── pre-update-curator.stderr.txt
+│       │   ├── pre-update-orchestrator.json
+│       │   ├── pre-update-orchestrator.stderr.txt
+│       │   ├── preflight-events.jsonl
+│       │   ├── preflight-help-workspace-id.stderr.txt
+│       │   ├── preflight-help-workspace-id.txt
+│       │   ├── preflight-help.stderr.txt
+│       │   ├── preflight-help.txt
+│       │   ├── preflight-stderr.log
+│       │   ├── preflight-summary.md
+│       │   ├── project-resources.json
+│       │   ├── projects.json
+│       │   ├── projects.stderr.txt
+│       │   ├── r2-consumer-note-events.jsonl
+│       │   ├── r2-consumer-note-receipt.json
+│       │   ├── r2-consumer-note-stderr.log
+│       │   ├── r2-consumer-note-summary.md
+│       │   ├── rc6-archive-comparison.json
+│       │   ├── rc6-verifier-difference.patch
+│       │   ├── resource-checkpoint.json
+│       │   ├── RUN-SPEC.md
+│       │   ├── runs-RC10VAL-4.json
+│       │   ├── runs-RC10VAL-4.stderr.txt
+│       │   ├── runs-RC10VAL-5.json
+│       │   ├── runs-RC10VAL-5.stderr.txt
+│       │   ├── runs-RC10VAL-6.json
+│       │   ├── runs-RC10VAL-6.stderr.txt
+│       │   ├── runs-RC10VAL-7.json
+│       │   ├── runs-RC10VAL-7.stderr.txt
+│       │   ├── runs-RC10VAL-8.json
+│       │   ├── runs-RC10VAL-8.stderr.txt
+│       │   ├── runs-RC10VAL-9.json
+│       │   ├── runs-RC10VAL-9.stderr.txt
+│       │   ├── runtime-checkpoint.json
+│       │   ├── runtimes.json
+│       │   ├── runtimes.stderr.txt
+│       │   ├── s01-active-runs.json
+│       │   ├── s01-comments.json
+│       │   ├── s01-consumer-final-review.json
+│       │   ├── s01-context-acceptance-note.md
+│       │   ├── s01-created-issue.json
+│       │   ├── s01-created-issue.stderr.txt
+│       │   ├── s01-curator-messages.json
+│       │   ├── s01-current-runs.json
+│       │   ├── s01-delivery-comments.json
+│       │   ├── s01-dispatch-runs.json
+│       │   ├── s01-dispatch-runs.stderr.txt
+│       │   ├── s01-fanin-active-runs.json
+│       │   ├── s01-fanin-active-runs.stderr.txt
+│       │   ├── s01-fanin-latest-comments.json
+│       │   ├── s01-fanin-latest-comments.stderr.txt
+│       │   ├── s01-fanin-note-receipt.json
+│       │   ├── s01-fanin-supervisor-events.jsonl
+│       │   ├── s01-fanin-supervisor-stderr.log
+│       │   ├── s01-fanin-supervisor-summary.md
+│       │   ├── s01-final-fanin-comments.json
+│       │   ├── s01-final-fanin-note.md
+│       │   ├── s01-followup-comments.json
+│       │   ├── s01-latest-comments.json
+│       │   ├── s01-leader-review-event-messages.json
+│       │   ├── s01-mission-learning-source.json
+│       │   ├── s01-mission.md
+│       │   ├── s01-new-comments.json
+│       │   ├── s01-r1-review-disposition.md
+│       │   ├── s01-r2-comments.json
+│       │   ├── s01-r2-consumer-note.md
+│       │   ├── s01-r2-consumer-review-messages.json
+│       │   ├── s01-r2-consumer-verdicts.json
+│       │   ├── s01-r2-dispatch-comments.json
+│       │   ├── s01-r2-final-verdicts.json
+│       │   ├── s01-r2-review-comments.json
+│       │   ├── s01-r2-verdicts.json
+│       │   ├── s01-r2-verifier-messages.json
+│       │   ├── s01-r3-chronology-limitation.md
+│       │   ├── s01-r3-comments.json
+│       │   ├── s01-r3-gates.json
+│       │   ├── s01-reviewer-followup-messages.json
+│       │   ├── s01-runs-checkpoint.json
+│       │   ├── s01-source-bundle.md
+│       │   ├── s01-squad-assignment.json
+│       │   ├── s01-squad-assignment.stderr.txt
+│       │   ├── s01-supervisor-closure-summary.md
+│       │   ├── s01-time-bound-inspection.json
+│       │   ├── s02-assignment-receipt.json
+│       │   ├── s02-assignment-receipt.stderr.txt
+│       │   ├── s02-authorized-visible-context-fresh.json
+│       │   ├── s02-authorized-visible-context-receipt.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-1.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-10.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-11.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-12.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-13.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-14.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-15.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-16.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-17.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-18.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-19.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-2.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-20.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-3.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-4.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-5.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-6.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-7.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-8.json
+│       │   ├── s02-before-dispatch-runs-RC10VAL-9.json
+│       │   ├── s02-bound-inspection.json
+│       │   ├── s02-bound-parent-comments.json
+│       │   ├── s02-bound-parent-issue.json
+│       │   ├── s02-bound-parent-runs.json
+│       │   ├── s02-bound-verifier-comments.json
+│       │   ├── s02-bound-verifier-issue.json
+│       │   ├── s02-bound-verifier-runs.json
+│       │   ├── s02-children-143014.json
+│       │   ├── s02-children-143732.json
+│       │   ├── s02-children-144032.json
+│       │   ├── s02-children-144705.json
+│       │   ├── s02-children-144826.json
+│       │   ├── s02-children-145002.json
+│       │   ├── s02-children-145110.json
+│       │   ├── s02-children-latest.json
+│       │   ├── s02-closeout-145234-parent-comments.json
+│       │   ├── s02-closeout-145234-parent-issue.json
+│       │   ├── s02-closeout-145234-parent-runs.json
+│       │   ├── s02-closeout-145234-RC10VAL-21-comments.json
+│       │   ├── s02-closeout-145234-RC10VAL-21-issue.json
+│       │   ├── s02-closeout-145234-RC10VAL-21-runs.json
+│       │   ├── s02-closeout-145234-RC10VAL-24-comments.json
+│       │   ├── s02-closeout-145234-RC10VAL-24-issue.json
+│       │   ├── s02-closeout-145234-RC10VAL-24-runs.json
+│       │   ├── s02-closeout-145234-RC10VAL-25-comments.json
+│       │   ├── s02-closeout-145234-RC10VAL-25-issue.json
+│       │   ├── s02-closeout-145234-RC10VAL-25-runs.json
+│       │   ├── s02-closeout-145234-RC10VAL-26-comments.json
+│       │   ├── s02-closeout-145234-RC10VAL-26-issue.json
+│       │   ├── s02-closeout-145234-RC10VAL-26-runs.json
+│       │   ├── s02-closeout-145234-RC10VAL-27-comments.json
+│       │   ├── s02-closeout-145234-RC10VAL-27-issue.json
+│       │   ├── s02-closeout-145234-RC10VAL-27-runs.json
+│       │   ├── s02-closeout-children-145234.json
+│       │   ├── s02-context-comparison.json
+│       │   ├── s02-correction-download-receipt.json
+│       │   ├── s02-curator-clarification-trace-143417.json
+│       │   ├── s02-curator-trace-142217.json
+│       │   ├── s02-curator-trace-followup.json
+│       │   ├── s02-curator-trace-latest.json
+│       │   ├── s02-delivery-download-receipt.json
+│       │   ├── s02-dispatch-receipt.json
+│       │   ├── s02-effective-mission.md
+│       │   ├── s02-final-bound-acceptance-note-receipt.json
+│       │   ├── s02-final-bound-acceptance-note.md
+│       │   ├── s02-final-description-receipt.json
+│       │   ├── s02-final-description-receipt.stderr.txt
+│       │   ├── s02-final-read-144724-pk-v1.json
+│       │   ├── s02-final-read-144724-pk-v2.json
+│       │   ├── s02-final-read-144724-wk-page.json
+│       │   ├── s02-final-read-144724-wk-record.json
+│       │   ├── s02-fresh-context-upload-receipt.json
+│       │   ├── s02-fresh-context-upload-receipt.stderr.txt
+│       │   ├── s02-frozen-source-verification.json
+│       │   ├── s02-initial-parent-trace.json
+│       │   ├── s02-initial-run-ack.json
+│       │   ├── s02-initial-run-ack.stderr.txt
+│       │   ├── s02-live-agents.json
+│       │   ├── s02-live-issue.json
+│       │   ├── s02-live-scoped-issues.json
+│       │   ├── s02-live-wk-page.json
+│       │   ├── s02-live-wk-record.json
+│       │   ├── s02-memory-pressure.txt
+│       │   ├── s02-misrouted-leader-trace-143417.json
+│       │   ├── s02-mission.draft.md
+│       │   ├── s02-mission.md
+│       │   ├── s02-monitor-140929-active.json
+│       │   ├── s02-monitor-140929-children.json
+│       │   ├── s02-monitor-140929-comments.json
+│       │   ├── s02-monitor-141043-active.json
+│       │   ├── s02-monitor-141043-children.json
+│       │   ├── s02-monitor-141043-comments.json
+│       │   ├── s02-monitor-141206-active.json
+│       │   ├── s02-monitor-141206-children.json
+│       │   ├── s02-monitor-141206-comments.json
+│       │   ├── s02-monitor-141206-RC10VAL-21-runs.json
+│       │   ├── s02-monitor-141323-curator-comments.json
+│       │   ├── s02-monitor-141323-curator-runs.json
+│       │   ├── s02-monitor-141323-parent-comments.json
+│       │   ├── s02-monitor-141323-parent-runs.json
+│       │   ├── s02-monitor-141554-curator-comments.json
+│       │   ├── s02-monitor-141554-curator-runs.json
+│       │   ├── s02-monitor-141554-parent-comments.json
+│       │   ├── s02-monitor-141554-parent-runs.json
+│       │   ├── s02-monitor-141823-curator-comments.json
+│       │   ├── s02-monitor-141823-curator-runs.json
+│       │   ├── s02-monitor-141823-parent-comments.json
+│       │   ├── s02-monitor-141823-parent-runs.json
+│       │   ├── s02-monitor-142049-curator-comments.json
+│       │   ├── s02-monitor-142049-curator-runs.json
+│       │   ├── s02-monitor-142049-parent-comments.json
+│       │   ├── s02-monitor-142049-parent-runs.json
+│       │   ├── s02-monitor-142329-curator-comments.json
+│       │   ├── s02-monitor-142329-curator-runs.json
+│       │   ├── s02-monitor-142329-parent-comments.json
+│       │   ├── s02-monitor-142329-parent-runs.json
+│       │   ├── s02-monitor-142535-parent-comments.json
+│       │   ├── s02-monitor-142535-parent-runs.json
+│       │   ├── s02-monitor-142535-reviewer-comments.json
+│       │   ├── s02-monitor-142535-reviewer-runs.json
+│       │   ├── s02-monitor-142713-parent-comments.json
+│       │   ├── s02-monitor-142713-parent-runs.json
+│       │   ├── s02-monitor-142713-reviewer-comments.json
+│       │   ├── s02-monitor-142713-reviewer-runs.json
+│       │   ├── s02-monitor-142840-parent-comments.json
+│       │   ├── s02-monitor-142840-parent-runs.json
+│       │   ├── s02-monitor-142840-reviewer-comments.json
+│       │   ├── s02-monitor-142840-reviewer-runs.json
+│       │   ├── s02-monitor-143014-parent-comments.json
+│       │   ├── s02-monitor-143014-parent-runs.json
+│       │   ├── s02-monitor-143014-RC10VAL-21-runs.json
+│       │   ├── s02-monitor-143014-RC10VAL-24-runs.json
+│       │   ├── s02-monitor-143127-curator-comments.json
+│       │   ├── s02-monitor-143127-curator-runs.json
+│       │   ├── s02-monitor-143127-parent-comments.json
+│       │   ├── s02-monitor-143127-parent-runs.json
+│       │   ├── s02-monitor-143241-curator-comments.json
+│       │   ├── s02-monitor-143241-curator-runs.json
+│       │   ├── s02-monitor-143241-parent-comments.json
+│       │   ├── s02-monitor-143241-parent-runs.json
+│       │   ├── s02-monitor-143533-curator-comments.json
+│       │   ├── s02-monitor-143533-curator-runs.json
+│       │   ├── s02-monitor-143533-parent-comments.json
+│       │   ├── s02-monitor-143533-parent-runs.json
+│       │   ├── s02-monitor-143533-reviewer-comments.json
+│       │   ├── s02-monitor-143533-reviewer-runs.json
+│       │   ├── s02-monitor-143710-curator-comments.json
+│       │   ├── s02-monitor-143710-curator-runs.json
+│       │   ├── s02-monitor-143710-parent-comments.json
+│       │   ├── s02-monitor-143710-parent-runs.json
+│       │   ├── s02-monitor-143710-reviewer-comments.json
+│       │   ├── s02-monitor-143710-reviewer-runs.json
+│       │   ├── s02-monitor-143732-RC10VAL-21-runs.json
+│       │   ├── s02-monitor-143732-RC10VAL-24-runs.json
+│       │   ├── s02-monitor-143732-RC10VAL-25-runs.json
+│       │   ├── s02-monitor-143854-curator-comments.json
+│       │   ├── s02-monitor-143854-curator-runs.json
+│       │   ├── s02-monitor-143854-parent-comments.json
+│       │   ├── s02-monitor-143854-parent-runs.json
+│       │   ├── s02-monitor-144032-parent-runs.json
+│       │   ├── s02-monitor-144032-RC10VAL-21-runs.json
+│       │   ├── s02-monitor-144032-RC10VAL-24-runs.json
+│       │   ├── s02-monitor-144032-RC10VAL-25-runs.json
+│       │   ├── s02-monitor-144032-RC10VAL-26-runs.json
+│       │   ├── s02-monitor-144158-parent-comments.json
+│       │   ├── s02-monitor-144158-parent-runs.json
+│       │   ├── s02-monitor-144158-r3review-comments.json
+│       │   ├── s02-monitor-144158-r3review-runs.json
+│       │   ├── s02-monitor-144325-parent-comments.json
+│       │   ├── s02-monitor-144325-parent-runs.json
+│       │   ├── s02-monitor-144325-r3review-comments.json
+│       │   ├── s02-monitor-144325-r3review-runs.json
+│       │   ├── s02-monitor-144547-parent-comments.json
+│       │   ├── s02-monitor-144547-parent-runs.json
+│       │   ├── s02-monitor-144547-r3review-comments.json
+│       │   ├── s02-monitor-144547-r3review-runs.json
+│       │   ├── s02-monitor-144705-parent-runs.json
+│       │   ├── s02-monitor-144705-RC10VAL-21-runs.json
+│       │   ├── s02-monitor-144705-RC10VAL-24-runs.json
+│       │   ├── s02-monitor-144705-RC10VAL-25-runs.json
+│       │   ├── s02-monitor-144705-RC10VAL-26-runs.json
+│       │   ├── s02-monitor-144826-parent-runs.json
+│       │   ├── s02-monitor-144826-RC10VAL-21-runs.json
+│       │   ├── s02-monitor-144826-RC10VAL-24-runs.json
+│       │   ├── s02-monitor-144826-RC10VAL-25-runs.json
+│       │   ├── s02-monitor-144826-RC10VAL-26-runs.json
+│       │   ├── s02-monitor-145002-parent-runs.json
+│       │   ├── s02-monitor-145002-RC10VAL-21-runs.json
+│       │   ├── s02-monitor-145002-RC10VAL-24-runs.json
+│       │   ├── s02-monitor-145002-RC10VAL-25-runs.json
+│       │   ├── s02-monitor-145002-RC10VAL-26-runs.json
+│       │   ├── s02-monitor-145134-parent-issue.json
+│       │   ├── s02-monitor-145134-parent-runs.json
+│       │   ├── s02-monitor-145134-verifier-issue.json
+│       │   ├── s02-monitor-145134-verifier-runs.json
+│       │   ├── s02-parent-comments-145110.json
+│       │   ├── s02-parent-predispatch-trace-144843.json
+│       │   ├── s02-r3-reviewer-trace-144434.json
+│       │   ├── s02-r3-supervisor-store-diff.json
+│       │   ├── s02-resource-midrun.json
+│       │   ├── s02-resource-postcorrection.json
+│       │   ├── s02-resource-preflight.json
+│       │   ├── s02-review-scope-time-clarification-receipt.json
+│       │   ├── s02-review-scope-time-clarification.md
+│       │   ├── s02-reviewer-trace-142823.json
+│       │   ├── s02-run-history-143302-curator.json
+│       │   ├── s02-run-history-143302-parent.json
+│       │   ├── s02-source-manifest.json
+│       │   ├── s02-source-v1.md
+│       │   ├── s02-source-v2.md
+│       │   ├── s02-stale-r2-review-comments.json
+│       │   ├── s02-supervisor-bounded-result.json
+│       │   ├── s02-supervisor-codex-cli-last-message.txt
+│       │   ├── s02-supervisor-commands.jsonl
+│       │   ├── s02-supervisor-dispatch.json
+│       │   ├── s02-supervisor-gate-observation-receipt.json
+│       │   ├── s02-supervisor-gate-observation.md
+│       │   ├── s02-supervisor-store-diff.json
+│       │   ├── s03-mission.draft.md
+│       │   ├── s03-relation-analysis.md
+│       │   ├── s04-intentspec-r1.yaml
+│       │   ├── s05-profile-adoption.json
+│       │   ├── skills.json
+│       │   ├── snapshot-verification.json
+│       │   ├── source-contract-manifest.json
+│       │   ├── source-snapshot-current-verification.json
+│       │   ├── squad.json
+│       │   ├── supervisor-cli-thread.txt
+│       │   ├── supervisor-command-outcomes.jsonl
+│       │   ├── supervisor-deployment-dispatch-summary.json
+│       │   ├── update-outcome-curator.json
+│       │   ├── update-outcome-curator.stderr.txt
+│       │   ├── update-outcome-orchestrator.json
+│       │   ├── update-outcome-orchestrator.stderr.txt
+│       │   ├── workspace.json
+│       │   └── workspace.stderr.txt
+│       └── rc6-baseline-2026-09-26/
+│           ├── BASELINE-RECORD.md
+│           ├── installed-source-RC6.zip
+│           ├── pk-store-s01-rc10val4.tar.gz
+│           └── RC6-MULTICA-VERIFICATION-REPORT.md
 ├── .gitignore
 ├── AGENTS.md
 ├── mvnw

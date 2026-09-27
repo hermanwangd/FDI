@@ -1,0 +1,32 @@
+Create a new issue
+
+USAGE
+  multica issue create [flags]
+
+FLAGS
+      --allow-duplicate           Allow creating an issue even when an active duplicate exists
+      --allow-external-file       Allow --description-file / --attachment to read a path outside the current working directory. Off by default so a stale file from another run/environment can't be picked up (MUL-4252).
+      --assignee string           Assignee name (member, agent, or squad; fuzzy match)
+      --assignee-id string        Assignee UUID — member, agent, or squad (mutually exclusive with --assignee)
+      --attachment strings        File path(s) to attach (can be specified multiple times). Each file is uploaded and its markdown reference is appended to the description, which is what makes it render on the issue page
+      --attachment-id strings     Existing attachment UUID(s) to bind to the created issue (can be specified multiple times)
+      --description string        Issue description (decodes \n, \r, \t, \\; pipe via --description-stdin to preserve literal backslashes)
+      --description-file string   Read issue description from a UTF-8 file (preserves multi-line content verbatim; use this on Windows when stdin piping mangles non-ASCII bytes). The path must be inside the current working directory unless --allow-external-file is set.
+      --description-stdin         Read issue description from stdin (preserves multi-line content verbatim)
+      --due-date string           Due date (calendar day, YYYY-MM-DD)
+  -h, --help                      help for create
+      --output string             Output format: table or json (default "json")
+      --parent string             Parent issue ID
+      --priority string           Issue priority
+      --project string            Project ID
+      --property stringArray      Set a custom property atomically with creation as "Name=Value" (repeatable, one distinct property per flag). Multi-value properties use comma-separated values inside one flag. Property and option/member names are case-insensitive; UUIDs are accepted. Filter-only __none__, >=, <=, and != forms are rejected.
+      --stage int                 Stage ordinal (>=1) grouping this sub-issue into an ordered barrier group under its parent; omit for unstaged. The parent assignee is woken only when every sub-issue in a stage finishes.
+      --start-date string         Start date (calendar day, YYYY-MM-DD)
+      --status string             Issue status
+      --title string              Issue title (required)
+
+INHERITED FLAGS
+  --help   Show help for command
+
+LEARN MORE
+  Use `multica <command> <subcommand> --help` for more information about a command.

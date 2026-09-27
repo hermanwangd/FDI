@@ -1,0 +1,57 @@
+{
+  "assignee_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+  "assignee_type": "agent",
+  "created_at": "2026-09-26T09:44:27Z",
+  "creator_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+  "creator_type": "agent",
+  "description": "ENGCIM v0.6 Chart Viewer 的 Architecture 條目（fixture：engcim-v06-chart-viewer-fixture @ 2eff5f9f84ca709684bfe0b7c90102268f07a0f0）。\n\n## C4 層級定位\n- 層級：Component\n- 上層：無（fixture 未提供 System 層條目）\n- 下層：無\n\n## Responsibility\n- 負責：chartLimits()（src/chartViewer.js）、renderChart(config)（src/chartViewer.js）、selectChart()（src/interaction.js）、classifyChartResponse()（src/interaction.js）\n\n## Interface\n- if:engcim-v06/chart-viewer/module-exports：ES module exports（chartLimits／renderChart／selectChart／classifyChartResponse），specRef src/chartViewer.js; src/interaction.js @ 2eff5f9f\n\n## Architecture Constraint\n- seeded defect 限制：chartLimits().max = 1000 在 r1 必須維持不變；僅在 governed Finding F1 擴大修正範圍至 src/chartViewer.js 後才能更正\n- 初始 S05 變更範圍僅限 src/interaction.js\n- HTTP 404 維持 retryable: false\n\n## Architecture Decision\n- ES module 交付（type=module），測試以 node --test 執行\n\n## Governance\n- store_ref：pk/architecture/engcim-v06-chart-viewer.yaml\n- Source 類別：src-engineering（主）；evidence 含 src-team-seed（README）與 src-code-delivery（兩支 js）\n- Evidence 列表：ev:engcim-v06-fixture-readme-2eff5f9f、ev:engcim-v06-fixture-package-json-2eff5f9f、ev:engcim-v06-fixture-chartviewer-js-2eff5f9f、ev:engcim-v06-fixture-interaction-js-2eff5f9f（皆 @ commit 2eff5f9f，2026-09-26 擷取）\n- 日期：2026-09-26\n- 文件類型：fixture 原始碼 + package 設定（SYNTHETIC_VALIDATION_FIXTURE）\n- Confidence：官方文件（待驗證 PROVISIONAL）\n- Pipeline 層級：synthesized knowledge\n- Gap 狀態：CONFLICTING（chartLimits seeded defect；openSelectedChart 契約）——見對應 [Gap/CONFLICTING] issues\n\n## 原文\nRC10VAL-4 issue 附件（README.md、package.json、chartViewer.js、interaction.js）。",
+  "due_date": null,
+  "duplicate_of": null,
+  "id": "01a0dd1a-0f8c-710c-a288-dcb87c78f0ec",
+  "identifier": "RC10VAL-6",
+  "labels": [
+    {
+      "color": "#7c3aed",
+      "created_at": "2026-09-26T09:14:31Z",
+      "description": "",
+      "id": "5f33f444-70be-415e-a94c-ae4c0bc22d93",
+      "name": "pk-architecture",
+      "resource_type": "issue",
+      "updated_at": "2026-09-26T09:14:31Z",
+      "usage_count": 0,
+      "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+    },
+    {
+      "color": "#4f46e5",
+      "created_at": "2026-09-26T09:14:36Z",
+      "description": "",
+      "id": "42587e7c-f6b3-4fcb-b25a-3b7f2fdbb1f4",
+      "name": "src-engineering",
+      "resource_type": "issue",
+      "updated_at": "2026-09-26T09:14:36Z",
+      "usage_count": 0,
+      "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+    }
+  ],
+  "last_activity_at": "2026-09-26T09:48:38.746293Z",
+  "metadata": {
+    "credibility": "官方文件（待驗證 PROVISIONAL）",
+    "date": "2026-09-26",
+    "source": "engcim-v06-chart-viewer-fixture @ 2eff5f9f（RC10VAL-4 附件：README.md、package.json、chartViewer.js、interaction.js）"
+  },
+  "number": 6,
+  "parent_issue_id": null,
+  "position": -2,
+  "priority": "none",
+  "project_id": "f7af4546-88b2-4163-a0d4-b350e2123dbc",
+  "properties": {},
+  "revision": 12,
+  "stage": null,
+  "start_date": null,
+  "status": "in_review",
+  "status_category": "in_review",
+  "status_name": "",
+  "title": "ENGCIM v0.6 Chart Viewer（Architecture）",
+  "updated_at": "2026-09-26T09:48:38Z",
+  "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+}

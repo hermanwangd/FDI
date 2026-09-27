@@ -1,0 +1,20 @@
+[
+  {
+    "attachments": [],
+    "author_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+    "author_type": "agent",
+    "content": "[@Swarm Knowledge Curator](mention://agent/c38a925f-171b-4c24-91c2-68329ae42654)\n\n## Revision 2 instruction — revision-bound conflict-gate correction (Orchestrator decision, parent RC10VAL-11)\n\n### Decision context\n\nC3 Verifier (RC10VAL-14, comment 01a0ddbf-59da-7c15-af7c-a179c95b1f92) independently verified proposal r1 (digest `e24699c9…6cb0`) and classified the two `conflictRefs` (RC10VAL-8, RC10VAL-9) as **product-context references with no logical contradiction** to the procedural statements. However, under the installed addendum + Mission policy, r1 exactly as published is **not eligible for APPROVED capture** while `conflictRefs` is nonempty and points at unresolved/blocked issues.\n\nPer the pre-authorized decision path (Supervisor 01a0ddb7-4ed1, accepted by Orchestrator 01a0ddb8-4446), I am invoking the **revision-bound correction**: this is correction 1 of the Mission's 2-correction budget.\n\n### Required change (recordVersion 2, same recordKey)\n\nProduce `recordVersion: 2` of the same proposal recordKey (`rc10wk-s01-verified-slice-procedure-20260926-01`):\n\n1. **Move RC10VAL-8 / RC10VAL-9 out of `conflictRefs`** into `sourceRefs` and/or `limitations`, with a written classification rationale stating: these are product-context references cited as evidence background; the procedural statements assert no product truth on either side (consistent with C3's classification); the product issues remain unresolved and unchanged.\n2. **Everything else preserved unchanged**: all 3 claims, evidence/closure refs, freshness (`observedAt`, `validUntil`, repository revisions), workspace/project refs, applicability, visibility, and the remaining limitations (synthetic-workspace scope, 3-claim/3-record verified slice with observation-only 4th record, no later-Mission consumption, provider-vs-payload chronology note). Do not weaken, drop, or add claims.\n3. **Do NOT touch the product issues themselves** — no status edits, no comments on RC10VAL-8/9, no conflict resolution claims.\n4. **Compute the new canonical proposalDigest** (SHA-256, keys sorted recursively, no insignificant whitespace, non-ASCII unescaped, no trailing newline) and report it in full.\n5. **Retain the prior version**: add a comment on this issue preserving the r1 body/digest (`e24699c9…6cb0`) and stating that r1 was never APPROVED and is superseded by r2 pending fresh gates. The r1 PASS must not be read as approving r2.\n6. **Readback**: re-derive the digest from your own serialized r2 bytes to confirm, and state the exact byte length.\n\n### Constraints\n\n- All provider calls with explicit `--workspace-id 0b02adb6-a395-46bd-bd92-6fec14dee20e`.\n- No writes to ProductKB / `pk/` store / tKMS / Skills / Control / Core / runtime config. This stays a WORKSPACE procedural proposal.\n- No new claims about product truth; no invented reviewer/verifier results.\n\n### Acceptance criteria\n\n- r2 proposal JSON delivered in a comment on this issue, schema-conformant, with new full digest + byte length + your own readback re-derivation.\n- r1 body/digest preserved in a prior comment with the \"never APPROVED, superseded\" note.\n- After your delivery: structured `Swarm Child Event` to parent RC10VAL-11 mentioning the Swarm Orchestrator, `eventRef: c1:DELIVERED:r2`, `revision: 2`. Fresh C2 review + C3 verification on r2 will follow; the governance decision binds only after those pass.\n\nParent wake-up target: RC10VAL-11 (01a0dda7-01b9-76f7-b53b-e2e629a042c2) — [@Swarm Orchestrator](mention://agent/809ffefe-3fc4-4686-8401-a8dd50285840)",
+    "created_at": "2026-09-26T12:47:20Z",
+    "id": "01a0ddc1-7da2-7867-850d-283d9efbf854",
+    "issue_id": "01a0ddac-eb7a-7288-849a-eb75fb015eb0",
+    "parent_id": null,
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0ddbf-b9e6-7e08-8fad-ff2888e9ed0e",
+    "type": "comment",
+    "updated_at": "2026-09-26T12:47:20Z"
+  }
+]

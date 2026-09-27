@@ -1,0 +1,21 @@
+{
+  "config": {},
+  "content": "---\nname: post-change-canary\ndescription: Use after a change to watch fresh runtime signals for a bounded canary window and block successful closure when new errors, SLO regressions, or health failures appear (S08/S09/S10)\n---\n\n# Post-Change Canary\n\nPurpose: distinguish \"deployment command finished\" from \"change remains healthy after deployment\".\n\n## Inputs\n\n- change/deployment reference\n- canary window\n- signal definitions and thresholds\n- baseline where available\n- rollback/escalation rule\n\n## Flow\n\n```text\npost-change start\n→ collect samples\n→ evaluate each required signal\n→ compare against threshold/baseline\n→ PASS / FAIL / INCONCLUSIVE\n```\n\nSignals may include:\n- HTTP/API probes\n- service health\n- error rate\n- latency\n- logs\n- traces\n- business/product signal\n\nUse `scripts/canary_gate.py` for deterministic numeric gates.\n\nA canary failure must prevent successful Change Workflow closure and must trigger the documented rollback/escalation path.\n",
+  "created_at": "2026-09-26T09:13:05Z",
+  "created_by": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+  "description": "Use after a change to watch fresh runtime signals for a bounded canary window and block successful closure when new errors, SLO regressions, or health failures appear (S08/S09/S10)",
+  "files": [
+    {
+      "content": "#!/usr/bin/env python3\nimport json, sys, pathlib\ndef main():\n    if len(sys.argv)!=2: print(\"usage: canary_gate.py \u003csamples.json\u003e\",file=sys.stderr); return 2\n    d=json.loads(pathlib.Path(sys.argv[1]).read_text(encoding=\"utf-8\"))\n    failures=[]\n    for s in d.get(\"signals\",[]):\n        vals=[float(v) for v in s.get(\"samples\",[])]\n        if not vals:\n            failures.append(f\"{s.get('name')}: no samples\"); continue\n        agg=max(vals) if s.get(\"aggregate\",\"max\")==\"max\" else min(vals)\n        direction=s.get(\"direction\",\"max\"); limit=float(s[\"limit\"])\n        ok=agg\u003c=limit if direction==\"max\" else agg\u003e=limit\n        print(json.dumps({\"name\":s.get(\"name\"),\"aggregate\":agg,\"limit\":limit,\"result\":\"PASS\" if ok else \"FAIL\"}))\n        if not ok: failures.append(s.get(\"name\",\"?\"))\n    if failures:\n        print(\"CANARY FAIL:\", \", \".join(failures)); return 1\n    print(\"CANARY PASS\"); return 0\nif __name__==\"__main__\": raise SystemExit(main())\n",
+      "created_at": "2026-09-26T09:13:06Z",
+      "id": "c1bd6a35-9598-4a97-a15a-61e819de1424",
+      "path": "scripts/canary_gate.py",
+      "skill_id": "a9b1be07-137f-4e4e-a668-d8851f216d6f",
+      "updated_at": "2026-09-26T09:13:06Z"
+    }
+  ],
+  "id": "a9b1be07-137f-4e4e-a668-d8851f216d6f",
+  "name": "post-change-canary",
+  "updated_at": "2026-09-26T09:13:05Z",
+  "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+}

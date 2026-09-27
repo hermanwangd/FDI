@@ -1,0 +1,29 @@
+{
+  "config": {},
+  "content": "---\nname: incident-response\ndescription: Use when commanding a production incident — severity triage, stop-the-bleeding first, timeline discipline, communication cadence, runbook execution and postmortem (S10)\n---\n\n# Incident Response（事故指揮程序）\n\n掛給 Swarm SRE 的事故應變 skill。負責 S10 場景的止血與指揮紀律：從告警接入到服務恢復、根因移交、事後檢討（RCA／postmortem）與知識回流。場景全流程與迴圈閉合見 `docs/scenarios.md` S10。\n\n**核心原則：止血優先於根因；每個動作上時間線；溝通有節奏不靠印象；事後檢討不入庫不算結束。**\n\n## 嚴重度分級表（SEV）\n\n| 等級 | 定義（操作化） | 溝通節奏 | 升級條件 |\n|---|---|---|---|\n| SEV1 | 核心功能全不可用或資料損毀／外洩，影響全部或多數使用者 | 每 15–30 分鐘更新；立即通知利害關係人 | 任何資料外洩疑慮直接 SEV1 |\n| SEV2 | 核心功能嚴重降級或多數使用者受影響，有 workaround | 每 30–60 分鐘更新 | 影響面擴大或 1 小時無進展升 SEV1 |\n| SEV3 | 非核心功能故障或少量使用者受影響 | 每日更新 | 持續逾 SLA 或影響擴大升 SEV2 |\n| SEV4 | 輕微問題／單一使用者／內部工具 | 結案時更新 | 重複發生升 SEV3 並檢討預防 |\n\n分級就高不就低；資訊不足時先按較高等級啟動，確認後可降級並在時間線記錄降級理由。\n\n## 事故指揮程序（六步）\n\n1. **接任指揮（IC）**：確認嚴重度等級並公告；本 squad 中 SRE 預設為 IC，同時只允許一個 IC。IC 不親自修 code——IC 管節奏、時間線、溝通與決策，根因修復派對應 Dev。\n2. **止血優先**：優先序——回滾最近變更 \u003e 切流量／降級功能 \u003e 重啟／擴容 \u003e 修 code。止血動作即使是「重啟」也要留時間線紀錄（何時、誰、做什麼、結果）。先查 ProductKB `src-operations` 的既有 runbook／troubleshooting 條目再動手；命中 runbook 就照 `templates/runbook.md` 的「症狀→處置→驗證」走。\n3. **時間線紀律**：從接手起，所有關鍵事件（偵測、止血動作、狀態變化、決策）即時貼 issue 評論，格式 `HH:MM \u003c動作\u003e → \u003c結果\u003e`。事後補的時間線標「（回溯補記）」。時間線是 postmortem 的唯一事實來源。\n4. **溝通節奏**：按嚴重度表節奏在 issue 發狀態更新（目前判斷／進行中動作／下次更新時間）；即使「無新進展」也按時更新，避免資訊真空。\n5. **移交根因修復**：止血後（服務恢復、有執行證據）把根因修復派給對應 Dev，走標準 stage-gate＋回歸（S05/S06 流程），hotfix 發布走 release-management skill 的精簡流程——**可縮短不省略**。\n6. **事後檢討**：SEV1/SEV2 必做 postmortem（套 `templates/postmortem.md`）；SEV3 重複發生時也做。RCA／runbook 更新派 Knowledge Curator 入庫 `src-operations`（S10 迴圈閉合）；**RCA 未入庫，事故不算關閉**。\n\n## 與其他角色的介面\n\n- 止血與修復的「服務已恢復」聲明一律由 Verifier 實際驗證（重現不再現、健康檢查通過），IC 不自證。\n- 修復交付物過 Reviewer stage-gate；hotfix 由 Release Manager 守門（含回滾方案）。\n- 發布後監控確認（SLO 指標回到閾值內）是 IC 的關閉條件之一。\n\n## 輸出檢查清單\n\n- [ ] 嚴重度等級已公告，升降級有時間線紀錄與理由\n- [ ] 時間線連續（偵測→止血→恢復→關閉），無大段空白；回溯補記已標註\n- [ ] 止血動作逐條含「動作→結果」；命中既有 runbook 已註明條目連結\n- [ ] 溝通按等級節奏更新，「無新進展」也有更新\n- [ ] 恢復聲明有 Verifier 執行證據；hotfix 有回滾方案\n- [ ] postmortem 完成（SEV1/2）且 RCA／runbook 已入庫 `src-operations`，聚合報告附條目連結\n",
+  "created_at": "2026-09-26T09:12:36Z",
+  "created_by": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+  "description": "Use when commanding a production incident — severity triage, stop-the-bleeding first, timeline discipline, communication cadence, runbook execution and postmortem (S10)",
+  "files": [
+    {
+      "content": "# Postmortem：\u003c事故標題\u003e\n\n- 嚴重度：SEV? ｜ IC：\u003c誰\u003e ｜ 期間：\u003c開始–恢復–關閉時間\u003e\n- 影響：\u003c使用者面／資料面／SLO 消耗（error budget 燒掉多少）\u003e\n- 狀態：草稿 / 已檢討 / **已入庫（src-operations 條目連結：\u003c必填，未入庫不算關閉\u003e）**\n\n\u003e 本文件是 blameless 的事實文件：分析系統與流程，不追究個人。\n\n## 1. 時間線（從 issue 評論時間線整理，唯一事實來源）\n\n| 時間 | 事件 | 來源（評論連結） |\n|---|---|---|\n| HH:MM | 告警觸發／使用者回報 | |\n| HH:MM | IC 接手，公告 SEV? | |\n| HH:MM | 止血動作 → 結果 | |\n| HH:MM | 服務恢復（Verifier 證據） | |\n| HH:MM | 關閉 | |\n\n## 2. 根因（5-Why）\n\n1. 為什麼發生？\u003c直接原因\u003e\n2. 為什麼 \u003c1\u003e？\u003c……\u003e\n3. 為什麼 \u003c2\u003e？\u003c……\u003e\n4. 為什麼 \u003c3\u003e？\u003c……\u003e\n5. 為什麼 \u003c4\u003e？\u003c系統／流程層根因\u003e\n\n\u003e 每層 why 都要有事實支撐（log／時間線／code 連結）；問到「人為失誤」不算到底——\n\u003e 繼續問「為什麼系統讓這個失誤能造成事故」。\n\n## 3. 處置評估\n\n- 做得好的：\u003c止血效率／時間線紀律／協作\u003e\n- 可改進的：\u003c偵測延遲／runbook 缺口／溝通空窗\u003e\n- 運氣成分：\u003c哪些環節是碰巧沒出事的，不得當成能力\u003e\n\n## 4. 行動項（每項有 owner 與期限；追蹤到關閉）\n\n| # | 行動 | 類型（修復/預防/偵測/流程） | Owner | 期限 | 狀態 |\n|---|---|---|---|---|---|\n| A1 | \u003c根本修復\u003e | 修復 | | | |\n| A2 | \u003c新增告警／runbook\u003e | 偵測 | | | |\n| A3 | \u003cregression case 入庫 src-test-assets\u003e | 預防 | | | |\n\n## 5. 知識回流（S10 迴圈閉合，不可省略）\n\n- [ ] RCA 本檔入庫 `src-operations`（Curator，條目連結：）\n- [ ] runbook 新增／更新入庫（連結：）\n- [ ] 新 regression case 入庫 `src-test-assets`（連結：）\n- [ ] 「ProductKB 索引」issue 已更新\n",
+      "created_at": "2026-09-26T09:12:37Z",
+      "id": "a2ca4586-fb50-4d32-b098-f29c620642b9",
+      "path": "templates/postmortem.md",
+      "skill_id": "2609a8ee-06fd-4f8b-beb8-fdb1d018b531",
+      "updated_at": "2026-09-26T09:12:37Z"
+    },
+    {
+      "content": "# Runbook：\u003c服務／症狀名\u003e\n\n- 適用症狀：\u003c告警名／使用者可見現象／指標異常 pattern\u003e\n- 對應 SLO：\u003c連結 observability-slo 的 SLO 定義\u003e\n- 嚴重度指引：\u003c什麼情況算 SEV1/2/3\u003e\n- 最近驗證日期：\u003cYYYY-MM-DD\u003e（runbook 每季或在相關變更後重驗；逾半年未驗證標 STALE）\n\n## 1. 症狀確認\n\n- 告警／指標：\u003c看哪個 dashboard、哪個指標、閾值\u003e\n- 快速判別真假警：\u003c排除誤報的檢查指令或查詢\u003e\n\n```bash\n# 骨架：依環境調整，執行結果貼 issue\n\u003c確認症狀的查詢指令\u003e\n```\n\n## 2. 診斷決策樹\n\n```text\n症狀確認\n  ├─ 指標 A 異常 → 檢查 X（指令）→ 是 → 處置 P1\n  │                              → 否 → 下一分支\n  ├─ 最近有發布？ → 比對 release 時間與發病時間 → 吻合 → 處置 P2（回滾）\n  └─ 依賴服務健康？ → \u003c檢查方式\u003e → 異常 → 轉該服務 runbook：\u003c連結\u003e\n```\n\n## 3. 處置（每條含：動作／預期結果／回退）\n\n### P1 \u003c處置名\u003e\n- 動作：\u003c指令或操作步驟\u003e\n- 預期結果：\u003c可觀察的恢復訊號\u003e\n- 回退：\u003c若惡化如何還原\u003e\n- 風險：\u003c副作用、資料影響\u003e\n\n### P2 回滾最近發布\n- 動作：\u003c回滾指令／Release Manager 協作入口\u003e\n- 預期結果：指標回到 baseline\n- 注意：回滾也是變更——時間線照記、Verification 照做\n\n## 4. 驗證恢復\n\n- [ ] 症狀指標回到閾值內（觀察 ≥ \u003cN\u003e 分鐘）\n- [ ] 核心路徑 smoke 檢查通過：\u003c指令\u003e\n- [ ] Verifier 已貼執行證據（IC 不自證）\n- [ ] 無次生異常（錯誤率、延遲、下游告警）\n\n## 5. 預防與後續\n\n- 根本修復 issue：\u003c連結\u003e\n- 監控缺口：\u003c本症狀是否應有更早的告警；開改進項\u003e\n- 本 runbook 更新：\u003c什麼情況下要改本文件\u003e\n- 入庫：本 runbook 經 Knowledge Curator 入庫為 `src-operations` 條目；更新時走 S02 STALE 流程\n",
+      "created_at": "2026-09-26T09:12:38Z",
+      "id": "c3d57ae0-bf1b-4e0b-9072-f8064d1bc94a",
+      "path": "templates/runbook.md",
+      "skill_id": "2609a8ee-06fd-4f8b-beb8-fdb1d018b531",
+      "updated_at": "2026-09-26T09:12:38Z"
+    }
+  ],
+  "id": "2609a8ee-06fd-4f8b-beb8-fdb1d018b531",
+  "name": "incident-response",
+  "updated_at": "2026-09-26T09:12:36Z",
+  "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+}

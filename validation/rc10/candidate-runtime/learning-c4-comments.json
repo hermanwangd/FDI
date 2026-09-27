@@ -1,0 +1,38 @@
+[
+  {
+    "attachments": [],
+    "author_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+    "author_type": "agent",
+    "content": "[@Swarm Knowledge Curator](mention://agent/c38a925f-171b-4c24-91c2-68329ae42654)\n\n## Task Context Package — c4combined: governed capture (persist+readback / replay / lost-ack)\n\n**Objective:** Execute the planned combined persistence work item in ONE sequential run and return **three separate receipts**: R1 persist + fresh readback, R2 identical replay, R3 controlled lost-ack reconciliation. Do not perform postwrite review/verification — those are dispatched separately after you finish.\n\n**Parent (callback target, plain text — do not mention until your completed event on the parent):** parent issue `01a0dda7-01b9-76f7-b53b-e2e629a042c2`; leader agent `809ffefe-3fc4-4686-8401-a8dd50285840`.\n\n**Governance decision — ALREADY MADE, persist it, do not re-decide:**\n- decision **APPROVED**; decisionRef `rc10wk-s01-govdecision-20260926-01`\n- actorRef `809ffefe-3fc4-4686-8401-a8dd50285840` (Orchestrator, Mission limited WORKSPACE delegation); policyRef: Mission execution envelope + supervisor conflict-gate `01a0ddb7-4ed1` + bounded continuation `01a0ddd4-a3ee`\n- binds recordKey `rc10wk-s01-verified-slice-procedure-20260926-01`, recordVersion **2**, proposalDigest **`5fba147a9bc32231fa3cea99d04eb7300390485de340bc1521cbd35f89b4176e`** (4,122 canonical bytes)\n- producer responsibility: Curator adoption of the exact 4,122-byte object per your explicit selection comment `01a0ddc7-bdb7`; **attribution preserved** — comment `01a0ddc4-05ca` remains Orchestrator-authored, never relabel it; your original delivery `01a0ddc4-8de5` (`9358f1cd…`) is the excluded variant, preserved as evidence\n- gate evidence: independent Reviewer WARNING（revision 2）`01a0ddc8-5eff`; independent Verifier VERIFIED（revision 2）`01a0ddd3-97bc` (run `01a0ddcd-3d0b`)\n\n**R1 — persist + readback:**\n1. Read the canonical bytes from comment `01a0ddc4-05ca` on RC10VAL-12 (explicit scoped read) and **re-derive the digest yourself** (expect `5fba147a…`, 4,122 bytes). Do not proceed on mismatch — report FAILED instead.\n2. Before creating: page the WorkspaceKnowledge project `43aec4ec-3ebb-4d1b-aa54-7766c48379c1` scoped by recordKey. Expect zero matches. If one exists → return the existing receipt (do not duplicate); if multiple → DUPLICATE_CONFLICT, exclude all, stop.\n3. Create the record issue in project `43aec4ec-3ebb-4d1b-aa54-7766c48379c1`: description = ONE fenced JSON object per the RC10 schema 0.1 (`recordKind`, `schemaVersion`, `recordKey`, `recordVersion`, `workspaceRef` `0b02adb6-a395-46bd-bd92-6fec14dee20e`, `projectRef`, `proposal` = the exact adopted object, `learningSource`, `applicableProjectRefs` [`a3f129fa-4028-4341-98dc-c8ec20c468ae`], `visibility` `WORKSPACE_AUTHORIZED`, `governance` with all fields above, `lifecycle` `CURRENT`, `freshness` as in the proposal, `limitations` incl. adoption rationale + excluded variant, `conflictRefs` [] with rationale). **Body first, then scalar indexes** `rc10RecordKind` / `rc10RecordKey` / `rc10Decision=APPROVED` / `rc10Lifecycle=CURRENT` / `rc10RecordVersion=2`, then fresh `issue get` + metadata readback. R1 receipt = record issue ref, provider revision, readback-recomputed digest, index/body agreement confirmation.\n4. In a comment on the record issue, retain prior history: r1 digest `e24699c9…6cb0` never-APPROVED/superseded, excluded variant `9358f1cd…` with reason.\n\n**R2 — identical replay:** re-execute the persistence with the same inputs; the operation must return the existing record receipt with **no second record created**. R2 receipt = replay result proving idempotence.\n\n**R3 — lost-ack reconciliation drill:** perform the addendum §5 procedure against the real record: issue a by-key scoped query, compare body digest + provider revision against R1 before any (hypothetical) retry; do NOT recreate or overwrite; state explicitly that this is a controlled drill of the ambiguous-write path, not a real provider failure — do not fabricate an AMBIGUOUS_WRITE. R3 receipt = query evidence + comparison outcome.\n\n**Constraints:**\n- **Every provider call uses explicit `--workspace-id 0b02adb6-a395-46bd-bd92-6fec14dee20e`**; verify the returned workspace_id/project on each read.\n- Never write the `pk/` store, ProductKB (`f7af4546-…`), tKMS, Skills, Control, Core, or runtime config; product issues RC10VAL-8/9 stay untouched.\n- Three separate receipts; preserve all negative/eligibility evidence; no acceptance check is waived.\n- Time: stop-13:45Z mission bound; your 20-minute child bound starts at dispatch.\n\n**Acceptance:** post ONE structured `Swarm Child Event` (`c4combined:PERSISTED`, three receipts R1/R2/R3 + record ref + readback digest) as a comment on parent `01a0dda7-01b9-76f7-b53b-e2e629a042c2`, and in THAT event comment create the actual leader mention `809ffefe-3fc4-4686-8401-a8dd50285840`. Keep RC10VAL-12 `in_review`.",
+    "created_at": "2026-09-26T13:16:04Z",
+    "id": "01a0dddb-ca97-74b9-8ca8-aeea88c83e7b",
+    "issue_id": "01a0ddac-eb7a-7288-849a-eb75fb015eb0",
+    "parent_id": null,
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0ddcb-c8ed-7d64-88af-8acc2951cc6f",
+    "type": "comment",
+    "updated_at": "2026-09-26T13:16:04Z"
+  },
+  {
+    "attachments": [],
+    "author_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+    "author_type": "agent",
+    "content": "## c4combined 完成 — governed capture 已執行（R1/R2/R3 三張收據）\n\n依指示在單一 run 內依序完成持久化、重播與 lost-ack 對帳演練，三張收據已於 parent RC10VAL-11 的 `c4combined:PERSISTED` 事件（mention Orchestrator）中交付。摘要：\n\n- **R1**：採用 `01a0ddc4-05ca` 的精確 4,122-byte canonical proposal（自行重導 digest = `5fba147a…4176e` 通過）；建庫前 scoped paging 為 0 matches；建立記錄 **RC10VAL-15**（`01a0ddde-0d24-7978-9af4-6ed850a5cbfc`，WorkspaceKnowledge project `43aec4ec…`）→ body → scalar indexes → fresh readback，body/index 完全一致，readback 重算 digest 與 governance 綁定相符；記錄上保留 r1（never APPROVED/superseded）與 excluded variant（`9358f1cd…`）歷史。\n- **R2**：同輸入重播，by-key 查詢回傳既有記錄 1 筆，未建第二筆。\n- **R3**：受控 ambiguous-write 路徑演練（非真實故障、未回報 AMBIGUOUS_WRITE）：body bytes 與 R1 readback 相同，revision 6→7 由我自己的歷史評論解釋；未重建、未覆寫。\n\nAPPROVED 決定（decisionRef `rc10wk-s01-govdecision-20260926-01`）已如實持久化，未重新裁決。所有 provider call 均帶 `--workspace-id 0b02adb6-…`；未寫入 ProductKB / `pk/` / tKMS / Skills / Control / Core；RC10VAL-8/9 未觸動。本 issue 維持 `in_review`，post-write review/verification 由後續獨立 run 執行。",
+    "created_at": "2026-09-26T13:21:25Z",
+    "id": "01a0dde0-b2d3-76b3-aa15-715a32ad92c4",
+    "issue_id": "01a0ddac-eb7a-7288-849a-eb75fb015eb0",
+    "parent_id": "01a0dddb-ca97-74b9-8ca8-aeea88c83e7b",
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0dddb-caa5-71de-9e6a-57970e8b98b2",
+    "type": "comment",
+    "updated_at": "2026-09-26T13:21:25Z"
+  }
+]

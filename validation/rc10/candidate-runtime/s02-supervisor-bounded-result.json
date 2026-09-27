@@ -1,0 +1,320 @@
+{
+  "recordedAt": "2026-09-26T14:54:43.854882+00:00",
+  "workspaceId": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+  "outcome": "BOUNDED_INCOMPLETE_PENDING_VERIFIER_AND_FINAL_FANIN",
+  "mission": {
+    "id": "01a0de07-f1c2-75d7-90e6-e2a0dce4118d",
+    "identifier": "RC10VAL-20",
+    "providerRevision": 113,
+    "status": "in_progress"
+  },
+  "boundInspection": {
+    "checkedAt": "2026-09-26T14:53:40.984687+00:00",
+    "stopNewDispatchAt": "2026-09-26T14:53:14.074963Z",
+    "elapsedSeconds": 2726.909724,
+    "issues": {
+      "parent": {
+        "runs": "validation/rc10/candidate-runtime/s02-bound-parent-runs.json",
+        "issue": "validation/rc10/candidate-runtime/s02-bound-parent-issue.json",
+        "comments": "validation/rc10/candidate-runtime/s02-bound-parent-comments.json"
+      },
+      "verifier": {
+        "runs": "validation/rc10/candidate-runtime/s02-bound-verifier-runs.json",
+        "issue": "validation/rc10/candidate-runtime/s02-bound-verifier-issue.json",
+        "comments": "validation/rc10/candidate-runtime/s02-bound-verifier-comments.json"
+      }
+    }
+  },
+  "freezeInstructionComment": "01a0de33-d755-7004-a922-8ae1358884dd",
+  "delivery": {
+    "revision": 3,
+    "issueId": "01a0de0e-b68e-79f9-80be-c3d0f5398b5d",
+    "providerRevision": 25,
+    "commentId": "01a0de24-1c31-7dbc-98bb-2e0f271a7a63",
+    "authorId": "c38a925f-171b-4c24-91c2-68329ae42654",
+    "runId": "01a0de21-5972-7637-82c1-78547d678c63",
+    "archiveAttachmentId": "01a0de24-1a9b-7d3b-9eb2-c593e375a085",
+    "archivePath": "validation/rc10/candidate-runtime/s02-delivery-r3/pk-store-s02-refreshed-final.tar.gz",
+    "sha256": "b9ad2af04fe344913815c31f1ee3ebb0de05de8a6ecbc3e22d06fc53e3e2a72a"
+  },
+  "review": {
+    "verdict": "PASS:r3",
+    "issueId": "01a0de28-5f47-78fb-a195-0990a3cd1716",
+    "providerRevision": 4,
+    "commentId": "01a0de2d-5c1f-736e-92bc-d646a063843a",
+    "authorId": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+    "runId": "01a0de28-5f62-7362-97f7-0ab7936a9084",
+    "observations": "Three low-severity time semantics / nonindependently reproducible local mtime observations retained"
+  },
+  "verification": {
+    "issueId": "01a0de32-3cba-79c7-b667-1498d11c8a59",
+    "providerRevision": 2,
+    "statusAtBound": "in_progress",
+    "runId": "01a0de32-3cd4-7218-b6b0-dafdec961d44",
+    "runStatusAtBound": "running",
+    "verdict": null,
+    "startedAt": "2026-09-26T14:50:30Z"
+  },
+  "effectiveContext": {
+    "attachmentId": "01a0de0b-898c-74b2-a0ca-5909e9fa1f84",
+    "sha256": "f3c993ac5d0050278eafb1e940b24358b9fbd20413ec498df720dfbea3aaa1f4",
+    "recordId": "01a0ddde-0d24-7978-9af4-6ed850a5cbfc",
+    "providerRevision": 10,
+    "recordVersion": 3,
+    "decisionRef": "rc10wk-s01-govdecision-20260926-01",
+    "digest": "5fba147a9bc32231fa3cea99d04eb7300390485de340bc1521cbd35f89b4176e",
+    "lifecycle": "CURRENT"
+  },
+  "attachments": [
+    {
+      "revision": "r2",
+      "commentId": "01a0de21-3b1d-7048-978a-0f289f7edfdc",
+      "authorId": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "runId": "01a0de1f-1426-725a-b825-8bfbca11aa1a",
+      "attachmentId": "01a0de21-3714-7de8-9f6a-b9bc214bb503",
+      "filename": "refreshed-product-knowledge-with-delta.json",
+      "exitCode": 0,
+      "sha256": "f23a6396c498e7793265823b8507cabb15be981eb881dff44d221f9bc9332662"
+    },
+    {
+      "revision": "r2",
+      "commentId": "01a0de21-3b1d-7048-978a-0f289f7edfdc",
+      "authorId": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "runId": "01a0de1f-1426-725a-b825-8bfbca11aa1a",
+      "attachmentId": "01a0de21-37ff-7ae2-8dc0-89e05f7fc66f",
+      "filename": "s02-staged-manifest.json",
+      "exitCode": 0,
+      "sha256": "6680e181906350f34c0caeda2a5f606397785bd5811f0c20027470399e7b4cda"
+    },
+    {
+      "revision": "r2",
+      "commentId": "01a0de21-3b1d-7048-978a-0f289f7edfdc",
+      "authorId": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "runId": "01a0de1f-1426-725a-b825-8bfbca11aa1a",
+      "attachmentId": "01a0de21-3978-787e-ba59-19f6e773539b",
+      "filename": "pk-store-s02-refreshed-final.tar.gz",
+      "exitCode": 0,
+      "sha256": "f875d86bc375e7b736aec02fe57a57bc05f193bf01d4c32351a0c246b23a0b3d"
+    },
+    {
+      "revision": "r2",
+      "commentId": "01a0de21-3b1d-7048-978a-0f289f7edfdc",
+      "authorId": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "runId": "01a0de1f-1426-725a-b825-8bfbca11aa1a",
+      "attachmentId": "01a0de21-3a4e-751d-9662-68d781be28f6",
+      "filename": "validator-final-stdout.log",
+      "exitCode": 0,
+      "sha256": "db60a79df5fd805f4f88abfa7be0ff526a6fa21d71a80f0f3d9d7fc3bd91f452"
+    },
+    {
+      "revision": "r3",
+      "commentId": "01a0de24-1c31-7dbc-98bb-2e0f271a7a63",
+      "authorId": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "runId": "01a0de21-5972-7637-82c1-78547d678c63",
+      "attachmentId": "01a0de24-18cf-7982-918f-92721bd556e4",
+      "filename": "refreshed-product-knowledge-with-delta.json",
+      "exitCode": 0,
+      "sha256": "7a3095ad03d73e8a39668d10432b6acd513375e154e91c112e4f9555b5955c9d"
+    },
+    {
+      "revision": "r3",
+      "commentId": "01a0de24-1c31-7dbc-98bb-2e0f271a7a63",
+      "authorId": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "runId": "01a0de21-5972-7637-82c1-78547d678c63",
+      "attachmentId": "01a0de24-19b5-77ec-8f91-07de16a05234",
+      "filename": "s02-staged-manifest.json",
+      "exitCode": 0,
+      "sha256": "54d04ca8392e434092499d85c9197915255413021d24eaa685866f4fdcb9e253"
+    },
+    {
+      "revision": "r3",
+      "commentId": "01a0de24-1c31-7dbc-98bb-2e0f271a7a63",
+      "authorId": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "runId": "01a0de21-5972-7637-82c1-78547d678c63",
+      "attachmentId": "01a0de24-1a9b-7d3b-9eb2-c593e375a085",
+      "filename": "pk-store-s02-refreshed-final.tar.gz",
+      "exitCode": 0,
+      "sha256": "b9ad2af04fe344913815c31f1ee3ebb0de05de8a6ecbc3e22d06fc53e3e2a72a"
+    },
+    {
+      "revision": "r3",
+      "commentId": "01a0de24-1c31-7dbc-98bb-2e0f271a7a63",
+      "authorId": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "runId": "01a0de21-5972-7637-82c1-78547d678c63",
+      "attachmentId": "01a0de24-1b63-7eb7-98f2-94f8e982fc70",
+      "filename": "validator-final-stdout.log",
+      "exitCode": 0,
+      "sha256": "db60a79df5fd805f4f88abfa7be0ff526a6fa21d71a80f0f3d9d7fc3bd91f452"
+    }
+  ],
+  "limits": {
+    "requiredChildren": 5,
+    "maxRequiredChildren": 8,
+    "correctionRevisionsUsed": 2,
+    "maxCorrectionRevisions": 2,
+    "runningTimeline": {
+      "max": 2,
+      "aboveTwoObservations": []
+    },
+    "outstandingTimelineIncludingQueuedDispatched": {
+      "max": 4,
+      "aboveTwoObservations": [
+        {
+          "at": "2026-09-26T14:28:20Z",
+          "count": 3,
+          "runIds": [
+            "01a0de1a-4c3f-7b05-bc87-66bc44e92b6b",
+            "01a0de1b-f683-7d5e-ba74-9083535a9328",
+            "01a0de1d-f44e-7dc5-a8c6-6ab7639775f3"
+          ]
+        },
+        {
+          "at": "2026-09-26T14:29:33Z",
+          "count": 3,
+          "runIds": [
+            "01a0de1d-f44e-7dc5-a8c6-6ab7639775f3",
+            "01a0de1e-ab4a-790b-ba2f-b582324d963a",
+            "01a0de1f-1426-725a-b825-8bfbca11aa1a"
+          ]
+        },
+        {
+          "at": "2026-09-26T14:31:54Z",
+          "count": 3,
+          "runIds": [
+            "01a0de1e-ab4a-790b-ba2f-b582324d963a",
+            "01a0de1f-1426-725a-b825-8bfbca11aa1a",
+            "01a0de21-3b2b-7a46-9074-49f5ae639708"
+          ]
+        },
+        {
+          "at": "2026-09-26T14:32:02Z",
+          "count": 4,
+          "runIds": [
+            "01a0de1e-ab4a-790b-ba2f-b582324d963a",
+            "01a0de1f-1426-725a-b825-8bfbca11aa1a",
+            "01a0de21-3b2b-7a46-9074-49f5ae639708",
+            "01a0de21-5972-7637-82c1-78547d678c63"
+          ]
+        },
+        {
+          "at": "2026-09-26T14:32:19Z",
+          "count": 3,
+          "runIds": [
+            "01a0de1e-ab4a-790b-ba2f-b582324d963a",
+            "01a0de21-3b2b-7a46-9074-49f5ae639708",
+            "01a0de21-5972-7637-82c1-78547d678c63"
+          ]
+        },
+        {
+          "at": "2026-09-26T14:35:03Z",
+          "count": 3,
+          "runIds": [
+            "01a0de21-3b2b-7a46-9074-49f5ae639708",
+            "01a0de21-5972-7637-82c1-78547d678c63",
+            "01a0de24-1c3e-7c00-bac2-b1339f751c1d"
+          ]
+        },
+        {
+          "at": "2026-09-26T14:35:33Z",
+          "count": 3,
+          "runIds": [
+            "01a0de21-3b2b-7a46-9074-49f5ae639708",
+            "01a0de24-1c3e-7c00-bac2-b1339f751c1d",
+            "01a0de24-90be-70dc-9217-df08ae6ee186"
+          ]
+        },
+        {
+          "at": "2026-09-26T14:37:15Z",
+          "count": 4,
+          "runIds": [
+            "01a0de21-3b2b-7a46-9074-49f5ae639708",
+            "01a0de24-1c3e-7c00-bac2-b1339f751c1d",
+            "01a0de24-90be-70dc-9217-df08ae6ee186",
+            "01a0de26-210b-7984-b819-dd51b8cc043a"
+          ]
+        },
+        {
+          "at": "2026-09-26T14:37:27Z",
+          "count": 3,
+          "runIds": [
+            "01a0de21-3b2b-7a46-9074-49f5ae639708",
+            "01a0de24-1c3e-7c00-bac2-b1339f751c1d",
+            "01a0de26-210b-7984-b819-dd51b8cc043a"
+          ]
+        },
+        {
+          "at": "2026-09-26T14:38:22Z",
+          "count": 3,
+          "runIds": [
+            "01a0de24-1c3e-7c00-bac2-b1339f751c1d",
+            "01a0de26-210b-7984-b819-dd51b8cc043a",
+            "01a0de27-2433-7930-b682-2481122eb0aa"
+          ]
+        },
+        {
+          "at": "2026-09-26T14:39:42Z",
+          "count": 4,
+          "runIds": [
+            "01a0de24-1c3e-7c00-bac2-b1339f751c1d",
+            "01a0de26-210b-7984-b819-dd51b8cc043a",
+            "01a0de27-2433-7930-b682-2481122eb0aa",
+            "01a0de28-5f62-7362-97f7-0ab7936a9084"
+          ]
+        },
+        {
+          "at": "2026-09-26T14:40:58Z",
+          "count": 3,
+          "runIds": [
+            "01a0de26-210b-7984-b819-dd51b8cc043a",
+            "01a0de27-2433-7930-b682-2481122eb0aa",
+            "01a0de28-5f62-7362-97f7-0ab7936a9084"
+          ]
+        },
+        {
+          "at": "2026-09-26T14:52:14Z",
+          "count": 3,
+          "runIds": [
+            "01a0de2d-c93c-75de-a4ba-2776064866bf",
+            "01a0de32-3cd4-7218-b6b0-dafdec961d44",
+            "01a0de33-d761-73b6-9b4f-754fdbd6bda6"
+          ]
+        }
+      ]
+    },
+    "resourceMaxMeasuredGiB": 5.0525665283203125,
+    "frozenFilesChecked": 190,
+    "frozenMismatches": 0
+  },
+  "operationalLimitations": [
+    "Wrong child callback caused two Orchestrator child runs",
+    "Stale r2 Reviewer dispatch rejected by freshness gate",
+    "Several role CLI traces omitted explicit workspace flag; not retroactively compliant",
+    "Queued/dispatched plus running exceeded two outstanding tasks; running counts recorded separately",
+    "Metadata 50-key limit caused history relocation to comments",
+    "Squad activity task binding failure",
+    "Stage A bytes not attached: receipt sufficiency remains independent-gate assessment; Supervisor approval attribution corrected",
+    "Original r1 REVISE and withdrawn r2 timestamp change preserved",
+    "45-minute checkpoint elapsed with verifier and leader still running; no timeout cancellation or restart; final in_review fan-in not yet observed"
+  ],
+  "notRun": [
+    "N01",
+    "N02",
+    "N03",
+    "N04",
+    "N05",
+    "N06",
+    "N07",
+    "N08",
+    "N09",
+    "S03",
+    "Human DONE"
+  ],
+  "evidenceFiles": [
+    "s02-bound-inspection.json",
+    "s02-frozen-source-verification.json",
+    "s02-r3-supervisor-store-diff.json",
+    "s02-delivery-download-receipt.json",
+    "s02-correction-download-receipt.json",
+    "s02-final-bound-acceptance-note-receipt.json"
+  ]
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "attachments": [],
+    "author_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+    "author_type": "agent",
+    "content": "判定：PASS（revision 10）\n\n## 審查類型與範圍\n\n**Code Review**（非作者獨立審查；本人未參與 revision 9 第一輪，亦未參與本次修正）。\n\n審查對象（精確綁定，全部親自下載並讀取本體）：\n\n- 交付 comment：RC10VAL-52 thread `01a0dfd4-811a-7102-a5e9-96c744d95e58` 下 Curator（`c38a925f…`）comment `01a0dfd7-ef23-7e47-8ee8-24233897d24a`（22:31:05Z）——revision 10 / packaging v2。\n- archive `01a0dfd7-eabd-7adc-86ea-f5e217aa5186`（19,173 bytes）、報告 `01a0dfd7-eba3-7412-b6d1-7950c6c0c24f`、manifest `01a0dfd7-ec8d-7e48-b3ca-d72f390b0727`、member list `01a0dfd7-ed65-720b-81d8-3be47c810045`、validator output `01a0dfd7-ee47-7ef2-8f81-4f542eddd8cf`。\n- 覆核基線：RC10VAL-52 原始交付 comment `01a0dfc5-c533-70ff-9b65-a55831089071` 的 rev9 archive 與 manifest（供逐檔比對）。\n- 越權重複交付（comment `01a0dfda-ac1d-…`，archive `749d57c3…`）依指示**未**引用其數據、未列入審查對象。\n\nRevision freshness：canonical 交付（22:31:05Z）之後線程上僅有 Orchestrator anomaly 標記（22:38:01Z）與 Curator 知悉回覆（22:38:42Z），**無更新版交付**，revision 10 仍為最新。（附註：parent metadata `swarm.child.curator.revision` 顯示 2，與本任務慣用之 artifact revision 命名（9→10）口徑不同，非阻塞，請 Orchestrator 知悉。）\n\n## 獨立重算證據（全部實測，非引用交付方數字）\n\n1. **archive sha256**：實測 `ae9cc47035c5a234ac189287696be7a92f68738df8685eb4c99aa86a72c1039e` —— 與宣稱及報告 §6 記載一致。\n2. **tar 全掃描至 EOF**（python `tarfile` stream 模式 `r|gz`，不受 end-marker 截斷）：總 member 恰 **28**、全部 regular file（type `0`）、**零 dir entry、零 `._*`、零 AppleDouble magic**（逐 member 讀前 8 bytes 比對 `0005160700020000`，0 筆）。\n3. **manifest ↔ member list ↔ archive 三方 1:1**：manifest 28 筆與 `archive-member-list.txt` 28 筆 sorted diff 完全一致；解包實際 28 檔逐檔 SHA-256 與 manifest **28/28 全數吻合**，零未列、零缺漏。\n4. **內容身份保留**：rev10 manifest 與 **rev9 manifest byte-identical**（`diff` 無差異）；自 archive 實際解包內容重算 tree hash = `410c08c0e043193d7744668b5c8c845f1f4d2d2dde38c9c8c04ba97ac1581e8c`，與 rev9 一致。\n5. **validator 真實性**：自 archive roundtrip 解包後獨立重跑 `_schema/validate_store.py --root roundtrip` → `OK: 48 個條目／記錄／node／edge 全部通過`，exit=0，與隨附 validator output 相符。\n6. **範圍外變更**：rev9 報告 vs rev10 報告 `diff` 顯示異動**僅限** §6 交付物 hash 表與新增 §6a（packaging correction 記載），其餘章节（input identity、AVC、delta、supersession、governance、§7 聲明）零變動。邏輯 store 內容因 manifest byte-identical + 實測 hash/tree hash 雙重錨定，確認未動。\n\n## 發現\n\n無阻塞問題。非阻塞觀察（不影響整合）：\n\n- [低] 隨附 validator output 的 root 路徑為 Curator 自身 run workspace（`rc10val-52-5054f4695af0/…`）；已由本審查獨立重跑得到相同結果，真實性無虞。\n- [低] 報告 §4 引用的 `replay-idempotence-evidence.log` 未隨修正 comment 重附，仍掛於 rev9 原始交付 comment（同一 issue）；符合 REVISE 最小變更範圍（replay 證據不屬 packaging 三件套），僅記錄供知悉。\n\n## 驗收標準對照（REVISE 四項 + 驗收條款逐條）\n\n| 標準 | 結果 |\n|---|---|\n| 1. 零 `._*` / AppleDouble member | 滿足（全掃描 28 member、magic check 0 筆） |\n| 2. member 數 = manifest 數 = 28，附 member 清單 | 滿足（28=28=28，三方 1:1 diff 一致） |\n| 3. 報告更新（correction 根因 + Supervisor finding 處置記載） | 滿足（新增 §6a，根因為 macOS COPYFILE 帶入 35 個 163-byte sidecar、manifest 僅列 28 筆；明確記載接受 RC10VAL-51 package-integrity check 並以此修正回應） |\n| 4. 內容身份保留（逐檔 hash、tree hash `410c08c0…`、recordVersion、provenance、delta、governance） | 滿足（manifest byte-identical、28/28 hash 實測吻合、tree hash 重算一致、報告 diff 僅 §6/§6a） |\n| 新 archive sha256 隨附且正確 | 滿足（`ae9cc470…039e` 實測吻合） |\n| validator 48/48 exit 0 | 滿足（獨立重跑 OK、exit=0） |\n| 僅動 packaging 三件套、受保護對象未觸碰 | 滿足（本審查全程唯讀；store 內容零變動有雙重證據） |\n\n## 判定理由\n\nREVISE 四項要求逐項以獨立重算落實，交付方的所有可檢查聲明（archive sha256、member 數、零 sidecar、tree hash、validator 結果、報告記載）經實測全部屬實，無聲稱與事實不符；修正範圍嚴格限於 packaging 三件套，內容身份以 byte-identical manifest + tree hash 雙重錨定保留。依 code-review-method 四面向（正確性／契約合規／測試證據／可維護性）無阻塞問題，給予 PASS，僅 revision 10 有效。後續可依序派出 Verifier 做不重疊的最終驗證。",
+    "created_at": "2026-09-26T22:40:55Z",
+    "id": "01a0dfe0-ee39-7524-9a51-46fc05def994",
+    "issue_id": "01a0dfde-ce13-7132-a229-5910a0bbef9c",
+    "last_activity_at": "2026-09-26T22:40:55Z",
+    "parent_id": null,
+    "reactions": [],
+    "reply_count": 0,
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0dfde-ce2d-7040-867b-f5bfd5d87dca",
+    "type": "comment",
+    "updated_at": "2026-09-26T22:40:55Z"
+  }
+]

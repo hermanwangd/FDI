@@ -1,0 +1,57 @@
+{
+  "assignee_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+  "assignee_type": "agent",
+  "created_at": "2026-09-26T09:44:32Z",
+  "creator_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+  "creator_type": "agent",
+  "description": "Gap 四態：CONFLICTING\n\n## 矛盾描述\nfixture `engcim-v06-chart-viewer-fixture` @ 2eff5f9f84ca709684bfe0b7c90102268f07a0f0 對「從列表開啟選取圖表」的介面契約有兩個矛盾主張：\n\n- 主張 A（測試資產）：interaction.test.js `import { openSelectedChart } from '../src/interaction.js'`，期望 `openSelectedChart(charts, 'chart-7')` 回傳 `{ action: 'OPENED', chartId: 'chart-7' }`\n- 主張 B（實作觀察）：src/interaction.js 僅 export `selectChart(chartList, chartId)`，回傳 `{ selectedChartId, action: 'SELECTED' }` 或 null——`openSelectedChart` 不存在，且回傳鍵值 contract 不同（chartId vs selectedChartId、OPENED vs SELECTED）\n\n依測試 import 路徑判斷，該測試對目前實作會直接失敗（模組無該 export）。\n\n## 發現脈絡\nRC10VAL-4（S01 baseline ingestion）：交叉比對 interaction.test.js 與 interaction.js 時發現。此矛盾與 README 宣告的 seeded defect（chartLimits max）是不同問題，README 未提及本項。\n\n## 處置（已執行）\n- 兩造契約均保留、未靜默裁決\n- sem:engcim-v06/chart-viewer 的 scen:engcim-v06/chart-viewing/open-selected-chart 記載測試期望並註記矛盾（PROVISIONAL）\n\n## 相關條目\n- [ENGCIM v0.6 Chart Viewer（Semantics）]（scen:engcim-v06/chart-viewing/open-selected-chart）\n- [ENGCIM v0.6 Chart Viewer（Realization）]\n\n## 待裁決\n可能解法（需人類裁決，不自行二選一）：\n1. 實作補上 openSelectedChart（測試為準，契約為 OPENED/chartId）——即 MISSING 實作\n2. 測試改寫對齊 selectChart（實作為準）——即測試資產過時\n建議向 fixture 擁有者確認意圖。",
+  "due_date": null,
+  "duplicate_of": null,
+  "id": "01a0dd1a-2086-76db-9bc5-e3bd0ef7f2ad",
+  "identifier": "RC10VAL-9",
+  "labels": [
+    {
+      "color": "#d97706",
+      "created_at": "2026-09-26T09:14:33Z",
+      "description": "",
+      "id": "d7430092-037b-4ca6-868c-49e2464ced91",
+      "name": "pk-governance",
+      "resource_type": "issue",
+      "updated_at": "2026-09-26T09:14:33Z",
+      "usage_count": 0,
+      "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+    },
+    {
+      "color": "#65a30d",
+      "created_at": "2026-09-26T09:14:35Z",
+      "description": "",
+      "id": "b9cd7daa-404d-4806-afc7-8169298a4c36",
+      "name": "src-test-assets",
+      "resource_type": "issue",
+      "updated_at": "2026-09-26T09:14:35Z",
+      "usage_count": 0,
+      "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+    }
+  ],
+  "last_activity_at": "2026-09-26T09:54:32.056218Z",
+  "metadata": {
+    "credibility": "official-document",
+    "date": "2026-09-26",
+    "source": "engcim-v06-chart-viewer-fixture @ 2eff5f9f"
+  },
+  "number": 9,
+  "parent_issue_id": null,
+  "position": -2,
+  "priority": "none",
+  "project_id": "f7af4546-88b2-4163-a0d4-b350e2123dbc",
+  "properties": {},
+  "revision": 8,
+  "stage": null,
+  "start_date": null,
+  "status": "blocked",
+  "status_category": "blocked",
+  "status_name": "",
+  "title": "[Gap/CONFLICTING] engcim-v06 openSelectedChart 測試契約 vs selectChart 實作契約",
+  "updated_at": "2026-09-26T09:54:32Z",
+  "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+}

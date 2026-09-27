@@ -1,0 +1,59 @@
+[
+  {
+    "agent_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+    "attempt": 1,
+    "attribution": {
+      "delegated_from_task_id": "01a0de19-2868-7b4c-ad0d-76e85c58746b",
+      "evidence": {
+        "kind": "issue_assignment",
+        "ref_id": "01a0de1a-4c24-7062-a21c-d8b2093f300d"
+      },
+      "initiator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "originator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "precise": true,
+      "source": "delegation"
+    },
+    "completed_at": "2026-09-26T14:28:35Z",
+    "created_at": "2026-09-26T14:24:20Z",
+    "delivered_comment_ids": [],
+    "dispatched_at": "2026-09-26T14:24:20Z",
+    "error": null,
+    "id": "01a0de1a-4c3f-7b05-bc87-66bc44e92b6b",
+    "issue_id": "01a0de1a-4c24-7062-a21c-d8b2093f300d",
+    "kind": "direct",
+    "max_attempts": 2,
+    "priority": 0,
+    "relative_work_dir": "engcim-swar-6fec14dee20e/rc10val-24-66bc44e92b6b/workdir",
+    "result": {
+      "output": "審查完成，判定 REVISE（revision 1）。\n\n**結論**：RC10VAL-21 交付物主體品質良好——我實際下載四件附件並解包 store 逐一核對：archive SHA-256（`69a0daf1…`）與聲明相符、validator 計數 60 與 store 實檔計數吻合、55→57→59→60 增量邏輯一致、v1/v2 supersession 成對完整、v1 歷史保留、governance issue 狀態（RC10VAL-22 in_review／RC10VAL-23 cancelled／RC10VAL-8/9 blocked）全部屬實、replay 無 silent promotion、兩個來源文件 SHA-256 實算相符。\n\n**退回原因**（1 中 1 低）：\n\n- [中] delta JSON `guidanceApplied[1]` 引用「refreshed final `a55a7d86…`」，與任何交付物 digest 不符（實際為 `69a0daf1…`）——正是審查重點「delta 陳述與 archive digest 無矛盾」要攔的缺陷，污染證據鏈，不能以權威欄位正確為由放行。\n- [低] v2 evidence `retrievedAt`（14:15:03Z）與 Stage B 時點（14:16:00Z）時序不符。\n\n已交付：\n- 判定評論貼於 RC10VAL-24（`comment:01a0de1d-b1e8-7009-9efd-ae3988b6eeb5`），該 issue 已移 `in_review`。\n- Parent wake-up event（`RC10VAL-21:REVIEW_REVISE:r1`）已發至 RC10VAL-20 並 mention Orchestrator，附轉交 Curator 的具體修改意見。",
+      "pr_url": "",
+      "session_id": "session_b9dc34f6-5a50-4595-8bcf-9dda1e0bb836",
+      "work_dir": "/Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-6fec14dee20e/rc10val-24-66bc44e92b6b/workdir"
+    },
+    "runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+    "started_at": "2026-09-26T14:24:21Z",
+    "status": "completed",
+    "usage": [
+      {
+        "cache_read_tokens": 1494528,
+        "cache_write_tokens": 0,
+        "input_tokens": 51477,
+        "model": "kimi-code/kimi-for-coding",
+        "output_tokens": 10384,
+        "provider": "kimi"
+      }
+    ],
+    "work_dir": "/Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-6fec14dee20e/rc10val-24-66bc44e92b6b/workdir",
+    "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+  }
+]

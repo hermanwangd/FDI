@@ -1,0 +1,99 @@
+{
+  "observedAt": "2026-09-26T12:57:38.435083+00:00",
+  "deliveries": [
+    {
+      "commentId": "01a0ddc4-05ca-7e78-935f-1e26bfd1d009",
+      "authorId": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "sourceRun": "01a0ddc1-7dc2-743f-9bb7-ce974ec446a8",
+      "canonicalSha256": "5fba147a9bc32231fa3cea99d04eb7300390485de340bc1521cbd35f89b4176e",
+      "canonicalBytes": 4122,
+      "proposal": {
+        "proposalRef": "rc10wk-s01-verified-slice-procedure-20260926-01",
+        "workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+        "sourceRefs": [
+          "learningSource:rc10-local-s01-learning-source-20260926-01",
+          "issue:01a0dd73-7d75-7295-aeb1-a83905eb2312",
+          "sem:engcim-v06/chart-viewer/verified-slice",
+          "comment:01a0dd93-856f-70f1-b40e-e576ec4fc50f",
+          "comment:01a0dd97-b559-77f1-a4af-075e22dea9c5",
+          "comment:01a0dd9e-6de7-7843-b567-0cb0c87d0a0d",
+          "comment:01a0dda2-edf9-7a88-91c9-d8bc1bdab15e",
+          "attachment:01a0dd93-83cc-794d-b1d7-9e8c8a43d70b",
+          "attachment:01a0dda7-000b-74db-9302-b72a64b739f0",
+          "issue:01a0dd1a-1ad3-7315-8e87-91b76ee361ab",
+          "issue:01a0dd1a-2086-76db-9bc5-e3bd0ef7f2ad"
+        ],
+        "knowledgeType": "PROCEDURAL",
+        "statement": "Procedure for producing a defensible verified-slice knowledge artifact in this workspace's RC10 validation flow, as demonstrated by the independently verified S01 evidence: (1) when the frozen test suite fails at a seeded contract defect (missing openSelectedChart export), obtain execution evidence by directly importing the ES modules at the pinned revision (confirm with git rev-parse HEAD = 2eff5f9f84ca709684bfe0b7c90102268f07a0f0, then node --input-type=module), recording exact commands and outputs as new observation evidence records; (2) upgrade to VALIDATED only the claims independently executable this way (select-chart, render-chart, HTTP 404 non-retryable), never by source count alone and never with an unrelated pre-existing seed as substitute evidence; (3) keep seeded conflicts (chartLimits max=10 vs code=1000; missing openSelectedChart export) unadjudicated as PROVISIONAL [Gap/CONFLICTING]; (4) bind every revision to a fresh archive digest and rerun all affected independent Reviewer/Verifier gates on that digest, with no silent store edits and honest reporting of failures (stale validator stdout corrected by fresh capture); (5) on elapsed-time boundary, stop new dispatch without killing in-flight children; reconcile notification failures as notification-only, never fabricating replacement verdicts.",
+        "scope": "WORKSPACE",
+        "applicability": "Isolated Validation project a3f129fa-4028-4341-98dc-c8ec20c468ae and the pinned RC10 validation workflow only; visibility WORKSPACE_AUTHORIZED; validity ends 2026-09-27T23:59:59+08:00; source revision Chart Viewer 2eff5f9f84ca709684bfe0b7c90102268f07a0f0; unknown applicability excludes this guidance.",
+        "limitations": [
+          "Derived from a synthetic validation workspace and its disposable fixtures; not a production procedure.",
+          "Verified-slice scope is exactly 3 claims (select-chart, render-chart, HTTP 404 non-retryable) backed by 3 applicable execution evidence records; the 4th record (chartLimits min=0) is observation-only and the fan-in's '4 records' shorthand must not be read as 4 records backing the slice.",
+          "No later-Mission consumption is established; capture does not prove future reuse.",
+          "Provider chronology differs from payload chronology: artifact upload was 2026-09-26T11:57:07Z while the immutable semantics payload updatedAt was 11:58:00Z (53s later); use provider events for chronology and preserve archive bytes.",
+          "S01 remains in_review; Human DONE is not asserted, and the seeded fixture defect was not repaired (S01 validates knowledge artifacts, not software).",
+          "RC10VAL-8 (issue:01a0dd1a-1ad3-7315-8e87-91b76ee361ab, chartLimits max=10 vs code=1000) and RC10VAL-9 (issue:01a0dd1a-2086-76db-9bc5-e3bd0ef7f2ad, missing openSelectedChart export) are product-context references cited as evidence background only; the procedural statements assert no product truth on either side (consistent with the C3 Verifier classification of these refs as product-context with no logical contradiction); both product issues remain unresolved and unchanged — not adjudicated, not edited, not commented on."
+        ],
+        "evidenceRefs": [
+          "comment:01a0dd97-b559-77f1-a4af-075e22dea9c5",
+          "comment:01a0dd9e-6de7-7843-b567-0cb0c87d0a0d",
+          "run:01a0dd94-a181-77b3-aba3-8d5f0e6cae72",
+          "run:01a0dd98-6498-73a3-9b66-8354a4c7bc6a",
+          "attachment:01a0dd9e-6d13-79b0-bb0a-3db3902ac8b5",
+          "sha256:57af68f6f63561e181df6edab6d0adea160620b78c058cf5c610b296581411ba"
+        ],
+        "conflictRefs": []
+      }
+    },
+    {
+      "commentId": "01a0ddc4-8de5-7d8d-b410-a258869a4181",
+      "authorId": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "sourceRun": "01a0ddc1-7db8-7446-8407-285de5e13553",
+      "canonicalSha256": "9358f1cdeba9f9e8895baf9c3a18318fa47cb8665d05e9a763f118d6489ad8df",
+      "canonicalBytes": 4230,
+      "proposal": {
+        "proposalRef": "rc10wk-s01-verified-slice-procedure-20260926-01",
+        "workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+        "sourceRefs": [
+          "learningSource:rc10-local-s01-learning-source-20260926-01",
+          "issue:01a0dd73-7d75-7295-aeb1-a83905eb2312",
+          "sem:engcim-v06/chart-viewer/verified-slice",
+          "comment:01a0dd93-856f-70f1-b40e-e576ec4fc50f",
+          "comment:01a0dd97-b559-77f1-a4af-075e22dea9c5",
+          "comment:01a0dd9e-6de7-7843-b567-0cb0c87d0a0d",
+          "comment:01a0dda2-edf9-7a88-91c9-d8bc1bdab15e",
+          "attachment:01a0dd93-83cc-794d-b1d7-9e8c8a43d70b",
+          "attachment:01a0dda7-000b-74db-9302-b72a64b739f0",
+          "issue:01a0dd1a-1ad3-7315-8e87-91b76ee361ab",
+          "issue:01a0dd1a-2086-76db-9bc5-e3bd0ef7f2ad"
+        ],
+        "knowledgeType": "PROCEDURAL",
+        "statement": "Procedure for producing a defensible verified-slice knowledge artifact in this workspace's RC10 validation flow, as demonstrated by the independently verified S01 evidence: (1) when the frozen test suite fails at a seeded contract defect (missing openSelectedChart export), obtain execution evidence by directly importing the ES modules at the pinned revision (confirm with git rev-parse HEAD = 2eff5f9f84ca709684bfe0b7c90102268f07a0f0, then node --input-type=module), recording exact commands and outputs as new observation evidence records; (2) upgrade to VALIDATED only the claims independently executable this way (select-chart, render-chart, HTTP 404 non-retryable), never by source count alone and never with an unrelated pre-existing seed as substitute evidence; (3) keep seeded conflicts (chartLimits max=10 vs code=1000; missing openSelectedChart export) unadjudicated as PROVISIONAL [Gap/CONFLICTING]; (4) bind every revision to a fresh archive digest and rerun all affected independent Reviewer/Verifier gates on that digest, with no silent store edits and honest reporting of failures (stale validator stdout corrected by fresh capture); (5) on elapsed-time boundary, stop new dispatch without killing in-flight children; reconcile notification failures as notification-only, never fabricating replacement verdicts.",
+        "scope": "WORKSPACE",
+        "applicability": "Isolated Validation project a3f129fa-4028-4341-98dc-c8ec20c468ae and the pinned RC10 validation workflow only; visibility WORKSPACE_AUTHORIZED; validity ends 2026-09-27T23:59:59+08:00; source revision Chart Viewer 2eff5f9f84ca709684bfe0b7c90102268f07a0f0; unknown applicability excludes this guidance.",
+        "limitations": [
+          "Derived from a synthetic validation workspace and its disposable fixtures; not a production procedure.",
+          "Verified-slice scope is exactly 3 claims (select-chart, render-chart, HTTP 404 non-retryable) backed by 3 applicable execution evidence records; the 4th record (chartLimits min=0) is observation-only and the fan-in's '4 records' shorthand must not be read as 4 records backing the slice.",
+          "No later-Mission consumption is established; capture does not prove future reuse.",
+          "Provider chronology differs from payload chronology: artifact upload was 2026-09-26T11:57:07Z while the immutable semantics payload updatedAt was 11:58:00Z (53s later); use provider events for chronology and preserve archive bytes.",
+          "S01 remains in_review; Human DONE is not asserted, and the seeded fixture defect was not repaired (S01 validates knowledge artifacts, not software).",
+          "Classification rationale (revision 2): RC10VAL-8 (issue:01a0dd1a-1ad3-7315-8e87-91b76ee361ab, chartLimits max=10 vs code=1000) and RC10VAL-9 (issue:01a0dd1a-2086-76db-9bc5-e3bd0ef7f2ad, missing openSelectedChart export) are product-context references cited as evidence background only. The procedural statements assert no product truth on either side (consistent with C3 Verifier's classification of no logical contradiction, comment 01a0ddbf-59da-7c15-af7c-a179c95b1f92). The product issues remain unresolved and unchanged; they are not conflicts of this WORKSPACE procedural proposal, hence moved out of conflictRefs into sourceRefs."
+        ],
+        "evidenceRefs": [
+          "comment:01a0dd97-b559-77f1-a4af-075e22dea9c5",
+          "comment:01a0dd9e-6de7-7843-b567-0cb0c87d0a0d",
+          "run:01a0dd94-a181-77b3-aba3-8d5f0e6cae72",
+          "run:01a0dd98-6498-73a3-9b66-8354a4c7bc6a",
+          "attachment:01a0dd9e-6d13-79b0-bb0a-3db3902ac8b5",
+          "sha256:57af68f6f63561e181df6edab6d0adea160620b78c058cf5c610b296581411ba"
+        ],
+        "conflictRefs": []
+      }
+    }
+  ],
+  "differentFields": [
+    "limitations"
+  ],
+  "finding": "Bound digest is Orchestrator authored; actual Curator delivery differs. Canonical ownership/disposition and fresh digest-bound gates required before capture."
+}

@@ -1,0 +1,58 @@
+{
+  "capturedAt": "2026-09-26T22:54:55.541073+00:00",
+  "candidate": "RC10-local-candidate-20260927-01",
+  "workspaceId": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+  "status": "RC10_IMPLEMENTED_WITH_BLOCKERS",
+  "s02": {
+    "canonicalArchiveSha256": "ae9cc47035c5a234ac189287696be7a92f68738df8685eb4c99aa86a72c1039e",
+    "reviewResultRef": "RC10VAL-55/comment/01a0dfe0-ee39-7524-9a51-46fc05def994",
+    "verificationResultRef": "RC10VAL-57/comment/01a0dfe9-6598-73ca-83fd-dca747729cf3",
+    "verificationRun": "01a0dfe7-0800-76ff-ae04-ac511e862a12",
+    "scope": "Packaging correction r10 technical gates; not aggregate scenario acceptance. Preserve overrun, duplicate delivery and concurrency findings."
+  },
+  "s05": {
+    "c1Issue": "RC10VAL-58",
+    "c1Run": "01a0dfea-6725-7c55-8f6a-08e1d076505e",
+    "requestedRevision": 2,
+    "supplement": "Existing C1 and parent descriptions updated using --no-start; parent readback revision 42, child 3. Child provider trims trailing newline.",
+    "workspaceKnowledgeConsumption": "UNVERIFIED; description readback alone does not prove in-flight consumption",
+    "c2RevisedResult": "NOT_YET_VERIFIED"
+  },
+  "remaining": [
+    "S02 final fan-in/process disposition",
+    "C1 knowledge selection/applicability and actual-use evidence, followed by exact-revision C2",
+    "Current candidate S03/S04 applicability validation",
+    "S05 bounded implementation/code review and S06 post-implementation evidence",
+    "Final Java17/source-policy/RC6 checks and aligned report/package reseal"
+  ],
+  "evidence": [
+    {
+      "path": "validation/rc10/candidate-runtime/s05-reuse-freshness-review/s02-parent.json",
+      "sha256": "4e0648e60a59b7f645ca2ed2f6aaf7da62f0046bdf844617d45cf71210d7cd75"
+    },
+    {
+      "path": "validation/rc10/candidate-runtime/s05-reuse-freshness-review/s02-review-r10.json",
+      "sha256": "17ee2d7d0d6135739464e2e68f4c4952fd052ab7dec5f0aa64b28cc05cc59fc1"
+    },
+    {
+      "path": "validation/rc10/candidate-runtime/s05-reuse-freshness-review/s02-verify-r10.json",
+      "sha256": "1f014e51476531ee9b9173e580b5bf887478135a6bcca3e13d96f3f0f2e75f0d"
+    },
+    {
+      "path": "validation/rc10/candidate-runtime/s05-reuse-freshness-review/s02-verifier-runs.json",
+      "sha256": "665a9b7afcd7dc5e58a2a7ffa37fd86c48a3676b9e530d0ceaa7e15a55b5f189"
+    },
+    {
+      "path": "validation/rc10/candidate-runtime/s05-reuse-freshness-review/s02-family-active.json",
+      "sha256": "3e8a50324c63ac1c7210e97a64d4ee917a782f8b7a5992bb68c76325944ea390"
+    },
+    {
+      "path": "validation/rc10/candidate-runtime/s05-reuse-freshness-review/s05-family-active.json",
+      "sha256": "150cf3e8d4b318d37e9ed6403a44aecef0a36b274af21a5ab736debb90391b93"
+    },
+    {
+      "path": "validation/rc10/candidate-runtime/s05-reuse-freshness-review/c1-run-messages.json",
+      "sha256": "66f2c0ee83b44eac7316b1d0c4dcdabe2ba62e8bf7ac85974a01fb9772393606"
+    }
+  ]
+}

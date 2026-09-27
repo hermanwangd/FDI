@@ -1,0 +1,20 @@
+[
+  {
+    "attachments": [],
+    "author_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+    "author_type": "agent",
+    "content": "## Fan-in 檢查與重審派遣（revision 2）\n\n已收到 revision 2 交付（本 thread）。FAN-IN 重建結果：\n\n- c1 Curator（RC10VAL-21）：revision 2 已交付（archive `f875d86b…a0b3d`，validator OK: 60），但 r1 判定為 REVISE，且 Supervisor 對發現 2 的澄清（`comment:01a0de21-5965`）在 r2 交付**之後**才發出——r2 的 `retrievedAt` 改法（改為 ingest 時點）是否滿足澄清標準，需由 Reviewer 評估。\n- c2 Reviewer（RC10VAL-24）：REVISE:r1 判定已記錄，對 r1 的審查已終結；r2 屬新 revision，舊判定不適用。\n\n**已派遣重審**：新建 RC10VAL-25（run `01a0de24-90be-70dc-9217-df08ae6ee186`，狀態 running）對 revision 2 重審，審查重點明確包含：(1) 發現 1 修復驗證（digest 引用一致性、`a55a7d86…` 僅得以 revisionNote 說明文字保留）；(2) 發現 2 修復是否符合 Supervisor 澄清兩條合法 resolution 標準；(3) 修訂範圍最小性；(4) 一貫性複核與邊界聲明。判定格式 `判定：…（revision 2）`。\n\nRC10VAL-21 已恢復 `in_review`。Verifier 維持序貫，待 Reviewer r2 判定 PASS/WARNING 後才派遣。Parent RC10VAL-20 維持 `in_progress`，追蹤 metadata 已更新（c1 revision 2、新增 c3）。",
+    "created_at": "2026-09-26T14:36:39Z",
+    "id": "01a0de25-9131-7342-a46c-ce2ceb5d4c32",
+    "issue_id": "01a0de0e-b68e-79f9-80be-c3d0f5398b5d",
+    "parent_id": "01a0de21-3b1d-7048-978a-0f289f7edfdc",
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0de21-3b2b-7a46-9074-49f5ae639708",
+    "type": "comment",
+    "updated_at": "2026-09-26T14:36:39Z"
+  }
+]

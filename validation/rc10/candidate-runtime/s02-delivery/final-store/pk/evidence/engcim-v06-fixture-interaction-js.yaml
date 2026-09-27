@@ -1,0 +1,20 @@
+id: ev:engcim-v06-fixture-interaction-js-2eff5f9f
+channel: file-upload
+sourceClass: src-code-delivery
+documentIdentity: >-
+  engcim-v06-chart-viewer-fixture/src/interaction.js @ commit
+  2eff5f9f84ca709684bfe0b7c90102268f07a0f0（fixture 原始路徑：src/interaction.js；
+  經 RC10VAL-4 issue 附件上傳，attachment id 01a0dd0f-2d3c-7051-8a66-145aacd53638）
+documentVersion: 2eff5f9f84ca709684bfe0b7c90102268f07a0f0
+retrievedAt: "2026-09-26T09:38:09Z"
+sourceUri: null
+excerpt: >-
+  export function selectChart(chartList, chartId) { const selected =
+  chartList.find(chart => chart.id === chartId); return selected ? {
+  selectedChartId: selected.id, action: 'SELECTED' } : null; }
+  export function classifyChartResponse(status) { if (status === 404) {
+  return { status: 404, retryable: false }; } return { status, retryable:
+  false }; }
+credibility: auto-observation
+historical: false
+stale: false

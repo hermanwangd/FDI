@@ -1,0 +1,181 @@
+[
+  {
+    "agent_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+    "attempt": 1,
+    "attribution": {
+      "delegated_from_task_id": "01a0ddc4-2694-7744-9da1-b80fbcb7b4b1",
+      "evidence": {
+        "kind": "comment",
+        "ref_id": "01a0ddc5-83dc-7990-a5fc-b7df9f7e86ad"
+      },
+      "initiator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "originator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "precise": true,
+      "source": "delegation"
+    },
+    "completed_at": "2026-09-26T12:57:32Z",
+    "created_at": "2026-09-26T12:51:44Z",
+    "delivered_comment_ids": [
+      "01a0ddc5-83dc-7990-a5fc-b7df9f7e86ad"
+    ],
+    "dispatched_at": "2026-09-26T12:53:01Z",
+    "error": null,
+    "id": "01a0ddc5-83f5-78d1-8bab-1fdb20559a11",
+    "issue_id": "01a0ddb2-cc14-71dd-8493-e4d1ea549bd6",
+    "kind": "comment",
+    "max_attempts": 2,
+    "priority": 0,
+    "relative_work_dir": "engcim-swar-6fec14dee20e/rc10val-13-1fdb20559a11/workdir",
+    "result": {
+      "output": "Review complete. Verdict: **WARNING（revision 2）**, delivered on RC10VAL-13 (comment `01a0ddca-5ff5`) and echoed to the parent RC10VAL-11 as structured Swarm Child Event `c2:REVIEW_WARNING:r2` mentioning the Orchestrator. RC10VAL-13 moved to `in_review`.\n\nSummary of what the review found:\n\n- **Content gate passes.** The r2 delivery (comment `01a0ddc4-8de5`) differs from r1 by exactly the authorized correction — `conflictRefs` emptied, RC10VAL-8/9 appended to `sourceRefs`, classification rationale appended as `limitations[5]`. Everything else (statement, scope, applicability, evidenceRefs, all 10 schema keys) is byte-identical to r1. No claim changes, no product-truth assertions; RC10VAL-8/9 verified untouched (both still `blocked`, last updated hours before delivery); r1 preserved and marked never-APPROVED/superseded; no ProductKB/tKMS/Skill/Control/Core mutations.\n- **Independent digest re-derivation.** The delivered r2 canonicalizes to **4230 bytes, SHA-256 `9358f1cd…`**, matching the Curator's own claim (my serialization method was validated against r1's known-good `e24699c9…`).\n- **Finding F1 (why WARNING, not PASS).** The Orchestrator's echo (`01a0ddc4-05ca`) and the review instruction cite canonical digest `5fba147a…` (4122 bytes) — a variant differing only in the `limitations[5]` wording. Two \"canonical\" digests for one recordVersion is unacceptable in a digest-bound governance flow. The verdict binds the **delivery comment's bytes** (`9358f1cd…`) as the sole canonical r2 and instructs the Orchestrator to reconcile/annotate its echo before any APPROVED decision; no Curator re-delivery needed.\n- C3 verification@2 can proceed against the delivery comment, expecting `9358f1cd…` @ 4230 bytes.",
+      "pr_url": "",
+      "session_id": "session_afeb0469-9695-46a0-82f5-5049f922caf3",
+      "work_dir": "/Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-6fec14dee20e/rc10val-13-1fdb20559a11/workdir"
+    },
+    "runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+    "started_at": "2026-09-26T12:53:01Z",
+    "status": "completed",
+    "trigger_comment_id": "01a0ddc5-83dc-7990-a5fc-b7df9f7e86ad",
+    "trigger_summary": "[@Swarm Reviewer](mention://agent/53a77a8b-aec9-4d7b-821e-0dae15e48c0c)  ## Revision 2 review — C1 WorkspaceKnowledgeProposal r2 (independent review, binds revision 2)  Context: the r1 proposal (diges…",
+    "usage": [
+      {
+        "cache_read_tokens": 1399296,
+        "cache_write_tokens": 0,
+        "input_tokens": 56880,
+        "model": "kimi-code/kimi-for-coding",
+        "output_tokens": 16772,
+        "provider": "kimi"
+      }
+    ],
+    "work_dir": "/Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-6fec14dee20e/rc10val-13-1fdb20559a11/workdir",
+    "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+  },
+  {
+    "agent_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+    "attempt": 1,
+    "attribution": {
+      "delegated_from_task_id": "01a0ddc4-2694-7744-9da1-b80fbcb7b4b1",
+      "evidence": {
+        "kind": "comment",
+        "ref_id": "01a0ddc5-83dc-7990-a5fc-b7df9f7e86ad"
+      },
+      "initiator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "originator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "precise": true,
+      "source": "delegation"
+    },
+    "completed_at": "2026-09-26T12:55:18Z",
+    "created_at": "2026-09-26T12:51:44Z",
+    "delivered_comment_ids": [
+      "01a0ddc5-83dc-7990-a5fc-b7df9f7e86ad"
+    ],
+    "dispatched_at": "2026-09-26T12:51:44Z",
+    "error": null,
+    "id": "01a0ddc5-83eb-79e9-bfef-a22c445a1f74",
+    "issue_id": "01a0ddb2-cc14-71dd-8493-e4d1ea549bd6",
+    "kind": "comment",
+    "max_attempts": 2,
+    "priority": 0,
+    "relative_work_dir": "multica_workspaces/engcim-swar-6fec14dee20e/rc10val-13-1b2099cc5eb0/workdir",
+    "result": {
+      "output": "Revision 2 審查完成。判定：**WARNING（revision 2，digest `5fba147a…`）**。\n\n核心結論：\n\n- **內容通過**：對 r1→r2 做結構 diff，變動恰為授權的 `conflictRefs`→`sourceRefs` + limitations 第 6 條分類理由，其餘全部逐字不變（statement 五條 claim、evidenceRefs、applicability、scope、原 5 條 limitations）。分類理由與 C3 Verifier（`01a0ddbf-59da`：product-context、無邏輯矛盾）一致；RC10VAL-8/9 查證未被觸碰、仍 `blocked`。r1 保留區塊重導 = `e24699c9…`（3,591 bytes），標註 never-APPROVED/superseded 正確。\n- **Digest 獨立重導**：自 `01a0ddc4-05ca` 發布 JSON 重導 = 4,122 bytes，`5fba147a…`，與 Orchestrator 綁定及 parent metadata `swarm.child.c1.r2digest` 逐字相符。\n- **WARNING 條件（發現 1，中度）**：同一 revision 有兩則交付評論 digest 不同——`05ca`（12:50:06Z，`5fba147a…`，權威）與 `8de5`（12:50:41Z，自稱 `9358f1cd…`/4,230 bytes，僅 limitation 第 6 條措辭不同）。觸發評論對兩則的「delivery/echo」標籤與 digest 綁定方向相反。已要求 Orchestrator 記入最終報告，後續 C3 驗證與持久化只認 `5fba147a…`。\n- **補充範圍**：我本人所有 essential ref 解析均用 exact ID，無依賴 default-scoped 搜尋。\n\n已執行：判定評論貼於 RC10VAL-13 trigger thread（`01a0ddc8-5eff-…`）→ 狀態 `in_review`；parent RC10VAL-11 已發 `c2:REVIEW_WARNING:r2` structured event 並 mention Orchestrator。",
+      "pr_url": "",
+      "session_id": "session_32027b64-ae6f-4e9f-88a1-e234f3fed0f1",
+      "work_dir": "/Users/herman_mbp2023/multica_workspaces/engcim-swar-6fec14dee20e/rc10val-13-1b2099cc5eb0/workdir"
+    },
+    "runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+    "started_at": "2026-09-26T12:51:44Z",
+    "status": "completed",
+    "trigger_comment_id": "01a0ddc5-83dc-7990-a5fc-b7df9f7e86ad",
+    "trigger_summary": "[@Swarm Reviewer](mention://agent/53a77a8b-aec9-4d7b-821e-0dae15e48c0c)  ## Revision 2 review — C1 WorkspaceKnowledgeProposal r2 (independent review, binds revision 2)  Context: the r1 proposal (diges…",
+    "usage": [
+      {
+        "cache_read_tokens": 1724416,
+        "cache_write_tokens": 0,
+        "input_tokens": 124123,
+        "model": "kimi-code/kimi-for-coding",
+        "output_tokens": 10347,
+        "provider": "kimi"
+      }
+    ],
+    "work_dir": "/Users/herman_mbp2023/multica_workspaces/engcim-swar-6fec14dee20e/rc10val-13-1b2099cc5eb0/workdir",
+    "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+  },
+  {
+    "agent_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+    "attempt": 1,
+    "attribution": {
+      "delegated_from_task_id": "01a0ddb0-69b0-717d-8453-ea4e1a6c3b73",
+      "evidence": {
+        "kind": "issue_assignment",
+        "ref_id": "01a0ddb2-cc14-71dd-8493-e4d1ea549bd6"
+      },
+      "initiator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "originator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "precise": true,
+      "source": "delegation"
+    },
+    "completed_at": "2026-09-26T12:34:21Z",
+    "created_at": "2026-09-26T12:31:17Z",
+    "delivered_comment_ids": [],
+    "dispatched_at": "2026-09-26T12:31:17Z",
+    "error": null,
+    "id": "01a0ddb2-cc32-7ebe-8ec3-1b2099cc5eb0",
+    "issue_id": "01a0ddb2-cc14-71dd-8493-e4d1ea549bd6",
+    "kind": "direct",
+    "max_attempts": 2,
+    "priority": 0,
+    "relative_work_dir": "engcim-swar-6fec14dee20e/rc10val-13-1b2099cc5eb0/workdir",
+    "result": {
+      "output": "審查完成。判定：**PASS（revision 1）**。\n\n核驗摘要：\n\n- **Digest 獨立重導**：從交付評論中的完整 proposal JSON 做 canonical serialization（3,591 bytes），SHA-256 = `e24699c9…6cb0`，與宣稱值完全一致——未信任 Curator 的聲明。\n- **來源歸因**：sourceRefs 9 項、evidenceRefs 6 項全部解析到實際 S01 證據——Reviewer PASS、Verifier VERIFIED、閉合摘要、Curator r3 四則評論逐一讀過且內容相符；r3 archive 下載重算 SHA-256 = `57af68f6…411ba`，與 evidenceRefs 一致。無偽造、無循環引用。\n- **範圍**：WORKSPACE、isolated Validation project、WORKSPACE_AUTHORIZED、validity 2026-09-27T23:59:59+08:00、pinned revision 2eff5f9f，全部符合。\n- **有用性**：五條程序性教訓均可對應實際證據，非測試指令複製，不主張修復 fixture 缺陷。\n- **衝突**：RC10VAL-8/9 保留未裁決、誠實標註，無靜默裁決。\n- **Schema**：鍵集合恰等於 required 十鍵（`additionalProperties: false`）。\n- **Freshness**：parent metadata 確認 `swarm.child.c1.revision = 1`，審查目標為最新 revision。\n\n已執行：判定評論貼於 RC10VAL-13（`01a0ddb5-4066-…`）→ 狀態設 `in_review`；structured `Swarm Child Event`（REVIEW_PASS:r1）已貼於 parent RC10VAL-11 並 mention Orchestrator。",
+      "pr_url": "",
+      "session_id": "session_32027b64-ae6f-4e9f-88a1-e234f3fed0f1",
+      "work_dir": "/Users/herman_mbp2023/multica_workspaces/engcim-swar-6fec14dee20e/rc10val-13-1b2099cc5eb0/workdir"
+    },
+    "runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+    "started_at": "2026-09-26T12:31:17Z",
+    "status": "completed",
+    "usage": [
+      {
+        "cache_read_tokens": 1057792,
+        "cache_write_tokens": 0,
+        "input_tokens": 44681,
+        "model": "kimi-code/kimi-for-coding",
+        "output_tokens": 9095,
+        "provider": "kimi"
+      }
+    ],
+    "work_dir": "/Users/herman_mbp2023/multica_workspaces/engcim-swar-6fec14dee20e/rc10val-13-1b2099cc5eb0/workdir",
+    "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+  }
+]

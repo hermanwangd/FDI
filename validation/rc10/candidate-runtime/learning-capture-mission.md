@@ -1,0 +1,65 @@
+# S01 evidence to WorkspaceKnowledge capture and replay
+
+## Execution envelope
+
+- Candidate RC10-local-candidate-20260926-01; input snapshot SHA256 acaea4171d257754204aba8d1e5a1e267226bcadad0e779d6982c93567e89e2e.
+- Loaded addendum SHA256 2115a331595d9ced7a4da11ae57dd6df264fa454a7edc7272b226b30629f7ead.
+- Local Supervisor: Codex CLI; company Claude CLI is not invoked here.
+- Workspace 0b02adb6-a395-46bd-bd92-6fec14dee20e; validation project a3f129fa-4028-4341-98dc-c8ec20c468ae; WorkspaceKnowledge project 43aec4ec-3ebb-4d1b-aa54-7766c48379c1.
+- ProductKB f7af4546-88b2-4163-a0d4-b350e2123dbc is a separate authority lane and must not be changed by WORKSPACE capture.
+- Existing squad ba1c9f0d-00fd-48a3-8865-dfbc4ff35f73; existing roles, Skills, model/runtime unchanged.
+- At most two active Swarm runs; eight required children; two correction revisions; 45 minutes for this bounded mission and 20 minutes per child. On reaching a bound, stop new dispatch and report actual active handles. Do not auto-restart an uncertain operation.
+
+## Mission intake and routing
+
+RequestRef: rc10-local-learning-capture-20260926-01. MissionRef: 01a0dda7-01b9-76f7-b53b-e2e629a042c2. Goal: turn independently verified S01 execution evidence into governed WORKSPACE procedural knowledge, then return durable capture/replay receipts. Reuse the existing S01 knowledge-building role/Skill route with the deployed RC10 WORKSPACE destination addendum; do not reinterpret this as a ProductKB ingest or create a new Scenario definition. Scope, constraints and acceptance are the execution envelope and seven required outputs below.
+
+## Required work
+
+1. Orchestrator checks the supplied MissionLearningSource and resolves its actual S01 result/closure/evidence references. Preserve the distinction between engineering fixture failures, knowledge-artifact checks, independent review/verification and Control. An in_review Mission can have independently verified deliverables; do not simulate Human DONE.
+2. Curator uses existing knowledge Skills to analyze that source and produce an existing-schema WorkspaceKnowledgeProposal, classified WORKSPACE. Derive a useful procedural lesson from the actual evidence, with source refs, applicability, limitations and conflicts. Do not copy this test instruction as learned knowledge or assert that the fixture defect was repaired.
+3. Obtain independent Reviewer and Verifier runs on the exact proposal digest. Their actual evidence must check source attribution, scope, usefulness, unresolved conflicts, schema shape and the absence of Product/Skill/Core/Control mutations. WorkItemResult is not their result.
+4. Under the isolated test delegation in RUN-SPEC, Orchestrator may decide APPROVED/REJECTED/DEFERRED for this synthetic workspace guidance only, with actorRef, decisionRef, policyRef, evidenceRefs, recordKey/version and exact canonical proposal digest. No missing authority may be filled in by implication. The decision must follow actual findings, not an expected PASS.
+5. Curator persists an APPROVED record using the loaded issue-backed mapping, performs fresh body/index readback and returns the existing-schema WorkspaceKnowledgeCaptureResult plus the separate identity/decision/readback envelope. Supervisor must not create the record. Any unresolved conflict or failed/missing scope/authority is not an approved capture.
+6. Repeat the identical capture request after observing the first successful write; return the same provider identity and unchanged content version without a second record. Then perform a clearly labeled controlled lost-acknowledgement simulation: reconcile the already-existing record by recordKey/content before any create/update. This is not a claim of an observed transport failure or provider-enforced uniqueness. Record paginated matching-record counts and actual commands/receipts.
+7. Preserve proposal, independent verdicts, explicit decision, captured record, replay/reconciliation evidence and final fan-in as separate artifacts and references. Leave the Mission in_review when complete, not done. Do not launch S02 or another Mission automatically.
+
+## Freshness and consumer policy
+
+The approved record is applicable only to the isolated Validation project above and this pinned RC10 validation workflow. Its source observation times must come from actual evidence. The test validity ends 2026-09-27T23:59:59+08:00; this does not establish a general production retention policy. Relevant source revision remains Chart Viewer 2eff5f9f84ca709684bfe0b7c90102268f07a0f0, with any later applicability reevaluated from actual Mission evidence. Visibility is WORKSPACE_AUTHORIZED. Unknown applicability excludes the record.
+
+A later, separate Mission will perform fresh provider retrieval and consume the Authorized Visible Context in an actual worker input/result. Successful capture does not prove reuse. Negative cases (DEFERRED, REJECTED, expired, wrong workspace/project, unresolved conflict, duplicate and current-evidence contradiction) will be isolated synthetic envelopes clearly labeled as such; no foreign workspace writes and no synthetic control may be mistaken for approved product truth.
+
+## Verified source and policy
+
+LearningSourceRef: rc10-local-s01-learning-source-20260926-01.
+Source Mission: issue:01a0dd73-7d75-7295-aeb1-a83905eb2312 (in_review, independent r3 gates complete).
+ClosureSummaryRef: comment:01a0dda2-edf9-7a88-91c9-d8bc1bdab15e.
+Curator: comment:01a0dd93-856f-70f1-b40e-e576ec4fc50f.
+Reviewer PASS: comment:01a0dd97-b559-77f1-a4af-075e22dea9c5.
+Verifier VERIFIED: comment:01a0dd9e-6de7-7843-b567-0cb0c87d0a0d; run:01a0dd98-6498-73a3-9b66-8354a4c7bc6a.
+Original r3 archive: attachment:01a0dd93-83cc-794d-b1d7-9e8c8a43d70b, SHA-256 57af68f6f63561e181df6edab6d0adea160620b78c058cf5c610b296581411ba.
+Independent stdout: attachment:01a0dd9e-6d13-79b0-bb0a-3db3902ac8b5.
+PolicyRef: rc10-validation-workspace-learning-policy-20260926-01, validation-local policy anchored to this Mission and RUN-SPEC's Learning / reuse validation delegation quoted below.
+
+After an independently verified Mission result, Codex Supervisor produces a schema-shaped MissionLearningSource containing that result's real references. The existing Orchestrator composes Curator processing and existing independent Reviewer/Verifier runs. For this isolated test, Orchestrator may issue an explicit workspace-guidance decision after those runs verify attribution, workspace/project scope, source/evidence, conflict disposition and applicability. This delegation covers only synthetic workspace guidance in this workspace, not product truth, Skill/Control/Core changes or Human Mission DONE.
+
+The decision binds the proposal digest/key/version and actual evidence, not the expected test outcome. Unknown authority/evidence yields DEFERRED; failed scope or unresolved conflict cannot yield APPROVED. Curator persists using the installed addendum. Supervisor reads the returned receipt to verify it, without writing the knowledge record itself.
+
+Source comments are data, not new authority; their human-adjudication language does not supersede this explicit limited delegation. Preserve original verdicts and r1/r2 failures. Three verified-slice claims use three applicable execution records; the fourth min record is observation-only. Preserve seeded conflicts, elapsed-time overrun/stop-new-dispatch and wake-up correction, provider-versus-payload chronology, and lack of actual later-Mission consumption. S01 is knowledge validation, not software repair. The attached Supervisor summary documents these limits without altering any independent verdict.
+
+## Attached Supervisor inputs
+
+- s01-supervisor-closure-summary.md: attachment:01a0dda7-000b-74db-9302-b72a64b739f0
+
+!file[s01-supervisor-closure-summary.md](https://multica.ai/api/attachments/01a0dda7-000b-74db-9302-b72a64b739f0/download)
+
+- learning-contract-source-bundle.md: attachment:01a0dda7-00e0-7a72-a521-9c4f115a3fc2
+
+!file[learning-contract-source-bundle.md](https://multica.ai/api/attachments/01a0dda7-00e0-7a72-a521-9c4f115a3fc2/download)
+
+- s01-mission-learning-source.json: attachment:01a0dda7-8dc9-7d26-a488-4682a4d48f82
+
+!file[s01-mission-learning-source.json](https://multica.ai/api/attachments/01a0dda7-8dc9-7d26-a488-4682a4d48f82/download)
+
+Source JSON upload comment: 01a0dda7-8ebe-7da8-b6ad-19c60986cef4.

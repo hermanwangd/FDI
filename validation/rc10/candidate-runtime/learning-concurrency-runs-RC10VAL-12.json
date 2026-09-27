@@ -1,0 +1,242 @@
+[
+  {
+    "agent_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+    "attempt": 1,
+    "attribution": {
+      "delegated_from_task_id": "01a0ddcb-c8ed-7d64-88af-8acc2951cc6f",
+      "evidence": {
+        "kind": "comment",
+        "ref_id": "01a0dddb-ca97-74b9-8ca8-aeea88c83e7b"
+      },
+      "initiator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "originator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "precise": true,
+      "source": "delegation"
+    },
+    "completed_at": "2026-09-26T13:21:55Z",
+    "created_at": "2026-09-26T13:16:04Z",
+    "delivered_comment_ids": [
+      "01a0dddb-ca97-74b9-8ca8-aeea88c83e7b"
+    ],
+    "dispatched_at": "2026-09-26T13:16:04Z",
+    "error": null,
+    "id": "01a0dddb-caa5-71de-9e6a-57970e8b98b2",
+    "issue_id": "01a0ddac-eb7a-7288-849a-eb75fb015eb0",
+    "kind": "comment",
+    "max_attempts": 2,
+    "priority": 0,
+    "relative_work_dir": "multica_workspaces/engcim-swar-6fec14dee20e/rc10val-12-ae5dc3a8ca5d/workdir",
+    "result": {
+      "output": "c4combined 完成，三張收據全部交付：\n\n- **R1（persist + readback）**：從 `01a0ddc4-05ca` 讀取 canonical bytes 自行重導 digest（`5fba147a…4176e`，4122 bytes）通過；建庫前 scoped paging 0 matches；建立記錄 **RC10VAL-15**（`01a0ddde-0d24-7978-9af4-6ed850a5cbfc`，WorkspaceKnowledge project `43aec4ec…`，workspace 逐次驗證）→ body → 五個 scalar indexes → fresh `issue get` + metadata readback：readback 重算 digest 與 body、governance 綁定完全一致，body/index 五項相符。記錄上已保留歷史評論（r1 `e24699c9…` never-APPROVED/superseded；excluded variant `9358f1cd…` 附原因）。\n- **R2（identical replay）**：同輸入重跑，by-key 查詢回傳既有記錄恰好 1 筆且 body digest 相同，未建第二筆——冪等性成立（未主張 provider 原子性）。\n- **R3（lost-ack drill）**：對真實記錄執行 §5 程序——by-key 1 match，body sha256 與 R1 readback 逐 byte 相同，provider revision 6→7 由我自己的歷史評論完全解釋；未重建、未覆寫。明確標示為受控演練，非真實故障，未回報 AMBIGUOUS_WRITE。\n\nAPPROVED 決定（decisionRef `rc10wk-s01-govdecision-20260926-01`、actor/policy/evidence refs）如實持久化於 body，未重新裁決；adoption 歸屬保留（`01a0ddc4-05ca` 未重新標籤）。所有 provider call 均帶 `--workspace-id 0b02adb6-…`；未觸動 ProductKB / `pk/` / tKMS / Skills / Control / Core 與 RC10VAL-8/9。\n\n交付：`c4combined:PERSISTED` 事件已發於 parent RC10VAL-11（含 leader mention 與三收據），本 issue 回覆已貼於觸發 thread，RC10VAL-12 維持 `in_review`，交給後續獨立 post-write review/verification。",
+      "pr_url": "",
+      "session_id": "session_34726a40-cbc5-47bd-9b2b-85b0bb85e29b",
+      "work_dir": "/Users/herman_mbp2023/multica_workspaces/engcim-swar-6fec14dee20e/rc10val-12-ae5dc3a8ca5d/workdir"
+    },
+    "runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+    "started_at": "2026-09-26T13:16:04Z",
+    "status": "completed",
+    "trigger_comment_id": "01a0dddb-ca97-74b9-8ca8-aeea88c83e7b",
+    "trigger_summary": "[@Swarm Knowledge Curator](mention://agent/c38a925f-171b-4c24-91c2-68329ae42654)  ## Task Context Package — c4combined: governed capture (persist+readback / replay / lost-ack)  **Objective:** Execute …",
+    "usage": [
+      {
+        "cache_read_tokens": 2310912,
+        "cache_write_tokens": 0,
+        "input_tokens": 65838,
+        "model": "kimi-code/kimi-for-coding",
+        "output_tokens": 11392,
+        "provider": "kimi"
+      }
+    ],
+    "work_dir": "/Users/herman_mbp2023/multica_workspaces/engcim-swar-6fec14dee20e/rc10val-12-ae5dc3a8ca5d/workdir",
+    "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+  },
+  {
+    "agent_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+    "attempt": 1,
+    "attribution": {
+      "delegated_from_task_id": "01a0ddbf-b9e6-7e08-8fad-ff2888e9ed0e",
+      "evidence": {
+        "kind": "comment",
+        "ref_id": "01a0ddc1-7da2-7867-850d-283d9efbf854"
+      },
+      "initiator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "originator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "precise": true,
+      "source": "delegation"
+    },
+    "completed_at": "2026-09-26T12:50:22Z",
+    "created_at": "2026-09-26T12:47:20Z",
+    "delivered_comment_ids": [
+      "01a0ddc1-7da2-7867-850d-283d9efbf854"
+    ],
+    "dispatched_at": "2026-09-26T12:48:52Z",
+    "error": null,
+    "id": "01a0ddc1-7dc2-743f-9bb7-ce974ec446a8",
+    "issue_id": "01a0ddac-eb7a-7288-849a-eb75fb015eb0",
+    "kind": "comment",
+    "max_attempts": 2,
+    "priority": 0,
+    "relative_work_dir": "engcim-swar-6fec14dee20e/rc10val-12-ce974ec446a8/workdir",
+    "result": {
+      "output": "Done. Revision 2 delivered and the child event sent to the parent.\n\nSummary of what was completed on RC10VAL-12:\n\n- **r2 proposal built** — same recordKey `rc10wk-s01-verified-slice-procedure-20260926-01`, recordVersion 2. The only changes: RC10VAL-8 / RC10VAL-9 moved out of `conflictRefs` (now empty) into `sourceRefs`, plus one new `limitations` entry carrying the classification rationale (product-context evidence background; no product truth asserted on either side; issues remain unresolved and untouched). Statement, evidence/closure refs, applicability/freshness, workspace/project refs, and the original five limitations are preserved verbatim.\n- **New canonical digest**: `5fba147a9bc32231fa3cea99d04eb7300390485de340bc1521cbd35f89b4176e` over 4122 canonical bytes. Verified by readback re-derivation (python canonical re-serialization matches the byte file) and independent `shasum -a 256`. Method self-check: same procedure reproduces the published r1 digest exactly.\n- **r1 retained** — full r1 body and digest `e24699c9…6cb0` embedded in the delivery comment with the explicit note: never APPROVED, superseded by r2 pending fresh gates; r1 PASS not applicable to r2.\n- **Product issues untouched** — no status edits, no comments on RC10VAL-8/9.\n- **Structured Swarm Child Event** posted on parent RC10VAL-11 mentioning the Orchestrator: `eventRef: c1:DELIVERED:r2`, `revision: 2`, with digest, delivery ref, and correction details.\n\nIssue RC10VAL-12 stays `in_review` awaiting fresh C2 review and C3 verification on r2 — the governance decision binds only after those pass.",
+      "pr_url": "",
+      "session_id": "session_42cecb46-672f-430f-888e-ed2f3df97ec6",
+      "work_dir": "/Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-6fec14dee20e/rc10val-12-ce974ec446a8/workdir"
+    },
+    "runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+    "started_at": "2026-09-26T12:48:52Z",
+    "status": "completed",
+    "trigger_comment_id": "01a0ddc1-7da2-7867-850d-283d9efbf854",
+    "trigger_summary": "[@Swarm Knowledge Curator](mention://agent/c38a925f-171b-4c24-91c2-68329ae42654)  ## Revision 2 instruction — revision-bound conflict-gate correction (Orchestrator decision, parent RC10VAL-11)  ### De…",
+    "usage": [
+      {
+        "cache_read_tokens": 500736,
+        "cache_write_tokens": 0,
+        "input_tokens": 35374,
+        "model": "kimi-code/kimi-for-coding",
+        "output_tokens": 5430,
+        "provider": "kimi"
+      }
+    ],
+    "work_dir": "/Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-6fec14dee20e/rc10val-12-ce974ec446a8/workdir",
+    "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+  },
+  {
+    "agent_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+    "attempt": 1,
+    "attribution": {
+      "delegated_from_task_id": "01a0ddbf-b9e6-7e08-8fad-ff2888e9ed0e",
+      "evidence": {
+        "kind": "comment",
+        "ref_id": "01a0ddc1-7da2-7867-850d-283d9efbf854"
+      },
+      "initiator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "originator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "precise": true,
+      "source": "delegation"
+    },
+    "completed_at": "2026-09-26T12:54:46Z",
+    "created_at": "2026-09-26T12:47:20Z",
+    "delivered_comment_ids": [
+      "01a0ddc1-7da2-7867-850d-283d9efbf854"
+    ],
+    "dispatched_at": "2026-09-26T12:47:20Z",
+    "error": null,
+    "id": "01a0ddc1-7db8-7446-8407-285de5e13553",
+    "issue_id": "01a0ddac-eb7a-7288-849a-eb75fb015eb0",
+    "kind": "comment",
+    "max_attempts": 2,
+    "priority": 0,
+    "relative_work_dir": "multica_workspaces/engcim-swar-6fec14dee20e/rc10val-12-ae5dc3a8ca5d/workdir",
+    "result": {
+      "output": "r2 修訂已交付並完成對帳，重點如下：\n\n- **r2 proposal 已交付**（reply comment `01a0ddc4-8de5`）：recordKey 不變，`conflictRefs` 清空，RC10VAL-8/9 移入 `sourceRefs`（11 筆），分類理由寫入第 6 條 limitations；statement、scope、applicability、evidenceRefs、原 5 條 limitations 全部不變，未動 product issues。我的 r2 digest `9358f1cd…ad8df`（4230 bytes），python 與獨立 `shasum` 重導一致；r1 保留聲明（never APPROVED、superseded）已附。\n- **發現重複交付並對帳**：runtime reconciliation（parent `01a0ddc3-8758`）保留了兩個並發 run，另一 run 也在本 thread 交付了 r2（`01a0ddc4-05ca`，digest `5fba147a…4176e`，4122 bytes）。Orchestrator fan-in（`01a0ddc5-dad2`）已綁定 `5fba147a…` 為 canonical 並派出 C2 review@2。我已發 reconciliation 評論：canonical r2 = `01a0ddc4-05ca`，本 run 的 `01a0ddc4-8de5` 依 duplicate rule 標為 excluded；並指出 fan-in 文中「delivery comment 01a0ddc4-8de5」與 digest 歸屬不一致（digest 屬於 `01a0ddc4-05ca`）。尚無 provider record，僅交付層重複。\n- **未發第二個 `c1:DELIVERED:r2` 事件**：並發 run 已於 parent `01a0ddc4-2681` 發過同 ref 事件並被 fan-in 消費，再發會造成重複派工。\n\n狀態：RC10VAL-12 維持 `in_review`，等待 C2/C3 對 canonical r2（`5fba147a…`）的新鮮 gates。",
+      "pr_url": "",
+      "session_id": "session_34726a40-cbc5-47bd-9b2b-85b0bb85e29b",
+      "work_dir": "/Users/herman_mbp2023/multica_workspaces/engcim-swar-6fec14dee20e/rc10val-12-ae5dc3a8ca5d/workdir"
+    },
+    "runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+    "started_at": "2026-09-26T12:47:20Z",
+    "status": "completed",
+    "trigger_comment_id": "01a0ddc1-7da2-7867-850d-283d9efbf854",
+    "trigger_summary": "[@Swarm Knowledge Curator](mention://agent/c38a925f-171b-4c24-91c2-68329ae42654)  ## Revision 2 instruction — revision-bound conflict-gate correction (Orchestrator decision, parent RC10VAL-11)  ### De…",
+    "usage": [
+      {
+        "cache_read_tokens": 1725440,
+        "cache_write_tokens": 0,
+        "input_tokens": 97035,
+        "model": "kimi-code/kimi-for-coding",
+        "output_tokens": 14236,
+        "provider": "kimi"
+      }
+    ],
+    "work_dir": "/Users/herman_mbp2023/multica_workspaces/engcim-swar-6fec14dee20e/rc10val-12-ae5dc3a8ca5d/workdir",
+    "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+  },
+  {
+    "agent_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+    "attempt": 1,
+    "attribution": {
+      "delegated_from_task_id": "01a0dda8-68d4-72db-9408-0da6332c53fd",
+      "evidence": {
+        "kind": "issue_assignment",
+        "ref_id": "01a0ddac-eb7a-7288-849a-eb75fb015eb0"
+      },
+      "initiator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "originator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "precise": true,
+      "source": "delegation"
+    },
+    "completed_at": "2026-09-26T12:29:15Z",
+    "created_at": "2026-09-26T12:24:52Z",
+    "delivered_comment_ids": [],
+    "dispatched_at": "2026-09-26T12:24:52Z",
+    "error": null,
+    "id": "01a0ddac-eb93-7b13-8335-ae5dc3a8ca5d",
+    "issue_id": "01a0ddac-eb7a-7288-849a-eb75fb015eb0",
+    "kind": "direct",
+    "max_attempts": 2,
+    "priority": 0,
+    "relative_work_dir": "engcim-swar-6fec14dee20e/rc10val-12-ae5dc3a8ca5d/workdir",
+    "result": {
+      "output": "C1 完成，四項驗收標準全部達成：\n\n- **Proposal 已交付（revision 1）**：在 RC10VAL-12 發佈完整 `WorkspaceKnowledgeProposal` JSON，分類 WORKSPACE / PROCEDURAL，`proposalRef: rc10wk-s01-verified-slice-procedure-20260926-01`。內容是從 S01 實際證據推導的 procedural 課程（凍結測試失敗時以 pinned revision 直接模組 import 取執行證據、僅升級可獨立執行的 claim、digest 綁定 revision 並重跑 gates、逾界停止新派工、通知失敗僅補通知），未複製測試指令、未宣稱修復 fixture、未提升為 product truth。Schema keys 與 `additionalProperties: false` 完全一致。\n- **Canonical digest**：`e24699c9e01d00027f6e28cf9af367d47b441a738c0db9c581fad731e61b6cb0`（canonical serialization 3591 bytes），python 計算與獨立 `shasum -a 256` 重導一致，評論中兩者皆展示。\n- **衝突保留**：RC10VAL-8（`01a0dd1a-1ad3-…`，max=10 vs 1000）與 RC10VAL-9（`01a0dd1a-2086-…`，openSelectedChart）作為未裁決 `conflictRefs` 保留；limitations 含合成驗證工作區、3-claim/3-record 範圍（第 4 筆僅觀察）、無後續 Mission 消費、provider-vs-payload 時序差 53 秒。\n- **Parent 事件**：已在 RC10VAL-11 發 `## Swarm Child Event`（eventRef/childRef=C1/event=delivered/revision=1/resultRef/outcome），mention Orchestrator 啟動 fan-in。\n\n狀態：RC10VAL-12 已設 `in_review`（未設 done）。本地工作檔 `c1-proposal.json`、`c1-proposal.canonical.json`、`build_proposal.py` 留在工作目錄供後續 capture 步驟複用 digest。",
+      "pr_url": "",
+      "session_id": "session_34726a40-cbc5-47bd-9b2b-85b0bb85e29b",
+      "work_dir": "/Users/herman_mbp2023/multica_workspaces/engcim-swar-6fec14dee20e/rc10val-12-ae5dc3a8ca5d/workdir"
+    },
+    "runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+    "started_at": "2026-09-26T12:24:52Z",
+    "status": "completed",
+    "usage": [
+      {
+        "cache_read_tokens": 1313024,
+        "cache_write_tokens": 0,
+        "input_tokens": 51286,
+        "model": "kimi-code/kimi-for-coding",
+        "output_tokens": 7433,
+        "provider": "kimi"
+      }
+    ],
+    "work_dir": "/Users/herman_mbp2023/multica_workspaces/engcim-swar-6fec14dee20e/rc10val-12-ae5dc3a8ca5d/workdir",
+    "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+  }
+]

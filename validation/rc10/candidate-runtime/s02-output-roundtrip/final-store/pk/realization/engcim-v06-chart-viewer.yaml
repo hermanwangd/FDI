@@ -1,0 +1,43 @@
+# ENGCIM v0.6 Chart Viewer Realization（fixture；schema: pk/_schema/realization-entry.schema.json）
+id: real:engcim-v06/chart-viewer
+pkClass: pk-realization
+validationState: PROVISIONAL        # raw code observation 依規則一律從 PROVISIONAL 起；Orchestrator 指示維持 provisional
+confidence: auto-observation
+sourceClass: src-code-delivery
+evidence:
+  - ev:engcim-v06-fixture-readme-2eff5f9f
+  - ev:engcim-v06-fixture-chartviewer-js-2eff5f9f
+  - ev:engcim-v06-fixture-interaction-js-2eff5f9f
+  - ev:engcim-v06-fixture-interaction-test-js-2eff5f9f
+  - ev:engcim-v06-fixture-readme-2eff5f9f-rc10val10
+  - ev:engcim-v06-fixture-chartviewer-js-2eff5f9f-rc10val10
+  - ev:engcim-v06-fixture-interaction-js-2eff5f9f-rc10val10
+  - ev:engcim-v06-fixture-interaction-test-js-2eff5f9f-rc10val10
+  - ev:engcim-v06-fixture-node-test-run-01a0dd73
+governanceIssueRef: "01a0dd1a-1517-78a6-9b89-d7bdb340e8c9"  # ENGCIM v0.6 Chart Viewer（Realization）
+updatedAt: "2026-09-26T11:27:30Z"
+supersedes: null
+supersededBy: null
+
+component: Component:engcim-v06-chart-viewer
+realizes:
+  - cap:engcim-v06/chart-viewing
+  - rule:engcim-v06/chart-limits-max            # 注意：code 側 chartLimits().max=1000 與 frozen=10 矛盾（seeded defect，見 [Gap/CONFLICTING]）
+  - rule:engcim-v06/http-404-non-retryable      # classifyChartResponse(404) → retryable:false，與 README/test 一致
+implementedIn:
+  - Repository:engcim-v06-chart-viewer-fixture
+exposes:
+  - if:engcim-v06/chart-viewer/module-exports
+consumes: []
+dependsOn: []
+codeRegions:
+  - repository: engcim-v06-chart-viewer-fixture
+    path: src/chartViewer.js:1-10
+    module: Module:engcim-v06-chart-viewer-fixture/src/chartViewer.js
+  - repository: engcim-v06-chart-viewer-fixture
+    path: src/interaction.js:1-11
+    module: Module:engcim-v06-chart-viewer-fixture/src/interaction.js
+
+# --- RC10VAL-10 candidate binding：candidate evidence append（未覆寫 baseline）。
+# chartLimits().max=1000 與 frozen=10 矛盾仍標註（[Gap/CONFLICTING] RC10VAL-8），未裁決；
+# openSelectedChart 缺 export 矛盾經 node --test 實跑佐證（RC10VAL-9）。 ---

@@ -1,0 +1,53 @@
+# ENGCIM v0.6 Chart Viewer product-intent claim v2（SYNTHETIC_VALIDATION_FIXTURE；schema: pk/_schema/semantics-entry.schema.json）
+# RC10VAL-21 Stage B（2026-09-26T14:16Z，Knowledge Curator S02 run）：ingest s02-source-v2.md，supersede v1 條目。
+# 本條目為 product-intent claim 文件面，非程式碼證據；code 於 pinned commit 2eff5f9 未變。
+id: sem:engcim-v06/chart-viewer/product-intent/v2
+pkClass: pk-semantics
+validationState: PROVISIONAL        # 文件主張（current product intent）；實作缺口未決 → PROVISIONAL，不晋升 product truth
+confidence: official-document
+sourceClass: src-product-docs
+evidence:
+  - ev:engcim-v06-s02-chart-intent-v2-rc10val21
+governanceIssueRef: "01a0de17-2515-77c5-96c7-9599d4da9318"  # RC10VAL-21 S02 governance issue
+updatedAt: "2026-09-26T14:16:00Z"
+supersedes: "sem:engcim-v06/chart-viewer/product-intent"
+supersededBy: null
+
+product: "ENGCIM v0.6 Chart Viewer（engcim-v06-chart-viewer-fixture，Authority: SYNTHETIC_VALIDATION_FIXTURE）"
+capabilities:
+  - id: cap:engcim-v06/chart-viewing
+    name: Chart Viewing
+    description: >-
+      product-intent claim v2（rc10-s02-chart-intent-v2，document sequence 2）：期望的使用者互動為一次
+      互動開啟選取圖表；frozen test 為具體 acceptance example——openSelectedChart(charts, 'chart-7')
+      returns { action: 'OPENED', chartId: 'chart-7' }。v1「SELECTED 為最終結果」的宣稱已 obsolete，
+      保留於 sem:engcim-v06/chart-viewer/product-intent（STALE）作為 source history。
+    scenarios:
+      - id: scen:engcim-v06/chart-viewing/product-intent-v2
+        name: Product Intent v2 — OPENED via openSelectedChart
+        behaviors:
+          - action: 從列表一次互動開啟選取的圖表（文件宣稱的期望互動；frozen test 為 acceptance example）
+            expected: "openSelectedChart(charts, chartId) 回傳 { action: 'OPENED', chartId: <id> }"
+            # Curator 註：本條目僅收錄文件宣稱的 current product intent。v2 明示不主張 baseline code
+            # 已實作（pinned source 僅 export selectChart，無 openSelectedChart）；implementation/acceptance
+            # gap 維持 open/provisional（[Gap/CONFLICTING] RC10VAL-9）。文件更新本身不關閉 gap、
+            # 不證明軟體 PASS；selectChart 已觀察行為（verified-slice，VALIDATED）不受影響。
+rules:
+  - id: rule:engcim-v06/chart-limits-max-s02-unchanged
+    statement: >-
+      v2 明示：frozen chart maximum remains 10 while the pinned implementation returns 1000——seeded defect
+      維持 unresolved，保留既有 governance reference（[Gap/CONFLICTING] RC10VAL-8）；本文件未授權任何
+      chart-limit 或 fixture-source 變更。HTTP 404 remains non-retryable（與 verified-slice 一致）。
+    appliesTo:
+      - cap:engcim-v06/chart-viewing
+terminology:
+  - term: product-intent claim
+    definition: 文件自述的產品意圖宣稱（source claim），非 acceptance contract 證明；不得據此晋升 product truth 或修改程式碼。
+
+# --- Stage B 聲明 ---
+# Supersession（淘汰雙軌，store 側）：v1 條目 sem:engcim-v06/chart-viewer/product-intent → validationState: STALE、
+#   supersededBy 指向本條目；v1 evidence（ev:...-v1-rc10val21）stale: true（保留不刪）。
+# Changed：product-intent claim SELECTED(final) → OPENED via openSelectedChart；v1 條目 STALE。
+# Unchanged：sem:engcim-v06/chart-viewer（衝突面）、sem:.../verified-slice（VALIDATED 切片）、
+#   architecture/realization 各條目、code-graph 全部 node/edge（code 未變，無新 edge）、
+#   seeded defect chartLimits max=10 vs 1000 與 openSelectedChart 缺口（RC10VAL-8/RC10VAL-9 維持 open）。

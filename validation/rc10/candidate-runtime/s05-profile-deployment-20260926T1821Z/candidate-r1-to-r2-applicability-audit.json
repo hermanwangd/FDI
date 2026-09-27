@@ -1,0 +1,28 @@
+{
+  "candidateVersion": "RC10-local-candidate-20260927-01",
+  "previousManifest": {
+    "path": "validation/rc10/candidate-runtime/s05-profile-deployment-20260926T1821Z/candidate-input-manifest.json",
+    "sha256": "902a5e97d3de9185ea22a36687823a4e1997d7e2d13c7c8e2f48f0b1a0ec4267"
+  },
+  "currentManifest": {
+    "path": "validation/rc10/candidate-runtime/s05-profile-deployment-20260926T1821Z/candidate-input-manifest-r2.json",
+    "sha256": "a89ea0e608f48d59c6161d3d4e54ad105d1c24e2b383c352f90ebcd3ba6b0962",
+    "revision": 2
+  },
+  "comparison": {
+    "entryCount": 204,
+    "unchangedEntryCount": 202,
+    "changedEntryCount": 2,
+    "changedPaths": [
+      "engcim/swarm/src/test/java/com/featuredeliveryintelligence/fdi/orchestration/KnowledgePipelineTests.java",
+      "engcim/swarm/src/test/java/com/featuredeliveryintelligence/fdi/orchestration/WorkspaceKnowledgeLifecycleTests.java"
+    ],
+    "unchangedRuntimeInputFingerprintSha256": "b53c966f994709a4668abd5643ee2214a30c4d2065288cb838df6a274cd0edfd",
+    "runtimeAndInstructionInputsUnchanged": true
+  },
+  "applicability": {
+    "existingS01ThroughS06ReceiptsRemainCandidateVersion": "RC10-local-candidate-20260927-01",
+    "boundRunManifest": "902a5e97d3de9185ea22a36687823a4e1997d7e2d13c7c8e2f48f0b1a0ec4267",
+    "reason": "Only the two listed local Java test files changed; effective Multica role guidance, bootstrap bindings, RC6 scenario sources, contracts, and test repository fixture identity are byte-identical."
+  }
+}

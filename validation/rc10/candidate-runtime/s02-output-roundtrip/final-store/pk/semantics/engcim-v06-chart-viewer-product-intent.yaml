@@ -1,0 +1,44 @@
+# ENGCIM v0.6 Chart Viewer product-intent claim v1（SYNTHETIC_VALIDATION_FIXTURE；schema: pk/_schema/semantics-entry.schema.json）
+# RC10VAL-21 Stage A（2026-09-26T14:15Z，Knowledge Curator S02 run）：以接受之 S01 r3 store 為起點 ingest s02-source-v1.md。
+# RC10VAL-21 Stage B（2026-09-26T14:16Z）：v2 文件（rc10-s02-chart-intent-v2）明示 v1 宣稱 obsolete——
+#   本條目轉 STALE（保留不刪，v1 歷史與精確 source identity 留存），由
+#   sem:engcim-v06/chart-viewer/product-intent/v2 取代。
+id: sem:engcim-v06/chart-viewer/product-intent
+pkClass: pk-semantics
+validationState: STALE              # Stage B：v2 文件明確 supersede v1 product-intent claim（歷史保留）
+confidence: official-document
+sourceClass: src-product-docs
+evidence:
+  - ev:engcim-v06-s02-chart-intent-v1-rc10val21
+governanceIssueRef: "01a0de17-2878-73e8-8794-80cd17d30d36"  # RC10VAL-21 S02 governance issue
+updatedAt: "2026-09-26T14:16:00Z"
+supersedes: null
+supersededBy: "sem:engcim-v06/chart-viewer/product-intent/v2"
+
+product: "ENGCIM v0.6 Chart Viewer（engcim-v06-chart-viewer-fixture，Authority: SYNTHETIC_VALIDATION_FIXTURE）"
+capabilities:
+  - id: cap:engcim-v06/chart-viewing
+    name: Chart Viewing
+    description: >-
+      product-intent claim v1（rc10-s02-chart-intent-v1，document sequence 1）：選取圖表為最終使用者互動，
+      結果為 SELECTED（selectedChartId），不需要獨立的 OPENED 結果。此為文件宣稱的意圖，非目前
+      acceptance contract 的證明。
+    scenarios:
+      - id: scen:engcim-v06/chart-viewing/product-intent-v1
+        name: Product Intent v1 — SELECTED as final interaction
+        behaviors:
+          - action: 選取圖表（文件宣稱的最終互動）
+            expected: "結果為 SELECTED（selectedChartId）；無獨立 OPENED 結果"
+            # Curator 註：v1 宣稱與 frozen acceptance（interaction.test.js 期望 openSelectedChart → OPENED）
+            # 之間的 discrepancy 依來源要求保留、未裁決。已觀察到的 selectChart 行為
+            # （sem:engcim-v06/chart-viewer/verified-slice，VALIDATED）不因本文件改寫。
+            # 對應 [Gap/CONFLICTING] RC10VAL-9（雙方主張保留，維持 open/provisional）。
+rules: []
+terminology:
+  - term: product-intent claim
+    definition: 文件自述的產品意圖宣稱（source claim），非 acceptance contract 證明；不得據此晋升 product truth 或修改程式碼。
+
+# --- Stage A 聲明 ---
+# v1 文件明確要求：保留其與 frozen test 期望之間的 disagreement；不得抹除已觀察到的 selectChart 行為。
+# HTTP 404 non-retryable、frozen chart limit（max=10 vs code=1000 seeded defect）不受本文件影響。
+# Stage B（v2 文件）將明確 supersede 本條目；v1 歷史與精確 source identity 保留不刪。

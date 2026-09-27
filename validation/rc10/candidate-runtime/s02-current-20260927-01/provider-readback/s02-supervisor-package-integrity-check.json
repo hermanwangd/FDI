@@ -1,0 +1,56 @@
+{
+  "findingType": "SupervisorReadOnlyPackageIntegrityCheck",
+  "recordedAtUtc": "2026-09-26T22:19:10Z",
+  "severity": "P2",
+  "status": "REVIEW_REQUIRED",
+  "mission": {
+    "identifier": "RC10VAL-51",
+    "id": "01a0dfb8-6712-7e63-888e-ddcece147850",
+    "candidate": "RC10-local-candidate-20260927-01",
+    "inputManifestRevision": 2,
+    "inputManifestSha256": "e5a7c9bf94bc23be037b2ea01ccfa1027ff7058f5e458174a144a516680168af"
+  },
+  "curatorDelivery": {
+    "identifier": "RC10VAL-52",
+    "id": "01a0dfbe-8dc9-70a0-b364-dde01278c5d9",
+    "revision": 9,
+    "archiveSha256": "0d964877b45c4167ee45edd4df18a935b481186eebb96903b5b3771e7a73d225",
+    "reportSha256": "b2988658d8bfe731fa1b18e0a3aaedc10a2cb281b1d509658ccb6980fa6a887f",
+    "archiveFileHashesSha256": "208aee873cb0c7d00c901dfdc540da37f2d6256b814843253c6e565cb3e88e1d"
+  },
+  "observations": {
+    "archiveRegularFileMembers": 63,
+    "hashListEntries": 28,
+    "listedFilesMissing": 0,
+    "listedFileHashMismatches": 0,
+    "unlistedMembers": 35,
+    "unlistedAllAppleDouble": true,
+    "unlistedAppleDoubleBytes": 163,
+    "unlistedAppleDoubleMagicHex": "0005160700020000",
+    "logicalStoreTreeSha256": "410c08c0e043193d7744668b5c8c845f1f4d2d2dde38c9c8c04ba97ac1581e8c"
+  },
+  "interpretation": "All 28 listed logical store files are present and match their hashes. The tar archive contains 35 additional AppleDouble sidecar files that are not listed in the per-file hash manifest; the delivered package is therefore not fully hash-bound as reported. The logical store tree digest remains internally consistent.",
+  "evidencePaths": [
+    "validation/rc10/candidate-runtime/s02-current-20260927-01/provider-readback/pk-store-s02-rc10val52-candidate.tar.gz",
+    "validation/rc10/candidate-runtime/s02-current-20260927-01/provider-readback/archive-file-hashes.txt",
+    "validation/rc10/candidate-runtime/s02-current-20260927-01/provider-readback/refreshed-product-knowledge-with-delta-report.md"
+  ],
+  "executionBoundary": "Read-only inspection only; no archive, source, issue, ProductKnowledge, or WorkspaceKnowledge content altered by this check.",
+  "requestedDisposition": "Make the current verifier aware of the actual archive member-count mismatch if it can still incorporate it without a concurrent run. Do not dispatch a Curator correction while Verifier is active. Bind the finding to the current gate; after Verifier completion, if the finding is not already dispositioned, do not declare S02 PASS. Request one minimal Curator correction excluding AppleDouble sidecars, regenerate archive and complete per-file hashes/report, preserve revision 1, then Reviewer and Verifier sequentially against the corrected revision.",
+  "reviewerGate": {
+    "identifier": "RC10VAL-53",
+    "id": "01a0dfc6-cc90-7b30-881e-01427463a52c",
+    "runId": "01a0dfc6-ccad-7a24-a27d-1a612b14093a",
+    "outcome": "VERDICT_PASS",
+    "reviewedRevision": 9,
+    "terminalStatus": "PENDING integration fan-in"
+  },
+  "verifierGate": {
+    "identifier": "RC10VAL-54",
+    "id": "01a0dfc9-fdea-7240-9d64-3f389bc9c492",
+    "runId": "01a0dfc9-fe02-71ed-a179-ac9ff7e5e212",
+    "status": "RUNNING",
+    "startedAtUtc": "2026-09-26T22:15:52Z"
+  },
+  "reviewTiming": "The P2 finding was found during the Verifier gate, after Reviewer VERDICT_PASS for Curator revision 9. Do not treat the review verdict as validation of full archive member coverage."
+}

@@ -1,0 +1,44 @@
+{
+  "proposalRef": "rc10wk-s01-candidate-identity-evidence-attribution-20260927-01",
+  "workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+  "sourceRefs": [
+    "learningSource:rc10-local-s01-learning-source-20260927-01",
+    "issue:01a0df4e-032b-733c-926b-68bb722fcece",
+    "issue:01a0df50-0e67-7971-bd40-1b0f62f09965",
+    "issue:01a0df54-8ef7-7da9-a159-e22150a02e23",
+    "issue:01a0df59-9365-7282-9f0c-b1321ff2d6f1",
+    "comment:01a0df52-3940-735a-b68b-56ee5e6c142b",
+    "comment:01a0df57-8741-7a09-a262-ee4d94ce2e0a",
+    "comment:01a0df5c-a57e-73d2-a902-57960ea80987",
+    "comment:01a0df5e-80c7-7e21-a122-8c2704c3ba66",
+    "sha256:902a5e97d3de9185ea22a36687823a4e1997d7e2d13c7c8e2f48f0b1a0ec4267",
+    "sha256:4c4125269788178dba6a605952761cba94b4deeb1d50d10dcfd382cadab8b867"
+  ],
+  "knowledgeType": "PROCEDURAL",
+  "statement": "Procedure for preserving candidate/mission/run-envelope identity and reporting heterogeneous gate outcomes without promotion in this workspace's RC10 validation flow, as demonstrated by the independently reviewed (PASS@r1) and verified (VERIFIED@r1) S01 candidate-20260927-01 evidence: (1) bind every deliverable to exact input identities by digest (candidate-input-manifest SHA-256 and store archive SHA-256) and report the producer's run-envelope identity verbatim — when the run envelope names candidate 20260926-01 while the mission and archive bind 20260927-01, preserve both identities as a disclosed limitation and never silently repair or unify them; acceptance of a disclosed mismatch is a Reviewer/Verifier finding, not a Curator edit. (2) Keep distinct gate outcomes separate: schema validator exit 0 (44 records) and fixture node --test exit 1 (seeded missing openSelectedChart export) are independent results — validator PASS must never be reported or consumed as software PASS, and a seeded fixture defect is neither a store/schema failure nor a repair mandate. (3) Label runtime instruction-consumption claims UNVERIFIED when only configured deployment readback is available — persisted configuration proves configuration, not per-run loaded bytes; do not infer consumption from a role's self-report or from a passing result. (4) Keep unadjudicated product-context conflicts (chartLimits().max 10 vs 1000; openSelectedChart vs selectChart, RC10VAL-8/RC10VAL-9) as background references with no product-truth assertion on either side.",
+  "scope": "WORKSPACE",
+  "applicability": "Isolated Validation project a3f129fa-4028-4341-98dc-c8ec20c468ae and the pinned RC10 validation workflow only; visibility WORKSPACE_AUTHORIZED; validity ends 2026-09-27T23:59:59+08:00; bound to candidate RC10-local-candidate-20260927-01 via manifest digest 902a5e97d3de9185ea22a36687823a4e1997d7e2d13c7c8e2f48f0b1a0ec4267 and archive digest 4c4125269788178dba6a605952761cba94b4deeb1d50d10dcfd382cadab8b867; source revision Chart Viewer 2eff5f9f84ca709684bfe0b7c90102268f07a0f0; unknown applicability excludes this guidance.",
+  "limitations": [
+    "Derived from a synthetic validation workspace and its disposable fixtures; not a production procedure.",
+    "S01 producer run envelope named candidate RC10-local-candidate-20260926-01 while the parent mission and attached archive bind 20260927-01; the identity mismatch is preserved as a disclosed finding (Reviewer low-1, accepted non-blocking), not repaired or hidden.",
+    "Per-run profile/addendum consumption is UNVERIFIED: configured deployment readback only proves persisted configuration; no provider evidence of the effective loaded bytes exists.",
+    "Fixture node --test exits 1 (missing openSelectedChart export) — an unresolved seeded contract defect; validator exit 0 is not a software PASS, and the two outcomes are reported separately.",
+    "S01 (RC10VAL-37) remains in_review; Human DONE is not asserted, and this capture does not prove future reuse.",
+    "RC10VAL-8 (issue:01a0dd1a-1ad3-7315-8e87-91b76ee361ab, chartLimits max=10 vs code=1000) and RC10VAL-9 (issue:01a0dd1a-2086-76db-9bc5-e3bd0ef7f2ad, missing openSelectedChart export) are product-context background references only; no product truth is asserted on either side; both product issues remain unresolved and unchanged.",
+    "conflictRefs is empty by the same governance classification as record rc10wk-s01-verified-slice-procedure-20260926-01 (C3 Verifier): the two product-context refs are evidence background, not conflicts of this WORKSPACE procedural record.",
+    "Applicability is restricted to the isolated Validation project a3f129fa-4028-4341-98dc-c8ec20c468ae and the pinned RC10 validation workflow; unknown applicability excludes this record."
+  ],
+  "evidenceRefs": [
+    "comment:01a0df52-3940-735a-b68b-56ee5e6c142b",
+    "comment:01a0df57-8741-7a09-a262-ee4d94ce2e0a",
+    "comment:01a0df5c-a57e-73d2-a902-57960ea80987",
+    "comment:01a0df5e-80c7-7e21-a122-8c2704c3ba66",
+    "run:01a0df54-8f0d-7527-86d5-350f4228cbd5",
+    "run:01a0df59-9381-790e-aac1-4100ec92c4f2",
+    "attachment:01a0df52-3797-7efb-98ee-ed3db148ed05",
+    "attachment:01a0df52-3861-7803-b743-c62561f07cd6",
+    "sha256:4c4125269788178dba6a605952761cba94b4deeb1d50d10dcfd382cadab8b867",
+    "sha256:902a5e97d3de9185ea22a36687823a4e1997d7e2d13c7c8e2f48f0b1a0ec4267"
+  ],
+  "conflictRefs": []
+}

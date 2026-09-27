@@ -1,0 +1,29 @@
+{
+  "config": {},
+  "content": "---\nname: root-cause-debugging\ndescription: Use for test failures, bugs, build failures, performance regressions, integration failures, or unexpected behavior; requires evidence and a confirmed root-cause hypothesis before a fix (S05/S06/S10)\n---\n\n# Root-Cause Debugging\n\nCore rule: **no fix before evidence supports a root cause.**\n\n## Phase 1 — Reproduce and bound\n\n- capture exact symptom, environment, revision, and reproduction;\n- read the complete error/trace;\n- determine reproducibility;\n- identify recent changes;\n- for multi-component systems, capture evidence at each boundary.\n\n## Phase 2 — Trace and compare\n\n- trace bad state backward toward its origin;\n- find a comparable working path;\n- list observable differences;\n- distinguish correlation from causation.\n\n## Phase 3 — Hypothesis\n\nMaintain one active hypothesis at a time:\n\n```text\nI believe \u003ccause\u003e because \u003cevidence\u003e.\nIf true, \u003cminimal observation/change\u003e should produce \u003cexpected result\u003e.\n```\n\nRecord hypotheses with:\n\n```bash\npython3 scripts/hypothesis_log.py add --cause \"...\" --evidence \"...\" --test \"...\"\n```\n\nA failed hypothesis must be closed before another one is promoted.\n\n## Phase 4 — Fix\n\n- first create a regression reproduction/test when feasible;\n- apply one root-cause fix;\n- run the proving test plus the relevant suite;\n- inspect for secondary failures;\n- attach fresh evidence.\n\nAfter three materially different failed fix attempts, stop and escalate the architecture assumption instead of stacking a fourth speculative patch.\n\n## Output\n\nUse `templates/rca-report.md`.\n\nFor S10, this skill complements `incident-response`:\n- incident-response manages command, containment, timeline, and recovery;\n- root-cause-debugging proves the technical cause.\n",
+  "created_at": "2026-09-26T09:13:11Z",
+  "created_by": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+  "description": "Use for test failures, bugs, build failures, performance regressions, integration failures, or unexpected behavior; requires evidence and a confirmed root-cause hypothesis before a fix (S05/S06/S10)",
+  "files": [
+    {
+      "content": "#!/usr/bin/env python3\nimport argparse, json, pathlib, time\np=argparse.ArgumentParser()\nsub=p.add_subparsers(dest=\"cmd\", required=True)\na=sub.add_parser(\"add\")\na.add_argument(\"--cause\", required=True); a.add_argument(\"--evidence\", required=True); a.add_argument(\"--test\", required=True)\na.add_argument(\"--file\", default=\".engcim-hypotheses.jsonl\")\nl=sub.add_parser(\"list\"); l.add_argument(\"--file\", default=\".engcim-hypotheses.jsonl\")\nargs=p.parse_args()\nf=pathlib.Path(args.file)\nif args.cmd==\"add\":\n    rec={\"ts\":int(time.time()),\"cause\":args.cause,\"evidence\":args.evidence,\"test\":args.test,\"status\":\"OPEN\"}\n    with f.open(\"a\",encoding=\"utf-8\") as h: h.write(json.dumps(rec,ensure_ascii=False)+\"\\n\")\n    print(\"RECORDED\")\nelse:\n    if not f.exists(): raise SystemExit(0)\n    print(f.read_text(encoding=\"utf-8\"),end=\"\")\n",
+      "created_at": "2026-09-26T09:13:11Z",
+      "id": "cfb2f35a-c24c-471b-8bab-cafcd2a91f1f",
+      "path": "scripts/hypothesis_log.py",
+      "skill_id": "49efa131-9247-48f9-8351-2a53b576b319",
+      "updated_at": "2026-09-26T09:13:11Z"
+    },
+    {
+      "content": "# Root Cause Analysis\n\n## Symptom\n## Reproduction\n## Evidence\n## Rejected hypotheses\n## Confirmed root cause\n## Fix\n## Regression evidence\n## Remaining uncertainty\n",
+      "created_at": "2026-09-26T09:13:12Z",
+      "id": "25f1b1b0-5c69-4528-93fc-eba4c25cf274",
+      "path": "templates/rca-report.md",
+      "skill_id": "49efa131-9247-48f9-8351-2a53b576b319",
+      "updated_at": "2026-09-26T09:13:12Z"
+    }
+  ],
+  "id": "49efa131-9247-48f9-8351-2a53b576b319",
+  "name": "root-cause-debugging",
+  "updated_at": "2026-09-26T09:13:11Z",
+  "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+}

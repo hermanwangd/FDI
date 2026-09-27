@@ -1,0 +1,37 @@
+[
+  {
+    "attachments": [],
+    "author_id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+    "author_type": "member",
+    "content": "## Supervisor acceptance observation — review PASS is not governance approval\n\n[@Swarm Orchestrator](mention://agent/809ffefe-3fc4-4686-8401-a8dd50285840)\n\nC2 PASS verifies proposal content and honest conflict preservation. It does not establish capture eligibility. The exact r1 proposal digest e24699c9e01d00027f6e28cf9af367d47b441a738c0db9c581fad731e61b6cb0 still has two nonempty conflictRefs whose issues remain unresolved. Under the installed addendum and this Mission's policy, an unresolved-conflict proposal must not become an APPROVED reusable capture merely because review/verification passed. Preserve this version and its actual decision, including DEFERRED if still ineligible.\n\nHave the existing independent gate assess the distinction between conflicts of the proposed procedural statement and unresolved product-context issues. If these refs are context only, any correction must be explicit and revision-bound: Curator may refine the procedural proposal and retain all original product-conflict references in sourceRefs/limitations with an explicit classification rationale; the product issues remain unresolved and unchanged. A changed proposal needs a new digest and affected independent gates before a new decision. Do not silently clear conflictRefs, reclassify them just to obtain PASS, close the product conflicts, invent a schema exemption, or treat the old review as approving new content. A defensible deferred outcome is valid evidence; approval must follow actual content/evidence.\n\nFold this into the existing C3/governance path without restarting active runs or adding a parallel worker. Preserve the existing correction/time bounds and all required capture/replay/reuse checks. This restates the original conflict-free capture requirement; it adds no new authority or product-truth decision.",
+    "created_at": "2026-09-26T12:36:13Z",
+    "id": "01a0ddb7-4ed1-799f-a91f-5203396595b1",
+    "issue_id": "01a0dda7-01b9-76f7-b53b-e2e629a042c2",
+    "parent_id": null,
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "type": "comment",
+    "updated_at": "2026-09-26T12:36:13Z"
+  },
+  {
+    "attachments": [],
+    "author_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+    "author_type": "agent",
+    "content": "## Fan-in — C2 PASS（revision 1）recorded; C3 Verifier dispatched\n\n- **C1** (Curator proposal): delivered r1 + review **PASS@1** (digest independently re-derived by Reviewer, all six criteria satisfied). `terminalStatus` stays **PENDING** — completes only when C3 verification comes back VERIFIED on this revision.\n- **C2** (Reviewer gate): **COMPLETED** — verdict PASS（revision 1）recorded (`reviewedRevision=1`, resultRef `01a0ddb5-4066…` on RC10VAL-13). The review also covered the supplemental workspace-selection finding; no evidence ref rested solely on an ambiguous search.\n- **C3** (Verifier gate): **DISPATCHED** — RC10VAL-14, run `01a0ddb6-2e69-7020-bdf3-d8354d8b6b5c` running. Scope: independently verify the proposal's evidence claims (digest re-derivation, exact-ID ref resolution, 3-claim/3-record fit, conflict preservation, chronology limitation, workspace-scope check). Package mandates explicit `--workspace-id` on every provider call per the Supervisor's requirement.\n\nSequence continues: C3 verdict → explicit APPROVED/DEFERRED decision (binding digest + recordKey/version) → combined C4/C5/C6 Curator persistence/replay/reconciliation → C7/C8 post-write gates → integration. Parent stays `in_progress`.",
+    "created_at": "2026-09-26T12:36:15Z",
+    "id": "01a0ddb7-581b-7d50-aa3f-af149b307e4f",
+    "issue_id": "01a0dda7-01b9-76f7-b53b-e2e629a042c2",
+    "parent_id": "01a0ddb5-7916-7076-ac4a-b854149464bc",
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0ddb5-7926-7324-9c5d-0bbc4b422896",
+    "type": "comment",
+    "updated_at": "2026-09-26T12:36:15Z"
+  }
+]

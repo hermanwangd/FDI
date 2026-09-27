@@ -1,0 +1,37 @@
+{
+  "config": {},
+  "content": "---\nname: release-management\ndescription: Use when planning a release — semver decision, changelog, release checklist, canary/gray rollout strategy, rollback plan, or executing the streamlined hotfix process (S08/S10)\n---\n\n# Release Management（發布管理）\n\n掛給 Swarm Release Manager 的發布 skill。負責 S08 的發布策略與守門、S10 的 hotfix 精簡流程：semver 判定、changelog、發布檢查清單、灰度與回滾。場景流程見 `docs/scenarios.md` S08／S10。\n\n**核心原則：發布是可回滾的變更，不是不可逆的交付；Release Manager 是守門員——測試未全綠、回滾方案未備，就不排發布。**\n\n## 發布流程（標準，七步）\n\n1. **收斂範圍**：列本次進入發布的 issue／PR 清單；每項確認已過 stage-gate（Reviewer PASS/WARNING 綁定最新 revision）與 Verifier 執行證據。**測試未全綠不排發布**（S06 護欄）。\n2. **semver 判定**：按下表對全部變更取**最高**等級，決定版本號；判定理由寫進 changelog。\n3. **產出 changelog**：套 `templates/changelog.md`，逐項歸類（Added/Changed/Fixed/Removed/Security）；breaking change 置頂並附遷移指引。\n4. **發布檢查清單**：套 `templates/release-checklist.md` 逐項勾選；未勾項寫豁免理由（誰批准）。\n5. **回滾方案**：套 `templates/rollback-plan.md`——回滾觸發條件（觀察什麼指標、閾值）、回滾步驟、資料相容性（migration 可逆性）必填。\n6. **灰度發布**：按下節策略執行；每個灰度階段有觀察期與通過條件，不合格即回滾。\n7. **發布後確認**：SRE 監控確認（SLO 指標正常、無新告警）後才算發布完成；公告與文件更新（release notes 經 S01 入庫 `src-engineering`／`src-product-docs`）。\n\n## semver 判定表\n\n| 變更內容 | 級別 |\n|---|---|\n| 向後不相容的 API／契約／schema 變更（刪欄位、改語意、改預設行為） | MAJOR |\n| 向後相容的新功能（新端點、新欄位 optional、新 Capability） | MINOR |\n| 向後相容的缺陷修復、效能改善、文件 | PATCH |\n| 僅內部重構、無行為變更 | PATCH（或併入下次，不單獨發版） |\n\n判定就高不就低：一次發布含任何 MAJOR 級變更，整版號升 MAJOR。不確定是否相容時**當不相容處理**（升一級），並在 changelog 註明疑慮。\n\n## 灰度策略\n\n| 策略 | 適用 | 階段骨架 |\n|---|---|---|\n| canary（小流量） | 預設；有明確健康指標的服務 | 5%（觀察 ≥30min）→ 25% → 50% → 100%；每階段過條件才進 |\n| blue/green | 需快速整體切換且資源允許 | 全量部署 green → smoke 驗證 → 切流量 → 保留 blue 至觀察期滿 |\n| feature flag | 新功能可獨立開關時 | 部署關閉 → 內部開 → 分批開 → 全開；flag 移除另排清潔工單 |\n\n共同規則：每階段寫明觀察指標（錯誤率／延遲／business KPI）、通過條件、觀察期長度；DB migration 與 app 發布的順序（先相容 schema 再 app）在 rollback-plan 中一併定義。\n\n## Hotfix 精簡流程（S10 專用）\n\n標準流程可縮短、**不可省略的環節**：\n\n1. 範圍收斂為單一根因修復（不夾帶其他變更）；版本號 PATCH（或按 semver 表）。\n2. stage-gate 仍過：Reviewer 審查＋QA 針對性回歸（含新 regression case）＋Verifier 恢復證據——可平行加速，不得跳過。\n3. changelog 與 rollback-plan 仍必填（rollback-plan 可引用「回滾＝revert 本 hotfix commit」但資料相容性仍要寫）。\n4. 灰度可縮短觀察期（事故中由 IC 與 Release Manager 共同決定並記錄理由），但保留至少一個小流量階段。\n5. 發布後 SRE 監控確認；RCA 走 incident-response 的 postmortem 流程。\n\n## 輸出檢查清單\n\n- [ ] 發布範圍逐項有 stage-gate 與 Verifier 證據；測試全綠\n- [ ] semver 判定有理由；changelog 逐項歸類、breaking change 置頂附遷移指引\n- [ ] release-checklist 全勾或豁免有批准人\n- [ ] rollback-plan 含觸發條件（指標＋閾值）、步驟、資料相容性\n- [ ] 灰度每階段有觀察指標／通過條件／觀察期；發布後 SRE 已確認\n- [ ] release notes 已入庫回流 ProductKB\n",
+  "created_at": "2026-09-26T09:13:08Z",
+  "created_by": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+  "description": "Use when planning a release — semver decision, changelog, release checklist, canary/gray rollout strategy, rollback plan, or executing the streamlined hotfix process (S08/S10)",
+  "files": [
+    {
+      "content": "# Changelog\n\n本專案遵循 semver；格式依 Keep a Changelog 慣例（Added/Changed/Deprecated/Removed/Fixed/Security）。\n\n## [\u003c新版本\u003e] - \u003cYYYY-MM-DD\u003e\n\n\u003e semver 判定：\u003c級別\u003e（理由：\u003c對照判定表，本次最高級變更是什麼\u003e）\n\n### ⚠ Breaking Changes（MAJOR 時必填，置頂）\n\n- \u003c變更描述\u003e — 遷移指引：\u003c怎麼改、期限、相容期\u003e（\u003cPR/issue 連結\u003e）\n\n### Added\n\n- \u003c新功能\u003e（\u003cPR/issue 連結\u003e）\n\n### Changed\n\n- \u003c行為變更\u003e（\u003c連結\u003e）\n\n### Fixed\n\n- \u003c缺陷修復\u003e（\u003c連結\u003e；對應 regression case：\u003cTC-xxx\u003e）\n\n### Security\n\n- \u003c安全修復；細節揭露程度依安全政策\u003e（\u003c連結\u003e）\n\n### 已知問題 / Open Findings\n\n- \u003cWARNING 級 stage-gate 的附帶風險揭露（Z11：不靜默）\u003e\n",
+      "created_at": "2026-09-26T09:13:08Z",
+      "id": "77b8c97f-47ed-47fb-bafa-3c9fb26542a2",
+      "path": "templates/changelog.md",
+      "skill_id": "4b29ae1d-a039-41f8-a7f2-fdda7368796f",
+      "updated_at": "2026-09-26T09:13:08Z"
+    },
+    {
+      "content": "# 發布檢查清單：\u003c版本號\u003e（\u003cYYYY-MM-DD\u003e）\n\n\u003e 逐項勾選；未勾項必須在「豁免」欄寫理由與批准人。\n\n## A. 守門（未全綠不排發布）\n\n- [ ] 發布範圍清單已定（issue／PR 連結逐項列出）\n- [ ] 每項已過 Reviewer stage-gate（PASS/WARNING 綁定最新 revision）\n- [ ] 執行結果聲明皆有 Verifier 證據\n- [ ] QA 測試全綠（smoke＋regression；報告連結：）\n- [ ] 安全審查通過（涉認證／權限／外部介面時；報告連結：）\n- 豁免：\u003c項目＋理由＋批准人；無則寫「無」\u003e\n\n## B. 版本與文件\n\n- [ ] semver 判定完成（級別：MAJOR/MINOR/PATCH；理由已記錄）\n- [ ] changelog 逐項歸類；breaking change 置頂附遷移指引\n- [ ] rollback-plan 已填（觸發條件／步驟／資料相容性）\n- [ ] 相關文件／API 文件已更新\n\n## C. 執行\n\n- [ ] 灰度策略已定（canary / blue-green / feature flag）＋每階段觀察指標與通過條件\n- [ ] DB migration 順序已定（先相容 schema 後 app；可逆性已確認）\n- [ ] secrets／config 差異已核對（secrets 一律環境變數引用，不進套件明文）\n- [ ] 監控告警在發布期間未被靜音（或靜音有期限與 owner）\n\n## D. 發布後\n\n- [ ] SRE 監控確認（SLO 正常、無新告警；觀察期 ≥ __ 分鐘）\n- [ ] 公告發出（利害關係人／使用者公告，依變更等級）\n- [ ] release notes 入庫 ProductKB（src-engineering／src-product-docs；條目連結：）\n- [ ] 灰度殘留清理（feature flag 移除工單／blue 環境回收）\n",
+      "created_at": "2026-09-26T09:13:09Z",
+      "id": "76c837a2-b239-40fb-9a2c-d774105bfc1a",
+      "path": "templates/release-checklist.md",
+      "skill_id": "4b29ae1d-a039-41f8-a7f2-fdda7368796f",
+      "updated_at": "2026-09-26T09:13:09Z"
+    },
+    {
+      "content": "# 回滾方案：\u003c版本號／hotfix 名\u003e\n\n- 對應發布：\u003crelease 連結\u003e ｜ 負責：Swarm Release Manager\n- 回滾決策者：\u003c誰有權喊回滾（事故中＝IC＋Release Manager 共同）\u003e\n\n## 1. 回滾觸發條件（可觀察、有閾值）\n\n| 指標 | 閾值 | 觀察視窗 | 動作 |\n|---|---|---|---|\n| 錯誤率 | \u003e __%（或 burn rate \u003e __） | __ 分鐘 | 立即回滾 |\n| p95 延遲 | \u003e __ms 且持續 | __ 分鐘 | 評估後回滾 |\n| business KPI（如轉換率） | 下降 \u003e __% | __ 分鐘 | 評估後回滾 |\n\n\u003e 觸發條件必須是監控可觀察的；「覺得不對勁」不是條件。\n\n## 2. 回滾步驟（逐步、可照做）\n\n1. \u003c停止灰度推進／凍結流量切換\u003e\n2. \u003c回滾指令或操作（revert commit / 切回 blue / 關 feature flag）\u003e\n3. \u003cDB 處置：見 §3\u003e\n4. \u003c驗證回滾成功：指標回到 baseline；Verifier 貼證據\u003e\n5. \u003c公告與時間線紀錄（事故中走 incident-response 時間線紀律）\u003e\n\n## 3. 資料相容性（必填，最常踩坑）\n\n- migration 可逆性：可逆 / 不可逆（不可逆的降級路徑：\u003c寫明\u003e）\n- 新舊版共存期間的 schema 相容性：\u003c舊版能否讀新版寫的資料\u003e\n- 已寫入的新格式資料如何處理：\u003c遷移回／保留／手動修復\u003e\n\n## 4. 灰度階段對應\n\n| 灰度階段 | 該階段的回滾動作 | 預估耗時 |\n|---|---|---|\n| 5% canary | 切回 0% | \u003c估\u003e |\n| 100% 全量 | \u003c完整回滾步驟 §2\u003e | \u003c估\u003e |\n\n## 5. 演練紀錄\n\n- [ ] 回滾方案已試跑／桌面演練（日期：；結果：）——未演練的回滾方案視為不存在\n",
+      "created_at": "2026-09-26T09:13:10Z",
+      "id": "107ad4de-19ce-4c98-b732-41010806ee19",
+      "path": "templates/rollback-plan.md",
+      "skill_id": "4b29ae1d-a039-41f8-a7f2-fdda7368796f",
+      "updated_at": "2026-09-26T09:13:10Z"
+    }
+  ],
+  "id": "4b29ae1d-a039-41f8-a7f2-fdda7368796f",
+  "name": "release-management",
+  "updated_at": "2026-09-26T09:13:08Z",
+  "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+}

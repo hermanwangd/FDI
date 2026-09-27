@@ -1,0 +1,36 @@
+# pk/architecture/ 範例：chart-management-api（C4 Container 層；schema: pk/_schema/architecture-entry.schema.json）
+id: arch:spc/chart-management-api
+pkClass: pk-architecture
+validationState: PROVISIONAL
+confidence: auto-observation
+sourceClass: src-code-delivery
+evidence:
+  - ev:repo-analysis-chart-api-2025-01
+governanceIssueRef: null
+updatedAt: "2025-01-20T09:05:00Z"
+supersedes: null
+supersededBy: null
+
+c4Level: container
+name: chart-management-api
+parent: null
+children: []
+responsibility:
+  owns:
+    - SPC Chart 的 CRUD 與組態管理 REST API
+    - Chart 資料來源與管制界限設定的持久化
+  excludes:
+    - Chart 的前端渲染（屬 chart-viewer-web）
+    - 管制規則運算（屬 spc-rules-engine）
+relationships:
+  - direction: outgoing
+    target: spc-rules-engine
+    description: 透過 Helm values 中的 RULES_ENGINE_URL 呼叫規則引擎計算管制界限
+interfaces:
+  - id: if:chart-management-api/charts-rest
+    name: Charts REST API
+    kind: api
+    specRef: chart-management-api/openapi/charts.yaml
+constraints:
+  - 僅經由 REST 對外提供能力，不直接暴露資料庫
+decisions: []

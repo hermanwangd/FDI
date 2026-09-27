@@ -1,0 +1,29 @@
+RC10VAL-52 S02 replay / idempotence evidence (deterministic re-run)
+base = S01 candidate store (pk-store-s01-rc10val37-candidate.tar.gz, sha256 4c412526…8b867)
+
+--- RUN 1: apply(v1,v2) on S01 base, ts=2026-09-26T22:07:18Z ---
+{
+ "events": [
+  "INGESTED s02-source-v1",
+  "INGESTED s02-source-v2"
+ ],
+ "treeSha256": "410c08c0e043193d7744668b5c8c845f1f4d2d2dde38c9c8c04ba97ac1581e8c"
+}
+
+--- RUN 2 (replay): apply(same v1, same v2) on refreshed store, ts=2026-09-26T22:08:30Z ---
+{
+ "events": [
+  "DUPLICATE s02-source-v1: source digest already bound in store; no new entry, no observation, no governance change",
+  "DUPLICATE s02-source-v2: source digest already bound in store; no new entry, no observation, no governance change"
+ ],
+ "treeSha256": "410c08c0e043193d7744668b5c8c845f1f4d2d2dde38c9c8c04ba97ac1581e8c"
+}
+
+run1 tree sha256: 410c08c0e043193d7744668b5c8c845f1f4d2d2dde38c9c8c04ba97ac1581e8c
+run2 tree sha256: 410c08c0e043193d7744668b5c8c845f1f4d2d2dde38c9c8c04ba97ac1581e8c
+IDEMPOTENT (no duplicate logical entry, no erased source history, no resolved conflict, no governance change): True
+v1 entry preserved as STALE history with supersededBy link: True
+v1 source evidence retained with stale: true (double-track supersession): True
+s02 evidence record count after replay (dedup, expect 2): 2
+seeded conflicts retained unadjudicated (chartLimits 10-vs-1000 note intact): True
+open-selected-chart gap note intact: True

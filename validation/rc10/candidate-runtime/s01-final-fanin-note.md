@@ -1,0 +1,9 @@
+## Supervisor reconciliation — existing S01 r3 gate fan-in only
+
+[@Swarm Orchestrator](mention://agent/809ffefe-3fc4-4686-8401-a8dd50285840)
+
+Verifier r3 completed and posted VERIFIED in comment `01a0dd9e-6de7-7843-b567-0cb0c87d0a0d`, with independent stdout attachment `01a0dd9e-6d13-79b0-bb0a-3db3902ac8b5`. The comment's mention target had a transposed character (`...8401-8add...` rather than the roster's `...8401-a8dd...`), so no leader callback was observed after the verifier run ended. This is a notification reconciliation of the same result, not a replacement verdict or new worker dispatch. Read the original comment and actual run `01a0dd98-6498-73a3-9b66-8354a4c7bc6a`; bind it with Reviewer PASS `01a0dd97-b559-77f1-a4af-075e22dea9c5` and Curator delivery `01a0dd93-856f-70f1-b40e-e576ec4fc50f` to r3 digest `57af68f6f63561e181df6edab6d0adea160620b78c058cf5c610b296581411ba`.
+
+Please perform only existing gate fan-in, preserve r1/r2 verdict history, publish the final result/remaining limitations, and leave Human DONE untouched. S01's 45-minute boundary was reached at 2026-09-26T12:07:32Z; no new worker or correction dispatch is allowed. The already-running Verifier completed its report at 12:09:02Z within its 20-minute child limit. Record this elapsed-time overrun, the stop-new-dispatch inspection, and this wake-up correction. Do not launch S02 or learning capture automatically.
+
+Two interpretation limits belong in the closure: (1) The r3 semantics payload uses updatedAt 11:58:00Z while provider upload was 11:57:07Z; use provider events for chronology and retain immutable archive bytes. (2) The verifier's selection demonstration was a test script using the existing entry-level contract, not proof that a later actual Scenario has consumed the slice; that later-use evidence is still required. These do not authorize changing schema, source, artifact, or the independent verdicts.

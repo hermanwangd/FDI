@@ -1,0 +1,29 @@
+{
+  "config": {},
+  "content": "---\nname: artifact-consistency\ndescription: Use at artifact handoffs to detect missing trace links, stale revisions, contradictory decisions, and unimplemented requirements across Intention Spec, design, Development Result, Verification Result, and change artifacts (S04-S08)\n---\n\n# Artifact Consistency\n\nPurpose: enforce consistency across delivery artifacts without creating a second product specification system.\n\n## Core checks\n\nAt every handoff:\n- every referenced artifact exists;\n- every consumed revision is current;\n- required upstream decisions are represented downstream;\n- downstream artifacts do not silently contradict upstream constraints/non-goals;\n- each acceptance requirement has an implementation and/or verification disposition;\n- gaps are explicit, never inferred away.\n\n## Trace manifest\n\nUse `templates/artifact-trace.yaml`.\n\nRun:\n\n```bash\npython3 scripts/check_traceability.py \u003cartifact-trace.yaml\u003e\n```\n\nThe checker validates reference integrity and current-revision links. Semantic contradictions still require Reviewer judgment.\n\n## Typical handoffs\n\n```text\nIntention Spec\n→ Technical Design\n→ Development Result\n→ Verification Result\n→ Reviewed Change\n→ Change Execution Result\n```\n\nThis skill does not replace those artifacts. It verifies the chain.\n",
+  "created_at": "2026-09-26T09:12:23Z",
+  "created_by": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+  "description": "Use at artifact handoffs to detect missing trace links, stale revisions, contradictory decisions, and unimplemented requirements across Intention Spec, design, Development Result, Verification Result, and change artifacts (S04-S08)",
+  "files": [
+    {
+      "content": "#!/usr/bin/env python3\nimport sys, pathlib, yaml\ndef main():\n    if len(sys.argv)!=2:\n        print(\"usage: check_traceability.py \u003ctrace.yaml\u003e\",file=sys.stderr); return 2\n    d=yaml.safe_load(pathlib.Path(sys.argv[1]).read_text(encoding=\"utf-8\")) or {}\n    arts={a.get(\"ref\"):a for a in d.get(\"artifacts\") or [] if isinstance(a,dict) and a.get(\"ref\")}\n    errors=[]\n    for l in d.get(\"links\") or []:\n        f,t=l.get(\"from\"),l.get(\"to\")\n        if f not in arts: errors.append(f\"missing from artifact {f}\")\n        if t not in arts: errors.append(f\"missing to artifact {t}\")\n        if f in arts and l.get(\"fromRevision\") is not None and arts[f].get(\"revision\") != l.get(\"fromRevision\"):\n            errors.append(f\"stale link {f}: expected revision {arts[f].get('revision')} got {l.get('fromRevision')}\")\n    for r in d.get(\"requirements\") or []:\n        refs=r.get(\"artifactRefs\") or []\n        if not refs: errors.append(f\"requirement {r.get('id','?')} has no artifactRefs\")\n        for ref in refs:\n            if ref not in arts: errors.append(f\"requirement {r.get('id','?')} references missing {ref}\")\n    if errors:\n        print(\"FAIL\"); [print(\"-\",e) for e in errors]; return 1\n    print(\"PASS artifact trace\")\n    return 0\nif __name__==\"__main__\":\n    raise SystemExit(main())\n",
+      "created_at": "2026-09-26T09:12:23Z",
+      "id": "8acb3481-a7f8-481a-a0c4-b3dec39c992a",
+      "path": "scripts/check_traceability.py",
+      "skill_id": "ee94ee8e-9d20-44b8-ac49-7d85c6db005f",
+      "updated_at": "2026-09-26T09:12:23Z"
+    },
+    {
+      "content": "artifacts:\n  - ref: INT-1\n    revision: 2\n  - ref: DEV-1\n    revision: 1\nlinks:\n  - from: INT-1\n    fromRevision: 2\n    to: DEV-1\n    relation: IMPLEMENTED_BY\nrequirements:\n  - id: AC-1\n    artifactRefs: [DEV-1]\n",
+      "created_at": "2026-09-26T09:12:24Z",
+      "id": "ee438a7e-0d60-485d-8984-a26c2ed8e979",
+      "path": "templates/artifact-trace.yaml",
+      "skill_id": "ee94ee8e-9d20-44b8-ac49-7d85c6db005f",
+      "updated_at": "2026-09-26T09:12:24Z"
+    }
+  ],
+  "id": "ee94ee8e-9d20-44b8-ac49-7d85c6db005f",
+  "name": "artifact-consistency",
+  "updated_at": "2026-09-26T09:12:23Z",
+  "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+}

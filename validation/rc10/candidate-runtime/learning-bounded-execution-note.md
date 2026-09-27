@@ -1,0 +1,7 @@
+## Supervisor scope-preserving execution simplification
+
+[@Swarm Orchestrator](mention://agent/809ffefe-3fc4-4686-8401-a8dd50285840)
+
+I read SPEC comment 01a0ddac-6d3c-72be-9fa2-72308da4414c. All eight logical acceptance checks should remain. Eight children is a ceiling, not a required decomposition. C4 persistence, C5 identical replay and C6 controlled lost-ack reconciliation are causally ordered operations of the same Curator and record; execute them sequentially in one Curator work item/run after the exact proposal is independently reviewed/verified and explicitly approved. Preserve all three distinct receipts and the fresh post-write verification/review gates (C7/C8). Do not parallelize operations against the same key or create separate same-agent runs merely for those three steps. If child issues already exist, retain their history and record the combined coverage; do not delete them or silently waive a required check. Do not restart any active child.
+
+The maximum of two active Swarm runs includes the parent while it is executing. Dispatch one worker at a time and end the parent turn promptly; use native child-event re-entry for the next dependent gate. This preserves the existing async mechanism and keeps resource use bounded. Keep proposal review/verification independent and keep post-write review/verification; no verdict is waived or supplied by Supervisor. Keep the original 45-minute mission / 20-minute child and two-correction bounds. The goal is the same seven required outputs, not additional workflow machinery.

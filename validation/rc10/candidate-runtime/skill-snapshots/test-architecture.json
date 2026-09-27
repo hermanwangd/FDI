@@ -1,0 +1,29 @@
+{
+  "config": {},
+  "content": "---\nname: test-architecture\ndescription: Use when determining test depth from risk, mapping requirements to evidence, assessing NFR evidence, and producing a release-quality gate instead of relying on intuition (S06/S07/S08)\n---\n\n# Test Architecture\n\nPurpose: add risk-based verification and evidence traceability above `test-design`.\n\n## Risk model\n\nFor each requirement/change area:\n\n```text\nRisk score = Probability (1..3) × Impact (1..3)\n```\n\nSuggested interpretation:\n- 1–2: LOW\n- 3–4: MEDIUM\n- 6: HIGH\n- 9: CRITICAL\n\nRisk does not automatically decide release. It determines required test depth and evidence.\n\n## Verification depth\n\nChoose the cheapest level that can prove the behavior:\n- unit\n- component\n- contract\n- integration\n- end-to-end\n- operational/NFR\n\nAvoid duplicate tests at expensive levels when a cheaper level proves the same invariant.\n\n## Traceability\n\nEach acceptance requirement must map to one or more evidence records.\n\nUse `templates/quality-gate.yaml` and run:\n\n```bash\npython3 scripts/quality_gate.py \u003cquality-gate.yaml\u003e\n```\n\n## Gate outcomes\n\n- PASS — required evidence is current and all blocking criteria pass.\n- CONCERNS — no known blocking failure, but material evidence/gaps remain.\n- FAIL — blocking requirement/test/NFR failed.\n- WAIVED — explicit owner + reason + expiry exists for every waived blocker.\n\nUndefined NFR targets or missing evidence must not silently become PASS.\n\n## Relationship with existing skills\n\n- `test-design`: derives cases and coverage.\n- `runtime-qa`: executes real UI/API/service flows.\n- `verification-protocol`: independent execution evidence.\n- `test-architecture`: decides required depth, traceability, and gate.\n",
+  "created_at": "2026-09-26T09:13:27Z",
+  "created_by": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+  "description": "Use when determining test depth from risk, mapping requirements to evidence, assessing NFR evidence, and producing a release-quality gate instead of relying on intuition (S06/S07/S08)",
+  "files": [
+    {
+      "content": "#!/usr/bin/env python3\nimport sys, pathlib, yaml\ndef main():\n    if len(sys.argv)!=2:\n        print(\"usage: quality_gate.py \u003cgate.yaml\u003e\",file=sys.stderr); return 2\n    d=yaml.safe_load(pathlib.Path(sys.argv[1]).read_text(encoding=\"utf-8\")) or {}\n    concerns=[]; failures=[]\n    waivers={w.get(\"id\"):w for w in (d.get(\"waivers\") or []) if isinstance(w,dict)}\n    for r in d.get(\"requirements\") or []:\n        score=int(r.get(\"probability\",0))*int(r.get(\"impact\",0))\n        ev=r.get(\"evidence\") or []\n        statuses=[str(x.get(\"status\",\"\")).upper() for x in ev if isinstance(x,dict)]\n        rid=r.get(\"id\",\"?\")\n        if r.get(\"blocking\") and (\"FAIL\" in statuses or not statuses):\n            if rid in waivers and waivers[rid].get(\"owner\") and waivers[rid].get(\"expires\"):\n                concerns.append(f\"{rid}:WAIVED\")\n            else:\n                failures.append(f\"{rid}:blocking evidence\")\n        elif any(s in (\"CONCERNS\",\"INCONCLUSIVE\",\"STALE\",\"\") for s in statuses):\n            concerns.append(f\"{rid}:evidence concerns\")\n        if score \u003e= 6 and not ev:\n            failures.append(f\"{rid}:high risk without evidence\")\n    for n in d.get(\"nfr\") or []:\n        nid=n.get(\"id\",\"?\")\n        if not n.get(\"targetDefined\"):\n            concerns.append(f\"{nid}:target undefined\")\n        st=str(n.get(\"evidenceStatus\",\"\")).upper()\n        if st==\"FAIL\": failures.append(f\"{nid}:NFR failed\")\n        elif st not in (\"PASS\",\"WAIVED\"): concerns.append(f\"{nid}:NFR evidence {st or 'missing'}\")\n    if failures:\n        print(\"FAIL\"); [print(\"-\",x) for x in failures]; return 1\n    if concerns:\n        print(\"CONCERNS\"); [print(\"-\",x) for x in concerns]; return 3\n    print(\"PASS\"); return 0\nif __name__==\"__main__\":\n    raise SystemExit(main())\n",
+      "created_at": "2026-09-26T09:13:27Z",
+      "id": "dc31c336-c768-4d48-91ad-d1448fbfa081",
+      "path": "scripts/quality_gate.py",
+      "skill_id": "4d12657a-001d-4ae4-87c6-846b4f3dcd34",
+      "updated_at": "2026-09-26T09:13:27Z"
+    },
+    {
+      "content": "requirements:\n  - id: R-001\n    probability: 2\n    impact: 3\n    blocking: true\n    evidence:\n      - id: test-R-001\n        status: PASS\nnfr:\n  - id: latency-p95\n    targetDefined: true\n    evidenceStatus: PASS\nwaivers: []\n",
+      "created_at": "2026-09-26T09:13:28Z",
+      "id": "edd3516b-0399-489c-9b46-38a0d1b85566",
+      "path": "templates/quality-gate.yaml",
+      "skill_id": "4d12657a-001d-4ae4-87c6-846b4f3dcd34",
+      "updated_at": "2026-09-26T09:13:28Z"
+    }
+  ],
+  "id": "4d12657a-001d-4ae4-87c6-846b4f3dcd34",
+  "name": "test-architecture",
+  "updated_at": "2026-09-26T09:13:27Z",
+  "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+}

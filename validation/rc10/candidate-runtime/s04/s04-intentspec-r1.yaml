@@ -1,0 +1,90 @@
+ref: RC10VAL-29-s04-intentspec-r1
+product: "ENGCIM v0.6 Chart Viewer（SYNTHETIC_VALIDATION_FIXTURE）"
+capability: Chart Viewing
+scenario: "Open Selected Chart（一次互動開啟選取圖表）"
+currentContext: |
+  Baseline @ 2eff5f9f84ca709684bfe0b7c90102268f07a0f0（candidate RC10-local-candidate-20260926-01，
+  snapshot sha256 acaea417… / addendum sha256 2115a331…）：
+  src/interaction.js 實作 selectChart(chartList, chartId) → { selectedChartId, action: 'SELECTED' } 或 null，
+  與 classifyChartResponse(status)（404 → { status: 404, retryable: false }）。
+  src/chartViewer.js 實作 chartLimits() → { min: 0, max: 1000 }（seeded defect）與 renderChart(config)。
+  test/interaction.test.js 為 frozen 驗收資產：import { openSelectedChart }，期望
+  openSelectedChart(charts, 'chart-7') → { action: 'OPENED', chartId: 'chart-7' }；
+  並有「preserves HTTP 404 as non-retryable」測試。測試對目前實作會失敗
+  （openSelectedChart 不存在）——此矛盾為已記錄之 CONFLICTING Gap，未裁決。
+  Product intent（v2，PROVISIONAL）：期望互動為一次互動開啟選取圖表，frozen test 為 acceptance example。
+actor: "Chart Viewer 使用者（操作圖表列表的人）"
+trigger: "使用者已選取一張圖表，發出「開啟選取圖表」的單次互動"
+intent: |
+  讓使用者在一次互動中開啟所選圖表（open selected chart in one interaction），
+  並完整保留 HTTP 404 不可重試（retryable: false）的既有行為。
+  驗收對齊 frozen acceptance example：openSelectedChart(charts, 'chart-7') 回傳
+  { action: 'OPENED', chartId: 'chart-7' }。
+inScopeBehavior:
+  - "一次互動開啟選取圖表，回傳契約 { action: 'OPENED', chartId }（以 chartId 為鍵、action 為 OPENED）"
+  - "HTTP 404 回應分類維持 { status: 404, retryable: false }（不可重試）"
+  - "既有 selectChart 的 SELECTED/null 行為保留（相容，不回退）"
+  - "renderChart 與 chartLimits 行為在 r1 不變"
+expectedDelta:
+  - "由「openSelectedChart 不存在、frozen test 失敗」到「openSelectedChart(charts, chartId) 一次互動回傳 { action: 'OPENED', chartId }，frozen test 通過」"
+  - "HTTP 404 retryable false 行為零變動（維持 non-retryable）"
+constraints:
+  - "HTTP 404 維持 retryable false（README、src/interaction.js:6-11、interaction.test.js 三處一致）"
+  - "初始 S05 r1 變更範圍僅限 src/interaction.js；src/chartViewer.js 在 r1 凍結"
+  - "seeded defect chartLimits().max=1000 刻意在 r1 變更範圍之外，r1 不得更正；chartLimits max=10 維持 frozen 產品期望"
+  - "本 IntentSpec 為 definition/decomposition：不改動任何 repo 原始碼/測試、ProductKB、WorkspaceKnowledge、Skill/Core/Control"
+nonGoals:
+  - "更正 chartLimits max=1000 seeded defect（屬 Finding F1 擴大範圍後的事，r1 不做）"
+  - "修改 src/chartViewer.js、test/interaction.test.js 或其他任何檔案（r1 凍結）"
+  - "裁決兩個 CONFLICTING Gap（RC10VAL-8、RC10VAL-9；裁決權在人類）"
+  - "新增任何 agent/adapter/workflow；dispatch S05 或 supplemental positive case"
+  - "renderChart、chartLimits 的行為變更"
+acceptanceIntent:
+  - "Given 圖表列表 [{ id: 'chart-7', title: 'Daily SPC' }] 且 chart-7 存在，When 對選取圖表執行單次開啟互動，Then 回傳 { action: 'OPENED', chartId: 'chart-7' }（依 frozen acceptance example，可直接轉為測試案例）"
+  - "Given HTTP 回應狀態 404，When 分類該回應，Then 結果為 { status: 404, retryable: false }，且對 404 不產生任何重試意圖"
+  - "Given 既有呼叫 selectChart(chartList, chartId)，When 命中/查無，Then 行為維持 { selectedChartId, action: 'SELECTED' } / null（無回退）"
+  - "Given r1 交付範圍審查，When 檢查變更檔案集合，Then 僅 src/interaction.js 被修改，src/chartViewer.js 與 test 檔案無 diff"
+  - "Given r1 交付範圍審查，When 檢查 chartLimits()，Then 回傳 max 仍為 1000（seeded defect 原樣保留），frozen 產品期望 max=10 記錄不變"
+assumptionsAndUnknowns:
+  - "ASSUMPTION（依 product-intent v2 官方文件）：「one interaction」= 對已選取圖表列表的單次 openSelectedChart 呼叫；frozen test 即 acceptance example"
+  - "UNVERIFIED/PARTIAL：openSelectedChart 內部是否複用 selectChart 為實作細節，不在本 IntentSpec 範圍，留待設計"
+  - "UNVERIFIED：兩個 [Gap/CONFLICTING]（RC10VAL-8 chartLimits max、RC10VAL-9 測試契約 vs 實作契約）人類裁決未完成；本 spec 記錄意圖但不裁決，CONFLICTING 未裁決前不作為已解事實引用"
+  - "PARTIAL：PK 條目 validation state 全部 PROVISIONAL（依 Orchestrator 指示維持），作為意圖依據可採信為官方文件級，但非軟體已驗證 PASS 的證明"
+openQuestions:
+  - severity: NON_BLOCKING
+    question: "openSelectedChart 契約衝突的治理裁決（哪一契約為 canonical product truth）"
+    status: unresolved
+    note: "已在 RC10VAL-9 tracked（blocked，人類裁決）；不阻塞本 IntentSpec——r1 範圍（僅 src/interaction.js）內即可滿足 frozen test，治理裁決留給人類"
+  - severity: NON_BLOCKING
+    question: "chartLimits max=10（frozen 期望）vs 1000（seeded defect）裁決"
+    status: unresolved
+    note: "已在 RC10VAL-8 tracked；README 明定 r1 維持不變，與本 IntentSpec 範圍無衝突"
+evidenceRefs:
+  - kind: pk-semantics
+    ref: "RC10VAL-5（ENGCIM v0.6 Chart Viewer（Semantics）），store_ref pk/semantics/engcim-v06-chart-viewer.yaml；官方文件／PROVISIONAL"
+  - kind: pk-semantics
+    ref: "RC10VAL-22（Chart Viewer product-intent v2；一次互動 OPENED via openSelectedChart，supersedes v1），store_ref pk/semantics/engcim-v06-chart-viewer-product-intent-v2.yaml；官方文件／PROVISIONAL"
+  - kind: pk-architecture
+    ref: "RC10VAL-6（ENGCIM v0.6 Chart Viewer（Architecture）），store_ref pk/architecture/engcim-v06-chart-viewer.yaml；含 r1 僅限 src/interaction.js、chartViewer.js 凍結、404 non-retryable 等 Constraint"
+  - kind: pk-realization
+    ref: "RC10VAL-7（ENGCIM v0.6 Chart Viewer（Realization）），store_ref pk/realization/engcim-v06-chart-viewer.yaml；code region src/interaction.js:1-11、src/chartViewer.js:1-10"
+  - kind: pk-governance
+    ref: "RC10VAL-9（[Gap/CONFLICTING] openSelectedChart 測試契約 vs selectChart 實作契約，blocked）"
+  - kind: pk-governance
+    ref: "RC10VAL-8（[Gap/CONFLICTING] chartLimits max frozen 10 vs 1000 seeded defect，blocked）"
+  - kind: workspace-knowledge
+    ref: "RC10VAL-15（01a0ddde-0d24-7978-9af4-6ed850a5cbfc），rev 10 / content v3 / APPROVED / CURRENT，digest 5fba147a…；S02 receipt 01a0de0b-898c-74b2-a0ca-5909e9fa1f84 sha256 f3c993ac…，本 Mission 新鮮重驗未變"
+  - kind: s03-verified-finding
+    ref: "RC10VAL-28 rev1（Reviewer PASS 01a0de60-…、Verifier VERIFIED 01a0de5f-…）：fixture @ 2eff5f9f 的 404 classification retryable false（src/interaction.js:6-11）；evidence-backed NO-EDGE vs RC7-B"
+  - kind: s01-verified-slice
+    ref: "RC10VAL-11：select-chart、render-chart、HTTP 404 non-retryable 獨立執行驗證；衝突保留未裁決"
+affectedRepoObligations:
+  - "repo: engcim-v06-chart-viewer-fixture @ 2eff5f9f84ca709684bfe0b7c90102268f07a0f0（S05 r1 起點；candidate RC10-local-candidate-20260926-01）"
+  - "S05 r1 僅可修改 src/interaction.js（滿足 frozen test：補上 openSelectedChart 匯出，回傳 { action: 'OPENED', chartId }）"
+  - "src/chartViewer.js 凍結；seeded defect max=1000 在 r1 不得更正（僅 Finding F1 擴大範圍後可修）"
+  - "不改 test/interaction.test.js 或其他資產；不改 ProductKB／WorkspaceKnowledge／Skill／package／production artifact"
+lifecycle:
+  scenario: "RC10VAL-29 S04（IntentSpec scenario；definition/decomposition only）"
+  revision: 1
+  maxCorrectionRevisions: 2
+  nextGates: "Reviewer（先）→ Verifier（後），依序、不並行；不得由本 run 啟動"

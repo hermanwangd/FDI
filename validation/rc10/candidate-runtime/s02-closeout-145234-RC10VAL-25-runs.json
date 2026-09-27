@@ -1,0 +1,59 @@
+[
+  {
+    "agent_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+    "attempt": 1,
+    "attribution": {
+      "delegated_from_task_id": "01a0de21-3b2b-7a46-9074-49f5ae639708",
+      "evidence": {
+        "kind": "issue_assignment",
+        "ref_id": "01a0de24-90a1-7e17-86ac-7209a570b6fe"
+      },
+      "initiator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "originator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "precise": true,
+      "source": "delegation"
+    },
+    "completed_at": "2026-09-26T14:37:27Z",
+    "created_at": "2026-09-26T14:35:33Z",
+    "delivered_comment_ids": [],
+    "dispatched_at": "2026-09-26T14:35:33Z",
+    "error": null,
+    "id": "01a0de24-90be-70dc-9217-df08ae6ee186",
+    "issue_id": "01a0de24-90a1-7e17-86ac-7209a570b6fe",
+    "kind": "direct",
+    "max_attempts": 2,
+    "priority": 0,
+    "relative_work_dir": "engcim-swar-6fec14dee20e/rc10val-25-df08ae6ee186/workdir",
+    "result": {
+      "output": "完成。審查未進行，原因是 freshness 檢查攔截：\n\n- 本任務（RC10VAL-25）派審目標是 RC10VAL-21 的 **revision 2**，但該 child 在 14:35:03Z 已交付 **revision 3**（`comment:01a0de24-1c31-7dbc`，四件附件，r3 archive `b9ad2af0…a72a`）——比我的 run 派發（14:35:33Z）還早。背景是 Supervisor 14:32Z 的澄清覆蓋了 r2 對 Finding 2 的作法（禁止以 ingest 時間戳替換 `retrievedAt`），Curator 遂依更正指示重做了 r3。\n- 依 revision freshness 規則，不對過時的 r2 出具 PASS/WARNING/REVISE 判定（r2 的 Finding 2 處理已被 Supervisor 明確作廢，審它沒有意義）；實質審查對象應為 revision 3。\n- 已在 RC10VAL-25 貼上 staleness 報告並移 `in_review`，並對 parent RC10VAL-20 發了 `review_target_stale` wake-up event mention Orchestrator——parent metadata `swarm.child.c1.revision = 2` 尚未反映 r3，提醒其以 revision 3 重算 fan-in 並重新派審。",
+      "pr_url": "",
+      "session_id": "session_40856a18-eade-418f-9c88-06e0c0e5a5ba",
+      "work_dir": "/Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-6fec14dee20e/rc10val-25-df08ae6ee186/workdir"
+    },
+    "runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+    "started_at": "2026-09-26T14:35:33Z",
+    "status": "completed",
+    "usage": [
+      {
+        "cache_read_tokens": 742400,
+        "cache_write_tokens": 0,
+        "input_tokens": 38808,
+        "model": "kimi-code/kimi-for-coding",
+        "output_tokens": 5266,
+        "provider": "kimi"
+      }
+    ],
+    "work_dir": "/Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-6fec14dee20e/rc10val-25-df08ae6ee186/workdir",
+    "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+  }
+]

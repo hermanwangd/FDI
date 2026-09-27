@@ -1,0 +1,57 @@
+{
+  "assignee_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+  "assignee_type": "agent",
+  "created_at": "2026-09-26T09:44:30Z",
+  "creator_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+  "creator_type": "agent",
+  "description": "Gap 四態：CONFLICTING\n\n## 矛盾描述\nfixture `engcim-v06-chart-viewer-fixture` @ 2eff5f9f84ca709684bfe0b7c90102268f07a0f0 對同一 fact（chartLimits() 回傳的 max 值）有兩個矛盾主張：\n\n- 主張 A（frozen Product expectation）：`chartLimits().max = 10` —— README.md 宣告的凍結產品行為\n- 主張 B（實作觀察）：`chartLimits().max = 1000` —— src/chartViewer.js:2 實際回傳值\n\nREADME 自述主張 B 是刻意植入的 **seeded defect**（「one seeded defect outside the initial S05 mutation scope」），且 r1 必須保持不變，僅能透過 governed Finding F1 擴大修正範圍至 src/chartViewer.js 後更正。\n\n## 發現脈絡\nRC10VAL-4（S01 baseline ingestion）：處理五個附件時，README frozen expectation 與 chartViewer.js 實作的對照。\n\n## 處置（已執行）\n- 兩造主張均保留、未靜默裁決；seeded defect 未記為 Product fact\n- sem:engcim-v06/chart-viewer 的 rule:engcim-v06/chart-limits-max 記載 frozen 主張並註記矛盾（PROVISIONAL）\n- real:engcim-v06/chart-viewer 與 code-graph CodeEntity chartLimits 記載實際觀察值 1000（PROVISIONAL）\n\n## 相關條目\n- [ENGCIM v0.6 Chart Viewer（Semantics）]（rule:engcim-v06/chart-limits-max）\n- [ENGCIM v0.6 Chart Viewer（Realization）]（realizes 鏈）\n\n## 待裁決\n以 frozen expectation（max=10）為準修正實作，或維持 seeded defect 至 Finding F1。依可信度採信順序，frozen expectation（src-team-seed/官方文件）優先於實作觀察，但 README 明定 r1 不得變更 → 需人類裁決，agent 不自行二選一。",
+  "due_date": null,
+  "duplicate_of": null,
+  "id": "01a0dd1a-1ad3-7315-8e87-91b76ee361ab",
+  "identifier": "RC10VAL-8",
+  "labels": [
+    {
+      "color": "#d97706",
+      "created_at": "2026-09-26T09:14:33Z",
+      "description": "",
+      "id": "d7430092-037b-4ca6-868c-49e2464ced91",
+      "name": "pk-governance",
+      "resource_type": "issue",
+      "updated_at": "2026-09-26T09:14:33Z",
+      "usage_count": 0,
+      "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+    },
+    {
+      "color": "#db2777",
+      "created_at": "2026-09-26T09:14:33Z",
+      "description": "",
+      "id": "8e7136a9-6e3c-4ab3-a821-503301afb11d",
+      "name": "src-team-seed",
+      "resource_type": "issue",
+      "updated_at": "2026-09-26T09:14:33Z",
+      "usage_count": 0,
+      "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+    }
+  ],
+  "last_activity_at": "2026-09-26T09:51:03.683062Z",
+  "metadata": {
+    "credibility": "official-document",
+    "date": "2026-09-26",
+    "source": "engcim-v06-chart-viewer-fixture @ 2eff5f9f"
+  },
+  "number": 8,
+  "parent_issue_id": null,
+  "position": -1,
+  "priority": "none",
+  "project_id": "f7af4546-88b2-4163-a0d4-b350e2123dbc",
+  "properties": {},
+  "revision": 9,
+  "stage": null,
+  "start_date": null,
+  "status": "blocked",
+  "status_category": "blocked",
+  "status_name": "",
+  "title": "[Gap/CONFLICTING] engcim-v06 chartLimits().max：frozen expectation 10 vs 實作 1000（seeded defect）",
+  "updated_at": "2026-09-26T09:51:03Z",
+  "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+}

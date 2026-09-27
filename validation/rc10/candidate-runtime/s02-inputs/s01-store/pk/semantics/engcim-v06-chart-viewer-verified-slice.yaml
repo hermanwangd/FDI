@@ -1,0 +1,68 @@
+# ENGCIM v0.6 Chart Viewer 語意樹——執行驗證切片（entry-level VALIDATED；schema: pk/_schema/semantics-entry.schema.json）
+# RC10VAL-10 revision 3：依 Reviewer REVISE（01a0dd8d 發現 2）＋ Verifier NESTED_TRUST_UNSUPPORTED（01a0dd8f 聲明 10），
+# 非衝突切片改以既有 entry-level 表示法（條目頂層 validationState），不使用 nested validationState、不延伸 schema/consumer。
+id: sem:engcim-v06/chart-viewer/verified-slice
+pkClass: pk-semantics
+validationState: VALIDATED        # 條目頂層治理標記：本條目範圍僅含非衝突、經獨立執行驗證的主張
+confidence: official-document
+sourceClass: src-team-seed
+evidence:
+  - ev:engcim-v06-fixture-readme-2eff5f9f
+  - ev:engcim-v06-fixture-readme-2eff5f9f-rc10val10
+  - ev:engcim-v06-fixture-interaction-js-2eff5f9f
+  - ev:engcim-v06-fixture-interaction-js-2eff5f9f-rc10val10
+  - ev:engcim-v06-fixture-interaction-test-js-2eff5f9f
+  - ev:engcim-v06-fixture-interaction-test-js-2eff5f9f-rc10val10
+  - ev:engcim-v06-fixture-chartviewer-js-2eff5f9f
+  - ev:engcim-v06-fixture-chartviewer-js-2eff5f9f-rc10val10
+  - ev:engcim-v06-exec-classify-response-01a0dd73
+  - ev:engcim-v06-exec-select-chart-01a0dd73
+  - ev:engcim-v06-exec-render-chart-01a0dd73
+governanceIssueRef: "01a0dd1a-09c4-7a4a-9f16-b006ddd2334f"  # 沿用既有 governance issue：RC10VAL-5（ENGCIM v0.6 Chart Viewer（Semantics））
+updatedAt: "2026-09-26T11:58:00Z"
+supersedes: null
+supersededBy: null
+
+product: "ENGCIM v0.6 Chart Viewer（engcim-v06-chart-viewer-fixture，Authority: SYNTHETIC_VALIDATION_FIXTURE）"
+capabilities:
+  - id: cap:engcim-v06/chart-viewing
+    name: Chart Viewing
+    description: 圖表檢視（執行驗證切片）：選取圖表、渲染圖表、檢視端回應分類——僅含經獨立執行驗證之非衝突行為；同 lineage 未裁決衝突內容保留於 sem:engcim-v06/chart-viewer（PROVISIONAL）。
+    scenarios:
+      - id: scen:engcim-v06/chart-viewing/select-chart
+        name: Select Chart
+        behaviors:
+          - action: 以 chartId 於圖表列表 selectChart(chartList, chartId)
+            expected: "命中時回傳 { selectedChartId: <id>, action: 'SELECTED' }；查無時回傳 null"
+            # 執行依據：ev:engcim-v06-exec-select-chart-01a0dd73（直接模組執行 {"selectedChartId":"chart-7","action":"SELECTED"}／null，非僅來源計數）
+      - id: scen:engcim-v06/chart-viewing/render-chart
+        name: Render Chart
+        behaviors:
+          - action: 以含 limits 的 config 呼叫 renderChart(config)
+            expected: "回傳 { rendered: true, limits: config.limits }"
+            # 執行依據：ev:engcim-v06-exec-render-chart-01a0dd73（直接模組執行 {"rendered":true,...}）
+          - action: config 或 config.limits 缺失時呼叫 renderChart
+            expected: 拋出 Error('INVALID_CHART_CONFIGURATION')
+            # 執行依據：ev:engcim-v06-exec-render-chart-01a0dd73（直接模組執行拋 INVALID_CHART_CONFIGURATION）
+rules:
+  - id: rule:engcim-v06/http-404-non-retryable
+    statement: >-
+      HTTP 404 回應的行為為 retryable: false。依據：README「remains」、interaction.js
+      classifyChartResponse、interaction.test.js 三獨立來源一致，且 revision 2 經直接模組
+      執行驗證（node --input-type=module -e 直接 import @ pinned commit 2eff5f9，
+      輸出 {"status":404,"retryable":false}／{"status":500,"retryable":false}，
+      見 ev:engcim-v06-exec-classify-response-01a0dd73）——非僅來源計數。
+      僅 404 retryable:false 面；不涉及 chartLimits max 衝突面。
+    appliesTo:
+      - cap:engcim-v06/chart-viewing
+    # 執行依據：ev:engcim-v06-exec-classify-response-01a0dd73（直接模組執行 {"status":404,"retryable":false}，非僅來源計數）
+
+# --- 明確排除（不涵蓋於本 VALIDATED 條目範圍；維持未裁決）---
+# chartLimits().max（frozen=10 vs code=1000，seeded defect）→ sem:engcim-v06/chart-viewer 內 rule:.../chart-limits-max，
+#   [Gap/CONFLICTING] RC10VAL-8（01a0dd1a-1ad3-7315-8e87-91b76ee361ab），PROVISIONAL；
+# openSelectedChart（測試期望 vs 未 export）→ sem:engcim-v06/chart-viewer 內 scen:.../open-selected-chart，
+#   [Gap/CONFLICTING] RC10VAL-9（01a0dd1a-2086-76db-9bc5-e3bd0ef7f2ad），PROVISIONAL；
+# chartLimits().min = 0 僅為執行觀察記錄（ev:...-exec-chart-limits-min-01a0dd73，收於 sem:engcim-v06/chart-viewer），
+#   因 chartLimits 語意面與 max 衝突同條目，不單獨升 VALIDATED。
+# 機制揭露：本條目與 sem:engcim-v06/chart-viewer 為同一 fact lineage 的範圍切分（既有 entry-level 治理欄位），
+#   rule/scenario id 沿用未複製、內容自原條目移入（非複製）、雙向 cross-reference；source/history 全部保留。

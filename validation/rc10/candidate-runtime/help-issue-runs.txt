@@ -1,0 +1,19 @@
+List agent runs for an issue.
+
+Defaults to this issue's full execution history, newest first. Narrow it to work in flight with --active, or widen it across the sub-issue family with --siblings when you need to know whether another agent is already working next to you.
+
+USAGE
+  multica issue runs <issue-id> [flags]
+
+FLAGS
+      --active          Only in-flight runs (queued, dispatched, running, waiting_local_directory) instead of the full execution history. Answers "is an agent working on this right now" without pulling every past run.
+      --full-id         Show full run UUIDs in table output
+  -h, --help            help for runs
+      --output string   Output format: table or json (default "table")
+      --siblings        Widen to this issue's sub-issue family — its parent (or itself, when it has no parent) plus every child of that parent — so you can see whether another run is already working alongside you before starting overlapping code or PR work. Implies --active. Returns a compact per-run row (run, issue, agent, status, started) rather than the full execution-log record. Ordered running-first, newest-first within a status, and capped at 20 rows; when the cap truncates the answer the CLI says so on stderr, so a short list is never mistaken for a complete one. Advisory only: it reports work in flight, it does not reserve or serialise anything.
+
+INHERITED FLAGS
+  --help   Show help for command
+
+LEARN MORE
+  Use `multica <command> <subcommand> --help` for more information about a command.

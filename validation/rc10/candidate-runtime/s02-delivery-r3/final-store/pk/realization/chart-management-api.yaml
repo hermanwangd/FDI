@@ -1,0 +1,32 @@
+# pk/realization/ 範例：chart-management-api 的 REALIZES 映射（schema: pk/_schema/realization-entry.schema.json）
+id: real:spc/chart-management-api
+pkClass: pk-realization
+validationState: PROVISIONAL
+confidence: auto-observation
+sourceClass: src-code-delivery
+evidence:
+  - ev:repo-analysis-chart-api-2025-01
+  - ev:spc-training-2024
+governanceIssueRef: null
+updatedAt: "2025-01-20T09:10:00Z"
+supersedes: null
+supersededBy: null
+
+component: Component:chart-management-api
+realizes:
+  - cap:spc/chart-management
+  - scen:spc/chart-management/create-chart
+  - scen:spc/chart-management/configure-chart
+  - scen:spc/chart-management/maintain-chart
+  - rule:spc/chart-title-required
+implementedIn:
+  - Repository:chart-management-api
+exposes:
+  - if:chart-management-api/charts-rest
+consumes: []
+dependsOn:
+  - Component:spc-rules-engine
+codeRegions:
+  - repository: chart-management-api
+    path: src/chart/
+    module: Module:chart-management-api/src/chart

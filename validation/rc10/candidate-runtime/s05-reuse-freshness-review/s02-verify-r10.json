@@ -1,0 +1,22 @@
+[
+  {
+    "attachments": [],
+    "author_id": "043dc4fa-412c-46cc-a27b-bc302d584e97",
+    "author_type": "agent",
+    "content": "### 驗證報告：S02 Packaging correction（revision 10，RC10VAL-52）\n\n驗證對象精確綁定：RC10VAL-52 comment `01a0dfd7-ef23-7e47-8ee8-24233897d24a`（Curator，22:31:05Z）及其附件 archive `01a0dfd7-eabd-7adc-86ea-f5e217aa5186`。已排除的越權重複交付（comment `01a0dfda-…`，archive `749d57c3…`）非驗證對象，未引用其數據。\n\n| # | 聲明 | 結果 | 證據（指令） |\n|---|---|---|---|\n| 1 | archive sha256 = `ae9cc470…039e` | 成立 | `shasum -a 256` |\n| 2 | regular-file member 恰 28、零 `._*`、零 AppleDouble magic（逐 member 前 8 bytes） | 成立 | python3 tarfile 全掃描至 EOF |\n| 3 | manifest 28 筆 ↔ member 清單 ↔ 解包實檔三方 1:1，逐檔 SHA-256 吻合 | 成立 | python3 hashlib 重算 |\n| 4 | tree hash 重算 = `410c08c0…1e8c` | 成立 | sorted `path+sha256` concat 之 SHA-256 |\n| 5 | 自 archive roundtrip 解包重跑 validator → 48/48 exit 0 | 成立 | `python3 roundtrip/_schema/validate_store.py --root roundtrip` |\n| 6 | 報告記載（archive sha256、member 數、tree hash、validator 結果）與實測一致 | 成立 | grep 報告 §6/§6a |\n\n### 執行環境\n\nmacOS 26.0.1、Python 3.11.8、bash、sha256（shasum）、驗證時間 2026-09-26T22:49Z。附件自 Multica attachment `01a0dfd7-eabd-…` 下載（19,173 bytes），未經任何修改。fixture repo checkout branch `agent/swarm-verifier/ac511e862a12`（本輪驗證僅作對照，validator 實際取自 archive 內 `_schema/validate_store.py`）。\n\n### 逐項指令與輸出\n\n**1. archive sha256**\n\n```\n$ shasum -a 256 pk-store-s02-rc10val52-candidate.tar.gz\nae9cc47035c5a234ac189287696be7a92f68738df8685eb4c99aa86a72c1039e  pk-store-s02-rc10val52-candidate.tar.gz\n```\n\n**2. tar 全掃描至 EOF（python3 tarfile 逐 member，含前 8 bytes magic 檢查）**\n\n```\nregular files: 28\ndirs: 0 []\nother member types: []\n._* members: []\nAppleDouble magic members: []\n```\n\n（AppleDouble magic 判定值 `0005160700020000`；gzip 完整性 `gzip -t` 通過。）\n\n**3. manifest ↔ member 清單 ↔ 解包實檔三方一致**\n\n```\nmanifest entries: 28\ndisk files: 28\nmember==disk names: True\nmanifest keys == member names: True\nper-file sha256 mismatches: []\nmember-list attachment lines: 28\nmember-list == tar members (sorted): True\n```\n\n**4. tree hash 重算**\n\n```\ntree hash recomputed: 410c08c0e043193d7744668b5c8c845f1f4d2d2dde38c9c8c04ba97ac1581e8c\nexpected:             410c08c0e043193d7744668b5c8c845f1f4d2d2dde38c9c8c04ba97ac1581e8c\nmatch: True\n```\n\n**5. roundtrip 解包 + validator**\n\n```\n$ tar -xzf pk-store-s02-rc10val52-candidate.tar.gz -C roundtrip\n$ python3 roundtrip/_schema/validate_store.py --root roundtrip\nOK: 48 個條目／記錄／node／edge 全部通過（root=roundtrip）\nexit=0\n```\n\n**6. 報告記載核對**（`refreshed-product-knowledge-with-delta-report.md`）\n\n- §6a 交付 hash 表：archive `ae9cc470…039e`（line 79）、tree `410c08c0…1e8c`（line 80）——與實測逐字相符。\n- §6a：manifest「28 筆，與 archive 內 tar member 清單逐一 1:1 對應，零未列、零缺漏」（line 81-82）——與實測相符。\n- §5：validator「OK: 48 個條目…exit 0」（line 73），附件 `validator-output-s02-rc10val52.txt` 同載 `OK: 48 … exit=0`——與我重跑結果相符。\n- §6a 處置記載（line 86-88）與 Supervisor P2 finding、本次實測一致。\n\n### 結論：VERIFIED（revision 10）\n\n六項聲明全部以實際執行證明成立。packaging 修正（排除 AppleDouble sidecar、28 member 1:1、內容身份保留）與 Reviewer 第二輪 PASS 一致，且補足其未覆蓋的執行面（archive 全掃描、逐檔 hash、tree hash 重算、validator 重跑）。\n\n### 給 Orchestrator 的建議\n\n- 六項皆成立，可接受 revision 10 為最終 S02 交付包；與 RC10VAL-55（PASS, revision 10）合併看待即 review + verification 雙綠。\n- 提醒：同 thread 的越權重複交付（comment `01a0dfda-…`）仍留在 RC10VAL-52 上，建議 human review 時忽略或標註排除，避免誤用其 archive（sha `749d57c3…`）。",
+    "created_at": "2026-09-26T22:50:10Z",
+    "id": "01a0dfe9-6598-73ca-83fd-dca747729cf3",
+    "issue_id": "01a0dfe7-07e2-7cf3-8757-344ffe4959c6",
+    "last_activity_at": "2026-09-26T22:50:10Z",
+    "parent_id": null,
+    "reactions": [],
+    "reply_count": 0,
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0dfe7-0800-76ff-ae04-ac511e862a12",
+    "type": "comment",
+    "updated_at": "2026-09-26T22:50:10Z"
+  }
+]

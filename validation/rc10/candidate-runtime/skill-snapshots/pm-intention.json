@@ -1,0 +1,29 @@
+{
+  "config": {},
+  "content": "---\nname: pm-intention\ndescription: Use when turning a PM request into an Intention Spec by resolving Product Context, challenging ambiguity, defining product-level delta, constraints, non-goals, and acceptance intent before design or implementation (S04)\n---\n\n# PM Intention\n\nPurpose: convert a raw PM request into a reviewed **Intention Spec** that states the product-level change clearly enough for downstream design and development.\n\nThis skill is intentionally upstream of technical design. It must not silently turn unresolved ambiguity into implementation assumptions.\n\n## Required inputs\n\n- Raw PM request / user story / conversation\n- Product Context or Product Knowledge references\n- Current capability and scenario, when known\n- Existing rules / constraints / known architecture only as context\n\n## Workflow\n\n1. **Normalize intent**\n   - Who is affected?\n   - Which Product / Capability / Scenario is implicated?\n   - What undesirable current behavior or unmet objective exists?\n   - What outcome is sought?\n\n2. **Resolve Product Context**\n   - Retrieve current semantics, rules, realization, and relevant evidence.\n   - Distinguish facts from inferred intent.\n   - Record missing Product Knowledge rather than inventing it.\n\n3. **Challenge ambiguity**\n   - List missing decisions that can materially alter scope, UX, contracts, or acceptance.\n   - Classify each gap as BLOCKING or NON_BLOCKING.\n   - Resolve only from authoritative context or explicit PM input.\n\n4. **Define product-level delta**\n   - Current behavior/context\n   - To-be behavior\n   - Explicit delta\n   - Constraints\n   - Non-goals\n   - Compatibility expectations\n\n5. **Define acceptance intent**\n   - Observable user/product outcomes\n   - Critical invariants\n   - Known risk areas\n   - No technical implementation details unless they are explicit external constraints\n\n6. **Review**\n   - No hidden TBD inside contract fields.\n   - Blocking ambiguity prevents publish.\n   - Each major statement has a context/evidence reference when applicable.\n\n## Output\n\nUse `templates/intention-spec.yaml`.\n\nPrimary artifact: **Intention Spec**.\n\nA PRD, backlog item, or technical design may be derived later; none of them replaces the Intention Spec.\n\n## Gate\n\nPublish only when:\n- all required fields exist;\n- no BLOCKING open question remains unresolved;\n- capability/scenario is known or explicitly recorded as unresolved;\n- product-level delta and non-goals are explicit;\n- acceptance intent is observable.\n\nRun:\n\n```bash\npython3 scripts/validate_intention_spec.py \u003cintention-spec.yaml\u003e\n```\n\nbefore declaring the artifact publishable.\n",
+  "created_at": "2026-09-26T09:13:03Z",
+  "created_by": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+  "description": "Use when turning a PM request into an Intention Spec by resolving Product Context, challenging ambiguity, defining product-level delta, constraints, non-goals, and acceptance intent before design or implementation (S04)",
+  "files": [
+    {
+      "content": "#!/usr/bin/env python3\nimport sys, pathlib, yaml\n\nREQUIRED = [\n    \"ref\", \"product\", \"capability\", \"scenario\", \"currentContext\",\n    \"intent\", \"expectedDelta\", \"constraints\", \"nonGoals\",\n    \"acceptanceIntent\", \"openQuestions\", \"evidenceRefs\"\n]\n\ndef main():\n    if len(sys.argv) != 2:\n        print(\"usage: validate_intention_spec.py \u003cspec.yaml\u003e\", file=sys.stderr)\n        return 2\n    data = yaml.safe_load(pathlib.Path(sys.argv[1]).read_text(encoding=\"utf-8\")) or {}\n    missing = [k for k in REQUIRED if k not in data or data[k] in (None, \"\", []) and k not in (\"openQuestions\",\"evidenceRefs\")]\n    blocking = [q for q in (data.get(\"openQuestions\") or []) if isinstance(q, dict) and str(q.get(\"severity\",\"\")).upper()==\"BLOCKING\" and not q.get(\"resolved\")]\n    if missing:\n        print(\"FAIL missing required fields:\", \", \".join(missing))\n        return 1\n    if blocking:\n        print(\"FAIL unresolved BLOCKING questions:\", len(blocking))\n        return 1\n    if not isinstance(data.get(\"expectedDelta\"), list) or not data[\"expectedDelta\"]:\n        print(\"FAIL expectedDelta must be non-empty list\")\n        return 1\n    print(\"PASS intention spec\")\n    return 0\n\nif __name__ == \"__main__\":\n    raise SystemExit(main())\n",
+      "created_at": "2026-09-26T09:13:04Z",
+      "id": "3b714bd5-e670-4118-b488-faeabdf43839",
+      "path": "scripts/validate_intention_spec.py",
+      "skill_id": "02e6b5f0-e564-469d-a2fd-d49d4b152784",
+      "updated_at": "2026-09-26T09:13:04Z"
+    },
+    {
+      "content": "ref: INT-DEMO-r1\nproduct: SPC Demo\ncapability: Chart Management\nscenario: Chart Viewing\ncurrentContext: Existing viewer behavior and relevant product context.\nintent: Improve the Chart Viewer user experience.\nexpectedDelta:\n  - Reduce unnecessary interaction steps.\nconstraints:\n  - Preserve published Chart API compatibility.\nnonGoals:\n  - Unrelated chart creation behavior.\nacceptanceIntent:\n  - A user can open and view a valid chart through the simplified flow.\nopenQuestions: []\nevidenceRefs: []\n",
+      "created_at": "2026-09-26T09:13:04Z",
+      "id": "0fafdd76-e90f-472d-ad9d-ed8e34cfea08",
+      "path": "templates/intention-spec.yaml",
+      "skill_id": "02e6b5f0-e564-469d-a2fd-d49d4b152784",
+      "updated_at": "2026-09-26T09:13:04Z"
+    }
+  ],
+  "id": "02e6b5f0-e564-469d-a2fd-d49d4b152784",
+  "name": "pm-intention",
+  "updated_at": "2026-09-26T09:13:03Z",
+  "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+}

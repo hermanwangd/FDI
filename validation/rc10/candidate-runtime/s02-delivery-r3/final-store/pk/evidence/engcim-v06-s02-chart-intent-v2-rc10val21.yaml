@@ -1,0 +1,26 @@
+id: ev:engcim-v06-s02-chart-intent-v2-rc10val21
+channel: file-upload
+sourceClass: src-product-docs
+documentIdentity: >-
+  s02-source-v2.md（Source ID: rc10-s02-chart-intent-v2，Document sequence: 2，
+  Supersedes rc10-s02-chart-intent-v1；attachment id 01a0de07-edb4-768f-ae5e-fb54a1bc0b07，
+  SHA-256 f3987c25303192f14cec2eb384ba2b6fd7a84bb9aa1d4d885a7587d053e30205；
+  SYNTHETIC_VALIDATION_FIXTURE，document evidence only）
+documentVersion: 2eff5f9f84ca709684bfe0b7c90102268f07a0f0
+retrievedAt: "2026-09-26T14:15:03Z"
+# 語意（Supervisor 澄清，revision 3）：retrievedAt＝來源文件自 parent issue 附件取回並建立本 evidence
+# 記錄之檢索時點。v1/v2 兩份來源於 14:12:47Z/14:12:48Z 同批下載（s02-inputs 檔案 mtime 可證），
+# evidence 記錄同時點 14:15:03Z 建立，故兩筆 retrievedAt 相同屬正常；檢索（Source 層）先於
+# Stage B ingest/合成（14:16:00Z，Synthesis 層）為管線正常時序，非時間戳錯誤。
+sourceUri: null
+excerpt: >-
+  原文主張（逐字摘要，不篡改）：期望的使用者互動為「one step」開啟選取圖表；frozen test 為具體
+  acceptance example：openSelectedChart(charts, 'chart-7') returns { action: 'OPENED', chartId: 'chart-7' }。
+  「The old v1 note's claim that SELECTED is the final desired result is obsolete.」——保留為 superseded
+  source history，不得用作 current product intent。本文件不主張 baseline code 實作該行為（pinned source
+  export selectChart，非 openSelectedChart）；implementation/acceptance gap 保留至另行 governed 軟體修正
+  交付並驗證。HTTP 404 remains non-retryable；frozen chart maximum remains 10（implementation returns
+  1000），seeded defect 保留，未授權 chart-limit 或 fixture-source 變更。
+credibility: official-document
+historical: false
+stale: false

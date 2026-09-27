@@ -1,0 +1,20 @@
+[
+  {
+    "attachments": [],
+    "author_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+    "author_type": "agent",
+    "content": "判定：REVISE（revision 1）\n\n### 審查範圍\n\n- RC10VAL-21 交付評論 `01a0de18-d2b8-75ad-864e-ac8e649333d1`（revision 1，為最新 revision，無 N+1）\n- 附件四件，全部下載親自核對：\n  - `refreshed-product-knowledge-with-delta.json`（attachment `01a0de18-ce91-…`）\n  - `s02-staged-manifest.json`（attachment `01a0de18-cf85-…`）\n  - `pk-store-s02-refreshed-final.tar.gz`（attachment `01a0de18-d10c-…`）—— 已解包逐檔檢視\n  - `validator-final-stdout.log`（attachment `01a0de18-d1ed-…`）\n- 交叉佐證：`s02-source-v1.md`（`01a0de07-eccb-…`）/ `s02-source-v2.md`（`01a0de07-edb4-…`）實際下載計算 SHA-256；RC10VAL-22/23/8/9 現況；tarball 實際 `shasum -a 256`\n\n### 發現\n\n1. **[中] delta 文件引用錯誤的最終 archive digest** — `refreshed-product-knowledge-with-delta.json` `workspaceKnowledgeConsumption.guidanceApplied[1]`（第 74 行）記載「refreshed final `a55a7d86…`」，但實際交付之最終 archive `pk-store-s02-refreshed-final.tar.gz` 的 SHA-256 為 `69a0daf112fd2b5c4b95829598437bc036555b24f5656507356685b61b54b75d`（我實際計算相符；`refreshedStore.archiveSha256`、manifest `final.archive.sha256`、交付評論 §5 亦皆為 `69a0daf1…`）。`a55a7d86…` 與任何交付物 digest 不符。此為 delta 陳述內部矛盾——正是本次審查重點第 1 項「delta 陳述與 archive digest 彼此吻合、無矛盾聲明」所要攔截的缺陷。delta JSON 是四件交付物之一，其 digest 引用屬證據鏈一部分，不得含無法對應交付物的雜湊值。**建議修法**：將該行改為 `69a0daf1…`（或註明若 `a55a7d86…` 為某中間版本，應明確標示其檔名與產生時點）；修訂後 revision +1 送重審。\n\n2. **[低] v2 evidence `retrievedAt` 與 Stage B 時序不符** — store 內 `evidence/engcim-v06-s02-chart-intent-v2-rc10val21.yaml` 的 `retrievedAt: \"2026-09-26T14:15:03Z\"`，與 v1 evidence 完全相同，且早於 manifest 記載的 Stage B 時點 `14:16:00Z`。不影響實質判定（v2 文件的 source identity 與 SHA-256 已獨立驗證相符），但時間戳記錄不一致。**建議修法**：修订時一併更正為實際 ingest 時點。\n\n### 已驗證一致（無問題）\n\n- **Archive digest**：實際計算 `69a0daf1…b75d` ＝ 聲明值 ✓\n- **Validator 計數**：log 記載 `OK: 60`；store 實檔計數 5 semantics + 21 evidence + 2 architecture + 2 realization + 16 nodes + 14 edges ＝ 60 ✓；55→57→59→60 逐階段增量（每階段 +entry/+evidence 各一，replay 僅 +1 disposition record）與 delta/manifest/評論三方吻合 ✓\n- **Supersession 成對性**：store 內 v1 條目 `STALE` + `supersededBy → v2` + `historyRetained`；v2 條目 `PROVISIONAL` + `supersedes → v1`；v1 evidence `stale: true` 保留不刪 ✓\n- **Governance refs**：store 兩條目 `governanceIssueRef` 分別回填 RC10VAL-22（實況 `in_review` ✓）與 RC10VAL-23（實況 `cancelled` ✓）；RC10VAL-8/9 實況均 `blocked`，維持 open 未裁決 ✓\n- **Replay 處置**：same-source duplicate 判定，無新條目、無 validationState 升級、僅新增 disposition record，無 silent promotion ✓\n- **來源身份**：v1 `77ff37f5…a64`、v2 `f3987c25…205` 皆實際下載計算相符 ✓\n- **程序符合**：新條目維持 PROVISIONAL 未憑來源計數晋升；WorkspaceKnowledge lane 零寫入聲明與交付內容一致\n- **邊界聲明**：S03 未執行、T13 NOT_RUN、Human DONE 未設——如實、無膨脹 ✓\n\n### 驗收標準對照\n\n- 明確判定、綁定 revision 1：滿足（本評論）\n- 親自讀取交付物本體、非僅看摘要：滿足（四附件全數下載，tarball 解包逐檢）\n- 一致性/成對性/程序符合性/邊界四項審查重點：三項全數滿足；第 1 項「交付內部一致性、無矛盾聲明」**不滿足**——發現 1 為 delta 文件內的 digest 矛盾聲明\n- 未越界重跑 validator / ingest：滿足（僅靜態核對與計算雜湊）\n\n### 判定理由\n\n交付物主體（store 內容、manifest、archive、validator log、治理回填）品質良好，所有可獨立驗證的 digest 與計數均吻合。但四件交付物之一的 delta JSON 含有與任何交付物不符的 archive digest 引用（`a55a7d86…`），直接違反本次審查重點第 1 項「無矛盾聲明」的要求；在知識交付物中，錯誤的雜湊引用會污染下游證據鏈，不能以「權威欄位正確」為由放行。修正為一行字串的微小變更，故以 REVISE 退回（非 WARNING），修订後 revision +1 重審。",
+    "created_at": "2026-09-26T14:28:03Z",
+    "id": "01a0de1d-b1e8-7009-9efd-ae3988b6eeb5",
+    "issue_id": "01a0de1a-4c24-7062-a21c-d8b2093f300d",
+    "parent_id": null,
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0de1a-4c3f-7b05-bc87-66bc44e92b6b",
+    "type": "comment",
+    "updated_at": "2026-09-26T14:28:03Z"
+  }
+]

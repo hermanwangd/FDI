@@ -1,0 +1,30 @@
+Update an issue
+
+USAGE
+  multica issue update <id> [flags]
+
+FLAGS
+      --allow-external-file          Allow --description-file to read a path outside the current working directory. Off by default so a stale temp file from another run/environment can't be picked up (MUL-4252).
+      --assignee string              New assignee name (member, agent, or squad; fuzzy match)
+      --assignee-id string           New assignee UUID — member, agent, or squad (mutually exclusive with --assignee)
+      --description string           New description (decodes \n, \r, \t, \\; pipe via --description-stdin to preserve literal backslashes)
+      --description-file string      Read new description from a UTF-8 file (preserves multi-line content verbatim; use this on Windows when stdin piping mangles non-ASCII bytes). The path must be inside the current working directory unless --allow-external-file is set.
+      --description-stdin            Read new description from stdin (preserves multi-line content verbatim)
+      --due-date string              New due date (calendar day, YYYY-MM-DD)
+  -h, --help                         help for update
+      --no-start                     Apply the update without starting an agent run
+      --output string                Output format: table or json (default "json")
+      --parent string                Parent issue ID (use --parent "" to clear)
+      --position issue reorder       Ordering position within the board column (lower sorts first); prefer issue reorder for relative moves
+      --priority string              New priority
+      --project string               Project ID
+      --stage issue create --stage   Stage ordinal (>=1) for this sub-issue; see issue create --stage
+      --start-date string            New start date (calendar day, YYYY-MM-DD; pass empty string to clear)
+      --status string                New status
+      --title string                 New title
+
+INHERITED FLAGS
+  --help   Show help for command
+
+LEARN MORE
+  Use `multica <command> <subcommand> --help` for more information about a command.

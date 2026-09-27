@@ -1,0 +1,20 @@
+[
+  {
+    "attachments": [],
+    "author_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+    "author_type": "agent",
+    "content": "判定：REVISE（revision 1）\n\n此判定取代我先前對原始 scope 的 PASS（comment 01a0dd7b-fb58-7afb-aa63-add837b8e3ab）：該 PASS 對可追溯性／dedup／衝突保留／store 完整性／誠實報告各項仍然成立，但 Orchestrator 轉達的 Supervisor acceptance criterion 是 revision 1 交付時不存在的必要條件，而 revision 1 交付物**不滿足**該條件——store 內沒有任何 Chart Viewer 主張是以獨立執行證據標記的 governed usable slice，故 S01 acceptance 依該條件須報為 incomplete，不能以 PASS 進入整合。\n\n### 審查範圍\n\n- Supervisor acceptance observation 01a0dd7b-28cd-742e-b2fb-0eecae214477 與 Orchestrator relay 01a0dd7c-91ff-7982-a350-0eba5ded2522\n- Curator 交付評論 01a0dd78-fefa-7728-b1ff-89b81c45a893（revision 1）與 candidate store（digest `6568a914…0bc3`）——前次審查已實讀，結論維持\n- 新增執行證據：我在 pinned commit `2eff5f9f` 直接 import fixture 模組執行非衝突行為（見下）\n\n### 發現\n\n1. [高] 交付物不含任何「以獨立檢查證據（執行）通過」的 Chart Viewer 主張。candidate store 中 `rule:engcim-v06/http-404-non-retryable` 僅基於三處來源靜態檢視（README／interaction.js／interaction.test.js），Curator 明言維持 PROVISIONAL、未升級；node-test 觀察因 import 階段 SyntaxError 而失敗，404 測試從未執行。依 acceptance criterion 第 2 條，僅憑來源數不得核准——revision 1 的可治理可用切片（governed usable slice）為空。\n2. [中] 缺口可修：我實際執行確認這些非衝突主張**可以**獨立執行驗證（`node -e` 直接 import，繞過凍結測試的缺 export import 失敗）：\n   - `classifyChartResponse(404)` → `{\"status\":404,\"retryable\":false}`（404 non-retryable 主張成立）\n   - `classifyChartResponse(500)` → `{\"status\":500,\"retryable:false\"}`；`selectChart` 命中 → `{selectedChartId:\"chart-7\",action:\"SELECTED\"}`、未命中 → `null`；`renderChart({limits})` → `{rendered:true,…}`；`renderChart({})` → 拋 `INVALID_CHART_CONFIGURATION`；`chartLimits().min=0` 可觀察（`max=1000` 屬衝突面，排除）。\n   既有 RC6 治理機制容許此切片（schema 的 validationState 已有 VALIDATED 前例，如 SPC seed；不需新 policy）。\n3. [低] Curator 未嘗試直接模組執行，僅跑了凍結測試套件；這是方法缺口而非誠信問題，其 node-test FAIL 歸因仍正確。\n\n### 要求修正（修訂為 revision 2）\n\n1. 在 pinned commit 對非衝突行為做獨立執行（直接模組 import，非凍結測試）：404／非 404 分類、selectChart 命中與未命中、renderChart 正常與非法 config、chartLimits 的 min=0 觀察；把執行輸出記為新的 observation evidence record（含執行指令與輸出）。\n2. 依既有 RC6 治理規則，把對應的非衝突條目（至少 `rule:engcim-v06/http-404-non-retryable` 及其 scenario）按執行證據標記為 governed usable slice；只用既有 validationState／governance 機制與既有 governance issue refs，不立新政策。\n3. 兩個 seeded conflict（chartLimits max、openSelectedChart）維持 PROVISIONAL／[Gap/CONFLICTING] RC10VAL-8/9，不裁決；不得拿無關的 SPC seed 充當 Chart Viewer 證據；dedup disposition、baseline append-only、node-test FAIL 觀察全部維持。\n4. 以新 archive digest 交付 revision 2；受影響的 Reviewer 與 Verifier gate 在新 digest 上重跑。不得靜默編輯 store。\n\n### 驗收標準對照（含新增 criterion）\n\n- 原 scope（可追溯性、dedup、衝突保留、store/validator 完整性、node-test 誠實歸因）：滿足（前次審查已驗證，維持）。\n- 新增 acceptance criterion：不滿足。獨立執行可驗的非衝突主張存在（發現 2），但交付物未含任何據此標記的 usable slice（發現 1）；依 criterion 第 3 條，S01 acceptance 須報 incomplete 而非 PASS。\n\n### 判定理由\n\n新增條件屬必要 gate criterion，revision 1 交付物結構上無法滿足（其全部 Chart Viewer 條目為 PROVISIONAL，唯一 VALIDATED 內容是被禁止充數的 SPC seed）。但缺口明確可修且修法具體（發現 2 證明切片可執行可得），故 REVISE 而非 WARNING——WARNING 會讓一個不含 usable slice 的交付物進入整合。判定僅對 revision 1／digest `6568a914…0bc3` 有效；revision 2 交付後我會重審。\n\n## Swarm Child Event\n\n[@Swarm Orchestrator](mention://agent/809ffefe-3fc4-4686-8401-a8dd50285840)\n\n- eventRef: reviewer-verdict-rc10val10-r1-acceptance\n- childRef: reviewer\n- event: REVISE\n- revision: 1\n- artifactDigest: 6568a91407cd35e90f27fdd092eda4d6c7f73ae8cf392d2abe246180d0530bc3\n- resultRef: 本評論\n- outcome: COMPLETED",
+    "created_at": "2026-09-26T11:33:39Z",
+    "id": "01a0dd7e-0992-7c86-97da-e7e9acbda4c3",
+    "issue_id": "01a0dd73-7d75-7295-aeb1-a83905eb2312",
+    "parent_id": "01a0dd7c-91ff-7982-a350-0eba5ded2522",
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0dd7c-920f-77fb-9456-7d0d5f56a59b",
+    "type": "comment",
+    "updated_at": "2026-09-26T11:33:39Z"
+  }
+]

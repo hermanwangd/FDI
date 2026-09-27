@@ -1,0 +1,85 @@
+{
+  "receiptKind": "AUTHORIZED_VISIBLE_CONTEXT",
+  "schemaVersion": "0.1",
+  "missionRef": "RC10VAL-51 / 01a0dfb8-6712-7e63-888e-ddcece147850",
+  "missionRevision": 2,
+  "missionProviderRevisionAtFreshRead": 2,
+  "workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+  "consumerProjectRef": "a3f129fa-4028-4341-98dc-c8ec20c468ae",
+  "fetchedAtUtc": "2026-09-26T22:00:38Z",
+  "candidateIdentity": {
+    "candidate": "RC10-local-candidate-20260927-01",
+    "candidateInputManifestSha256": "902a5e97d3de9185ea22a36687823a4e1997d7e2d13c7c8e2f48f0b1a0ec4267",
+    "s02InputManifestRevision": 2,
+    "s02InputManifestSha256": "e5a7c9bf94bc23be037b2ea01ccfa1027ff7058f5e458174a144a516680168af",
+    "s01ProductKnowledgeArchiveSha256": "4c4125269788178dba6a605952761cba94b4deeb1d50d10dcfd382cadab8b867",
+    "adoptedProfileId": "ENGCIM-S05-REVIEWED-DELIVERY-v0.1",
+    "adoptionReceiptSha256": "8ade042327de65549f9a2f02c7c70915f1bf2f2c70cd81459a6c0cca7c0b9361",
+    "configuredReadbackSha256": "675132e455c0baa8f222a1514399f980e78fdbd81e25f32bad32d0251d0fdd0b",
+    "perRunInstructionConsumption": "UNVERIFIED until bound to actual run evidence"
+  },
+  "equalityEvidence": {
+    "method": "Fresh multica issue get for RC10VAL-51 and RC10VAL-46 at 2026-09-26T22:00:38Z; compared exact strings",
+    "missionProjectIdFreshRead": "a3f129fa-4028-4341-98dc-c8ec20c468ae",
+    "receiptConsumerProjectRef": "a3f129fa-4028-4341-98dc-c8ec20c468ae",
+    "recordApplicableProjectRefsFreshRead": [
+      "a3f129fa-4028-4341-98dc-c8ec20c468ae"
+    ],
+    "missionProjectIdLength": 36,
+    "applicableProjectRefLength": 36,
+    "byteExactEquality": true
+  },
+  "selectedRecords": [
+    {
+      "lane": "WorkspaceKnowledge",
+      "authority": "Workspace-scoped procedure/context only; read-only for S02",
+      "identifier": "RC10VAL-46",
+      "issueId": "01a0df84-327c-7082-bff1-aa7715fd022f",
+      "providerRevision": 6,
+      "issueStatus": "in_review",
+      "recordKey": "rc10wk-s01-candidate-identity-evidence-attribution-20260927-01",
+      "recordVersion": 1,
+      "recordBodyCanonicalSha256": "5507ba68c381603808740316ac140ddb221e96222d5a1fe815661087e820e333",
+      "proposalDigest": "68c5b950fe39fb811cbd5e67caebab42f7f22b9eaa1959f7e30bf86549f2ac0a",
+      "workspaceRef": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+      "projectRef": "43aec4ec-3ebb-4d1b-aa54-7766c48379c1",
+      "applicableProjectRefs": [
+        "a3f129fa-4028-4341-98dc-c8ec20c468ae"
+      ],
+      "visibility": "WORKSPACE_AUTHORIZED",
+      "decision": "APPROVED",
+      "decisionRef": "RC10VAL-41 metadata swarm.governance.*",
+      "lifecycle": "CURRENT",
+      "canonicalUnique": true,
+      "duplicateCheck": {
+        "projectId": "43aec4ec-3ebb-4d1b-aa54-7766c48379c1",
+        "matchingRecordKeyCount": 1,
+        "hasMore": false
+      },
+      "validUntil": "2026-09-27T23:59:59+08:00",
+      "applicability": "Isolated Validation project and pinned RC10 validation workflow only; unknown applicability excludes the guidance.",
+      "intendedUse": "Maintain identity/digest boundaries, keep heterogeneous outcomes separate, preserve product conflicts without asserting product truth, and distinguish configured role settings from per-run consumption."
+    }
+  ],
+  "excludedContext": [
+    {
+      "lane": "ProductKnowledge",
+      "identifier": "RC10VAL-22",
+      "reason": "Provisional product claim and separate authority lane; may not be elevated by WorkspaceKnowledge."
+    },
+    {
+      "lane": "ProductKnowledge",
+      "identifier": "RC10VAL-8 and RC10VAL-9",
+      "reason": "Blocked product-context conflicts, unadjudicated; retained only as background references."
+    }
+  ],
+  "limitations": [
+    "The record is in_review as an issue while its explicit record governance is APPROVED and lifecycle CURRENT; these statuses are distinct.",
+    "The producer run envelope's 20260926-01 identity mismatch is disclosed and preserved; it is not silently repaired.",
+    "Fixture node --test exit 1 and ProductKnowledge validator exit 0 are separate results; neither substitutes for the other.",
+    "This receipt records fresh selection, not Curator consumption. Actual input/use must be independently demonstrated from run-bound evidence.",
+    "RC10VAL-51 input-manifest revision 1 attachment 01a0dfb8-5fb6-7067-99f5-842590e2e29a (SHA-256 9cda72f3690f4627ca28372a871e6c0fdbdc1b4dc7a382313bbb7b697477bab6) is invalid and must not be used."
+  ],
+  "excludedRecords": [],
+  "statementOfEvidence": "Supervisor fresh-read provider selection bound to the exact current Mission project and current approved WorkspaceKnowledge record. Attachment alone is not proof of subsequent run consumption."
+}

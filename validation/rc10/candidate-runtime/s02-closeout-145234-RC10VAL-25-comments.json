@@ -1,0 +1,20 @@
+[
+  {
+    "attachments": [],
+    "author_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+    "author_type": "agent",
+    "content": "## 審查目標 revision freshness 檢查結果：審查目標已過時，不予審查\n\n依 revision freshness 規則，審查前先核對交付物最新 revision，結果如下：\n\n**本審查任務（RC10VAL-25）的目標為 RC10VAL-21 revision 2，但交付物已推進至 revision 3，故不審舊版。**\n\n### 證據\n\n- 我收到的派審指示（本 issue 描述）明確綁定 revision 2 交付評論 `comment:01a0de21-3b1d-7048-978a-0f289f7edfdc`（archive `f875d86b…a0b3d`）。\n- RC10VAL-21 thread `01a0de1f-1417-7c93-9549-1761cf4e35c4` 內，於 **2026-09-26T14:35:03Z**（早於本 run 派發 14:35:33Z）已有 Curator 的 **revision 3** 交付評論 `comment:01a0de24-1c31-7dbc-98bb-2e0f271a7a63`（四件附件，`deliveryRevision: 3`，r3 archive digest `b9ad2af04fe344913815c31f1ee3ebb0de05de8a6ecbc3e22d06fc53e3e2a72a`）。其產生背景：Supervisor 澄清評論 `comment:01a0de21-5965-75a3-b6ad-d6872ec4303c`（14:32:02Z）覆蓋了 revision 2 對 Finding 2 的處理方式（禁止以 ingest 時間戳替換 `retrievedAt`），Curator 遂交付 r3 以依更正指示重做。\n- Parent metadata `swarm.child.c1.revision = 2` / `DELIVERED:r2` 尚未反映 r3——Orchestrator 對 r3 的 fan-in 尚未完成（或本派審即依該 stale 狀態產生）。\n\n### 判定\n\n- 依規則「審查目標 revision 已過時，請以最新 revision 重新派審」：**不對 revision 2 出具 PASS / WARNING / REVISE 判定**（對 r2 的任何判定將因 r3 存在而自動 stale，且 r2 的 Finding 2 處理已被 Supervisor 明確作廢，審查它沒有意義）。\n- 實質審查對象應為 **revision 3**（`comment:01a0de24-1c31-7dbc` 及其四件附件），其中 Finding 2 的評估應以 Supervisor 澄清的兩條合法 resolution 標準檢驗 r3 採用的 resolution 1（語意澄清＋檢索時點證據鏈：v1/v2 同批下載 14:12:47/48Z、兩筆 evidence 同點建立 14:15:03Z、檢索先於 ingest 之管線時序）。\n- 請 Orchestrator 以最新 revision 3 重新派審（修订轮次上限仍為 3，r3 為第 2 次修訂交付）。\n\n本 issue 移 `in_review`，等待重新派審指示。",
+    "created_at": "2026-09-26T14:37:03Z",
+    "id": "01a0de25-f09a-7e85-92a9-cfb52e9bcc6a",
+    "issue_id": "01a0de24-90a1-7e17-86ac-7209a570b6fe",
+    "parent_id": null,
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0de24-90be-70dc-9217-df08ae6ee186",
+    "type": "comment",
+    "updated_at": "2026-09-26T14:37:03Z"
+  }
+]

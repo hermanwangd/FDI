@@ -1,0 +1,41 @@
+--- tracked-RC6/verify.sh
++++ installed-source-RC6/verify.sh
+@@ -316,7 +316,15 @@
+   if ! printf '%s' "$LABELS_JSON" | jq -e --arg n "$n" '.[] | select(.name == $n)' >/dev/null 2>&1; then
+     missing="$missing $n"
+   else
+-    LBL_IDS[$n]="${LBL_IDS[$n]:-$(printf '%s' "$LABELS_JSON" | jq -r --arg n "$n" '.[] | select(.name == $n) | .id' | head -n1)}"
++    # The package may contain a stale map from the workspace that produced it.
++    # Always bind by the current workspace label name so UUIDs never cross
++    # workspace boundaries.
++    current_label_id="$(printf '%s' "$LABELS_JSON" | jq -r --arg n "$n" '.[] | select(.name == $n) | .id' | head -n1)"
++    if [[ -n "$current_label_id" && "$current_label_id" != "null" ]]; then
++      LBL_IDS[$n]="$current_label_id"
++    else
++      missing="$missing $n"
++    fi
+   fi
+ done
+ if [[ -z "$missing" ]]; then
+@@ -627,7 +635,7 @@
+ for _f in "${!RC6_BINDINGS[@]}"; do
+   _raw="$(fm_get "$AGENTS_DIR/$_f" skills)"
+   for _s in ${RC6_BINDINGS[$_f]}; do
+-    printf '%s' "$_raw" | tr ',' '\n' | tr -d '[:space:]' | grep -qx "$_s" || RC6_BIND_OK=0
++    printf '%s' "$_raw" | tr ',' '\n' | tr -d '[:blank:]' | grep -qx "$_s" || RC6_BIND_OK=0
+   done
+ done
+ if [[ "$RC6_BIND_OK" -eq 1 ]]; then
+@@ -744,10 +752,10 @@
+    並用 \`multica issue runs <child-id>\`（以 --help 為準）或 REST \`GET /api/issues/{id}/task-runs\`
+    確認三個 child 各有 run 證據（queued/dispatched/running）。**指令 exit 0 不算 ack。**
+ 4. 確認三個 child 各自獨立執行（各自的 run 與評論，互不等待）。
+-5. 只讓 child A delivery 到 `in_review`，並由 child 對 parent 發 `Swarm Child Event`：確認 parent 被自動喚醒，但 fan-in 尚未滿足；**不得人工把 A 設 done**。
++5. 只讓 child A delivery 到 \`in_review\`，並由 child 對 parent 發 \`Swarm Child Event\`：確認 parent 被自動喚醒，但 fan-in 尚未滿足；**不得人工把 A 設 done**。
+ 6. Reviewer 對 A PASS@current revision（必要時 Verifier VERIFIED），再送 parent event；確認 A 被計算為 Swarm COMPLETED，但其他 REQUIRED child 未完成時 parent 仍不推進。
+ 7. 讓 child B 失敗／blocked：確認即使其 issue 到 terminal lifecycle，ALL_REQUIRED 仍不滿足；success predicate 不得以 stage closed 取代。
+-8. 修復 B，讓 A/B/C 都在 `in_review` 且 current revision review/verification gate 全過：確認 fan-in satisfied，parent 自動進入整合；全程 child 不需要 human done。
++8. 修復 B，讓 A/B/C 都在 \`in_review\` 且 current revision review/verification gate 全過：確認 fan-in satisfied，parent 自動進入整合；全程 child 不需要 human done。
+ 9. 讓 Reviewer 判 REVISE：確認修改意見原樣退回原負責 worker，child 回到 in_progress。
+ 10. worker 修訂後重新交付（revision N+1）：確認觸發重審，且舊 revision 的 PASS（若有）被視為 stale。
+ 11. 確認 Verifier 被獨立派遣並實際執行指令、貼出執行證據（與 Reviewer 不互相取代）。

@@ -1,0 +1,78 @@
+{
+  "manifestKind": "S02_STAGED_MANIFEST",
+  "schemaVersion": "0.1",
+  "mission": "RC10VAL-21",
+  "workspaceId": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+  "baseSnapshot": {
+    "filename": "pk-store-s01-rc10val10-candidate-r3.tar.gz",
+    "attachmentId": "01a0dd93-83cc-794d-b1d7-9e8c8a43d70b",
+    "sha256": "57af68f6f63561e181df6edab6d0adea160620b78c058cf5c610b296581411ba",
+    "validatorCount": 55
+  },
+  "stageA": {
+    "at": "2026-09-26T14:15:03Z",
+    "input": {
+      "filename": "s02-source-v1.md",
+      "sourceId": "rc10-s02-chart-intent-v1",
+      "attachmentId": "01a0de07-eccb-7d06-8547-c9ce807f92e6",
+      "sha256": "77ff37f5314d43eaf54c643418180a80fce91643449828403a9206fb8b0ada64"
+    },
+    "outputs": {
+      "entry": "sem:engcim-v06/chart-viewer/product-intent",
+      "evidence": "ev:engcim-v06-s02-chart-intent-v1-rc10val21",
+      "state": "PROVISIONAL (discrepancy with frozen acceptance OPENED retained, unadjudicated)"
+    },
+    "validator": "OK: 57",
+    "intermediateSnapshot": {
+      "filename": "pk-store-s02-stage-a-v1.tar.gz",
+      "sha256": "a09b3c3fdb2f8e7dbad8a7f58e1688e39c9af7f9a72470e8ca4c4251d4e37698"
+    }
+  },
+  "stageB": {
+    "at": "2026-09-26T14:16:00Z",
+    "input": {
+      "filename": "s02-source-v2.md",
+      "sourceId": "rc10-s02-chart-intent-v2",
+      "attachmentId": "01a0de07-edb4-768f-ae5e-fb54a1bc0b07",
+      "sha256": "f3987c25303192f14cec2eb384ba2b6fd7a84bb9aa1d4d885a7587d053e30205"
+    },
+    "outputs": {
+      "entry": "sem:engcim-v06/chart-viewer/product-intent/v2",
+      "evidence": "ev:engcim-v06-s02-chart-intent-v2-rc10val21",
+      "state": "PROVISIONAL (document claim only; implementation gap kept open)",
+      "superseded": {
+        "entry": "sem:engcim-v06/chart-viewer/product-intent",
+        "toState": "STALE",
+        "supersededBy": "sem:engcim-v06/chart-viewer/product-intent/v2",
+        "evidenceStale": "ev:engcim-v06-s02-chart-intent-v1-rc10val21 (stale: true, retained)"
+      }
+    },
+    "validator": "OK: 59"
+  },
+  "replay": {
+    "at": "2026-09-26T14:17:00Z",
+    "inputIdenticalTo": "stageB.input",
+    "disposition": "same-source duplicate (same sourceId + same SHA-256); no new observation, no new entry, no validationState upgrade, no independent corroboration counted",
+    "evidenceDispositionRecord": "ev:engcim-v06-s02-chart-intent-v2-replay-dedup-rc10val21",
+    "before": {
+      "validatorCount": 59,
+      "semanticsEntries": 5,
+      "evidenceRecords": 20
+    },
+    "after": {
+      "validatorCount": 60,
+      "semanticsEntries": 5,
+      "evidenceRecords": 21
+    },
+    "countsNote": "after adds only the replay-disposition evidence record; entries unchanged (no silent duplicate promotion)"
+  },
+  "final": {
+    "validator": "OK: 60",
+    "archive": {
+      "filename": "pk-store-s02-refreshed-final.tar.gz",
+      "sha256": "f875d86bc375e7b736aec02fe57a57bc05f193bf01d4c32351a0c246b23a0b3d"
+    }
+  },
+  "deliveryRevision": 2,
+  "revisionNote": "同 delta JSON：僅 v2 evidence retrievedAt 更正（14:15:03Z→14:16:00Z）並重archive；digest 更新為 revision 2 值。"
+}

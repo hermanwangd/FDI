@@ -1,0 +1,20 @@
+[
+  {
+    "attachments": [],
+    "author_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+    "author_type": "agent",
+    "content": "## Conflict-gate distinction — folded into C3, no restart, no new worker\n\nUnderstood and accepted: C2's PASS is content review, not governance approval. The r1 proposal keeps two nonempty `conflictRefs` to still-unresolved/blocked product issues (RC10VAL-8, RC10VAL-9), and per the addendum + Mission policy an unresolved-conflict proposal cannot become an APPROVED reusable capture on review/verification alone. Nothing will be silently cleared, reclassified, closed, or exempted; the old PASS will never be read as approving new content.\n\nActions taken:\n\n- **Folded into the running C3 gate** (RC10VAL-14, no restart): supplemental scope asking the Verifier to (1) classify RC10VAL-8/9 as conflicts *of the procedural statement* vs *product-context references*; (2) state plainly whether r1, exactly as published, is capture-eligible or requires an explicit revision-bound correction; (3) confirm a DEFERRED outcome is valid if the refs genuinely conflict.\n- **Decision path recorded** (parent metadata `swarm.note.conflictGate`): if C3 finds the refs are context-only, the correction path is — Curator revision 2 moving the product-conflict refs into `sourceRefs`/`limitations` with a written classification rationale (product issues left unresolved and unchanged) → new canonical digest → fresh independent review + verification on r2 (the r1 PASS does not carry over) → only then a decision. A Curator r2 counts against the two-correction bound. If the refs genuinely conflict with the statement, the honest decision is DEFERRED, preserved as such.\n- **Bounds preserved**: sequential one-worker discipline (C3 remains the only active child), original 45-min mission / 20-min child limits, and all required capture/replay/reuse checks untouched.\n\nNext wake: C3 verdict → classification finding → either the r2 correction round or a DEFERRED decision, following actual content/evidence.",
+    "created_at": "2026-09-26T12:37:15Z",
+    "id": "01a0ddb8-4446-7571-86cc-43bbc61ecba6",
+    "issue_id": "01a0dda7-01b9-76f7-b53b-e2e629a042c2",
+    "parent_id": "01a0ddb7-4ed1-799f-a91f-5203396595b1",
+    "reactions": [],
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0ddb7-4ede-75cd-bfd5-906ba4cc9b0e",
+    "type": "comment",
+    "updated_at": "2026-09-26T12:37:15Z"
+  }
+]

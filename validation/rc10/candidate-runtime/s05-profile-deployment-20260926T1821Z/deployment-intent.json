@@ -1,0 +1,76 @@
+{
+  "recordType": "CandidateRoleDeploymentIntent",
+  "candidateVersion": "RC10-local-candidate-20260927-01",
+  "candidateSnapshotSha256": "902a5e97d3de9185ea22a36687823a4e1997d7e2d13c7c8e2f48f0b1a0ec4267",
+  "workspaceId": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+  "validationProjectId": "a3f129fa-4028-4341-98dc-c8ec20c468ae",
+  "profileId": "ENGCIM-S05-REVIEWED-DELIVERY-v0.1",
+  "adoptionReceipt": "validation/rc10/candidate-runtime/s05-profile-adoption.json",
+  "adoptionReceiptSha256": "8ade042327de65549f9a2f02c7c70915f1bf2f2c70cd81459a6c0cca7c0b9361",
+  "profileSource": "engcim/bootstrap/overlays/multica/RC10-S05-S06-ROLE-GUIDANCE.md",
+  "profileSourceSha256": "a09e9fbd2cbeecceede25c9d80612002a1c6369367450422986bdb208bcbe4e9",
+  "RC6ScenarioSha256": "9eefc7b72c01af62bab81bd4d4c19ff29a8c212170066f2e673245c6699f1f1b",
+  "roles": {
+    "orchestrator": {
+      "agentId": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "role": "Swarm Orchestrator",
+      "beforeInstructionSha256": "b48d6cd809d001f7b87800e191a3c1beacfa2ece322dcac1f9d53cae3e73dfb1",
+      "roleExcerptSha256": "db07e27caa75473cfa98a894fb0e9794b6a6accfab222026b3d9b0f164f98816",
+      "desiredInstructionSha256": "b3b29cd7f56cbed065f20923e97210a37e7c404739593718dbd7ddaba1c0b472",
+      "desiredInstructionBytes": 27301,
+      "settingsToPreserve": [
+        "model",
+        "runtime_id",
+        "runtime_mode",
+        "skills",
+        "permission_mode",
+        "visibility",
+        "custom_args",
+        "status",
+        "max_concurrent_tasks",
+        "mcp_config"
+      ]
+    },
+    "architect": {
+      "agentId": "668dadac-fd7a-4523-855a-f6a842301555",
+      "role": "Swarm Architect",
+      "beforeInstructionSha256": "b585628c253e21a93452df6b62e224accfb36c91f1a995e421ac0155c97f6184",
+      "roleExcerptSha256": "b2fde546ca458da79286f80bb0a69a016de21f39fcbb4cb8b28027f7e52acfa8",
+      "desiredInstructionSha256": "e6c8861bd1ab0bfb95b2863e15870e31f1e95ccf40538d5fa45c46139955c6a9",
+      "desiredInstructionBytes": 7313,
+      "settingsToPreserve": [
+        "model",
+        "runtime_id",
+        "runtime_mode",
+        "skills",
+        "permission_mode",
+        "visibility",
+        "custom_args",
+        "status",
+        "max_concurrent_tasks",
+        "mcp_config"
+      ]
+    },
+    "reviewer": {
+      "agentId": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "role": "Swarm Reviewer",
+      "beforeInstructionSha256": "41aa25fdbe66a88b6d0ee6b0df26ed43dbf034a4375aa942e9991dab06eda610",
+      "roleExcerptSha256": "519e08ebe16de2f706417d9f9df8f58fa2bdc663fd83e49e7813931a062366f2",
+      "desiredInstructionSha256": "16d15bc328b39a05c30c8d79c82e0c8e4b47dead055833157d6e86c195aa1964",
+      "desiredInstructionBytes": 6178,
+      "settingsToPreserve": [
+        "model",
+        "runtime_id",
+        "runtime_mode",
+        "skills",
+        "permission_mode",
+        "visibility",
+        "custom_args",
+        "status",
+        "max_concurrent_tasks",
+        "mcp_config"
+      ]
+    }
+  },
+  "changeBoundary": "Only Orchestrator/Architect/Reviewer instruction fields; preserve every other role field and all other agents."
+}

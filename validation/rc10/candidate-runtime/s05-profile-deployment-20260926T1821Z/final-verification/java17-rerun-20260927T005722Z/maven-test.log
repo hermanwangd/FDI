@@ -1,0 +1,109 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------< com.featuredeliveryintelligence:fdi >-----------------
+[INFO] Building Feature Delivery Intelligence ENGCIM Swarm 0.4.8.3
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ fdi ---
+[INFO] skip non existing resourceDirectory /Users/herman_mbp2023/.codex/worktrees/fdi-rc10-implementation/Feature-Delivery-Intelligence/engcim/swarm/src/main/resources
+[INFO] skip non existing resourceDirectory /Users/herman_mbp2023/.codex/worktrees/fdi-rc10-implementation/Feature-Delivery-Intelligence/engcim/swarm/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ fdi ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ fdi ---
+[INFO] skip non existing resourceDirectory /Users/herman_mbp2023/.codex/worktrees/fdi-rc10-implementation/Feature-Delivery-Intelligence/engcim/swarm/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ fdi ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ fdi ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.featuredeliveryintelligence.fdi.ReviewRegressionTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.056 s -- in com.featuredeliveryintelligence.fdi.ReviewRegressionTests
+[INFO] Running com.featuredeliveryintelligence.fdi.CompanyImportManifestTests
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.272 s <<< FAILURE! -- in com.featuredeliveryintelligence.fdi.CompanyImportManifestTests
+[ERROR] com.featuredeliveryintelligence.fdi.CompanyImportManifestTests.importManifestAccountsForMovesAdditionsAndExcludedLocalState -- Time elapsed: 0.175 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+[destination digest: engcim/swarm/docs/rc10/RC10-EVIDENCE-MANIFEST.md] 
+expected: "75db9e6aa7d24d31dfb20e0ebb28c936e7ec91305061e4911850da8f174088e7"
+ but was: "cb2e41e0f7bf7724686983f26b6f820875879ceb3bc530dd28ca2fdf3ad1b74c"
+	at com.featuredeliveryintelligence.fdi.CompanyImportManifestTests.importManifestAccountsForMovesAdditionsAndExcludedLocalState(CompanyImportManifestTests.java:58)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+[INFO] Running com.featuredeliveryintelligence.fdi.JavaOnlySourcePolicyTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s -- in com.featuredeliveryintelligence.fdi.JavaOnlySourcePolicyTests
+[INFO] Running com.featuredeliveryintelligence.fdi.PackageArchitectureTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in com.featuredeliveryintelligence.fdi.PackageArchitectureTests
+[INFO] Running com.featuredeliveryintelligence.fdi.Rc6CompatibilityTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in com.featuredeliveryintelligence.fdi.Rc6CompatibilityTests
+[INFO] Running com.featuredeliveryintelligence.fdi.orchestration.SupervisorPathTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.015 s -- in com.featuredeliveryintelligence.fdi.orchestration.SupervisorPathTests
+[INFO] Running com.featuredeliveryintelligence.fdi.orchestration.MulticaWorkspaceKnowledgeRepositoryTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.038 s -- in com.featuredeliveryintelligence.fdi.orchestration.MulticaWorkspaceKnowledgeRepositoryTests
+[INFO] Running com.featuredeliveryintelligence.fdi.orchestration.KnowledgePipelineTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in com.featuredeliveryintelligence.fdi.orchestration.KnowledgePipelineTests
+[INFO] Running com.featuredeliveryintelligence.fdi.orchestration.WorkspaceKnowledgeLifecycleTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in com.featuredeliveryintelligence.fdi.orchestration.WorkspaceKnowledgeLifecycleTests
+[INFO] Running com.featuredeliveryintelligence.fdi.orchestration.SupervisorBoundaryTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.featuredeliveryintelligence.fdi.orchestration.SupervisorBoundaryTests
+[INFO] Running com.featuredeliveryintelligence.fdi.orchestration.MulticaRuntimeBindingReceiptTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in com.featuredeliveryintelligence.fdi.orchestration.MulticaRuntimeBindingReceiptTests
+[INFO] Running com.featuredeliveryintelligence.fdi.orchestration.MissionFlowTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.featuredeliveryintelligence.fdi.orchestration.MissionFlowTests
+[INFO] Running com.featuredeliveryintelligence.fdi.orchestration.LearningBoundaryTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.featuredeliveryintelligence.fdi.orchestration.LearningBoundaryTests
+[INFO] Running com.featuredeliveryintelligence.fdi.application.FdiApplicationTests
+09:01:12.558 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.featuredeliveryintelligence.fdi.application.FdiApplicationTests]: FdiApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+09:01:12.648 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.featuredeliveryintelligence.fdi.application.FdiApplication for test class com.featuredeliveryintelligence.fdi.application.FdiApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.1)
+
+2026-09-27T09:01:12.884+08:00  INFO 71787 --- [           main] c.f.fdi.application.FdiApplicationTests  : Starting FdiApplicationTests using Java 17.0.20.1 with PID 71787 (started by herman_mbp2023 in /Users/herman_mbp2023/.codex/worktrees/fdi-rc10-implementation/Feature-Delivery-Intelligence/engcim/swarm)
+2026-09-27T09:01:12.885+08:00  INFO 71787 --- [           main] c.f.fdi.application.FdiApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2026-09-27T09:01:13.190+08:00  INFO 71787 --- [           main] c.f.fdi.application.FdiApplicationTests  : Started FdiApplicationTests in 0.454 seconds (process running for 1.695)
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.366 s -- in com.featuredeliveryintelligence.fdi.application.FdiApplicationTests
+[INFO] Running com.featuredeliveryintelligence.fdi.RuntimeMigrationTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in com.featuredeliveryintelligence.fdi.RuntimeMigrationTests
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   CompanyImportManifestTests.importManifestAccountsForMovesAdditionsAndExcludedLocalState:58 [destination digest: engcim/swarm/docs/rc10/RC10-EVIDENCE-MANIFEST.md] 
+expected: "75db9e6aa7d24d31dfb20e0ebb28c936e7ec91305061e4911850da8f174088e7"
+ but was: "cb2e41e0f7bf7724686983f26b6f820875879ceb3bc530dd28ca2fdf3ad1b74c"
+[INFO] 
+[ERROR] Tests run: 44, Failures: 1, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.144 s
+[INFO] Finished at: 2026-09-27T09:01:13+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.2:test (default-test) on project fdi: There are test failures.
+[ERROR] 
+[ERROR] See /Users/herman_mbp2023/.codex/worktrees/fdi-rc10-implementation/Feature-Delivery-Intelligence/engcim/swarm/target/surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

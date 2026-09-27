@@ -1,0 +1,22 @@
+[
+  {
+    "attachments": [],
+    "author_id": "9e98e1d4-7bb5-4efe-9b32-e90962683e71",
+    "author_type": "agent",
+    "content": "### 交付摘要\n\nWI-1 實作完成：於 `src/interaction.js` 依 C1 revision 2 契約新增具名匯出 `openSelectedChart(charts, chartId)`，命中回傳 `{ action: 'OPENED', chartId: \u003cmatched id\u003e }`，查無回傳 `null`。其餘檔案零變更，`chartLimits` 的 seeded defect（max=1000）依紅線未觸動。已在 task branch commit，未 push、未開 PR、未 merge。\n\n### 變更檔案清單\n\n- `src/interaction.js` — 新增 `openSelectedChart`（+5 行，既有函式 `selectChart`／`classifyChartResponse` 一字未動）\n\n### diff 摘要\n\n```diff\ndiff --git a/src/interaction.js b/src/interaction.js\n@@ -9,3 +9,8 @@\n   }\n   return { status, retryable: false };\n }\n+\n+export function openSelectedChart(charts, chartId) {\n+  const matched = charts.find(chart =\u003e chart.id === chartId);\n+  return matched ? { action: 'OPENED', chartId: matched.id } : null;\n+}\n```\n\n### 自測證據\n\n- 指令：`npm test`（即 `node --test`）\n- 輸出摘要：`# tests 2 / # pass 2 / # fail 0`；frozen test「opens a selected chart from the list in one interaction」與「preserves HTTP 404 as non-retryable」均 ok，全綠。\n- `git diff` 與 `git show --stat`：`1 file changed, 5 insertions(+)`，僅 `src/interaction.js`。\n\n### Branch / Commit\n\n- Branch：`agent/swarm-coder/a00dfa61d108`\n- Commit：`3be28d44fa1e9fcdcfb48d169f47672e373cf4c9`（基於 pinned `2eff5f9f84ca709684bfe0b7c90102268f07a0f0`）\n- 未 push、未開 PR、未 merge。\n\n### 驗收標準對照\n\n1. **diff 僅觸及 `src/interaction.js` 且僅新增 `openSelectedChart`** → 滿足（`git show --stat` 佐證，既有函式未更動）。\n2. **frozen test 於 `node --test` 通過、全部測試綠** → 滿足（2 pass / 0 fail）。\n3. **frozen tests 與 `src/chartViewer.js` 零 diff** → 滿足（`git diff --stat` 顯示唯一變更檔案為 `src/interaction.js`）。\n4. **task branch commit、不 push/PR/merge** → 滿足。\n5. **交付評論 + child 保持 `in_review` + parent Swarm Child Event** → 本評論即交付，接續處理 status 與 parent event。\n\n### 契約逐點對照（C1 rev 2）\n\n- 具名匯出 `openSelectedChart(charts, chartId)` ✓\n- 命中精確回傳 `{ action: 'OPENED', chartId: \u003cmatched id\u003e }` ✓（frozen test 驗證）\n- 查無回傳 `null`（不 throw／undefined／其他 action，C2-rev2 finding 3）✓\n- `selectChart`（SELECTED／null）零變更 ✓\n- `classifyChartResponse`（含 404／retryable:false baseline）零變更 ✓\n- `chartLimits` seeded defect（1000）未修正 ✓\n- `src/chartViewer.js` 零 diff ✓\n- frozen tests 零 diff ✓\n\n### 已知限制 / 殘留風險\n\n無。scope 邊界遵守：未處理 RC10VAL-8 之 chartViewer.js scope-expansion，未加 devDeps，未改寫 frozen tests。",
+    "created_at": "2026-09-26T23:06:08Z",
+    "id": "01a0dff8-054e-7114-b8b4-3ff9f2fe9caf",
+    "issue_id": "01a0dff6-bd9c-7297-90fc-70720d3f3c6a",
+    "last_activity_at": "2026-09-26T23:06:08Z",
+    "parent_id": null,
+    "reactions": [],
+    "reply_count": 0,
+    "resolved_at": null,
+    "resolved_by_id": null,
+    "resolved_by_type": null,
+    "revision": 1,
+    "source_task_id": "01a0dff6-bdb7-74ac-8e76-a00dfa61d108",
+    "type": "comment",
+    "updated_at": "2026-09-26T23:06:08Z"
+  }
+]

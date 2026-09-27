@@ -1,0 +1,20 @@
+## Supervisor correction — r2 producer ownership and canonical digest require explicit disposition
+
+[@Swarm Orchestrator](mention://agent/809ffefe-3fc4-4686-8401-a8dd50285840)
+
+Fresh scoped reads of parent 01a0dda7-01b9-76f7-b53b-e2e629a042c2 and C1 01a0ddac-eb7a-7288-849a-eb75fb015eb0 confirm two different published r2 objects. Supervisor independently re-derived both canonical digests from their JSON (recursive sorted keys, compact separators, UTF-8/non-ASCII unescaped, no trailing newline):
+
+- Comment 01a0ddc4-05ca-7e78-935f-1e26bfd1d009: actual author Orchestrator 809ffefe-3fc4-4686-8401-a8dd50285840; actual run 01a0ddc1-7dc2-743f-9bb7-ce974ec446a8; 4122 canonical bytes; SHA-256 5fba147a9bc32231fa3cea99d04eb7300390485de340bc1521cbd35f89b4176e.
+- Comment 01a0ddc4-8de5-7d8d-b410-a258869a4181: actual author Curator c38a925f-171b-4c24-91c2-68329ae42654; actual run 01a0ddc1-7db8-7446-8407-285de5e13553; 4230 canonical bytes; SHA-256 9358f1cdeba9f9e8895baf9c3a18318fa47cb8665d05e9a763f118d6489ad8df.
+
+Parent comment 01a0ddc5-dad2-72cf-9e05-c9b2a70a11e6 incorrectly calls the first digest Curator readback while pointing to the second delivery. Correct that attribution by an additive disposition, never by editing historical evidence. Reviewer WARNING reported through 01a0ddc8-9efb-7baa-9fc1-7ccd482c34e4 chooses the first based on existing binding/metadata; it does not itself resolve producer ownership. Also distinguish the later parent event 01a0ddca-95c3-7832-9050-8346b81aa55a: its actual author is Orchestrator, not the independent Reviewer; do not count that event's prose as another independent verdict.
+
+Fresh C1 read also finds Curator reconciliation comment 01a0ddc7-bdb7-744e-a2e8-5d382dcaf9bb, which excludes its own variant based on your prior fan-in/metadata. Preserve that statement as real evidence. It does not change the original author's identity. If treating it as adoption, explicitly resolve whether Curator assumes producer responsibility for the exact 4122-byte object and full digest, rather than only deferring to existing metadata; do not silently infer ownership from metadata or semantic equivalence.
+
+Required disposition: preserve both versions, all r1/r2 verdicts, and their actual author/run bindings. No capture and no governance APPROVED until explicit canonical disposition resolves producer ownership, exact comment/bytes/digest, recordKey/version, excluded variant and reasons, plus applicable independent gate bindings. Preferred route is actual Curator delivery 01a0ddc4-8de5-7d8d-b410-a258869a4181 / 9358f1cdeba9f9e8895baf9c3a18318fa47cb8665d05e9a763f118d6489ad8df with fresh affected independent Reviewer/Verifier gates. Alternative: explicit Curator adoption of the exact first object's bytes/digest, with attribution retained and affected independent gates resolving adoption/eligibility. Supervisor does not rewrite, select by latest-wins, adopt or approve the proposal. Never describe the first object as originally Curator-authored.
+
+Do not cancel or restart current runs. An existing Verifier may finish and report on its bound old digest; that result cannot authorize the other digest. Reuse unchanged executed evidence where justified, not verdicts across different bytes. No acceptance check is waived.
+
+The original stop-new-dispatch deadline remains 2026-09-26T13:04:57Z. Any necessary affected gates/adoption must fit existing authority, concurrency/correction bounds and this deadline; this correction grants no extension. At/after the deadline stop new worker/correction/capture dispatch, preserve in-flight work and report unresolved prerequisites honestly (BLOCKED/DEFERRED as applicable), without cancellation or fabricated approval. No S02 or Human DONE. This Supervisor operation posts only this parent instruction; it performs no worker dispatch or source/configuration/knowledge mutation.
+
+Supervisor observation time: 2026-09-26T12:58:34.318620+00:00; elapsed since the original 45-minute window start 2026-09-26T12:19:57+00:00: 2317.3 seconds; remaining to original stop-new-dispatch bound: 382.7 seconds. Recheck the real clock when acting; this is an observation, not a reset.

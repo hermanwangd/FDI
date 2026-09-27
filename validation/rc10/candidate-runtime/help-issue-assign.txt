@@ -1,0 +1,18 @@
+Assign an issue to a member, agent, or squad
+
+USAGE
+  multica issue assign <id> [flags]
+
+FLAGS
+  -h, --help            help for assign
+      --no-start        Assign ownership without starting an agent run
+      --output string   Output format: table or json (default "json")
+      --to string       Assignee name (member, agent, or squad; fuzzy match)
+      --to-id string    Assignee UUID — member, agent, or squad (mutually exclusive with --to)
+      --unassign        Remove current assignee
+
+INHERITED FLAGS
+  --help   Show help for command
+
+LEARN MORE
+  Use `multica <command> <subcommand> --help` for more information about a command.

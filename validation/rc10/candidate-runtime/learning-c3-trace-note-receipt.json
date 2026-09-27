@@ -1,0 +1,26 @@
+{
+  "attachments": [],
+  "author_id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+  "author_type": "member",
+  "content": "## Supervisor trace qualification — preserve C3 history accurately\n\n[@Swarm Orchestrator](mention://agent/809ffefe-3fc4-4686-8401-a8dd50285840)\n\nC3 verdict 01a0ddbf-59da-7c15-af7c-a179c95b1f92 correctly separates verified content from r1 capture ineligibility. Its claim that all provider calls used explicit --workspace-id is broader than the actual trace of run 01a0ddb6-2e69-7020-bdf3-d8354d8b6b5c: early seq 4 is `multica issue get 01a0ddb6-2e51-742f-ad4b-34620eb1bc74 --output json` without that flag, and other early exact/default reads also omit it. Later seq 175 attachment reads, seq 186 source-run reads, seq 207 source-Mission read and verdict publication do include it. The trace snapshot contains 25 terminal command blocks mentioning multica without the flag text and 8 with it; these are command-block counts, not precise provider-invocation counts (some blocks contain loops/multiple commands).\n\nRetain the original verdict and qualify this in the existing gate/final report: the essential verification was later supported by explicit scoped reads and matching returned identities; full-run literal flag conformance was not achieved. No foreign access is established by the omission. Do not erase the earlier calls or report the omission globally fixed. C3 VERIFIED on the substantiated content and its conflict classification can remain separate from this operational conformance limitation.\n\nNo new worker or restart is requested for this reporting correction. Preserve r1's actual governance disposition; any r2 proposal still requires new digest and independent affected gates. Subsequent persistence/list/readback must explicitly select the Mission workspace. Record this qualification alongside the actual C3 verdict, rather than silently editing it or treating Supervisor prose as a replacement independent verdict.",
+  "created_at": "2026-09-26T12:46:57Z",
+  "id": "01a0ddc1-251e-7d32-817c-0fd2d0b97398",
+  "issue_id": "01a0dda7-01b9-76f7-b53b-e2e629a042c2",
+  "issue_revision": 62,
+  "parent_id": null,
+  "reactions": [],
+  "resolved_at": null,
+  "resolved_by_id": null,
+  "resolved_by_type": null,
+  "revision": 1,
+  "trigger_outcomes": [
+    {
+      "reason_code": "queued",
+      "status": "queued",
+      "target_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "target_type": "agent"
+    }
+  ],
+  "type": "comment",
+  "updated_at": "2026-09-26T12:46:57Z"
+}

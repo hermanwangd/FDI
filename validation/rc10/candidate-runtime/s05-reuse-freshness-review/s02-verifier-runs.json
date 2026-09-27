@@ -1,0 +1,59 @@
+[
+  {
+    "agent_id": "043dc4fa-412c-46cc-a27b-bc302d584e97",
+    "attempt": 1,
+    "attribution": {
+      "delegated_from_task_id": "01a0dfda-f59e-7283-98cd-aa65e94fe201",
+      "evidence": {
+        "kind": "issue_assignment",
+        "ref_id": "01a0dfe7-07e2-7cf3-8757-344ffe4959c6"
+      },
+      "initiator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "originator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "precise": true,
+      "source": "delegation"
+    },
+    "completed_at": "2026-09-26T22:50:49Z",
+    "created_at": "2026-09-26T22:47:35Z",
+    "delivered_comment_ids": [],
+    "dispatched_at": "2026-09-26T22:47:35Z",
+    "error": null,
+    "id": "01a0dfe7-0800-76ff-ae04-ac511e862a12",
+    "issue_id": "01a0dfe7-07e2-7cf3-8757-344ffe4959c6",
+    "kind": "direct",
+    "max_attempts": 2,
+    "priority": 0,
+    "relative_work_dir": "engcim-swar-6fec14dee20e/rc10val-57-ac511e862a12/workdir",
+    "result": {
+      "output": "驗證完成，判定 **VERIFIED（revision 10）**。\n\n六項聲明全部以實際執行證明成立：\n\n1. archive sha256 實測 = `ae9cc470…039e`，與宣告一致。\n2. python3 tarfile 全掃描至 EOF：regular-file member 恰 28、0 dir、0 其他型別、零 `._*`、零 AppleDouble magic（逐 member 前 8 bytes 檢查）。\n3. manifest 28 筆 ↔ tar member 清單 ↔ 解包實檔三方 1:1，逐檔 SHA-256 零 mismatch。\n4. tree hash 重算（sorted `path+sha256` concat 之 SHA-256）= `410c08c0…1e8c`，吻合。\n5. 自 archive roundtrip 解包重跑 `_schema/validate_store.py`：`OK: 48 個條目…`，exit 0。\n6. 報告 §6a 記載的 sha256、member 數、tree hash、validator 結果與實測逐字相符。\n\n交付完成動作：\n\n- 驗證報告貼於 RC10VAL-57（comment `01a0dfe9-6598-73ca-83fd-dca747729cf3`），RC10VAL-57 設為 `in_review`。\n- parent RC10VAL-51 已發 `Swarm Child Event`（eventRef `curator:VERIFICATION:r10`）並 mention Orchestrator。\n- 已排除的越權重複交付（archive `749d57c3…`）未引用其數據，並在建議中提醒 human review 忽略之。",
+      "pr_url": "",
+      "session_id": "session_9dee3197-ddd3-4a58-becb-9943784b0038",
+      "work_dir": "/Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-6fec14dee20e/rc10val-57-ac511e862a12/workdir"
+    },
+    "runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+    "started_at": "2026-09-26T22:47:35Z",
+    "status": "completed",
+    "usage": [
+      {
+        "cache_read_tokens": 1023488,
+        "cache_write_tokens": 0,
+        "input_tokens": 40710,
+        "model": "kimi-code/kimi-for-coding",
+        "output_tokens": 7113,
+        "provider": "kimi"
+      }
+    ],
+    "work_dir": "/Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-6fec14dee20e/rc10val-57-ac511e862a12/workdir",
+    "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+  }
+]

@@ -1,0 +1,9 @@
+## Supervisor trace qualification — preserve C3 history accurately
+
+[@Swarm Orchestrator](mention://agent/809ffefe-3fc4-4686-8401-a8dd50285840)
+
+C3 verdict 01a0ddbf-59da-7c15-af7c-a179c95b1f92 correctly separates verified content from r1 capture ineligibility. Its claim that all provider calls used explicit --workspace-id is broader than the actual trace of run 01a0ddb6-2e69-7020-bdf3-d8354d8b6b5c: early seq 4 is `multica issue get 01a0ddb6-2e51-742f-ad4b-34620eb1bc74 --output json` without that flag, and other early exact/default reads also omit it. Later seq 175 attachment reads, seq 186 source-run reads, seq 207 source-Mission read and verdict publication do include it. The trace snapshot contains 25 terminal command blocks mentioning multica without the flag text and 8 with it; these are command-block counts, not precise provider-invocation counts (some blocks contain loops/multiple commands).
+
+Retain the original verdict and qualify this in the existing gate/final report: the essential verification was later supported by explicit scoped reads and matching returned identities; full-run literal flag conformance was not achieved. No foreign access is established by the omission. Do not erase the earlier calls or report the omission globally fixed. C3 VERIFIED on the substantiated content and its conflict classification can remain separate from this operational conformance limitation.
+
+No new worker or restart is requested for this reporting correction. Preserve r1's actual governance disposition; any r2 proposal still requires new digest and independent affected gates. Subsequent persistence/list/readback must explicitly select the Mission workspace. Record this qualification alongside the actual C3 verdict, rather than silently editing it or treating Supervisor prose as a replacement independent verdict.

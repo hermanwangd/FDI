@@ -1,0 +1,41 @@
+{
+  "recordType": "T13U1VerificationReceipt",
+  "recordedAtUtc": "2026-09-27T04:21:43.357859+00:00",
+  "workspaceId": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+  "mission": {
+    "identifier": "RC10VAL-72",
+    "id": "01a0e0ae-3ea9-7ef1-a850-31b76823a61e",
+    "status": "in_progress",
+    "revision": 36
+  },
+  "child": {
+    "identifier": "RC10VAL-74",
+    "id": "01a0e0d2-a55e-7bda-8437-d6fc8af7ed16",
+    "status": "in_review",
+    "revision": 5
+  },
+  "attempt1": {
+    "runId": "01a0e0d2-a57c-7d9c-8865-28ceee435812",
+    "status": "cancelled",
+    "deliveredCommentIds": [],
+    "verdict": "none"
+  },
+  "attempt2": {
+    "runId": "01a0e10e-ab79-73ef-9f77-9696c01600cc",
+    "status": "completed",
+    "createdAt": "2026-09-27T04:10:30Z",
+    "startedAt": "2026-09-27T04:10:32Z",
+    "completedAt": "2026-09-27T04:20:32Z",
+    "deliveredCommentIds": []
+  },
+  "verificationCommentId": "01a0e117-637f-758d-a37b-8302502a1f25",
+  "result": "VERIFIED_WITH_FINDINGS",
+  "findings": [
+    "F1: worker AVC comment-list availability sentence imprecise; 3/4 refs listed in RC10VAL-12",
+    "F2: double-layer conflictRefs representation should remain visible",
+    "F3: provider comment-list anomaly persisted; W1 dispatch ref remained unavailable"
+  ],
+  "verifiedClaims": "Checks 1-7 per attached full verifier comment; no provider-enforced isolation or Control SATISFIED/Human DONE inferred.",
+  "rawCommentPath": "validation/rc10/candidate-runtime/s05-profile-deployment-20260926T1821Z/T13-U1-VERIFICATION-ATTEMPT-2.md",
+  "rawCommentSha256": "6bbecff7faa511b8745eca71f55b39045d79803489b9df35caad7b4b7af5640e"
+}

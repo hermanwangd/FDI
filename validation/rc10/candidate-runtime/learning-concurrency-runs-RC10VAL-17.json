@@ -1,0 +1,59 @@
+[
+  {
+    "agent_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+    "attempt": 1,
+    "attribution": {
+      "delegated_from_task_id": "01a0dde0-af8a-7309-8da0-a0b29daf9963",
+      "evidence": {
+        "kind": "issue_assignment",
+        "ref_id": "01a0dde9-f3be-7c39-96f5-e412fc68b911"
+      },
+      "initiator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "originator": {
+        "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJeKjO9nVq5eMks1kyQlDNryJO5uAxIxyOtO5t-RuDQ8DodfA=s96-c",
+        "email": "herman.wangd@gmail.com",
+        "id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+        "name": "Herman Wang"
+      },
+      "precise": true,
+      "source": "delegation"
+    },
+    "completed_at": "2026-09-26T13:34:52Z",
+    "created_at": "2026-09-26T13:31:32Z",
+    "delivered_comment_ids": [],
+    "dispatched_at": "2026-09-26T13:31:32Z",
+    "error": null,
+    "id": "01a0dde9-f3da-7509-a140-5bb69d5c39db",
+    "issue_id": "01a0dde9-f3be-7c39-96f5-e412fc68b911",
+    "kind": "direct",
+    "max_attempts": 2,
+    "priority": 0,
+    "relative_work_dir": "engcim-swar-6fec14dee20e/rc10val-17-5bb69d5c39db/workdir",
+    "result": {
+      "output": "C4fix 完成，RC10VAL-17 已交付並置為 `in_review`（遠早於 13:45Z hard stop）：\n\n- **記錄修正（RC10VAL-15 → recordVersion 3）**：僅改 `governance.evidenceRefs[2]` 截斷的 `run:01a0ddcd-3d0b` 為完整 `run:01a0ddcd-3d0b-7dc3-ae46-305889037b53`，兩筆 comment ref 原樣保留。proposal 逐 byte 驗證未動（proposalDigest 重算 = `5fba147a…b4176e`）；全文 digest v2 `9d32e827…d124` → v3 `46fd7a04…8306`；索引 `rc10RecordVersion` → 3；lifecycle CURRENT、decision APPROVED 不變（只持久化、未重裁決）。寫前 by-key scoped 查重僅一筆 match，無 duplicate conflict；寫後 fresh readback（rev 10）確認 body 與 indexes 一致，並在記錄上留 additive audit comment。\n- **CaptureResult**：依現有 contract shape 精確 8 欄位，發佈於 RC10VAL-12 delivery comment；`capturedAt` 以 RC10VAL-15 provider `created_at`（2026-09-26T13:18:32Z）為證據基礎，`knowledgeRef` 綁定讀取時 provider rev 10。\n- 所有 provider call 均帶明確 `--workspace-id`；未觸及 ProductKB / `pk/` / tKMS / Skills / Control / Core / runtime config，RC10VAL-8/9 未動。父議題 RC10VAL-11 已收到 `c4fix:DELIVERED` child event（含 leader mention）。",
+      "pr_url": "",
+      "session_id": "session_08ee2a74-a4df-4f4d-bceb-84b46164a762",
+      "work_dir": "/Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-6fec14dee20e/rc10val-17-5bb69d5c39db/workdir"
+    },
+    "runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+    "started_at": "2026-09-26T13:31:32Z",
+    "status": "completed",
+    "usage": [
+      {
+        "cache_read_tokens": 1237760,
+        "cache_write_tokens": 0,
+        "input_tokens": 48099,
+        "model": "kimi-code/kimi-for-coding",
+        "output_tokens": 10777,
+        "provider": "kimi"
+      }
+    ],
+    "work_dir": "/Users/herman_mbp2023/multica_workspaces_desktop-api.multica.ai/engcim-swar-6fec14dee20e/rc10val-17-5bb69d5c39db/workdir",
+    "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+  }
+]

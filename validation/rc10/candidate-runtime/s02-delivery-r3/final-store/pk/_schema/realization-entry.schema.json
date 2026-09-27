@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pk/_schema/realization-entry.schema.json",
+  "title": "Product Realization Entry",
+  "description": "pk/realization/ 條目 schema：把 Product Semantics 接到 implementation 的 REALIZES 映射（Capability/Scenario/Rule → Component → Interface → Repository → Module/Code Region）。YAML 或 JSON。",
+  "type": "object",
+  "allOf": [{"$ref": "common.schema.json#/$defs/governanceFields"}],
+  "required": ["id", "pkClass", "validationState", "confidence", "evidence", "governanceIssueRef", "component", "realizes"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^real:"},
+    "pkClass": {"const": "pk-realization"},
+    "component": {"type": "string", "description": "Component node id（同時是 Code Graph node），如 Component:chart-management-api"},
+    "realizes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "description": "semantics 條目內的 Capability / Scenario / Rule id（REALIZES 鏈起點的目標）"},
+      "description": "本 Component 實現的產品語意；每個 Component 至少 REALIZES 一個語意，否則記 Gap（AMBIGUOUS）"
+    },
+    "implementedIn": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "description": "Repository node id，如 Repository:chart-management-api"},
+      "description": "IMPLEMENTED_IN 落點；查無落點記 Gap（MISSING）"
+    },
+    "exposes": {"type": "array", "items": {"type": "string"}, "description": "Interface id（EXPOSES）"},
+    "consumes": {"type": "array", "items": {"type": "string"}, "description": "Interface id（CONSUMES）"},
+    "dependsOn": {"type": "array", "items": {"type": "string"}, "description": "Component node id（DEPENDS_ON）"},
+    "codeRegions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["repository", "path"],
+        "properties": {
+          "repository": {"type": "string"},
+          "path": {"type": "string", "description": "模組路徑或 檔案:起訖行"},
+          "module": {"type": "string", "description": "Module node id"}
+        }
+      }
+    }
+  }
+}

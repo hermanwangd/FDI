@@ -1,0 +1,79 @@
+# ENGCIM v0.6 Chart Viewer 語意樹（SYNTHETIC_VALIDATION_FIXTURE；schema: pk/_schema/semantics-entry.schema.json）
+# RC10VAL-10 revision 3：非衝突已驗證內容以既有 entry-level 表示法移至
+# sem:engcim-v06/chart-viewer/verified-slice（條目頂層 VALIDATED）；本條目保留未裁決衝突面，維持 PROVISIONAL。
+id: sem:engcim-v06/chart-viewer
+pkClass: pk-semantics
+validationState: PROVISIONAL        # 條目範圍：未裁決衝突面（chartLimits max、openSelectedChart）→ PROVISIONAL
+confidence: official-document
+sourceClass: src-team-seed
+evidence:
+  - ev:engcim-v06-fixture-readme-2eff5f9f
+  - ev:engcim-v06-fixture-chartviewer-js-2eff5f9f
+  - ev:engcim-v06-fixture-interaction-js-2eff5f9f
+  - ev:engcim-v06-fixture-interaction-test-js-2eff5f9f
+  - ev:engcim-v06-fixture-readme-2eff5f9f-rc10val10
+  - ev:engcim-v06-fixture-chartviewer-js-2eff5f9f-rc10val10
+  - ev:engcim-v06-fixture-interaction-js-2eff5f9f-rc10val10
+  - ev:engcim-v06-fixture-interaction-test-js-2eff5f9f-rc10val10
+  - ev:engcim-v06-fixture-readme-duplicate-dedup-01a0dd73
+  - ev:engcim-v06-fixture-node-test-run-01a0dd73
+  - ev:engcim-v06-exec-classify-response-01a0dd73
+  - ev:engcim-v06-exec-select-chart-01a0dd73
+  - ev:engcim-v06-exec-render-chart-01a0dd73
+  - ev:engcim-v06-exec-chart-limits-min-01a0dd73
+governanceIssueRef: "01a0dd1a-09c4-7a4a-9f16-b006ddd2334f"  # ENGCIM v0.6 Chart Viewer（Semantics）RC10VAL-5
+updatedAt: "2026-09-26T11:58:00Z"
+supersedes: null
+supersededBy: null
+
+product: "ENGCIM v0.6 Chart Viewer（engcim-v06-chart-viewer-fixture，Authority: SYNTHETIC_VALIDATION_FIXTURE）"
+capabilities:
+  - id: cap:engcim-v06/chart-viewing
+    name: Chart Viewing
+    description: 圖表檢視（未裁決衝突面）：開啟選取圖表（openSelectedChart 契約缺口）。非衝突已驗證行為（select-chart、render-chart、404 分類）已移至同 lineage 之 sem:engcim-v06/chart-viewer/verified-slice（entry-level VALIDATED）。
+    scenarios:
+      - id: scen:engcim-v06/chart-viewing/open-selected-chart
+        name: Open Selected Chart
+        behaviors:
+          - action: 從列表一次互動開啟選取的圖表（測試期望 openSelectedChart(charts, chartId)）
+            expected: "回傳 { action: 'OPENED', chartId: <id> }"
+            # Curator 註：interaction.test.js 期望的 openSelectedChart 不存在於 src/interaction.js
+            # （實作僅 export selectChart，且回傳鍵值 contract 不同）→ 已開 [Gap/CONFLICTING] 揭露，未靜默裁決。
+            # 執行觀察：node --test 於 import 階段 SyntaxError（ev:...-node-test-run-01a0dd73）。
+rules:
+  - id: rule:engcim-v06/chart-limits-max
+    statement: >-
+      frozen Product behavior：chartLimits().max = 10。
+      注意：fixture 實作 src/chartViewer.js 為 chartLimits().max = 1000，與本 frozen
+      expectation 矛盾（README 自述為 seeded defect，須經 governed Finding F1 才能修正）。
+      本條目保留兩造主張、未裁決；seeded defect 不記為 Product fact。
+      對應 [Gap/CONFLICTING] issue RC10VAL-8。
+    appliesTo:
+      - cap:engcim-v06/chart-viewing
+    # 執行觀察：chartLimits().min = 0 經直接執行觀察（ev:...-exec-chart-limits-min-01a0dd73）；
+    # min 面非衝突，但因 chartLimits 語意面與 max 衝突同條目，不單獨升 VALIDATED（Curator 註）。
+terminology:
+  - term: Chart Viewer
+    definition: ENGCIM v0.6 的圖表檢視模組（本條目所描述 capability 的載體，fixture 產品名）。
+  - term: frozen product expectation
+    definition: "README 宣告的凍結產品行為（chartLimits().max = 10、HTTP 404 retryable: false），fixture 基線不得逕自變更。"
+  - term: seeded defect
+    definition: fixture 基線刻意植入的缺陷（chartLimits().max = 1000）；屬驗證設定，不是產品事實。
+  - term: chartLimits()
+    definition: 回傳圖表界限 { min, max } 的函式；實作落點 src/chartViewer.js。
+
+# --- RC10VAL-10 candidate binding（2026-09-26T11:27:30Z，Knowledge Curator S01 candidate run）---
+# 候選重新擷取 evidence 併入既有條目（evidence 列表 append，未覆寫 baseline evidence）。
+# 查重：README 重複拷貝判定為同來源重複（same-source duplicate），非獨立佐證——
+#   不產新 observation、不升級 validationState／信心（見 ev:...-readme-duplicate-dedup-01a0dd73）。
+# 衝突揭露（保留兩造，未裁決）：
+#   (1) chartLimits().max：README frozen=10 vs code=1000（seeded defect）→ [Gap/CONFLICTING] RC10VAL-8；
+#   (2) openSelectedChart：interaction.test.js 期望 vs interaction.js 未 export → [Gap/CONFLICTING] RC10VAL-9，
+#       經 node --test 實跑重現（SyntaxError，pass 0 / fail 1，見 ev:...-node-test-run-01a0dd73）。
+# --- RC10VAL-10 revision 2（11:41:00Z）：4 筆直接模組執行 observation evidence 入庫
+#   （ev:...-exec-{classify-response,select-chart,render-chart,chart-limits-min}-01a0dd73）。
+# --- RC10VAL-10 revision 3（11:58:00Z）：依 Reviewer REVISE（01a0dd8d）＋ Verifier NESTED_TRUST_UNSUPPORTED
+#   （01a0dd8f 聲明 10），移除 nested validationState 表示法；非衝突已驗證內容（scen:.../select-chart、
+#   scen:.../render-chart、rule:.../http-404-non-retryable，id 沿用未複製）移至同 fact lineage 之
+#   sem:engcim-v06/chart-viewer/verified-slice（條目頂層 VALIDATED，沿用 governanceIssueRef RC10VAL-5）；
+#   本條目保留未裁決衝突面，維持 PROVISIONAL。雙向 cross-reference；source/history 全部保留。

@@ -1,0 +1,107 @@
+{
+  "recordType": "S06F1CandidateRevalidation",
+  "recordedAtUtc": "2026-09-27T04:12:00.575070+00:00",
+  "scope": "Phase 1 only; isolated MultiCA validation fixture; no production merge, deployment or promotion",
+  "candidate": {
+    "candidateId": "RC10-local-candidate-20260927-01",
+    "fixtureRepository": "engcim-v06-chart-viewer-fixture",
+    "baselineCommit": "2eff5f9f84ca709684bfe0b7c90102268f07a0f0",
+    "preCorrectionCommit": "3be28d44fa1e9fcdcfb48d169f47672e373cf4c9",
+    "commit": "0159b44d9e89bb06e1e2d72b752c4b9cb6e5685e",
+    "parentCommit": "3be28d44fa1e9fcdcfb48d169f47672e373cf4c9",
+    "branch": "agent/swarm-verifier/da834c89fa6c",
+    "changedPaths": [
+      "src/chartViewer.js"
+    ],
+    "change": "chartLimits().max: 1000 -> 10 (one line)",
+    "chartViewerSha256": "053c2b8fff8dece99f09f6b4316678414d1ff455738686f4a1a10f4dcffc9ed9",
+    "frozenTestsChanged": false,
+    "interactionJsBehaviorChanged": false
+  },
+  "authorization": {
+    "authority": "Explicit Human approval for this exact one-line F1 correction in the active Phase 1 task",
+    "limit": "No additional files, test edits, production source, push, PR, merge, deployment or promotion"
+  },
+  "codeReview": {
+    "issue": "RC10VAL-63",
+    "issueId": "01a0e005-6b34-7e99-920f-7f043d650210",
+    "issueStatus": "in_review",
+    "issueRevision": 9,
+    "commentId": "01a0e103-b0c2-790a-b16f-807719f3b274",
+    "runId": "01a0e101-ed1d-79d5-ab2a-1a39079407eb",
+    "result": "PASS",
+    "candidateCommit": "0159b44d9e89bb06e1e2d72b752c4b9cb6e5685e"
+  },
+  "independentVerification": {
+    "issue": "RC10VAL-64",
+    "issueId": "01a0e00a-6459-750c-a03f-8879e51f508b",
+    "issueStatus": "in_review",
+    "issueRevision": 10,
+    "commentId": "01a0e10c-8b88-71b0-97a3-c36338f6dc3c",
+    "runId": "01a0e10a-b328-74f2-8279-d4a9af22449d",
+    "result": "VERIFIED",
+    "candidateCommit": "0159b44d9e89bb06e1e2d72b752c4b9cb6e5685e",
+    "checks": {
+      "headAndCleanTree": "PASS",
+      "srcChartViewerSha256": "PASS",
+      "diffExactlyOneApprovedLine": "PASS",
+      "npmTest": "PASS 2/2",
+      "chartLimitsMax10": "PASS",
+      "validRender": "PASS",
+      "invalidConfigRejected": "PASS",
+      "interactionJsNoRegression": "PASS",
+      "frozenTestsUnchanged": "PASS"
+    }
+  },
+  "historicalEvidence": {
+    "preCorrectionVerificationComment": "01a0e00c-1384-763d-8bd4-a2da328cea73",
+    "preCorrectionCommit": "3be28d44fa1e9fcdcfb48d169f47672e373cf4c9",
+    "meaning": "Retained unchanged as historical; not used as verification of the corrected candidate"
+  },
+  "runs": {
+    "review": [
+      {
+        "id": "01a0e101-ed1d-79d5-ab2a-1a39079407eb",
+        "status": "completed",
+        "createdAt": "2026-09-27T03:56:34Z",
+        "completedAt": "2026-09-27T03:59:18Z"
+      },
+      {
+        "id": "01a0e005-6b4e-7084-94ef-b3caae3f4fa8",
+        "status": "completed",
+        "createdAt": "2026-09-26T23:20:46Z",
+        "completedAt": "2026-09-26T23:24:26Z"
+      }
+    ],
+    "verification": [
+      {
+        "id": "01a0e10a-b328-74f2-8279-d4a9af22449d",
+        "status": "completed",
+        "createdAt": "2026-09-27T04:06:09Z",
+        "completedAt": "2026-09-27T04:08:50Z"
+      },
+      {
+        "id": "01a0e106-e7a5-7560-a4bf-15fb2e1a4510",
+        "status": "completed",
+        "createdAt": "2026-09-27T04:02:01Z",
+        "completedAt": "2026-09-27T04:03:41Z"
+      },
+      {
+        "id": "01a0e00a-6478-748a-bd92-da834c89fa6c",
+        "status": "completed",
+        "createdAt": "2026-09-26T23:26:12Z",
+        "completedAt": "2026-09-26T23:28:28Z"
+      }
+    ]
+  },
+  "mutationActor": {
+    "actualActor": "Codex primary agent in task 01a0dc67-960f-7100-972d-557464f7c1fd",
+    "actions": "Applied the authorized one-line patch with apply_patch, then staged only src/chartViewer.js and committed it in the local fixture checkout.",
+    "reviewCommentAttribution": "RC10VAL-63 comment 01a0e103-b0c2-790a-b16f-807719f3b274 says the commit author was a Swarm Verifier fix run. Exact git show metadata instead names Herman Wang as author/committer and multica-agent as co-author; this task transcript confirms the actual editor was the Codex primary agent. The review comment misattributes the mutation actor. Reviewer and Verifier were separate later MultiCA runs; their exact-commit verdicts remain valid as separate review/verification evidence. Preserve the original comment unchanged.",
+    "gitAuthorMetadata": {
+      "author": "Herman Wang (hermanwangd0814 <herman.wang@gmail.com>)",
+      "committer": "Herman Wang (hermanwangd0814 <herman.wang@gmail.com>)",
+      "coAuthor": "multica-agent <github@multica.ai>"
+    }
+  }
+}

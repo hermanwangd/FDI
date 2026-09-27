@@ -1,0 +1,28 @@
+Upload a local file so it is attached to the reply of the current chat task.
+
+Intended for agents running inside a chat task: the file is tagged with the
+task and, when the task completes, the server binds it to the assistant reply
+it produces — it appears as an attachment card below your reply even if you
+paste nothing. The command also returns a markdown snippet you may paste on its
+own line to place the item: files use !file[name](url) (a card), images use
+![name](url) (inline).
+
+The task id is read from MULTICA_TASK_ID (set by the daemon inside a task);
+override it with --task when needed.
+
+USAGE
+  multica attachment upload <path> [flags]
+
+FLAGS
+  -h, --help          help for upload
+      --task string   Chat task id to attach to (defaults to MULTICA_TASK_ID)
+
+INHERITED FLAGS
+  --help   Show help for command
+
+EXAMPLES
+  # Attach an image to the current chat reply
+  $ multica attachment upload ./chart.png
+
+LEARN MORE
+  Use `multica <command> <subcommand> --help` for more information about a command.

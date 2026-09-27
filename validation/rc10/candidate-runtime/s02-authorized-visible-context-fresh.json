@@ -1,0 +1,257 @@
+{
+  "receiptType": "AUTHORIZED_VISIBLE_CONTEXT",
+  "receiptVersion": "1.1",
+  "fetchedAt": "2026-09-26T14:07:21.154751+00:00",
+  "supervisorRuntime": "Codex CLI (local); Claude CLI is reserved for the company environment and was not used here",
+  "workspace": {
+    "id": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+    "verifiedBy": "scoped MultiCA project and issue reads"
+  },
+  "consumerProject": {
+    "id": "a3f129fa-4028-4341-98dc-c8ec20c468ae",
+    "name": "Validation"
+  },
+  "selectedContext": [
+    {
+      "lane": "WorkspaceKnowledge",
+      "authority": "WORKSPACE procedural guidance; read-only for S02",
+      "project": {
+        "id": "43aec4ec-3ebb-4d1b-aa54-7766c48379c1",
+        "title": "WorkspaceKnowledge",
+        "issueCount": 1,
+        "hasMore": false
+      },
+      "providerRecord": {
+        "issueId": "01a0ddde-0d24-7978-9af4-6ed850a5cbfc",
+        "identifier": "RC10VAL-15",
+        "providerRevision": 10,
+        "recordKey": "rc10wk-s01-verified-slice-procedure-20260926-01",
+        "contentVersion": 3,
+        "decision": "APPROVED",
+        "decisionRef": "rc10wk-s01-govdecision-20260926-01",
+        "lifecycle": "CURRENT",
+        "issueStatus": "in_review",
+        "lastUpdatedAt": "2026-09-26T13:33:48Z",
+        "proposalDigest": "5fba147a9bc32231fa3cea99d04eb7300390485de340bc1521cbd35f89b4176e",
+        "applicability": "Isolated Validation project a3f129fa-4028-4341-98dc-c8ec20c468ae and the pinned RC10 validation workflow only; visibility WORKSPACE_AUTHORIZED; validity ends 2026-09-27T23:59:59+08:00; source revision Chart Viewer 2eff5f9f84ca709684bfe0b7c90102268f07a0f0; unknown applicability excludes this guidance.",
+        "freshness": {
+          "observedAt": "2026-09-26T12:19:00Z",
+          "validUntil": "2026-09-27T23:59:59+08:00",
+          "repositoryRevisions": [
+            {
+              "repository": "https://github.com/hermanwangd/engcim-v06-chart-viewer-fixture.git",
+              "revision": "2eff5f9f84ca709684bfe0b7c90102268f07a0f0"
+            }
+          ]
+        },
+        "applicableProjectRefs": [
+          "a3f129fa-4028-4341-98dc-c8ec20c468ae"
+        ],
+        "visibility": "WORKSPACE_AUTHORIZED",
+        "bodySha256": "46fd7a04cec9f7a5be68e47c7afa942361c5586a43c460bafef0315e55328306"
+      },
+      "exactStatements": [
+        "Procedure for producing a defensible verified-slice knowledge artifact in this workspace's RC10 validation flow, as demonstrated by the independently verified S01 evidence: (1) when the frozen test suite fails at a seeded contract defect (missing openSelectedChart export), obtain execution evidence by directly importing the ES modules at the pinned revision (confirm with git rev-parse HEAD = 2eff5f9f84ca709684bfe0b7c90102268f07a0f0, then node --input-type=module), recording exact commands and outputs as new observation evidence records; (2) upgrade to VALIDATED only the claims independently executable this way (select-chart, render-chart, HTTP 404 non-retryable), never by source count alone and never with an unrelated pre-existing seed as substitute evidence; (3) keep seeded conflicts (chartLimits max=10 vs code=1000; missing openSelectedChart export) unadjudicated as PROVISIONAL [Gap/CONFLICTING]; (4) bind every revision to a fresh archive digest and rerun all affected independent Reviewer/Verifier gates on that digest, with no silent store edits and honest reporting of failures (stale validator stdout corrected by fresh capture); (5) on elapsed-time boundary, stop new dispatch without killing in-flight children; reconcile notification failures as notification-only, never fabricating replacement verdicts."
+      ],
+      "provenance": {
+        "sourceRefs": [
+          "learningSource:rc10-local-s01-learning-source-20260926-01",
+          "issue:01a0dd73-7d75-7295-aeb1-a83905eb2312",
+          "sem:engcim-v06/chart-viewer/verified-slice",
+          "comment:01a0dd93-856f-70f1-b40e-e576ec4fc50f",
+          "comment:01a0dd97-b559-77f1-a4af-075e22dea9c5",
+          "comment:01a0dd9e-6de7-7843-b567-0cb0c87d0a0d",
+          "comment:01a0dda2-edf9-7a88-91c9-d8bc1bdab15e",
+          "attachment:01a0dd93-83cc-794d-b1d7-9e8c8a43d70b",
+          "attachment:01a0dda7-000b-74db-9302-b72a64b739f0",
+          "issue:01a0dd1a-1ad3-7315-8e87-91b76ee361ab",
+          "issue:01a0dd1a-2086-76db-9bc5-e3bd0ef7f2ad"
+        ],
+        "governanceEvidenceRefs": [
+          "comment:01a0ddc8-5eff-7685-b055-2906b34b3266",
+          "comment:01a0ddd3-97bc-7037-9dbb-94cf79f29e35",
+          "run:01a0ddcd-3d0b-7dc3-ae46-305889037b53"
+        ],
+        "captureResult": {
+          "comment": "01a0ddec-63b0-75c3-9e72-67f5170cca59",
+          "commentAuthor": "c38a925f-171b-4c24-91c2-68329ae42654",
+          "sourceRun": "01a0dde9-f3da-7509-a140-5bb69d5c39db",
+          "knowledgeRef": "issue:01a0ddde-0d24-7978-9af4-6ed850a5cbfc@rev:10",
+          "capturedAt": "2026-09-26T13:18:32Z",
+          "localSchemaValidation": "PASS; canonical CaptureResult SHA-256 e2eb832333c8b3de40803bcb3aef77205d59e8f6643f8363fd5ccae2a9dc3ab1",
+          "independentReviewer": {
+            "comment": "01a0ddef-ee2f-7154-a377-b0e1f7654d3f",
+            "issue": "RC10VAL-19",
+            "run": "01a0ddee-61a2-7010-9f55-7aa9f0423c6d",
+            "verdict": "PASS@3"
+          },
+          "independentVerifier": {
+            "comment": "01a0ddf1-d7a7-7813-9ea9-bc5362154f50",
+            "issue": "RC10VAL-18",
+            "run": "01a0ddee-5b22-792b-b46f-b8e0fb15f33b",
+            "verdict": "VERIFIED@3"
+          }
+        },
+        "proposalEvidenceRefs": [
+          "comment:01a0dd97-b559-77f1-a4af-075e22dea9c5",
+          "comment:01a0dd9e-6de7-7843-b567-0cb0c87d0a0d",
+          "run:01a0dd94-a181-77b3-aba3-8d5f0e6cae72",
+          "run:01a0dd98-6498-73a3-9b66-8354a4c7bc6a",
+          "attachment:01a0dd9e-6d13-79b0-bb0a-3db3902ac8b5",
+          "sha256:57af68f6f63561e181df6edab6d0adea160620b78c058cf5c610b296581411ba"
+        ]
+      },
+      "limitations": [
+        "Derived from a synthetic validation workspace and its disposable fixtures; not a production procedure.",
+        "Verified-slice scope is exactly 3 claims (select-chart, render-chart, HTTP 404 non-retryable) backed by 3 applicable execution evidence records; the 4th record (chartLimits min=0) is observation-only and the fan-in's '4 records' shorthand must not be read as 4 records backing the slice.",
+        "No later-Mission consumption is established; capture does not prove future reuse.",
+        "Provider chronology differs from payload chronology: artifact upload was 2026-09-26T11:57:07Z while the immutable semantics payload updatedAt was 11:58:00Z (53s later); use provider events for chronology and preserve archive bytes.",
+        "S01 remains in_review; Human DONE is not asserted, and the seeded fixture defect was not repaired (S01 validates knowledge artifacts, not software).",
+        "RC10VAL-8 (issue:01a0dd1a-1ad3-7315-8e87-91b76ee361ab, chartLimits max=10 vs code=1000) and RC10VAL-9 (issue:01a0dd1a-2086-76db-9bc5-e3bd0ef7f2ad, missing openSelectedChart export) are product-context references cited as evidence background only; the procedural statements assert no product truth on either side (consistent with the C3 Verifier classification of these refs as product-context with no logical contradiction); both product issues remain unresolved and unchanged — not adjudicated, not edited, not commented on.",
+        "Adoption rationale (c4combined R1): this record adopts the exact 4,122-byte canonical proposal object delivered in comment 01a0ddc4-05ca on RC10VAL-12 (digest 5fba147a9bc32231fa3cea99d04eb7300390485de340bc1521cbd35f89b4176e), explicitly selected as canonical by Orchestrator fan-in 01a0ddc5-dad2 and adoption comment 01a0ddc7-bdb7. Attribution preserved: comment 01a0ddc4-05ca remains its author's delivery; it is not relabeled.",
+        "Excluded variant: a concurrent run's r2 delivery comment 01a0ddc4-8de5 (digest 9358f1cdeba9f9e8895baf9c3a18318fa47cb8665d05e9a763f118d6489ad8df, 4230 bytes) is a duplicate delivery-layer variant differing only in the 6th limitations wording; it is excluded from reuse and preserved as evidence on RC10VAL-12.",
+        "conflictRefs is empty by governance decision: RC10VAL-8 / RC10VAL-9 were reclassified as product-context evidence background (C3 Verifier, comment 01a0ddbf-59da-7c15-af7c-a179c95b1f92); they remain unresolved, unchanged product issues and are not conflicts of this WORKSPACE procedural record.",
+        "Applicability is restricted to the isolated Validation project a3f129fa-4028-4341-98dc-c8ec20c468ae and the pinned RC10 validation workflow; unknown applicability excludes this record."
+      ]
+    },
+    {
+      "lane": "ProductKnowledge",
+      "authority": "Separate synthetic ProductKB context; read-only as S02 input, with permitted writes limited to the isolated ProductKB candidate store",
+      "project": {
+        "id": "f7af4546-88b2-4163-a0d4-b350e2123dbc",
+        "title": "ProductKB",
+        "issueCount": 9,
+        "workspaceId": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+      },
+      "acceptedS01Snapshot": {
+        "attachment": "01a0dd93-83cc-794d-b1d7-9e8c8a43d70b",
+        "sha256": "57af68f6f63561e181df6edab6d0adea160620b78c058cf5c610b296581411ba",
+        "filename": "pk-store-s01-rc10val10-candidate-r3.tar.gz"
+      },
+      "selectedProviderEntries": [
+        {
+          "issue": "RC10VAL-5",
+          "issueId": "01a0dd1a-09c4-7a4a-9f16-b006ddd2334f",
+          "providerRevision": 15,
+          "updatedAt": "2026-09-26T11:56:40Z",
+          "exactStatements": [
+            "selectChart(chartList, chartId) returns { selectedChartId, action: 'SELECTED' } on match and null when absent.",
+            "The frozen test expects openSelectedChart(charts, chartId) to return { action: 'OPENED', chartId }; the test/implementation contracts conflict.",
+            "The chart-limits max=10 versus implementation max=1000 conflict remains PROVISIONAL; HTTP 404 non-retryable is independently executable in the verified slice."
+          ]
+        },
+        {
+          "issue": "RC10VAL-6",
+          "issueId": "01a0dd1a-0f8c-710c-a288-dcb87c78f0ec",
+          "providerRevision": 12,
+          "updatedAt": "2026-09-26T09:48:38Z",
+          "exactStatements": [
+            "The architecture record describes the current module exports and treats max=1000 as a seeded defect that must remain unchanged until governed Finding F1 expands the change scope.",
+            "This architecture entry is provisional source context, not authorization to modify code."
+          ]
+        },
+        {
+          "issue": "RC10VAL-7",
+          "issueId": "01a0dd1a-1517-78a6-9b89-d7bdb340e8c9",
+          "providerRevision": 13,
+          "updatedAt": "2026-09-26T09:53:59Z",
+          "exactStatements": [
+            "The pinned realization exposes selectChart and classifyChartResponse from interaction.js; openSelectedChart is absent.",
+            "Store graph observations are PROVISIONAL, while the S01 verified-slice archive carries the three independently executed validated claims."
+          ]
+        },
+        {
+          "issue": "RC10VAL-8",
+          "issueId": "01a0dd1a-1ad3-7315-8e87-91b76ee361ab",
+          "providerRevision": 9,
+          "updatedAt": "2026-09-26T09:51:03Z",
+          "status": "blocked",
+          "exactStatements": [
+            "Frozen Product expectation is chartLimits().max=10 while implementation returns 1000; both claims are retained as an unresolved conflict."
+          ]
+        },
+        {
+          "issue": "RC10VAL-9",
+          "issueId": "01a0dd1a-2086-76db-9bc5-e3bd0ef7f2ad",
+          "providerRevision": 8,
+          "updatedAt": "2026-09-26T09:54:32Z",
+          "status": "blocked",
+          "exactStatements": [
+            "The test expects openSelectedChart(...)=OPENED/chartId while implementation exposes selectChart(...)=SELECTED/selectedChartId; neither side is silently adjudicated."
+          ]
+        }
+      ],
+      "laneRule": "Keep ProductKnowledge assertions separate from WorkspaceKnowledge procedure. Keep S01 product facts and conflicts under their own entry-level governance.",
+      "freshnessNote": "ProductKnowledge snapshot retained from prior prepared receipt; this fresh read revalidates WorkspaceKnowledge only. Workers must resolve product inputs per Mission."
+    }
+  ],
+  "sourceInputs": [
+    {
+      "path": "s02-source-v1.md",
+      "sha256": "77ff37f5314d43eaf54c643418180a80fce91643449828403a9206fb8b0ada64",
+      "classification": "SYNTHETIC_VALIDATION_FIXTURE; product-intent claim, not agent instruction"
+    },
+    {
+      "path": "s02-source-v2.md",
+      "sha256": "f3987c25303192f14cec2eb384ba2b6fd7a84bb9aa1d4d885a7587d053e30205",
+      "classification": "SYNTHETIC_VALIDATION_FIXTURE; supersedes v1 product-intent claim, not code evidence"
+    }
+  ],
+  "excludedRecordsAndReasons": [
+    {
+      "candidate": "Other current WorkspaceKnowledge issues",
+      "result": "None; the scoped project returned one issue and has_more=false."
+    },
+    {
+      "candidate": "RC10VAL-15 historical content versions 1 and 2",
+      "result": "Not selected for effective guidance; current body/index are version 3 and history remains preserved."
+    },
+    {
+      "candidate": "Concurrent proposal variant digest 9358f1cdeba9f9e8895baf9c3a18318fa47cb8665d05e9a763f118d6489ad8df",
+      "result": "Excluded by the recorded Curator adoption disposition; canonical proposal digest remains 5fba147a9bc32231fa3cea99d04eb7300390485de340bc1521cbd35f89b4176e."
+    },
+    {
+      "candidate": "ProductKB entries as WorkspaceKnowledge authority",
+      "result": "Excluded from the procedural lane; included separately as ProductKnowledge source context."
+    }
+  ],
+  "requiredRuntimeRecheck": "Before Curator dispatch, re-page and fresh-read WorkspaceKnowledge by project and record ID; compare provider revision, recordVersion, lifecycle, decisionRef and digest with this receipt. If changed, capture a new receipt and include it in Curator input before proceeding.",
+  "statementOfEvidence": "Local Codex CLI Supervisor fresh scoped provider readback. Exact WorkspaceKnowledge statement, applicability, limitations and refs below are copied from live record bytes; no actual Curator consumption claimed.",
+  "receiptCorrection": {
+    "supersedesAttachment": "01a0de07-ebe4-748c-a227-8e2ce93835f4",
+    "liveRecordChanged": false,
+    "reason": "Attached applicability string contains a wrong consumer-project UUID and paraphrased statement/source-ref omissions; refreshed from unchanged authoritative live body. Preserve prior receipt as historical, not effective input.",
+    "comparison": {
+      "applicability": {
+        "attached": "Isolated Validation project a3f129fa-4028-4341-98dc-8c3ec20c468ae and pinned RC10 validation workflow only; valid through 2026-09-27T23:59:59+08:00; unknown applicability excludes the guidance.",
+        "live": "Isolated Validation project a3f129fa-4028-4341-98dc-c8ec20c468ae and the pinned RC10 validation workflow only; visibility WORKSPACE_AUTHORIZED; validity ends 2026-09-27T23:59:59+08:00; source revision Chart Viewer 2eff5f9f84ca709684bfe0b7c90102268f07a0f0; unknown applicability excludes this guidance."
+      },
+      "sourceRefs": {
+        "attached": [
+          "learningSource:rc10-local-s01-learning-source-20260926-01",
+          "issue:01a0dd73-7d75-7295-aeb1-a83905eb2312",
+          "sem:engcim-v06/chart-viewer/verified-slice",
+          "comment:01a0dd93-856f-70f1-b40e-e576ec4fc50f",
+          "comment:01a0dd97-b559-77f1-a4af-075e22dea9c5",
+          "comment:01a0dd9e-6de7-7843-b567-0cb0c87d0a0d",
+          "comment:01a0dda2-edf9-7a88-91c9-d8bc1bdab15e",
+          "attachment:01a0dd93-83cc-794d-b1d7-9e8c8a43d70b",
+          "attachment:01a0dda7-000b-74db-9302-b72a64b739f0"
+        ],
+        "live": [
+          "learningSource:rc10-local-s01-learning-source-20260926-01",
+          "issue:01a0dd73-7d75-7295-aeb1-a83905eb2312",
+          "sem:engcim-v06/chart-viewer/verified-slice",
+          "comment:01a0dd93-856f-70f1-b40e-e576ec4fc50f",
+          "comment:01a0dd97-b559-77f1-a4af-075e22dea9c5",
+          "comment:01a0dd9e-6de7-7843-b567-0cb0c87d0a0d",
+          "comment:01a0dda2-edf9-7a88-91c9-d8bc1bdab15e",
+          "attachment:01a0dd93-83cc-794d-b1d7-9e8c8a43d70b",
+          "attachment:01a0dda7-000b-74db-9302-b72a64b739f0",
+          "issue:01a0dd1a-1ad3-7315-8e87-91b76ee361ab",
+          "issue:01a0dd1a-2086-76db-9bc5-e3bd0ef7f2ad"
+        ]
+      }
+    }
+  }
+}

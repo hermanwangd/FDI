@@ -1,0 +1,7 @@
+PASS AC2 classifyChartResponse(404) => {"status":404,"retryable":false}
+PASS AC2 classifyChartResponse(500) => {"status":500,"retryable":false}
+PASS AC3 selectChart hit => {"selectedChartId":"chart-7","action":"SELECTED"}
+PASS AC3 selectChart miss => null
+PASS AC1 baseline: openSelectedChart export is absent => typeof undefined
+exports: classifyChartResponse, selectChart
+EXIT_CODE=0

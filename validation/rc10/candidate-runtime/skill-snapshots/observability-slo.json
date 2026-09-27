@@ -1,0 +1,37 @@
+{
+  "config": {},
+  "content": "---\nname: observability-slo\ndescription: Use when defining SLI/SLO, computing error budgets, designing symptom-based alerts, or producing periodic system health reports (S09)\n---\n\n# Observability \u0026 SLO（可觀測性與服務水準）\n\n掛給 Swarm SRE 與 Swarm Data Analyst 的可觀測性 skill。負責 S09 場景：SLO/SLI 定義、error budget 計算、告警設計、定期健康報告。場景流程與角色分工見 `docs/scenarios.md` S09。\n\n**核心原則：SLO 是使用者體驗的承諾，不是監控指標的堆砌；告警對症狀（使用者受影響）不對原因（機器忙）；每條告警都要能回答「收到的人該做什麼」。**\n\n## SLI／SLO 定義方法\n\n1. **從使用者旅程出發**：列出關鍵旅程（如下單、查詢、登入），每個旅程選 1–2 個 SLI——不為每個技術指標都定 SLO。\n2. **選 SLI 類型**（操作化定義）：\n   - 可用性＝`成功請求數 / 總請求數`（成功須定義：HTTP 2xx 且延遲達標？寫清楚）\n   - 延遲＝`延遲 ≤ 閾值的請求比例`（閾值寫數字，如 p95 \u003c 300ms 中「夠快」的界線）\n   - 新鮮度／正確性（資料管線）：`資料延遲 ≤ N 分鐘的比例`\n   - SLI 必須是**比例**（0–100%），不是原始計數；量測視窗與資料來源寫進定義檔（`templates/slo-definition.yaml`）。\n3. **定 SLO 目標**：目標值依據使用者容忍度與歷史表現（Data Analyst 提供 baseline），不拍 99.99%；**100% 不是 SLO**——那是零 error budget 的別名。\n4. **文件化**：每個 SLO 一份 `slo-definition.yaml`，入庫 `src-operations`；變更屬治理動作，須人類批准。\n\n## Error budget 計算\n\n```text\nerror budget = (1 − SLO目標) × 視窗內總量\n例：30 天視窗、SLO 99.9%、月請求 43.2M → budget = 0.001 × 43.2M = 43,200 次失敗\n    或換算時間：30 天 × 0.001 ≈ 43.2 分鐘全斷\nburn rate（燃燒率）= 實際錯誤率 / 允許錯誤率\n    burn rate = 1  → 恰好按預算消耗；\u003e1 超燒；14.4 以上 → 1 小時燒完 30 天 budget 的 2%\n```\n\n- 報告與告警都用 burn rate 表達，不用「錯誤數絕對值」（流量增長會讓絕對值失真）。\n- budget 耗盡的政策要事先寫明：凍結新功能發布、優先穩定性工作——誰批准凍結、如何解除，寫在 SLO 定義檔。\n\n## 告警設計原則\n\n1. **症狀 vs 原因**：頁面告警（會喚醒人）只對**症狀**——使用者可感的 SLO 威脅（burn rate 告警）；原因類指標（CPU、磁碟、queue 深度）進 dashboard 與診斷用 runbook，不直接告警，除非它**必然且即將**導致症狀。\n2. **每條告警必填三欄**：症狀描述（使用者受到什麼影響）／收到者的動作（連結 runbook）／嚴重度對應（SEV 分級，見 incident-response skill）。答不出「該做什麼」的告警刪除或降為記錄。\n3. **多視窗 burn rate 告警**：快燃燒（如 1h 視窗 burn rate ≥14.4）立即告警；慢燃燒（如 3 天視窗 ≥1）工單追蹤——單一視窗不是漏報（慢燒）就是誤報（短毛刺）。模式速查見 `references/alerting-patterns.md`。\n4. **噪音審查**：定期（隨 S09 健康報告）統計每條告警的觸發次數與**有效行動率**（觸發後有實際處置的比例）；有效行動率趨近 0 的告警是噪音，調閾值或刪除。告警疲勞 = 事故漏接的前兆。\n5. 告警規則落地後由 Verifier 驗證實際觸發（測試條件下），「已生效」聲明需執行證據。\n\n## 健康報告（定期，S09）\n\n套 `templates/health-report.md`：每個 SLO 列當期 SLI 實績、error budget 餘額、burn rate 趨勢、異常判讀與處置建議；數字由 Data Analyst 的可重現腳本產出，Verifier 可重跑驗證；異常趨勢明列，必要時轉 S10。\n\n## 輸出檢查清單\n\n- [ ] 每個 SLO 有 SLI 操作化定義（分子分母、視窗、資料來源）與目標值依據\n- [ ] error budget 有計算過程與耗盡政策；報告用 burn rate 表達\n- [ ] 每條告警有症狀／動作（runbook 連結）／SEV 對應三欄\n- [ ] 告警生效有 Verifier 觸發證據；噪音審查結論（保留／調整／刪除）已記錄\n- [ ] SLO 定義與健康報告已入庫 `src-operations`；SLO／閾值變更經人類批准\n",
+  "created_at": "2026-09-26T09:12:39Z",
+  "created_by": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+  "description": "Use when defining SLI/SLO, computing error budgets, designing symptom-based alerts, or producing periodic system health reports (S09)",
+  "files": [
+    {
+      "content": "# 告警模式速查（Alerting Patterns）\n\n## 症狀 vs 原因（分層）\n\n```text\n症狀層（會喚醒人）：SLO burn rate、可用性、端到端延遲、錯誤率（使用者視角）\n原因層（進 dashboard / runbook）：CPU、記憶體、磁碟、queue 深度、GC、連線數\n```\n\n原因層指標只在「必然且即將導致症狀」時才告警（如磁碟依趨勢 4 小時內必滿）；\n其餘情況它是**診斷資料**——症狀告警的 runbook 裡引用它，而不是讓它自己告警。\n\n## 多視窗 burn rate 告警（推薦骨架）\n\n| 告警 | 長視窗 | 短視窗 | 燃燒率閾值 | 嚴重度 |\n|---|---|---|---|---|\n| 快速燃燒 | 1h | 5m | ≥ 14.4（30d budget 2%/h） | SEV2，頁面 |\n| 中速燃燒 | 6h | 30m | ≥ 6 | SEV2/3 |\n| 慢速燃燒 | 3d | 6h | ≥ 1 | SEV3，工單 |\n\n- **長視窗＋短視窗 AND**：短視窗確認「現在還在燒」，避免已恢復的舊事故重複告警。\n- 閾值數字是骨架起點，按服務流量與容忍度調整；調整屬治理動作（人類批准）。\n\n## 反模式（見到就改）\n\n| 反模式 | 問題 | 改法 |\n|---|---|---|\n| 對原始計數告警（「錯誤 \u003e100 次」） | 流量增長即誤報 | 改用錯誤率／burn rate |\n| 每個原因指標都告警 | 告警海嘯、疲勞 | 原因層降為 dashboard＋runbook 診斷步驟 |\n| 告警無 runbook 連結 | 收到者無所適從 | 補動作欄或刪除 |\n| 閾值貼著日常波動 | 天天誤報 → 狼來了 | 以 baseline 的 p99 以上＋業務影響定閾值 |\n| 靜音當處理 | 問題累積 | 靜音要有期限與 owner；噪音審查時檢討 |\n\n## 噪音審查指標\n\n- **有效行動率**＝觸發後有實際處置（非靜音、非「看一下沒事」）的比例。\n- 有效行動率 \u003c 30% 的告警：調閾值、改條件、或刪除——並在健康報告記錄結論。\n- 零觸發超過一季的告警：驗證它還活著（Verifier 測試觸發），否則它是裝飾。\n",
+      "created_at": "2026-09-26T09:12:40Z",
+      "id": "9ba178d4-168d-4cb4-85f4-5c893cb1b005",
+      "path": "references/alerting-patterns.md",
+      "skill_id": "0a62df1a-b443-42c1-ad24-eac73f30b6e5",
+      "updated_at": "2026-09-26T09:12:40Z"
+    },
+    {
+      "content": "# 系統健康報告：\u003cYYYY-MM-DD 週期\u003e\n\n- 產出：Swarm SRE（判讀）＋ Swarm Data Analyst（指標計算，可重現腳本：\u003c連結\u003e）\n- 資料來源：\u003cmonitoring 系統／查詢連結\u003e；數字可由 Verifier 重跑腳本重現\n\n## 1. SLO 總覽\n\n| SLO | 目標 | 當期 SLI 實績 | error budget 餘額 | burn rate 趨勢 | 判定 |\n|---|---|---|---|---|---|\n| \u003cname\u003e | 99.9% | __% | __%（剩 __ 分鐘等價） | ↑/→/↓ | 健康 / 關注 / 超限 |\n\n## 2. 告警健康（噪音審查）\n\n| 告警 | 本期觸發次數 | 有效行動率 | 結論（保留/調閾值/刪除） |\n|---|---|---|---|\n| \u003cname\u003e | | __% | |\n\n## 3. 異常與趨勢判讀\n\n- \u003c異常 1：現象／可能原因／信心／建議處置（轉 S10？開改進項？）\u003e\n- 容量趨勢：\u003c資源使用對 baseline 的走向；預估何時需擴容\u003e\n\n## 4. 行動項\n\n| # | 項目 | Owner | 期限 |\n|---|---|---|---|\n| | \u003cSLO 調整／告警調整／容量／轉 S10\u003e | | |\n\n## 5. 入庫\n\n- [ ] 本報告已入庫 `src-operations`（條目連結：）——S09 迴圈閉合，供 S10 事故時查用\n",
+      "created_at": "2026-09-26T09:12:41Z",
+      "id": "d8e78161-6f86-401d-a078-b914d486d5b2",
+      "path": "templates/health-report.md",
+      "skill_id": "0a62df1a-b443-42c1-ad24-eac73f30b6e5",
+      "updated_at": "2026-09-26T09:12:41Z"
+    },
+    {
+      "content": "# SLO 定義檔（一個 SLO 一份；入庫 src-operations；變更屬治理動作需人類批准）\nslo:\n  name: \u003cjourney-availability | journey-latency | ...\u003e\n  service: \u003c服務名\u003e\n  userJourney: \u003c關鍵使用者旅程，如「下單」「查詢訂單」\u003e\n  owner: Swarm SRE\n  lastReviewed: \u003cYYYY-MM-DD\u003e\n\n  sli:\n    type: availability | latency | freshness\n    # 操作化定義：分子/分母必須可由資料來源直接算出，不含糊\n    definition: |\n      \u003c例：availability = 5xx 以外且 latency \u003c= 500ms 的請求數 / 總請求數\u003e\n    dataSource: \u003cPrometheus 查詢 / log pipeline / 連結\u003e\n    measurementWindow: 30d        # rolling window\n\n  target:\n    value: 99.9                   # 百分比；依據見下\n    rationale: \u003c使用者容忍度／歷史 baseline 連結；為何不是更高或更低\u003e\n\n  errorBudget:\n    policy: |\n      \u003cbudget 耗盡時：凍結什麼、誰批准、如何解除\u003e\n    # 例：30d 視窗 99.9% → 每月允許 ≈43.2 分鐘全斷或等價錯誤量\n\n  alerts:\n    - name: \u003cslo-fast-burn\u003e\n      symptom: \u003c使用者可見的影響描述\u003e\n      condition: burn_rate(1h) \u003e= 14.4 and burn_rate(5m) \u003e= 14.4   # 多視窗骨架，以監控系統語法為準\n      severity: SEV2\n      runbook: \u003crunbook 連結（incident-response/templates/runbook.md）\u003e\n      action: \u003c收到者第一步做什麼\u003e\n    - name: \u003cslo-slow-burn\u003e\n      symptom: \u003c……\u003e\n      condition: burn_rate(3d) \u003e= 1\n      severity: SEV3（工單追蹤，不頁面）\n      runbook: \u003c連結\u003e\n      action: \u003c……\u003e\n",
+      "created_at": "2026-09-26T09:12:41Z",
+      "id": "0af29bd2-a4c7-42f1-a7c4-985d9211585f",
+      "path": "templates/slo-definition.yaml",
+      "skill_id": "0a62df1a-b443-42c1-ad24-eac73f30b6e5",
+      "updated_at": "2026-09-26T09:12:41Z"
+    }
+  ],
+  "id": "0a62df1a-b443-42c1-ad24-eac73f30b6e5",
+  "name": "observability-slo",
+  "updated_at": "2026-09-26T09:12:39Z",
+  "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+}

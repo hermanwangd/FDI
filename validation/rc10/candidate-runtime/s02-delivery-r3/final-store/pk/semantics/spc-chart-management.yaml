@@ -1,0 +1,44 @@
+# pk/semantics/ 範例：SPC Chart Management 語意樹（schema: pk/_schema/semantics-entry.schema.json）
+id: sem:spc/chart-management
+pkClass: pk-semantics
+validationState: VALIDATED
+confidence: official-document
+sourceClass: src-product-docs
+evidence:
+  - ev:spc-training-2024
+governanceIssueRef: null        # 對應的 ProductKB governance issue；建立後回填（雙向連結）
+updatedAt: "2025-01-15T03:00:00Z"
+supersedes: null
+supersededBy: null
+
+product: SPC
+capabilities:
+  - id: cap:spc/chart-management
+    name: Chart Management
+    description: SPC 圖表的建立、組態與維護能力。
+    scenarios:
+      - id: scen:spc/chart-management/create-chart
+        name: Create Chart
+        behaviors:
+          - action: 使用者於 Chart 列表點擊「新增圖表」並填寫標題與資料來源
+            expected: 系統建立新 Chart 並出現在列表中
+      - id: scen:spc/chart-management/configure-chart
+        name: Configure Chart
+        behaviors:
+          - action: 使用者調整 Chart 的管制界限與抽樣設定
+            expected: 設定儲存後即時反映於 Chart 顯示
+      - id: scen:spc/chart-management/maintain-chart
+        name: Maintain Chart
+        behaviors:
+          - action: 使用者停用不再使用的 Chart
+            expected: Chart 標記為停用，不再出現在預設列表
+rules:
+  - id: rule:spc/chart-title-required
+    statement: 每張 Chart 必須有標題（title 不得為空）。
+    appliesTo:
+      - cap:spc/chart-management
+terminology:
+  - term: SPC
+    definition: Statistical Process Control，統計製程管制。
+  - term: Chart
+    definition: 一張 SPC 管制圖，由標題、資料來源與管制界限組成。

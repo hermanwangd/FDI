@@ -1,0 +1,79 @@
+{
+  "assignee_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+  "assignee_type": "agent",
+  "created_at": "2026-09-26T09:44:26Z",
+  "creator_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+  "creator_type": "agent",
+  "description": "ENGCIM v0.6 Chart Viewer 的 Product Semantics 語意樹（fixture：engcim-v06-chart-viewer-fixture @ 2eff5f9f84ca709684bfe0b7c90102268f07a0f0，Authority: SYNTHETIC_VALIDATION_FIXTURE）。\n\n## Semantics 樹\nENGCIM v0.6 Chart Viewer（SYNTHETIC_VALIDATION_FIXTURE）\n└─ Chart Viewing\n   ├─ Select Chart：selectChart(chartList, chartId) → 命中回傳 { selectedChartId, action: 'SELECTED' }；查無回傳 null\n   ├─ Open Selected Chart：測試期望 openSelectedChart(charts, chartId) → { action: 'OPENED', chartId }（⚠ 與實作 contract 矛盾，見 [Gap/CONFLICTING]）\n   └─ Render Chart：renderChart(config) 含 limits → { rendered: true, limits }；缺 config/limits → 拋 INVALID_CHART_CONFIGURATION\n\n## Rules / Invariants\n- rule:engcim-v06/chart-limits-max：frozen Product behavior chartLimits().max = 10；實作為 1000（seeded defect），兩造保留未裁決 → [Gap/CONFLICTING]\n- rule:engcim-v06/http-404-non-retryable：HTTP 404 → retryable: false（README、interaction.js、interaction.test.js 三處一致，仍 PROVISIONAL）\n\n## Terminology\n- Chart Viewer／frozen product expectation／seeded defect／chartLimits()：見 store 條目。\n\n## Governance\n- store_ref：pk/semantics/engcim-v06-chart-viewer.yaml\n- Source 類別：src-team-seed（主）；evidence 亦掛 src-code-delivery（chartViewer.js、interaction.js）與 src-test-assets（interaction.test.js）\n- Evidence 列表：\n  - ev:engcim-v06-fixture-readme-2eff5f9f（src-team-seed，README.md @ 2eff5f9f，2026-09-26 擷取，官方文件）\n  - ev:engcim-v06-fixture-chartviewer-js-2eff5f9f（src-code-delivery，src/chartViewer.js @ 2eff5f9f，auto-observation）\n  - ev:engcim-v06-fixture-interaction-js-2eff5f9f（src-code-delivery，src/interaction.js @ 2eff5f9f，auto-observation）\n  - ev:engcim-v06-fixture-interaction-test-js-2eff5f9f（src-test-assets，interaction.test.js @ 2eff5f9f，官方文件）\n- 日期：2026-09-26\n- 文件類型：fixture README + source + test（SYNTHETIC_VALIDATION_FIXTURE）\n- Confidence：官方文件（validation state：待驗證 PROVISIONAL——依 Orchestrator 指示全部維持 provisional）\n- Pipeline 層級：synthesized knowledge（經 correlation/synthesis；seeded defect 已隔離為 conflict，未記為 product fact）\n- Gap 狀態：CONFLICTING（chartLimits max；openSelectedChart 契約）——兩個 [Gap/CONFLICTING] issue 已開並連結\n\n## 原文\nRC10VAL-4 issue 附件（attachment ids：01a0dd0f-2aa7-752f-8f74-2722e199f5f3、01a0dd0f-2c5c-7a76-a0f7-deb3f417f263、01a0dd0f-2d3c-7051-8a66-145aacd53638、01a0dd0f-2e13-7ed3-a62a-1c361df9ddbd），provenance 釘在 fixture commit 2eff5f9f84ca709684bfe0b7c90102268f07a0f0。",
+  "due_date": null,
+  "duplicate_of": null,
+  "id": "01a0dd1a-09c4-7a4a-9f16-b006ddd2334f",
+  "identifier": "RC10VAL-5",
+  "labels": [
+    {
+      "color": "#2563eb",
+      "created_at": "2026-09-26T09:14:30Z",
+      "description": "",
+      "id": "f5b41cab-f220-4e78-8f0c-5dd5f980c6ee",
+      "name": "pk-semantics",
+      "resource_type": "issue",
+      "updated_at": "2026-09-26T09:14:30Z",
+      "usage_count": 0,
+      "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+    },
+    {
+      "color": "#475569",
+      "created_at": "2026-09-26T09:14:37Z",
+      "description": "",
+      "id": "caaf9112-d838-48bd-b8d5-9adfbc1be62a",
+      "name": "src-code-delivery",
+      "resource_type": "issue",
+      "updated_at": "2026-09-26T09:14:37Z",
+      "usage_count": 0,
+      "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+    },
+    {
+      "color": "#db2777",
+      "created_at": "2026-09-26T09:14:33Z",
+      "description": "",
+      "id": "8e7136a9-6e3c-4ab3-a821-503301afb11d",
+      "name": "src-team-seed",
+      "resource_type": "issue",
+      "updated_at": "2026-09-26T09:14:33Z",
+      "usage_count": 0,
+      "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+    },
+    {
+      "color": "#65a30d",
+      "created_at": "2026-09-26T09:14:35Z",
+      "description": "",
+      "id": "b9cd7daa-404d-4806-afc7-8169298a4c36",
+      "name": "src-test-assets",
+      "resource_type": "issue",
+      "updated_at": "2026-09-26T09:14:35Z",
+      "usage_count": 0,
+      "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+    }
+  ],
+  "last_activity_at": "2026-09-26T11:56:40.845536Z",
+  "metadata": {
+    "credibility": "official-document",
+    "date": "2026-09-26",
+    "source": "engcim-v06-chart-viewer-fixture @ 2eff5f9f"
+  },
+  "number": 5,
+  "parent_issue_id": null,
+  "position": -4,
+  "priority": "none",
+  "project_id": "f7af4546-88b2-4163-a0d4-b350e2123dbc",
+  "properties": {},
+  "revision": 15,
+  "stage": null,
+  "start_date": null,
+  "status": "in_review",
+  "status_category": "in_review",
+  "status_name": "",
+  "title": "ENGCIM v0.6 Chart Viewer（Semantics）",
+  "updated_at": "2026-09-26T11:56:40Z",
+  "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+}

@@ -1,0 +1,113 @@
+{
+  "resultKind": "RefreshedProductKnowledgeWithDelta",
+  "schemaVersion": "0.1",
+  "mission": "RC10VAL-21",
+  "childIssue": "01a0de0e-b68e-79f9-80be-c3d0f5398b5d",
+  "parentIssue": "01a0de07-f1c2-75d7-90e6-e2a0dce4118d",
+  "producedBy": "agent:c38a925f-171b-4c24-91c2-68329ae42654",
+  "producedAt": "2026-09-26T14:18:30Z",
+  "baseSnapshot": {
+    "filename": "pk-store-s01-rc10val10-candidate-r3.tar.gz",
+    "sha256": "57af68f6f63561e181df6edab6d0adea160620b78c058cf5c610b296581411ba",
+    "validatorCount": 55
+  },
+  "refreshedStore": {
+    "archive": "pk-store-s02-refreshed-final.tar.gz",
+    "archiveSha256": "69a0daf112fd2b5c4b95829598437bc036555b24f5656507356685b61b54b75d",
+    "validatorStdout": "OK: 60 個條目／記錄／node／edge 全部通過（root=…/pk-store-s02/pk）",
+    "validatorStdoutFile": "validator-final-stdout.log"
+  },
+  "delta": {
+    "changedEntries": [
+      {
+        "id": "sem:engcim-v06/chart-viewer/product-intent",
+        "change": "NEW (Stage A) → STALE (Stage B)",
+        "supersededBy": "sem:engcim-v06/chart-viewer/product-intent/v2",
+        "historyRetained": true,
+        "sourceIdentity": "rc10-s02-chart-intent-v1 @ sha256 77ff37f5314d43eaf54c643418180a80fce91643449828403a9206fb8b0ada64"
+      },
+      {
+        "id": "sem:engcim-v06/chart-viewer/product-intent/v2",
+        "change": "NEW (Stage B, CURRENT product-intent claim)",
+        "supersedes": "sem:engcim-v06/chart-viewer/product-intent",
+        "sourceIdentity": "rc10-s02-chart-intent-v2 @ sha256 f3987c25303192f14cec2eb384ba2b6fd7a84bb9aa1d4d885a7587d053e30205"
+      }
+    ],
+    "staleOrSupersededClaims": [
+      "v1 claim 'SELECTED is the final desired result' → obsolete per v2; retained as STALE source history"
+    ],
+    "unchangedEntries": [
+      "sem:engcim-v06/chart-viewer (PROVISIONAL conflict face)",
+      "sem:engcim-v06/chart-viewer/verified-slice (VALIDATED slice; selectChart behavior not rewritten)",
+      "sem:spc-chart-management",
+      "pk/architecture/* (2 entries)",
+      "pk/realization/* (2 entries)",
+      "pk/code-graph/* (all nodes/edges; code unchanged at pinned commit 2eff5f9 — no new edges, 無證據不產 edge)"
+    ],
+    "keptOpen": [
+      "implementation/acceptance conflict: OPENED (frozen test) vs SELECTED (pinned code) — RC10VAL-9, unadjudicated",
+      "seeded defect: chartLimits max=10 (frozen) vs 1000 (code) — RC10VAL-8, unresolved",
+      "note: v2 document does NOT close these; no invented decisions; no software repair claimed"
+    ]
+  },
+  "replay": {
+    "disposition": "same-source duplicate; no new observation/entry/upgrade",
+    "before": {
+      "validatorCount": 59,
+      "semanticsEntries": 5,
+      "evidenceRecords": 20
+    },
+    "after": {
+      "validatorCount": 60,
+      "semanticsEntries": 5,
+      "evidenceRecords": 21
+    },
+    "dispositionRecord": "ev:engcim-v06-s02-chart-intent-v2-replay-dedup-rc10val21"
+  },
+  "workspaceKnowledgeConsumption": {
+    "receiptAttachment": "01a0de0b-898c-74b2-a0ca-5909e9fa1f84",
+    "receiptSha256": "f3c993ac5d0050278eafb1e940b24358b9fbd20413ec498df720dfbea3aaa1f4",
+    "record": "RC10VAL-15 issue:01a0ddde-0d24-7978-9af4-6ed850a5cbfc rev 10 content v3 APPROVED CURRENT digest 5fba147a…176e",
+    "runtimeRecheck": "fresh provider read at 2026-09-26T14:12Z: revision 10 / rc10RecordVersion 3 / rc10Decision APPROVED / rc10Lifecycle CURRENT — matches receipt, no change",
+    "guidanceApplied": [
+      "requiredRuntimeRecheck: fresh re-read of WorkspaceKnowledge record before consumption — executed, matched receipt",
+      "statement (4): bind every revision to a fresh archive digest — Stage A snapshot a09b3c3f…, refreshed final a55a7d86…, each with fresh validator stdout captured in this run",
+      "statement (4): no silent store edits — all changes are new files or explicit STALE/supersededBy/supersede fields; validator run before/after",
+      "statement (4): honest reporting of failures — none occurred; validator PASS at every stage (55→57→59→60)",
+      "statement (3): keep seeded conflicts unadjudicated as PROVISIONAL — RC10VAL-8/RC10VAL-9 untouched, kept open",
+      "statement (2): never upgrade by source count alone — v2/replay counts as duplicate provenance, no VALIDATED promotion; new entries stay PROVISIONAL"
+    ],
+    "laneRule": "ProductKnowledge assertions kept separate from WorkspaceKnowledge procedure; ProductKB lane read/write limited to candidate store issues"
+  },
+  "governanceReferences": {
+    "productKBProject": "f7af4546-88b2-4163-a0d4-b350e2123dbc",
+    "existing": [
+      "RC10VAL-5 rev15",
+      "RC10VAL-6 rev12",
+      "RC10VAL-7 rev13",
+      "RC10VAL-8 (blocked, unchanged)",
+      "RC10VAL-9 (blocked, unchanged)"
+    ],
+    "newIssues": {
+      "v2Issue": "01a0de17-2515-77c5-96c7-9599d4da9318 (in_review; store entry governanceIssueRef backfilled)",
+      "v1Issue": "01a0de17-2878-73e8-8794-80cd17d30d36 (cancelled=已淘汰; store entry STALE supersededBy backfilled)"
+    },
+    "s01Capture": {
+      "captureRef": "rc10wk-s01-capture-20260926-01",
+      "knowledgeRef": "issue:01a0ddde-0d24-7978-9af4-6ed850a5cbfc@rev:10",
+      "canonicalSha256": "e2eb832333c8b3de40803bcb3aef77205d59e8f6643f8363fd5ccae2a9dc3ab1"
+    }
+  },
+  "artifacts": {
+    "stagedManifest": "s02-staged-manifest.json",
+    "stageASnapshot": "pk-store-s02-stage-a-v1.tar.gz (sha256 a09b3c3fdb2f8e7dbad8a7f58e1688e39c9af7f9a72470e8ca4c4251d4e37698)",
+    "finalArchive": "pk-store-s02-refreshed-final.tar.gz",
+    "validatorStdout": "validator-final-stdout.log",
+    "s01History": "pk-store-s01 rc10val10 candidate r1/r2/r3 preserved (r3 tarball retained unmodified; r1/r2 remain on RC10VAL-10 history)"
+  },
+  "scopeNotes": {
+    "s03": "NOT performed per constraints",
+    "t13NegativeCases": "NOT_RUN — bounded follow-up work item, not claimed",
+    "humanDone": "not set (human decision)"
+  }
+}

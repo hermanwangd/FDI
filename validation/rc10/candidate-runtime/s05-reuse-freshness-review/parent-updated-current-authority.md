@@ -1,0 +1,53 @@
+# [S05] RC10 candidate — bounded pre-coding validation
+
+Run this mission only in MultiCA workspace `0b02adb6-a395-46bd-bd92-6fec14dee20e`, Validation project `a3f129fa-4028-4341-98dc-c8ec20c468ae`, with the existing squad `ba1c9f0d-00fd-48a3-8865-dfbc4ff35f73`. Local supervisor is Codex CLI. Do not invoke Claude CLI.
+
+Candidate `RC10-local-candidate-20260927-01` is pinned by input manifest SHA-256 `902a5e97d3de9185ea22a36687823a4e1997d7e2d13c7c8e2f48f0b1a0ec4267`. Human-adopted profile `ENGCIM-S05-REVIEWED-DELIVERY-v0.1` source SHA-256 `a09e9fbd2cbeecceede25c9d80612002a1c6369367450422986bdb208bcbe4e9`; adoption receipt SHA-256 `8ade042327de65549f9a2f02c7c70915f1bf2f2c70cd81459a6c0cca7c0b9361`. Configured role readback is attached separately; actual consumption must be evidenced by this run and must not be inferred from issue status or self-report alone.
+
+Use S04 issue `RC10VAL-29`, IntentSpec revision 1 SHA-256 `ded65a80ba34ef20792aafdcb0f4c8dababbda7a4327c5b7decdb2f98d565602`, the sealed RC6 Scenario SHA-256 `9eefc7b72c01af62bab81bd4d4c19ff29a8c212170066f2e673245c6699f1f1b`, and only applicable structured Product Knowledge references. Preserve existing issue/run identities.
+
+## Authorized work for this run
+
+1. Execute only S05 C1, independent non-author Design Review C2, and conditional C3 planning: map each AC to WorkItems, repositories, test/dependency, integration owner, and `MODIFY` or `VERIFY_ONLY`; clearly mark unresolved dependencies and authorization. Bind every artifact and review to exact revision.
+2. Demonstrate which adopted profile clauses the actual Orchestrator, Architect, and Reviewer runs consumed, with run IDs and source/config references. Record any runtime-loading evidence gap precisely.
+3. Reuse current Scenario, squad, issue/fan-in path, and existing roles; one parent Scenario at a time, at most two active Swarm runs including the parent, one child at a time. Keep total process RSS below 8 GiB.
+
+## Current authority and scope — supersedes the pre-adoption stop below
+
+The original pre-adoption HOLD text below is historical and no longer controls current work. Human Product Decision Addendum RC10VAL-30 comment `01a0dfe3-2aae-76c1-9976-0fc4ff34ae31` resolves RC10VAL-9 as additive `openSelectedChart(charts, chartId)` returning `{ action: 'OPENED', chartId }`, preserving `selectChart` and 404 non-retryable behavior; it resolves RC10VAL-8 product intent as max=10 with 1000 a seeded defect. The adopted S05 profile authorizes bounded `src/interaction.js` implementation, review and exact-candidate validation. The active Human goal authorizes actual S01–S06 execution in this isolated workspace and approved fixtures. Therefore continue S05 code review and S06 on the exact committed fixture revision; report the observed F1. Any `chartViewer.js` correction still requires the separate scope-expansion approval specified by the addendum. Do not change frozen tests.
+
+Do not create extra scenarios, agents, skills, services, or gates. Do not mark any issue `done` or claim Human acceptance. Preserve native review and verification result types. No production merge, deployment, promotion, rollout, or company Claude CLI execution.
+
+## Superseded pre-adoption stop text (historical only)
+
+
+!file[RUN-SPEC.md](https://multica.ai/api/attachments/01a0df03-ca71-76d0-9b0a-5b5022ec5c0c/download)
+
+!file[RUN-EXECUTION-ADDENDUM.md](https://multica.ai/api/attachments/01a0df03-cb56-7d79-9402-5b9d4b3b2e72/download)
+
+!file[deployment-readback.json](https://multica.ai/api/attachments/01a0df03-cc33-7997-a83e-c428fbebffd0/download)
+
+!file[RC10-S05-S06-ROLE-GUIDANCE.md](https://multica.ai/api/attachments/01a0df03-ccfd-7ae2-9ba8-8cabcd3bba04/download)
+
+## Human-requested C1/C2 reuse and freshness verification
+
+This supplements the existing bounded C1/C2 revision only. No new schema, service, agent, gate, parallel dispatch, shared instructions/Core changes, or mutation outside the existing interaction.js scope is authorized.
+
+- Freshly resolve applicable Product Knowledge and learned WorkspaceKnowledge by exact version/digest, workspace/project, candidate, governance and freshness. Exclude irrelevant or inapplicable records with reasons. Profile compliance is Swarm-rule consumption, not learned WorkspaceKnowledge reuse.
+- RC10VAL-46 recordKey rc10wk-s01-candidate-identity-evidence-attribution-20260927-01 v1 is APPROVED/CURRENT but includes historical RC10VAL-8/9 unresolved statements. Human decision RC10VAL-30 comment 01a0dfe3-2aae-76c1-9976-0fc4ff34ae31 supersedes those as current product facts. Preserve the historical record. CURRENT/validUntil alone does not establish whole-record applicability. Inspect the existing selection contract: if partial use is not permitted, exclude the record and use the existing governance-update proposal route. Never trim content and claim the original approved digest authorizes the altered payload.
+- In the existing C1 artifact, identify which selected knowledge actually changed each analysis/design/scope/verification decision, or explicitly record exclusion/no applicable learned knowledge. Bind existing input/result/evidence refs and actual consumer run IDs. Do not invent reuse for demonstration.
+- C2 must be a non-author review of the exact revised C1: verify reference applicability, actual influence, historical statements not treated as current blockers, and Product/Workspace/Swarm authority separation. Retain the existing native review result and evidence format.
+- Preserve historical reuse RC10VAL-47/50; no retroactive invalidation, deletion, unaffected reruns, or Human accepted/DONE inference.
+- Before accepting this revision or dispatching its C2, fresh-read this supplement and identify whether the actual C1 run addressed it. Updating this task description is configuration evidence only, not proof the in-flight consumer read it. Missing consumption remains unverified and must not be credited.
+- Preserve one-parent-at-a-time and previous S02 timing/concurrency findings. No further independent dispatch while existing scenario work is outstanding.
+
+## Supervisor observation of delivered C1 revision 2 (for the existing C2)
+
+Subject: RC10VAL-58 comment 01a0dfee-6b74-749a-b413-d42449e9b74b, author run 01a0dfea-6725-7c55-8f6a-08e1d076505e. This observation is not a substitute for independent C2.
+
+P2 — The delivered r2 has no RC10VAL-46 selection/exclusion, current version/digest applicability disposition, or learned WorkspaceKnowledge influence record. Human decisions and current/old-candidate distinctions are correctly reflected, but that does not satisfy the requested reuse/freshness validation. The description supplement may not have reached the in-flight author; do not infer consumption from its presence. Minimum correction: use the existing revision loop to fresh-resolve relevant knowledge, document selection or exclusion and actual influence in C1, and independently review the resulting exact revision in C2. A justified exclusion is valid; forced reuse is not required. Preserve r2 as history and do not assign the missing requirement a PASS.
+
+P2 — C1 r2 profile-consumption paragraph (2) literally says “unresolved Product Context 以 guess 填補”, contradicting the governing instruction to avoid guessing. Its surrounding treatment of the Human decisions is correct. Correct the wording in the same bounded revision; no new framework, schema, gate, agent, or shared-instruction change.
+
+## C2 revision 2 coverage reconciliation
+C2 PASS is now delivered at RC10VAL-59 comment 01a0dff5-249f-70e1-aefb-573451a53237, bound to C1 r2. Preserve its valid product-contract and scope findings. It does not address the previously saved Human-requested learned-knowledge freshness/applicability requirement or the two Supervisor observations above. Do not infer those requirements passed from this verdict. Before coding, use the existing bounded correction loop for C1 revision 3: record fresh RC10VAL-46 selection or justified exclusion with exact version/digest and actual influence, correct the missing prohibition on guessing unresolved Product Context, and align the revision summary notes identified by C2. Obtain non-author C2 on that exact revision; preserve unchanged contract/scope and prior evidence. This is completion of existing requirements, not a new gate, schema, service, or expanded implementation scope. Avoid duplicate children if a correction is already active.

@@ -1,0 +1,45 @@
+{
+  "config": {},
+  "content": "---\nname: test-design\ndescription: Use when designing test plans with equivalence partitioning, boundary values, state transitions and scenario tests, or defining regression strategy and coverage targets (S05/S06/S10)\n---\n\n# Test Design（測試設計方法）\n\n掛給 Swarm QA Tester 與 Swarm Verifier 的測試設計 skill。負責把 SPEC／驗收條件轉成**可執行、可評量覆蓋的測試計畫**，並定義回歸策略。場景流程見 `docs/scenarios.md` S06（獨立驗證 mission）與 S05（開發鏈品質線）；與 Verifier 的分工見本文末節。\n\n**核心原則：測試案例是從規格系統性推導出來的，不是靈感列舉；每個案例都能回答「它覆蓋了哪一個等價類／邊界／狀態轉移／場景」。**\n\n## 測試設計四技法（選用規則）\n\n| 技法 | 適用訊號 | 產出 |\n|---|---|---|\n| 等價類劃分 | 輸入域大、同類輸入應有相同行為 | 每個有效／無效等價類 ≥1 案例 |\n| 邊界值分析 | 有數值範圍、長度、容量、日期區間 | 每個邊界取 min-1/min/min+1/max-1/max/max+1（型別允許時） |\n| 狀態轉移 | 對象有生命週期狀態機（訂單、issue、訂閱） | 合法轉移各 ≥1 案例＋非法轉移全列（應拒絕） |\n| 場景測試 | 跨功能端到端流程、user story 驗收 | 主流程＋替代流程＋異常流程各一條以上 |\n\n組合規則：**先等價類切域 → 對有邊界的等價類補邊界值 → 對象有狀態機就必畫狀態轉移圖 → 最後用場景測試串驗收路徑**。四者互補不互斥；遺漏任一適用技法要在測試計畫「不覆蓋說明」寫理由。速查表見 `references/techniques-cheatsheet.md`。\n\n## 測試計畫流程\n\n1. **定標的與範圍**：驗證標的（版本／build／環境／交付物）、測試範圍與明確不測項；引用 SPEC 與驗收條件連結。\n2. **查 PK 測試資產**：`src-test-assets` 條目（既有 test case／AC／regression case）優先重用；發現既有案例過時標 STALE 回報 Curator。\n3. **逐技法推導案例**：每個案例標註技法來源與覆蓋點；案例含前置條件、步驟、預期結果、資料需求。\n4. **定回歸集與覆蓋率目標**：見下節；覆蓋率目標寫數字（如 line ≥80%、critical path 100%），不寫「儘量高」。\n5. **成文**：套 `templates/test-plan.md`；缺陷回報套 `templates/defect-report.md`。\n\n## 回歸策略\n\n- **回歸集分層**：smoke（核心路徑，每次必跑）／regression（本變更 blast radius 內功能，見 changesurface-analysis 的影響清單）／full（發布前）。\n- **新缺陷 → 新 regression case**：每個修復的缺陷必附一個能重現該缺陷的回歸案例，入庫為 `src-test-assets`（S10 迴圈閉合的一部分）；修復沒配回歸案例不算完成。\n- **選擇依據可追溯**：回歸集選擇必須能對回變更影響清單（S07 報告）；「全跑」或「只跑改的檔案」都不是策略。\n\n## 與 Verifier 的分工（不互相取代）\n\n| | QA Tester（本 skill 主要持有者） | Verifier |\n|---|---|---|\n| 職責 | 系統性測試覆蓋：計畫、案例推導、回歸集、覆蓋率評估 | 執行證據：實際跑指令／測試，貼原始輸出證明或證偽聲明 |\n| 產出 | 測試計畫、缺陷報告、測試報告（通過率／覆蓋率／open findings） | 執行紀錄（指令＋輸出＋環境），VERIFIED / REFUTED 結論 |\n| 失敗時 | 開缺陷（templates/defect-report.md，附完整重現步驟） | REFUTED 視同 REVISE，退回原負責成員 |\n\nQA 設計但不假裝執行過；Verifier 執行但不自行設計覆蓋範圍。S06 中兩者皆 REQUIRED，可先後或平行派遣。\n\n## 輸出檢查清單\n\n- [ ] 測試計畫含標的／範圍／不測項／回歸集／覆蓋率數字目標\n- [ ] 每個案例可追溯到技法與覆蓋點；適用而未用的技法有「不覆蓋理由」\n- [ ] 邊界值覆蓋所有數值／長度／日期邊界；狀態機的非法轉移全列\n- [ ] 缺陷報告附完整重現步驟、實際 vs 預期、嚴重度、環境\n- [ ] 每個修復缺陷附新 regression case（或明確移交人類的建議）\n- [ ] 測試未全綠時不建議發布（Release Manager 守門，S08）\n",
+  "created_at": "2026-09-26T09:13:29Z",
+  "created_by": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+  "description": "Use when designing test plans with equivalence partitioning, boundary values, state transitions and scenario tests, or defining regression strategy and coverage targets (S05/S06/S10)",
+  "files": [
+    {
+      "content": "# 測試技法速查（Equivalence / Boundary / State / Scenario）\n\n## 等價類劃分（Equivalence Partitioning）\n\n- 把輸入域切成「系統行為相同」的類；每類取一代表值即可。\n- 必切：有效類 ≥1＋無效類 ≥1（型別錯、空值、超範圍、格式錯各算獨立類）。\n- 訊號：「輸入很多種但處理邏輯一樣」→ 用等價類，不要窮舉。\n- 例：年齡欄位 18–65 → 類別 {\u003c18, 18–65, \u003e65, 非數字, 空}。\n\n## 邊界值分析（Boundary Value Analysis）\n\n- 缺陷聚集在邊界：對每個邊界取 min-1 / min / min+1 / max-1 / max / max+1（型別允許時）。\n- 常見邊界：數值範圍、字串／清單長度（0、1、上限、上限+1）、日期（起訖日、閏年、時區交界）、\n  容量（滿、滿+1）、分頁（第 0 頁、最後一頁、超出頁）。\n- 訊號：規格出現「最多／至少／介於／不超過」→ 必有邊界值案例。\n- 搭配等價類：先切類，再對有邊界的類補邊界點。\n\n## 狀態轉移測試（State Transition）\n\n- 對象有生命週期（訂單、工單、訂閱、issue）→ 畫狀態圖再設計。\n- 覆蓋規則：每條**合法**轉移 ≥1 案例；每條**非法**轉移（如 cancelled→in_progress）都要有案例驗證被拒。\n- 別忘：初始狀態進入、終態不可再轉、並發轉移（兩個操作競態）。\n\n## 場景測試（Scenario Testing）\n\n- 用 user story／端到端流程串多個功能：主流程（happy path）＋替代流程＋異常流程各 ≥1。\n- 來源：驗收條件、PRD 的 Scenario 條目（pk-semantics）、S07 影響報告的傳導路徑。\n- 場景案例同時是 smoke 集候選。\n\n## 選用決策（30 秒版）\n\n```text\n輸入域大？      → 等價類\n規格有範圍詞？  → + 邊界值\n對象有狀態？    → + 狀態轉移（含非法轉移）\n跨功能流程？    → + 場景測試\n全部適用全用；不用的寫進測試計畫「不覆蓋說明」。\n```\n",
+      "created_at": "2026-09-26T09:13:30Z",
+      "id": "450e8487-a970-4ced-8cdd-bf4a120f71e7",
+      "path": "references/techniques-cheatsheet.md",
+      "skill_id": "741ab02a-8ef5-4122-86d0-bb8d4d5c2777",
+      "updated_at": "2026-09-26T09:13:30Z"
+    },
+    {
+      "content": "# 覆蓋率指令骨架（需按專案實際工具鏈調整後使用）\n\n\u003e 以下是**骨架**，參數（路徑、門檻、報告格式）以各專案工具鏈與 `--help` 為準；\n\u003e 執行後把指令與原始輸出交給 Verifier 貼證據，QA 只負責解讀。\n\n## Go\n\n```bash\ngo test ./... -coverprofile=coverage.out          # 產出 profile\ngo tool cover -func=coverage.out | tail -n1       # 總覆蓋率（total 行）\ngo tool cover -html=coverage.out -o coverage.html # 逐檔報告\n# 門檻檢查（骨架）：解析 total 行百分比，低於目標即 exit 1\n```\n\n## Python（pytest）\n\n```bash\npytest --cov=\u003cpackage\u003e --cov-report=term-missing --cov-report=xml:coverage.xml\npytest --cov=\u003cpackage\u003e --cov-fail-under=80        # 門檻內建（數字按計畫目標）\n```\n\n## Node.js（nyc）\n\n```bash\nnyc --reporter=text --reporter=lcov npm test\nnyc check-coverage --lines 80 --branches 80       # 門檻（數字按計畫目標）\n```\n\n## 通用紀律\n\n- 覆蓋率數字是**下限守門**，不是品質證明：100% line 也可能漏掉未實作的規格——\n  規格覆蓋（每條驗收條件有案例）與 code 覆蓋要分開報告。\n- 報告必附：工具版本、指令原文、原始輸出檔位置，供 Verifier 重跑重現。\n- 覆蓋率陡降（對 baseline）本身就是缺陷訊號，在測試報告 open findings 揭露。\n",
+      "created_at": "2026-09-26T09:13:30Z",
+      "id": "d8ee0924-56bf-434c-bf1b-807a3b7912c2",
+      "path": "scripts/coverage-commands.md",
+      "skill_id": "741ab02a-8ef5-4122-86d0-bb8d4d5c2777",
+      "updated_at": "2026-09-26T09:13:30Z"
+    },
+    {
+      "content": "# 缺陷報告：\u003c一句話症狀\u003e\n\n- 發現者／日期：\u003c誰\u003e ｜ \u003cYYYY-MM-DD\u003e\n- 標的：\u003c版本 / build / 環境\u003e\n- 嚴重度：Blocker / Critical / Major / Minor / Trivial\n  （Blocker＝核心流程不可用或資料損毀；Critical＝主要功能錯誤無 workaround；\n    Major＝功能錯誤有 workaround；Minor＝外觀／邊角；Trivial＝文案）\n- 關聯測試案例：\u003cTC-xxx\u003e\n\n## 重現步驟（必填，逐步可重複）\n\n1. 前置狀態：\u003c資料／帳號／環境\u003e\n2. 操作：\u003c逐步\u003e\n3. 實際結果：\u003c含錯誤訊息原文、截圖／log 摘錄\u003e\n4. 預期結果：\u003c依 SPEC／驗收條件第 N 條\u003e\n\n## 影響評估\n\n- 影響範圍：\u003c功能／使用者群\u003e\n- 是否阻塞發布：是 / 否（Blocker／Critical 預設阻塞）\n\n## 處置\n\n- 修復 child：\u003cissue 連結；指派對象\u003e\n- [ ] 修復後已回歸重驗（Verifier 執行證據：連結）\n- [ ] 已新增 regression case：\u003cTC-xxx\u003e（入庫 src-test-assets；未入庫不算關閉）\n",
+      "created_at": "2026-09-26T09:13:31Z",
+      "id": "f69f45b1-ba67-40a3-9dba-f138bb0a5a60",
+      "path": "templates/defect-report.md",
+      "skill_id": "741ab02a-8ef5-4122-86d0-bb8d4d5c2777",
+      "updated_at": "2026-09-26T09:13:31Z"
+    },
+    {
+      "content": "# 測試計畫：\u003c標的名稱／版本\u003e\n\n- 標的：\u003c版本 / build / 環境 / 交付物連結\u003e\n- 依據：\u003cSPEC／PRD／驗收條件連結；S07 影響報告連結（若有）\u003e\n- 設計者：Swarm QA Tester ｜ 日期：\u003cYYYY-MM-DD\u003e\n\n## 1. 範圍\n\n- 測試範圍：\u003c功能／模組清單\u003e\n- 明確不測項：\u003c項目＋理由\u003e（不得留白；全測則寫「無」）\n\n## 2. 測試案例（逐技法推導）\n\n| ID | 案例標題 | 技法來源（等價類/邊界值/狀態轉移/場景） | 覆蓋點 | 前置條件 | 預期結果 | 優先級 |\n|---|---|---|---|---|---|---|\n| TC-001 | | 邊界值 | max 長度 | | | P0 |\n| TC-002 | | 等價類 | 無效輸入類 | | | P1 |\n\n\u003e 每個案例必須能回答「覆蓋哪個等價類／邊界／狀態轉移／場景」；適用但未用的技法在 §5 寫理由。\n\n## 3. 回歸策略\n\n- smoke 集：\u003c案例 ID 清單\u003e（每次必跑）\n- regression 集：\u003c案例 ID 清單\u003e（對應 blast radius：\u003c影響清單連結\u003e）\n- full 集：發布前全跑\n- 選擇依據：\u003c如何對回變更影響清單\u003e\n\n## 4. 覆蓋率目標\n\n| 指標 | 目標 | 量測方式（指令見 scripts/coverage-commands.md） |\n|---|---|---|\n| line coverage | ≥ __% | |\n| branch coverage | ≥ __% | |\n| critical path（smoke 集） | 100% | 人工核對案例執行紀錄 |\n\n## 5. 不覆蓋說明\n\n\u003c適用但本計畫未覆蓋的技法／區域＋理由；無則寫「無」\u003e\n\n## 6. 執行與分工\n\n- 案例設計：QA Tester（本計畫）\n- 實際執行＋證據：Verifier（指令＋原始輸出貼 issue；失敗附重現步驟）\n- 缺陷修復：另開 child 給對應 Dev，修後回歸重驗（revision+1）\n",
+      "created_at": "2026-09-26T09:13:32Z",
+      "id": "8510cb8f-e868-40d5-842a-3c3df223cbe6",
+      "path": "templates/test-plan.md",
+      "skill_id": "741ab02a-8ef5-4122-86d0-bb8d4d5c2777",
+      "updated_at": "2026-09-26T09:13:32Z"
+    }
+  ],
+  "id": "741ab02a-8ef5-4122-86d0-bb8d4d5c2777",
+  "name": "test-design",
+  "updated_at": "2026-09-26T09:13:29Z",
+  "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e"
+}

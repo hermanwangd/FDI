@@ -1,0 +1,21 @@
+id: ev:engcim-v06-fixture-interaction-test-js-2eff5f9f
+channel: file-upload
+sourceClass: src-test-assets
+documentIdentity: >-
+  engcim-v06-chart-viewer-fixture/<test 目錄>/interaction.test.js @ commit
+  2eff5f9f84ca709684bfe0b7c90102268f07a0f0（原始目錄未隨附件提供；
+  檔案內部以 '../src/interaction.js' 相對路徑 import；attachment id
+  01a0dd0f-2e13-7ed3-a62a-1c361df9ddbd）
+documentVersion: 2eff5f9f84ca709684bfe0b7c90102268f07a0f0
+retrievedAt: "2026-09-26T09:38:09Z"
+sourceUri: null
+excerpt: >-
+  import { openSelectedChart } from '../src/interaction.js';
+  test('opens a selected chart from the list in one interaction', () => {
+  assert.deepEqual(openSelectedChart(charts, 'chart-7'), { action: 'OPENED',
+  chartId: 'chart-7' }); });
+  test('preserves HTTP 404 as non-retryable', ... classifyChartResponse(404),
+  { status: 404, retryable: false });
+credibility: official-document
+historical: false
+stale: false

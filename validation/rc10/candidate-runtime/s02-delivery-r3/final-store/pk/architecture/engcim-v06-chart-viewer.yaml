@@ -1,0 +1,48 @@
+# ENGCIM v0.6 Chart Viewer 架構（fixture；schema: pk/_schema/architecture-entry.schema.json）
+id: arch:engcim-v06/chart-viewer
+pkClass: pk-architecture
+validationState: PROVISIONAL        # 依 Orchestrator 指示維持 provisional（待驗證）
+confidence: official-document
+sourceClass: src-engineering
+evidence:
+  - ev:engcim-v06-fixture-readme-2eff5f9f
+  - ev:engcim-v06-fixture-package-json-2eff5f9f
+  - ev:engcim-v06-fixture-chartviewer-js-2eff5f9f
+  - ev:engcim-v06-fixture-interaction-js-2eff5f9f
+  - ev:engcim-v06-fixture-readme-2eff5f9f-rc10val10
+  - ev:engcim-v06-fixture-package-json-2eff5f9f-rc10val10
+  - ev:engcim-v06-fixture-chartviewer-js-2eff5f9f-rc10val10
+  - ev:engcim-v06-fixture-interaction-js-2eff5f9f-rc10val10
+governanceIssueRef: "01a0dd1a-0f8c-710c-a288-dcb87c78f0ec"  # ENGCIM v0.6 Chart Viewer（Architecture）
+updatedAt: "2026-09-26T11:27:30Z"
+supersedes: null
+supersededBy: null
+
+c4Level: component
+name: ENGCIM v0.6 Chart Viewer（engcim-v06-chart-viewer-fixture）
+parent: null
+children: []
+responsibility:
+  owns:
+    - 提供圖表界限 chartLimits()（src/chartViewer.js）
+    - 圖表渲染 renderChart(config)（src/chartViewer.js；缺 config/limits 時拋 INVALID_CHART_CONFIGURATION）
+    - 圖表選取 selectChart(chartList, chartId)（src/interaction.js）
+    - 檢視端回應分類 classifyChartResponse(status)（src/interaction.js）
+relationships: []
+interfaces:
+  - id: if:engcim-v06/chart-viewer/module-exports
+    name: ES module exports（chartLimits／renderChart／selectChart／classifyChartResponse）
+    kind: data-contract
+    specRef: src/chartViewer.js; src/interaction.js @ 2eff5f9f84ca709684bfe0b7c90102268f07a0f0
+constraints:
+  - >-
+    seeded defect 限制：chartLimits().max = 1000 在 r1 必須維持不變；僅能在 governed
+    Finding F1 將修正範圍擴大到 src/chartViewer.js 之後才得更正（依 README）。
+  - 初始 S05 變更範圍僅限 src/interaction.js（依 README）。
+  - HTTP 404 行為維持 retryable: false（依 README）。
+decisions:
+  - decision: "以 ES module（type=module）交付，測試以 node --test 執行"
+    rationale: package.json 宣告 type=module、scripts.test=node --test
+
+# --- RC10VAL-10 candidate binding：candidate evidence append（未覆寫 baseline）；
+# seeded defect 限制（max=1000 僅能經 governed Finding F1 後更正）與 S05 範圍限制維持不變，未裁決。 ---

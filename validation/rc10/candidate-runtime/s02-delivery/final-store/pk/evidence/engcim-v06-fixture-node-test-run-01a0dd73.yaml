@@ -1,0 +1,19 @@
+id: ev:engcim-v06-fixture-node-test-run-01a0dd73
+channel: file-upload
+sourceClass: src-test-assets
+documentIdentity: >-
+  node --test 執行觀察 @ engcim-v06-chart-viewer-fixture commit
+  2eff5f9f84ca709684bfe0b7c90102268f07a0f0（repo checkout 實際執行；RC10VAL-10 S01
+  candidate run）
+documentVersion: 2eff5f9f84ca709684bfe0b7c90102268f07a0f0
+retrievedAt: "2026-09-26T11:26:29Z"
+sourceUri: null
+excerpt: >-
+  執行結果：FAIL（預期之 seeded contract defect，非 candidate S01 store/schema 失敗）。
+  SyntaxError: The requested module '../src/interaction.js' does not provide an export
+  named 'openSelectedChart'（test/interaction.test.js import 階段即失敗，pass 0 / fail 1；
+  第二個 404 測試因模組載入失敗未執行）。佐證 [Gap/CONFLICTING] RC10VAL-9
+  （openSelectedChart 缺 export）。
+credibility: auto-observation
+historical: false
+stale: false
