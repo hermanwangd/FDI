@@ -59,6 +59,9 @@ class KnowledgePipelineTests {
             if (route == KnowledgeRoute.DIRECT_TKMS_PUBLICATION) continue;
             KnowledgeRoutingDecision decision = gateway.route(source(), candidate(route, "route: " + route));
             assertThat(decision.route()).isEqualTo(route);
+            if (route == KnowledgeRoute.MISSION_HISTORY) {
+                assertThat(decision.reusable()).isFalse();
+            }
             assertThat(decision.sourceRefs()).containsExactly("source:1");
             assertThat(decision.evidenceRefs()).containsExactly("evidence:1");
         }

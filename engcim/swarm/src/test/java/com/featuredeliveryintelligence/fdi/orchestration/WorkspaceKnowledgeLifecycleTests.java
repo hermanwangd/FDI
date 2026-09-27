@@ -29,7 +29,7 @@ class WorkspaceKnowledgeLifecycleTests {
         MissionLearningSource source = MissionLearningSourceFactory.from(closure);
         WorkspaceKnowledgeLifecycleResult result = new SwarmKnowledgeLifecycle(
                 new SwarmKnowledgeGateway(), new InMemoryWorkspaceKnowledgeRepository())
-                .buildAndPersist(source, candidate(), "workspace-reviewer");
+                .buildAndPersist(source, candidate(), KnowledgeGovernanceDecision.APPROVED, "workspace-reviewer");
 
         assertThat(result.missionLearningSourceRef()).isEqualTo(source.learningSourceRef());
         assertThat(result.proposal().evidenceRefs())
@@ -68,7 +68,7 @@ class WorkspaceKnowledgeLifecycleTests {
                 });
 
         WorkspaceKnowledgeLifecycleResult result = new SwarmKnowledgeLifecycle(gateway, repository)
-                .buildAndPersist(source, candidate(), "workspace-reviewer");
+                .buildAndPersist(source, candidate(), KnowledgeGovernanceDecision.APPROVED, "workspace-reviewer");
 
         assertThat(result.routingDecision().route()).isEqualTo(KnowledgeRoute.WORKSPACE_SEMANTIC);
         assertThat(result.governedKnowledge().decision()).isEqualTo(KnowledgeGovernanceDecision.APPROVED);
@@ -85,8 +85,64 @@ class WorkspaceKnowledgeLifecycleTests {
 
         assertThatThrownBy(() -> new SwarmKnowledgeLifecycle(
                 new SwarmKnowledgeGateway(), new InMemoryWorkspaceKnowledgeRepository())
-                .buildAndPersist(source(), candidate, "workspace-reviewer"))
+                .buildAndPersist(source(), candidate, KnowledgeGovernanceDecision.APPROVED, "workspace-reviewer"))
                 .hasMessageContaining("only WorkspaceKnowledge routes");
+    }
+
+    @Test
+    void rejectedKnowledgeIsNotPersisted() {
+        InMemoryWorkspaceKnowledgeRepository repository = new InMemoryWorkspaceKnowledgeRepository();
+        SwarmKnowledgeLifecycle lifecycle = new SwarmKnowledgeLifecycle(new SwarmKnowledgeGateway(), repository);
+
+        WorkspaceKnowledgeLifecycleResult result = lifecycle.buildAndPersist(
+                source(), candidate(), KnowledgeGovernanceDecision.REJECTED, "workspace-reviewer");
+
+        assertThat(result.governedKnowledge().decision()).isEqualTo(KnowledgeGovernanceDecision.REJECTED);
+        assertThat(result.captureReceipt()).isEmpty();
+        assertThat(result.retrievedKnowledge()).isEmpty();
+        assertThat(repository.findByWorkspace("workspace-a")).isEmpty();
+    }
+
+    @Test
+    void deferredKnowledgeRemainsAProposalAndIsNotPersisted() {
+        InMemoryWorkspaceKnowledgeRepository repository = new InMemoryWorkspaceKnowledgeRepository();
+        SwarmKnowledgeLifecycle lifecycle = new SwarmKnowledgeLifecycle(new SwarmKnowledgeGateway(), repository);
+
+        WorkspaceKnowledgeLifecycleResult result = lifecycle.buildAndPersist(
+                source(), candidate(), KnowledgeGovernanceDecision.DEFERRED, "workspace-reviewer");
+
+        assertThat(result.governedKnowledge().decision()).isEqualTo(KnowledgeGovernanceDecision.DEFERRED);
+        assertThat(result.captureReceipt()).isEmpty();
+        assertThat(repository.findByWorkspace("workspace-a")).isEmpty();
+    }
+
+    @Test
+    void conflictingProposalCannotBeApprovedThroughLifecycle() {
+        InMemoryWorkspaceKnowledgeRepository repository = new InMemoryWorkspaceKnowledgeRepository();
+        LearningCandidate conflicting = new LearningCandidate(
+                "runtime-revision", KnowledgeRoute.WORKSPACE_SEMANTIC,
+                "verified runtime revision", "runtime", "workspace-a", List.of(), List.of("conflict:source"));
+
+        assertThatThrownBy(() -> new SwarmKnowledgeLifecycle(new SwarmKnowledgeGateway(), repository)
+                .buildAndPersist(source(), conflicting, KnowledgeGovernanceDecision.APPROVED, "workspace-reviewer"))
+                .hasMessageContaining("conflicting WorkspaceKnowledge requires resolution");
+
+        assertThat(repository.findByWorkspace("workspace-a")).isEmpty();
+    }
+
+    @Test
+    void missionHistoryCandidateIsRejectedBeforeWorkspacePersistence() {
+        InMemoryWorkspaceKnowledgeRepository repository = new InMemoryWorkspaceKnowledgeRepository();
+        LearningCandidate missionHistory = new LearningCandidate(
+                "runtime-revision", KnowledgeRoute.MISSION_HISTORY,
+                "one-off mission history", "mission", "workspace-a", List.of(), List.of());
+
+        assertThatThrownBy(() -> new SwarmKnowledgeLifecycle(new SwarmKnowledgeGateway(), repository)
+                .buildAndPersist(source(), missionHistory, KnowledgeGovernanceDecision.APPROVED, "workspace-reviewer"))
+                .hasMessageContaining("only WorkspaceKnowledge routes")
+                .hasMessageContaining("MISSION_HISTORY");
+
+        assertThat(repository.findByWorkspace("workspace-a")).isEmpty();
     }
 
     private static MissionLearningSource source() {

@@ -3,7 +3,7 @@ import sys
 root=Path(sys.argv[1] if len(sys.argv)>1 else '.').resolve()
 out=root/'release'/'PROJECT-TREE.txt'
 ignore={'.git','__pycache__','.pytest_cache','target'}
-def visible(p): return (not (p.parts and p.parts[0] == '.claude')
+def visible(p): return (not p.name.startswith('._') and not (p.parts and p.parts[0] in {'.claude', '.superpowers'})
                         and p.as_posix() != 'CLAUDE.md'
                         and p.as_posix() != 'release/RC10-CANDIDATE-PACKAGE.zip'
                         and not any(part in ignore for part in p.parts)

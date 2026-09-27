@@ -38,7 +38,13 @@ class CompanyImportManifestTests {
             String source = entry.path("source").asText();
             String action = entry.path("action").asText();
             assertThat(entry.path("authority").asText()).isNotBlank();
-            assertThat(entry.path("sha256").asText()).matches("[0-9a-f]{64}");
+            if (isSelfReferentialCandidateArchive(entry)) {
+                assertThat(entry.path("hash_policy").asText()).isEqualTo("NO_SELF_HASH");
+                assertThat(entry.has("sha256")).isFalse();
+                assertThat(entry.has("size_bytes")).isFalse();
+            } else {
+                assertThat(entry.path("sha256").asText()).matches("[0-9a-f]{64}");
+            }
             assertThat(sources.add(source)).as("unique source %s", source).isTrue();
             if (action.equals("ADD_PHASE_2")) assertThat(source).startsWith("NEW:");
 
@@ -68,6 +74,9 @@ class CompanyImportManifestTests {
                 case "EXCLUDE_LOCAL_CANDIDATE" -> {
                     localCandidateExclusions++;
                     assertThat(entry.path("destination").asText()).isEmpty();
+                    if (isSelfReferentialCandidateArchive(entry)) {
+                        assertThat(entry.path("note").asText()).contains("final archive SHA");
+                    }
                 }
                 case "KEEP_ROOT_UPDATE_IN_PHASE_1" -> {
                     rootKeeps++;
@@ -83,7 +92,7 @@ class CompanyImportManifestTests {
         assertThat(phaseOneCompatibilityMoves).isEqualTo(summary.path("move_phase_1_compat_symlink").asInt());
         assertThat(phaseTwoMoves).isEqualTo(10);
         assertThat(phaseTwoMoves).isEqualTo(summary.path("move_phase_2").asInt());
-        assertThat(phaseTwoAdds).isEqualTo(3);
+        assertThat(phaseTwoAdds).isEqualTo(6);
         assertThat(phaseTwoAdds).isEqualTo(summary.path("add_phase_2").asInt());
         assertThat(liveStateExclusions).isEqualTo(summary.path("exclude_live_state").asInt());
         assertThat(localControlExclusions).isEqualTo(1);
@@ -91,6 +100,11 @@ class CompanyImportManifestTests {
         assertThat(localCandidateExclusions).isEqualTo(summary.path("exclude_local_candidate").asInt());
         assertThat(rootKeeps).isEqualTo(summary.path("keep_root_update").asInt());
         assertRepositoryManifestRecordsImportManifest(root, manifest);
+    }
+
+    private static boolean isSelfReferentialCandidateArchive(JsonNode entry) {
+        return entry.path("action").asText().equals("EXCLUDE_LOCAL_CANDIDATE")
+                && entry.path("source").asText().equals("release/RC10-CANDIDATE-PACKAGE.zip");
     }
 
     private static void assertSourceDigest(Path root, JsonNode entry) throws Exception {

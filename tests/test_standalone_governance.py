@@ -31,7 +31,7 @@ def test_all_markdown_basename_is_in_project_tree():
     tree=(ROOT/'release/PROJECT-TREE.txt').read_text()
     for p in ROOT.rglob('*.md'):
         rel=p.relative_to(ROOT)
-        if rel.as_posix() != 'CLAUDE.md' and rel.parts[0] != '.claude': assert p.name in tree
+        if not p.name.startswith('._') and rel.as_posix() != 'CLAUDE.md' and rel.parts[0] not in {'.claude', '.superpowers'}: assert p.name in tree
 def test_overview_and_handoff_exist():
     assert (ROOT/'PROJECT-OVERVIEW.md').exists()
     assert (ROOT/'docs/overview/FDI-PROJECT-OVERVIEW.md').exists()
@@ -60,7 +60,7 @@ def test_file_classification_covers_active_path_families():
 
 
 def test_markdown_inventory_is_exact():
-    actual=sorted(p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*.md") if p.relative_to(ROOT).as_posix() != 'CLAUDE.md' and p.relative_to(ROOT).parts[0] != '.claude' and not any(x in {".pytest_cache","__pycache__",".git","target"} for x in p.relative_to(ROOT).parts))
+    actual=sorted(p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*.md") if not p.name.startswith('._') and p.relative_to(ROOT).as_posix() != 'CLAUDE.md' and p.relative_to(ROOT).parts[0] not in {'.claude', '.superpowers'} and not any(x in {".pytest_cache","__pycache__",".git","target"} for x in p.relative_to(ROOT).parts))
     inv=[x.strip() for x in (ROOT/"release/MARKDOWN-INVENTORY.txt").read_text().splitlines() if x.strip()]
     assert inv==actual
 
@@ -75,6 +75,8 @@ def test_package_and_release_indexes_exclude_local_control_and_candidate():
         (root/'.claude/state').mkdir(parents=True)
         (root/'.claude/state/environment-state.json').write_text('{"workspace":"local"}\n')
         (root/'.claude/supervisor.md').write_text('active local entrypoint\n')
+        (root/'.superpowers/sdd').mkdir(parents=True)
+        (root/'.superpowers/sdd/progress.md').write_text('local implementation scratch\n')
         (root/'CLAUDE.md').write_text('active local compatibility overlay\n')
         candidate=root/'release/RC10-CANDIDATE-PACKAGE.zip'
         candidate.parent.mkdir(parents=True)
@@ -83,6 +85,8 @@ def test_package_and_release_indexes_exclude_local_control_and_candidate():
         nested.mkdir(parents=True)
         (nested/'supervisor.md').write_text('canonical runtime source\n')
         (root/'README.md').write_text('fixture\n')
+        (root/'._resource-fork.py').write_bytes(b'\x00\x05\x16\x07AppleDouble')
+        (root/'._resource-fork.md').write_bytes(b'\x00\x05\x16\x07AppleDouble')
         archive=Path(tmp)/'fixture.zip'
 
         subprocess.run([sys.executable, str(ROOT/'tooling/packaging/build_package.py'), str(root), str(archive)], check=True)
@@ -90,29 +94,37 @@ def test_package_and_release_indexes_exclude_local_control_and_candidate():
             names=set(bundle.namelist())
         assert 'fixture/.claude/state/environment-state.json' not in names
         assert 'fixture/CLAUDE.md' not in names
+        assert 'fixture/.superpowers/sdd/progress.md' not in names
         assert 'fixture/release/RC10-CANDIDATE-PACKAGE.zip' not in names
         assert 'fixture/engcim/bootstrap/supervisor/packages/runtime/.claude/engcim/supervisor.md' in names
+        assert not any(Path(name).name.startswith('._') for name in names)
 
         subprocess.run([sys.executable, str(ROOT/'tooling/packaging/build_manifest.py'), str(root)], check=True)
         manifest=json.loads((root/'release/MANIFEST.json').read_text())
         manifest_paths={entry['path'] for entry in manifest['files']}
         assert '.claude/state/environment-state.json' not in manifest_paths
         assert 'CLAUDE.md' not in manifest_paths
+        assert '.superpowers/sdd/progress.md' not in manifest_paths
         assert 'release/RC10-CANDIDATE-PACKAGE.zip' not in manifest_paths
         assert 'engcim/bootstrap/supervisor/packages/runtime/.claude/engcim/supervisor.md' in manifest_paths
+        assert not any(Path(name).name.startswith('._') for name in manifest_paths)
 
         subprocess.run([sys.executable, str(ROOT/'tooling/packaging/generate_project_tree.py'), str(root)], check=True)
         tree=(root/'release/PROJECT-TREE.txt').read_text().splitlines()
         assert '├── .claude/' not in tree and '└── .claude/' not in tree
+        assert '├── .superpowers/' not in tree and '└── .superpowers/' not in tree
         assert not any(line.endswith('CLAUDE.md') for line in tree)
         assert not any('RC10-CANDIDATE-PACKAGE.zip' in line for line in tree)
         assert any(line.endswith('supervisor.md') for line in tree)
+        assert not any(Path(line.split()[-1]).name.startswith('._') for line in tree)
 
         subprocess.run([sys.executable, str(ROOT/'tooling/packaging/generate_markdown_inventory.py'), str(root)], check=True)
         inventory=(root/'release/MARKDOWN-INVENTORY.txt').read_text().splitlines()
         assert '.claude/supervisor.md' not in inventory
         assert 'CLAUDE.md' not in inventory
+        assert '.superpowers/sdd/progress.md' not in inventory
         assert 'engcim/bootstrap/supervisor/packages/runtime/.claude/engcim/supervisor.md' in inventory
+        assert not any(Path(name).name.startswith('._') for name in inventory)
 
 def test_verification_summary_reads_module_surefire_reports():
     script=ROOT/'tooling/verification/write_verification_summary.py'

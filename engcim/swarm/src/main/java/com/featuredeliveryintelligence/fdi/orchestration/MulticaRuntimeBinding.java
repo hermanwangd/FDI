@@ -19,6 +19,9 @@ public final class MulticaRuntimeBinding implements RuntimeBindingPort {
         if (!bindingRef.equals(receipt.runtimeBindingRef())) {
             throw new IllegalStateException("Multica receipt does not match Runtime Binding");
         }
+        if (!execution.executionRevision().equals(receipt.executionRevision())) {
+            throw new IllegalStateException("Multica receipt execution revision does not match submitted Mission");
+        }
         return receipt;
     }
 }

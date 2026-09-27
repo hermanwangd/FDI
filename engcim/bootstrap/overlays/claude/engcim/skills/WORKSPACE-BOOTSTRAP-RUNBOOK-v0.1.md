@@ -1,6 +1,6 @@
 # Workspace Bootstrap Runbook v0.1
 
-**Owner:** Claude Supervisor
+**Owner:** Supervisor — Codex CLI locally; Claude CLI in the company environment
 
 Use this runbook to qualify a fresh workspace without guessing Multica syntax or runtime identity.
 
@@ -144,6 +144,52 @@ If exact active identity cannot be proven:
 ```text
 BLOCKED_RUNTIME_IDENTITY
 ```
+
+## RC10 candidate role-instruction materialization
+
+Use only the explicitly authorized isolated workspace, explicit project and
+role IDs, and operations in the active user goal. Before any role update, read
+the workspace/project binding, target role records and active runs. Save each
+complete role record and exact instruction bytes in run-scoped evidence; do not
+update a role with an active run or overwrite concurrent changes.
+
+Resolve `engcim/bootstrap/overlays/multica/RC10-WORKSPACE-LEARNING.md` and, only
+for a candidate selecting the adopted profile, the exact
+`ENGCIM-S05-REVIEWED-DELIVERY-v0.1` source and adoption receipt through
+`engcim/bootstrap/multica/MAPPING.md`. Bind a content manifest over dirty
+source, contracts, bootstrap configuration, instruction sources and package
+inputs; Git HEAD alone is insufficient. Preserve the full baseline instruction
+for each role. Compose the Orchestrator from its current instruction (including
+its Workspace Learning content) plus only the selected Orchestrator excerpt;
+compose Architect and Reviewer from their current instructions plus only their
+selected excerpts. Keep all other roles and their non-instruction settings
+unchanged. The mapping defines intended composition, not actual loader priority.
+
+Discover `agent update --help` and use its supported instruction field with
+literal argument passing; never evaluate instruction content as shell code.
+Update only the existing Orchestrator, Architect and Reviewer with explicit
+`--workspace-id` and verified role IDs. Read each back and require an exact full
+instruction digest match and unchanged model, runtime, Skills, permissions and
+other settings. If any update/readback is ambiguous or shows concurrent drift,
+stop and reconcile before retrying. If the three roles cannot all be verified,
+do not dispatch dependent profile work. Restore only this operation's changed
+instruction fields from preserved originals, read them back, and retain both
+failure and rollback evidence.
+
+Use the existing RC6 issue/assignment path for authorized bounded Scenarios.
+Require run-level evidence to identify the selected candidate/profile, effective
+instruction digest, role identity and consumed Scenario revision. Configuration
+readback is CONFIG_VERIFIED; actual consumption and behavior remain
+NOT_VERIFIED until that evidence exists. A failed prerequisite blocks only its
+dependent scenarios. Rollback affects only the instruction fields updated by
+this operation; retain validation issues and knowledge records as evidence and
+label them with their candidate identity. Do not delete or overwrite earlier
+run evidence.
+
+For local Codex CLI operation, store environment/run receipts in the validation
+evidence directory. The `.claude/` paths elsewhere in this company-profile
+runbook apply only to company Claude materialization; do not create local
+Claude runtime state merely to operate through Codex.
 
 ## B6 — Smoke
 

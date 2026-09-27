@@ -1,3 +1,3 @@
 package com.featuredeliveryintelligence.fdi.orchestration;
 
-public enum KnowledgeGovernanceDecision { APPROVED, REJECTED }
+public enum KnowledgeGovernanceDecision { APPROVED, REJECTED, DEFERRED }

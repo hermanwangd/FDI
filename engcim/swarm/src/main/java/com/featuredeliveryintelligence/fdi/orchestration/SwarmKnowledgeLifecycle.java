@@ -21,8 +21,10 @@ public final class SwarmKnowledgeLifecycle {
     public WorkspaceKnowledgeLifecycleResult buildAndPersist(
             MissionLearningSource source,
             LearningCandidate candidate,
+            KnowledgeGovernanceDecision decision,
             String governanceActor) {
         Objects.requireNonNull(source, "source is required");
+        Objects.requireNonNull(decision, "governance decision is required");
         KnowledgeRoutingDecision routing = gateway.route(source, candidate);
         if (routing.route() != KnowledgeRoute.WORKSPACE_SEMANTIC
                 && routing.route() != KnowledgeRoute.WORKSPACE_PROCEDURAL) {
@@ -31,8 +33,13 @@ public final class SwarmKnowledgeLifecycle {
         }
 
         WorkspaceKnowledgeProposal proposal = gateway.propose(source, candidate);
-        GovernedWorkspaceKnowledge governed = gateway.govern(
-                proposal, KnowledgeGovernanceDecision.APPROVED, governanceActor);
+        GovernedWorkspaceKnowledge governed = gateway.govern(proposal, decision, governanceActor);
+        if (decision != KnowledgeGovernanceDecision.APPROVED) {
+            return new WorkspaceKnowledgeLifecycleResult(
+                    source.workspaceRef(), source.learningSourceRef(), routing, proposal, governed,
+                    Optional.empty(), List.of());
+        }
+
         gateway.persist(governed, repository);
         List<WorkspaceKnowledgeProposal> retrieved = gateway.retrieve(source.workspaceRef(), repository);
         Optional<WorkspaceKnowledgeCaptureResult> capture = repository instanceof WorkspaceKnowledgeCaptureReceiptRepository receipts
