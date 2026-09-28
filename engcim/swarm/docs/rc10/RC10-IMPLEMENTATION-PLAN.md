@@ -1,5 +1,21 @@
 # RC10 Minimal Remediation Implementation Plan
 
+## Knowledge design consolidation — 2026-09-28
+
+The single maintained review source is [RC10-KNOWLEDGE-DESIGN.md](RC10-KNOWLEDGE-DESIGN.md). It remains PROPOSED, not adopted runtime authority. Original Downloads documents are historical provenance; future design changes belong in the repository source. This additive scope applies to Phase 2 knowledge reuse and report improvement without adopting other uncommitted plan revisions.
+
+Required implementation acceptance, using existing owners and storage:
+
+- Curator persists a versioned WorkspaceKnowledge method with exact proposal digest, policy/actor decision and read-after-write. Metadata and chat memory are not method authority.
+- Orchestrator passes eligible scoped knowledge to the actual consumer; acceptance links record/version to adoption or rejection rationale and concrete action/result.
+- The existing capability maintainer links improvement proposals to canonical Skill/instructions/code, tests and adopted revision. Knowledge preserves rationale and applicability, not competing executable instructions.
+- Distinguish local source, deployment/readback and actual runtime consumption. Exclude stale, conflicting and wrong-workspace methods; preserve current Mission evidence, Human DONE and authorized Scenario scope.
+- Preserve lineage and provenance during updates or authorized portability checks; source approval does not grant destination authorization.
+- Track capture, later reuse and capability validation separately in the existing implementation report. No new knowledge store, framework component, receipt schema or automatic Mission is required.
+
+Design §28 records the bounded first-report case: preserved original failure, a local six-test regression result, and unverified method capture/reuse and corrected live first publication. It is dated evidence, not a current runtime status feed. This documentation commit does not authorize live publication, deployment, dispatch, merge or promotion.
+
+
 ## Current execution checkpoint — 2026-09-27T13:13Z / 21:13 Asia/Taipei
 
 **Status: RC10_IMPLEMENTED_WITH_BLOCKERS.** Implementation candidate RC10-local-candidate-20260927-01; last sealed package is RC10-PACKAGE-SNAPSHOT-20260927-04, SHA-256 `ccc79ea71eb46da29e16a82304e685b7bc99ea9e743f760177b8aaf3399a908e`. This integrated Phase 2 plan was updated after snapshot 04 and is not present in that archive. Repository HEAD 66dcc0d1316f8179a81b4c4564a821c574b7a54b plus the dirty content set remains bound by its candidate manifests. The current runtime/source input manifest is r2, SHA-256 a89ea0e608f48d59c6161d3d4e54ad105d1c24e2b383c352f90ebcd3ba6b0962 (204 entries); r1 remains preserved for receipts that bind to it. This plan-only update changes no runtime/source inputs.
