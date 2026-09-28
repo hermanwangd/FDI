@@ -1732,4 +1732,111 @@ Runtime State 不是 learned knowledge。Metadata、搜尋索引、embedding/cac
 整合檢查結論：設計維護來源已集中；知識與能力不混用；owner/consumer、實際存放、版本、更新、移植及正反驗收已明示。§1–25 的 shared target 並未因本節覆蓋已採用 local profile。§26/本節是新增設計核對，不繼承舊 r3 scoped review 的批准。
 
 最短剩餘路徑：核對既有 policy/actor 與真實 source → Curator exact-version proposal/decision/capture/readback → 下一個已授權且適用 Mission 取用並留下行動證據。能力修正可依既有授權並行；部署和新 Mission 不由此文件自動授權。無適用後續 Mission 時保留 pending trigger，不反覆重跑或新增平行系統。
+# 29. 模組架構對齊：圖、責任、實作與驗收
+
+**2026-09-28；PROPOSED / DOCUMENTATION_ONLY。** 依 Human 選擇先修圖、再對齊模組。此圖是邏輯責任總覽，不是部署 topology、實作完成證明或新的 component contract。未改 Java、Skill/runtime instructions、Maven module、provider、已採用權限或 live 狀態。
+
+![ENGCIM Swarm logical module alignment](assets/ENGCIM-SWARM-MODULE-ALIGNMENT-v1.png)
+
+圖的文字責任與精確來源以本節表格為準；PNG 是展示用衍生物。修改責任時先改本節，再同步圖片，避免圖與文件各自演進。Knowledge 箭頭代表各來源經授權後輸入 Context，不是只准讀 Product Knowledge。Mission input 與授權 runtime facts 也是 Context inputs，未各畫一個資料庫。底部 A lane 顯示本地方法重用；Product/shared promotion 保留各自治理，不由本地方法批准代替。
+
+## 29.1 圖例與重要變更
+
+- **Actor:** Human、外部 Supervisor、現有 Orchestrator／Curator／工程角色、Swarm Dev。Actor 不等於一個 service。
+- **Data/resource:** Product Knowledge、共享 Swarm Knowledge、WorkspaceKnowledge、Repository/artifacts。三個知識 scope 不要求三個 database。
+- **Logical responsibilities:** Context、Planning、Skill Invocation、Control、Orchestrator/Core、Runtime Binding；允許同一既有模組承載不同責任，但不得混淆 authority。
+- **External execution:** Multica 負責 dispatch、scheduling、retry/re-entry、durable runtime state、sessions/isolation；模型為設定選項。
+- **Cross-cutting flow:** Learning & Capability、observability/provenance 不是新增元件。Telemetry 不產生 Control verdict、Product truth 或 Human DONE。
+
+| 原圖易誤讀處 | 對齊後 |
+| --- | --- |
+| Supervisor Plan 與 Planning 重複 | Supervisor Intake / Observe / Diagnose / Closure；工程分解由 Scenario Planning |
+| Orchestrator Decision／Mission state 無邊界 | Semantic progression / Dependencies / Aggregation；其 Mission relationships 不取代 provider durable runtime state，不自作 Control verdict |
+| Skill Runtime / Runtime Binding / Multica 都像執行器 | Skill Invocation 決定能力及工作指引；Binding concrete materialization；Multica execution mechanics |
+| Knowledge Base 看似只有共享 PK/Swarm | 明列 WorkspaceKnowledge local scope 與 provenance；不等於 Product truth |
+| Knowledge update 接 capability improvement，像自動改程式 | A 方法治理→存放→Context→後續消費；B proposal→Swarm Dev→review/test→authorized adoption，兩路可獨立進行 |
+| S01–S06 像固定流水線 | Scenario catalog，不強迫每個 Mission 依序跑完，更不自動讓 S05 進 S06 |
+
+## 29.2 與既有七項 component contract 的對照
+
+檢視來源：`engcim/bootstrap/overlays/claude/engcim/contracts/ENGCIM-SWARM-V1-COMPONENT-CONTRACT.md`。檔案標示 **Canonical Architecture Boundary — Draft for Freeze**；這個標題不證明它已被 runtime 採用。§2 的 PK Runtime Form 本來就是 structured knowledge / knowledge base，不要求 PK service。因此以資料卡呈現 PK 可以保留其 product-truth ownership；不要把展示方式改變誤稱為正式刪除一個契約 component。
+
+| 既有責任名稱 | 本圖呈現 | 保留／待決事項 |
+| --- | --- | --- |
+| Product Knowledge | Product Knowledge 資料卡；Curator/Product owner 是處理／治理 actor | 保留 product truth 與治理；不新增或刪除 PK service |
+| Product Context | Context 的 Product truth lane | Context 圖框還含 Workspace/Mission/runtime context composition；這不授權把本地 learning 塞進 PK |
+| Scenario | Scenario catalog + Scenario Planning 的語意需求 | Planning 是協作責任，不新增第八 canonical component；具體 ownership 要依 adopted planning/core contract |
+| Skill | Skill Invocation + 既有 Skill capability package | 邏輯選用與 runtime materialization 分開；不必新增 SkillInvocation class |
+| Control | Control | Policy/subject/evidence→治理結果；與 domain VerificationResult 分開 |
+| Swarm Core | Orchestrator/Core + planning/progression 協調 | 不含 Multica generic mechanics；Orchestrator Agent 不等於所有 Core code |
+| Runtime Binding | Runtime Binding | 具體 binding、translation、attribution；不取代 Scenario semantics 或 Control |
+| Supervisor / Multica | 外部 band | 維持 Swarm 外部責任，不改 tKMS policy 或 Human authority |
+
+**Authority handling:** 若後續要求正式改 component enum／contract taxonomy，另列 DECISION_REQUIRED，先解析 adopted source/revision 與影響 consumer。此次只建立對照，不更新 canonical enum、契約或授權。舊 contract 中指向 WorkspaceKnowledge 的診斷改善線也不得解讀為所有 code correction 必須先入庫；已授權缺陷修正可並行。涉及實際 policy 衝突時，只記錄及提交受影響差異，不以圖覆蓋 policy。
+
+## 29.3 Owner、介面與既有實作位置
+
+以下是 review-time source mapping，不是 live wiring 宣告。Grafel 對 `SwarmMissionGateway` 查無結果，因此回查 actual files；查無索引不代表沒有實作。路徑 alias 僅為縮短表格，均相對 repo root：
+
+- **J:** `engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/`
+- **B:** `engcim/swarm/baselines/rc6/runtime/package/engcim-swarm-package-RC6/`（sealed，僅讀／重用）
+- **O:** `engcim/bootstrap/overlays/multica/`
+- **C:** `engcim/bootstrap/overlays/claude/engcim/contracts/`
+- **V:** `validation/rc10/report-config-20260928/`
+
+| 責任／維護 owner | Caller → Input → Output → consumer | 實際 source／role／Skill seam | 不可越界／目前證據限制 |
+| --- | --- | --- | --- |
+| Supervisor／Supervisor maintainer | Human→intent/scope/AC→qualified Mission；結果→closure/learning source→Human/Swarm | C `SUPERVISOR-EXECUTION-IDENTITY-RULES-v0.1.md`；J `ClaudeSupervisorGateway.java#submit/close`；實際 CLI package mapping 在 bootstrap | Java submit/close 存在，但不是完整 diagnose/readiness 或 live CLI caller 證明；不可替代工程 planning、Control 或知識 publisher |
+| Scenario／Scenario maintainer | qualified Mission + applicable context→Scenario requirements/composition→Planning/Core | B `skills/scenario-playbooks/SKILL.md`；O `RC10-S05-S06-ROLE-GUIDANCE.md`；Orchestrator/Architect/Reviewer | 宣告與指引已存在；本次未新驗 live S01–S06，不建立固定 universal lifecycle |
+| Context／context responsibility owner；Orchestrator 組合、Curator 提供知識 | Mission + Scenario requirements + PK/WK + authorized facts→versioned authorized context→Planner/engineering roles | O `RC10-WORKSPACE-LEARNING.md` fresh retrieval；B `skills/product-knowledge/SKILL.md`；J `SwarmKnowledgeGateway.java#retrieve` 是 workspace retrieval seam | PK 與 WK 保留不同 lane；Java retrieve 不能證明完整 authority/freshness composition 或 worker 實際用了資料 |
+| Planning／Scenario/Core maintainer；Orchestrator 組合、Architect 設計輸入 | reviewed design/context/constraints→capability-level WorkItems/dependencies/integration intent→Core/Binding | B `skills/swarm-orchestration/SKILL.md`、`skills/scenario-playbooks/SKILL.md`；O role guidance 的 C3 | 不指定 provider/model/具體 Agent；現有責任仍可能集中在 Skill，不能憑圖聲稱已 extract 為 planner module |
+| Core／Swarm Core maintainer；Orchestrator role | approved work + applicable ControlResult + child facts→eligible progression/aggregation→Binding/Human-readable report | B `agents/orchestrator.md`、orchestration Skill；J `SwarmMissionGateway.java#execute`；O `RC10-ORCHESTRATOR-PARENT-REPORT.md` | actual Java execute 僅 Mission envelope→Binding→WorkItemResult；不足以證明完整 DAG/planning/control coordination。Report source 的存在不代表已部署 |
+| Skill Invocation／Skill maintainer；選定 engineering role | capability requirements + authorized context→work instructions / engineering result+evidence→Binding/Core/reviewer | B capability Skills（如 code-review-method、verification-protocol、pk-correlation-synthesis）；O role guidance / task context handoff | 不新增 runtime；不以 Skill 自評充當獨立 review/Control。具體 assigned skill、instruction materialization 在 Binding/既有 bootstrap |
+| Control／policy/Control owner | Scenario/plan governance requirements + subject/revision/evidence→ControlResult→Core 的 progression/authorization decision | C component contract Control 定義；O role guidance；B `skills/execution-guard/SKILL.md`；J `ControlResult.java` | result type/procedure 不是 deterministic evaluator 接線證明；真實 resolver/evaluator caller 在本次仍 UNVERIFIED，先定位，不先新增 ControlService |
+| Runtime Binding／integration maintainer | Core semantic work + authorized bindings/context→provider request；provider receipt→attributed WorkItemResult→Core | J `MulticaRuntimeBinding.java#execute`、`MissionExecutionEnvelope.java`；`engcim/bootstrap/multica/MAPPING.md` + actual provider receipts | Java 現有檢查 bindingRef/executionRevision；不宣稱因此有全部 resource selection、attempt、dispatch-state 或 live wiring；不判斷工程正確 |
+| Multica／external platform owner | Binding request→execution/state/logs→Binding | External provider；V 中 issue/run/comment snapshots 為歷史例證 | 不複製排程/retry/state；本次沒有查 live 狀態、改平台或跑 Mission |
+| Knowledge processing/storage／Curator + actual policy actor | Supervisor source/evidence→proposal→decision→versioned record→Context/五類 consumer | O Workspace Learning；B `agents/knowledge-curator.md`、pk-correlation-synthesis；J `SwarmKnowledgeLifecycle.java#buildAndPersist`、`SwarmKnowledgeGateway.java#route/observe/correlate/synthesize`、`MulticaWorkspaceKnowledgeRepository.java#save/findByWorkspace` | Java model/port 與 issue-backed procedure 分開驗；source existence 不算此方法 live capture；拒絕 PK/WK 混寫及 self-approval |
+| Capability improvement／對應 Swarm Dev maintainer、reviewer、採用 owner | routed proposal+evidence→bounded source change/tests→authorized adopted revision→原 consumer | J Gateway `route`；O report procedure + V bounded regression 作目前案例；既有 engineering backlog | routing result 不代表任務已受理、實作或部署；不強迫每個方法變成 code；provider 缺陷 route external owner |
+
+**Integration contract:** WorkItemResult、VerificationResult、ControlResult 保持獨立。語意 fan-in 是「必要交付是否足夠／當前」，provider fan-in 是「執行事件如何收集／喚醒」；兩者不能混為新 scheduler。資料框不擁有 runtime actor 授權。
+
+## 29.4 最短互動與錯誤路徑
+
+Mission 主路徑：
+
+`Human → Supervisor intake → Core selects Scenario → Context + Scenario Planning → applicable Control binding/evaluation → Core eligibility → Runtime Binding → Multica → attributed result/evidence → Core aggregation/report → Supervisor closure check → Human`
+
+這是相關責任的最短說明，不是每個 gate 僅執行一次或全部 strictly serial。Control 在適用 pre-mutation／review／completion 邊界被評估；Context 與 planning 可依新證據重新求解。Skill Invocation 由 Scenario/Core 按 capability requirements 觸發，具體執行仍經 Binding→Multica。
+
+有界錯誤處理：missing critical input 按 policy 在 owning responsibility 澄清／阻擋；可管理 uncertainty 保留標記；provider unknown 不宣稱 dispatched；revision 改變只重新判定受影響 evidence。Supervisor 處理材料性異常，不成正常路徑每一步的 orchestrator。
+
+Learning A：`Mission evidence → Supervisor bounded source → Curator method proposal → actual local governance → record/readback → fresh Context retrieval → later consumer action`。
+
+Learning B：`evidence/method → improvement proposal → existing Swarm Dev owner → minimum change → review/test → authorized adoption → actual consumer evidence → Curator feedback`。兩路不是互相必等的串行 pipeline；Product/shared proposal 另走既有治理。方法無適用後續 Mission 時保持 pending trigger，不為 demo 自動新建 Mission。
+
+## 29.5 Phase 2 對應與最小驗收
+
+不建立「先重構所有模組才能做 Phase 2」的前置門檻。維持既有 packages，先實際消費路徑，再針對 confirmed gap 最小修改。
+
+| Phase 2 | 改善落點／business impact | 最小正例 | 最小反例／保護行為 |
+| --- | --- | --- | --- |
+| P2-01 | Supervisor intake、Context；減少重複問已知欄位與無關掃描 | 完整合法 intent 到真實 submission receipt；保留 AC/scope | material ambiguity 定點澄清；不派未授權工程工作 |
+| P2-02 | Scenario/Planning/Core/Binding；交付責任清楚、減少人工追單 | reviewed C1/C2→C3 repo decomposition→attributed children→所需交付 fan-in；multi-repo 僅在已授權 case | pending child 不報完成；不同 repo/revision 不混入；不複製 provider retry |
+| P2-03 | Context/Skill/Control/Core；提早發現問題、只重驗受影響部分 | finding→owning responsibility→新 revision→fresh applicable verification | 不因非critical缺資料全面阻塞；self-test 不等於 independent verification；S06 另需授權 |
+| P2-04 | Curator/Context/consumer/Swarm Dev；下一次選對方法，不只記住事件 | §27 exact record/version/decision→consumer adoption/action→結果回饋；改善 proposal 對應真實 owner/change | wrong workspace/stale/conflict 排除；不得自動改共享 code 或把 WK 升格 Product truth |
+| P2-05 | Core report role + Binding attribution；Human 首次即可讀懂與追溯 | 真實時序、PK/context實際使用、C1–C5、review、限制、Human action；publish readback→marker | original FAIL 保留；prepublication 不要求未存在 comment；offline PASS 不代替 live first report |
+| P2-06 | 既有 telemetry、provider receipts；以真實資料判斷效益 | 品質、額外Human介入、首報完整性、elapsed time 四項有來源或明確不可得 | 不以 log 推 Control PASS；不虛構節省百分比，不新增 KPI 平台 |
+
+交付最小附註：每個 slice 應列本表責任名、actual owner、source/Skill/Agent、Input/Output/Caller/Consumer、採用版本、適用 integration evidence；沒有程式變更需求時明記 REUSE/NO_CODE_CHANGE。真正 consumer 未確立用 UNVERIFIED 前置查證，不能據此自動生成新 class/service。
+
+## 29.6 圖文自審與限制
+
+- 原圖「Knowledge→Orchestrator」已改為 Knowledge→Context；Mission 從 Supervisor 進 Swarm。
+- 四個責任卡不是 serial pipeline；Runtime Binding 是工程執行的轉譯 boundary，Multica 是外部 mechanics。
+- 圖內 Learning A 簡写治理後 record；Curator persist/readback 與後續 adoption/action 詳見 §§26–28，不因圖省略而免驗。
+- 不依圖更名 sealed RC6 Skill、改 live Agent 或 contract；本節不是完整 code review、架構 freeze 或 S01–S06 PASS。
+- Existing contract terminology 與展示 module 名有明確對照；formal taxonomy 改動需另外決策。
+- 本次文件修改未執行 Java suite；未修改 executable framework，沒有新增 Java/runtime 驗收主張。
+
+圖片以內建 imagegen 依使用者原圖非破壞式修改；完整生成與二次箭頭修正 prompt 保留在 [圖像生成紀錄](assets/ENGCIM-SWARM-MODULE-ALIGNMENT-v1.prompt.md)。不新增其他架構規格作競爭 authority。
 

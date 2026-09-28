@@ -453,6 +453,29 @@ No new service, provider API, approval regime, or additional capability should b
 
 ## Phase 2 implementation plan — Swarm operations and company-repository handoff
 
+### Module responsibility alignment — 2026-09-28
+
+Use [knowledge design §29](RC10-KNOWLEDGE-DESIGN.md) and its [aligned architecture diagram](assets/ENGCIM-SWARM-MODULE-ALIGNMENT-v1.png) as the single proposed logical-module view. The seven-name component contract is mapped there, not replaced. Product Knowledge is data with processing/governance owners; Scenario Planning and Skill Invocation labels do not create new services or canonical components.
+
+| Package | Responsible module/actor seams | Minimum acceptance focus |
+| --- | --- | --- |
+| P2-01 | Supervisor intake + Context | Qualified intent reaches actual submission; material ambiguity stays explicit |
+| P2-02 | Scenario / Planning / Core / Binding | Reviewed design to repo work, actual attributable child delivery and semantic fan-in |
+| P2-03 | Context / engineering Skills / Control / Core | Early defect detection and affected-only correction; independent verification preserved |
+| P2-04 | Curator / Context / actual consumer / Swarm Dev | Governed method record/version → real consumer action; separately authorized capability improvement |
+| P2-05 | Core report role + Binding attribution | Readable first report and postpublication readback; no false evidence or Human DONE |
+| P2-06 | Existing telemetry + provider receipts | Four existing measures with provenance, no new measurement platform |
+
+For each slice, identify owner, actual source/Skill/Agent, input/output/caller/consumer and applicable integration evidence using design §29.3–29.5 plus the existing seam map below. Preserve REUSE when current behavior suffices; UNVERIFIED consumer wiring is a bounded verification prerequisite, not a coding task. Do not create a prerequisite to refactor every box before delivering useful behavior.
+
+Concrete inspection limit: local `SwarmMissionGateway.execute` wraps Mission→Binding→WorkItemResult; it does not establish complete planning/progression. Local `MulticaRuntimeBinding.execute` checks binding/revision, not all provider mechanics. Existing Java knowledge lifecycle models and issue-backed role procedures are different evidence paths. Actual Control resolver/evaluator caller remains unverified by this alignment pass. Verify the selected runtime consumer before choosing a code change.
+
+Reuse existing tests where they actually cover a changed seam: `SupervisorPathTests`/`SupervisorBoundaryTests`, `MissionFlowTests`, `MulticaRuntimeBindingReceiptTests`, `KnowledgePipelineTests`, `WorkspaceKnowledgeLifecycleTests`, `MulticaWorkspaceKnowledgeRepositoryTests`, `LearningBoundaryTests` under `engcim/swarm/src/test/java/com/featuredeliveryintelligence/fdi/orchestration/`. Role/instruction changes need applicable actual consumption evidence, not only these local tests. Java framework changes additionally require Java 17 and `JavaOnlySourcePolicyTests`. No tests are claimed rerun by this documentation alignment.
+
+Diagram changes are presentation/ownership clarification only: Supervisor remains external, Context preserves separate PK/WK lanes, Skill Invocation does not schedule, Binding translates, Multica owns execution mechanics, and method reuse does not automatically mutate shared code. No runtime settings, approved contract, source code, package version or deployment changes are authorized by this section.
+
+
+
 **Purpose and status.** Phase 2 has two separate workstreams: (A) evidence-led Swarm operations improvement and (B) company-repository reference/build migration. This section consolidates the existing [Swarm Phase 2 proposal](/Users/herman_mbp2023/Documents/Feature-Delivery-Intelligence/docs/superpowers/plans/2026-09-27-engcim-swarm-phase-2-plan.md) with the migration plan below into one execution plan; the companion proposal remains rationale/source context, not a second task backlog. The workstreams keep separate outcomes and dependencies. Company migration is not a prerequisite for Swarm findings or candidate-level improvements unless a specific task needs the migrated target. This plan does not authorize code changes, MultiCA dispatch, company-repository writes, landing, or promotion.
 
 **Priority and boundary.** Order decisions by **Quality > Human effort > Cycle-time**. Preserve the adopted S05 profile, D01–D08, seven-Activity/C1–C5 flow, RC6 sealed baseline, identity/authorization, and applicable hard controls. Product Knowledge (PK) remains governed data; improving how existing PK is selected and consumed is in scope, while broad cross-Scenario PK expansion is a Phase 3 candidate. WorkspaceKnowledge remains a separate, governed learning record. Do not add an agent, adapter, schema, service, dispatcher, dashboard, or workflow engine unless evidence proves an existing seam cannot meet a specific acceptance criterion.
