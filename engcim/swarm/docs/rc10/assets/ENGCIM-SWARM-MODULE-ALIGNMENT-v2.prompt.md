@@ -1,0 +1,7 @@
+# Diagram generation provenance — v2
+
+Tool: built-in imagegen. Status: PROPOSED logical view. Governing design text: ../RC10-KNOWLEDGE-DESIGN.md §29. The original user image and v1 asset remain unchanged. The v1 generation prompts are in ENGCIM-SWARM-MODULE-ALIGNMENT-v1.prompt.md. This follow-up starts with the first generated image because it already had the aggregate knowledge-source connector, then corrects only the Mission arrow to originate at Supervisor. The final v2 preserves both semantics. This record is reproducibility context, not runtime instructions.
+
+## Follow-up edit prompt
+
+Precise edit. Preserve every element and text exactly except the Mission connector at the top. This input already has the correct Knowledge connector: it starts from the shared outer knowledge-sources panel edge and enters the Context card. Keep that connector exactly as shown; do NOT move it or create a connector from the Product Knowledge card. Change only the Mission arrow: remove the current vertical arrow from the middle of the Human/Supervisor return-flow band. Draw a clear right-angle connector originating at the bottom edge of the Supervisor card, going downward then left to center, with a downward arrowhead entering the top border of the central ENGCIM SWARM box. Label it Mission. It must visibly originate at Supervisor, not between the two actors. Preserve rest of infographic, all cards, labels, arrows, layout, colors, resolution.

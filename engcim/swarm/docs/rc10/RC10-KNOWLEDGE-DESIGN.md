@@ -1736,7 +1736,7 @@ Runtime State 不是 learned knowledge。Metadata、搜尋索引、embedding/cac
 
 **2026-09-28；PROPOSED / DOCUMENTATION_ONLY。** 依 Human 選擇先修圖、再對齊模組。此圖是邏輯責任總覽，不是部署 topology、實作完成證明或新的 component contract。未改 Java、Skill/runtime instructions、Maven module、provider、已採用權限或 live 狀態。
 
-![ENGCIM Swarm logical module alignment](assets/ENGCIM-SWARM-MODULE-ALIGNMENT-v1.png)
+![ENGCIM Swarm logical module alignment](assets/ENGCIM-SWARM-MODULE-ALIGNMENT-v2.png)
 
 圖的文字責任與精確來源以本節表格為準；PNG 是展示用衍生物。修改責任時先改本節，再同步圖片，避免圖與文件各自演進。Knowledge 箭頭代表各來源經授權後輸入 Context，不是只准讀 Product Knowledge。Mission input 與授權 runtime facts 也是 Context inputs，未各畫一個資料庫。底部 A lane 顯示本地方法重用；Product/shared promotion 保留各自治理，不由本地方法批准代替。
 
@@ -1838,5 +1838,5 @@ Learning B：`evidence/method → improvement proposal → existing Swarm Dev ow
 - Existing contract terminology 與展示 module 名有明確對照；formal taxonomy 改動需另外決策。
 - 本次文件修改未執行 Java suite；未修改 executable framework，沒有新增 Java/runtime 驗收主張。
 
-圖片以內建 imagegen 依使用者原圖非破壞式修改；完整生成與二次箭頭修正 prompt 保留在 [圖像生成紀錄](assets/ENGCIM-SWARM-MODULE-ALIGNMENT-v1.prompt.md)。不新增其他架構規格作競爭 authority。
+最終 v2 圖以內建 imagegen 依使用者原圖非破壞式修改；本次 follow-up 僅修正 Mission connector，prompt 保留於 [圖像生成紀錄](assets/ENGCIM-SWARM-MODULE-ALIGNMENT-v2.prompt.md)，初始生成 prompt 見 v1 記錄。不新增其他架構規格作競爭 authority。
 

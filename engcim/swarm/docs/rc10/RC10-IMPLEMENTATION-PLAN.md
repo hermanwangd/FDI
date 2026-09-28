@@ -455,7 +455,7 @@ No new service, provider API, approval regime, or additional capability should b
 
 ### Module responsibility alignment — 2026-09-28
 
-Use [knowledge design §29](RC10-KNOWLEDGE-DESIGN.md) and its [aligned architecture diagram](assets/ENGCIM-SWARM-MODULE-ALIGNMENT-v1.png) as the single proposed logical-module view. The seven-name component contract is mapped there, not replaced. Product Knowledge is data with processing/governance owners; Scenario Planning and Skill Invocation labels do not create new services or canonical components.
+Use [knowledge design §29](RC10-KNOWLEDGE-DESIGN.md) and its [aligned architecture diagram](assets/ENGCIM-SWARM-MODULE-ALIGNMENT-v2.png) as the single proposed logical-module view. The seven-name component contract is mapped there, not replaced. Product Knowledge is data with processing/governance owners; Scenario Planning and Skill Invocation labels do not create new services or canonical components.
 
 | Package | Responsible module/actor seams | Minimum acceptance focus |
 | --- | --- | --- |
