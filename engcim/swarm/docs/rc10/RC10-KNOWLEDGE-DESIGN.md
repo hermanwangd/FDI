@@ -8,7 +8,7 @@
 
 **Status:** PROPOSED / READY FOR REVIEW — r3 corrections pending scoped independent review; not runtime-validated  
 **Date:** 2026-09-27  
-**Review update:** 2026-09-30 — rollback concurrency, method applicability and revision-bound source inventory corrected; §27.7 adds experience consolidation, method identity, selection and feedback decisions. Status remains PROPOSED.
+**Review update:** 2026-09-30 — source inventory refreshed against `e5a9651`; §31 records source/deployment differences and the minimum consumer-feedback acceptance plan; §32 evaluates an optional Cognee candidate-processing adapter. Status remains PROPOSED / DOCUMENTATION_ONLY; no new runtime adoption or OSS integration is claimed.
 **Authority base:** ENGCIM Swarm v1.0 r9 FINAL-ALIGNED + Claude Supervisor v0.5.20  
 **Candidate alignment:** ENGCIM Swarm v1.0 r10 Candidate r3 + Knowledge Workspace Architecture v0.1  
 **Supersedes as review candidate:** v0.8-r2; preserves v0.7 consumer needs and bounded two-mode decision rules. No adopted authority is superseded by this document.  
@@ -1902,7 +1902,7 @@ Product 工程、Workspace、Swarm、Supervisor、Swarm Dev 是不同 consumer �
 
 #### 六、由誰運作：既有 Agent／Skill／code 的責任配置
 
-**2026-09-30 source inventory 修訂；核對基準為 `codex/fdi-rc10-implementation` commit `8fa99b823aff48f6398edc2a3715f1376925137c`（下稱 review base），設計配置不等於 runtime 已採用。** 知識體系需要可追責的執行者，但不預設新建固定 Knowledge squad。Agent 承擔工作與判斷，Skill 提供方法，code 執行確定性規則；knowledge record 是資料，不是執行者或部署能力。需要獨立 review 時使用符合契約的另一 eligible agent/run，不因分工建立永久角色或另一份 store。
+**2026-09-30 source inventory 更新；核對基準為 `codex/fdi-rc10-implementation` commit `e5a96512072adbc92e72a051aedb30dea1a1e22c`（下稱 review base），設計配置不等於 runtime 已採用。** 舊盤點固定在 `8fa99b823aff48f6398edc2a3715f1376925137c`，當時未見 consumer API 的敘述不再代表本次 source；歷史 run 的原有版本與限制仍保留。知識體系需要可追責的執行者，但不預設新建固定 Knowledge squad。Agent 承擔工作與判斷，Skill 提供方法，code 執行確定性規則；knowledge record 是資料，不是執行者或部署能力。需要獨立 review 時使用符合契約的另一 eligible agent/run，不因分工建立永久角色或另一份 store。
 
 | 工作／輸出 → consumer | 責任 owner | Agent／Skill 工作 | Code 工作與驗收邊界 |
 | --- | --- | --- | --- |
@@ -1914,20 +1914,20 @@ Product 工程、Workspace、Swarm、Supervisor、Swarm Dev 是不同 consumer �
 | 使用效果／反例 → Curator／能力 owner | 實際 consumer | 對照目標報有效、無效或未評估，區分未觸發與方法無效 | feedback 綁當次 action/result；產生 feedback object 不等於 durable feedback 已保存 |
 | 能力改善 → 下次自然工作 | Swarm Dev／原能力 owner | 決定最小 Skill/instructions 改善，保留適用邊界 | 現有 code/test/deployment seam；獨立驗收照原要求，不由正常 Mission 自改共享實作 |
 
-**實際落點與缺口。** 以下路徑相對 repo root，Java 簡稱均位於 `engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/`。先前工作樹盤點曾記錄 grafel 在 `fdi-adr001-runtime` 對 `SwarmKnowledgeLifecycle` 無索引結果；該紀錄不證明本次 Git source 的實作狀態。本次以 review base 的 tracked source 與完整 Git tree 核對。先前提到的 `retrieveForConsumer`、`buildConsumerFeedback`、`ConsumerRequest` 及 `WorkspaceKnowledgeRetrievalTests.java` 未出現在此基準；未取得其工作樹 snapshot/digest，不能將它們列為本分支已實作能力，也不據此推論其他工作樹不存在。後續若引用未提交 source，須提供 base commit、變更檔清單及各檔內容 digest／可讀取快照。此 inventory 只代表固定 source 基準，不是完整 live audit。
+**實際落點與缺口。** 以下路徑相對 repo root，Java 簡稱均位於 `engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/`。本次核對完整 Git tree 及全部 87 個 tracked Java 檔的 blob identity。Grafel 在目前工具環境未提供，故以 exact source／text references 查 caller；未由索引缺失推論程式不存在。本段為 source audit；歷史 provider snapshot、run delivery 與 independent verdict 的證據範圍另見 §31，未重新查詢最新 live Multica。
 
 | 現有 source／方法 | 已確認內容 | 尚需落地／確認 | 最小驗收 |
 | --- | --- | --- | --- |
-| `engcim/swarm/baselines/rc6/runtime/package/engcim-swarm-package-RC6/agents/knowledge-curator.md` | Curator 已存在，掛 product-knowledge 及 ingestion/correlation Skills；原本以 Structured PK Store＋ProductKB governance 為目的地 | baseline 不能直接視為 WK actor 已載入；其 PK 雙軌寫入、狀態及 Python 指令不能照搬成 WK／新 Java framework 行為 | fresh consumer 接收明確 PRODUCT/WORKSPACE scope，WK 不誤寫 PK；來源版本及結果可核對 |
-| 同 RC6 package 的 `skills/pk-correlation-synthesis/SKILL.md` | 已有抽取後合成、衝突、來源與淘汰方法；內容為 PK domain | 重用方法而非繼承 PK 權限、儲存及升級門檻；獨立來源一致不等於程序因果有效 | 成功、失敗、互相抄錄來源與未知案例，輸出有界 proposal，不能冒充 Product truth |
-| `engcim/bootstrap/overlays/multica/RC10-WORKSPACE-LEARNING.md` | 已寫 Orchestrator dispatch Curator、PRODUCT/WORKSPACE 分流、治理及 fresh retrieval 規則 | 文件存在不證明當次 agent 的有效 instructions 或自然入口已接通；沿現有 mapping 採用，不新增整組 Agents | 自然入口的 Curator proposal→真實 policy decision→readback；無 authority 保留候選／DEFERRED |
-| `SwarmKnowledgeGateway.java`：`observe/correlate/synthesize/route` | 有 observation、proposal、routing；`classify` 讀 candidate 指定 route，`correlate` 按 subject 分組及不同 statement 找 conflict | 不能把此薄 contract 實作稱為自動語義分類、RCA、完整知識推理；判斷仍需適用 Agent/Skill 輸入 | 同 subject 不同說法可留下衝突；錯 scope 拒絕；好壞與因果不因函數成功就自動成立 |
-| `SwarmKnowledgeLifecycle.java#buildAndPersist`；`MulticaWorkspaceKnowledgeRepository.java`；`MulticaWorkspaceKnowledgePort.java` | 有治理輸入、APPROVED 路徑、persist/readback、receipt seam；Port 宣告外部 persist/retrieve | 本次 main source 未找到具名 `implements MulticaWorkspaceKnowledgePort`；不能由 interface 推論已有 live adapter，也不排除外部接線。需實際 provider/caller 證據 | exact body/digest/decision 的真實 provider read-after-write；跨 workspace、版本不符及無批准不誤入庫 |
-| `SwarmKnowledgeGateway.java#retrieve` | review base 有依 workspace 取回 proposal 的入口；上述 consumer API／測試不在此基準 | 此入口不單獨證明完整 eligibility、語義選法、feedback 保存或 live 接線；ADOPTED/REJECTED feedback API 的先前工作樹說法仍待 exact source 補證，不假稱已有 ADAPTED enum | 沿實際可核對入口驗證 scoped retrieval、exact 方法交接與可讀回 action/result；調整時保留原方法版本及偏離理由 |
+| RC6 package `agents/knowledge-curator.md`、`skills/pk-correlation-synthesis/SKILL.md` | 既有 Curator 及抽取、關聯、衝突處理方法；原本以 PK 為 domain | 不照搬 PK 的寫入權限、store 或升級門檻；sealed baseline 不代表當次 WK instructions 已載入 | PRODUCT／WORKSPACE scope 分開；不把來源一致或字串不同當成程序因果證明 |
+| `engcim/bootstrap/overlays/multica/RC10-WORKSPACE-LEARNING.md` | 有 proposal/governance/capture、Fresh retrieval、Consumer result and feedback；feedback 保存於原 Mission issue/result 並沿 Curator 路徑處理 | 保存的 Orchestrator candidate／S05 部署快照未含 feedback 新段落；其後採用狀態未驗證 | 採用來源與有效設定讀回對齊；新 run 的輸入、輸出及保存的 feedback 可核對 |
+| `SwarmKnowledgeGateway.java#observe/correlate/synthesize/route` | 建 observation、proposal、routing；`correlate` 按 subjectRef／不同 statement 建 conflict | 語意提煉、同義去重與候選相關度非這些方法的既有能力 | 有界候選沿既有治理；關聯建議不得自動批准或改 Product truth |
+| `SwarmKnowledgeLifecycle.java#buildAndPersist`；`MulticaWorkspaceKnowledgeRepository.java`；`MulticaWorkspaceKnowledgePort.java` | 已有治理、persist/read-after-write 與 capture receipt boundary | 全部 main Java 未見 port 的具名／匿名實作；外部或程序性接線仍需 provider/caller 證據 | exact body/digest/decision 的真實 readback；不能由 interface 存在宣稱 live adapter 完成 |
+| `SwarmKnowledgeGateway.java#retrieveForConsumer`；`ConsumerRequest` | 已有每次 provider read、workspace/project、批准、版本/digest、conflict、有效期限、exact repository revision map 等檢查 | main Java 中只見宣告；呼叫點在 retrieval tests。`ConsumerRequest` 無 query／任務前提／語意排序輸入；source/evidence refs 的實際可解析性仍須外部驗證 | 不合格記錄排除、空候選不阻擋可選知識路徑；eligible 集合仍需 consumer 判斷適用方法 |
+| `SwarmMissionGateway.java#execute`；`MissionExecutionEnvelope`；`MulticaRuntimeBinding.java#execute` | Mission envelope → Binding → execution receipt；未直接接 retrieval，envelope 無 WK context 欄位 | Java API 無 runtime caller 不代表 Multica 指令路徑完全沒運作；先核對真正工作入口，避免再建第二條 retrieval 路徑 | actual worker input 能解析 exact context；Product、Workspace 與 profile lanes 分開 |
+| `SwarmKnowledgeGateway.java#buildConsumerFeedback`；`ConsumerFeedback` | 已有 ADOPTED／REJECTED、理由、版本/digest、action/result、UNASSESSED／EFFECTIVE／INEFFECTIVE 與證據規則 | main Java 中只見宣告；呼叫點在 tests；方法不保存或送達 Curator。沒有 ADAPTED enum | 採用及偏離理由可追溯；處置、效果、durable readback 與 Curator 處理分開驗 |
+| `WorkspaceKnowledgeRetrievalTests.java` | 有 fresh-read、空集合、scope mismatch、expiry、digest/revision／decision／conflict／duplicate 排除及 feedback 輸入規則案例 | 本次讀取測試 source，未重跑 Java suite；測試輸入與 provider enforcement／live 使用不同 | 變更 executable framework 時跑受影響測試及 JavaOnlySourcePolicyTests；不能以離線 PASS 宣稱 runtime 閉環 |
 
-上述是最小現況對照，不另開平行 backlog。需要的實作沿既有 P2-04／對應 slice 管理；這份設計不是 Phase 2 前置 gate。本段只核對 source，不據此聲稱 live adapter/部署或 runtime 採用已驗證。
-
-推薦順序是先接通既有 Curator→proposal→有權決定→capture→consumer reuse 的一條有界路徑，再按瓶頸擴充 Skills／code；不要先堆 Agent 數量。驗收以方法選對、行為發生、結果有證據與反例可回饋為準。
+上述沿既有 P2-04／相關 slice 管理，不另開平行 backlog。推薦先沿既有 Orchestrator／Curator procedure 對齊版本、驗證 exact handoff → consumer action/result → feedback readback → Curator 處理；需要 Java composition 時再接既有 seam。最小補強與可宣稱狀態見 §31；OSS 候選處理選項見 §32。
 
 ### 27.6.1 唯一存放與定位
 
@@ -2000,7 +2000,7 @@ Product 工程、Workspace、Swarm、Supervisor、Swarm Dev 是不同 consumer �
 
 **A. Eligibility 與方法選擇分開。** Context/code 依已採用 policy 排除無權、錯 scope、stale、衝突或錯版本資料；這只回答「可不可以取用」。真正 consumer 與其既有 Skill 再比對當次目標、已知症狀、方法前置條件、反例及限制，回答「是否適合這次工作」。在原工作紀錄保留選用／拒用理由與 exact 方法版本，傳最小必要內容。無適用方法可沿原授權路徑繼續；必要 Product Context 或 Control 要求不因此省略。
 
-最小選法測試：同 workspace/project 兩筆均 eligible、只有一筆適用時能選對；相似症狀但不同原因時先做區分檢查；兩筆皆不適用時可拒用。不得用「傳入所有 eligible records」或單一候選的成功，宣稱選法能力已驗收。不強制新增推薦引擎；workspace/project/revision 過濾不單獨承擔語義選法。review base 未包含先前工作樹提及的 `ConsumerRequest`，實際 consumer 契約須隨 source snapshot 核對。
+最小選法測試：同 workspace/project 兩筆均 eligible、只有一筆適用時能選對；相似症狀但不同原因時先做區分檢查；兩筆皆不適用時可拒用。不得用「傳入所有 eligible records」或單一候選的成功，宣稱選法能力已驗收。不強制新增推薦引擎；workspace/project/revision 過濾不單獨承擔語義選法。review base 已有 `ConsumerRequest`，但它只帶 Mission/workspace/project/repository revisions；query、情境前提與語意選法仍由既有 consumer／Context procedure 負責。
 
 選法不預設唯一正解：多個方法皆適用時，按§15預設 Quality > Human effort > Cycle-time 比較；沒有重大差異就選最簡單且足夠的方法並記理由，不再要求 Human 選。互補方法可在不衝突、不擴權且成本相稱時組合，保留各版本與使用順序；資訊不足時先做最小區分檢查，只有未解差異影響必要安全、授權或重大取捨才交既有決策owner。補驗「多個皆適用」「可互補」「資訊不足」三種情境，接受有證據支持的多種合理選擇，不用固定答案字串評分。
 
@@ -2028,7 +2028,7 @@ Product 工程、Workspace、Swarm、Supervisor、Swarm Dev 是不同 consumer �
 
 一次成功只支持本案例能力；「明顯改善」須有上表約定範圍內的可比證據，不能由單次試用推算一般可靠度。此處「自然觸發」指走正常工作入口，由已採用行為完成取用／執行，而非 Human 手貼方法答案；不限定真實業務需求。已獲相應授權的 synthetic fixture 可經同一入口驗證功能與整合，標明 synthetic，不宣稱已證明真實業務效益。沒有可比業務工作時，只有業務效果評估保持 pending trigger，不凍結可做的本地實作與已授權驗證。本文件不新增 Mission／知識寫入授權，也不覆蓋現行驗證範圍；必要測試按既有授權執行，不另加逐步批准。
 
-**D. 接線與回饋必須可驗。** P2-04／相關 slice 需指出既有工作入口何時觸發 retrieval、哪個 consumer 選用、如何 handoff、結果存回哪個原工作紀錄，以及誰處理後續方法／能力修訂。feedback builder 即使回傳物件，也不構成保存證據；review base 未包含先前工作樹提及的 `buildConsumerFeedback`。comment 已保存也不是 Curator 已處理。以原工作 locator→方法版本→處置／新版本→下次取用的證據串驗收，不強制建立新的持久feedback schema。缺 provider/caller/自然觸發證據的段落維持 UNVERIFIED，不以離線 API 測試或 Human 手貼方法代替。
+**D. 接線與回饋必須可驗。** P2-04／相關 slice 需指出既有工作入口何時觸發 retrieval、哪個 consumer 選用、如何 handoff、結果存回哪個原工作紀錄，以及誰處理後續方法／能力修訂。feedback builder 即使回傳物件，也不構成保存證據；review base 已有 `buildConsumerFeedback`，main Java 呼叫點未接通；source overlay 已有原 Mission 保存／Curator 處理規則，其後 runtime 採用及 durable feedback 證據仍未驗證（§31）。comment 已保存也不是 Curator 已處理。以原工作 locator→方法版本→處置／新版本→下次取用的證據串驗收，不強制建立新的持久feedback schema。缺 provider/caller/自然觸發證據的段落維持 UNVERIFIED，不以離線 API 測試或 Human 手貼方法代替。
 
 上述 retrieval 要求只驗知識重用路徑，不要求已固化能力每次重讀知識：
 
@@ -2301,7 +2301,7 @@ P2-04／相關slice最小驗收：一筆有界RCA連到方法與修正位置；�
 | --- | --- | --- | --- |
 | Supervisor／Supervisor maintainer | Human→intent/scope/AC→qualified Mission；結果→closure/learning source→Human/Swarm | C `SUPERVISOR-EXECUTION-IDENTITY-RULES-v0.1.md`；J `ClaudeSupervisorGateway.java#submit/close`；實際 CLI package mapping 在 bootstrap | Java submit/close 存在，但不是完整 diagnose/readiness 或 live CLI caller 證明；不可替代工程 planning、Control 或知識 publisher |
 | Scenario／Scenario maintainer | qualified Mission + applicable context→Scenario requirements/composition→Planning/Core | B `skills/scenario-playbooks/SKILL.md`；O `RC10-S05-S06-ROLE-GUIDANCE.md`；Orchestrator/Architect/Reviewer | 宣告與指引已存在；本次未新驗 live S01–S06，不建立固定 universal lifecycle |
-| Context／context responsibility owner；Orchestrator 組合、Curator 提供知識 | Mission + Scenario requirements + PK/WK + authorized facts→versioned authorized context→Planner/engineering roles | O `RC10-WORKSPACE-LEARNING.md` fresh retrieval；B `skills/product-knowledge/SKILL.md`；J `SwarmKnowledgeGateway.java#retrieve` 是 workspace retrieval seam | PK 與 WK 保留不同 lane；Java retrieve 不能證明完整 authority/freshness composition 或 worker 實際用了資料 |
+| Context／context responsibility owner；Orchestrator 組合、Curator 提供知識 | Mission + Scenario requirements + PK/WK + authorized facts→versioned authorized context→Planner/engineering roles | O `RC10-WORKSPACE-LEARNING.md` fresh retrieval；B `skills/product-knowledge/SKILL.md`；J `SwarmKnowledgeGateway.java#retrieveForConsumer` 是資格過濾 seam | PK 與 WK 保留不同 lane；Java eligibility 檢查不能證明完整 source/evidence resolution、情境選法或 worker 實際用了資料 |
 | Planning／Scenario/Core maintainer；Orchestrator 組合、Architect 設計輸入 | reviewed design/context/constraints→capability-level WorkItems/dependencies/integration intent→Core/Binding | B `skills/swarm-orchestration/SKILL.md`、`skills/scenario-playbooks/SKILL.md`；O role guidance 的 C3 | 不指定 provider/model/具體 Agent；現有責任仍可能集中在 Skill，不能憑圖聲稱已 extract 為 planner module |
 | Core／Swarm Core maintainer；Orchestrator role | approved work + applicable ControlResult + child facts→eligible progression/aggregation→Binding/Human-readable report | B `agents/orchestrator.md`、orchestration Skill；J `SwarmMissionGateway.java#execute`；O `RC10-ORCHESTRATOR-PARENT-REPORT.md` | actual Java execute 僅 Mission envelope→Binding→WorkItemResult；不足以證明完整 DAG/planning/control coordination。Report source 的存在不代表已部署 |
 | Skill Invocation／Skill maintainer；選定 engineering role | capability requirements + authorized context→work instructions / engineering result+evidence→Binding/Core/reviewer | B capability Skills（如 code-review-method、verification-protocol、pk-correlation-synthesis）；O role guidance / task context handoff | 不新增 runtime；不以 Skill 自評充當獨立 review/Control。具體 assigned skill、instruction materialization 在 Binding/既有 bootstrap |
@@ -2383,3 +2383,122 @@ JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home PATH=/o
 ### 30.2 後續消費與回饋
 
 下一次自然適用工作引用本節 exact revision/digest，記採用／拒用理由、實際 action/result 與新反例，回饋同一 lineage。RC105 的候選方法透過 trigger 直接提供且有 bounded 採用回覆，不是從 live WorkspaceKnowledge 自動檢索；其步驟4–5不適用，因此未驗證「長時間持續推進」核心改善。不得為湊重用成績另建 Mission。未入庫不阻擋已授權工程修正，未有治理不得寫 APPROVED。
+
+---
+
+## 31. Source／部署對齊與最小閉環補強
+
+**2026-09-30；PROPOSED / DOCUMENTATION_ONLY。** 本節完成 source 與保存部署證據的差異盤點，並提出既有 P2-04 的最小落地／驗收順序；沒有更新 live role instructions、安裝 provider、修改 Java 或建立新的驗收 gate。本次 Human 選擇涵蓋方案整理、source inventory 更新與 Cognee 評估；實際部署及 provider 操作仍依當次已授權範圍執行。
+
+### 31.1 固定來源、事實與證據限制
+
+本次 source base 為 `e5a96512072adbc92e72a051aedb30dea1a1e22c`。Source、configured deployment snapshot、run delivery、independent verdict 與方法效果分別判定：
+
+| 證據 | 已確認／保存紀錄 | 可以支持／仍不能支持 |
+| --- | --- | --- |
+| 全部 87 個 tracked Java source/test；§27.6 inventory | caller 與 API 的存在依 exact Git blob 核對；retrieval／feedback 呼叫點只在 tests | 可支持本次 source 狀態；不能排除外部 caller，也不能證明 provider enforcement。未重跑 Java suite |
+| `engcim/bootstrap/overlays/multica/RC10-WORKSPACE-LEARNING.md` | 已含 Fresh retrieval 及 Consumer result and feedback | 是 source procedure；不是已部署或每次自然觸發的證據 |
+| `validation/rc10/candidate-runtime/orchestrator-candidate.md`；`s05-profile-deployment-20260926T1821Z/agent-orchestrator-after.instructions.txt` | 有 exact worker handoff 要求，未含新增 feedback 段落 | 可確認保存快照與 source 差異；最新 live instructions 未重新讀取，不能推論目前仍未採用 |
+| `s01-learning-20260927/provider-readback/authorized-visible-context-rc10val47-v2.json` | RC10VAL-46 v1／provider revision 6；proposal digest 為 `68c5b950fe39fb811cbd5e67caebab42f7f22b9eaa1959f7e30bf86549f2ac0a`；相符的 provider body snapshot 已獨立重算 | 保存的 exact context 可核對；不是今日 provider 的最新版本、批准或可用性 |
+| `RC10-INTEGRATION-TEST-REPORT.md` 的 current checkpoint | 記錄 W3 RC10VAL-50 讀取 AVC 並作 read-only 分類；Reviewer PASS、Verifier 6/7，保留 envelope 限制 | 是報告中的有界歷史取用證據；本次未重新下載完整 W3 run，因果效果及完整 negative coverage 未建立 |
+| `s05-reuse-freshness-review/c1-r3-01a0dffe-d72e-7502-85e6-19214a598943.md`；`c2-r3-01a0e003-d00f-7a97-9711-d96e610e85c6.md` | Architect 記 exact selection/read，Reviewer 另行核對；作者明記沒有 learned knowledge 改變 r3 決策 | 支持該次核對與如實記 no-new-influence；不證明方法改善設計／程式或縮短時間 |
+| 上述 source／歷史 evidence | 未見同一次方法使用連到契約相符的 durable feedback、Curator 處理及後續治理處置的完整串接 | 閉環仍為 UNVERIFIED；未找到完整證據不等於所有 runtime 從未做過 |
+
+表內省略前綴的 evidence paths 均相對 `validation/rc10/candidate-runtime/`。保存的 RC10VAL-46 v1 `validUntil=2026-09-27T23:59:59+08:00` 已到期；不能在後續 Mission 直接沿用此快照。先 fresh-read 當時有效版本；若沒有可用記錄，排除並走 optional-context fallback。重新批准／延展仍沿原治理，不為演示改舊時間或 approval。
+
+**結論：** 存在程序性取用證據；尚無完整自然使用／效果／回饋處理閉環。Source 新規則與保存的部署版本不一致，是接線查證起點，並非已證實所有失敗的根因。
+
+### 31.2 最小補強順序與 owner
+
+優先使用現有程序路徑。以下是既有工作的分步驗收，不是新 role、service、公共 schema 或平行 backlog：
+
+| 順序／owner | 最小工作 | 交付及限制 |
+| --- | --- | --- |
+| 1／既有 bootstrap・部署 owner | fresh-read 目標 workspace、role、effective instructions；按既有 mapping 比對 Workspace Learning source，辨識 feedback 段落是否已採用 | 保存來源與有效設定 identity、差異及 scope。已有新段落就不重複部署；需要變更時按現有授權做 scoped materialization，保留其他 profile／role bytes，讀回並保留原版本 rollback locator |
+| 2／Orchestrator → 實際 worker | 在既有 Mission context handoff 前做 fresh scoped retrieval，資格與情境選法分開；帶 exact key/version/digest/provider revision/decision、方法內容與限制 | 只傳 eligible context；ID 必須可解析。空集合保留排除理由；不再由 Supervisor 手貼候選當作自然 retrieval 證據 |
+| 3／worker → 原 Mission result | 有 selected record 時記 ADOPTED 或 REJECTED、理由；ADOPTED 帶 action/result。效果預設 UNASSESSED，有獨立相稱證據才評 EFFECTIVE／INEFFECTIVE | 在既有 issue/comment/result 保存並讀回。偏離原方法仍記 ADOPTED＋偏離理由，不能冒稱有 ADAPTED enum 或把變體效果算成原方法效果 |
+| 4／Orchestrator・Curator・實際 policy actor | 將有界 feedback 沿既有 MissionLearningSource 路徑交給 Curator；記 retain／proposal revision／pending evidence 的處置 | comment 保存、Curator 接收、處理與批准分別留下 refs。retain 不強制升版；更改 approved body／適用範圍需新版本與 decision，不自動更新正式知識 |
+| 5／對應 engineering owner | 僅在實際 caller 需要 Java composition 時，接既有 Gateway／Repository／Binding seam | 先證明現在執行在哪條路徑；不因 API 存在就新建 handler/service，不在 procedure 與 Java 同時新增一套獨立 retrieval／治理 |
+
+版本比對完成只可宣稱設定對齊；單次 worker 使用只可宣稱該次取用。方法效果需對照預期、實際結果、適用前提與反例；任何新部署不得由設定 digest 一步推論效果。Provider 不提供的 effective-loaded-byte 證據保持 UNVERIFIED，不自行創造無法取得的阻擋條件。
+
+### 31.3 最小驗收矩陣
+
+| 案例／層級 | 必須觀察 | 結果判定 |
+| --- | --- | --- |
+| 自然正例／live | 已授權的下一次適用工作：fresh record → exact worker input → ADOPTED理由 → action/result → durable feedback readback → Curator處置 | 同一 lineage 可連回；先前人工要求補件或 hand-supplied 方法不算新自然觸發。無適用工作時保留 pending trigger，不為湊成績另開 Mission |
+| 選法／bounded | 同 scope 的兩筆 eligible 方法，只有一筆符合任務前提；consumer 選對並說明理由 | eligibility 全部通過不等於兩筆皆適用；無法辨別時拒用／保留未知 |
+| 合格但拒用／bounded | selected record 的 REJECTED 理由保存；outcome=UNASSESSED | 拒用可正確完成取用判斷；不能虛構 action 或有效性 |
+| 過期／錯 scope／revision／digest／decision／conflict／duplicate／contract | 每個獨立反例驗對應排除原因；provider-observed 與 synthetic input 分開標示 | 不得讓 malformed JSON 的總拒絕代替各 predicate 驗證；沿既有 tests，按變更補必要缺口 |
+| Optional provider 不可用／bounded | 可選知識無法取得或沒有合格方法，保留原因並沿已授權工作繼續 | 不覆蓋必要 PK／Control evidence 的原要求，不暗用舊快照 |
+| 不明效果或反例／bounded/live | feedback 指向使用時版本與實際 action/result，Curator區分選錯／交接／執行／方法問題 | 原因未知保持未知；一次失敗不自動撤回、一次成功不自動升版；固化能力問題另交實際採用 owner |
+
+交付分開報 `source-aligned`、`configured`、`worker-consumed`、`feedback-persisted`、`curator-processed`、`effect-assessed` 的觀察狀態；這些為報告用語，不新增 workflow enum／gate。只要其中一段缺證據，就不能合併宣稱完整閉環。此次只完成設計與 source audit，矩陣尚未新增 live PASS。
+
+## 32. Cognee 適配評估：可選的候選處理 provider
+
+**2026-09-30；EVALUATION / NOT_ADOPTED。** 推薦先完成 §31，再按實測瓶頸決定是否做隔離 PoC。Cognee 不替換 WorkspaceKnowledge 正文、Multica 原始證據、Swarm governance 或 worker feedback。§1「不新增 knowledge runtime」仍有效；以下 provider 接法是條件式評估，未授權 production integration，也未假稱外部 process 沒有架構成本。
+
+### 32.1 官方能力與查證基準
+
+| 官方來源 | 已查證內容 | 對本案的含義 |
+| --- | --- | --- |
+| [Cognee source snapshot](https://github.com/topoteretes/cognee/tree/ba3631f2ed363a6ea50d649c34c56885af6b36fe) 的 README／pyproject／LICENSE | snapshot 對應 package version 1.6.2、Apache-2.0；Python requirement `>=3.10,<3.15`；README 提供 remember／recall／improve／forget | 是來源評估基準，未安裝、未測試，不將 main／最新 image tag 當部署 pin；完整依賴與 model/backend identity 隨 PoC 固定 |
+| [REST API reference](https://docs.cognee.ai/api-reference/introduction) | 保留 `/api/v1/add`、`cognify`、`search` low-level operations；search 有 CHUNKS 等模式；add 接收 upload／raw_data 與 external_metadata | Java 可隔離 HTTP transport；REST 與 Python SDK 參數不完全相同，不能照抄 SDK signature 或用舊 JSON example 當已驗 request |
+| [Architecture](https://docs.cognee.ai/core-concepts/architecture)／API setup | 內部有 relational、vector、graph 三種儲存責任；local API example 使用 embedded backends | 可以評估 embedded defaults，不先部署多套 DB；仍有可重建的 processing/index state、模型與資源需求 |
+| pinned `cognee/api/v1/search/search.py`／API reference | 支援 dataset 範圍與權限檢查；未指定 dataset 可搜尋所有有權 dataset；completion 與 raw-chunk retrieval 不同 | adapter 必須顯式 scope；無法解析回來源 exact identity 的命中不能進 worker。Cognee ACL 不代替 Swarm 的 workspace/project、版本及治理檢查 |
+
+以上只使用官方文件及 pinned source；尚未驗證其對 Mission 方法提煉、去重或搜尋的實際成效。API 是否提供本案需要的完整 origin ID／version/digest，仍須用實際返回值驗證。
+
+### 32.2 三種做法與推薦
+
+| 做法 | 取捨 | 判斷 |
+| --- | --- | --- |
+| 沿既有 Curator／Skills，完成 §31 | 不增 engine、provider state 或權威正文；目前語意品質仍取決於既有 consumer 方法 | **目前推薦**：先確立使用與回饋，再辨認真正瓶頸 |
+| 外部 Cognee provider＋既有 Java boundary | 可補提煉／同義關聯／候選搜尋；增加 process、索引、模型及 scope同步成本 | **條件式 PoC 選項**：若省工／品質有可比證據，再決定 §1 例外或既有 provider能力擴充的架構處置 |
+| 讓 workers 直接使用 Cognee MCP／memory 作知識權威 | 自動記憶／查詢方便，但容易繞過 exact eligibility、產生第二份正文或由改善功能改知識 | 不選；不交治理、context approval 或 feedback權威給 OSS |
+
+外部 Python provider 位於 Java provider boundary 後，符合 Java-only framework 的語言責任；這項邊界本身不等於新增 runtime 已被批准。此次不新增 public interface、Java class、Python source、DB 或 agent。先查既有 provider integration seam，再决定是否需要 private adapter。
+
+### 32.3 最小 adapter 的輸入、輸出與接線
+
+| 使用點 | 允許輸入 → provider輸出 | Swarm 保留的判斷／處理 |
+| --- | --- | --- |
+| Curator 候選提煉 | 已授權 MissionLearningSource 對應的最小 evidence snapshot → candidate statement、支持來源、限制及待確認關聯 | Curator 判 domain／route／subject identity；轉回既有 LearningCandidate／proposal。不能由 Cognee 產 governance APPROVED 或證實 RCA |
+| 同義與去重輔助 | scoped method snapshot＋新候選 → 同義／互補／可能矛盾建議及 source locators | 相似度不決定 canonical key、沿用／升版／拆分；subjectRef 分組的既有字串衝突行為不被靜默改掉 |
+| Consumer 搜尋／排序 | 當前問題＋明確 dataset scope → raw candidate hits；adapter 對照外部 index manifest 解析 exact record identity | authoritative fresh-read／eligible集合仍來自現有 Gateway 或已採用 procedure；只在合格集合中選方法，不將 LLM completion 當成批准正文 |
+| 使用效果分析 | 原 Mission 已保存、可解析的 feedback → 反例／關聯修訂候選 | 紀錄效果與知識批准由原 owner處理；不把 improve／memify直接作用於正式正文，也不讓搜尋權重代替方法有效性 |
+
+建議的最小 consumer 接法是：**既有 fresh-read／eligibility → scoped候選搜尋結果與 eligible exact identities 交集 → consumer前提判斷 → authoritative方法 handoff → 原 Mission feedback**。Gateway 的 `selected` 在此代表合格集合，不等於 worker 已採用。Search timeout／索引未建好時退回既有 consumer選法；若傳遞前出現版本變動、到期或新反證，重新核對受影響 record，不強制重查所有歷史。
+
+索引 manifest 保留 provider snapshot ↔ workspace/project、recordKey/version、proposalDigest、knowledgeRef/providerRevision 的關聯；這是 adapter 的衍生映射，不是新的 knowledge正文／公共schema。Cognee 的抽取、chunking 或傳回 metadata 若不能可靠保留／恢復這個映射，就判定該命中不合格，而非由模型猜 ID。新 index snapshot 先完整建立並核對後才切換；舊 revision不可覆蓋新 record或延續舊批准。
+
+### 32.4 必要依賴、失敗與架構影響
+
+| 項目 | 最小評估要求 |
+| --- | --- |
+| Java／transport | 沿 Java provider boundary 使用 Java 17 HTTP client；是否已有可重用 transport 須核對 caller，不宣稱已接通；timeout／bounded retry 按既有設定。副作用 ingest timeout先核對 provider state，不盲目重送 |
+| Cognee／模型／backend | 固定 package/commit 或 image digest、LLM/embedding model/config及實際 backend；記 token、耗時、RSS、index build cost。不因 CPU default可用就宣稱符合現有 runtime budget |
+| Scope／access | 僅 ingest當次有權的最小 snapshots；dataset 明確映射 scope，請求不可省略 dataset；data/domain lanes分開。Consumer 可見範圍必須在返回結果與 authoritative mapping 再核對 |
+| 衍生 index | 正式正文與證據仍留原 provider；index可以重建。刪除／撤回／升版後 index再出現舊命中，也不得越過 authoritative eligibility |
+| 行為成本 | ingest/index build不放到每次 worker latency critical path；不開全history自動記憶，不自動寫回 approved knowledge |
+| 失敗退回 | provider／模型不可用、無可解析來源或無合格命中 → 保留原因、退回既有流程；必要 PK／Control要求仍獨立成立 |
+
+這不是零維運依賴的替換。若進入實際 adoption，須明確處理 §1 不增 knowledge runtime 與外部 provider process/state 的相容決策；Java boundary、Apache license 或「可重建」都不替代該架構決策。Company部署、MCP access、模型連線、外部資料輸出與 indexed snapshot retention依當次既有權限，不由此評估預先授權。
+
+### 32.5 最小 PoC 與停止條件
+
+先凍結同一組有標註的 inputs／queries／current facts，A 用既有流程，B 只加 Cognee；保存 producer／consumer／模型／索引版本與失敗。真實案例與 synthetic negatives分開，不用 synthetic結果宣稱 production效果。
+
+| 項目 | 最小通過標準 |
+| --- | --- |
+| 搜尋 smoke cases | 6 個有正確方法的 query，top-3至少5個找回標註方法；僅作小樣本 smoke threshold，不能稱 production recall rate |
+| 選用／反例 | 2 個無適用方法的 query允許空集合／拒用；4 個 stale／wrong-scope／revision或digest不符／unresolved-conflict反例，零不合格方法進 actual worker context |
+| 可追溯性 | 所有交付 worker 的方法都能解析 authoritative key/version/digest/decision；來源、模型生成內容及正式正文分開 |
+| 提煉／關聯 | 至少核對同義、互補、真正矛盾各一組；保留未知與來源限制，不因文字不同就自動升級conflict，也不由LLM自動清掉conflict |
+| 可比效益 | 同一cases／acceptance下記查找正確性、人工修正/提醒、token/time、index成本；品質不下降，且有查找／人工介入或總成本的實測改善才值得進下一步 |
+| 閉環 | §31 的 worker-feedback-Curator證據仍獨立驗；OSS查得準或建圖成功不能抵銷 feedback未接通 |
+
+若 raw hits不能映射 exact identity、dataset scope不可靠、增加成本卻沒有可比效益，或仍需繞過現行資格／治理才可使用，停止此接法，保留評估 evidence。不因工具有知識圖譜就先採用；Graphiti僅在真正需要跨時間關聯查詢且已證明缺口時另評估，這輪不增加第二個引擎。
+
+**本輪交付狀態：** source inventory修正、source／保存部署差異、最小補強與Cognee adapter評估已整合於本文件；runtime deployment、Java integration、Cognee PoC、自然閉環與效益驗收仍未執行。沒有修改原始 run meaning、approved governance、sealed RC6或正式 knowledge record。
