@@ -8,6 +8,7 @@
 
 **Status:** PROPOSED / READY FOR REVIEW — r3 corrections pending scoped independent review; not runtime-validated  
 **Date:** 2026-09-27  
+**Review update:** 2026-09-30 — rollback concurrency, method applicability and revision-bound source inventory corrected below; status remains PROPOSED.
 **Authority base:** ENGCIM Swarm v1.0 r9 FINAL-ALIGNED + Claude Supervisor v0.5.20  
 **Candidate alignment:** ENGCIM Swarm v1.0 r10 Candidate r3 + Knowledge Workspace Architecture v0.1  
 **Supersedes as review candidate:** v0.8-r2; preserves v0.7 consumer needs and bounded two-mode decision rules. No adopted authority is superseded by this document.  
@@ -1899,7 +1900,7 @@ Product 工程、Workspace、Swarm、Supervisor、Swarm Dev 是不同 consumer �
 
 #### 六、由誰運作：既有 Agent／Skill／code 的責任配置
 
-**2026-09-30 工作樹核對；設計配置不等於 runtime 已採用。** 知識體系需要可追責的執行者，但不預設新建固定 Knowledge squad。Agent 承擔工作與判斷，Skill 提供方法，code 執行確定性規則；knowledge record 是資料，不是執行者或部署能力。需要獨立 review 時使用符合契約的另一 eligible agent/run，不因分工建立永久角色或另一份 store。
+**2026-09-30 source inventory 修訂；核對基準為 `codex/fdi-rc10-implementation` commit `8fa99b823aff48f6398edc2a3715f1376925137c`（下稱 review base），設計配置不等於 runtime 已採用。** 知識體系需要可追責的執行者，但不預設新建固定 Knowledge squad。Agent 承擔工作與判斷，Skill 提供方法，code 執行確定性規則；knowledge record 是資料，不是執行者或部署能力。需要獨立 review 時使用符合契約的另一 eligible agent/run，不因分工建立永久角色或另一份 store。
 
 | 工作／輸出 → consumer | 責任 owner | Agent／Skill 工作 | Code 工作與驗收邊界 |
 | --- | --- | --- | --- |
@@ -1911,7 +1912,7 @@ Product 工程、Workspace、Swarm、Supervisor、Swarm Dev 是不同 consumer �
 | 使用效果／反例 → Curator／能力 owner | 實際 consumer | 對照目標報有效、無效或未評估，區分未觸發與方法無效 | feedback 綁當次 action/result；產生 feedback object 不等於 durable feedback 已保存 |
 | 能力改善 → 下次自然工作 | Swarm Dev／原能力 owner | 決定最小 Skill/instructions 改善，保留適用邊界 | 現有 code/test/deployment seam；獨立驗收照原要求，不由正常 Mission 自改共享實作 |
 
-**實際落點與缺口。** 以下路徑相對 repo root，Java 簡稱均位於 `engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/`。本次 grafel 在 `fdi-adr001-runtime` 對 `SwarmKnowledgeLifecycle` 無索引結果，因此以目前工作樹 source 補查；不是用舊 graph 證明新功能不存在。這是有日期的 source inventory，不是完整 live audit。
+**實際落點與缺口。** 以下路徑相對 repo root，Java 簡稱均位於 `engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/`。先前工作樹盤點曾記錄 grafel 在 `fdi-adr001-runtime` 對 `SwarmKnowledgeLifecycle` 無索引結果；該紀錄不證明本次 Git source 的實作狀態。本次以 review base 的 tracked source 與完整 Git tree 核對。先前提到的 `retrieveForConsumer`、`buildConsumerFeedback`、`ConsumerRequest` 及 `WorkspaceKnowledgeRetrievalTests.java` 未出現在此基準；未取得其工作樹 snapshot/digest，不能將它們列為本分支已實作能力，也不據此推論其他工作樹不存在。後續若引用未提交 source，須提供 base commit、變更檔清單及各檔內容 digest／可讀取快照。此 inventory 只代表固定 source 基準，不是完整 live audit。
 
 | 現有 source／方法 | 已確認內容 | 尚需落地／確認 | 最小驗收 |
 | --- | --- | --- | --- |
@@ -1920,9 +1921,9 @@ Product 工程、Workspace、Swarm、Supervisor、Swarm Dev 是不同 consumer �
 | `engcim/bootstrap/overlays/multica/RC10-WORKSPACE-LEARNING.md` | 已寫 Orchestrator dispatch Curator、PRODUCT/WORKSPACE 分流、治理及 fresh retrieval 規則 | 文件存在不證明當次 agent 的有效 instructions 或自然入口已接通；沿現有 mapping 採用，不新增整組 Agents | 自然入口的 Curator proposal→真實 policy decision→readback；無 authority 保留候選／DEFERRED |
 | `SwarmKnowledgeGateway.java`：`observe/correlate/synthesize/route` | 有 observation、proposal、routing；`classify` 讀 candidate 指定 route，`correlate` 按 subject 分組及不同 statement 找 conflict | 不能把此薄 contract 實作稱為自動語義分類、RCA、完整知識推理；判斷仍需適用 Agent/Skill 輸入 | 同 subject 不同說法可留下衝突；錯 scope 拒絕；好壞與因果不因函數成功就自動成立 |
 | `SwarmKnowledgeLifecycle.java#buildAndPersist`；`MulticaWorkspaceKnowledgeRepository.java`；`MulticaWorkspaceKnowledgePort.java` | 有治理輸入、APPROVED 路徑、persist/readback、receipt seam；Port 宣告外部 persist/retrieve | 本次 main source 未找到具名 `implements MulticaWorkspaceKnowledgePort`；不能由 interface 推論已有 live adapter，也不排除外部接線。需實際 provider/caller 證據 | exact body/digest/decision 的真實 provider read-after-write；跨 workspace、版本不符及無批准不誤入庫 |
-| `SwarmKnowledgeGateway.java#retrieveForConsumer/#buildConsumerFeedback`；`engcim/swarm/src/test/java/com/featuredeliveryintelligence/fdi/orchestration/WorkspaceKnowledgeRetrievalTests.java` | 有 retrieval/filtering、ADOPTED/REJECTED feedback API 與測試 caller | 本次 main source 搜尋只見方法宣告，未見這兩方法的直接 caller；runtime 自動取用／持久 feedback 仍 UNVERIFIED。設計中的「調整方法」不能假稱已有 ADAPTED enum | 後續工作自然取出 exact 方法、執行並留下可讀回結果；調整時保留原方法版本及偏離理由，不偽報新 schema 已存在 |
+| `SwarmKnowledgeGateway.java#retrieve` | review base 有依 workspace 取回 proposal 的入口；上述 consumer API／測試不在此基準 | 此入口不單獨證明完整 eligibility、語義選法、feedback 保存或 live 接線；ADOPTED/REJECTED feedback API 的先前工作樹說法仍待 exact source 補證，不假稱已有 ADAPTED enum | 沿實際可核對入口驗證 scoped retrieval、exact 方法交接與可讀回 action/result；調整時保留原方法版本及偏離理由 |
 
-上述是最小現況對照，不另開平行 backlog。需要的實作沿既有 P2-04／對應 slice 管理；這份設計不是 Phase 2 前置 gate。此次未執行測試、未驗證 live adapter/部署、未修改 baseline Agent/Skill 或任何 runtime 設定。
+上述是最小現況對照，不另開平行 backlog。需要的實作沿既有 P2-04／對應 slice 管理；這份設計不是 Phase 2 前置 gate。本段只核對 source，不據此聲稱 live adapter/部署或 runtime 採用已驗證。
 
 推薦順序是先接通既有 Curator→proposal→有權決定→capture→consumer reuse 的一條有界路徑，再按瓶頸擴充 Skills／code；不要先堆 Agent 數量。驗收以方法選對、行為發生、結果有證據與反例可回饋為準。
 
@@ -1969,7 +1970,7 @@ Product 工程、Workspace、Swarm、Supervisor、Swarm Dev 是不同 consumer �
 3. **更新同一紀錄。** Curator 將反例交實際policy actor處理，依既有profile更新`conflictRefs`、`limitations`與lifecycle（CURRENT/STALE/SUPERSEDED），保留舊body/decision。撤回治理決定遵既有policy，不新增自授權狀態。未獲寫入權限則保留候選／受影響範圍，不假稱已撤銷provider紀錄。
 4. **重新讀取與排除。** Context依§27.3和既有fresh retrieval重新檢查；cache只是locator/帶版本副本。body/index不一致、未知freshness、未解衝突者不eligible。歷史E2/E3不使它自動恢復有效。
 5. **分開處理能力。** 若有已固化Skill/instructions/code，以原improvement/deployment refs交Swarm Dev／實際採用owner判斷影響、修正或rollback。知識失效不會自動改runtime；嚴重風險按現有hold/containment權限處理。必要修正不等知識入庫。
-6. **保留並發修改。** rollback先fresh readback；只有target field仍等於本次after版本才可整欄還原。若已變動，僅撤回可分離的本次差異，不能蓋掉後續修改。多來源逐一保存結果；部分更新如實記錄，不宣稱原子性。
+6. **保留並發修改。** rollback 先 fresh readback，核對 target identity、provider revision 及本次 after 內容。只有 target field 仍等於本次 after 內容，才可整欄還原；已變動時只評估撤回可分離的本次差異。讀回比對與後續寫入並不原子。整欄還原或撤回可分離差異，都必須在實際寫入時由既有 provider conditional update 保護所讀 revision，或由涵蓋該 target 全部寫入路徑的既有授權流程序列化。僅保護另一個 issue、僅鎖本次 agent，或只比對欄位值，均不足以保證無覆寫；內容改動後又改回也須由 revision 辨識。條件失敗時重新讀取並評估差異，不無條件重試。缺少可驗證的保護機制時，保留 rollback proposal 與當前差異，交原 owner 協調，停止這次自動覆寫；不停止不相依工作。回應不明時先核對 provider 狀態，不盲目重送。多來源逐一保存結果；部分更新如實記錄，不宣稱跨來源原子性。最小驗收須插入「A 讀回後、A 還原前，B 修改」的並發事件，證明 B 的變更保留，並涵蓋條件失敗與部分來源成功。
 7. **再驗收與回饋。** 新方法/能力版本經適用治理、測試、採用及consumer驗證後，才更新當前使用判斷；原失敗保留，新通過不回溯改舊版本結果。
 
 ### 27.6.5 工作量與取捨
@@ -1997,7 +1998,7 @@ Product 工程、Workspace、Swarm、Supervisor、Swarm Dev 是不同 consumer �
 
 **A. Eligibility 與方法選擇分開。** Context/code 依已採用 policy 排除無權、錯 scope、stale、衝突或錯版本資料；這只回答「可不可以取用」。真正 consumer 與其既有 Skill 再比對當次目標、已知症狀、方法前置條件、反例及限制，回答「是否適合這次工作」。在原工作紀錄保留選用／拒用理由與 exact 方法版本，傳最小必要內容。無適用方法可沿原授權路徑繼續；必要 Product Context 或 Control 要求不因此省略。
 
-最小選法測試：同 workspace/project 兩筆均 eligible、只有一筆適用時能選對；相似症狀但不同原因時先做區分檢查；兩筆皆不適用時可拒用。不得用「傳入所有 eligible records」或單一候選的成功，宣稱選法能力已驗收。不強制新增推薦引擎；現有 `ConsumerRequest` 的 workspace/project/revision 過濾並不單獨承擔語義選法。
+最小選法測試：同 workspace/project 兩筆均 eligible、只有一筆適用時能選對；相似症狀但不同原因時先做區分檢查；兩筆皆不適用時可拒用。不得用「傳入所有 eligible records」或單一候選的成功，宣稱選法能力已驗收。不強制新增推薦引擎；workspace/project/revision 過濾不單獨承擔語義選法。review base 未包含先前工作樹提及的 `ConsumerRequest`，實際 consumer 契約須隨 source snapshot 核對。
 
 選法不預設唯一正解：多個方法皆適用時，按§15預設 Quality > Human effort > Cycle-time 比較；沒有重大差異就選最簡單且足夠的方法並記理由，不再要求 Human 選。互補方法可在不衝突、不擴權且成本相稱時組合，保留各版本與使用順序；資訊不足時先做最小區分檢查，只有未解差異影響必要安全、授權或重大取捨才交既有決策owner。補驗「多個皆適用」「可互補」「資訊不足」三種情境，接受有證據支持的多種合理選擇，不用固定答案字串評分。
 
@@ -2025,7 +2026,7 @@ Product 工程、Workspace、Swarm、Supervisor、Swarm Dev 是不同 consumer �
 
 一次成功只支持本案例能力；「明顯改善」須有上表約定範圍內的可比證據，不能由單次試用推算一般可靠度。此處「自然觸發」指走正常工作入口，由已採用行為完成取用／執行，而非 Human 手貼方法答案；不限定真實業務需求。已獲相應授權的 synthetic fixture 可經同一入口驗證功能與整合，標明 synthetic，不宣稱已證明真實業務效益。沒有可比業務工作時，只有業務效果評估保持 pending trigger，不凍結可做的本地實作與已授權驗證。本文件不新增 Mission／知識寫入授權，也不覆蓋現行驗證範圍；必要測試按既有授權執行，不另加逐步批准。
 
-**D. 接線與回饋必須可驗。** P2-04／相關 slice 需指出既有工作入口何時觸發 retrieval、哪個 consumer 選用、如何 handoff、結果存回哪個原工作紀錄，以及誰處理後續方法／能力修訂。`buildConsumerFeedback` 回傳物件不是保存證據；comment 已保存也不是 Curator 已處理。以原工作 locator→方法版本→處置／新版本→下次取用的證據串驗收，不強制建立新的持久feedback schema。缺 provider/caller/自然觸發證據的段落維持 UNVERIFIED，不以離線 API 測試或 Human 手貼方法代替。
+**D. 接線與回饋必須可驗。** P2-04／相關 slice 需指出既有工作入口何時觸發 retrieval、哪個 consumer 選用、如何 handoff、結果存回哪個原工作紀錄，以及誰處理後續方法／能力修訂。feedback builder 即使回傳物件，也不構成保存證據；review base 未包含先前工作樹提及的 `buildConsumerFeedback`。comment 已保存也不是 Curator 已處理。以原工作 locator→方法版本→處置／新版本→下次取用的證據串驗收，不強制建立新的持久feedback schema。缺 provider/caller/自然觸發證據的段落維持 UNVERIFIED，不以離線 API 測試或 Human 手貼方法代替。
 
 上述 retrieval 要求只驗知識重用路徑，不要求已固化能力每次重讀知識：
 
@@ -2038,7 +2039,20 @@ Product 工程、Workspace、Swarm、Supervisor、Swarm Dev 是不同 consumer �
 
 回饋採三種相稱處置：①方法仍適用，保留正文，僅在原工作紀錄追加支持／使用證據；②有證据需改方法或縮小範圍，經既有權限與治理修訂版本；③原因不明，保留假說，按風險限制受影響使用並繼續區分診斷。一次失敗不自動判方法錯，一次成功不自動升版／升級。這裡的「處置／新版本」是可選分支，不是每筆feedback都要新建知識；若更新受批准body中的evidenceRefs，仍算內容變更，必須依原版本與決策綁定規則處理。
 
-**E. 跨情境重用不繞過版本控制。** 分開記錄「經驗來源是哪個revision」與「方法真正依赖哪些契約／工具／版本」。一般診斷程序可能跨repo revision適用，產品事實或精確命令則可能嚴格依赖版本；兩者不能只靠相同標題或症狀推斷。現行 Java/profile 的 exact revision map、`validUntil`及治理排除仍有效，本節不放寬。若要支持較廣方法，先證明必要性，再由原owner提出最小profile/consumer修改、採用與相容遷移，測試無關變更與真正破壞適用性的變更。重核到期不代表歷史知識為假，但不因此取得繞過排除的權利。
+**E. 跨情境重用的適用規則（候選設計，待 profile 採用）。** 經驗來源保留 exact repository revision／run／evidence identity；方法適用性另依真正依賴的契約、工具、設定及版本判斷。來源 SHA 不隨 consumer 升版改寫，方法標為 PROCEDURAL 也不自動取得跨版本適用資格。
+
+| 內容／條件 | 候選適用規則 | Consumer 必須核對 |
+| --- | --- | --- |
+| 產品事實、精確命令或依賴特定實作的步驟 | 預設 exact revision；較廣適用範圍須另有證據及治理 | 當前目標版本與已批准依賴一致；版本不符則排除 |
+| 可跨版本的一般方法 | 以已批准且有界的契約／工具／設定條件判定；必要依賴須完整列明，不能只寫「通用」 | 所有條件都有當前證據支持，且無反證；無關 repo commit 可不影響適用性 |
+| 同一方法混合一般步驟與版本敏感內容 | 同時滿足各部分依賴；版本敏感部分仍 exact pin | 不因其中一段可重用而放寬整筆方法 |
+| 依賴未知、條件缺失或無法驗證 | 排除此次取用，保留原因與後續可補證事項 | 不以標題、相似症狀或空白依賴清單推定相容 |
+
+以上沿用 proposal 的 `applicability`、`limitations` 與 evidence envelope 表達，不新增 schema 或相容性服務。scope、governance、conflict、visibility 與 freshness 檢查仍各自成立；相容不等於批准，也不延長有效期限。
+
+**採用與遷移。** 現有 Workspace Learning profile 的 repository revision matching、`validUntil` 及治理排除仍有效；本段不授權 consumer 直接跳過現行檢查。原 profile／consumer owner 須將上述條件映射到既有入口並完成採用。舊紀錄保留原規則；要擴大 applicability，必須建立依原治理綁定的新內容版本及決策，不能沿用舊批准授權較寬用途。未知依賴不得自動遷移為通用方法。review base 的 Java source 不足以證明這套相容判定已實作，實作證據須另綁 exact source。重核到期不代表歷史知識為假，但現有 `validUntil` 到期仍排除，直到適用治理完成更新。
+
+**最小驗收。** 同一已批准方法在四種情境驗證：①無關 repo commit 改變、必要依賴仍滿足時可取用；②必要契約／工具不再滿足已批准條件，或 exact pin 不符時排除；③依賴未知或有效期已過時排除；④舊版本批准不能授權擴大的 applicability。每例保存方法版本、當前依賴證據與取用／排除理由；①只能在相容規則已採用的 profile 下通過。
 
 **F. 成功經驗也要可學習。** 有重用價值的成功案例，在原工作紀錄保留受方法影響的決定／動作、成功所需條件、結果及Human介入、替代解釋與未知。一次成功只支持其證據範圍，不強制完整RCA或知識升版。這樣才可區分方法有效、巧合成功與人工救回；失敗亦沿同一lineage保留，不只挑好看的結果。
 
