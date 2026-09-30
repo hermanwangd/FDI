@@ -8,7 +8,7 @@
 
 **Status:** PROPOSED / READY FOR REVIEW — r3 corrections pending scoped independent review; not runtime-validated  
 **Date:** 2026-09-27  
-**Review update:** 2026-09-30 — rollback concurrency, method applicability and revision-bound source inventory corrected below; status remains PROPOSED.
+**Review update:** 2026-09-30 — rollback concurrency, method applicability and revision-bound source inventory corrected; §27.7 adds experience consolidation, method identity, selection and feedback decisions. Status remains PROPOSED.
 **Authority base:** ENGCIM Swarm v1.0 r9 FINAL-ALIGNED + Claude Supervisor v0.5.20  
 **Candidate alignment:** ENGCIM Swarm v1.0 r10 Candidate r3 + Knowledge Workspace Architecture v0.1  
 **Supersedes as review candidate:** v0.8-r2; preserves v0.7 consumer needs and bounded two-mode decision rules. No adopted authority is superseded by this document.  
@@ -1790,6 +1790,8 @@ Fallback沿§27.6.6.1：無適用方法、provider timeout、存取拒絕與資�
 
 更新使用同一 recordKey 的新 content version，保留 decision 綁定舊版本的事實；遇重複 key、部分更新或 uncertain write，先讀回並 reconcile，不聲稱 provider 有未證明的 transaction／exactly-once。
 
+何時沿用同一方法、何時另建或拆分，以及來源 case 與方法身分的區別，見 §27.7；同一症狀或相似標題不足以判定為同一 record。
+
 可移植單位是「record 版本 + 方法內容 + provenance/decision + limitations + 所需 evidence snapshot」，不是裸 Markdown 或本機路徑。來源 provider IDs 保留為 provenance；目的 workspace 使用它自己的 locator、access/scope/governance。來源批准是歷史決策，不能當作目的環境批准。Import/export 仍需實際授權。
 
 本文件的 repo 相對路徑可移植；Downloads 原檔及先前 mapping/review 只作歷史來源。既有 shared-store ACL、並發 approval lineage、shared authority transition 的未決事項沒有因搬檔而解決；未驗證不得宣称已實作。Shared governance 與 local issue-backed profile 不可混用。
@@ -2124,6 +2126,66 @@ Shift left 是把預防或偵測放到最早能正確行動的位置，不是一
 | marker先於完整發布讀回 | provider事件與實際程式／操作次序，不靠producer敘述推定 | 既有發布→讀回→marker/review順序 |
 
 P2-04／相關slice最小驗收：一筆有界RCA連到方法與修正位置；保留未知根因時不升格為事實的反例；健康／不適用案例不被過度阻擋；真實consumer的選用、動作與結果可追溯。後續反證需能連回方法版本和受影響已部署能力，依§27.6.4分別限制、修訂及修復。原失敗修復證明、首次報告正確發布、跨案例效果分開判定；synthetic PASS、Human手貼方法或單次成功均不能代替整條live輪轉驗收。
+
+## 27.7 經驗整理、知識累積與取用決策
+
+本節補足 §27.6 的日常運作決策，仍為設計候選。沿用既有 Mission／work evidence、Curator、knowledge record 與治理；不新增記憶服務、固定整理排程、角色、schema 或驗收 gate。目標是讓後續工作取得更適用的方法，而非每次事件都新增一筆知識。
+
+### 27.7.1 何時整理成知識
+
+當次目標、已做動作、未決問題與恢復工作所需事實，保留在原 Mission／工作紀錄；交接或中斷時先確保這些資訊可續接，不以知識入庫作為恢復工作的前置。知識正文只承載可在明確條件下再次使用、獨立審查的方法或判斷。
+
+| 新經驗帶來什麼 | 既有流程中的最小處理 |
+| --- | --- |
+| 只有當次進度，未改變方法或其適用判斷 | 更新原工作紀錄，不必產生 knowledge proposal |
+| 已知方法在另一個可辨識 case 被使用 | 留下 exact 方法版本、條件、動作與結果；由 Curator 判斷是否新增支持、限制或反例 |
+| 新方法、重要反例，或已知方法的必要條件改變 | 在既有 Curator 工作中整理候選；保留來源與未知，不等待累積固定次數 |
+| 多筆相似紀錄但尚無可重用判斷 | 先關聯來源，保留待辨別問題；不把摘要數量當成知識成熟度 |
+
+整理可隨既有交接、結案或問題處理發生，無須每次事件觸發。來源必須符合所用 profile：local capture 若要求可解析的 closure/evidence，未結案觀察先留在原工作證據，不補造 closure 或繞過來源條件。重要反例涉及當前風險時，依 §27.6.4 立即交給既有 owner 處理，不等知識整理完成。
+
+### 27.7.2 累積在同一方法，或建立另一個方法
+
+知識單位以「可獨立選用與審查的判斷／方法」為界。Curator 在相同 authority/scope 內，對照要解決的決策、必要前提及方法機制來判定身分；相似標題、錯誤訊息或來源 subject 只是 discovery 線索。
+
+| 判定 | 身分與版本處理 |
+| --- | --- |
+| 相同方法，只增加一次使用結果 | 在原工作／既有 audit trail 關聯 exact 方法版本；不因每次使用自動改正文或升版本 |
+| 方法步驟、適用條件、限制或正文 evidence 改變 | 在原 canonical key 建立新版本，重新取得適用的版本綁定 decision；舊版本與舊決策留存 |
+| 前提或處理機制不同，需獨立選用 | 建立另一個知識單位並保留來源關聯；不要把相同症狀下互斥的修法拼成通用方法 |
+| 重複、合併或拆分 | 由 Curator 提議 canonical lineage 與受影響內容，沿用既有治理／supersession；不刪除歷史或直接合併 approval |
+| 尚不能確認是否同一方法 | 保留來源／候選及待辨別問題；不臆造 canonical key，也不發布互相競爭的 current record |
+
+同一 run 衍生的報告、重試摘要與轉貼是同一底層來源，不算多次獨立成功；不同 case 也只支持其實際涵蓋的條件。新增使用紀錄不會自動改寫已批准正文；若要把新證據納入正文，仍走新版本。合併不得擴大 audience、跨越 authority 或把各來源批准加總成共同批准；不同 authority 的知識保持各自治理，只在有權存取時建立關聯。
+
+**現有 mapping 的明確邊界：** local profile 的 `recordKey` 沿用穩定 `proposalRef`；目前 `SwarmKnowledgeGateway` 以 `proposal:<learningSourceRef>:<subjectRef>` 產生 proposalRef，新 source 因此可能得到新 key。這是來源候選身分，不能據此宣稱已有跨 case 的方法去重。整理既有方法時需先解析其 canonical record，透過既有 owner/update 路徑沿用該 key；若現有路徑不能表達來源與方法的關聯，交回 P2-04／profile owner 在原工作內處理，未解決前保留候選。本節不靜默改寫 proposalRef 規則，也不宣稱 Java 已實作此能力。
+
+### 27.7.3 取用時做哪個判斷
+
+資格與當前版本核對沿用 §27.3、§27.6.6.1；合格候選仍須回答以下問題，才構成選用理由。這些是既有 consumer 判斷所需內容，不是新增必填表單或推薦引擎。
+
+1. **要解決同一個決策嗎？** 對照當前目標、預期／實際差異及受影響對象，不只比對症狀字詞。
+2. **必要條件成立嗎？** 區分已核實、不成立、未知；必要條件未知時先做最小且有權執行的辨別檢查，不能把未知當成符合。
+3. **當前證據支持哪個方法？** 一併看限制與反例；歷史成功不能推翻當前相反證據，E2 使用次數也不是有效性排名。
+4. **最小足夠動作是什麼？** 多個方法皆適用時選擇足以處理當前問題且成本合理者；尚無法區分時保留候選與辨別問題，沿用允許的安全工作路徑，不強選一筆。
+
+選用／拒用理由與關鍵條件保留在既有 work/handoff evidence，連到 exact 方法版本及實際動作。已核對且條件未變的 context 可沿用，不要求每一步重新搜尋。新 case 的成功只能增加對已觀察條件的支持；要擴大適用範圍，仍需提出有證據的新版本。
+
+### 27.7.4 回饋應修方法，還是修使用流程
+
+一次失敗先定位中斷在哪裡，並允許多個因素並存；未取得辨別證據時標未知。consumer 留下當時輸入、取得／選用的版本、實際動作與結果，沿既有 owner 路徑處理，不把所有失敗都算成方法無效。
+
+| 可辨別的情形 | 優先處理位置 |
+| --- | --- |
+| 當時有權且適用的知識未被找到 | 既有 context/retrieval owner 檢查 scope、查詢與索引／正文一致性；不能事後以新批准版本推定當時漏取 |
+| 找到但選錯，或忽略必要前提／反例 | consumer 與 Curator 校正選用依據、方法表達或限制 |
+| 選對但 handoff 缺失、版本錯置，或沒有實際執行 | 既有 Orchestrator／實際入口／執行 owner 修正交接或執行；不因此自動否定方法 |
+| 在確認的適用條件下照方法執行仍無效 | Curator 與問題 owner 對照原證據、替代原因與反例，依 §27.6.4 限制／修訂受影響知識及已固化能力 |
+| 有效但代價過高，或出現更簡單且可比較的方法 | 依原品質、Human effort 與 cycle-time 邊界比較，再決定是否修訂；不只依單次耗時替換 |
+
+**設計示例，非 live receipt 或驗收 PASS：** 假設某次 workspace 查詢「找不到資料」，證據確認查錯 scope，則可整理「查詢前核對明確 workspace/project，必要時在已授權 scope 重查」的方法。下一次同樣顯示找不到、但 scope 已核實正確，不能直接套用切換 workspace 的修法；應依當前證據辨別查詢條件、可見性或實際不存在。第一個 case 的摘要被多次轉貼不增加獨立支持；第二個 case 也不直接推翻第一個方法，而是檢查它是否漏寫必要條件。若要把方法擴充為另一套診斷程序，需新版本或獨立方法及相應治理。
+
+本節的設計檢查是：同一方法可累積多個有來源的使用結果；不同前提的方法仍可區分；新反例能定位到方法版本與使用環節。實際實作與 live 效果仍回到既有 P2-04／相關 slice 驗證，不由上述示例代替。
 
 # 28. 「首次完整結案報告」真實來源鏈核對
 
