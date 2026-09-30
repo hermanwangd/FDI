@@ -1,7 +1,5 @@
 package com.featuredeliveryintelligence.fdi.orchestration;
 
-import java.util.List;
-
 /**
  * Provider-neutral durable boundary for the external Multica WorkspaceKnowledge
  * project. CLI syntax and record primitives remain outside the ENGCIM semantic
@@ -12,5 +10,5 @@ public interface MulticaWorkspaceKnowledgePort {
             WorkspaceKnowledgeProjectRef project,
             GovernedWorkspaceKnowledge knowledge);
 
-    List<WorkspaceKnowledgeProposal> retrieve(WorkspaceKnowledgeProjectRef project);
+    WorkspaceKnowledgeRepository.ReadResult retrieve(WorkspaceKnowledgeProjectRef project);
 }

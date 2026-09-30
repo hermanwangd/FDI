@@ -1,0 +1,283 @@
+package com.featuredeliveryintelligence.fdi.orchestration;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.junit.jupiter.api.Test;
+
+class WorkspaceKnowledgeRetrievalTests {
+    private static final Instant FETCHED_AT = Instant.parse("2026-09-29T00:00:00Z");
+    private static final Instant VALID_UNTIL = Instant.parse("2026-09-30T00:00:00Z");
+
+    @Test
+    void freshProviderReadSelectsOnlyBoundEligibleRecordsAndSeparatesUseFromEffectiveness() {
+        WorkspaceKnowledgeProposal eligible = proposal("proposal-1", "workspace-a", List.of());
+        WorkspaceKnowledgeProposal stale = proposal("proposal-stale", "workspace-a", List.of());
+        WorkspaceKnowledgeProposal wrongWorkspace = proposal("proposal-wrong", "workspace-b", List.of());
+        WorkspaceKnowledgeProposal conflicting = proposal("proposal-conflict", "workspace-a", List.of("conflict:1"));
+        WorkspaceKnowledgeProposal rejected = proposal("proposal-rejected", "workspace-a", List.of());
+        WorkspaceKnowledgeProposal badDigest = proposal("proposal-digest", "workspace-a", List.of());
+        WorkspaceKnowledgeProposal unknownFreshness = proposal("proposal-unknown-freshness", "workspace-a", List.of());
+        WorkspaceKnowledgeProposal wrongRevision = proposal("proposal-wrong-revision", "workspace-a", List.of());
+        WorkspaceKnowledgeProposal missingRevision = proposal("proposal-missing-revision", "workspace-a", List.of());
+        WorkspaceKnowledgeProposal duplicate = proposal("proposal-duplicate", "workspace-a", List.of());
+
+        List<WorkspaceKnowledgeRepository.Entry> entries = List.of(
+                entry(eligible, KnowledgeGovernanceDecision.APPROVED, "CURRENT", FETCHED_AT.minusSeconds(2), VALID_UNTIL,
+                        Map.of("repo", "rev-1", "repo-secondary", "rev-2"),
+                        List.of("project-consumer"), "WORKSPACE_AUTHORIZED"),
+                entry(stale, KnowledgeGovernanceDecision.APPROVED, "CURRENT", FETCHED_AT.minusSeconds(2),
+                        FETCHED_AT.minusSeconds(1), Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED"),
+                entry(wrongWorkspace, KnowledgeGovernanceDecision.APPROVED, "CURRENT", FETCHED_AT.minusSeconds(2), VALID_UNTIL,
+                        Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED"),
+                entry(conflicting, KnowledgeGovernanceDecision.APPROVED, "CURRENT", FETCHED_AT.minusSeconds(2), VALID_UNTIL,
+                        Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED"),
+                entry(rejected, KnowledgeGovernanceDecision.REJECTED, "CURRENT", FETCHED_AT.minusSeconds(2), VALID_UNTIL,
+                        Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED"),
+                entry(badDigest, KnowledgeGovernanceDecision.APPROVED, "CURRENT", FETCHED_AT.minusSeconds(2), VALID_UNTIL,
+                        Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED", "", "sha256:wrong"),
+                entry(unknownFreshness, KnowledgeGovernanceDecision.APPROVED, "CURRENT", null, null,
+                        Map.of(), List.of("project-consumer"), "WORKSPACE_AUTHORIZED"),
+                entry(wrongRevision, KnowledgeGovernanceDecision.APPROVED, "CURRENT", FETCHED_AT.minusSeconds(2), VALID_UNTIL,
+                        Map.of("repo", "rev-0", "repo-secondary", "rev-2"),
+                        List.of("project-consumer"), "WORKSPACE_AUTHORIZED"),
+                entry(missingRevision, KnowledgeGovernanceDecision.APPROVED, "CURRENT", FETCHED_AT.minusSeconds(2), VALID_UNTIL,
+                        Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED"),
+                entry(duplicate, KnowledgeGovernanceDecision.APPROVED, "CURRENT", FETCHED_AT.minusSeconds(2), VALID_UNTIL,
+                        Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED"),
+                entry(duplicate, KnowledgeGovernanceDecision.APPROVED, "CURRENT", FETCHED_AT.minusSeconds(2), VALID_UNTIL,
+                        Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED", "provider:duplicate", ""));
+        AtomicInteger providerReads = new AtomicInteger();
+        WorkspaceKnowledgeRepository repository = repository(entries, providerReads);
+        SwarmKnowledgeGateway gateway = gateway();
+        SwarmKnowledgeGateway.ConsumerRequest request = new SwarmKnowledgeGateway.ConsumerRequest(
+                "mission:later", "workspace-a", "project-workspace-knowledge", "project-consumer",
+                Map.of("repo", "rev-1", "repo-secondary", "rev-2"));
+
+        SwarmKnowledgeGateway.EligibleConsumerContext context = gateway.retrieveForConsumer(request, repository);
+
+        assertThat(providerReads).hasValue(1);
+        assertThat(context.selected()).extracting(item -> item.proposal().proposalRef()).containsExactly("proposal-1");
+        assertThat(context.fetchedAt()).isEqualTo(FETCHED_AT);
+        assertThat(context.selected().get(0).recordVersion()).isEqualTo(1);
+        assertThat(context.selected().get(0).providerRevision()).isEqualTo("provider-revision:4");
+        assertThat(context.selected().get(0).governance().decisionRef()).isEqualTo("decision:proposal-1");
+        assertThat(context.selected().get(0).proposalDigest())
+                .isEqualTo(SwarmKnowledgeGateway.proposalDigest(eligible));
+        assertThat(context.excluded()).extracting(SwarmKnowledgeGateway.ContextExclusion::reason)
+                .contains(
+                        SwarmKnowledgeGateway.ContextExclusionReason.STALE,
+                        SwarmKnowledgeGateway.ContextExclusionReason.WRONG_WORKSPACE,
+                        SwarmKnowledgeGateway.ContextExclusionReason.UNRESOLVED_CONFLICT,
+                        SwarmKnowledgeGateway.ContextExclusionReason.NOT_APPROVED,
+                        SwarmKnowledgeGateway.ContextExclusionReason.DIGEST_MISMATCH,
+                        SwarmKnowledgeGateway.ContextExclusionReason.FRESHNESS_UNKNOWN,
+                        SwarmKnowledgeGateway.ContextExclusionReason.SOURCE_REVISION_MISMATCH);
+        assertThat(context.excluded().stream()
+                .filter(item -> item.reason() == SwarmKnowledgeGateway.ContextExclusionReason.DUPLICATE_RECORD_KEY))
+                .hasSize(2);
+        assertThat(context.excluded().stream()
+                .filter(item -> item.reason() == SwarmKnowledgeGateway.ContextExclusionReason.SOURCE_REVISION_MISMATCH))
+                .extracting(SwarmKnowledgeGateway.ContextExclusion::recordKey)
+                .containsExactlyInAnyOrder("proposal-wrong-revision", "proposal-missing-revision");
+
+        assertThatThrownBy(() -> gateway.buildConsumerFeedback(
+                context, "proposal-1", 1,
+                SwarmKnowledgeGateway.ConsumerDisposition.ADOPTED, "", "action:1", "result:1",
+                SwarmKnowledgeGateway.Outcome.UNASSESSED, List.of()))
+                .hasMessageContaining("adoption reason");
+
+        SwarmKnowledgeGateway.ConsumerFeedback feedback = gateway.buildConsumerFeedback(
+                context, "proposal-1", 1,
+                SwarmKnowledgeGateway.ConsumerDisposition.ADOPTED, "applied the matching workflow", "action:1", "result:1",
+                SwarmKnowledgeGateway.Outcome.UNASSESSED, List.of());
+
+        assertThat(feedback.recordVersion()).isEqualTo(1);
+        assertThat(feedback.reason()).isEqualTo("applied the matching workflow");
+        assertThat(feedback.actionRef()).isEqualTo("action:1");
+        assertThat(feedback.resultRef()).isEqualTo("result:1");
+        assertThat(feedback.outcome()).isEqualTo(SwarmKnowledgeGateway.Outcome.UNASSESSED);
+        assertThatThrownBy(() -> gateway.buildConsumerFeedback(
+                context, "proposal-1", 1,
+                SwarmKnowledgeGateway.ConsumerDisposition.ADOPTED, "applied the matching workflow", "action:1", "result:1",
+                SwarmKnowledgeGateway.Outcome.EFFECTIVE, List.of()))
+                .hasMessageContaining("outcomeEvidenceRefs");
+        assertThatThrownBy(() -> gateway.buildConsumerFeedback(
+                context, "proposal-stale", 1,
+                SwarmKnowledgeGateway.ConsumerDisposition.ADOPTED, "would apply the matching workflow", "action:stale", "result:stale",
+                SwarmKnowledgeGateway.Outcome.UNASSESSED, List.of()))
+                .hasMessageContaining("was not selected");
+
+        SwarmKnowledgeGateway.EligibleConsumerContext nextMissionContext = gateway.retrieveForConsumer(request, repository);
+        assertThat(providerReads).hasValue(2);
+        SwarmKnowledgeGateway.ConsumerFeedback rejectedUse = gateway.buildConsumerFeedback(
+                nextMissionContext, "proposal-1", 1,
+                SwarmKnowledgeGateway.ConsumerDisposition.REJECTED, "not applicable to this change", "", "",
+                SwarmKnowledgeGateway.Outcome.UNASSESSED, List.of());
+        assertThat(rejectedUse.disposition()).isEqualTo(SwarmKnowledgeGateway.ConsumerDisposition.REJECTED);
+        assertThat(rejectedUse.reason()).isEqualTo("not applicable to this change");
+        assertThat(rejectedUse.outcome()).isEqualTo(SwarmKnowledgeGateway.Outcome.UNASSESSED);
+    }
+
+    @Test
+    void emptyProviderReadIsAValidContextAndDoesNotBlockTheConsumer() {
+        AtomicInteger providerReads = new AtomicInteger();
+        WorkspaceKnowledgeRepository repository = repository(List.of(), providerReads);
+
+        SwarmKnowledgeGateway.EligibleConsumerContext context = gateway().retrieveForConsumer(
+                new SwarmKnowledgeGateway.ConsumerRequest(
+                        "mission:empty", "workspace-a", "project-workspace-knowledge", "project-consumer", Map.of()),
+                repository);
+
+        assertThat(providerReads).hasValue(1);
+        assertThat(context.selected()).isEmpty();
+        assertThat(context.mayProceedWithoutKnowledge()).isTrue();
+    }
+
+    @Test
+    void entryExpiredSinceProviderFetchIsExcludedEvenWhenRepositoryRevisionsStillMatch() {
+        Instant now = FETCHED_AT.plusSeconds(120);
+        Instant fetchedAt = FETCHED_AT;
+        Instant validUntil = FETCHED_AT.plusSeconds(60);
+        WorkspaceKnowledgeProposal expired = proposal("proposal-expired-now", "workspace-a", List.of());
+        WorkspaceKnowledgeRepository.Entry entry = entry(
+                expired, KnowledgeGovernanceDecision.APPROVED, "CURRENT", fetchedAt.minusSeconds(10), validUntil,
+                Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED");
+        WorkspaceKnowledgeRepository repository = new WorkspaceKnowledgeRepository() {
+            @Override
+            public void save(GovernedWorkspaceKnowledge knowledge) {
+                throw new AssertionError("read-only consumer must not persist WorkspaceKnowledge");
+            }
+
+            @Override
+            public WorkspaceKnowledgeRepository.ReadResult findByWorkspace(String workspaceRef) {
+                return new WorkspaceKnowledgeRepository.ReadResult(
+                        "workspace-a", "project-workspace-knowledge", fetchedAt, List.of(entry));
+            }
+        };
+
+        SwarmKnowledgeGateway.EligibleConsumerContext context = gatewayAt(now).retrieveForConsumer(
+                new SwarmKnowledgeGateway.ConsumerRequest(
+                        "mission:expired-now", "workspace-a", "project-workspace-knowledge", "project-consumer",
+                        Map.of("repo", "rev-1")), repository);
+
+        assertThat(context.selected()).isEmpty();
+        assertThat(context.excluded()).singleElement()
+                .extracting(SwarmKnowledgeGateway.ContextExclusion::reason)
+                .isEqualTo(SwarmKnowledgeGateway.ContextExclusionReason.STALE);
+    }
+
+    @Test
+    void mismatchedProviderWorkspaceOrProjectIsReportedAndNeverHandedOff() {
+        WorkspaceKnowledgeRepository repository = new WorkspaceKnowledgeRepository() {
+            @Override
+            public void save(GovernedWorkspaceKnowledge knowledge) {
+                throw new AssertionError("read-only consumer must not persist WorkspaceKnowledge");
+            }
+
+            @Override
+            public WorkspaceKnowledgeRepository.ReadResult findByWorkspace(String workspaceRef) {
+                return new WorkspaceKnowledgeRepository.ReadResult(
+                        "workspace-other", "project-other", FETCHED_AT,
+                        List.of(entry(proposal("proposal-cross-scope", "workspace-other", List.of()),
+                                KnowledgeGovernanceDecision.APPROVED, "CURRENT", FETCHED_AT.minusSeconds(2), VALID_UNTIL,
+                                Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED")));
+            }
+        };
+
+        SwarmKnowledgeGateway.EligibleConsumerContext context = gateway().retrieveForConsumer(
+                new SwarmKnowledgeGateway.ConsumerRequest(
+                        "mission:cross-scope", "workspace-a", "project-workspace-knowledge", "project-consumer",
+                        Map.of("repo", "rev-1")), repository);
+
+        assertThat(context.selected()).isEmpty();
+        assertThat(context.excluded()).singleElement()
+                .extracting(SwarmKnowledgeGateway.ContextExclusion::reason)
+                .isEqualTo(SwarmKnowledgeGateway.ContextExclusionReason.READ_SCOPE_MISMATCH);
+        assertThat(context.mayProceedWithoutKnowledge()).isTrue();
+    }
+
+    @Test
+    void proposalDigestUsesTheProfileCanonicalJsonEncoding() {
+        WorkspaceKnowledgeProposal proposal = new WorkspaceKnowledgeProposal(
+                "proposal-1", "workspace-a", List.of("repo@rev1"), KnowledgeType.SEMANTIC,
+                "Use the supported entrypoint", "workspace-a", "repo@rev1", List.of(),
+                List.of("issue:1"), List.of());
+
+        assertThat(SwarmKnowledgeGateway.proposalDigest(proposal))
+                .isEqualTo("7fbef635c4a43790440bef11352b7c62921a6bd4372ba6b63d99f6a68a65be5e");
+    }
+
+    private static WorkspaceKnowledgeRepository.Entry entry(
+            WorkspaceKnowledgeProposal proposal,
+            KnowledgeGovernanceDecision decision,
+            String lifecycle,
+            Instant observedAt,
+            Instant validUntil,
+            Map<String, String> repositoryRevisions,
+            List<String> applicableProjects,
+            String visibility) {
+        return entry(proposal, decision, lifecycle, observedAt, validUntil, repositoryRevisions,
+                applicableProjects, visibility, "", "");
+    }
+
+    private static WorkspaceKnowledgeRepository.Entry entry(
+            WorkspaceKnowledgeProposal proposal,
+            KnowledgeGovernanceDecision decision,
+            String lifecycle,
+            Instant observedAt,
+            Instant validUntil,
+            Map<String, String> repositoryRevisions,
+            List<String> applicableProjects,
+            String visibility,
+            String providerKnowledgeRef,
+            String digestOverride) {
+        String digest = digestOverride.isBlank() ? SwarmKnowledgeGateway.proposalDigest(proposal) : digestOverride;
+        GovernedWorkspaceKnowledge governance = new GovernedWorkspaceKnowledge(
+                proposal, decision, "decision:" + proposal.proposalRef(), "actor:reviewer",
+                "policy:workspace-learning", FETCHED_AT.toString(), List.of("decision-evidence:1"));
+        return new WorkspaceKnowledgeRepository.Entry(
+                providerKnowledgeRef.isBlank() ? "knowledge:" + proposal.proposalRef() : providerKnowledgeRef,
+                "provider-revision:4", proposal.proposalRef(), 1, proposal, governance,
+                digest, proposal.proposalRef(), 1, digest, lifecycle, observedAt, validUntil,
+                repositoryRevisions, applicableProjects, visibility);
+    }
+
+    private static WorkspaceKnowledgeRepository repository(
+            List<WorkspaceKnowledgeRepository.Entry> entries, AtomicInteger providerReads) {
+        return new WorkspaceKnowledgeRepository() {
+            @Override
+            public void save(GovernedWorkspaceKnowledge knowledge) {
+                throw new AssertionError("read-only consumer must not persist WorkspaceKnowledge");
+            }
+
+            @Override
+            public WorkspaceKnowledgeRepository.ReadResult findByWorkspace(String workspaceRef) {
+                providerReads.incrementAndGet();
+                assertThat(workspaceRef).isEqualTo("workspace-a");
+                return new WorkspaceKnowledgeRepository.ReadResult(
+                        "workspace-a", "project-workspace-knowledge", FETCHED_AT, entries);
+            }
+        };
+    }
+
+    private static SwarmKnowledgeGateway gateway() {
+        return gatewayAt(FETCHED_AT.plusSeconds(30));
+    }
+
+    private static SwarmKnowledgeGateway gatewayAt(Instant instant) {
+        return new SwarmKnowledgeGateway(Clock.fixed(instant, ZoneOffset.UTC));
+    }
+
+    private static WorkspaceKnowledgeProposal proposal(String ref, String workspaceRef, List<String> conflicts) {
+        return new WorkspaceKnowledgeProposal(
+                ref, workspaceRef, List.of("repo@rev1"), KnowledgeType.SEMANTIC,
+                "Use the supported entrypoint", "workspace-a", "repo@rev1", List.of(), List.of("issue:1"), conflicts);
+    }
+}

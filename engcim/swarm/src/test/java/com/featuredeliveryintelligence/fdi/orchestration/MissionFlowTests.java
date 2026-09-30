@@ -109,7 +109,7 @@ class MissionFlowTests {
         // Closure carries linkage only; it cannot synthesize a final Human DONE outcome.
         assertThat(recordNames(MissionClosureSummary.class)).containsExactly(
                 "closureSummaryRef", "missionRef", "workspaceRef", "subjectRefs", "sourceRefs", "evidenceRefs");
-        assertThat(repository.findByWorkspace(mission.request().workspaceRef())).isEmpty();
+        assertThat(repository.findByWorkspace(mission.request().workspaceRef()).entries()).isEmpty();
 
         MissionLearningSource source = MissionLearningSourceFactory.from(closure);
 
@@ -119,15 +119,17 @@ class MissionFlowTests {
         assertThat(source.subjectRefs()).isEqualTo(closure.subjectRefs());
         assertThat(source.sourceRefs()).isEqualTo(closure.sourceRefs());
         assertThat(source.evidenceRefs()).isEqualTo(closure.evidenceRefs());
-        assertThat(repository.findByWorkspace(source.workspaceRef())).isEmpty();
-        assertThat(knowledgeGateway.retrieve(source.workspaceRef(), repository)).isEmpty();
+        assertThat(repository.findByWorkspace(source.workspaceRef()).entries()).isEmpty();
+        assertThat(knowledgeGateway.readAfterWrite(source.workspaceRef(), repository).entries()).isEmpty();
 
         var candidate = new LearningCandidate(
                 "runtime-revision", KnowledgeRoute.WORKSPACE_SEMANTIC,
                 "committed execution still requires verification and control", "runtime", "workspace-a",
                 List.of(), List.of());
         WorkspaceKnowledgeLifecycleResult learning = lifecycle.buildAndPersist(
-                source, candidate, KnowledgeGovernanceDecision.DEFERRED, "workspace-reviewer");
+                source, candidate, KnowledgeGovernanceDecision.DEFERRED,
+                "test:decision:deferred", "workspace-reviewer", "", "2026-09-28T00:00:00Z",
+                source.evidenceRefs());
 
         assertThat(learning.missionLearningSourceRef()).isEqualTo(source.learningSourceRef());
         assertThat(learning.proposal().sourceRefs()).isEqualTo(source.sourceRefs());
@@ -135,8 +137,8 @@ class MissionFlowTests {
         assertThat(learning.governedKnowledge().decision()).isEqualTo(KnowledgeGovernanceDecision.DEFERRED);
         assertThat(learning.captureReceipt()).isEmpty();
         assertThat(learning.retrievedKnowledge()).isEmpty();
-        assertThat(knowledgeGateway.retrieve(source.workspaceRef(), repository)).isEmpty();
-        assertThat(repository.findByWorkspace(source.workspaceRef())).isEmpty();
+        assertThat(knowledgeGateway.readAfterWrite(source.workspaceRef(), repository).entries()).isEmpty();
+        assertThat(repository.findByWorkspace(source.workspaceRef()).entries()).isEmpty();
     }
 
     private static MissionRequest request() {

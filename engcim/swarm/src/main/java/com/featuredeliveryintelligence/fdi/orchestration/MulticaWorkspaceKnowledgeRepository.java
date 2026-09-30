@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * ENGCIM Swarm repository adapter for a durable external WorkspaceKnowledge
  * project. It owns no local knowledge store; the supplied Multica port owns the
- * external persistence primitive and returns a capture receipt.
+ * external persistence primitive and supplies the read envelope.
  */
 public final class MulticaWorkspaceKnowledgeRepository implements WorkspaceKnowledgeCaptureReceiptRepository {
     private final WorkspaceKnowledgeProjectResolver projectResolver;
@@ -36,22 +36,20 @@ public final class MulticaWorkspaceKnowledgeRepository implements WorkspaceKnowl
         if (!proposal.workspaceRef().equals(capture.workspaceRef())
                 || !project.projectRef().equals(capture.projectRef())
                 || !proposal.proposalRef().equals(capture.proposalRef())) {
-            throw new RuntimeContractException("WorkspaceKnowledge capture attribution does not match the proposal");
+            throw new RuntimeContractException("WorkspaceKnowledge capture attribution does not match the proposal identity");
+        }
+        if (!sameRefs(proposal.sourceRefs(), capture.sourceRefs())
+                || !sameRefs(proposal.evidenceRefs(), capture.evidenceRefs())) {
+            throw new RuntimeContractException(
+                    "WorkspaceKnowledge capture attribution source/evidence refs do not match the proposal");
         }
         captures.put(proposal.proposalRef(), capture);
     }
 
     @Override
-    public List<WorkspaceKnowledgeProposal> findByWorkspace(String workspaceRef) {
+    public WorkspaceKnowledgeRepository.ReadResult findByWorkspace(String workspaceRef) {
         WorkspaceKnowledgeProjectRef project = resolve(workspaceRef);
-        List<WorkspaceKnowledgeProposal> proposals = Objects.requireNonNull(
-                multica.retrieve(project), "Multica retrieval returned no result");
-        for (WorkspaceKnowledgeProposal proposal : proposals) {
-            if (!workspaceRef.equals(proposal.workspaceRef())) {
-                throw new RuntimeContractException("Multica retrieval crossed WorkspaceKnowledge boundaries");
-            }
-        }
-        return List.copyOf(proposals);
+        return Objects.requireNonNull(multica.retrieve(project), "Multica retrieval returned no result");
     }
 
     @Override
@@ -68,5 +66,11 @@ public final class MulticaWorkspaceKnowledgeRepository implements WorkspaceKnowl
             throw new RuntimeContractException("WorkspaceKnowledge project belongs to a different workspace");
         }
         return project;
+    }
+
+    private static boolean sameRefs(List<String> expected, List<String> actual) {
+        // Receipt attribution preserves the reference multiset; provider ordering is not semantic here.
+        return expected.size() == actual.size()
+                && expected.stream().sorted().toList().equals(actual.stream().sorted().toList());
     }
 }

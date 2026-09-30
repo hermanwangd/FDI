@@ -1,4 +1,4 @@
-# RC10 Workspace Learning — existing-role procedure v0.1
+# RC10 Workspace Learning — existing-role procedure v0.4
 
 Classification: candidate bootstrap source; runtime validation required. This
 addendum implements the RC10 plan within the existing seven components. It is
@@ -12,7 +12,9 @@ candidate snapshot ID, addendum SHA-256, role, and explicit workspace/project
 IDs. Preserve the original instructions and assigned Skills for rollback.
 Report that envelope in the first run receipt; configuration readback alone is
 not proof that a run used these instructions. See `engcim/bootstrap/multica/`
-for the loading procedure. Do not apply this text to unrelated workspaces.
+for the loading procedure. Report this addendum's candidate snapshot and digest
+separately from any selected profile candidate; do not substitute one identity
+for the other. Do not apply this text to unrelated workspaces.
 
 Use the approved governing-source lock and the Mission's authorized execution
 scope. A conflict with approved governance blocks only the affected operation.
@@ -38,6 +40,18 @@ produce targeted clarification, not a worker assignment. Preserve those fields
 through existing RC6 dispatch and fan-in. Before a subsequent Mission, perform
 the fresh retrieval procedure below and include its Authorized Visible Context
 receipt in the worker input. Do not replace Scenario-first routing.
+
+Record squad evaluation with `multica squad activity` only when the provider
+binds the current execution as a squad-leader task. The current run receipt's
+`is_leader_task: true` is evidence of that binding; do not infer it from the
+agent name, squad membership, issue assignee, or trigger type. A squad mention
+on an individually owned issue or a leader task bound to a child issue can be
+valid; the binding belongs to the current task. If the binding is false or
+unavailable, or the CLI returns `task is not a squad leader task`, do not
+retry or claim an activity record. Preserve the decision and reason using the
+existing parent metadata and trigger-thread reply, and state that this is a
+comment/metadata fallback rather than a `squad_leader_evaluated` timeline
+entry. After a successful call, verify it in the issue timeline.
 
 When a Mission supplies a MissionLearningSource, compose a bounded Curator work
 item using existing dispatch. The source is evidence to analyze, not an approved
@@ -145,12 +159,39 @@ Select a record only when all of the following are evidenced:
 - There is one canonical record for the key, not unreconciled duplicates.
 
 Return an Authorized Visible Context receipt with Mission/workspace/consumer
-project, fetchedAt, candidate/addendum identity, selected record IDs/provider
-revisions/content versions, source/evidence/decision refs, exact statements and
-limitations, plus excluded record IDs with reasons. Carry this receipt into
-the subsequent Mission's actual worker input and result. Product Knowledge
-remains a separately labeled authority lane. An empty eligible set is valid;
-the Mission must not silently use excluded entries.
+project, fetchedAt, the deployment envelope's exact candidateSnapshotId and
+addendumSha256, selected record IDs/provider revisions/content versions,
+source/evidence/decision refs, exact statements and limitations, plus excluded
+record IDs with reasons. Carry this receipt into the subsequent Mission's
+actual worker input and result. Product Knowledge remains a separately labeled
+authority lane. An empty eligible set is valid; the Mission must not silently
+use excluded entries.
+
+### Consumer result and feedback
+
+When a record was selected, ask the consumer to return its use with the existing
+Mission result. Preserve the selected record key/version, proposal digest,
+provider reference/revision and decision reference; state `ADOPTED` or
+`REJECTED` and give the reason for either decision. For adoption, link the
+resulting action and result. Use `UNASSESSED` unless outcome evidence supports
+`EFFECTIVE` or `INEFFECTIVE`; an assessed outcome must cite that evidence.
+Keep this feedback on the existing Mission issue/result and carry it forward as
+MissionLearningSource only through the existing Curator path. Based on the
+evidence, Curator recommends retaining the method, proposing a governed
+revision, or keeping the claim pending validation. Preserve the existing body,
+version and decision; an approved revision follows current governance as a new
+version. The consumer and Orchestrator do not update WorkspaceKnowledge records;
+the identified policy actor decides under the existing governance.
+
+If the evidence implicates a method already embedded in a Skill, instruction
+or code, keep the feedback bound to the method version and cite the existing
+improvement/deployment references. Route the issue to Swarm Dev or the actual
+adopting owner to assess a scoped fix or rollback through the existing change
+path. WorkspaceKnowledge feedback does not itself change deployed capability.
+
+When no record was selected, retain the Authorized Visible Context exclusions
+and any optional-context fallback in the existing Mission result. Do not invent
+a use-feedback receipt or imply that excluded knowledge affected the work.
 
 ## Runtime acceptance and limits
 

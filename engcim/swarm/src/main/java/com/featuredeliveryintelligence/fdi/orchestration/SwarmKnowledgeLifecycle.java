@@ -22,7 +22,11 @@ public final class SwarmKnowledgeLifecycle {
             MissionLearningSource source,
             LearningCandidate candidate,
             KnowledgeGovernanceDecision decision,
-            String governanceActor) {
+            String decisionRef,
+            String governanceActor,
+            String policyRef,
+            String decidedAt,
+            List<String> decisionEvidenceRefs) {
         Objects.requireNonNull(source, "source is required");
         Objects.requireNonNull(decision, "governance decision is required");
         KnowledgeRoutingDecision routing = gateway.route(source, candidate);
@@ -33,7 +37,8 @@ public final class SwarmKnowledgeLifecycle {
         }
 
         WorkspaceKnowledgeProposal proposal = gateway.propose(source, candidate);
-        GovernedWorkspaceKnowledge governed = gateway.govern(proposal, decision, governanceActor);
+        GovernedWorkspaceKnowledge governed = gateway.govern(
+                proposal, decision, decisionRef, governanceActor, policyRef, decidedAt, decisionEvidenceRefs);
         if (decision != KnowledgeGovernanceDecision.APPROVED) {
             return new WorkspaceKnowledgeLifecycleResult(
                     source.workspaceRef(), source.learningSourceRef(), routing, proposal, governed,
@@ -41,12 +46,21 @@ public final class SwarmKnowledgeLifecycle {
         }
 
         gateway.persist(governed, repository);
-        List<WorkspaceKnowledgeProposal> retrieved = gateway.retrieve(source.workspaceRef(), repository);
+        WorkspaceKnowledgeRepository.ReadResult readback = gateway.readAfterWrite(source.workspaceRef(), repository);
+        List<WorkspaceKnowledgeRepository.Entry> matching = readback.entries().stream()
+                .filter(item -> proposal.proposalRef().equals(item.recordKey()))
+                .toList();
+        if (matching.size() != 1 || !proposal.equals(matching.get(0).proposal())) {
+            throw new RuntimeContractException(
+                    "WorkspaceKnowledge read-after-write did not return exactly one matching proposal: "
+                            + proposal.proposalRef());
+        }
         Optional<WorkspaceKnowledgeCaptureResult> capture = repository instanceof WorkspaceKnowledgeCaptureReceiptRepository receipts
                 ? receipts.captureFor(proposal.proposalRef())
                 : Optional.empty();
 
         return new WorkspaceKnowledgeLifecycleResult(
-                source.workspaceRef(), source.learningSourceRef(), routing, proposal, governed, capture, retrieved);
+                source.workspaceRef(), source.learningSourceRef(), routing, proposal, governed, capture,
+                readback.entries().stream().map(WorkspaceKnowledgeRepository.Entry::proposal).toList());
     }
 }
