@@ -2449,9 +2449,50 @@ JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home PATH=/o
 | Java adapter | 在既有 provider boundary 呼叫 REST，解析來源映射、timeout、錯誤與 fallback；不新增 Core component 或公共 Knowledge Store service |
 | Mission／repo | 原始工作、consumer feedback 與程式證據保留原處；知識引用其 exact locators／revisions，必要時保存有權的最小快照 |
 
-第一版只接 PK／WK 搜尋、來源回讀及既有 consumer handoff。Curator 自動提煉、去重、生成更新建議、memify/improve、自動改寫核准正文與 conversational session memory 均不在這一版；保留既有 Curator 的人工／agent 工作。Grafel 延續 code structure 證據責任；不加入 Graphiti 或第二個 memory engine。
+第一版只接 PK／WK 的 raw-chunk 搜尋、來源回讀及既有 consumer handoff；Graph 可建置及檢視，但不以 Graph traversal/completion 組合 worker context。Curator 自動提煉、去重、生成更新建議、memify/improve、自動改寫核准正文與 conversational session memory 均不在這一版；保留既有 Curator 的人工／agent 工作。Grafel 延續 code structure 證據責任；不加入 Graphiti 或第二個 memory engine。
 
 沿 §4 使用一個 Knowledge Workspace Project 的邏輯 namespaces，不先按 Product 建新實體 Workspace 或 Cognee instance。地方 WK 的本地 authority、sharing/export permission 與 governance 保持原契約；集中檢索不代表自動共享、promotion 或一律加 Human gate。不得將所有本地資料無差別搬進 shared project。
+
+#### 32.1.1 架構圖與實作狀態
+
+下圖為設計候選；箭頭不證明 provider、adapter、真實 consumer caller 或持久化已接通。「權威知識來源」包含地方 WK、共享 Knowledge Workspace，以及尚未移轉的既有 PK provider；每個 scope 只有一個正文維護入口。Java adapter 是既有 boundary 下的實作責任，不是第八個 Core component。
+
+```mermaid
+flowchart TD
+    E["Mission／Repo 證據與回饋"] --> C["Curator 分流與整理"]
+    C -->|依 scope 與既有治理| W["權威知識來源"]
+    W -->|有權且合格的快照| A["Java Adapter"]
+    A --> G["單一 Cognee"]
+    G --- S["持久化目錄與內建 backends"]
+    Q["Consumer 知識需求"] --> K["KnowledgeGateway 資格核對"]
+    W -->|當前資格與 exact 正文| K
+    K -->|限定 scope 的 raw 檢索| A
+    A -->|來源命中| K
+    K -->|合格知識 handoff| U["Consumer 適用性判斷與執行"]
+    U --> E
+```
+
+#### 32.1.2 知識分流與回饋
+
+Curator 先依內容性質、authority 與分享權限分流，不把所有 Mission 經驗集中到 shared project。圖中每一條通往合格 revision 的路徑沿該 scope 原有 policy，不能把 local WK 的 decision 當 shared approval。
+
+```mermaid
+flowchart TD
+    E["原工作經驗與證據"] --> C["Curator 判斷處置"]
+    C --> H["保留原歷史或現有知識"]
+    C --> L["地方 WK 候選"]
+    C -->|有權共享| P["共享 PK／Swarm 候選"]
+    L --> LG["Local policy 與治理"]
+    P --> PG["授權 Human 審查"]
+    LG --> V["各自權威來源的合格 revision"]
+    PG --> V
+    V --> I["明確發布／刷新 Cognee"]
+    I --> U["符合 scope 的 consumer 取用"]
+    U --> F["原 Mission 保存 action／result 回饋"]
+    F --> C
+```
+
+每次取用只保存相稱的採用／拒用理由、exact method revision 與實際 action/result；不強制產新候選或升版。Curator 可保留知識、保留未知／反例、修訂適用範圍，或提出新的 PK／WK proposal；能力改善仍交原 owner，不由搜尋引擎改共享實作。
 
 ### 32.2 儲存與部署基準
 
@@ -2484,9 +2525,20 @@ JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home PATH=/o
 
 ### 32.4 搜尋、回讀與失效
 
-沿既有入口取得任務需求與明確 scope，優先做 retrieval-only 查詢（如 CHUNKS）；不讓 completion 先混入未核准或跨 scope 內容再事後濾掉。
+沿既有入口取得任務需求與明確 scope，第一版限定來源可解析的 retrieval-only raw chunks（如 CHUNKS）。查詢前核對 actor access/use、scope、dataset 與當前 eligible 集合；查詢後再把命中與 exact identities 取交集，不以 Cognee ranking 或 dataset membership 代替 record eligibility。
 
-**最小讀取流程：** authoritative fresh-read／eligible 集合 → scoped Cognee raw hits → exact identity 交集 → consumer applicability 判斷 → 回權威 provider 讀 exact 正文／必要引用 → 原 handoff → 原 Mission feedback。
+**最小讀取流程：** 需求／actor/scope → authoritative fresh-read／eligible 集合 → scoped raw-chunk 檢索 → exact identity 交集 → 回讀並核對 authoritative 正文 → handoff → consumer 判斷本次 applicability → action/result 或拒用理由保存。
+
+| 步驟 | 輸出／約束 |
+| --- | --- |
+| 查詢前資格檢查 | 明確有權 dataset 及合格 record/version/digest/decision；無合格記錄時不以搜尋擴大權限 |
+| Raw retrieval | 最小必要 query；每個 chunk 必須對應可解析來源，不能用 completion/context string 混合多來源後補猜身份 |
+| 命中交集 | 排除 wrong scope、待審、撤回、到期、版本/digest 不符及 conflicts；舊索引可命中但不能被交付 |
+| 正文回讀 | 核對同一 revision/digest 與決策，返回正文、限制與 exact refs；資格有實質變動時重核受影響項目 |
+| Consumer 使用 | 讀到正文後確認當次前提，採用、調整或拒用；不在未讀正文前宣稱完成 applicability 判斷 |
+| 回饋 | 保存原工作證據；後續整理不自動產新知識 |
+
+**撤回資訊與 Graph 混合風險：**同一 dataset 若尚含失效文件，Graph 關聯、summaries 或 completion 可能混入其內容；post-filter 某個輸出 ID 不能證明全部 context 來源合格。這是需驗證的設計風險，並非本次實測的缺陷。第一版不將這類混合 context 交 worker；raw chunk 亦須確認其 source binding。Graph 關聯取用只在可完整驗證證據來源與資格範圍後另行啟用，不把圖建置 PASS 當授權。
 
 | 情況 | 處理 |
 | --- | --- |
@@ -2510,7 +2562,7 @@ Workspace／原 provider 備份保護權威正文、版本及治理歷史；Cogn
 | --- | --- |
 | 單機儲存 | package/commit/image/backend identity、health/auth；完成 add/process/search 後移除並重建容器，不重新 ingest，原 dataset、raw body、Graph 及 retrieval 仍可讀 |
 | 來源與版本 | 所有 handoff 能回讀 exact authoritative version/digest/decision；r2 待審時不覆蓋合格 r1；清空衍生索引後可由來源重建 |
-| 資格與隔離 | 未核准 shared knowledge、wrong scope、撤回/expiry、錯 revision/digest 與 conflict 均不得進 consumer context；至少兩個不同權限 dataset 驗 cross-scope exclusion |
+| 資格與隔離 | 未核准 shared knowledge、wrong scope、撤回/expiry、錯 revision/digest 與 conflict 均不得進 consumer context；至少兩個不同權限 dataset 驗 cross-scope exclusion；同 dataset 保留撤回文件時，raw hits 被排除且其正文不進 handoff，混合 Graph context 未被啟用 |
 | 故障與真正使用 | 刷新部分失敗、provider timeout／不可用能沿既有路徑 fallback；consumer 實際 action/result、feedback 保存與 Curator 處理按 §31 分別驗證 |
 
 搜尋品質沿原小樣本 smoke 基準：6 個有標註知識的 query，top-3 至少 5 個找回；2 個無適用方法的 query 可返回空／拒用。這不是 production recall。成本記錄 ingest/query time、資源與人工介入；有 storage 或 retrieval PASS 不代表方法有效、閉環完成或 production readiness。
