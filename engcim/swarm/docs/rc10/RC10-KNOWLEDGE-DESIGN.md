@@ -2455,22 +2455,49 @@ JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home PATH=/o
 
 #### 32.1.1 架構圖與實作狀態
 
-下圖為設計候選；箭頭不證明 provider、adapter、真實 consumer caller 或持久化已接通。「權威知識來源」包含地方 WK、共享 Knowledge Workspace，以及尚未移轉的既有 PK provider；每個 scope 只有一個正文維護入口。Java adapter 是既有 boundary 下的實作責任，不是第八個 Core component。
+**ENGCIM Swarm Knowledge Architecture — PROPOSED。** 箭頭是設計資料流，不證明 provider、adapter、真實 consumer caller 或持久化已接通。「權威知識來源」包含地方 WK、共享 Knowledge Workspace，以及尚未移轉的既有 PK provider；每個 scope 只有一個正文維護入口。下圖分組表示責任及部署邊界，不是新的 Core component inventory；Consumer 是實際工程角色／工作入口，Java adapter 是既有 provider boundary 下的實作責任。
 
 ```mermaid
 flowchart TD
-    E["Mission／Repo 證據與回饋"] --> C["Curator 分流與整理"]
-    C -->|依 scope 與既有治理| W["權威知識來源"]
-    W -->|有權且合格的快照| A["Java Adapter"]
-    A --> G["單一 Cognee"]
-    G --- S["持久化目錄與內建 backends"]
-    Q["Consumer 知識需求"] --> K["KnowledgeGateway 資格核對"]
-    W -->|當前資格與 exact 正文| K
-    K -->|限定 scope 的 raw 檢索| A
-    A -->|來源命中| K
-    K -->|合格知識 handoff| U["Consumer 適用性判斷與執行"]
-    U --> E
+    subgraph SOURCE["知識產生與治理"]
+        M["Mission／Repo 證據與回饋"]
+        C["Curator 分流與整理"]
+        W["權威知識來源"]
+        M --> C
+        C -->|依 scope 與既有治理| W
+    end
+
+    U["Consumer 需求與實際執行"]
+
+    subgraph SWARM["Swarm 取用與既有 provider boundary"]
+        K["KnowledgeGateway 資格核對"]
+        A["Java Adapter"]
+        K -->|限定 dataset 的查詢| A
+        A -->|Raw chunks 與 exact refs| K
+    end
+
+    subgraph PROVIDER["单機 Cognee Provider"]
+        G["Cognee Instance"]
+        S["持久化目錄與內建 backends"]
+        G --- S
+    end
+
+    U -->|知識需求| K
+    K -->|合格正文與來源| U
+    W -->|當前資格與精確正文| K
+    W -->|明確發布合格快照| A
+    A -->|REST API| G
+    G -->|檢索結果| A
+    U -->|Action／Result 回饋| M
 ```
+
+| 邊界 | 設計 |
+| --- | --- |
+| 權威知識來源 | 保存可讀正文、revision、來源及決策；各 scope 沿原 authority/local/shared policy，§4.2 移轉前既有 PK provider 保持權威 |
+| Cognee 儲存 | 主機 `./storage` → 容器 `/cognee-storage`；使用 pinned build 的內建 SQLite、LanceDB、Ladybug/Kuzu-compatible Graph，不使用 PostgreSQL |
+| 首輪取用 | Raw chunks → exact identity 交集 → 回讀正文 → Consumer applicability；Graph 可建置／檢視，不直接組合 worker context |
+| 最小操作 | 查詢前 actor/dataset allowlist 授權；同 dataset 串行刷新；本地 mapping 核對後原子替換；過濾不足最多一次有界補查 |
+| 回饋與恢復 | 原 Mission 保存 action/result；Curator 可保留、修訂或產候選；Cognee failure 沿既有 fallback，衍生資料可由合格快照重建 |
 
 #### 32.1.2 知識分流與回饋
 
