@@ -2515,11 +2515,13 @@ flowchart TD
 採明確的「發布／刷新索引」操作，沿既有 owner／工作入口執行，不另加定時排程、同步 daemon、message broker 或 event bus。
 
 1. 從權威 provider 讀 exact revision、正文及當前治理依據；核對當次 access/use/export permission。索引只包含符合該檢索用途的合格快照，不混入待審候選或未准共享的地方資料。
-2. 按實際 access scope 決定 dataset UUID；建立 Product／Workspace/project／domain 與 provider dataset 的明確映射。名稱／label 不構成權限，任何 search 不可省略範圍。
+2. 按相同的實際資料存取範圍分組 dataset，建立 Product／Workspace/project／domain 與 dataset UUID 的明確映射；同一 dataset 不混入僅部分 consumer 可讀的正文。查詢前由 adapter 核對當前 actor 與獲准 dataset allowlist，不採 client 任意傳入的 ID，不依 service account 的全庫可讀權限擴大 actor 權限；禁止省略 dataset 或全庫搜尋。名稱／label 不構成權限，Cognee ACL 与 Swarm actor authorization 均需成立。
 3. Ingest snapshot，執行 processing，讀回核對來源映射與狀態。完整核對前不發布新 mapping。副作用 timeout／uncertain write 先查 provider state，不能盲目重送。
 4. 記錄刷新成功／失敗及受影響 exact revisions；失敗的 mapping 不交 consumer，保留既有讀取路徑。
 
 最小衍生 manifest 保存既有 workspace/project、recordKey/version、proposalDigest 或正文 digest、knowledgeRef/providerRevision ↔ Cognee dataset/data/chunk locators。沿既有持久紀錄或 provider metadata 保存並讀回；若必須用本地 manifest，放 persistent root，視為可重建的衍生資料，不是新權威 DB 或公共 schema。無法可靠對應來源時排除命中，不由模型猜 ID。
+
+**單機刷新與 mapping 發布：** 每個 dataset 的刷新／清理串行執行，鎖涵蓋 source fresh-read、processing、核對與 mapping 發布；同 dataset 的後續操作須等前次完成或明確失敗，不另引入 queue service。發布前重新確認受影響 source identity／資格，已被更新或失效的 snapshot 不得成為新可用 mapping。若使用本地 manifest，於同一 filesystem 寫暫存檔並完整核對後原子替換 active 檔，保留上一份已核對 mapping；讀者只讀完整 active mapping。這只保證 manifest 不呈現半份檔案，不宣稱 Cognee 三個 backends 有跨 store transaction。失敗、重啟或 uncertain write 時以 source/provider readback reconcile；上一份 mapping 也要通過当前資格與 locator 核對，失效或 provider 內容已變則排除／fallback。第一版限制發布寫入由同一 adapter instance 管理，人工操作不得繞過串行刷新。
 
 同一 logical record 的新 revision 不覆蓋已批准版本；新內容須依各自 policy 審查，舊版是否仍可用由當前資格決定，不按「最新」自動替換。刷新操作不是新 approval gate，也不授予資料分享權限。
 
@@ -2531,12 +2533,14 @@ flowchart TD
 
 | 步驟 | 輸出／約束 |
 | --- | --- |
-| 查詢前資格檢查 | 明確有權 dataset 及合格 record/version/digest/decision；無合格記錄時不以搜尋擴大權限 |
+| 查詢前資格檢查 | 核對 actor 有權搜尋每個 allowlisted dataset 及當前合格 record/version/digest/decision；service account 權限不代替 actor 權限，無合格記錄時不以搜尋擴大權限 |
 | Raw retrieval | 最小必要 query；每個 chunk 必須對應可解析來源，不能用 completion/context string 混合多來源後補猜身份 |
 | 命中交集 | 排除 wrong scope、待審、撤回、到期、版本/digest 不符及 conflicts；舊索引可命中但不能被交付 |
 | 正文回讀 | 核對同一 revision/digest 與決策，返回正文、限制與 exact refs；資格有實質變動時重核受影響項目 |
 | Consumer 使用 | 讀到正文後確認當次前提，採用、調整或拒用；不在未讀正文前宣稱完成 applicability 判斷 |
 | 回饋 | 保存原工作證據；後續整理不自動產新知識 |
+
+**過濾後不足的有界補查：** 舊版／撤回 chunks 可能占用 top-k。若已有有權且合格的候選而首次過濾後不足，在同一 actor、dataset allowlist 與相同 raw retrieval mode 下，該次 logical query 最多再作一次增大 top-k 的補查；起始值、增大量及最大值沿 adapter 設定且須有限，合併命中後按 exact identity 去重並重核資格。仍不足、超過時限或發生 provider error 時回既有查找／回讀，不遞迴補查、不無上限查全部、不跨 scope 擴大。無合格記錄或授權不成立時不補查。結果只表示此次候選覆蓋程度，不據此宣稱知識不存在。
 
 **撤回資訊與 Graph 混合風險：**同一 dataset 若尚含失效文件，Graph 關聯、summaries 或 completion 可能混入其內容；post-filter 某個輸出 ID 不能證明全部 context 來源合格。這是需驗證的設計風險，並非本次實測的缺陷。第一版不將這類混合 context 交 worker；raw chunk 亦須確認其 source binding。Graph 關聯取用只在可完整驗證證據來源與資格範圍後另行啟用，不把圖建置 PASS 當授權。
 
@@ -2546,7 +2550,7 @@ flowchart TD
 | 待審新版、撤回、到期、scope mismatch、digest/revision 不符或 unresolved conflict | 即使舊索引仍命中也排除；不因清理尚未完成而延長使用資格 |
 | 刷新未完成或無可解析來源 | 記錄原因，使用既有 provider 查找／讀取；不將不完整命中當知識不存在 |
 | timeout／模型／provider 不可用 | 有界失敗與既有 fallback；不得掩蓋 required PK／Control 缺失 |
-| 撤回後清理 | 先在權威資格判斷排除，再以明確刷新／刪除清理衍生資料；撤回保留正式歷史，物理刪除另依 retention |
+| 撤回後清理 | 核准／使用資格撤回先由 Gateway 排除，再串行清理衍生資料，保留正式歷史；若是資料存取權限縮小，須重新核對 dataset audience，無法證明 actor 仍可讀整個 dataset 時在 query 前排除該 dataset，完成 ACL／資料分組調整後才恢復，不能只靠返回後過濾 |
 
 使用前只重核對當次方法有實質影響的變動，不要求每位 agent／每步全量重搜。Cognee raw hits 不直接授予 worker 工具執行或正文寫入能力。
 
@@ -2562,8 +2566,8 @@ Workspace／原 provider 備份保護權威正文、版本及治理歷史；Cogn
 | --- | --- |
 | 單機儲存 | package/commit/image/backend identity、health/auth；完成 add/process/search 後移除並重建容器，不重新 ingest，原 dataset、raw body、Graph 及 retrieval 仍可讀 |
 | 來源與版本 | 所有 handoff 能回讀 exact authoritative version/digest/decision；r2 待審時不覆蓋合格 r1；清空衍生索引後可由來源重建 |
-| 資格與隔離 | 未核准 shared knowledge、wrong scope、撤回/expiry、錯 revision/digest 與 conflict 均不得進 consumer context；至少兩個不同權限 dataset 驗 cross-scope exclusion；同 dataset 保留撤回文件時，raw hits 被排除且其正文不進 handoff，混合 Graph context 未被啟用 |
-| 故障與真正使用 | 刷新部分失敗、provider timeout／不可用能沿既有路徑 fallback；consumer 實際 action/result、feedback 保存與 Curator 處理按 §31 分別驗證 |
+| 資格與隔離 | 未核准 shared knowledge、wrong scope、撤回/expiry、錯 revision/digest 與 conflict 均不得進 consumer context；至少兩個不同權限 dataset 驗 cross-scope exclusion及 service account 可讀而 actor 不可讀的查詢前排除；同 dataset 保留撤回文件時，raw hits 被排除且其正文不進 handoff，混合 Graph context 未被啟用 |
+| 故障與真正使用 | 同 dataset 重疊刷新串行完成且不發布半份／過期 mapping；刷新部分失敗、重啟、provider timeout／不可用能 readback reconcile 或 fallback；舊命中占滿 top-k 時最多一次有界補查且不擴權；consumer 實際 action/result、feedback 保存與 Curator 處理按 §31 分別驗證 |
 
 搜尋品質沿原小樣本 smoke 基準：6 個有標註知識的 query，top-3 至少 5 個找回；2 個無適用方法的 query 可返回空／拒用。這不是 production recall。成本記錄 ingest/query time、資源與人工介入；有 storage 或 retrieval PASS 不代表方法有效、閉環完成或 production readiness。
 
