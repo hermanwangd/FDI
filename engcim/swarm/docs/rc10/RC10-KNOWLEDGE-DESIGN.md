@@ -2455,16 +2455,19 @@ JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home PATH=/o
 
 #### 32.1.1 架構圖與實作狀態
 
-**ENGCIM Swarm Knowledge Architecture — PROPOSED。** 箭頭是設計資料流，不證明 provider、adapter、真實 consumer caller 或持久化已接通。「權威知識來源」包含地方 WK、共享 Knowledge Workspace，以及尚未移轉的既有 PK provider；每個 scope 只有一個正文維護入口。下圖分組表示責任及部署邊界，不是新的 Core component inventory；Consumer 是實際工程角色／工作入口，Java adapter 是既有 provider boundary 下的實作責任。
+**ENGCIM Swarm Knowledge Architecture — PROPOSED。** 箭頭是設計資料流，不證明 provider、adapter、真實 consumer caller 或持久化已接通。Knowledge Workspace 是共享知識的明確操作與維護入口；地方 WK 留原 scope，既有 PK provider 在 §4.2 移轉前保留權威。三者各自按 scope 提供正文與決策，不因圖上並列就成為同一 Product 的多個可寫權威。下圖分組表示責任及部署邊界，不是新的 Core component inventory；Consumer 是實際工程角色／工作入口，Java adapter 是既有 provider boundary 下的實作責任。
 
 ```mermaid
 flowchart TD
     subgraph SOURCE["知識產生與治理"]
         M["Mission／Repo 證據與回饋"]
         C["Curator 分流與整理"]
-        W["權威知識來源"]
+        W["Knowledge Workspace 共享正文與審查"]
+        L["Local Workspace Knowledge"]
+        P["既有 PK provider 移轉前保留"]
         M --> C
-        C -->|依 scope 與既有治理| W
+        C -->|有權共享與 Human 治理| W
+        C -->|Local policy| L
     end
 
     U["Consumer 需求與實際執行"]
@@ -2486,6 +2489,10 @@ flowchart TD
     K -->|合格正文與來源| U
     W -->|當前資格與精確正文| K
     W -->|明確發布合格快照| A
+    L -->|地方資格與正文| K
+    L -->|有權的合格快照| A
+    P -->|既有 PK 資格與正文| K
+    P -->|有權的合格快照| A
     A -->|REST API| G
     G -->|檢索結果| A
     U -->|Action／Result 回饋| M
@@ -2493,7 +2500,9 @@ flowchart TD
 
 | 邊界 | 設計 |
 | --- | --- |
-| 權威知識來源 | 保存可讀正文、revision、來源及決策；各 scope 沿原 authority/local/shared policy，§4.2 移轉前既有 PK provider 保持權威 |
+| Knowledge Workspace | 共享 PK／Swarm knowledge 的可讀正文、revision、來源、審查及決策；在 §4.2 的明確權威移轉後接管相應 PK scope |
+| Local Workspace Knowledge | 地方 WK 保留原執行 Workspace、scope 及 local governance；共享 promotion 另核對授權與治理 |
+| 既有 PK provider | 尚未移轉範圍維持原 provider 的權威；已移轉範圍退出正文寫入，不與 Knowledge Workspace 平行維護 |
 | Cognee 儲存 | 主機 `./storage` → 容器 `/cognee-storage`；使用 pinned build 的內建 SQLite、LanceDB、Ladybug/Kuzu-compatible Graph，不使用 PostgreSQL |
 | 首輪取用 | Raw chunks → exact identity 交集 → 回讀正文 → Consumer applicability；Graph 可建置／檢視，不直接組合 worker context |
 | 最小操作 | 查詢前 actor/dataset allowlist 授權；同 dataset 串行刷新；本地 mapping 核對後原子替換；過濾不足最多一次有界補查 |
