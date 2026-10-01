@@ -1,6 +1,6 @@
 # ENGCIM Knowledge Design v0.8-r3 — Knowledge Workspace Model
 
-> **Repository review source — 2026-09-28 consolidation.** This file is the single maintained design/review source for this knowledge capability line. Status remains **PROPOSED**, not adopted runtime authority. Sections 1–26 preserve the imported r3 design; §27 defines SSOT/reference rules, §28 records the dated evidence-chain assessment, and §29 aligns the architecture diagram with module responsibilities and implementation seams. Historical worked-example statuses in §26 are not a current runtime status feed.
+> **Repository review source — 2026-09-28 consolidation.** This file is the single maintained design/review source for this knowledge capability line. Status remains **PROPOSED**, not adopted runtime authority. Sections 1–26 retain the imported r3 design except the explicitly dated Cognee provider boundary amendment in §1 and §4; §27 defines SSOT/reference rules, §28 records the dated evidence-chain assessment, and §29 aligns the architecture diagram with module responsibilities and implementation seams. Historical worked-example statuses in §26 are not a current runtime status feed.
 >
 > Imported from `ENGCIM-KNOWLEDGE-DESIGN-v0.8-r3-KNOWLEDGE-WORKSPACE.md`, SHA-256 `0d071c6cbea40b6ab5df0e896f33fd70f4117eebf8f07f2ce252dd3ecfe29c61`. Downloads copies remain historical, unchanged; future edits belong here. This consolidation changes the design maintenance location, not knowledge approval, source-policy precedence, package adoption, runtime configuration or deployment.
 >
@@ -8,7 +8,7 @@
 
 **Status:** PROPOSED / READY FOR REVIEW — r3 corrections pending scoped independent review; not runtime-validated  
 **Date:** 2026-09-27  
-**Review update:** 2026-09-30 — source inventory refreshed against `e5a9651`; §31 records source/deployment differences and the minimum consumer-feedback acceptance plan; §32 evaluates an optional Cognee candidate-processing adapter. Status remains PROPOSED / DOCUMENTATION_ONLY; no new runtime adoption or OSS integration is claimed.
+**Review update:** 2026-10-01 — §32 replaces the separate evaluation/isolated-PoC recommendation with the current project’s minimal Cognee integration design: one external instance, embedded backends, persistent directory, and explicit index refresh. §1/§4/§27.4 align the provider boundary and storage responsibilities. Status remains PROPOSED / DOCUMENTATION_ONLY; installation, Java integration and runtime adoption are not claimed.
 **Authority base:** ENGCIM Swarm v1.0 r9 FINAL-ALIGNED + Claude Supervisor v0.5.20  
 **Candidate alignment:** ENGCIM Swarm v1.0 r10 Candidate r3 + Knowledge Workspace Architecture v0.1  
 **Supersedes as review candidate:** v0.8-r2; preserves v0.7 consumer needs and bounded two-mode decision rules. No adopted authority is superseded by this document.  
@@ -30,7 +30,7 @@ ENGCIM needs a knowledge architecture that:
 5. provides Human-governed cross-Workspace Product and Swarm knowledge;
 6. supplies exact, attributable Product Context and Swarm Context to Missions;
 7. turns repeated learning into Knowledge or Capability improvement;
-8. does not introduce a new Memory Service, knowledge runtime, workflow engine, or eighth ENGCIM Core component.
+8. does not introduce a new ENGCIM-owned Memory Service, workflow engine, or eighth ENGCIM Core component. The 2026-10-01 proposal permits one external Cognee provider process with derived persistent state behind the existing Java boundary (§32); this is an explicit change to the earlier no-knowledge-runtime constraint, not a claim of zero runtime or operational cost.
 
 The growth objective is to improve judgment and subsequent work in concrete scenarios: preserve quality while measurably reducing avoidable Human reminders, rescue and rework. Retrieval, record counts and isolated test passes do not establish this outcome. The bounded acceptance procedure is in §27.6.6.1.
 
@@ -309,7 +309,7 @@ It is not:
 ```text
 a new ENGCIM component
 a Memory Service
-a new runtime
+a new ENGCIM-owned runtime
 a workflow engine
 a replacement for WorkspaceKnowledge
 ```
@@ -1786,7 +1786,7 @@ Fallback沿§27.6.6.1：無適用方法、provider timeout、存取拒絕與資�
 
 ## 27.4 更新、索引與移植
 
-物理存放沿用既有 issue-backed mapping，不新建資料庫。正文為 canonical content；索引只協助 discovery。正文與 index 不一致時不任選一個值，依現有規則排除／修復受影響 record。
+權威正文及治理紀錄沿用既有 issue-backed mapping，不新增 ENGCIM Knowledge Store 或治理資料庫。2026-10-01 修訂允許 §32 的 Cognee 使用內建 backends 保存可重建的文件副本與索引；這些仍是實際持久儲存，不是第二個正文維護入口。正文與 index 不一致時，以當前權威來源與資格檢查決定可用性，排除／修復受影響命中。
 
 更新使用同一 recordKey 的新 content version，保留 decision 綁定舊版本的事實；遇重複 key、部分更新或 uncertain write，先讀回並 reconcile，不聲稱 provider 有未證明的 transaction／exactly-once。
 
@@ -2435,70 +2435,96 @@ JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home PATH=/o
 
 交付分開報 `source-aligned`、`configured`、`worker-consumed`、`feedback-persisted`、`curator-processed`、`effect-assessed` 的觀察狀態；這些為報告用語，不新增 workflow enum／gate。只要其中一段缺證據，就不能合併宣稱完整閉環。此次只完成設計與 source audit，矩陣尚未新增 live PASS。
 
-## 32. Cognee 適配評估：可選的候選處理 provider
+## 32. 現有 project 的最小 Cognee 接入設計
 
-**2026-09-30；EVALUATION / NOT_ADOPTED。** 推薦先完成 §31，再按實測瓶頸決定是否做隔離 PoC。Cognee 不替換 WorkspaceKnowledge 正文、Multica 原始證據、Swarm governance 或 worker feedback。§1「不新增 knowledge runtime」仍有效；以下 provider 接法是條件式評估，未授權 production integration，也未假稱外部 process 沒有架構成本。
+**2026-10-01；PROPOSED / DOCUMENTATION_ONLY / NOT_RUNTIME_ADOPTED。** 使用者已確認 Cognee 可帶進公司，並選定直接在目前 ENGCIM Swarm PoC 使用一個 instance、內建 backends 與持久化目錄。依此修訂設計，不另開隔離 PoC，不以 §31 閉環完成作為設計或安裝的前置；實際使用與回饋仍須獨立驗證。Company installation、模型存取與 Java caller 接線尚無本文件驗證 receipts。
 
-### 32.1 官方能力與查證基準
+### 32.1 範圍與最小架構
 
-| 官方來源 | 已查證內容 | 對本案的含義 |
-| --- | --- | --- |
-| [Cognee source snapshot](https://github.com/topoteretes/cognee/tree/ba3631f2ed363a6ea50d649c34c56885af6b36fe) 的 README／pyproject／LICENSE | snapshot 對應 package version 1.6.2、Apache-2.0；Python requirement `>=3.10,<3.15`；README 提供 remember／recall／improve／forget | 是來源評估基準，未安裝、未測試，不將 main／最新 image tag 當部署 pin；完整依賴與 model/backend identity 隨 PoC 固定 |
-| [REST API reference](https://docs.cognee.ai/api-reference/introduction) | 保留 `/api/v1/add`、`cognify`、`search` low-level operations；search 有 CHUNKS 等模式；add 接收 upload／raw_data 與 external_metadata | Java 可隔離 HTTP transport；REST 與 Python SDK 參數不完全相同，不能照抄 SDK signature 或用舊 JSON example 當已驗 request |
-| [Architecture](https://docs.cognee.ai/core-concepts/architecture)／API setup | 內部有 relational、vector、graph 三種儲存責任；local API example 使用 embedded backends | 可以評估 embedded defaults，不先部署多套 DB；仍有可重建的 processing/index state、模型與資源需求 |
-| pinned `cognee/api/v1/search/search.py`／API reference | 支援 dataset 範圍與權限檢查；未指定 dataset 可搜尋所有有權 dataset；completion 與 raw-chunk retrieval 不同 | adapter 必須顯式 scope；無法解析回來源 exact identity 的命中不能進 worker。Cognee ACL 不代替 Swarm 的 workspace/project、版本及治理檢查 |
-
-以上只使用官方文件及 pinned source；尚未驗證其對 Mission 方法提煉、去重或搜尋的實際成效。API 是否提供本案需要的完整 origin ID／version/digest，仍須用實際返回值驗證。
-
-### 32.2 三種做法與推薦
-
-| 做法 | 取捨 | 判斷 |
-| --- | --- | --- |
-| 沿既有 Curator／Skills，完成 §31 | 不增 engine、provider state 或權威正文；目前語意品質仍取決於既有 consumer 方法 | **目前推薦**：先確立使用與回饋，再辨認真正瓶頸 |
-| 外部 Cognee provider＋既有 Java boundary | 可補提煉／同義關聯／候選搜尋；增加 process、索引、模型及 scope同步成本 | **條件式 PoC 選項**：若省工／品質有可比證據，再決定 §1 例外或既有 provider能力擴充的架構處置 |
-| 讓 workers 直接使用 Cognee MCP／memory 作知識權威 | 自動記憶／查詢方便，但容易繞過 exact eligibility、產生第二份正文或由改善功能改知識 | 不選；不交治理、context approval 或 feedback權威給 OSS |
-
-外部 Python provider 位於 Java provider boundary 後，符合 Java-only framework 的語言責任；這項邊界本身不等於新增 runtime 已被批准。此次不新增 public interface、Java class、Python source、DB 或 agent。先查既有 provider integration seam，再决定是否需要 private adapter。
-
-### 32.3 最小 adapter 的輸入、輸出與接線
-
-| 使用點 | 允許輸入 → provider輸出 | Swarm 保留的判斷／處理 |
-| --- | --- | --- |
-| Curator 候選提煉 | 已授權 MissionLearningSource 對應的最小 evidence snapshot → candidate statement、支持來源、限制及待確認關聯 | Curator 判 domain／route／subject identity；轉回既有 LearningCandidate／proposal。不能由 Cognee 產 governance APPROVED 或證實 RCA |
-| 同義與去重輔助 | scoped method snapshot＋新候選 → 同義／互補／可能矛盾建議及 source locators | 相似度不決定 canonical key、沿用／升版／拆分；subjectRef 分組的既有字串衝突行為不被靜默改掉 |
-| Consumer 搜尋／排序 | 當前問題＋明確 dataset scope → raw candidate hits；adapter 對照外部 index manifest 解析 exact record identity | authoritative fresh-read／eligible集合仍來自現有 Gateway 或已採用 procedure；只在合格集合中選方法，不將 LLM completion 當成批准正文 |
-| 使用效果分析 | 原 Mission 已保存、可解析的 feedback → 反例／關聯修訂候選 | 紀錄效果與知識批准由原 owner處理；不把 improve／memify直接作用於正式正文，也不讓搜尋權重代替方法有效性 |
-
-建議的最小 consumer 接法是：**既有 fresh-read／eligibility → scoped候選搜尋結果與 eligible exact identities 交集 → consumer前提判斷 → authoritative方法 handoff → 原 Mission feedback**。Gateway 的 `selected` 在此代表合格集合，不等於 worker 已採用。Search timeout／索引未建好時退回既有 consumer選法；若傳遞前出現版本變動、到期或新反證，重新核對受影響 record，不強制重查所有歷史。
-
-索引 manifest 保留 provider snapshot ↔ workspace/project、recordKey/version、proposalDigest、knowledgeRef/providerRevision 的關聯；這是 adapter 的衍生映射，不是新的 knowledge正文／公共schema。Cognee 的抽取、chunking 或傳回 metadata 若不能可靠保留／恢復這個映射，就判定該命中不合格，而非由模型猜 ID。新 index snapshot 先完整建立並核對後才切換；舊 revision不可覆蓋新 record或延續舊批准。
-
-### 32.4 必要依賴、失敗與架構影響
-
-| 項目 | 最小評估要求 |
+| 部分 | 本輪責任 |
 | --- | --- |
-| Java／transport | 沿 Java provider boundary 使用 Java 17 HTTP client；是否已有可重用 transport 須核對 caller，不宣稱已接通；timeout／bounded retry 按既有設定。副作用 ingest timeout先核對 provider state，不盲目重送 |
-| Cognee／模型／backend | 固定 package/commit 或 image digest、LLM/embedding model/config及實際 backend；記 token、耗時、RSS、index build cost。不因 CPU default可用就宣稱符合現有 runtime budget |
-| Scope／access | 僅 ingest當次有權的最小 snapshots；dataset 明確映射 scope，請求不可省略 dataset；data/domain lanes分開。Consumer 可見範圍必須在返回結果與 authoritative mapping 再核對 |
-| 衍生 index | 正式正文與證據仍留原 provider；index可以重建。刪除／撤回／升版後 index再出現舊命中，也不得越過 authoritative eligibility |
-| 行為成本 | ingest/index build不放到每次 worker latency critical path；不開全history自動記憶，不自動寫回 approved knowledge |
-| 失敗退回 | provider／模型不可用、無可解析來源或無合格命中 → 保留原因、退回既有流程；必要 PK／Control要求仍獨立成立 |
+| Knowledge Workspace | 統一人的閱讀、編輯與審查入口，沿既有 issue-backed mapping 保存正文、候選、版本、来源與決策；保留 §4.2 的權威移轉條件 |
+| Cognee | 單一外部 provider；接收合格且有權傳送的知識快照，管理文件副本、chunks、Graph、embedding 與搜尋 |
+| KnowledgeGateway／既有治理 | 保留 scope、access/use、exact version/digest、approval、expiry、conflict 與 applicability 檢查；Cognee 不授予使用資格 |
+| Java adapter | 在既有 provider boundary 呼叫 REST，解析來源映射、timeout、錯誤與 fallback；不新增 Core component 或公共 Knowledge Store service |
+| Mission／repo | 原始工作、consumer feedback 與程式證據保留原處；知識引用其 exact locators／revisions，必要時保存有權的最小快照 |
 
-這不是零維運依賴的替換。若進入實際 adoption，須明確處理 §1 不增 knowledge runtime 與外部 provider process/state 的相容決策；Java boundary、Apache license 或「可重建」都不替代該架構決策。Company部署、MCP access、模型連線、外部資料輸出與 indexed snapshot retention依當次既有權限，不由此評估預先授權。
+第一版只接 PK／WK 搜尋、來源回讀及既有 consumer handoff。Curator 自動提煉、去重、生成更新建議、memify/improve、自動改寫核准正文與 conversational session memory 均不在這一版；保留既有 Curator 的人工／agent 工作。Grafel 延續 code structure 證據責任；不加入 Graphiti 或第二個 memory engine。
 
-### 32.5 最小 PoC 與停止條件
+沿 §4 使用一個 Knowledge Workspace Project 的邏輯 namespaces，不先按 Product 建新實體 Workspace 或 Cognee instance。地方 WK 的本地 authority、sharing/export permission 與 governance 保持原契約；集中檢索不代表自動共享、promotion 或一律加 Human gate。不得將所有本地資料無差別搬進 shared project。
 
-先凍結同一組有標註的 inputs／queries／current facts，A 用既有流程，B 只加 Cognee；保存 producer／consumer／模型／索引版本與失敗。真實案例與 synthetic negatives分開，不用 synthetic結果宣稱 production效果。
+### 32.2 儲存與部署基準
 
-| 項目 | 最小通過標準 |
+| 資料／配置 | 決定 |
 | --- | --- |
-| 搜尋 smoke cases | 6 個有正確方法的 query，top-3至少5個找回標註方法；僅作小樣本 smoke threshold，不能稱 production recall rate |
-| 選用／反例 | 2 個無適用方法的 query允許空集合／拒用；4 個 stale／wrong-scope／revision或digest不符／unresolved-conflict反例，零不合格方法進 actual worker context |
-| 可追溯性 | 所有交付 worker 的方法都能解析 authoritative key/version/digest/decision；來源、模型生成內容及正式正文分開 |
-| 提煉／關聯 | 至少核對同義、互補、真正矛盾各一組；保留未知與來源限制，不因文字不同就自動升級conflict，也不由LLM自動清掉conflict |
-| 可比效益 | 同一cases／acceptance下記查找正確性、人工修正/提醒、token/time、index成本；品質不下降，且有查找／人工介入或總成本的實測改善才值得進下一步 |
-| 閉環 | §31 的 worker-feedback-Curator證據仍獨立驗；OSS查得準或建圖成功不能抵銷 feedback未接通 |
+| 權威正文、候選、revision、decision | 現有 Knowledge Workspace／local issue-backed profile；現有 Product PK provider 在 §4.2 的明確移轉前仍是唯一權威 |
+| Cognee 文件副本、metadata、Graph、embeddings | 使用該 pinned build 的內建 SQLite、LanceDB、Ladybug/Kuzu-compatible graph；記錄實際 provider/package versions，不以網站 default 敘述代替配置證據 |
+| 持久化 | 主機專用 `./storage` 掛至 `/cognee-storage`；`DATA_ROOT_DIRECTORY=/cognee-storage/data`、`SYSTEM_ROOT_DIRECTORY=/cognee-storage/system` |
+| Source build | 同仁已 clone 1.6.2 source；記錄實際 commit SHA、package version、build image ID/digest 與模型設定，不只依 branch/tag 名稱 |
+| 拓撲 | 一個單機 Cognee API instance；不啟用 PostgreSQL/Neo4j profiles、外部 DB、HA 或多節點 |
+| 存取 | 開啟認證與 backend access control，驗證內建 backend handlers 相容；初次 installation smoke 限 localhost |
+| 模型 | 使用公司核准且明確設定的 extraction/LLM 與 embedding providers；安裝可用不代表模型或外部資料傳送已驗證 |
 
-若 raw hits不能映射 exact identity、dataset scope不可靠、增加成本卻沒有可比效益，或仍需繞過現行資格／治理才可使用，停止此接法，保留評估 evidence。不因工具有知識圖譜就先採用；Graphiti僅在真正需要跨時間關聯查詢且已證明缺口時另評估，這輪不增加第二個引擎。
+權威正文只有一個可維護來源。Cognee 保存的副本及衍生資料須帶 exact source identity，可刪除、重建，不在 Cognee 獨立編輯成另一份正式知識。不修改 Cognee internal tables，不新增 ENGCIM relational schema、Knowledge Store、管理 UI 或模型服務來填補尚未證明的缺口。
 
-**本輪交付狀態：** source inventory修正、source／保存部署差異、最小補強與Cognee adapter評估已整合於本文件；runtime deployment、Java integration、Cognee PoC、自然閉環與效益驗收仍未執行。沒有修改原始 run meaning、approved governance、sealed RC6或正式 knowledge record。
+本部署是目前單機 PoC 基準，不宣稱 production HA、並發容量或可用性保證。保留一個 persistent root 便於操作，不要求全部資料只有一種 DB；模型 caches／下載資產若不在此 root，须另記其位置與重新取得方式，不能假稱全部環境已被目錄備份覆蓋。
+
+### 32.3 發布與來源映射
+
+採明確的「發布／刷新索引」操作，沿既有 owner／工作入口執行，不另加定時排程、同步 daemon、message broker 或 event bus。
+
+1. 從權威 provider 讀 exact revision、正文及當前治理依據；核對當次 access/use/export permission。索引只包含符合該檢索用途的合格快照，不混入待審候選或未准共享的地方資料。
+2. 按實際 access scope 決定 dataset UUID；建立 Product／Workspace/project／domain 與 provider dataset 的明確映射。名稱／label 不構成權限，任何 search 不可省略範圍。
+3. Ingest snapshot，執行 processing，讀回核對來源映射與狀態。完整核對前不發布新 mapping。副作用 timeout／uncertain write 先查 provider state，不能盲目重送。
+4. 記錄刷新成功／失敗及受影響 exact revisions；失敗的 mapping 不交 consumer，保留既有讀取路徑。
+
+最小衍生 manifest 保存既有 workspace/project、recordKey/version、proposalDigest 或正文 digest、knowledgeRef/providerRevision ↔ Cognee dataset/data/chunk locators。沿既有持久紀錄或 provider metadata 保存並讀回；若必須用本地 manifest，放 persistent root，視為可重建的衍生資料，不是新權威 DB 或公共 schema。無法可靠對應來源時排除命中，不由模型猜 ID。
+
+同一 logical record 的新 revision 不覆蓋已批准版本；新內容須依各自 policy 審查，舊版是否仍可用由當前資格決定，不按「最新」自動替換。刷新操作不是新 approval gate，也不授予資料分享權限。
+
+### 32.4 搜尋、回讀與失效
+
+沿既有入口取得任務需求與明確 scope，優先做 retrieval-only 查詢（如 CHUNKS）；不讓 completion 先混入未核准或跨 scope 內容再事後濾掉。
+
+**最小讀取流程：** authoritative fresh-read／eligible 集合 → scoped Cognee raw hits → exact identity 交集 → consumer applicability 判斷 → 回權威 provider 讀 exact 正文／必要引用 → 原 handoff → 原 Mission feedback。
+
+| 情況 | 處理 |
+| --- | --- |
+| 命中可核對且仍合格 | 返回權威正文及來源、版本、限制；搜尋分數不代表批准或有效性 |
+| 待審新版、撤回、到期、scope mismatch、digest/revision 不符或 unresolved conflict | 即使舊索引仍命中也排除；不因清理尚未完成而延長使用資格 |
+| 刷新未完成或無可解析來源 | 記錄原因，使用既有 provider 查找／讀取；不將不完整命中當知識不存在 |
+| timeout／模型／provider 不可用 | 有界失敗與既有 fallback；不得掩蓋 required PK／Control 缺失 |
+| 撤回後清理 | 先在權威資格判斷排除，再以明確刷新／刪除清理衍生資料；撤回保留正式歷史，物理刪除另依 retention |
+
+使用前只重核對當次方法有實質影響的變動，不要求每位 agent／每步全量重搜。Cognee raw hits 不直接授予 worker 工具執行或正文寫入能力。
+
+現有 ConsumerRequest 沒有 semantic query 欄位；retrieveForConsumer／feedback builder 的存在不代表真實 caller 接通。先識別已採用 Java／instructions／CLI caller，沿現有 seam 接線，不建立只有測試會用的平行管線。若 private adapter 足夠，不改公共 contract；確需改 contract 時另列相容影響。
+
+### 32.5 持久化、重建與驗收
+
+Workspace／原 provider 備份保護權威正文、版本及治理歷史；Cognee 衍生狀態可由當前合格快照重建。Cognee 目錄冷備份先停止寫入並備份 persistent root及manifest，再以相同 build/config 還原驗證；Graph export/COGX 不是已證明包含全部原文、ACL、決策及模型資產的系統備份。
+
+第一版驗收收斂為四組，沿既有 P2-04／相關 slice，不新增獨立 backlog 或 gate：
+
+| 組別 | 必須可觀測的證據 |
+| --- | --- |
+| 單機儲存 | package/commit/image/backend identity、health/auth；完成 add/process/search 後移除並重建容器，不重新 ingest，原 dataset、raw body、Graph 及 retrieval 仍可讀 |
+| 來源與版本 | 所有 handoff 能回讀 exact authoritative version/digest/decision；r2 待審時不覆蓋合格 r1；清空衍生索引後可由來源重建 |
+| 資格與隔離 | 未核准 shared knowledge、wrong scope、撤回/expiry、錯 revision/digest 與 conflict 均不得進 consumer context；至少兩個不同權限 dataset 驗 cross-scope exclusion |
+| 故障與真正使用 | 刷新部分失敗、provider timeout／不可用能沿既有路徑 fallback；consumer 實際 action/result、feedback 保存與 Curator 處理按 §31 分別驗證 |
+
+搜尋品質沿原小樣本 smoke 基準：6 個有標註知識的 query，top-3 至少 5 個找回；2 個無適用方法的 query 可返回空／拒用。這不是 production recall。成本記錄 ingest/query time、資源與人工介入；有 storage 或 retrieval PASS 不代表方法有效、閉環完成或 production readiness。
+
+Workspace 能否回讀 immutable revision 與 exact approval provenance 仍待 provider evidence。優先用既有歷史；不足時只補必要 snapshot binding，另明列最小缺口，不先新增通用 storage subsystem。不能建立可靠來源映射或隔離時，停止受影響 Cognee handoff，保留既有流程。
+
+### 32.6 修訂狀態與查證來源
+
+本修訂取代舊 §32「先完成閉環再決定是否另做隔離 PoC」的建議。§31 的既有閉環工作與本 project Cognee 接入可並行；兩者的結果分開報告。§1 的外部 provider 例外是明確架構提案，不改 Core 元件數，也不宣稱外部 process/state 零成本。
+
+官方基準：
+- [Cognee 1.6.2 source](https://github.com/topoteretes/cognee/tree/ba3631f2ed363a6ea50d649c34c56885af6b36fe)：Apache-2.0，Python 3.10–3.14；實際 company checkout/image 身分另驗。
+- [Minimal Docker Compose](https://github.com/topoteretes/cognee/blob/ba3631f2ed363a6ea50d649c34c56885af6b36fe/docs/minimal-docker-compose.md)／[Dockerfile](https://github.com/topoteretes/cognee/blob/ba3631f2ed363a6ea50d649c34c56885af6b36fe/Dockerfile)：內建 backends、persistent root與 uid 1000 權限。
+- [Architecture](https://docs.cognee.ai/core-concepts/architecture)、[Permissions](https://docs.cognee.ai/setup-configuration/permissions)、[Search](https://docs.cognee.ai/guides/search-basics)：儲存責任、認證／dataset handlers、scoped raw retrieval。
+- [S3 storage](https://docs.cognee.ai/guides/s3-storage)、[COGX](https://docs.cognee.ai/core-concepts/further-concepts/cogx)：證明 provider 有檔案與可移植 Graph 能力，本輪不因此部署 S3/MinIO 或把 Graph export當完整備份。
+
+**本輪交付：** 僅整合設計修訂；未修改 Java、overlay／live instructions、正式 knowledge records，未安裝 Cognee、執行公司驗證或遷移 PK。狀態保持 PROPOSED / DOCUMENTATION_ONLY，後續 installation、接線、資格及自然閉環各自提供 receipts。
