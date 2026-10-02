@@ -887,7 +887,7 @@ Pull Request
 - Preserve provider-native explicit links before structural or semantic inference.
 - Historical evidence may supply precedent, rationale, constraints, risks and verification history; it does not become current Product truth or current implementation truth.
 - Check current applicability against current Product authority and current engineering evidence.
-- Use suitable GitHub OSS history for external real-world validation; qualify Azure DevOps PR → PBI → Feature semantics after company migration.
+- Use suitable GitHub OSS history for external real-world validation under the existing approved PA-05 replay boundary: pin a case-specific temporal cutoff and exclude the target solution PR's post-cutoff changed content, review, test/check results and other post-cutoff evidence from the SA/SD reasoning input. Those withheld artifacts may be revealed only after the run as reference/evaluation evidence. Qualify Azure DevOps PR → PBI → Feature semantics after company migration.
 - Do not add `EngineeringChangeEpisode`, `ChangePattern`, `DesignPrecedent` or similar first-class contracts unless evidence demonstrates an independent lifecycle/responsibility that existing evidence/knowledge contracts cannot represent.
 
 ### Delta 2 — P2-04 actual use → S05 SA/SD effectiveness
@@ -935,6 +935,8 @@ Add one required interpretation to those comparisons:
 Continue to report acceleration separately using the existing comparable-case measures for elapsed time, first-report completeness, avoidable Human intervention and rework. When comparable evidence is insufficient, retain the existing `NOT_DEMONSTRATED` / `INCONCLUSIVE` disposition rather than inferring acceleration.
 
 GitHub external validation may establish real-world generalization of these deltas; it does not establish company/Azure qualification.
+
+For **Swarm v1.1 completion**, Delta 1 is not optional merely because the underlying Phase 2 P2-04/SW2.6 cycle can complete with another bounded knowledge source. Record PR-linked Engineering History within the existing P2-04/SW2.6 qualification evidence as one of: (a) exercised with the temporal-cutoff rule above and dispositioned from real evidence, or (b) explicitly deferred / NOT_SUPPORTED with missing evidence, owner, next trigger and accepted scope disposition. Do not create SW2.9 or a parallel completion gate. Phase 2 may retain its own bounded completion state independently; a Swarm v1.1 completion claim requires this additional Delta 1 disposition.
 
 ### Scope guardrail
 
