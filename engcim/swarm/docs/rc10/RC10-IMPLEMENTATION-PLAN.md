@@ -849,6 +849,108 @@ The table below is a verify-first backlog. “Existing” identifies a source or
 
 Phase 2 closes when Workstream A has a pinned baseline and every SW2.0–SW2.8 item is classified as (a) already satisfied with evidence, (b) an evidence-confirmed gap corrected and reverified, or (c) UNVERIFIED/deferred with the missing evidence, owner, next trigger, and accepted scope disposition stated. Workstream A then follows one of two outcomes: an identified gap is corrected and passes its quality acceptance, or evidence supports `NO_CHANGE_NEEDED` and the responsible owner accepts that disposition. Record capability acceptance and acceleration-effect acceptance separately using the objective section above. Compare pinned equivalent cases for time, quality, first-report completeness and avoidable Human intervention; without adequate comparison state NOT_DEMONSTRATED/INCONCLUSIVE, or NO_IMPROVEMENT when measurements do not improve. Capability acceptance or NO_CHANGE_NEEDED may justify a bounded delivery disposition, but neither establishes the explicit acceleration objective. Do not claim overall Phase 2 goal attainment until the acceleration evidence supports the stated scope. Workstream B must either complete P2.0–P2.4 or have a Human/company-owner-approved disposition to defer company adoption. For P2-04 / SW2.6, explicitly disposition each of P2-04a–04c against its acceptance above. Also disposition the two bounded Orchestrator refactor slices within their existing SW2 items; deferred work requires the responsible owner's accepted scope disposition and must not be reported as completed refactoring or acceleration. Claim the bounded knowledge cycle complete only when authoritative publication, qualified retrieval, actual consumer action/result, saved feedback and Curator disposition are evidenced; installation or storage/retrieval PASS alone does not satisfy it. A deferred slice requires the responsible owner's accepted scope disposition, missing evidence and next trigger; it must not be reported as completed knowledge reuse. A and B retain separate revisions, receipts, and decisions. Finishing one does not silently mark the other complete.
 
+
+---
+
+## Swarm v1.1 Implementation Scope — Phase 2 next-release framing
+
+**Status:** PROPOSED / evidence-gated next-release scope. This section does not supersede the Phase 2 workstreams, P2-04/SW2.6 knowledge cycle, SW2.8 effectiveness measures, receipts, blockers, or Phase 2 completion rules above.
+
+### Positioning and objective
+
+Swarm v1.1 is the next-release framing for the continuation of Phase 2, not a restart or a parallel knowledge program.
+
+Move the existing RC10/Phase 2 capability from **bounded knowledge reuse validation** toward demonstrated **engineering-reasoning effectiveness on unfamiliar work**.
+
+Reuse the existing Scenario-first architecture, S01/S02/S03 Product Knowledge family, WorkspaceKnowledge/Knowledge Workspace authority and lifecycle, Mission learning/disposition path, Runtime Binding, Multica boundary, P2-04a–04c publication/retrieval/use/feedback cycle, and SW2.8 effectiveness/acceleration evidence. Existing blockers and UNVERIFIED items remain unchanged until their current acceptance rules are satisfied.
+
+The release-level question is:
+
+> Can the existing Swarm combine current engineering evidence with applicable reusable knowledge to improve System Analysis and System Design on unfamiliar work, with attributable quality/evidence benefit and reduced avoidable search, rework or Human rescue?
+
+### Delta 1 — PR-first Engineering History
+
+Extend the existing historical-delivery capability with provider-neutral, change-first history semantics:
+
+```text
+Pull Request
+  ├─ repository / resulting revision
+  ├─ commits / changed content
+  ├─ review evidence
+  ├─ build / test evidence
+  └─ linked intent
+       ├─ GitHub: Issue
+       └─ Azure DevOps: PBI → Feature
+```
+
+- Start from the actual completed change and trace toward linked intent.
+- Preserve provider-native explicit links before structural or semantic inference.
+- Historical evidence may supply precedent, rationale, constraints, risks and verification history; it does not become current Product truth or current implementation truth.
+- Check current applicability against current Product authority and current engineering evidence.
+- Use suitable GitHub OSS history for external real-world validation under the existing approved PA-05 replay boundary: pin a case-specific temporal cutoff and exclude the target solution PR's post-cutoff changed content, review, test/check results and other post-cutoff evidence from the SA/SD reasoning input. Those withheld artifacts may be revealed only after the run as reference/evaluation evidence. Qualify Azure DevOps PR → PBI → Feature semantics after company migration.
+- Do not add `EngineeringChangeEpisode`, `ChangePattern`, `DesignPrecedent` or similar first-class contracts unless evidence demonstrates an independent lifecycle/responsibility that existing evidence/knowledge contracts cannot represent.
+
+### Delta 2 — P2-04 actual use → S05 SA/SD effectiveness
+
+Keep P2-04a publication and P2-04c feedback/maintenance unchanged. Extend the P2-04b **actual consumer use** validation to demonstrate material influence on S05 engineering reasoning:
+
+```text
+P2-04a Authoritative publication
+        ↓
+P2-04b Qualified retrieval + actual use
+        ↓
+Product Context
++ Current Mission Artifacts
++ Current Engineering Evidence
++ Applicable Reusable Knowledge
+        ↓
+S05 System Analysis
+        ↓
+S05 System Design
+        ↓
+Engineering Outcome
+        ↓
+P2-04c Feedback + maintenance
+```
+
+The four reasoning inputs remain distinct:
+
+- **Product Context** — governed Product Knowledge selected under existing authority.
+- **Current Mission Artifacts** — artifacts governing or produced by the current Mission; not automatically reusable knowledge.
+- **Current Engineering Evidence** — attributable current code, API/schema, dependency, test or runtime evidence; it may enter reasoning directly without first being persisted as knowledge.
+- **Applicable Reusable Knowledge** — eligible Product/Workspace/Swarm knowledge selected under existing authority, freshness, revision and applicability rules.
+
+Preserve existing S05 responsibilities for affected scope, components/interfaces, dependencies, constraints/gaps, to-be behavior, architecture/component changes, interface changes, failure behavior, compatibility and verification implications.
+
+Retrieval/readback or an ADOPTED marker alone does not establish this delta; bind the selected knowledge revision to a material SA/SD reasoning use or decision and its resulting engineering outcome.
+
+### Delta 3 — Extend existing effectiveness evidence to engineering outcome
+
+Do not create a second validation or telemetry framework. Reuse the existing production-like comparison, SW2.0/SW2.8 measures and Phase 2 completion rules.
+
+Add one required interpretation to those comparisons:
+
+> Determine whether applicable knowledge materially improves SA/SD engineering completeness, correctness, evidence support, constraint/risk coverage or removal of unsupported assumptions without a critical regression.
+
+Continue to report acceleration separately using the existing comparable-case measures for elapsed time, first-report completeness, avoidable Human intervention and rework. When comparable evidence is insufficient, retain the existing `NOT_DEMONSTRATED` / `INCONCLUSIVE` disposition rather than inferring acceleration.
+
+GitHub external validation may establish real-world generalization of these deltas; it does not establish company/Azure qualification.
+
+For **Swarm v1.1 completion**, Delta 1 is not optional merely because the underlying Phase 2 P2-04/SW2.6 cycle can complete with another bounded knowledge source. Record PR-linked Engineering History within the existing P2-04/SW2.6 qualification evidence as one of: (a) exercised with the temporal-cutoff rule above and dispositioned from real evidence, or (b) explicitly deferred / NOT_SUPPORTED with missing evidence, owner, next trigger and accepted scope disposition. Do not create SW2.9 or a parallel completion gate. Phase 2 may retain its own bounded completion state independently; a Swarm v1.1 completion claim requires this additional Delta 1 disposition.
+
+### Scope guardrail
+
+These three deltas are the only new Swarm v1.1 scope introduced here. Existing Phase 2 acceptance and completion rules remain the execution authority.
+
+Unless evidence from the v1.1/Phase 2 qualification proves an existing seam cannot satisfy a required responsibility, defer:
+
+- first-class `KnowledgeNeed` / `KnowledgeResolver`;
+- new Knowledge Service / Router / Builder component or knowledge-specific persistence layer;
+- EngineeringChangeEpisode / ChangePattern / DesignPrecedent / VerificationPattern contracts;
+- cross-PR mining architecture;
+- new Planner or Architect component;
+- redesign of S01/S02/S03, WorkspaceKnowledge lifecycle, Knowledge Workspace authority, Mission learning/disposition, or the P2-04a–04c cycle.
+
 ---
 
 ## Historical plan — retained, superseded
