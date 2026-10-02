@@ -2620,3 +2620,75 @@ Workspace 能否回讀 immutable revision 與 exact approval provenance 仍待 p
 - [S3 storage](https://docs.cognee.ai/guides/s3-storage)、[COGX](https://docs.cognee.ai/core-concepts/further-concepts/cogx)：證明 provider 有檔案與可移植 Graph 能力，本輪不因此部署 S3/MinIO 或把 Graph export當完整備份。
 
 **本輪交付：** 僅整合設計修訂；未修改 Java、overlay／live instructions、正式 knowledge records，未安裝 Cognee、執行公司驗證或遷移 PK。狀態保持 PROPOSED / DOCUMENTATION_ONLY，後續 installation、接線、資格及自然閉環各自提供 receipts。
+
+---
+
+# 33. Swarm v1.1 minimal alignment — Engineering History and S05 effectiveness
+
+**2026-10-02; PROPOSED / DESIGN ALIGNMENT ONLY.** This section aligns this design SSOT with the Swarm v1.1 next-release scope accepted in `RC10-IMPLEMENTATION-PLAN.md`. It does not replace §§1–32, add a knowledge component/store/workflow, change Product/Workspace/Swarm authority, or redefine P2-04a–04c / SW2.6 / SW2.8 acceptance. Existing blockers and UNVERIFIED states remain unchanged.
+
+## 33.1 PR-first Engineering History source semantics
+
+The existing `PA-Historical-Delivery` capability may extend its historical source handling using provider-neutral, change-first semantics:
+
+```text
+Pull Request
+  ├─ repository / resulting revision
+  ├─ commits / changed content
+  ├─ review evidence
+  ├─ build / test evidence
+  └─ linked intent
+       ├─ GitHub: Issue
+       └─ Azure DevOps: PBI → Feature
+```
+
+Start from the actual completed change and trace toward provider-native linked intent. Preserve explicit source links before structural or semantic inference. Historical material supplies attributable precedent, rationale, constraints, risks or verification history; it is not current Product truth or current implementation truth. Current applicability is checked against the existing Product authority and current engineering evidence.
+
+For GitHub replay/generalization validation, follow the existing approved PA-05 temporal-cutoff boundary: pin the case cutoff and withhold the target solution PR's post-cutoff changed content, reviews, test/check results and other post-cutoff evidence from SA/SD reasoning. Reveal withheld artifacts only after the run as reference/evaluation evidence. Azure DevOps PR → PBI → Feature remains an internal company qualification target.
+
+No `EngineeringChangeEpisode`, `ChangePattern`, `DesignPrecedent` or equivalent first-class knowledge contract is introduced by this alignment.
+
+## 33.2 S05 reasoning inputs remain distinct
+
+The existing Context/reuse design is retained. For Swarm v1.1 effectiveness qualification, distinguish the provenance/authority of the inputs consumed by S05:
+
+```text
+Product Context
++ Current Mission Artifacts
++ Current Engineering Evidence
++ Applicable Reusable Knowledge
+        ↓
+S05 System Analysis
+        ↓
+S05 System Design
+        ↓
+Engineering Outcome
+```
+
+- **Product Context** remains governed Product Knowledge selected under the existing Product authority.
+- **Current Mission Artifacts** are current-Mission inputs/outputs and do not automatically become reusable knowledge.
+- **Current Engineering Evidence** is attributable current code, API/schema, dependency, test or runtime evidence; it may be used directly without first becoming a persisted knowledge record.
+- **Applicable Reusable Knowledge** is eligible Product/Workspace/Swarm knowledge under the existing authority, freshness, revision, conflict and applicability rules.
+
+This distinction is an evaluation/provenance boundary, not a new `EngineeringContext` component. Existing Context composition may carry more than one of these inputs; the implementation must retain enough attribution to determine what materially influenced an SA/SD conclusion.
+
+## 33.3 Effectiveness interpretation
+
+Existing evidence maturity remains unchanged:
+
+```text
+E2 REUSED
+= later consumer use is traceable
+
+E3 EFFECT_VALIDATED
+= comparable evidence supports measurable effect
+```
+
+For Swarm v1.1, retrieval/readback or an `ADOPTED` marker can support E2 but does not by itself establish engineering effectiveness. Reuse the existing P2-04 actual-use/feedback path and SW2.0/SW2.8 comparison evidence to determine whether applicable knowledge materially improves SA/SD completeness, correctness, evidence support, constraint/risk coverage or removal of unsupported assumptions without a critical regression.
+
+Acceleration remains a separate conclusion under the existing Phase 2 measures. Insufficient comparable evidence remains `NOT_DEMONSTRATED` / `INCONCLUSIVE`; do not infer speed from retrieval, adoption, fewer calls or a single successful result.
+
+Swarm v1.1 completion additionally requires the PR-linked Engineering History delta to be exercised under the temporal-cutoff rule above or explicitly dispositioned as deferred / NOT_SUPPORTED with missing evidence, owner, next trigger and accepted scope disposition. This does not create SW2.9 or alter the bounded Phase 2 completion state.
+
+No first-class `KnowledgeNeed` / `KnowledgeResolver`, new Knowledge Service/Router/Builder, knowledge-specific persistence layer, new Planner/Architect component, or cross-PR mining architecture is authorized by this section.
+
