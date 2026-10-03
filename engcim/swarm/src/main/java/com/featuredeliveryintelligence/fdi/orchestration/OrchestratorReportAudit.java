@@ -285,7 +285,10 @@ public final class OrchestratorReportAudit {
                                 "Artifact receipt belongs to a different issue than the ledger reference.");
                     }
                     String artifactRunId = text(artifact, "source_task_id");
-                    if (!artifactRunId.isEmpty() && !runId.isEmpty() && !runId.equals(artifactRunId)) {
+                    if (!runId.isEmpty() && artifactRunId.isEmpty()) {
+                        finding(findings, "ARTIFACT_RUN_UNVERIFIED", artifactLocator,
+                                "Ledger claims a run but the artifact receipt does not establish source_task_id.");
+                    } else if (!runId.isEmpty() && !runId.equals(artifactRunId)) {
                         finding(findings, "ARTIFACT_RUN_MISMATCH", artifactLocator,
                                 "Artifact receipt is associated with a different run than the ledger reference.");
                     }
