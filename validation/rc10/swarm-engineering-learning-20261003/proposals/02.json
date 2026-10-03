@@ -1,0 +1,31 @@
+{
+  "proposalRef": "rc10wk-swarm-read-context-failure-20261003-01",
+  "workspaceRef": "private-workspace:SWARM-EXP-20261003",
+  "sourceRefs": [
+    "validation/rc10/swarm-engineering-learning-20261003/sources/02.json",
+    "rc10-swarm-experience-learning-source-read-context-failure-20261003-01",
+    "private-evidence:SWARM-EXP-20261003-02",
+    "engcim/bootstrap/multica/MAPPING.md",
+    "https://github.com/multica-ai/multica/issues/368",
+    "https://github.com/multica-ai/multica/pull/796"
+  ],
+  "knowledgeType": "PROCEDURAL",
+  "statement": "Reporting label: OPEN PROBLEM — environmental cause UNKNOWN.\n\nProblem and environment: A side read context reported DNS failure and a stopped daemon while the main authorized context successfully authenticated and performed live reads. Exact context/profile/version/error receipts are owner-held under SWARM-EXP-20261003-02.\n\nAttempts and observed results: The side read failed; authorized main-context operations succeeded. No credential reset, proven global outage or repaired side-context cause is established.\n\nConfirmed mechanism versus hypothesis: Divergent outcomes are reported. A failed read alone cannot distinguish resolver, daemon/namespace reachability, transport, permissions/profile or authentication causes. Main-context success does not explain the side failure. Public Multica issue 368 / PR 796 are precedent only, not causal proof for this instance.\n\nProposed practice; owner/consumer: Supervisor/native platform owner retains exact context, command, time, error class and effective profile. Compare saved evidence from an already authorized working context before naming the failing layer or changing credentials/permissions.\n\nApplicability/limitations: Applies to contradictory context observations. One successful operation establishes only that context's operation; it grants no new access and proves no cross-context availability.\n\nNext verification: Review the saved side/main receipts and correlate their environments with the installed build. Apply a precedent only if its prerequisites match. Do not repeat completed reads or introduce an auth-reset flow to fill this record.",
+  "scope": "WORKSPACE",
+  "applicability": "Authorized contexts whose service-read observations disagree; investigation before cause-specific remedy.",
+  "limitations": [
+    "Environmental cause, exact context versions and native originals remain unverified here.",
+    "Public precedent is not proof of this failure.",
+    "Public-safe local review draft; private evidence aliases and workspace/Mission scope must be resolved by the existing owner/Curator before live intake.",
+    "Owner-reported runtime facts are not independently native-readback-verified here.",
+    "No governance decision, capture receipt, live publication, runtime adoption or retrieval eligibility is created by this candidate."
+  ],
+  "evidenceRefs": [
+    "validation/rc10/swarm-engineering-learning-20261003/OBSERVATIONS.md#episode-02--context-specific-read-failure",
+    "private-evidence:SWARM-EXP-20261003-02",
+    "engcim/bootstrap/multica/MAPPING.md",
+    "https://github.com/multica-ai/multica/issues/368",
+    "https://github.com/multica-ai/multica/pull/796"
+  ],
+  "conflictRefs": []
+}
