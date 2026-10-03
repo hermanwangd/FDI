@@ -14,6 +14,30 @@ import org.junit.jupiter.api.Test;
 class WorkspaceKnowledgeRetrievalTests {
     private static final Instant FETCHED_AT = Instant.parse("2026-09-29T00:00:00Z");
     private static final Instant VALID_UNTIL = Instant.parse("2026-09-30T00:00:00Z");
+    private static final String COGNEE_DATASET = "00000000-0000-7000-8000-000000000001";
+
+    @Test
+    void missionHandsOffAtMostThreeQualifiedSourcesWithoutTruncatingSelectionReceipts() {
+        var entries = java.util.stream.IntStream.range(0, 4).mapToObj(index -> entry(
+                proposal("proposal-bounded-" + index, "workspace-a", List.of()),
+                KnowledgeGovernanceDecision.APPROVED, "CURRENT", FETCHED_AT.minusSeconds(2), VALID_UNTIL,
+                Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED")).toList();
+        var read = new WorkspaceKnowledgeRepository.ReadResult(
+                "workspace-a", "project-workspace-knowledge", FETCHED_AT, entries);
+        var request = new SwarmKnowledgeGateway.ConsumerRequest(
+                "mission:bounded", "workspace-a", "project-workspace-knowledge", "project-consumer", Map.of("repo", "rev-1"));
+        var gateway = gateway();
+        assertThat(gateway.retrieveForConsumer(request, read).selected()).hasSize(4);
+        var context = gateway.retrieveForConsumer(request, read, COGNEE_DATASET,
+                entries.stream().map(WorkspaceKnowledgeRetrievalTests::candidate).toList());
+        assertThat(context.selected()).containsExactlyElementsOf(entries);
+        var envelope = new MissionExecutionEnvelope("mission:bounded", "request", "workspace-a", "project-consumer",
+                "scope", "goal", List.of(), List.of("qualified knowledge"), "revision").withKnowledgeContext(context);
+        assertThat(envelope.eligibleKnowledge()).containsExactlyElementsOf(entries.subList(0, 3));
+        assertThat(context.selected()).containsExactlyElementsOf(entries);
+        assertThat(gateway.retrieveForConsumer(request, read, COGNEE_DATASET,
+                List.of(candidate(entries.get(3)))).selected()).containsExactly(entries.get(3));
+    }
 
     @Test
     void freshProviderReadSelectsOnlyBoundEligibleRecordsAndSeparatesUseFromEffectiveness() {
@@ -137,7 +161,67 @@ class WorkspaceKnowledgeRetrievalTests {
 
         assertThat(providerReads).hasValue(1);
         assertThat(context.selected()).isEmpty();
-        assertThat(context.mayProceedWithoutKnowledge()).isTrue();
+        assertThat(context.mayProceedWithoutKnowledge()).isFalse();
+    }
+
+    @Test
+    void cogneeSourceMatchNarrowsButDoesNotBypassFreshnessOrGovernanceChecks() {
+        WorkspaceKnowledgeRepository.Entry approved = entry(
+                proposal("proposal-cognee-approved", "workspace-a", List.of()),
+                KnowledgeGovernanceDecision.APPROVED, "CURRENT", FETCHED_AT.minusSeconds(2), VALID_UNTIL,
+                Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED");
+        WorkspaceKnowledgeRepository.Entry stale = entry(
+                proposal("proposal-cognee-stale", "workspace-a", List.of()),
+                KnowledgeGovernanceDecision.APPROVED, "CURRENT", FETCHED_AT.minusSeconds(2), FETCHED_AT.minusSeconds(1),
+                Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED");
+        WorkspaceKnowledgeRepository.Entry deferred = entry(
+                proposal("proposal-cognee-deferred", "workspace-a", List.of()),
+                KnowledgeGovernanceDecision.DEFERRED, "CURRENT", FETCHED_AT.minusSeconds(2), VALID_UNTIL,
+                Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED");
+        var read = new WorkspaceKnowledgeRepository.ReadResult(
+                "workspace-a", "project-workspace-knowledge", FETCHED_AT, List.of(approved, stale, deferred));
+        var request = new SwarmKnowledgeGateway.ConsumerRequest(
+                "mission:cognee-filter", "workspace-a", "project-workspace-knowledge", "project-consumer",
+                Map.of("repo", "rev-1"));
+        List<CogneeSearchClient.CandidateDocument> candidates = List.of(
+                candidate(approved), candidate(stale), candidate(deferred));
+
+        SwarmKnowledgeGateway.EligibleConsumerContext context = gateway().retrieveForConsumer(
+                request, read, COGNEE_DATASET, candidates);
+
+        assertThat(context.selected()).containsExactly(approved);
+        assertThat(context.excluded()).extracting(SwarmKnowledgeGateway.ContextExclusion::recordKey)
+                .containsExactlyInAnyOrder(stale.recordKey(), deferred.recordKey());
+        assertThat(context.excluded()).extracting(SwarmKnowledgeGateway.ContextExclusion::reason)
+                .containsExactlyInAnyOrder(
+                        SwarmKnowledgeGateway.ContextExclusionReason.STALE,
+                        SwarmKnowledgeGateway.ContextExclusionReason.NOT_APPROVED);
+    }
+
+    @Test
+    void cogneeNarrowingCannotHideDuplicateRecordKeysFromTheOriginalProviderRead() {
+        WorkspaceKnowledgeRepository.Entry exact = entry(
+                proposal("proposal-cognee-duplicate", "workspace-a", List.of()),
+                KnowledgeGovernanceDecision.APPROVED, "CURRENT", FETCHED_AT.minusSeconds(2), VALID_UNTIL,
+                Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED");
+        WorkspaceKnowledgeRepository.Entry conflictingVersion = new WorkspaceKnowledgeRepository.Entry(
+                exact.knowledgeRef(), "provider-revision:other", exact.recordKey(), exact.recordVersion(), exact.proposal(),
+                exact.governance(), exact.proposalDigest(), exact.decisionRecordKey(), exact.decisionRecordVersion(),
+                exact.decisionProposalDigest(), exact.lifecycle(), exact.observedAt(), exact.validUntil(),
+                exact.repositoryRevisions(), exact.applicableProjectRefs(), exact.visibility());
+        var read = new WorkspaceKnowledgeRepository.ReadResult(
+                "workspace-a", "project-workspace-knowledge", FETCHED_AT, List.of(exact, conflictingVersion));
+        var request = new SwarmKnowledgeGateway.ConsumerRequest(
+                "mission:cognee-duplicate", "workspace-a", "project-workspace-knowledge", "project-consumer",
+                Map.of("repo", "rev-1"));
+
+        SwarmKnowledgeGateway.EligibleConsumerContext context = gateway().retrieveForConsumer(
+                request, read, COGNEE_DATASET, List.of(candidate(exact)));
+
+        assertThat(context.selected()).isEmpty();
+        assertThat(context.excluded()).hasSize(2)
+                .extracting(SwarmKnowledgeGateway.ContextExclusion::reason)
+                .containsOnly(SwarmKnowledgeGateway.ContextExclusionReason.DUPLICATE_RECORD_KEY);
     }
 
     @Test
@@ -174,6 +258,41 @@ class WorkspaceKnowledgeRetrievalTests {
     }
 
     @Test
+    void feedbackReplaysOriginalSelectionTimeAfterMethodExpiresButFreshSelectionExcludesIt() {
+        Instant selectedAt = FETCHED_AT.plusSeconds(30);
+        Instant validUntil = FETCHED_AT.plusSeconds(60);
+        Instant feedbackAt = FETCHED_AT.plusSeconds(120);
+        WorkspaceKnowledgeProposal method = proposal("proposal-expired-after-selection", "workspace-a", List.of());
+        WorkspaceKnowledgeRepository.Entry entry = entry(
+                method, KnowledgeGovernanceDecision.APPROVED, "CURRENT", FETCHED_AT.minusSeconds(10), validUntil,
+                Map.of("repo", "rev-1"), List.of("project-consumer"), "WORKSPACE_AUTHORIZED");
+        WorkspaceKnowledgeRepository.ReadResult read = new WorkspaceKnowledgeRepository.ReadResult(
+                "workspace-a", "project-workspace-knowledge", FETCHED_AT, List.of(entry));
+        SwarmKnowledgeGateway.ConsumerRequest request = new SwarmKnowledgeGateway.ConsumerRequest(
+                "mission:consumer-before-expiry", "workspace-a", "project-workspace-knowledge", "project-consumer",
+                Map.of("repo", "rev-1"));
+
+        SwarmKnowledgeGateway.EligibleConsumerContext original = gatewayAt(selectedAt).retrieveForConsumer(request, read);
+        SwarmKnowledgeGateway afterExpiry = gatewayAt(feedbackAt);
+        SwarmKnowledgeGateway.EligibleConsumerContext replayed =
+                afterExpiry.replayConsumerSelection(request, read, original.evaluatedAt());
+        SwarmKnowledgeGateway.ConsumerFeedback feedback = afterExpiry.buildConsumerFeedback(
+                replayed, method.proposalRef(), 1,
+                SwarmKnowledgeGateway.ConsumerDisposition.ADOPTED, "used while the receipt was eligible",
+                "action:before-expiry", "result:after-expiry", SwarmKnowledgeGateway.Outcome.UNASSESSED, List.of());
+        SwarmKnowledgeGateway.EligibleConsumerContext fresh = afterExpiry.retrieveForConsumer(request, read);
+
+        assertThat(original.selected()).containsExactly(entry);
+        assertThat(replayed.evaluatedAt()).isEqualTo(selectedAt);
+        assertThat(replayed.selected()).containsExactly(entry);
+        assertThat(feedback.actionRef()).isEqualTo("action:before-expiry");
+        assertThat(fresh.selected()).isEmpty();
+        assertThat(fresh.excluded()).singleElement()
+                .extracting(SwarmKnowledgeGateway.ContextExclusion::reason)
+                .isEqualTo(SwarmKnowledgeGateway.ContextExclusionReason.STALE);
+    }
+
+    @Test
     void mismatchedProviderWorkspaceOrProjectIsReportedAndNeverHandedOff() {
         WorkspaceKnowledgeRepository repository = new WorkspaceKnowledgeRepository() {
             @Override
@@ -200,7 +319,7 @@ class WorkspaceKnowledgeRetrievalTests {
         assertThat(context.excluded()).singleElement()
                 .extracting(SwarmKnowledgeGateway.ContextExclusion::reason)
                 .isEqualTo(SwarmKnowledgeGateway.ContextExclusionReason.READ_SCOPE_MISMATCH);
-        assertThat(context.mayProceedWithoutKnowledge()).isTrue();
+        assertThat(context.mayProceedWithoutKnowledge()).isFalse();
     }
 
     @Test
@@ -279,5 +398,12 @@ class WorkspaceKnowledgeRetrievalTests {
         return new WorkspaceKnowledgeProposal(
                 ref, workspaceRef, List.of("repo@rev1"), KnowledgeType.SEMANTIC,
                 "Use the supported entrypoint", "workspace-a", "repo@rev1", List.of(), List.of("issue:1"), conflicts);
+    }
+
+    private static CogneeSearchClient.CandidateDocument candidate(WorkspaceKnowledgeRepository.Entry entry) {
+        return new CogneeSearchClient.CandidateDocument(
+                COGNEE_DATASET, "doc:" + entry.recordKey(), entry.recordKey(), entry.recordVersion(),
+                entry.providerRevision(), entry.proposal().sourceRefs().get(0), "workspace-a",
+                "project-workspace-knowledge", "0".repeat(64), 1);
     }
 }

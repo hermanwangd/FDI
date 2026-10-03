@@ -197,7 +197,7 @@ public final class SwarmKnowledgeGateway {
 
     /**
      * Performs a provider read for this consumer invocation and returns only eligible context.
-     * An empty selection is valid because optional WorkspaceKnowledge does not gate unrelated work.
+     * An empty selection preserves exclusion evidence; it does not establish permission to continue without knowledge.
      */
     public EligibleConsumerContext retrieveForConsumer(
             ConsumerRequest request, WorkspaceKnowledgeRepository repository) {
@@ -205,7 +205,96 @@ public final class SwarmKnowledgeGateway {
         WorkspaceKnowledgeRepository provider = Objects.requireNonNull(repository, "repository is required");
         WorkspaceKnowledgeRepository.ReadResult read = Objects.requireNonNull(
                 provider.findByWorkspace(request.workspaceRef()), "WorkspaceKnowledge provider read returned no result");
-        Instant evaluatedAt = clock.instant();
+        return retrieveForConsumer(request, read);
+    }
+
+    /**
+     * Uses Cognee only to narrow a fresh governed read. Semantic candidates never become worker context by
+     * themselves; the existing eligibility evaluation remains the authority for every selected record.
+     */
+    public EligibleConsumerContext retrieveForConsumer(
+            ConsumerRequest request,
+            WorkspaceKnowledgeRepository repository,
+            String expectedDatasetId,
+            List<CogneeSearchClient.CandidateDocument> candidates) {
+        Objects.requireNonNull(request, "request is required");
+        WorkspaceKnowledgeRepository provider = Objects.requireNonNull(repository, "repository is required");
+        WorkspaceKnowledgeRepository.ReadResult read = Objects.requireNonNull(
+                provider.findByWorkspace(request.workspaceRef()), "WorkspaceKnowledge provider read returned no result");
+        return retrieveForConsumer(request, read, expectedDatasetId, candidates);
+    }
+
+    /** Evaluates only exact source-bound entries, then applies the full existing governance/freshness gate. */
+    public EligibleConsumerContext retrieveForConsumer(
+            ConsumerRequest request,
+            WorkspaceKnowledgeRepository.ReadResult read,
+            String expectedDatasetId,
+            List<CogneeSearchClient.CandidateDocument> candidates) {
+        return selectCogneeCandidates(request, read, expectedDatasetId, candidates, clock.instant());
+    }
+
+    /** Replays a receipt-bound Cognee narrowing at the original selection time. */
+    public EligibleConsumerContext replayConsumerSelection(
+            ConsumerRequest request,
+            WorkspaceKnowledgeRepository.ReadResult read,
+            Instant evaluatedAt,
+            String expectedDatasetId,
+            List<CogneeSearchClient.CandidateDocument> candidates) {
+        return selectCogneeCandidates(request, read, expectedDatasetId, candidates, evaluatedAt);
+    }
+
+    private EligibleConsumerContext selectCogneeCandidates(
+            ConsumerRequest request,
+            WorkspaceKnowledgeRepository.ReadResult read,
+            String expectedDatasetId,
+            List<CogneeSearchClient.CandidateDocument> candidates,
+            Instant evaluatedAt) {
+        Objects.requireNonNull(request, "request is required");
+        Objects.requireNonNull(read, "provider read is required");
+        String normalizedDatasetId = normalizeDatasetId(expectedDatasetId);
+        Objects.requireNonNull(evaluatedAt, "evaluatedAt is required");
+        List<CogneeSearchClient.CandidateDocument> sourceCandidates = List.copyOf(
+                candidates == null ? List.of() : candidates);
+        if (sourceCandidates.stream().anyMatch(candidate -> !normalizedDatasetId.equals(candidate.datasetId()))) {
+            throw new WorkspaceKnowledgeRepository.ProviderUnavailableException(
+                    "Cognee candidate did not match the configured dataset");
+        }
+        // Evaluate the complete provider read first. In particular, Cognee must not hide duplicate record keys
+        // by narrowing the entries before the existing duplicate/governance checks see them.
+        EligibleConsumerContext eligibleRead = evaluateConsumerRead(request, read, evaluatedAt);
+        List<WorkspaceKnowledgeRepository.Entry> selected = eligibleRead.selected().stream()
+                .filter(entry -> sourceCandidates.stream()
+                        .anyMatch(candidate -> matchesSource(candidate, request, read, entry)))
+                .toList();
+        return new EligibleConsumerContext(
+                request, eligibleRead.readWorkspaceRef(), eligibleRead.readProjectRef(), eligibleRead.fetchedAt(),
+                eligibleRead.evaluatedAt(), selected, eligibleRead.excluded());
+    }
+
+    /** Evaluates an already-obtained provider read at the current clock time. */
+    public EligibleConsumerContext retrieveForConsumer(
+            ConsumerRequest request, WorkspaceKnowledgeRepository.ReadResult read) {
+        return evaluateConsumerRead(request, read, clock.instant());
+    }
+
+    /**
+     * Re-evaluates a preserved consumer selection at its original evaluation time for receipt-lineage checks.
+     * This is not a fresh retrieval or permission to adopt expired knowledge.
+     */
+    public EligibleConsumerContext replayConsumerSelection(
+            ConsumerRequest request,
+            WorkspaceKnowledgeRepository.ReadResult read,
+            Instant evaluatedAt) {
+        return evaluateConsumerRead(request, read, evaluatedAt);
+    }
+
+    private EligibleConsumerContext evaluateConsumerRead(
+            ConsumerRequest request,
+            WorkspaceKnowledgeRepository.ReadResult read,
+            Instant evaluatedAt) {
+        Objects.requireNonNull(request, "request is required");
+        Objects.requireNonNull(read, "provider read is required");
+        Objects.requireNonNull(evaluatedAt, "evaluatedAt is required");
         var selected = new ArrayList<WorkspaceKnowledgeRepository.Entry>();
         var excluded = new ArrayList<ContextExclusion>();
 
@@ -213,7 +302,7 @@ public final class SwarmKnowledgeGateway {
                 || !request.knowledgeProjectRef().equals(read.projectRef())) {
             excluded.add(new ContextExclusion("", read.projectRef(), ContextExclusionReason.READ_SCOPE_MISMATCH));
             return new EligibleConsumerContext(
-                    request, read.workspaceRef(), read.projectRef(), read.fetchedAt(), selected, excluded);
+                    request, read.workspaceRef(), read.projectRef(), read.fetchedAt(), evaluatedAt, selected, excluded);
         }
 
         Map<String, Long> recordsPerKey = read.entries().stream()
@@ -226,7 +315,7 @@ public final class SwarmKnowledgeGateway {
             else excluded.add(new ContextExclusion(entry.recordKey(), entry.knowledgeRef(), reason));
         }
         return new EligibleConsumerContext(
-                request, read.workspaceRef(), read.projectRef(), read.fetchedAt(), selected, excluded);
+                request, read.workspaceRef(), read.projectRef(), read.fetchedAt(), evaluatedAt, selected, excluded);
     }
 
     /** Builds consumer feedback evidence; ADOPTED alone never marks the method effective. */
@@ -305,7 +394,9 @@ public final class SwarmKnowledgeGateway {
             return ContextExclusionReason.NOT_APPROVED;
         }
         if (!"CURRENT".equals(entry.lifecycle())) return ContextExclusionReason.LIFECYCLE_NOT_CURRENT;
-        if (!proposal.conflictRefs().isEmpty()) return ContextExclusionReason.UNRESOLVED_CONFLICT;
+        if (!entry.sourceConflictRefs().isEmpty() || !proposal.conflictRefs().isEmpty()) {
+            return ContextExclusionReason.UNRESOLVED_CONFLICT;
+        }
         if (entry.proposalDigest() == null || entry.proposalDigest().isBlank()) return ContextExclusionReason.DIGEST_MISSING;
         String recomputedDigest = proposalDigest(proposal);
         if (!entry.proposalDigest().equals(recomputedDigest)) return ContextExclusionReason.DIGEST_MISMATCH;
@@ -333,6 +424,31 @@ public final class SwarmKnowledgeGateway {
         if (value == null || value.isBlank()) throw new IllegalArgumentException(field + " is required");
     }
 
+    private static String normalizeDatasetId(String datasetId) {
+        require(datasetId, "expectedDatasetId");
+        try {
+            return java.util.UUID.fromString(datasetId).toString();
+        } catch (IllegalArgumentException invalidDatasetId) {
+            throw new IllegalArgumentException("expectedDatasetId must be a UUID", invalidDatasetId);
+        }
+    }
+
+    private static boolean matchesSource(
+            CogneeSearchClient.CandidateDocument candidate,
+            ConsumerRequest request,
+            WorkspaceKnowledgeRepository.ReadResult read,
+            WorkspaceKnowledgeRepository.Entry entry) {
+        if (entry.proposal() == null) return false;
+        return candidate.sourceId().equals(entry.recordKey())
+                && candidate.sourceRevision() == entry.recordVersion()
+                && candidate.providerRevision().equals(entry.providerRevision())
+                && entry.proposal().sourceRefs().contains(candidate.sourceRef())
+                && candidate.workspaceRef().equals(request.workspaceRef())
+                && candidate.workspaceRef().equals(read.workspaceRef())
+                && candidate.projectRef().equals(request.knowledgeProjectRef())
+                && candidate.projectRef().equals(read.projectRef());
+    }
+
     /** The revision map is the exact repository set relevant to this consumer request. */
     public record ConsumerRequest(
             String missionRef,
@@ -354,6 +470,7 @@ public final class SwarmKnowledgeGateway {
         private final String readWorkspaceRef;
         private final String readProjectRef;
         private final Instant fetchedAt;
+        private final Instant evaluatedAt;
         private final List<WorkspaceKnowledgeRepository.Entry> selected;
         private final List<ContextExclusion> excluded;
 
@@ -362,12 +479,14 @@ public final class SwarmKnowledgeGateway {
                 String readWorkspaceRef,
                 String readProjectRef,
                 Instant fetchedAt,
+                Instant evaluatedAt,
                 List<WorkspaceKnowledgeRepository.Entry> selected,
                 List<ContextExclusion> excluded) {
             this.request = Objects.requireNonNull(request, "request is required");
             this.readWorkspaceRef = Objects.requireNonNull(readWorkspaceRef, "readWorkspaceRef is required");
             this.readProjectRef = Objects.requireNonNull(readProjectRef, "readProjectRef is required");
             this.fetchedAt = Objects.requireNonNull(fetchedAt, "fetchedAt is required");
+            this.evaluatedAt = Objects.requireNonNull(evaluatedAt, "evaluatedAt is required");
             this.selected = List.copyOf(selected == null ? List.of() : selected);
             this.excluded = List.copyOf(excluded == null ? List.of() : excluded);
         }
@@ -380,12 +499,15 @@ public final class SwarmKnowledgeGateway {
 
         public Instant fetchedAt() { return fetchedAt; }
 
+        public Instant evaluatedAt() { return evaluatedAt; }
+
         public List<WorkspaceKnowledgeRepository.Entry> selected() { return selected; }
 
         public List<ContextExclusion> excluded() { return excluded; }
 
         public boolean mayProceedWithoutKnowledge() {
-            return true;
+            // Eligibility evidence carries no independently verified optional-context policy.
+            return false;
         }
     }
 
