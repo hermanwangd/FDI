@@ -870,6 +870,8 @@ The release-level question is:
 
 > Can the existing Swarm combine current engineering evidence with applicable reusable knowledge to improve System Analysis and System Design on unfamiliar work, with attributable quality/evidence benefit and reduced avoidable search, rework or Human rescue?
 
+The first formal end-to-end qualification case is defined separately in [SWARM-V11-Q1-QUALIFICATION-PLAN.md](SWARM-V11-Q1-QUALIFICATION-PLAN.md). That plan freezes the resilience4j Issue #480 replay, three-arm Baseline/PK/PK+History comparison, architecture-depth/C4-view selection rules, blind SA/SD scoring, hidden outcome oracle and separate effectiveness/acceleration dispositions. Case-specific execution evidence belongs there rather than expanding this implementation-plan section.
+
 ### Delta 1 — PR-first Engineering History
 
 Extend the existing historical-delivery capability with provider-neutral, change-first history semantics:
