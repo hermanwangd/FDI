@@ -2598,7 +2598,7 @@
     },
     {
       "path": "engcim/swarm/docs/rc10/RC10-COMPANY-REPO-IMPORT-MANIFEST.json",
-      "sha256": "86aa798c0e4efd12fa3f0c5611d14c0f520708632f0d5b03b7b9d8049c1b4fcb",
+      "sha256": "40a24bd60fe821a8bfcfca3763bedae29071c3fbe43e00d5cb39082ecc710d2d",
       "size": 212816
     },
     {
@@ -2608,8 +2608,8 @@
     },
     {
       "path": "engcim/swarm/docs/rc10/RC10-IMPLEMENTATION-PLAN.md",
-      "sha256": "2ad8fa9c6f3c0a1014fa425affc1c8595ea61bbe59bf0ab300bf2adf22249eaa",
-      "size": 217000
+      "sha256": "3ad6a150f6e795adceac258784a425cf385284d22a723ef70fa87bca6c0195e1",
+      "size": 217712
     },
     {
       "path": "engcim/swarm/docs/rc10/RC10-IMPLEMENTATION-REPORT.md",
@@ -2650,6 +2650,16 @@
       "path": "engcim/swarm/docs/rc10/RC6-TO-RC10-SOURCE-TO-RUNTIME-GAP-MATRIX.md",
       "sha256": "4317154c731ca8d08ccc57507f0fd8c2918736d49bcf00f20d816ec560544ebb",
       "size": 50637
+    },
+    {
+      "path": "engcim/swarm/docs/rc10/SWARM-V11-MAC-INTEGRATION.md",
+      "sha256": "53e343420d606103296c770ab2695e228e747216d0e450274865149254eb9812",
+      "size": 10289
+    },
+    {
+      "path": "engcim/swarm/docs/rc10/SWARM-V11-THREE-PR-SPLIT.md",
+      "sha256": "52734e900d8a4635aa532a778c94a3834a911c66b9fa5a2b06ef40dbf636bea6",
+      "size": 7212
     },
     {
       "path": "engcim/swarm/docs/rc10/assets/ENGCIM-SWARM-MODULE-ALIGNMENT-v1.png",
@@ -3197,6 +3207,21 @@
       "size": 1624
     },
     {
+      "path": "engcim/swarm/src/test/resources/rc10/phase2/retry-fixture/RetryPolicy.java",
+      "sha256": "60e38d4b8d6c569c5f65be6b0987b637a4080a0b9f7c54fde959bcf5c4c0fe92",
+      "size": 818
+    },
+    {
+      "path": "engcim/swarm/src/test/resources/rc10/phase2/retry-fixture/RetryPolicyOracle.java",
+      "sha256": "7b67ca3216c6b9412a7785b6316efd33cbe248d542a277970f5bff900f013ac1",
+      "size": 2468
+    },
+    {
+      "path": "engcim/swarm/src/test/resources/rc10/phase2/retry-fixture/scenario.json",
+      "sha256": "84a3a58dd21d78a6e7000d3ada54e12e0350290924e596735fe8bce3d46f43cb",
+      "size": 1857
+    },
+    {
       "path": "engcim/swarm/tooling/verification/verify_swarm_runtime.sh",
       "sha256": "731d4aed7455f70f662f2c653e2d373959802eda4c08fe899d629db7deff011e",
       "size": 3771
@@ -3278,13 +3303,13 @@
     },
     {
       "path": "release/MARKDOWN-INVENTORY.txt",
-      "sha256": "5139abb99510979df71ce92c0fbbcf580d7e21e36b297351dd80e23c11b272e8",
-      "size": 33998
+      "sha256": "63cd082ef27adbf302140c39055183d88a21ecafe0d0d32829b5e3cb766e6d0d",
+      "size": 34299
     },
     {
       "path": "release/PROJECT-TREE.txt",
-      "sha256": "9a4e9855b450309f0e63d5145111a61a8fa1f354ef0b918bda3589ba7495c481",
-      "size": 137080
+      "sha256": "e1d69cc593ed9c9400ec3f49f8217e4f37f8e23ae400af07b89f2273ab4523a1",
+      "size": 138468
     },
     {
       "path": "release/VERIFICATION-SUMMARY.json",
@@ -8675,6 +8700,106 @@
       "path": "validation/rc10/rc6-baseline-2026-09-26/pk-store-s01-rc10val4.tar.gz",
       "sha256": "e6881697523af6373f4088fa28c04f9cab121ae2fd0ea789187e9fa6110ca6c6",
       "size": 18063
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/OBSERVATIONS.md",
+      "sha256": "2541fd6d48dbd81c06754a49cd5e24c8d277f450a26b72a0ab4326c6b784fb31",
+      "size": 18544
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/PROPOSAL-DIGESTS.txt",
+      "sha256": "4d5ad0e09e2dbb926543ddb35763fb37a9e266af08342ac3775feb1ade8877ee",
+      "size": 804
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/README.md",
+      "sha256": "b31cde113d668430d8d7f23bc01cb512761bf25d07dfbe806a7f7dde07997798",
+      "size": 6339
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/SHA256SUMS",
+      "sha256": "959c82242108b4dab1fac6c9886b5cbc1e9a902cbfe306d3cf9c28767333c748",
+      "size": 1489
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/VERIFICATION.md",
+      "sha256": "57b2daa6addc1b699051218449016f5106e7bd0cccadc9cd6177cef1bd8e84c4",
+      "size": 1631
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/proposals/01.json",
+      "sha256": "455a1d22ee54a9510625dd3d89b63e1569312a674bf70299626a9b2597ccea37",
+      "size": 3544
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/proposals/02.json",
+      "sha256": "75672402253c0aa095d3d7518e8463e5b90a050189ef8817a0204f9d1ef7ed23",
+      "size": 3244
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/proposals/03.json",
+      "sha256": "1b584b662f5e09225e6791520c843588d7aa819056bf5c0bf4c51ba2b1fac6dc",
+      "size": 3233
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/proposals/04.json",
+      "sha256": "5aedc48325fe74111e618a03f6e847b5c34c7ea3b3c8de8a38d3ee31e157136d",
+      "size": 5377
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/proposals/05.json",
+      "sha256": "1aac609a4da5dc1a866b6e84be6305a0c85e7393bda62b5c625e19249e2401d3",
+      "size": 3832
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/proposals/06.json",
+      "sha256": "157fe45d54a2a44ee5ca17f3bcb71c9a3211f0dba6ed0b7de30531bdbff3ca4a",
+      "size": 4291
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/proposals/07.json",
+      "sha256": "fc27aa10b5ca00f7e25137e1e69daab8ecc1234f7bbc942e06346cbbf294db3f",
+      "size": 4317
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/sources/01.json",
+      "sha256": "24711286335ba5bbeeaf235a7264c6090276402e7beea047f481a1dc878a8827",
+      "size": 1131
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/sources/02.json",
+      "sha256": "375219f7b50e2e8f3a16d37b2018b2e2a1bbf0c48036fe912e4de2704437d782",
+      "size": 1069
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/sources/03.json",
+      "sha256": "91e47a683bdbada669fc3b383b06fec0ea84d5f6d7a53ddf3b9f684681502064",
+      "size": 873
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/sources/04.json",
+      "sha256": "574babb6dbd14480a8aac535f4045f559cc1962a5d3d52f9f8d148b7b4c10ce7",
+      "size": 1871
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/sources/05.json",
+      "sha256": "3a070d150c7868799f4efdf7d257d98286d9862981889fdd067d8843bc727350",
+      "size": 1127
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/sources/06.json",
+      "sha256": "ec07ba9c4f72ac28be3a55f0bcf3cd212a319c27184c782869a4aa8a7aa08fe7",
+      "size": 1153
+    },
+    {
+      "path": "validation/rc10/swarm-engineering-learning-20261003/sources/07.json",
+      "sha256": "920a52617e85d5ab474368e45f9bbe1ae91bd432c2df685addd498a916ebc0f4",
+      "size": 1197
+    },
+    {
+      "path": "validation/rc10/swarm-v11-cloud-20261002/pa05-pre-solution-reasoning.json",
+      "sha256": "f3989cb8b9ce816ca77df5cc895317419787fe453f9fbc05a1be296f6f2804df",
+      "size": 3765
     }
   ]
 }

@@ -800,7 +800,9 @@ swarm-v11-composition-dry-run/
 │   │   │       ├── RC10-REMAINDER-GAP-REPORT.md
 │   │   │       ├── RC10-RUNTIME-MATERIALIZATION.md
 │   │   │       ├── RC6-TO-RC10-GAP-REPORT.md
-│   │   │       └── RC6-TO-RC10-SOURCE-TO-RUNTIME-GAP-MATRIX.md
+│   │   │       ├── RC6-TO-RC10-SOURCE-TO-RUNTIME-GAP-MATRIX.md
+│   │   │       ├── SWARM-V11-MAC-INTEGRATION.md
+│   │   │       └── SWARM-V11-THREE-PR-SPLIT.md
 │   │   ├── release/
 │   │   │   └── RC10-CANDIDATE-PACKAGE/
 │   │   │       └── README.md
@@ -932,6 +934,10 @@ swarm-v11-composition-dry-run/
 │   │   │                   │   ├── c5-cause-diagnostic-v1.md
 │   │   │                   │   ├── c5-run-attribution-v2.md
 │   │   │                   │   └── child-result-locator-v3.md
+│   │   │                   ├── retry-fixture/
+│   │   │                   │   ├── RetryPolicy.java
+│   │   │                   │   ├── RetryPolicyOracle.java
+│   │   │                   │   └── scenario.json
 │   │   │                   └── knowledge-consumer-cases.json
 │   │   ├── tooling/
 │   │   │   └── verification/
@@ -2112,11 +2118,35 @@ swarm-v11-composition-dry-run/
 │       │   ├── update-outcome-orchestrator.stderr.txt
 │       │   ├── workspace.json
 │       │   └── workspace.stderr.txt
-│       └── rc6-baseline-2026-09-26/
-│           ├── BASELINE-RECORD.md
-│           ├── installed-source-RC6.zip
-│           ├── pk-store-s01-rc10val4.tar.gz
-│           └── RC6-MULTICA-VERIFICATION-REPORT.md
+│       ├── rc6-baseline-2026-09-26/
+│       │   ├── BASELINE-RECORD.md
+│       │   ├── installed-source-RC6.zip
+│       │   ├── pk-store-s01-rc10val4.tar.gz
+│       │   └── RC6-MULTICA-VERIFICATION-REPORT.md
+│       ├── swarm-engineering-learning-20261003/
+│       │   ├── proposals/
+│       │   │   ├── 01.json
+│       │   │   ├── 02.json
+│       │   │   ├── 03.json
+│       │   │   ├── 04.json
+│       │   │   ├── 05.json
+│       │   │   ├── 06.json
+│       │   │   └── 07.json
+│       │   ├── sources/
+│       │   │   ├── 01.json
+│       │   │   ├── 02.json
+│       │   │   ├── 03.json
+│       │   │   ├── 04.json
+│       │   │   ├── 05.json
+│       │   │   ├── 06.json
+│       │   │   └── 07.json
+│       │   ├── OBSERVATIONS.md
+│       │   ├── PROPOSAL-DIGESTS.txt
+│       │   ├── README.md
+│       │   ├── SHA256SUMS
+│       │   └── VERIFICATION.md
+│       └── swarm-v11-cloud-20261002/
+│           └── pa05-pre-solution-reasoning.json
 ├── .gitignore
 ├── AGENTS.md
 ├── mvnw
