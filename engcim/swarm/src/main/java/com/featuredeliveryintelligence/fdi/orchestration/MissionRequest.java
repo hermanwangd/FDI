@@ -16,7 +16,7 @@ public record MissionRequest(
         Map<String, String> currentRepositoryRevisions,
         KnowledgeContextRequirement knowledgeContextRequirement) {
 
-    public enum KnowledgeContextRequirement { REQUIRED, OPTIONAL }
+    public enum KnowledgeContextRequirement { UNSPECIFIED, REQUIRED, OPTIONAL }
 
     public MissionRequest(
             String requestRef,
@@ -28,7 +28,7 @@ public record MissionRequest(
             List<String> acceptanceCriteria,
             String requestedRevision) {
         this(requestRef, workspaceRef, projectRef, scope, goal, constraints, acceptanceCriteria,
-                requestedRevision, Map.of(), KnowledgeContextRequirement.OPTIONAL);
+                requestedRevision, Map.of(), KnowledgeContextRequirement.UNSPECIFIED);
     }
 
     public MissionRequest(
@@ -42,7 +42,7 @@ public record MissionRequest(
             String requestedRevision,
             Map<String, String> currentRepositoryRevisions) {
         this(requestRef, workspaceRef, projectRef, scope, goal, constraints, acceptanceCriteria,
-                requestedRevision, currentRepositoryRevisions, KnowledgeContextRequirement.OPTIONAL);
+                requestedRevision, currentRepositoryRevisions, KnowledgeContextRequirement.UNSPECIFIED);
     }
 
     public MissionRequest {
@@ -52,7 +52,7 @@ public record MissionRequest(
         currentRepositoryRevisions = Map.copyOf(
                 currentRepositoryRevisions == null ? Map.of() : currentRepositoryRevisions);
         knowledgeContextRequirement = knowledgeContextRequirement == null
-                ? KnowledgeContextRequirement.OPTIONAL
+                ? KnowledgeContextRequirement.UNSPECIFIED
                 : knowledgeContextRequirement;
     }
 
