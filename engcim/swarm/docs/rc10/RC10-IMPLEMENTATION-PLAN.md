@@ -892,9 +892,9 @@ Pull Request
 - Use suitable GitHub OSS history for external real-world validation under the existing approved PA-05 replay boundary: pin a case-specific temporal cutoff and exclude the target solution PR's post-cutoff changed content, review, test/check results and other post-cutoff evidence from the SA/SD reasoning input. Those withheld artifacts may be revealed only after the run as reference/evaluation evidence. Qualify Azure DevOps PR → PBI → Feature semantics after company migration.
 - Do not add `EngineeringChangeEpisode`, `ChangePattern`, `DesignPrecedent` or similar first-class contracts unless evidence demonstrates an independent lifecycle/responsibility that existing evidence/knowledge contracts cannot represent.
 
-#### D1 qualification plan — PR-first history inside a multi-source engineering case
+#### V1.1-D1 qualification plan — PR-first history inside a multi-source engineering case
 
-D1 qualifies one **historical-source traversal capability**, not the overall Source model. The qualification case may use any authorized, attributable Sources needed for the target work—such as requirements/specifications, design or architecture documents, implementation plans, issues/PBIs/features, repositories/code/configuration, tests/verification results, runtime evidence and current Mission artifacts. Those Sources retain their own provenance/authority and are not converted into PR-derived knowledge.
+V1.1-D1 qualifies one **historical-source traversal capability**, not the overall Source model. The qualification case may use any authorized, attributable Sources needed for the target work—such as requirements/specifications, design or architecture documents, implementation plans, issues/PBIs/features, repositories/code/configuration, tests/verification results, runtime evidence and current Mission artifacts. Those Sources retain their own provenance/authority and are not converted into PR-derived knowledge.
 
 Separate the case into two evidence sets before execution:
 
@@ -921,7 +921,7 @@ Evaluator-only withheld evidence
 └─ other post-cutoff answer-bearing artifacts
 ```
 
-The target solution PR is **not** the historical PR handed to the worker. It remains evaluator-only until the run ends. D1 operates on completed historical deliveries available by the cutoff and reconstructs those deliveries change-first. Existing PA-05/DH-01 semantics remain authoritative: stable delivery-unit/work-item identity, per-source correlation method/strength, completeness/limitations, conflicts/reverts/replacements, delivered-as-of and fact-level provenance remain intact. PR-first changes traversal order; it does not redefine DH-01 identity or make PR the only Source type.
+The target solution PR is **not** the historical PR handed to the worker. It remains evaluator-only until the run ends. V1.1-D1 operates on completed historical deliveries available by the cutoff and reconstructs those deliveries change-first. Existing PA-05/DH-01 semantics remain authoritative: stable delivery-unit/work-item identity, per-source correlation method/strength, completeness/limitations, conflicts/reverts/replacements, delivered-as-of and fact-level provenance remain intact. PR-first changes traversal order; it does not redefine DH-01 identity or make PR the only Source type.
 
 **Freeze before the run:**
 - target repository/product scope, target intent and cutoff T;
@@ -929,9 +929,9 @@ The target solution PR is **not** the historical PR handed to the worker. It rem
 - bounded historical search space and provider access available by T;
 - evaluator-only withheld artifacts and solution references;
 - source-link/correlation rules, including which provider-native links count as explicit;
-- D1 acceptance checks below. Do not change these after seeing the result.
+- V1.1-D1 acceptance checks below. Do not change these after seeing the result.
 
-**D1 acceptance:**
+**V1.1-D1 acceptance:**
 
 | Check | Required evidence |
 | --- | --- |
@@ -941,10 +941,10 @@ The target solution PR is **not** the historical PR handed to the worker. It rem
 | Temporal isolation | No target solution PR content or other post-cutoff answer-bearing evidence reaches SA/SD before evaluation. Durable historical records may contain post-delivery data only when the replay harness filters it at T as required by PA-05 §4.13. |
 | Historical/current boundary | Historical facts produce precedent or hypotheses only. Current applicability is confirmed, excluded or left unresolved using the current authorized sources/evidence; history does not establish current Change Surface or Product truth by itself. |
 | Honest incompleteness | Missing PRs, direct commits, review/check evidence, reverts/replacements or intent links remain explicit limitations; the run does not fabricate coverage. |
-| D2 handoff | Any historical record/observation used downstream carries exact source refs, delivery-as-of, limitations and applicability status so D2 can attribute whether it materially influenced SA/SD. D1 does not require Product/Workspace Knowledge publication to pass. |
+| V1.1-D2 handoff | Any historical record/observation used downstream carries exact source refs, delivery-as-of, limitations and applicability status so V1.1-D2 can attribute whether it materially influenced SA/SD. V1.1-D1 does not require Product/Workspace Knowledge publication to pass. |
 | Negative protection | At least one bounded negative demonstrates that absent/ambiguous linkage, contradicted/reverted history, or a post-cutoff source is not silently promoted into a current engineering conclusion. |
 
-**D1 disposition:** D1 is satisfied for the bounded case when the PR-first historical reconstruction is reproducible, temporally isolated, provenance-preserving and safely handed to current investigation with honest limitations. Whether that historical input actually improves SA/SD quality or delivery time is **not a D1 PASS condition**; those are D2 and D3 conclusions. A correct D1 run may therefore coexist with `NO_MEASURABLE_UPLIFT` or `INCONCLUSIVE` downstream effectiveness.
+**V1.1-D1 disposition:** V1.1-D1 is satisfied for the bounded case when the PR-first historical reconstruction is reproducible, temporally isolated, provenance-preserving and safely handed to current investigation with honest limitations. Whether that historical input actually improves SA/SD quality or delivery time is **not a V1.1-D1 PASS condition**; those are V1.1-D2 and V1.1-D3 conclusions. A correct V1.1-D1 run may therefore coexist with `NO_MEASURABLE_UPLIFT` or `INCONCLUSIVE` downstream effectiveness.
 
 ### Delta 2 — P2-04 actual use → S05 SA/SD effectiveness
 
