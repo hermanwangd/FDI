@@ -870,7 +870,7 @@ The release-level question is:
 
 > Can the existing Swarm combine current engineering evidence with applicable reusable knowledge to improve System Analysis and System Design on unfamiliar work, with attributable quality/evidence benefit and reduced avoidable search, rework or Human rescue?
 
-### Delta 1 — PR-first Engineering History
+### V1.1-D1 — PR-first Engineering History
 
 Extend the existing historical-delivery capability with provider-neutral, change-first history semantics:
 
@@ -946,7 +946,7 @@ The target solution PR is **not** the historical PR handed to the worker. It rem
 
 **V1.1-D1 disposition:** V1.1-D1 is satisfied for the bounded case when the PR-first historical reconstruction is reproducible, temporally isolated, provenance-preserving and safely handed to current investigation with honest limitations. Whether that historical input actually improves SA/SD quality or delivery time is **not a V1.1-D1 PASS condition**; those are V1.1-D2 and V1.1-D3 conclusions. A correct V1.1-D1 run may therefore coexist with `NO_MEASURABLE_UPLIFT` or `INCONCLUSIVE` downstream effectiveness.
 
-### Delta 2 — P2-04 actual use → S05 SA/SD effectiveness
+### V1.1-D2 — P2-04 actual use → S05 SA/SD effectiveness
 
 Keep P2-04a publication and P2-04c feedback/maintenance unchanged. Extend the P2-04b **actual consumer use** validation to demonstrate material influence on S05 engineering reasoning:
 
@@ -980,7 +980,7 @@ Preserve existing S05 responsibilities for affected scope, components/interfaces
 
 Retrieval/readback or an ADOPTED marker alone does not establish this delta; bind the selected knowledge revision to a material SA/SD reasoning use or decision and its resulting engineering outcome.
 
-### Delta 3 — Extend existing effectiveness evidence to engineering outcome
+### V1.1-D3 — Extend existing effectiveness evidence to engineering outcome
 
 Do not create a second validation or telemetry framework. Reuse the existing production-like comparison, SW2.0/SW2.8 measures and Phase 2 completion rules.
 
@@ -992,7 +992,7 @@ Continue to report acceleration separately using the existing comparable-case me
 
 GitHub external validation may establish real-world generalization of these deltas; it does not establish company/Azure qualification.
 
-For **Swarm v1.1 completion**, Delta 1 is not optional merely because the underlying Phase 2 P2-04/SW2.6 cycle can complete with another bounded knowledge source. Record PR-linked Engineering History within the existing P2-04/SW2.6 qualification evidence as one of: (a) exercised with the temporal-cutoff rule above and dispositioned from real evidence, or (b) explicitly deferred / NOT_SUPPORTED with missing evidence, owner, next trigger and accepted scope disposition. Do not create SW2.9 or a parallel completion gate. Phase 2 may retain its own bounded completion state independently; a Swarm v1.1 completion claim requires this additional Delta 1 disposition.
+For **Swarm v1.1 completion**, V1.1-D1 is not optional merely because the underlying Phase 2 P2-04/SW2.6 cycle can complete with another bounded knowledge source. Record PR-linked Engineering History within the existing P2-04/SW2.6 qualification evidence as one of: (a) exercised with the temporal-cutoff rule above and dispositioned from real evidence, or (b) explicitly deferred / NOT_SUPPORTED with missing evidence, owner, next trigger and accepted scope disposition. Do not create SW2.9 or a parallel completion gate. Phase 2 may retain its own bounded completion state independently; a Swarm v1.1 completion claim requires this additional V1.1-D1 disposition.
 
 ### Scope guardrail
 
