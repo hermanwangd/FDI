@@ -1,9 +1,12 @@
 # Swarm v1.1 Q1 Qualification Plan — Resilience4j CompletionStage<Void>
 
-**Status:** PROPOSED / qualification-ready after RC10 integration cleanup  
+**Status:** PROPOSED / pre-execution admission evidence and final freeze required
+
 **Case:** Q1 — Resilience4j Issue #480, `CompletionStage<Void>` async resilience behavior  
 **Scope:** One frozen real-world GitHub replay used to qualify V1.1-D1 → V1.1-D2 → V1.1-D3 without changing the case after results are known  
 **Non-goals:** No new ENGCIM component, source taxonomy, knowledge store, telemetry framework, production deployment, external-repository mutation, or alternate completion gate
+
+This full plan is operator/evaluator material. It contains case-specific expectations and oracle information and must not be sent to a worker or Phase 1 blind scorer. Use the explicit permitted projections below. The known case and previous results are retained; they are not relabeled as a new blind run. This plan authorizes no execution, new knowledge grant or runtime/context change.
 
 ---
 
@@ -135,13 +138,9 @@ Target work at T
 └─ other explicitly frozen Mission inputs
 ```
 
-Every material mutable provider source must be represented by one of:
+Every material mutable provider source must have exact snapshot/revision bytes and a digest, plus evidence establishing that permitted content at or before T. A snapshot hash proves identity, not historical availability. An immutable code commit does not establish the historical body, links, reviews or checks of a mutable work item.
 
-- exact content snapshot + digest;
-- immutable revision/commit + digest;
-- provider as-of receipt that establishes the exact content at or before T.
-
-A live mutable provider read after T cannot substitute for the replay input.
+Record the supported provider as-of receipt or the evidentiary basis of a controlled reconstruction separately. A reconstruction is admissible only when its exact allowed view and historical basis are verifiable before admission; otherwise exclude it and retain the unmet admission requirement. A current mutable read or a declared limitation cannot repair that gap. Workers read the frozen allowed view only, with no live post-T fallback.
 
 ### 3.2 Evaluator-only Sources
 
@@ -167,13 +166,17 @@ Before execution, create one immutable Q1 freeze manifest containing at least:
 - every historical-source ref/revision/digest;
 - Product Knowledge pack revision/digest;
 - reusable historical knowledge revision/digest;
+- revision-bound governance/eligibility/selection receipts for both consumed packs;
 - evaluator-only withheld refs;
 - worker model/config/instruction revision;
+- fresh worker/scorer context, prior-exposure quarantine and actual access-boundary receipts;
 - S05 contract/profile revision;
 - tool permissions and time budget;
 - scoring rubric revision;
 - hidden-verification revision;
 - run-invalidity rules.
+
+Seal the final manifest after Q2/Q3 pack preparation and independent readback, immediately before Q4. It binds the exact allowed worker projections, scorer packet contract, source availability evidence, eligibility decisions, first-SA/SD endpoints, concrete scoring anchors/denominators, mandatory verification commands and expected behavior, deadline and stop rules. Preserve its original bytes/hash. No dependent launch is permitted while these admission receipts are absent or contradictory.
 
 Do not alter the case, oracle, rubric, threshold or worker-visible source set after observing outcomes.
 
@@ -223,9 +226,13 @@ All arms use the same:
 - implementation endpoint;
 - review/verification requirements.
 
-Runs are isolated. No arm may read another arm's work or conversation state. Where feasible, execution order is randomized and evaluation order is anonymized.
+Runs are isolated. No arm may read another arm's work or conversation state. Freeze the supported dispatch-order control and private arm assignment/commitment before admission. Record unsupported randomization rather than claiming it occurred.
 
-Model pretraining cannot be perfectly removed; using the same model/configuration in all arms controls it as a shared background factor rather than attributing it to Product Knowledge.
+Require fresh worker conversations/process contexts and a fresh Phase 1 scorer context. Quarantine previous case reasoning, prior solution/oracle exposure, outputs, evaluation material and persisted context from those participants. An exposed operator may prepare attributable frozen evidence under an independently checked allowlist, but cannot supply answer-bearing interpretation to workers or the blind scorer. The full plan, prior case reports and evaluator-only artifacts remain outside their allowed views. A new task name alone does not establish freshness.
+
+Use the existing supported access/context boundary and separate clean checkouts/output scopes. A must be unable to read the governed PK/history packs; B must be unable to read C's historical pack; no arm may read other arms or the oracle. Capture actual context/tool/source receipts and check inherited/native context. If exclusion or visibility cannot be demonstrated, stop fresh-blind/causal qualification; a known-case operational rehearsal needs an explicit bounded disposition and must be labeled as such. Do not add services, stores, permissions, credentials or dispatchers to assert isolation.
+
+Model pretraining and stochastic variation cannot be eliminated by equal configuration. The current one-A/B/C triplet supports bounded score, action, outcome and timing observations only. Its causal PK_EFFECT, HISTORICAL_REUSE_EFFECT, FULL_KNOWLEDGE_EFFECT and ACCELERATION_EFFECT remain INCONCLUSIVE, even when a material contrast below is observed. EFFECT_VALIDATED or ACCELERATION_DEMONSTRATED would require a separately authorized, preregistered replicated design with fixed sampling/order controls and an inference rule before any runs; this plan does not prescribe or authorize additional runs. Poor results are not a reason to repeat arms.
 
 ---
 
@@ -252,6 +259,8 @@ It must not contain:
 - evaluator-only conclusions.
 
 The Product Knowledge pack therefore gives Arm B/C a better Product model, not the answer.
+
+Before handoff, bind the exact PK revision/body digest to its applicable governance decision, authority/policy and current eligibility/selection readback. The existing policy determines required approval; this is not a blanket new Human gate or a new publication authority.
 
 ### 5.1 PK setup cost
 
@@ -308,6 +317,10 @@ CONFIRMED | EXCLUDED | UNRESOLVED
 V1.1-D1 PASS requires reproducible change-first reconstruction, temporal isolation, provenance/correlation fidelity, honest incompleteness and safe handoff. It does not require Product/Workspace Knowledge publication and does not depend on whether V1.1-D2/D3 later show uplift.
 
 For **Arm C consumption**, however, any historical/reusable knowledge selected for worker handoff must pass the existing applicable governance/eligibility rules and be frozen as an exact reusable-knowledge revision before execution. This is a Q1 V1.1-D2 consumer requirement; it does not retroactively make publication a V1.1-D1 reconstruction PASS condition.
+
+The Q3→Q4 gate requires an exact revision/body-digest-bound governance decision and eligibility/selection receipt recording the existing authority, actor/policy, publication/lifecycle status, freshness/validity, target applicability, trust and conflict disposition. Read back the selected eligible revision at admission; pending revisions do not replace an eligible revision. Record raw result and exclusions, not just a citation or ADOPTED marker. Missing, expired, conflicted or unverified eligibility blocks Arm C handoff. Retain these receipts in the evidence package and completion checklist; D1 reconstruction may still be dispositioned independently.
+
+Preserve PA-05's bounded negative protection: demonstrate that an absent/ambiguous link, contradicted/reverted history or post-cutoff source is not promoted into current truth. Manual preparation is an execution mode, not itself a D1 failure.
 
 ---
 
@@ -396,12 +409,7 @@ For Q1, this should establish the Resilience4j system boundary and the applicati
 
 Show the major internal realization units that own the Product capabilities involved in the target behavior.
 
-For Q1, this level must at minimum investigate and disposition:
-
-- CircuitBreaker realization;
-- Retry realization;
-- shared/core async semantics where applicable;
-- decorators/integration layers where materially relevant.
+The worker derives the relevant realization units from the frozen intent and current evidence. The worker-facing contract must not name an expected hidden change surface or direct attention to a target-specific component from the evaluator's answer. Investigate and disposition every material unit supported by that permitted evidence.
 
 Each Level 2 unit must carry responsibility, evidence refs and one of:
 
@@ -417,22 +425,7 @@ A Level 2 unit may correspond to a C4 Container when the runtime abstraction is 
 
 Decompose every material Level 2 unit into the components/responsibilities needed to explain the current behavior and To-Be design.
 
-For Q1 this includes, as applicable:
-
-```text
-CircuitBreaker side
-├─ permission acquisition
-├─ CompletionStage completion handling
-├─ success/error accounting
-├─ metrics
-└─ state transition responsibility
-
-Retry side
-├─ async retry block
-├─ completion classification
-├─ result/error handling
-└─ retry/success decision
-```
+The worker derives material responsibilities and mechanisms from its allowed evidence. Component names, expected fixes and target-specific decomposition from the oracle are not part of the worker contract.
 
 Level 3 must identify:
 
@@ -482,8 +475,8 @@ A material break in this chain is an architecture-depth defect.
 
 Examples:
 
-- L1 identifies async resilience behavior, but L2 only models CircuitBreaker while current evidence confirms Retry shares the semantic path;
-- L2 puts Retry in scope, but L3 cannot explain which Retry responsibility is affected;
+- L1 identifies behavior whose current-source ownership is omitted from L2;
+- L2 puts a unit in scope, but L3 cannot explain its affected responsibility;
 - L3 changes a completion handler but Dynamic/State views do not show how the behavior changes;
 - implementation changes a component absent from L2/L3 with no justified late evidence.
 
@@ -504,6 +497,12 @@ Evaluate:
 More diagrams do not improve the score by themselves.
 
 A material cross-level or cross-view contradiction is a quality defect.
+
+### 9.5 Absolute conformance and evaluator boundary
+
+For each arm, record absolute conformance with mandatory L1/L2/L3, As-Is/To-Be Dynamic, applicable State and material cross-level traceability. Missing a mandatory level/view or a material traceability break prevents any Q1 V1.1-D2/D3 effect PASS, regardless of relative score. Preserve the score but disposition the affected effectiveness comparison INCONCLUSIVE with the unmet contract; a shared omission cannot cancel out as equal deductions.
+
+The generic SA/SD/view contract may be projected to workers. Case-specific expected units, hidden change surfaces and component decompositions belong only to the withheld evaluator material and are not released to workers or the Phase 1 scorer. They may inform Phase 2 comparison after all first-SA/SD scores are sealed. This plan's case/oracle sections are never a worker input.
 
 ---
 
@@ -534,15 +533,21 @@ This matrix supports the depth verdict; it is not added again to the 100-point t
 
 ## 11. Blind SA/SD Evaluation — Before Oracle Reveal
 
-SA/SD quality is scored before PR #484 or hidden solution evidence is revealed.
+SA/SD quality is scored before PR #484 or hidden solution evidence is revealed. The primary artifacts are each arm's first complete native SA and first complete native SD, with exact original revision/hash and delivery receipt fixed before review, coding, rescue, feedback or grading. Preserve incomplete/failed outputs; do not select a later best revision. Later repairs and engineering results are separate secondary evidence.
 
 ### Phase 1A — Independent architecture/engineering scoring
 
 - Freeze Arm A/B/C submissions.
-- Present them in randomized/anonymized order where practical.
+- Use mandatory technical-only anonymous packets and a frozen anonymous evaluation order; unsupported randomization is reported explicitly.
 - Evaluator has the frozen target Sources but not PR #484.
 - Score SA/SD quality, depth, evidence grounding and downstream usability.
 - Freeze the scores and findings.
+
+Before launch, independently inspect the permitted packet projection and rubric. Before scoring, inspect the actual packets again without exposing the arm map. Allow only frozen technical SA/SD reasoning, diagrams, verification implications and necessary technical evidence excerpts with neutral source aliases. Preserve claim/evidence relationships, legitimate technical citations, wrong assumptions and unknowns; never rewrite the design to improve it.
+
+Exclude arm/condition labels, PK/history retrieval or ADOPTED/MethodUsed/feedback markers, actor/role/workspace/run identities, private paths, routing/prior-run history, timestamps/timing/usage/cost, oracle clues and operator interpretation. Never pass a raw native envelope and rely on the scorer to ignore these fields. Keep a private original-to-packet byte/hash correspondence and removal ledger. Substance can still suggest a condition; report that limit rather than claiming perfect blinding.
+
+The fresh scorer receives only validated packets, the frozen generic rubric/conformance contract and permitted pre-cutoff technical references. Seal original score/report bytes and hashes before revealing arm/knowledge identity or oracle material. On exposure, stop that scorer, preserve its partial work and record the disclosure boundary; no blind claim survives that exposure. A replacement scorer requires a pre-frozen integrity rule and unchanged artifacts, not a solver rerun or post-hoc packet tuning.
 
 ### Phase 1B — Knowledge causal attribution
 
@@ -559,6 +564,8 @@ knowledge revision
 ```
 
 Current evidence remains the authority for current applicability.
+
+Also trace direct Sources through their attributed observations/correlation or synthesis to the specific SA/SD decision, action and observed outcome. Specifications, design/implementation plans, code, tests and runtime/Mission evidence remain Sources; they need not become PK/WK. Record retrieval, selection, declared adoption, actual decision use and observed effect separately. PR→WK alone is not the engineering-value trace.
 
 ---
 
@@ -602,7 +609,7 @@ A design that reaches the eventual patch by unsupported guessing does not receiv
 
 ## 14. Architecture-Depth Gate for V1.1-D2
 
-Proposed frozen material-uplift thresholds for Q1:
+Proposed material-contrast thresholds for Q1, to be adopted and frozen before launch. They classify bounded observed contrasts; they do not overcome §4.1's single-triplet causal limitation. Every rule requires §9.5 absolute architecture conformance and valid admission/blinding evidence.
 
 ### PK_EFFECT — Arm B vs Arm A
 
@@ -616,7 +623,15 @@ Require all of:
 
 ### HISTORICAL_REUSE_EFFECT — Arm C vs Arm B
 
-A historical-reuse uplift is material when it causes an attributable new or improved engineering decision, such as:
+A bounded historical-reuse contrast is material only when all of the following hold:
+
+- Arm C SA score >= Arm B SA score;
+- Arm C SD score >= Arm B SD score;
+- Arm C SA+SD >= Arm B SA+SD + 4 points out of 80;
+- no critical-layer or architecture/evidence regression;
+- at least one exact history→reasoning→decision→action trace supports a material improvement.
+
+Examples of a qualifying decision improvement are:
 
 - a current change surface that B missed;
 - a dependency/constraint/risk B missed;
@@ -624,7 +639,7 @@ A historical-reuse uplift is material when it causes an attributable new or impr
 - removal of an unsupported assumption;
 - a meaningful SA/SD score increase.
 
-For Q1, use +4/80 SA+SD points as the proposed quantitative corroboration threshold, but causal traceability is mandatory; a numeric increase without a history→reasoning→decision chain is not validated reuse.
+The +4/80 threshold is mandatory, not optional corroboration. A smaller contrast is NO_MEASURABLE_UPLIFT as a bounded observation; a worse score/critical regression is a bounded REGRESSION. Missing trace, contract failure, exposure or invalid admission is INCONCLUSIVE. None authorizes a causal EFFECT_VALIDATED verdict for one triplet.
 
 ### FULL_KNOWLEDGE_EFFECT — Arm C vs Arm A
 
@@ -635,7 +650,7 @@ Require:
 - material uplift in architecture/change-surface or behavior/verification depth;
 - causal evidence showing which Product Knowledge and/or historical knowledge contributed.
 
-These thresholds are frozen before execution. Do not lower them after seeing results.
+Freeze concrete full/partial/no-credit item anchors, applicability/denominators and critical defects with these rules before execution. Do not lower thresholds or remove unassessable items after seeing results.
 
 ---
 
@@ -664,6 +679,8 @@ The hidden oracle should cover at least:
 
 Worker-authored tests are scored separately from hidden tests.
 
+All eight listed hidden behaviors are mandatory. Before launch freeze the exact fixtures/commands, expected pre-existing error policy, required baseline/regression gates and any diagnostic-equivalence rule. Any missing/failed mandatory behavior or critical regression fails functional qualification; nominal completion or a later ad-hoc compensating check cannot replace that gate. Preserve raw failures and attempts.
+
 ### 15.2 Outcome rubric — 20 points
 
 | Outcome dimension | Points |
@@ -675,6 +692,10 @@ Worker-authored tests are scored separately from hidden tests.
 | **Outcome total** | **20** |
 
 Exact textual or file-for-file agreement with PR #484 is not required.
+
+Per-arm functional qualification requires full 8/8 patch/behavior-correctness credit, full 5/5 hidden-verification credit, every frozen mandatory verification gate passing and zero critical regressions. The correctness floor is therefore 13/20; the other seven points report minimality and review/rework quality and cannot compensate for incorrect behavior. Freeze concrete point anchors and critical failures before execution.
+
+Report B−A, C−B and C−A outcome contrasts separately. A bounded better-outcome observation requires the treatment arm to meet that correctness floor, a strictly positive outcome-score difference, no critical regression and an exact decision→action→outcome trace. Equal qualified scores are NO_MEASURABLE_UPLIFT; a worse score or critical regression is a bounded REGRESSION; missing gates/trace or invalid evidence is INCONCLUSIVE. Qualification of one arm is a direct verification fact, not causal validation. The current single triplet's causal ENGINEERING_OUTCOME_EFFECT remains INCONCLUSIVE under §4.1 even when these bounded observations are present.
 
 ---
 
@@ -693,7 +714,7 @@ SA 40
 = 100
 ```
 
-V1.1-D3 engineering effectiveness requires the relevant V1.1-D2 depth/quality gate plus no critical downstream regression.
+Any Q1 V1.1-D3 effect candidate requires the relevant V1.1-D2 material-contrast rule, absolute architecture conformance, §15's functional floor/mandatory gates and no critical downstream regression. Better SA/SD alone does not establish a better engineering outcome; report the separate outcome contrasts and trace. The one-triplet causal effectiveness verdict remains INCONCLUSIVE.
 
 Allowed dispositions:
 
@@ -703,6 +724,8 @@ Allowed dispositions:
 - `INCONCLUSIVE`
 
 An unfavorable result is retained. Do not swap the case or change the oracle to manufacture uplift.
+
+For this single triplet, report the actual scores, conformance, functional results and bounded contrast dispositions alongside INCONCLUSIVE causal verdicts. EFFECT_VALIDATED is unavailable without the separately preregistered replicated evidence described in §4.1.
 
 ### 16.2 Acceleration
 
@@ -733,6 +756,8 @@ Report separately:
 3. **Knowledge setup cost:** PK/history construction/governance outside the Mission.
 
 Do not infer acceleration from fewer retrieval calls, lower token count, or a single fast run.
+
+Freeze T0–T5 event definitions and identical absolute qualification gates before launch. Keep creation, dispatch, start, artifact delivery, run completion and readback distinct; missing required gates mean that endpoint was not achieved. Report queue/active/wall time, PK/history setup, review/rework/rescue, packet/grading and feedback overhead separately. The single triplet permits bounded timing observations only; causal ACCELERATION_EFFECT is INCONCLUSIVE and ACCELERATION_DEMONSTRATED is unavailable.
 
 Allowed acceleration dispositions:
 
@@ -768,8 +793,11 @@ A run may be declared invalid only for a pre-frozen execution failure such as:
 - infrastructure/tool failure preventing comparable completion;
 - model/config mismatch;
 - corruption of required artifacts.
+- prior-exposure/context or scoring-packet leakage violating the frozen admission/blinding contract.
 
 Invalid runs are preserved with the reason. A rerun, if necessary, uses the same frozen inputs/rubric. Poor engineering quality is not a valid reason to rerun.
+
+Freeze any permitted bounded correction/replacement rule and deadline before admission. A critical source, eligibility, context, isolation or blinding gap stops dependent work; an operational-only downgrade must be explicit and cannot be reported as fresh blind causal qualification. Previously completed case results remain unchanged.
 
 ---
 
@@ -784,12 +812,18 @@ validation/rc10/swarm-v11-q1/
 ├─ product-knowledge/
 │  ├─ source-manifest.json
 │  ├─ governed-pk-revision.json
-│  └─ product-context-receipt.json
+│  ├─ product-context-receipt.json
+│  └─ revision-eligibility-selection-receipt.json
 ├─ historical/
 │  ├─ H1-pr394/
 │  ├─ H2-pr173/
 │  ├─ d1-reconstruction.json
-│  └─ reusable-knowledge-revision.json
+│  ├─ reusable-knowledge-revision.json
+│  └─ revision-eligibility-selection-receipt.json
+├─ admission/
+│  ├─ fresh-context-and-prior-exposure-receipts.json
+│  ├─ allowed-view-and-access-boundary-receipts.json
+│  └─ final-freeze-readback.json
 ├─ arm-a-baseline/
 │  ├─ sa/
 │  ├─ sd/
@@ -808,6 +842,8 @@ validation/rc10/swarm-v11-q1/
 ├─ blind-evaluation/
 │  ├─ sa-sd-scores.json
 │  ├─ reasoning-coverage-matrix.json
+│  ├─ technical-packet-contract-and-inspection.json
+│  ├─ score-seal-and-disclosure-receipt.json
 │  └─ review-findings.md
 ├─ oracle/
 │  ├─ withheld-manifest.json
@@ -830,6 +866,9 @@ Q1  freeze target Sources / cutoff / oracle / rubric
 Q2  build + govern target-independent Product Knowledge
  ↓
 Q3  V1.1-D1 PR-first historical reconstruction + reusable knowledge freeze
+ ↓
+Q3a exact PK/history eligibility + fresh-context/access/packet checks;
+    final manifest seal and independent readback; stop on unmet admission
  ↓
 Q4  execute isolated Arm A / B / C to the same endpoint
  ↓
@@ -856,13 +895,17 @@ The entire Q1 sequence is one qualification slice. V1.1-D1, D2 and D3 are not se
 Q1 is complete when:
 
 - the case and all mutable replay Sources are frozen reproducibly;
+- the Q3a final manifest/readback, prior-exposure/context/access and packet checks are satisfied, or the case is explicitly stopped/downgraded;
 - V1.1-D1 is dispositioned from real historical evidence;
+- exact consumed PK/history governance and current revision-eligibility/selection receipts are retained;
 - all A/B/C arms reach the same predeclared endpoint or are honestly invalidated;
+- first-SA/SD artifacts, absolute architecture conformance and mandatory engineering gates are dispositioned independently of relative scores;
 - blind SA/SD scoring is frozen before oracle reveal;
 - PK and historical knowledge influence is traceable to material reasoning/decisions;
 - hidden outcome verification is complete;
 - quality and acceleration conclusions are separate;
 - unfavorable/no-uplift results are preserved;
+- single-triplet causal effectiveness/acceleration verdicts remain INCONCLUSIVE; bounded observations are not relabeled as validated effects;
 - no target-solution leakage, fabricated linkage, Product-truth elevation from history, or post-hoc rubric/case changes occurred.
 
 Q1 completion does not establish company/Azure qualification, production deployment, Human DONE, or universal Swarm effectiveness across all engineering domains.
