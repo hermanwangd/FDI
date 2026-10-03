@@ -319,9 +319,9 @@ SA must include:
 
 1. intent/problem interpretation;
 2. Product behavior and capability analysis;
-3. system boundary/context;
-4. current Product/module realization;
-5. affected responsibility/component analysis;
+3. Level 1 system boundary/context;
+4. Level 2 current Product/module realization;
+5. Level 3 affected component/responsibility analysis;
 6. As-Is critical dynamic behavior;
 7. state/behavior model where state is material;
 8. explicit behavior/invariant model;
@@ -344,8 +344,8 @@ SD must include:
 
 1. design intent/principles;
 2. To-Be behavior;
-3. architecture/realization delta;
-4. To-Be component/responsibility design;
+3. Level 2 To-Be architecture/realization delta;
+4. Level 3 To-Be component/responsibility design;
 5. To-Be critical dynamic behavior;
 6. explicit invariants;
 7. interface/interaction implications;
@@ -359,46 +359,151 @@ The design must be implementation-ready: a Coder should not have to rediscover t
 
 ---
 
-## 9. C4 and Supporting-View Selection Contract
+## 9. Architecture Hierarchy and C4/Supporting-View Contract
 
-Q1 evaluates architecture-model fitness, not diagram count.
+Q1 evaluates architecture depth and model fitness, not diagram count.
 
-C4 abstractions must not be falsified merely to satisfy a checklist. In particular, a Maven/JAR/module is not automatically a C4 Container. Use a C4 Container only when the modeled element is a deployable/runnable application or data store consistent with the C4 abstraction being claimed.
+The qualification requires a three-level architecture hierarchy for every arm:
 
-### 9.1 Q1 expected view set
+```text
+Level 1 — System Context
+        ↓
+Level 2 — Product / Module Realization
+        ↓
+Level 3 — Component / Responsibility
+```
 
-For Issue #480, the expected architecture evidence is:
+All three levels are mandatory. They must be mutually traceable and consistent with the same frozen evidence.
+
+C4 terminology is used only where its abstraction is valid. In particular, a Maven/JAR/module is not automatically a C4 Container. If a real deployable/runnable C4 Container exists, Level 2 may use the C4 Container view directly. If not, the arm must still provide the mandatory Level 2 Product/Module Realization view and explicitly label it as a qualification architecture view rather than a C4 Container.
+
+Likewise, Level 3 is mandatory even when there is no strict C4 Container scope. In that case use a clearly named Component/Responsibility view rather than falsely claiming a C4 Component diagram.
+
+### 9.1 Mandatory structural levels
+
+#### Level 1 — System Context
+
+Show:
+
+- the software system under analysis;
+- relevant users/actors/external systems;
+- the behavioral boundary of the target problem;
+- material external dependencies relevant to the case.
+
+For Q1, this should establish the Resilience4j system boundary and the application/backend interaction without collapsing into module/code detail.
+
+#### Level 2 — Product / Module Realization
+
+Show the major internal realization units that own the Product capabilities involved in the target behavior.
+
+For Q1, this level must at minimum investigate and disposition:
+
+- CircuitBreaker realization;
+- Retry realization;
+- shared/core async semantics where applicable;
+- decorators/integration layers where materially relevant.
+
+Each Level 2 unit must carry responsibility, evidence refs and one of:
+
+```text
+CONFIRMED
+EXCLUDED
+UNRESOLVED
+```
+
+A Level 2 unit may correspond to a C4 Container when the runtime abstraction is valid; otherwise it remains an explicit Product/Module realization element.
+
+#### Level 3 — Component / Responsibility
+
+Decompose every material Level 2 unit into the components/responsibilities needed to explain the current behavior and To-Be design.
+
+For Q1 this includes, as applicable:
+
+```text
+CircuitBreaker side
+├─ permission acquisition
+├─ CompletionStage completion handling
+├─ success/error accounting
+├─ metrics
+└─ state transition responsibility
+
+Retry side
+├─ async retry block
+├─ completion classification
+├─ result/error handling
+└─ retry/success decision
+```
+
+Level 3 must identify:
+
+- component responsibility;
+- relevant interaction/dependency;
+- current behavior;
+- To-Be responsibility/change;
+- evidence source;
+- whether the component changes or is explicitly no-change.
+
+### 9.2 Supporting views
+
+For Issue #480, the required supporting architecture evidence is:
 
 | View | Q1 expectation |
 | --- | --- |
-| C4 System Context | Applicable; concise system boundary/context |
-| C4 Container | Conditional; do not relabel library modules as Containers without a valid runtime/container boundary |
-| C4 Component | Conditional on a valid Container scope; otherwise use a clearly named responsibility/component view |
-| C4 Code | Optional |
+| Level 1 System Context | **Mandatory** |
+| Level 2 Product/Module Realization | **Mandatory** |
+| Level 3 Component/Responsibility | **Mandatory** |
+| C4 Container | Use when a valid runtime/container boundary exists; otherwise do not mislabel Level 2 |
+| C4 Component | Use when valid under a C4 Container; otherwise do not mislabel Level 3 |
+| C4 Dynamic | **Mandatory** for As-Is and To-Be critical runtime behavior |
+| State Diagram | **Mandatory** for the CircuitBreaker state mechanism; non-C4 supporting model |
 | C4 System Landscape | Normally N/A unless evidence shows a portfolio/system-of-systems concern |
-| C4 Dynamic | Mandatory for As-Is and To-Be critical runtime behavior |
 | C4 Deployment | Normally N/A unless deployment topology materially affects the defect |
-| Product/Module Realization View | Mandatory; non-C4 if necessary |
-| State Diagram | Mandatory for the CircuitBreaker state mechanism; non-C4 supporting model |
+| C4 Code | Optional |
 
-Every omitted/conditional view needs a one-line applicability rationale.
+Every omitted conditional C4/supporting view needs a one-line applicability rationale.
 
-### 9.2 Architecture-quality dimensions
+### 9.3 Cross-level traceability gate
+
+The three mandatory architecture levels must form one consistent reasoning chain:
+
+```text
+L1 system behavior/problem boundary
+        ↓
+L2 owning Product/module realization
+        ↓
+L3 component/responsibility mechanism
+        ↓
+Dynamic/state failure mechanism
+        ↓
+To-Be design / verification implication
+```
+
+A material break in this chain is an architecture-depth defect.
+
+Examples:
+
+- L1 identifies async resilience behavior, but L2 only models CircuitBreaker while current evidence confirms Retry shares the semantic path;
+- L2 puts Retry in scope, but L3 cannot explain which Retry responsibility is affected;
+- L3 changes a completion handler but Dynamic/State views do not show how the behavior changes;
+- implementation changes a component absent from L2/L3 with no justified late evidence.
+
+### 9.4 Architecture-quality dimensions
 
 Evaluate:
 
+- Level 1 correctness;
+- Level 2 completeness and responsibility correctness;
+- Level 3 component/responsibility depth;
 - view fitness;
 - abstraction integrity;
 - model correctness;
-- model completeness;
-- responsibility/boundary correctness;
 - evidence grounding;
-- cross-view consistency;
+- cross-level/cross-view consistency;
 - decision usefulness.
 
 More diagrams do not improve the score by themselves.
 
-A material cross-view contradiction is a quality defect. Example: SA says Retry is in scope, Dynamic omits it without explanation, SD excludes it, while implementation changes it.
+A material cross-level or cross-view contradiction is a quality defect.
 
 ---
 
@@ -463,8 +568,8 @@ Current evidence remains the authority for current applicability.
 | --- | ---: |
 | Intent / Product behavior | 5 |
 | Capability understanding | 5 |
-| Architecture / realization | 5 |
-| Architecture view selection & correctness | 4 |
+| Level 2 architecture / realization | 5 |
+| Level 3 component/responsibility depth + view correctness | 4 |
 | Dynamic / state understanding | 5 |
 | Root-cause causal chain | 5 |
 | Change-surface completeness | 5 |
@@ -482,7 +587,7 @@ A critical unsupported current-truth claim, material solution leakage, fabricate
 | --- | ---: |
 | Design intent / principles | 4 |
 | To-Be behavior | 5 |
-| Architecture / component design | 6 |
+| Level 2/3 architecture and component design | 6 |
 | To-Be Dynamic | 4 |
 | Explicit invariants | 5 |
 | Interface / interaction implications | 4 |
