@@ -77,7 +77,7 @@ class MissionFlowTests {
         assertThat(formulated.request().acceptanceCriteria()).isEqualTo(request.acceptanceCriteria());
         assertThat(formulated.request().requestedRevision()).isEqualTo("rev-17");
         assertThat(formulated.request().knowledgeContextRequirement())
-                .isEqualTo(MissionRequest.KnowledgeContextRequirement.OPTIONAL);
+                .isEqualTo(MissionRequest.KnowledgeContextRequirement.UNSPECIFIED);
     }
 
     @Test
@@ -174,6 +174,32 @@ class MissionFlowTests {
             assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(knowledgeRequest())))
                     .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
                     .hasMessageContaining("Required knowledge context");
+            assertThat(dispatches.get()).isZero();
+        }
+    }
+
+    @Test
+    void unspecifiedKnowledgePolicyPreservesFailClosedConfiguredConsumer() {
+        for (boolean unavailable : List.of(false, true)) {
+            WorkspaceKnowledgeRepository source = new WorkspaceKnowledgeRepository() {
+                @Override public void save(GovernedWorkspaceKnowledge knowledge) { throw new AssertionError("no writes"); }
+                @Override public ReadResult findByWorkspace(String workspaceRef) {
+                    if (unavailable) throw new ProviderUnavailableException("provider unavailable");
+                    return new ReadResult(workspaceRef, "workspace-knowledge-a",
+                            Instant.parse("2026-10-02T00:00:00Z"), List.of());
+                }
+            };
+            var dispatches = new java.util.concurrent.atomic.AtomicInteger();
+            var swarm = new SwarmMissionGateway(execution -> {
+                dispatches.incrementAndGet();
+                throw new AssertionError("unverified optionality must not authorize dispatch");
+            }, new SwarmKnowledgeGateway(), source,
+                    workspaceRef -> new WorkspaceKnowledgeProjectRef(
+                            workspaceRef, "workspace-knowledge-a", "Workspace Knowledge"));
+
+            assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(request())))
+                    .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
+                    .hasMessageContaining("optional-context policy");
             assertThat(dispatches.get()).isZero();
         }
     }
