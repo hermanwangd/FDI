@@ -65,9 +65,11 @@ public final class SwarmMissionGateway {
     public WorkItemResult execute(Mission mission) {
         Objects.requireNonNull(mission, "mission is required");
         MissionExecutionEnvelope execution = prepareKnowledgeContext(mission);
-        if (knowledgeGateway != null && execution.knowledgeContextStatus() != MissionExecutionEnvelope.KnowledgeContextStatus.AVAILABLE) {
-            throw new RuntimeContractException("Knowledge context " + execution.knowledgeContextStatus()
-                    + " blocks dispatch: optional-context policy has not been verified");
+        if (knowledgeGateway != null
+                && execution.knowledgeContextStatus() != MissionExecutionEnvelope.KnowledgeContextStatus.AVAILABLE
+                && mission.request().knowledgeContextRequirement() == MissionRequest.KnowledgeContextRequirement.REQUIRED) {
+            throw new RuntimeContractException("Required knowledge context " + execution.knowledgeContextStatus()
+                    + " blocks dispatch");
         }
         BindingReceipt receipt = runtimeBinding.execute(execution);
         return new WorkItemResult(
