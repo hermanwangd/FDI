@@ -65,8 +65,7 @@ public final class SwarmMissionGateway {
     public WorkItemResult execute(Mission mission) {
         Objects.requireNonNull(mission, "mission is required");
         MissionExecutionEnvelope execution = prepareKnowledgeContext(mission);
-        if (knowledgeGateway != null
-                && execution.knowledgeContextStatus() != MissionExecutionEnvelope.KnowledgeContextStatus.AVAILABLE
+        if (execution.knowledgeContextStatus() != MissionExecutionEnvelope.KnowledgeContextStatus.AVAILABLE
                 && mission.request().knowledgeContextRequirement() == MissionRequest.KnowledgeContextRequirement.REQUIRED) {
             throw new RuntimeContractException("Required knowledge context " + execution.knowledgeContextStatus()
                     + " blocks dispatch");
