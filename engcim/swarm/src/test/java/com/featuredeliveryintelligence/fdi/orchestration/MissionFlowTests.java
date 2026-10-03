@@ -76,6 +76,8 @@ class MissionFlowTests {
         assertThat(formulated.request().constraints()).isEqualTo(request.constraints());
         assertThat(formulated.request().acceptanceCriteria()).isEqualTo(request.acceptanceCriteria());
         assertThat(formulated.request().requestedRevision()).isEqualTo("rev-17");
+        assertThat(formulated.request().knowledgeContextRequirement())
+                .isEqualTo(MissionRequest.KnowledgeContextRequirement.OPTIONAL);
     }
 
     @Test
@@ -101,6 +103,20 @@ class MissionFlowTests {
                 .isEqualTo(MissionExecutionEnvelope.KnowledgeContextStatus.NOT_CONFIGURED);
         assertThat(seen.get(0).eligibleKnowledge()).isEmpty();
         assertThat(seen.get(0).currentRepositoryRevisions()).containsExactlyEntriesOf(Map.of("repo-a", "rev-17"));
+    }
+
+    @Test
+    void requiredKnowledgeBlocksWhenConsumerIsNotConfigured() {
+        var dispatches = new java.util.concurrent.atomic.AtomicInteger();
+        var swarm = new SwarmMissionGateway(execution -> {
+            dispatches.incrementAndGet();
+            throw new AssertionError("required knowledge must block before runtime dispatch");
+        });
+
+        assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(knowledgeRequest())))
+                .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
+                .hasMessageContaining("Required knowledge context NOT_CONFIGURED");
+        assertThat(dispatches.get()).isZero();
     }
 
     @Test
@@ -211,7 +227,8 @@ class MissionFlowTests {
 
         assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(new MissionRequest(
                 "req-revision-mismatch", "workspace-a", "project-a", "src", "Fix the report issue",
-                List.of(), List.of("continue without stale method"), "rev-17", Map.of("repo-a", "rev-17")))))
+                List.of(), List.of("continue without stale method"), "rev-17", Map.of("repo-a", "rev-17"))
+                .withKnowledgeContextRequirement(MissionRequest.KnowledgeContextRequirement.REQUIRED))))
                 .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
                 .hasMessageContaining("NO_ELIGIBLE_RECORDS")
                 .hasMessageContaining("Required knowledge context");
@@ -242,7 +259,7 @@ class MissionFlowTests {
                 binding, new SwarmKnowledgeGateway(), unavailableRepository,
                 workspaceRef -> new WorkspaceKnowledgeProjectRef(workspaceRef, "workspace-knowledge-a", "Workspace Knowledge"));
 
-        assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(request())))
+        assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(knowledgeRequest())))
                 .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
                 .hasMessageContaining("PROVIDER_UNAVAILABLE")
                 .hasMessageContaining("Required knowledge context");
@@ -720,7 +737,8 @@ class MissionFlowTests {
 
     private static MissionRequest knowledgeRequest() {
         return new MissionRequest("req-knowledge", "workspace-a", "project-a", "src", "Fix report",
-                List.of(), List.of("qualified source"), "rev-17", Map.of("repo-a", "rev-17"));
+                List.of(), List.of("qualified source"), "rev-17", Map.of("repo-a", "rev-17"))
+                .withKnowledgeContextRequirement(MissionRequest.KnowledgeContextRequirement.REQUIRED);
     }
 
     private static MissionRequest request() {
