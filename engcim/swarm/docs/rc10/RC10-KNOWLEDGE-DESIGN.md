@@ -34,6 +34,8 @@ ENGCIM needs a knowledge architecture that:
 
 The growth objective is to improve judgment and subsequent work in concrete scenarios: preserve quality while measurably reducing avoidable Human reminders, rescue and rework. Retrieval, record counts and isolated test passes do not establish this outcome. The bounded acceptance procedure is in §27.6.6.1.
 
+**Canonical Source meaning.** In this design, `Source` is the generic provenance-bearing input to current reasoning or knowledge construction; it is not a synonym for Product Knowledge, Pull Request, or any single provider. A Source may be any attributable document, artifact, repository state, or evidence relevant to the work—for example requirements/specifications, design or architecture documents, implementation plans, issues/PBIs/features, repositories/code/configuration, pull requests/commits/reviews, tests/verification results, runtime/incident evidence, or Mission artifacts. A Source may be consumed directly as authorized Mission evidence/context, or enter the canonical `Source Intake → Observation → Correlation / Conflict Detection / Synthesis → Knowledge Proposal → Governance → Governed Knowledge → Context / Reuse` path; being a Source does not by itself make the material governed Knowledge. The §33.1 PR-first addition is only an extension of `PA-Historical-Delivery` historical source traversal and does not narrow or replace this broader Source model.
+
 The target loop has independent, governed branches:
 
 ```text
