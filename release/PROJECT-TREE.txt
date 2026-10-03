@@ -1,4 +1,4 @@
-swarm-v11-pr-a/
+swarm-v11-composition-dry-run/
 ├── .mvn/
 │   └── wrapper/
 │       └── maven-wrapper.properties
@@ -233,6 +233,7 @@ swarm-v11-pr-a/
 │   │   │   │           ├── RUNTIME-LIFECYCLE-RUNBOOK-v0.1.md
 │   │   │   │           └── WORKSPACE-BOOTSTRAP-RUNBOOK-v0.1.md
 │   │   │   └── multica/
+│   │   │       ├── RC10-ORCHESTRATOR-PARENT-REPORT.md
 │   │   │       ├── RC10-S05-S06-ROLE-GUIDANCE.md
 │   │   │       └── RC10-WORKSPACE-LEARNING.md
 │   │   ├── state-templates/
@@ -849,6 +850,7 @@ swarm-v11-pr-a/
 │   │   │   │                   │   ├── ObservationState.java
 │   │   │   │                   │   ├── OperationalMulticaPort.java
 │   │   │   │                   │   ├── OperationalReceipt.java
+│   │   │   │                   │   ├── OrchestratorReportAudit.java
 │   │   │   │                   │   ├── ProductKnowledgeProposal.java
 │   │   │   │                   │   ├── RuntimeBindingPort.java
 │   │   │   │                   │   ├── SupervisorMulticaAction.java
@@ -898,6 +900,7 @@ swarm-v11-pr-a/
 │   │   │       │               ├── application/
 │   │   │       │               │   ├── Dev204CogneeConsumerIndependentTests.java
 │   │   │       │               │   ├── Dev204KnowledgeConsumerCliTests.java
+│   │   │       │               │   ├── Dev204ReportAuditCliTests.java
 │   │   │       │               │   └── FdiApplicationTests.java
 │   │   │       │               ├── orchestration/
 │   │   │       │               │   ├── CogneeConsumerIndependentTests.java
@@ -909,6 +912,8 @@ swarm-v11-pr-a/
 │   │   │       │               │   ├── MissionFlowTests.java
 │   │   │       │               │   ├── MulticaRuntimeBindingReceiptTests.java
 │   │   │       │               │   ├── MulticaWorkspaceKnowledgeRepositoryTests.java
+│   │   │       │               │   ├── OrchestratorReportAuditIndependentTests.java
+│   │   │       │               │   ├── OrchestratorReportAuditTest.java
 │   │   │       │               │   ├── Rc10Phase2KnowledgeConsumerFixtureTests.java
 │   │   │       │               │   ├── SupervisorBoundaryTests.java
 │   │   │       │               │   ├── SupervisorPathTests.java
@@ -927,7 +932,6 @@ swarm-v11-pr-a/
 │   │   │                   │   ├── c5-cause-diagnostic-v1.md
 │   │   │                   │   ├── c5-run-attribution-v2.md
 │   │   │                   │   └── child-result-locator-v3.md
-│   │   │                   ├── retry-fixture/
 │   │   │                   └── knowledge-consumer-cases.json
 │   │   ├── tooling/
 │   │   │   └── verification/

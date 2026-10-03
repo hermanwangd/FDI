@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.featuredeliveryintelligence.fdi.orchestration.CogneeSearchClient;
 import com.featuredeliveryintelligence.fdi.orchestration.GovernedWorkspaceKnowledge;
+import com.featuredeliveryintelligence.fdi.orchestration.OrchestratorReportAudit;
 import com.featuredeliveryintelligence.fdi.orchestration.SwarmKnowledgeGateway;
 import com.featuredeliveryintelligence.fdi.orchestration.WorkspaceKnowledgeProposal;
 import com.featuredeliveryintelligence.fdi.orchestration.WorkspaceKnowledgeRepository;
@@ -89,6 +90,8 @@ public final class Dev204Cli {
                     Dev204Validation.read(Path.of(required(options, "--green"))));
         } else if ("dev204-cognee-search".equals(args[0])) {
             result = cogneeSearch(options);
+        } else if ("dev204-report-audit".equals(args[0])) {
+            result = reportAudit(options);
         } else if ("dev204-knowledge-consume".equals(args[0])) {
             result = knowledgeConsume(options, authorizedClient);
         } else {
@@ -100,12 +103,48 @@ public final class Dev204Cli {
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
+        if (result instanceof Map<?, ?> output && "NONZERO_FINDINGS".equals(output.get("processOutcome"))) {
+            throw new IllegalStateException("report audit found findings; see the JSON result above");
+        }
         if (result instanceof Map<?, ?> output && "selection".equals(output.get("phase"))
                 && output.get("context") instanceof Map<?, ?> context
                 && context.get("selected") instanceof List<?> selected && selected.isEmpty()) {
             throw new IllegalStateException("Empty knowledge selection: optional-context policy has not been verified; see the JSON result above");
         }
         return true;
+    }
+
+    private static Map<String, Object> reportAudit(Map<String, String> options) {
+        Path evidenceFile = Path.of(required(options, "--evidence-file"));
+        String phaseOption = required(options, "--phase");
+        OrchestratorReportAudit.PublicationPhase phase = switch (phaseOption) {
+            case "prepublication" -> OrchestratorReportAudit.PublicationPhase.PREPUBLICATION;
+            case "postpublication" -> OrchestratorReportAudit.PublicationPhase.POSTPUBLICATION;
+            default -> throw new IllegalArgumentException(
+                    "--phase must be prepublication or postpublication");
+        };
+
+        try {
+            long size = Files.size(evidenceFile);
+            if (size == 0 || size > MAX_REPORT_EVIDENCE_BYTES) {
+                throw new IllegalArgumentException("report evidence file must be between 1 byte and 4 MiB");
+            }
+            JsonNode evidence = JSON.readTree(evidenceFile.toFile());
+            OrchestratorReportAudit.AuditResult audit = OrchestratorReportAudit.audit(evidence, phase);
+            Map<String, Object> result = new HashMap<>();
+            result.put("phase", phase.name());
+            result.put("status", audit.status());
+            result.put("facts", audit.facts());
+            result.put("findings", audit.findings());
+            result.put("exitStatus", audit.exitStatus());
+            result.put("claimBoundary", "REPORT_EVIDENCE_AUDIT_ONLY_NO_CONTROL_VERDICT_NO_WRITE");
+            if (audit.exitStatus() != 0) {
+                result.put("processOutcome", "NONZERO_FINDINGS");
+            }
+            return result;
+        } catch (IOException e) {
+            throw new IllegalArgumentException("cannot read the report evidence file", e);
+        }
     }
 
     private static Map<String, Object> knowledgeConsume(Map<String, String> options,
