@@ -2,8 +2,10 @@
 
 **Status:** PROPOSED / pre-execution admission evidence and final freeze required
 
-**Case:** Q1 — Resilience4j Issue #480, `CompletionStage<Void>` async resilience behavior  
-**Scope:** One frozen real-world GitHub replay used to qualify V1.1-D1 → V1.1-D2 → V1.1-D3 without changing the case after results are known  
+**Case:** Q1 — Resilience4j Issue #480, `CompletionStage<Void>` async resilience behavior
+
+**Scope:** One frozen real-world GitHub replay used to qualify V1.1-D1 → V1.1-D2 → V1.1-D3 without changing the case after results are known
+
 **Non-goals:** No new ENGCIM component, source taxonomy, knowledge store, telemetry framework, production deployment, external-repository mutation, or alternate completion gate
 
 This full plan is operator/evaluator material. It contains case-specific expectations and oracle information and must not be sent to a worker or Phase 1 blind scorer. Use the explicit permitted projections below. The known case and previous results are retained; they are not relabeled as a new blind run. This plan authorizes no execution, new knowledge grant or runtime/context change.
@@ -230,7 +232,7 @@ Runs are isolated. No arm may read another arm's work or conversation state. Fre
 
 Require fresh worker conversations/process contexts and a fresh Phase 1 scorer context. Quarantine previous case reasoning, prior solution/oracle exposure, outputs, evaluation material and persisted context from those participants. An exposed operator may prepare attributable frozen evidence under an independently checked allowlist, but cannot supply answer-bearing interpretation to workers or the blind scorer. The full plan, prior case reports and evaluator-only artifacts remain outside their allowed views. A new task name alone does not establish freshness.
 
-Use the existing supported access/context boundary and separate clean checkouts/output scopes. A must be unable to read the governed PK/history packs; B must be unable to read C's historical pack; no arm may read other arms or the oracle. Capture actual context/tool/source receipts and check inherited/native context. If exclusion or visibility cannot be demonstrated, stop fresh-blind/causal qualification; a known-case operational rehearsal needs an explicit bounded disposition and must be labeled as such. Do not add services, stores, permissions, credentials or dispatchers to assert isolation.
+Use the existing supported access/context boundary and separate clean Git object stores, checkouts and output scopes; a shared worktree object store can expose withheld refs/objects. A must be unable to read the governed PK/history packs; B must be unable to read C's historical pack; no arm may read other arms or the oracle. Capture actual context/tool/source receipts and check inherited/native context. If exclusion or visibility cannot be demonstrated, stop fresh-blind/causal qualification; a known-case operational rehearsal needs an explicit bounded disposition and must be labeled as such. Do not add services, knowledge stores, permission schemes, credentials or dispatchers to assert isolation.
 
 Model pretraining and stochastic variation cannot be eliminated by equal configuration. The current one-A/B/C triplet supports bounded score, action, outcome and timing observations only. Its causal PK_EFFECT, HISTORICAL_REUSE_EFFECT, FULL_KNOWLEDGE_EFFECT and ACCELERATION_EFFECT remain INCONCLUSIVE, even when a material contrast below is observed. EFFECT_VALIDATED or ACCELERATION_DEMONSTRATED would require a separately authorized, preregistered replicated design with fixed sampling/order controls and an inference rule before any runs; this plan does not prescribe or authorize additional runs. Poor results are not a reason to repeat arms.
 
@@ -545,7 +547,7 @@ SA/SD quality is scored before PR #484 or hidden solution evidence is revealed. 
 
 Before launch, independently inspect the permitted packet projection and rubric. Before scoring, inspect the actual packets again without exposing the arm map. Allow only frozen technical SA/SD reasoning, diagrams, verification implications and necessary technical evidence excerpts with neutral source aliases. Preserve claim/evidence relationships, legitimate technical citations, wrong assumptions and unknowns; never rewrite the design to improve it.
 
-Exclude arm/condition labels, PK/history retrieval or ADOPTED/MethodUsed/feedback markers, actor/role/workspace/run identities, private paths, routing/prior-run history, timestamps/timing/usage/cost, oracle clues and operator interpretation. Never pass a raw native envelope and rely on the scorer to ignore these fields. Keep a private original-to-packet byte/hash correspondence and removal ledger. Substance can still suggest a condition; report that limit rather than claiming perfect blinding.
+Exclude arm/condition labels, PK/history retrieval or ADOPTED/MethodUsed/feedback markers, native actor/role/workspace/run identities, private runtime/workspace paths, routing/prior-run history, native Mission clocks/elapsed timing/resource-usage/cost, oracle clues and operator interpretation. Retain rubric-relevant technical behavior timing, synchronization/order constraints, source/code context and evidence through neutral aliases; metadata removal must not hide a technical defect or citation. Never pass a raw native envelope and rely on the scorer to ignore these fields. Keep a private original-to-packet byte/hash correspondence and removal ledger. Substance can still suggest a condition; report that limit rather than claiming perfect blinding.
 
 The fresh scorer receives only validated packets, the frozen generic rubric/conformance contract and permitted pre-cutoff technical references. Seal original score/report bytes and hashes before revealing arm/knowledge identity or oracle material. On exposure, stop that scorer, preserve its partial work and record the disclosure boundary; no blind claim survives that exposure. A replacement scorer requires a pre-frozen integrity rule and unchanged artifacts, not a solver rerun or post-hoc packet tuning.
 
