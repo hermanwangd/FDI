@@ -1,0 +1,21 @@
+{
+  "classification": "DISPOSABLE_SYNTHETIC_DELIVERY_FIXTURE_NOT_PRODUCTION_IMPLEMENTATION",
+  "authority": "Existing RC10 implementation plan: Production-like baseline / revised delivery comparison, 2026-10-01",
+  "permitted_delivery_file": "RetryPolicy.java",
+  "permitted_delivery_method": "RetryPolicy.execute",
+  "frozen_oracle": "RetryPolicyOracle.java",
+  "initial_behavior": "One transport attempt. Both orchestration arms start with these same bytes; the delivery task is to implement the specified bounded retry behavior.",
+  "requirements": [
+    "A read-only request with established idempotency may retry transient TIMEOUT up to the finite maximumAttempts, counting the initial attempt.",
+    "A state-changing request without idempotency evidence executes once.",
+    "A NON_RETRYABLE failure executes once and preserves its category.",
+    "Preserve successful result and failure category; no real network or production writes."
+  ],
+  "oracle_frozen_cases": 4,
+  "compile": "javac --release 17 -d <isolated-output> RetryPolicy.java RetryPolicyOracle.java",
+  "verify": "java -cp <isolated-output> fixture.retry.RetryPolicyOracle",
+  "comparison_boundary": "Initial oracle failure verifies the task is unfinished. It is not a measured baseline arm, failed engineering delivery, or weaker source access. Actual baseline/revised runs need identical fixture bytes, governed r1 method access, real worker/review/readback receipts, and matched timing boundaries.",
+  "method_access": "Both arms require the same eligible r1 source through the existing governed provider; no approval or authority is granted by this fixture.",
+  "outcome_status": "PREPARED_NOT_RUN_THROUGH_ACTUAL_ORCHESTRATION",
+  "excluded_claims": ["S05 Architect use", "knowledge publication", "durable feedback", "Curator disposition", "quality improvement", "acceleration"]
+}

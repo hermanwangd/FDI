@@ -28,9 +28,6 @@ A is the executable D2 governed consumer foundation and its tests/fixtures. B is
 - `engcim/swarm/src/test/resources/rc10/phase2/methods/c5-cause-diagnostic-v1.md`
 - `engcim/swarm/src/test/resources/rc10/phase2/methods/c5-run-attribution-v2.md`
 - `engcim/swarm/src/test/resources/rc10/phase2/methods/child-result-locator-v3.md`
-- `engcim/swarm/src/test/resources/rc10/phase2/retry-fixture/RetryPolicy.java`
-- `engcim/swarm/src/test/resources/rc10/phase2/retry-fixture/RetryPolicyOracle.java`
-- `engcim/swarm/src/test/resources/rc10/phase2/retry-fixture/scenario.json`
 
 ### PR-B
 
@@ -65,6 +62,12 @@ A is the executable D2 governed consumer foundation and its tests/fixtures. B is
 - `validation/rc10/swarm-engineering-learning-20261003/sources/06.json`
 - `validation/rc10/swarm-engineering-learning-20261003/sources/07.json`
 - `validation/rc10/swarm-v11-cloud-20261002/pa05-pre-solution-reasoning.json`
+
+- `engcim/swarm/src/test/resources/rc10/phase2/retry-fixture/RetryPolicy.java`
+- `engcim/swarm/src/test/resources/rc10/phase2/retry-fixture/RetryPolicyOracle.java`
+- `engcim/swarm/src/test/resources/rc10/phase2/retry-fixture/scenario.json`
+
+The three Retry resources are frozen validation evidence, not a dependency of PR-A tests.
 
 ## Shared files
 

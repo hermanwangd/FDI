@@ -892,28 +892,35 @@ swarm-v11-pr-c/
 │   │   │   │                       ├── Dev204Validation.java
 │   │   │   │                       └── VerificationAccounting.java
 │   │   │   └── test/
-│   │   │       └── java/
-│   │   │           └── com/
-│   │   │               └── featuredeliveryintelligence/
-│   │   │                   └── fdi/
-│   │   │                       ├── application/
-│   │   │                       │   └── FdiApplicationTests.java
-│   │   │                       ├── orchestration/
-│   │   │                       │   ├── KnowledgePipelineTests.java
-│   │   │                       │   ├── LearningBoundaryTests.java
-│   │   │                       │   ├── MissionFlowTests.java
-│   │   │                       │   ├── MulticaRuntimeBindingReceiptTests.java
-│   │   │                       │   ├── MulticaWorkspaceKnowledgeRepositoryTests.java
-│   │   │                       │   ├── SupervisorBoundaryTests.java
-│   │   │                       │   ├── SupervisorPathTests.java
-│   │   │                       │   ├── WorkspaceKnowledgeLifecycleTests.java
-│   │   │                       │   └── WorkspaceKnowledgeRetrievalTests.java
-│   │   │                       ├── CompanyImportManifestTests.java
-│   │   │                       ├── JavaOnlySourcePolicyTests.java
-│   │   │                       ├── PackageArchitectureTests.java
-│   │   │                       ├── Rc6CompatibilityTests.java
-│   │   │                       ├── ReviewRegressionTests.java
-│   │   │                       └── RuntimeMigrationTests.java
+│   │   │       ├── java/
+│   │   │       │   └── com/
+│   │   │       │       └── featuredeliveryintelligence/
+│   │   │       │           └── fdi/
+│   │   │       │               ├── application/
+│   │   │       │               │   └── FdiApplicationTests.java
+│   │   │       │               ├── orchestration/
+│   │   │       │               │   ├── KnowledgePipelineTests.java
+│   │   │       │               │   ├── LearningBoundaryTests.java
+│   │   │       │               │   ├── MissionFlowTests.java
+│   │   │       │               │   ├── MulticaRuntimeBindingReceiptTests.java
+│   │   │       │               │   ├── MulticaWorkspaceKnowledgeRepositoryTests.java
+│   │   │       │               │   ├── SupervisorBoundaryTests.java
+│   │   │       │               │   ├── SupervisorPathTests.java
+│   │   │       │               │   ├── WorkspaceKnowledgeLifecycleTests.java
+│   │   │       │               │   └── WorkspaceKnowledgeRetrievalTests.java
+│   │   │       │               ├── CompanyImportManifestTests.java
+│   │   │       │               ├── JavaOnlySourcePolicyTests.java
+│   │   │       │               ├── PackageArchitectureTests.java
+│   │   │       │               ├── Rc6CompatibilityTests.java
+│   │   │       │               ├── ReviewRegressionTests.java
+│   │   │       │               └── RuntimeMigrationTests.java
+│   │   │       └── resources/
+│   │   │           └── rc10/
+│   │   │               └── phase2/
+│   │   │                   └── retry-fixture/
+│   │   │                       ├── RetryPolicy.java
+│   │   │                       ├── RetryPolicyOracle.java
+│   │   │                       └── scenario.json
 │   │   ├── tooling/
 │   │   │   └── verification/
 │   │   │       └── verify_swarm_runtime.sh
