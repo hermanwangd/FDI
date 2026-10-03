@@ -92,7 +92,7 @@ class CompanyImportManifestTests {
         assertThat(phaseOneCompatibilityMoves).isEqualTo(summary.path("move_phase_1_compat_symlink").asInt());
         assertThat(phaseTwoMoves).isEqualTo(10);
         assertThat(phaseTwoMoves).isEqualTo(summary.path("move_phase_2").asInt());
-        assertThat(phaseTwoAdds).isEqualTo(7);
+        assertThat(phaseTwoAdds).isEqualTo(8);
         assertThat(phaseTwoAdds).isEqualTo(summary.path("add_phase_2").asInt());
         assertThat(liveStateExclusions).isEqualTo(summary.path("exclude_live_state").asInt());
         assertThat(localControlExclusions).isEqualTo(1);
