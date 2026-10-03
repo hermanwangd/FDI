@@ -88,7 +88,7 @@ The local procedure now requires direct provider evidence for operation
 outcomes, manifest-derived split counts, timestamp-ordered event ledgers, and
 an attribution note when `work_dir` differs from an authorized absolute input.
 Current local candidate source SHA-256:
-`acae0c20e5f4fc55c23cf3977e8168eeef41a0926bd8c6d1a3d6ea411acad511`.
+`5f0c77f6d200247a02701ce43bab01e7d1ddd7b99a1aec0e1afe749f2d064f7f`.
 
 This local source correction is not deployed. The pre-test configured source
 and instruction readback in the adjacent receipt remain historical; their
