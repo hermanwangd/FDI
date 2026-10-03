@@ -1,4 +1,4 @@
-Feature-Delivery-Intelligence/
+swarm-v11-pr-b/
 ├── .mvn/
 │   └── wrapper/
 │       └── maven-wrapper.properties
@@ -233,6 +233,7 @@ Feature-Delivery-Intelligence/
 │   │   │   │           ├── RUNTIME-LIFECYCLE-RUNBOOK-v0.1.md
 │   │   │   │           └── WORKSPACE-BOOTSTRAP-RUNBOOK-v0.1.md
 │   │   │   └── multica/
+│   │   │       ├── RC10-ORCHESTRATOR-PARENT-REPORT.md
 │   │   │       ├── RC10-S05-S06-ROLE-GUIDANCE.md
 │   │   │       └── RC10-WORKSPACE-LEARNING.md
 │   │   ├── state-templates/
@@ -600,7 +601,6 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   └── writer.md
 │   │   │   │       ├── skills/
 │   │   │   │       │   ├── artifact-consistency/
-│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   ├── templates/
 │   │   │   │       │   │   │   └── artifact-trace.yaml
 │   │   │   │       │   │   └── SKILL.md
@@ -628,7 +628,6 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   │   │   └── deployment-result.yaml
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── execution-guard/
-│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── incident-response/
 │   │   │   │       │   │   ├── templates/
@@ -645,7 +644,6 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   │   │   └── slo-definition.yaml
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── performance-benchmark/
-│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── pk-azure-devops-history/
 │   │   │   │       │   │   └── SKILL.md
@@ -684,12 +682,10 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   ├── pk-tkms-ingestion/
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── pm-intention/
-│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   ├── templates/
 │   │   │   │       │   │   │   └── intention-spec.yaml
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── post-change-canary/
-│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── product-knowledge/
 │   │   │   │       │   │   └── SKILL.md
@@ -700,7 +696,6 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   │   │   └── rollback-plan.md
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── root-cause-debugging/
-│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   ├── templates/
 │   │   │   │       │   │   │   └── rca-report.md
 │   │   │   │       │   │   └── SKILL.md
@@ -737,7 +732,6 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   │   │   └── mission-metrics-report.md
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── test-architecture/
-│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   ├── templates/
 │   │   │   │       │   │   │   └── quality-gate.yaml
 │   │   │   │       │   │   └── SKILL.md
@@ -790,12 +784,18 @@ Feature-Delivery-Intelligence/
 │   │   │       └── WorkspaceKnowledgeProposal.schema.json
 │   │   ├── docs/
 │   │   │   └── rc10/
+│   │   │       ├── assets/
+│   │   │       │   ├── ENGCIM-SWARM-MODULE-ALIGNMENT-v1.png
+│   │   │       │   ├── ENGCIM-SWARM-MODULE-ALIGNMENT-v1.prompt.md
+│   │   │       │   ├── ENGCIM-SWARM-MODULE-ALIGNMENT-v2.png
+│   │   │       │   └── ENGCIM-SWARM-MODULE-ALIGNMENT-v2.prompt.md
 │   │   │       ├── RC10-COMPANY-REPO-IMPORT-FOLDER-MAP.md
 │   │   │       ├── RC10-COMPANY-REPO-IMPORT-MANIFEST.json
 │   │   │       ├── RC10-EVIDENCE-MANIFEST.md
 │   │   │       ├── RC10-IMPLEMENTATION-PLAN.md
 │   │   │       ├── RC10-IMPLEMENTATION-REPORT.md
 │   │   │       ├── RC10-INTEGRATION-TEST-REPORT.md
+│   │   │       ├── RC10-KNOWLEDGE-DESIGN.md
 │   │   │       ├── RC10-REGRESSION-REPORT.md
 │   │   │       ├── RC10-REMAINDER-GAP-REPORT.md
 │   │   │       ├── RC10-RUNTIME-MATERIALIZATION.md
@@ -849,6 +849,7 @@ Feature-Delivery-Intelligence/
 │   │   │   │                   │   ├── ObservationState.java
 │   │   │   │                   │   ├── OperationalMulticaPort.java
 │   │   │   │                   │   ├── OperationalReceipt.java
+│   │   │   │                   │   ├── OrchestratorReportAudit.java
 │   │   │   │                   │   ├── ProductKnowledgeProposal.java
 │   │   │   │                   │   ├── RuntimeBindingPort.java
 │   │   │   │                   │   ├── SupervisorMulticaAction.java
@@ -896,6 +897,7 @@ Feature-Delivery-Intelligence/
 │   │   │               └── featuredeliveryintelligence/
 │   │   │                   └── fdi/
 │   │   │                       ├── application/
+│   │   │                       │   ├── Dev204ReportAuditCliTests.java
 │   │   │                       │   └── FdiApplicationTests.java
 │   │   │                       ├── orchestration/
 │   │   │                       │   ├── KnowledgePipelineTests.java
@@ -903,9 +905,12 @@ Feature-Delivery-Intelligence/
 │   │   │                       │   ├── MissionFlowTests.java
 │   │   │                       │   ├── MulticaRuntimeBindingReceiptTests.java
 │   │   │                       │   ├── MulticaWorkspaceKnowledgeRepositoryTests.java
+│   │   │                       │   ├── OrchestratorReportAuditIndependentTests.java
+│   │   │                       │   ├── OrchestratorReportAuditTest.java
 │   │   │                       │   ├── SupervisorBoundaryTests.java
 │   │   │                       │   ├── SupervisorPathTests.java
-│   │   │                       │   └── WorkspaceKnowledgeLifecycleTests.java
+│   │   │                       │   ├── WorkspaceKnowledgeLifecycleTests.java
+│   │   │                       │   └── WorkspaceKnowledgeRetrievalTests.java
 │   │   │                       ├── CompanyImportManifestTests.java
 │   │   │                       ├── JavaOnlySourcePolicyTests.java
 │   │   │                       ├── PackageArchitectureTests.java
