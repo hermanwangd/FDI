@@ -56,3 +56,43 @@ Do not infer runtime precedence from this mapping. RC6 Scenario and assigned
 Skills remain the default behavior; the adopted profile is a narrow,
 candidate-specific supplement. Preserve exact source, readback, and run
 identities separately.
+
+## RC10 readable parent report — 2026-09-28
+
+For new S05 Missions in the RC10 validation project, append the complete
+`engcim/bootstrap/overlays/multica/RC10-ORCHESTRATOR-PARENT-REPORT.md` source
+to the existing Orchestrator instruction field, with source SHA-256 and exact
+workspace/project/agent IDs. Human authorized this report configuration in the
+2026-09-28 task. It supplements the existing integration report; preserve
+the assigned Skills, learning overlay, selected profile and other role settings.
+The source includes the report template, context provenance, fan-out/fan-in
+diagram requirements, report self-check and S05-only boundary. Child-issue
+presentation is the default for new S05 Missions, subject to an explicit
+authorized Mission override and existing capacity guards.
+
+Keep pre-change instructions and configured readback in
+`validation/rc10/report-config-20260928/`. Configuration readback proves stored
+bytes only; the next new Mission must acknowledge the source identity and its
+final report must be reviewed before runtime compliance can be claimed.
+For rollback, remove only the marked parent-report block after verifying its
+bytes still match the deployment receipt; preserve any subsequent edits.
+
+### Local report-evidence correction — 2026-09-29
+
+The RC10VAL-99/100 first-report review preserved a new read-only runtime
+snapshot and added an offline regression audit under
+`validation/rc10/report-config-20260928/`. It reproduced missing clickable
+parent/child locators and parent run UUIDs, an out-of-order timeline, a
+manifest-count mismatch, and conflicting agent narration about squad activity.
+The local procedure now requires direct provider evidence for operation
+outcomes, manifest-derived split counts, timestamp-ordered event ledgers, and
+an attribution note when `work_dir` differs from an authorized absolute input.
+Current local candidate source SHA-256:
+`acae0c20e5f4fc55c23cf3977e8168eeef41a0926bd8c6d1a3d6ea411acad511`.
+
+This local source correction is not deployed. The pre-test configured source
+and instruction readback in the adjacent receipt remain historical; their
+identity does not prove that a particular Orchestrator run consumed or invoked
+the current source or the local audit. Any live instruction update requires a
+separate authorization and fresh readback. The report checks do not add S05
+stages to another Scenario or change Human DONE authority.

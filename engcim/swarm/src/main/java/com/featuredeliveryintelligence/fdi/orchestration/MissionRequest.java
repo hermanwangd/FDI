@@ -1,6 +1,7 @@
 package com.featuredeliveryintelligence.fdi.orchestration;
 
 import java.util.List;
+import java.util.Map;
 
 /** Human-provided material retained before a Mission is formulated. */
 public record MissionRequest(
@@ -11,12 +12,27 @@ public record MissionRequest(
         String goal,
         List<String> constraints,
         List<String> acceptanceCriteria,
-        String requestedRevision) {
+        String requestedRevision,
+        Map<String, String> currentRepositoryRevisions) {
+
+    public MissionRequest(
+            String requestRef,
+            String workspaceRef,
+            String projectRef,
+            String scope,
+            String goal,
+            List<String> constraints,
+            List<String> acceptanceCriteria,
+            String requestedRevision) {
+        this(requestRef, workspaceRef, projectRef, scope, goal, constraints, acceptanceCriteria, requestedRevision, Map.of());
+    }
 
     public MissionRequest {
         constraints = List.copyOf(constraints == null ? List.of() : constraints);
         acceptanceCriteria = List.copyOf(acceptanceCriteria == null ? List.of() : acceptanceCriteria);
         requestedRevision = requestedRevision == null ? "" : requestedRevision;
+        currentRepositoryRevisions = Map.copyOf(
+                currentRepositoryRevisions == null ? Map.of() : currentRepositoryRevisions);
     }
 
     public List<String> missingFields() {
@@ -32,7 +48,7 @@ public record MissionRequest(
 
     public MissionRequest withRequestedRevision(String revision) {
         return new MissionRequest(requestRef, workspaceRef, projectRef, scope, goal,
-                constraints, acceptanceCriteria, revision);
+                constraints, acceptanceCriteria, revision, currentRepositoryRevisions);
     }
 
     private static boolean blank(String value) { return value == null || value.isBlank(); }

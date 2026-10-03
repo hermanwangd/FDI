@@ -15,6 +15,8 @@ Required implementation acceptance, using existing owners and storage:
 
 Design §28 records the bounded first-report case: preserved original failure, a local six-test regression result, and unverified method capture/reuse and corrected live first publication. It is dated evidence, not a current runtime status feed. This documentation commit does not authorize live publication, deployment, dispatch, merge or promotion.
 
+The [2026-10-03 Swarm engineering experience candidate pack](../../../../validation/rc10/swarm-engineering-learning-20261003/README.md) contains seven public-safe local review proposals using the existing MissionLearningSource/WorkspaceKnowledgeProposal lifecycle. External GitHub cases remain validation/effectiveness evidence; real Swarm episodes supply reusable Swarm knowledge. Owner-held private evidence supports one resolved directory wait and original-Mission feedback readback while preserving earlier failed interpretations, other unknowns and UNASSESSED effect. The public drafts use evidence aliases, create no live publication and hand over through the single integration owner without another PR.
+
 
 ## Current execution checkpoint — 2026-09-27T13:13Z / 21:13 Asia/Taipei
 

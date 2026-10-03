@@ -1,0 +1,160 @@
+{
+  "artifactType": "RC10_PHASE2_LOCAL_KNOWLEDGE_CONSUMER_FIXTURE",
+  "schemaVersion": 1,
+  "classification": "synthetic_read_only_test_data_not_governed_knowledge_or_runtime_policy",
+  "scope": {
+    "workspaceRef": "fixture-workspace-a",
+    "knowledgeProjectRef": "fixture-workspace-knowledge",
+    "consumerProjectRef": "fixture-chart-viewer",
+    "missionRef": "fixture:s05-chart-viewer-report",
+    "fetchedAt": "2026-10-02T00:00:00Z",
+    "validUntil": "2026-10-03T00:00:00Z",
+    "repositoryRevisionKey": "RC10-SAFE-ID-0008",
+    "providerRevision": "fixture-provider-rev-1"
+  },
+  "methods": [
+    {
+      "recordKey": "RC10-SAFE-ID-0025",
+      "recordVersion": 2,
+      "knowledgeRef": "RC10-SAFE-ID-0022",
+      "providerRevision": "fixture-provider-rev-1",
+      "decisionRef": "RC10-SAFE-ID-0013",
+      "sourceRef": "classpath:rc10/phase2/methods/c5-run-attribution-v2.md",
+      "contentResource": "rc10/phase2/methods/c5-run-attribution-v2.md",
+      "sha256": "f7aafb4412280cc706dec7f9314a84e7d92f84d51d8c5ded9c264bf97be532e2",
+      "scope": "synthetic S05 final-report preflight and local draft repair",
+      "applicability": "Use only when exact C5 report evidence proves source_task_id differs from the actual C5 publishing parent run.",
+      "limitations": ["test-only local draft", "no issue write", "no publication or status change"]
+    },
+    {
+      "recordKey": "RC10-SAFE-ID-0026",
+      "recordVersion": 3,
+      "knowledgeRef": "RC10-SAFE-ID-0023",
+      "providerRevision": "fixture-provider-rev-1",
+      "decisionRef": "RC10-SAFE-ID-0014",
+      "sourceRef": "classpath:rc10/phase2/methods/child-result-locator-v3.md",
+      "contentResource": "rc10/phase2/methods/child-result-locator-v3.md",
+      "sha256": "57c07b1c61b96dbb1800b161857b09472c5275577cda6bcc2ef15333c7c5949d",
+      "scope": "synthetic S05 report completeness and local draft repair",
+      "applicability": "Use when a required child-result locator is absent; this method can be compatible with a separately confirmed run-attribution repair.",
+      "limitations": ["test-only local draft", "no issue write", "no publication or status change"]
+    },
+    {
+      "recordKey": "RC10-SAFE-ID-0024",
+      "recordVersion": 1,
+      "knowledgeRef": "RC10-SAFE-ID-0021",
+      "providerRevision": "fixture-provider-rev-1",
+      "decisionRef": "RC10-SAFE-ID-0012",
+      "sourceRef": "classpath:rc10/phase2/methods/c5-cause-diagnostic-v1.md",
+      "contentResource": "rc10/phase2/methods/c5-cause-diagnostic-v1.md",
+      "sha256": "6544f370c8e431b87c32e3a752c567e5cec651dc09583ae05bd7e65a5f674329",
+      "scope": "read-only diagnosis for the synthetic S05 C5 report",
+      "applicability": "Use when the shared rejected-report symptom is known, the pinned inputs resolve, and attribution-versus-locator cause remains uncertain.",
+      "limitations": ["read-only diagnosis", "preserve hypotheses", "no repair before evidence", "no issue write or publication"]
+    }
+  ],
+  "cases": [
+    {
+      "id": "RC10-SAFE-ID-0030",
+      "matrixCaseId": "RC10-SAFE-ID-0005",
+      "sourceRevision": "RC10-SAFE-ID-0008-rev-1",
+      "symptom": "first C5 report is rejected",
+      "observedCause": "report comment source_task_id does not equal the C5 publishing run",
+      "observedEvidenceRefs": ["RC10-SAFE-ID-0016", "RC10-SAFE-ID-0018"],
+      "eligibleCandidateKeys": ["RC10-SAFE-ID-0025", "RC10-SAFE-ID-0026"],
+      "fixtureExpectedApplicableKeys": ["RC10-SAFE-ID-0025"],
+      "fixtureExpectedUses": [{
+        "recordKey": "RC10-SAFE-ID-0025",
+        "recordVersion": 2,
+        "reasonEvidenceRefs": ["RC10-SAFE-ID-0016", "RC10-SAFE-ID-0018"],
+        "actionRef": "RC10-SAFE-ID-0011",
+        "resultRef": "RC10-SAFE-ID-0029"
+      }]
+    },
+    {
+      "id": "RC10-SAFE-ID-0032",
+      "matrixCaseId": "RC10-SAFE-ID-0004",
+      "sourceRevision": "RC10-SAFE-ID-0008-rev-2",
+      "symptom": "first C5 report is rejected",
+      "observedCause": "child-result locator is absent while source_task_id matches the C5 publishing run",
+      "observedEvidenceRefs": ["RC10-SAFE-ID-0017", "RC10-SAFE-ID-0015"],
+      "eligibleCandidateKeys": ["RC10-SAFE-ID-0025", "RC10-SAFE-ID-0026"],
+      "fixtureExpectedApplicableKeys": ["RC10-SAFE-ID-0026"],
+      "fixtureExpectedUses": [{
+        "recordKey": "RC10-SAFE-ID-0026",
+        "recordVersion": 3,
+        "reasonEvidenceRefs": ["RC10-SAFE-ID-0017", "RC10-SAFE-ID-0015"],
+        "actionRef": "RC10-SAFE-ID-0010",
+        "resultRef": "RC10-SAFE-ID-0028"
+      }]
+    },
+    {
+      "id": "RC10-SAFE-ID-0007",
+      "matrixCaseId": "RC10-SAFE-ID-0002",
+      "sourceRevision": "RC10-SAFE-ID-0008-rev-4",
+      "symptom": "first C5 report is rejected",
+      "observedCause": null,
+      "observedEvidenceRef": "RC10-SAFE-ID-0020",
+      "causeHypotheses": ["RC10-SAFE-ID-0025", "RC10-SAFE-ID-0026"],
+      "eligibleCandidateKeys": ["RC10-SAFE-ID-0025", "RC10-SAFE-ID-0026", "RC10-SAFE-ID-0024"],
+      "fixtureExpectedApplicableKeys": ["RC10-SAFE-ID-0024"],
+      "fixtureExpectedUses": [{
+        "recordKey": "RC10-SAFE-ID-0024",
+        "recordVersion": 1,
+        "reasonEvidenceRefs": ["RC10-SAFE-ID-0020"],
+        "actionRef": "RC10-SAFE-ID-0009",
+        "resultRef": "RC10-SAFE-ID-0027"
+      }],
+      "fixtureExpectedNonUse": [
+        "RC10-SAFE-ID-0025",
+        "RC10-SAFE-ID-0026"
+      ],
+      "workerRuntimeVerification": "PENDING_ACTUAL_WORKER_CONSUMER"
+    },
+    {
+      "id": "RC10-SAFE-ID-0006",
+      "matrixCaseId": "RC10-SAFE-ID-0001",
+      "sourceRevision": "RC10-SAFE-ID-0008-rev-5",
+      "symptom": "first C5 report is rejected",
+      "observedCauses": [
+        "report comment source_task_id does not equal the C5 publishing run",
+        "a required child-result locator is absent"
+      ],
+      "observedEvidenceRefs": ["RC10-SAFE-ID-0016", "RC10-SAFE-ID-0017"],
+      "eligibleCandidateKeys": ["RC10-SAFE-ID-0025", "RC10-SAFE-ID-0026"],
+      "fixtureExpectedApplicableKeys": ["RC10-SAFE-ID-0025", "RC10-SAFE-ID-0026"],
+      "fixtureExpectedUses": [
+        {
+          "recordKey": "RC10-SAFE-ID-0025",
+          "recordVersion": 2,
+          "reasonEvidenceRefs": ["RC10-SAFE-ID-0016"],
+          "actionRef": "RC10-SAFE-ID-0011",
+          "resultRef": "RC10-SAFE-ID-0029"
+        },
+        {
+          "recordKey": "RC10-SAFE-ID-0026",
+          "recordVersion": 3,
+          "reasonEvidenceRefs": ["RC10-SAFE-ID-0017"],
+          "actionRef": "RC10-SAFE-ID-0010",
+          "resultRef": "RC10-SAFE-ID-0028"
+        }
+      ],
+      "noSingleMethodGate": true,
+      "workerRuntimeVerification": "PENDING_ACTUAL_WORKER_CONSUMER"
+    },
+    {
+      "id": "RC10-SAFE-ID-0031",
+      "matrixCaseId": "RC10-SAFE-ID-0003",
+      "sourceRevision": "RC10-SAFE-ID-0008-rev-3",
+      "symptom": "first C5 report is rejected",
+      "observedCause": "current source manifest revision differs from the pinned case input",
+      "observedEvidenceRef": "RC10-SAFE-ID-0019",
+      "eligibleCandidateKeys": ["RC10-SAFE-ID-0025", "RC10-SAFE-ID-0026", "RC10-SAFE-ID-0024"],
+      "fixtureExpectedApplicableKeys": [],
+      "fixtureExpectedUses": [],
+      "missionMayContinueWithoutOptionalKnowledge": true,
+      "workerRuntimeVerification": "PENDING_ACTUAL_WORKER_CONSUMER"
+    }
+  ],
+  "verificationBoundary": "Java tests exercise resource integrity, provider eligibility, and exact feedback binding only; they do not test semantic method selection or live worker use."
+}
