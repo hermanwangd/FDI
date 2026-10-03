@@ -28,7 +28,7 @@ public record MissionRequest(
             List<String> acceptanceCriteria,
             String requestedRevision) {
         this(requestRef, workspaceRef, projectRef, scope, goal, constraints, acceptanceCriteria,
-                requestedRevision, Map.of(), KnowledgeContextRequirement.REQUIRED);
+                requestedRevision, Map.of(), KnowledgeContextRequirement.OPTIONAL);
     }
 
     public MissionRequest(
@@ -42,7 +42,7 @@ public record MissionRequest(
             String requestedRevision,
             Map<String, String> currentRepositoryRevisions) {
         this(requestRef, workspaceRef, projectRef, scope, goal, constraints, acceptanceCriteria,
-                requestedRevision, currentRepositoryRevisions, KnowledgeContextRequirement.REQUIRED);
+                requestedRevision, currentRepositoryRevisions, KnowledgeContextRequirement.OPTIONAL);
     }
 
     public MissionRequest {
@@ -52,7 +52,7 @@ public record MissionRequest(
         currentRepositoryRevisions = Map.copyOf(
                 currentRepositoryRevisions == null ? Map.of() : currentRepositoryRevisions);
         knowledgeContextRequirement = knowledgeContextRequirement == null
-                ? KnowledgeContextRequirement.REQUIRED
+                ? KnowledgeContextRequirement.OPTIONAL
                 : knowledgeContextRequirement;
     }
 
