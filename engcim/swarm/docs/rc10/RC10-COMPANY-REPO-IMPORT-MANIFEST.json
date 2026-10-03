@@ -233,8 +233,8 @@
       "destination": "engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/MissionRequest.java",
       "action": "MOVE_PHASE_1",
       "authority": "SWARM_EXECUTABLE",
-      "sha256": "accf2d33ac8eda5eff6e06f46d6caf9cfb62ec8b35743da6e52ec611cd87f7f6",
-      "size_bytes": 2207
+      "sha256": "87d80950551cd2c73468c3c4205ecf2660f5138fd29869dd63fb49239ae412dd",
+      "size_bytes": 3486
     },
     {
       "source": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/MissionState.java",
@@ -365,6 +365,15 @@
       "size_bytes": 4102
     },
     {
+      "source": "NEW:engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/OrchestratorReportAudit.java",
+      "destination": "engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/OrchestratorReportAudit.java",
+      "action": "ADD_PHASE_2",
+      "authority": "SWARM_EXECUTABLE",
+      "sha256": "6bd50ff746b052850f6023c02f4aea99b35bfc6be183e53cb78d88a5c7d0e008",
+      "size_bytes": 44985,
+      "note": "Created in Phase 2; required by the reconciled Dev204 report-audit CLI."
+    },
+    {
       "source": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/SwarmKnowledgeGateway.java",
       "destination": "engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/SwarmKnowledgeGateway.java",
       "action": "MOVE_PHASE_1",
@@ -385,8 +394,8 @@
       "destination": "engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/SwarmMissionGateway.java",
       "action": "MOVE_PHASE_1",
       "authority": "SWARM_EXECUTABLE",
-      "sha256": "6b1a78cdb44b1c1bd998974f2ddda29ec55e2ad32a84b3ac436a4ed295ee4fb4",
-      "size_bytes": 8924
+      "sha256": "71048e8fcf1965296d4881a9ff649d4e53e2cd0dbdcab7235e458efb9040fb32",
+      "size_bytes": 9418
     },
     {
       "source": "src/main/java/com/featuredeliveryintelligence/fdi/orchestration/VerificationResult.java",
@@ -673,8 +682,8 @@
       "destination": "engcim/swarm/src/test/java/com/featuredeliveryintelligence/fdi/orchestration/MissionFlowTests.java",
       "action": "MOVE_PHASE_1",
       "authority": "SWARM_EXECUTABLE",
-      "sha256": "4fd7750ad27fa23447c01c026db3b080cb6a97df91b77567be623c94a365414b",
-      "size_bytes": 45961
+      "sha256": "d24dd6c7b6151e18bc8516ee84ac6e58630b7b0b8b0b6b42336f00569fe07d97",
+      "size_bytes": 50631
     },
     {
       "source": "src/test/java/com/featuredeliveryintelligence/fdi/orchestration/MulticaWorkspaceKnowledgeRepositoryTests.java",
@@ -3674,7 +3683,7 @@
       "destination": "engcim/bootstrap/multica/MAPPING.md",
       "action": "MOVE_PHASE_1",
       "authority": "MULTICA_OPERATIONAL_CONFIG",
-      "sha256": "64a49bd3014920032bdfab1f371f40ee5deb1d3b7bf1944d675d762a04e600bf",
+      "sha256": "97da29cd399949e248dcbf3f7ec5be7f5ec6e691fa1096acd2701e7acca9f1b9",
       "size_bytes": 5901
     },
     {
@@ -3775,7 +3784,7 @@
       "destination": "engcim/swarm/docs/rc10/RC10-IMPLEMENTATION-PLAN.md",
       "action": "MOVE_PHASE_2",
       "authority": "SWARM_DELIVERY_EVIDENCE",
-      "sha256": "5b6fc98b031fadce4977791f5af571cca6a3cd100aaf224fd4c6a2721074d3fd",
+      "sha256": "6e7cccbf4b0695812e0cab22061315c3f26b6f515ae7517a326e2e0a6f000d93",
       "size_bytes": 223124,
       "note": "Moved in Phase 2; destination hash records the reconciled file after path-reference updates."
     },
@@ -3856,7 +3865,7 @@
       "destination": "engcim/swarm/src/test/java/com/featuredeliveryintelligence/fdi/CompanyImportManifestTests.java",
       "action": "ADD_PHASE_2",
       "authority": "SWARM_IMPORT_MANIFEST_VERIFIER",
-      "sha256": "2fb3f222a2f4c77a255d6726481e859585d5faeb980bb9515d18abeffc208500",
+      "sha256": "4f575e0101d98c8c97f1cb5f8a40c07c6b79c216510971d97cb9764e222982e6",
       "size_bytes": 8648,
       "note": "Created as a Java 17 JUnit verifier to comply with the repository source policy."
     },
@@ -3941,11 +3950,11 @@
     }
   ],
   "summary": {
-    "total_entries": 488,
+    "total_entries": 489,
     "move_phase_1": 435,
     "move_phase_1_compat_symlink": 25,
     "move_phase_2": 10,
-    "add_phase_2": 6,
+    "add_phase_2": 7,
     "exclude_live_state": 3,
     "exclude_local_candidate": 5,
     "exclude_local_control": 1,

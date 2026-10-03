@@ -814,7 +814,7 @@ The table below is a verify-first backlog. “Existing” identifies a source or
 
 ### Workstream B — Company-repository reference and build migration
 
-**Purpose and status.** This workstream implements the company-import Phase 2 defined in `RC10-COMPANY-REPO-IMPORT-FOLDER-MAP.md` §6. It migrates the reviewed RC10 import surface and its build references into the intended company repository. It is separate from Workstream A and from the RC10 runtime/S01–S06 validation chain. The current local import manifest is `PHASE_2_IMPORT_RECONCILED` (10 `MOVE_PHASE_2` and 6 `ADD_PHASE_2` entries); this proves local reconciliation only. The folder map remains `PROPOSED / LOCAL IMPORT CANDIDATE / NOT ACTIVE COMPANY AUTHORITY`, so company-repository adoption is not established.
+**Purpose and status.** This workstream implements the company-import Phase 2 defined in `RC10-COMPANY-REPO-IMPORT-FOLDER-MAP.md` §6. It migrates the reviewed RC10 import surface and its build references into the intended company repository. It is separate from Workstream A and from the RC10 runtime/S01–S06 validation chain. The current local import manifest is `PHASE_2_IMPORT_RECONCILED` (10 `MOVE_PHASE_2` and 7 `ADD_PHASE_2` entries); this proves local reconciliation only. The folder map remains `PROPOSED / LOCAL IMPORT CANDIDATE / NOT ACTIVE COMPANY AUTHORITY`, so company-repository adoption is not established.
 
 **Objective.** Produce a revision-bound, reviewable company-repository change that applies the existing folder map and reconciled manifest to a named target checkout, preserves root-owned build/package responsibilities, updates generated indexes and release metadata, and records target-specific verification. Treat the current worktree destinations as the proposed baseline; inspect the actual target first and apply only verified missing or changed deltas.
 
@@ -826,7 +826,7 @@ The table below is a verify-first backlog. “Existing” identifies a source or
 
 2. **P2.1 — Reconcile the mapped import surface.** Compare the target against every `MOVE_PHASE_2` and `ADD_PHASE_2` entry. Apply only verified deltas, preserve path and content authority, and retain the manifest's explicit keep/exclude decisions. Keep FDI-wide packaging tools and generated indexes at repository root. Do not import the old full-repository candidate ZIP containing live `.claude` state; use the curated package path. Do not rename Java packages or create a parallel import/adapter layer.
 
-   **Acceptance:** every mapped entry has a recorded source/destination result; the existing 10+6 actions are either applied or explicitly reconciled against the target, with no unexplained overwrite, omission, or authority change. **Depends on:** P2.0. **Verification:** destination hashes/sizes and a reviewed diff against the pinned target baseline.
+   **Acceptance:** every mapped entry has a recorded source/destination result; the existing 10+7 actions are either applied or explicitly reconciled against the target, with no unexplained overwrite, omission, or authority change. **Depends on:** P2.0. **Verification:** destination hashes/sizes and a reviewed diff against the pinned target baseline.
 
 3. **P2.2 — Migrate references and regenerate root indexes.** Update references affected by the new paths; regenerate the project tree, Markdown inventory, and root release manifest with the existing tools. Keep root build/package entry points usable from the intended company checkout. Do not hand-edit generated output when the generator can produce it.
 

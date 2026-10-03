@@ -13,7 +13,10 @@ public record MissionRequest(
         List<String> constraints,
         List<String> acceptanceCriteria,
         String requestedRevision,
-        Map<String, String> currentRepositoryRevisions) {
+        Map<String, String> currentRepositoryRevisions,
+        KnowledgeContextRequirement knowledgeContextRequirement) {
+
+    public enum KnowledgeContextRequirement { UNSPECIFIED, REQUIRED, OPTIONAL }
 
     public MissionRequest(
             String requestRef,
@@ -24,7 +27,22 @@ public record MissionRequest(
             List<String> constraints,
             List<String> acceptanceCriteria,
             String requestedRevision) {
-        this(requestRef, workspaceRef, projectRef, scope, goal, constraints, acceptanceCriteria, requestedRevision, Map.of());
+        this(requestRef, workspaceRef, projectRef, scope, goal, constraints, acceptanceCriteria,
+                requestedRevision, Map.of(), KnowledgeContextRequirement.UNSPECIFIED);
+    }
+
+    public MissionRequest(
+            String requestRef,
+            String workspaceRef,
+            String projectRef,
+            String scope,
+            String goal,
+            List<String> constraints,
+            List<String> acceptanceCriteria,
+            String requestedRevision,
+            Map<String, String> currentRepositoryRevisions) {
+        this(requestRef, workspaceRef, projectRef, scope, goal, constraints, acceptanceCriteria,
+                requestedRevision, currentRepositoryRevisions, KnowledgeContextRequirement.UNSPECIFIED);
     }
 
     public MissionRequest {
@@ -33,6 +51,9 @@ public record MissionRequest(
         requestedRevision = requestedRevision == null ? "" : requestedRevision;
         currentRepositoryRevisions = Map.copyOf(
                 currentRepositoryRevisions == null ? Map.of() : currentRepositoryRevisions);
+        knowledgeContextRequirement = knowledgeContextRequirement == null
+                ? KnowledgeContextRequirement.UNSPECIFIED
+                : knowledgeContextRequirement;
     }
 
     public List<String> missingFields() {
@@ -48,7 +69,12 @@ public record MissionRequest(
 
     public MissionRequest withRequestedRevision(String revision) {
         return new MissionRequest(requestRef, workspaceRef, projectRef, scope, goal,
-                constraints, acceptanceCriteria, revision, currentRepositoryRevisions);
+                constraints, acceptanceCriteria, revision, currentRepositoryRevisions, knowledgeContextRequirement);
+    }
+
+    public MissionRequest withKnowledgeContextRequirement(KnowledgeContextRequirement requirement) {
+        return new MissionRequest(requestRef, workspaceRef, projectRef, scope, goal,
+                constraints, acceptanceCriteria, requestedRevision, currentRepositoryRevisions, requirement);
     }
 
     private static boolean blank(String value) { return value == null || value.isBlank(); }

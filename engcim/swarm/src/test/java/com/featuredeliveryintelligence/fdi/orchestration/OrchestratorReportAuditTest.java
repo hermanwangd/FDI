@@ -121,6 +121,11 @@ class OrchestratorReportAuditTest {
         assertTrue(codes(audit(missingReceipt, OrchestratorReportAudit.PublicationPhase.PREPUBLICATION))
                 .contains("ARTIFACT_RECEIPT_MISSING"));
 
+        ObjectNode missingRunAttribution = validEvidence();
+        ((ObjectNode) missingRunAttribution.withArray("artifacts").get(0)).remove("source_task_id");
+        assertTrue(codes(audit(missingRunAttribution, OrchestratorReportAudit.PublicationPhase.PREPUBLICATION))
+                .contains("ARTIFACT_RUN_UNVERIFIED"));
+
         ObjectNode longerArtifactRevision = validEvidence();
         longerArtifactRevision.put("draft_body", longerArtifactRevision.get("draft_body").asText()
                 .replace("revision `revision-r2`", "revision `revision-r20`"));
