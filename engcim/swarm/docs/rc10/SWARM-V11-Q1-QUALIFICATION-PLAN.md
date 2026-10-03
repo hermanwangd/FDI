@@ -307,6 +307,8 @@ CONFIRMED | EXCLUDED | UNRESOLVED
 
 V1.1-D1 PASS requires reproducible change-first reconstruction, temporal isolation, provenance/correlation fidelity, honest incompleteness and safe handoff. It does not require Product/Workspace Knowledge publication and does not depend on whether V1.1-D2/D3 later show uplift.
 
+For **Arm C consumption**, however, any historical/reusable knowledge selected for worker handoff must pass the existing applicable governance/eligibility rules and be frozen as an exact reusable-knowledge revision before execution. This is a Q1 V1.1-D2 consumer requirement; it does not retroactively make publication a V1.1-D1 reconstruction PASS condition.
+
 ---
 
 ## 7. Required SA Deliverable Contract
