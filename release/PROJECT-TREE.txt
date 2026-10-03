@@ -1,4 +1,4 @@
-Feature-Delivery-Intelligence/
+swarm-v11-pr-a/
 ├── .mvn/
 │   └── wrapper/
 │       └── maven-wrapper.properties
@@ -600,7 +600,6 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   └── writer.md
 │   │   │   │       ├── skills/
 │   │   │   │       │   ├── artifact-consistency/
-│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   ├── templates/
 │   │   │   │       │   │   │   └── artifact-trace.yaml
 │   │   │   │       │   │   └── SKILL.md
@@ -628,7 +627,6 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   │   │   └── deployment-result.yaml
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── execution-guard/
-│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── incident-response/
 │   │   │   │       │   │   ├── templates/
@@ -645,7 +643,6 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   │   │   └── slo-definition.yaml
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── performance-benchmark/
-│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── pk-azure-devops-history/
 │   │   │   │       │   │   └── SKILL.md
@@ -684,12 +681,10 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   ├── pk-tkms-ingestion/
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── pm-intention/
-│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   ├── templates/
 │   │   │   │       │   │   │   └── intention-spec.yaml
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── post-change-canary/
-│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── product-knowledge/
 │   │   │   │       │   │   └── SKILL.md
@@ -700,7 +695,6 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   │   │   └── rollback-plan.md
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── root-cause-debugging/
-│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   ├── templates/
 │   │   │   │       │   │   │   └── rca-report.md
 │   │   │   │       │   │   └── SKILL.md
@@ -737,7 +731,6 @@ Feature-Delivery-Intelligence/
 │   │   │   │       │   │   │   └── mission-metrics-report.md
 │   │   │   │       │   │   └── SKILL.md
 │   │   │   │       │   ├── test-architecture/
-│   │   │   │       │   │   ├── scripts/
 │   │   │   │       │   │   ├── templates/
 │   │   │   │       │   │   │   └── quality-gate.yaml
 │   │   │   │       │   │   └── SKILL.md
@@ -790,12 +783,18 @@ Feature-Delivery-Intelligence/
 │   │   │       └── WorkspaceKnowledgeProposal.schema.json
 │   │   ├── docs/
 │   │   │   └── rc10/
+│   │   │       ├── assets/
+│   │   │       │   ├── ENGCIM-SWARM-MODULE-ALIGNMENT-v1.png
+│   │   │       │   ├── ENGCIM-SWARM-MODULE-ALIGNMENT-v1.prompt.md
+│   │   │       │   ├── ENGCIM-SWARM-MODULE-ALIGNMENT-v2.png
+│   │   │       │   └── ENGCIM-SWARM-MODULE-ALIGNMENT-v2.prompt.md
 │   │   │       ├── RC10-COMPANY-REPO-IMPORT-FOLDER-MAP.md
 │   │   │       ├── RC10-COMPANY-REPO-IMPORT-MANIFEST.json
 │   │   │       ├── RC10-EVIDENCE-MANIFEST.md
 │   │   │       ├── RC10-IMPLEMENTATION-PLAN.md
 │   │   │       ├── RC10-IMPLEMENTATION-REPORT.md
 │   │   │       ├── RC10-INTEGRATION-TEST-REPORT.md
+│   │   │       ├── RC10-KNOWLEDGE-DESIGN.md
 │   │   │       ├── RC10-REGRESSION-REPORT.md
 │   │   │       ├── RC10-REMAINDER-GAP-REPORT.md
 │   │   │       ├── RC10-RUNTIME-MATERIALIZATION.md
@@ -821,6 +820,7 @@ Feature-Delivery-Intelligence/
 │   │   │   │                   │   ├── BindingReceipt.java
 │   │   │   │                   │   ├── ClarificationRequiredException.java
 │   │   │   │                   │   ├── ClaudeSupervisorGateway.java
+│   │   │   │                   │   ├── CogneeSearchClient.java
 │   │   │   │                   │   ├── ControlResult.java
 │   │   │   │                   │   ├── GovernedWorkspaceKnowledge.java
 │   │   │   │                   │   ├── InMemoryWorkspaceKnowledgeRepository.java
@@ -891,27 +891,47 @@ Feature-Delivery-Intelligence/
 │   │   │   │                       ├── Dev204Validation.java
 │   │   │   │                       └── VerificationAccounting.java
 │   │   │   └── test/
-│   │   │       └── java/
-│   │   │           └── com/
-│   │   │               └── featuredeliveryintelligence/
-│   │   │                   └── fdi/
-│   │   │                       ├── application/
-│   │   │                       │   └── FdiApplicationTests.java
-│   │   │                       ├── orchestration/
-│   │   │                       │   ├── KnowledgePipelineTests.java
-│   │   │                       │   ├── LearningBoundaryTests.java
-│   │   │                       │   ├── MissionFlowTests.java
-│   │   │                       │   ├── MulticaRuntimeBindingReceiptTests.java
-│   │   │                       │   ├── MulticaWorkspaceKnowledgeRepositoryTests.java
-│   │   │                       │   ├── SupervisorBoundaryTests.java
-│   │   │                       │   ├── SupervisorPathTests.java
-│   │   │                       │   └── WorkspaceKnowledgeLifecycleTests.java
-│   │   │                       ├── CompanyImportManifestTests.java
-│   │   │                       ├── JavaOnlySourcePolicyTests.java
-│   │   │                       ├── PackageArchitectureTests.java
-│   │   │                       ├── Rc6CompatibilityTests.java
-│   │   │                       ├── ReviewRegressionTests.java
-│   │   │                       └── RuntimeMigrationTests.java
+│   │   │       ├── java/
+│   │   │       │   └── com/
+│   │   │       │       └── featuredeliveryintelligence/
+│   │   │       │           └── fdi/
+│   │   │       │               ├── application/
+│   │   │       │               │   ├── Dev204CogneeConsumerIndependentTests.java
+│   │   │       │               │   ├── Dev204KnowledgeConsumerCliTests.java
+│   │   │       │               │   └── FdiApplicationTests.java
+│   │   │       │               ├── orchestration/
+│   │   │       │               │   ├── CogneeConsumerIndependentTests.java
+│   │   │       │               │   ├── CogneeHandoffOrderTests.java
+│   │   │       │               │   ├── CogneeSearchBoundaryTests.java
+│   │   │       │               │   ├── CogneeSearchClientTests.java
+│   │   │       │               │   ├── KnowledgePipelineTests.java
+│   │   │       │               │   ├── LearningBoundaryTests.java
+│   │   │       │               │   ├── MissionFlowTests.java
+│   │   │       │               │   ├── MulticaRuntimeBindingReceiptTests.java
+│   │   │       │               │   ├── MulticaWorkspaceKnowledgeRepositoryTests.java
+│   │   │       │               │   ├── Rc10Phase2KnowledgeConsumerFixtureTests.java
+│   │   │       │               │   ├── SupervisorBoundaryTests.java
+│   │   │       │               │   ├── SupervisorPathTests.java
+│   │   │       │               │   ├── WorkspaceKnowledgeLifecycleTests.java
+│   │   │       │               │   └── WorkspaceKnowledgeRetrievalTests.java
+│   │   │       │               ├── CompanyImportManifestTests.java
+│   │   │       │               ├── JavaOnlySourcePolicyTests.java
+│   │   │       │               ├── PackageArchitectureTests.java
+│   │   │       │               ├── Rc6CompatibilityTests.java
+│   │   │       │               ├── ReviewRegressionTests.java
+│   │   │       │               └── RuntimeMigrationTests.java
+│   │   │       └── resources/
+│   │   │           └── rc10/
+│   │   │               └── phase2/
+│   │   │                   ├── methods/
+│   │   │                   │   ├── c5-cause-diagnostic-v1.md
+│   │   │                   │   ├── c5-run-attribution-v2.md
+│   │   │                   │   └── child-result-locator-v3.md
+│   │   │                   ├── retry-fixture/
+│   │   │                   │   ├── RetryPolicy.java
+│   │   │                   │   ├── RetryPolicyOracle.java
+│   │   │                   │   └── scenario.json
+│   │   │                   └── knowledge-consumer-cases.json
 │   │   ├── tooling/
 │   │   │   └── verification/
 │   │   │       └── verify_swarm_runtime.sh
