@@ -1,0 +1,27 @@
+{
+  "proposalRef": "rc10wk-swarm-layer-scoped-model-restore-20261003-01",
+  "workspaceRef": "private-workspace:SWARM-EXP-20261003",
+  "sourceRefs": [
+    "validation/rc10/swarm-engineering-learning-20261003/sources/03.json",
+    "rc10-swarm-experience-learning-source-layer-scoped-model-restore-20261003-01",
+    "private-evidence:SWARM-EXP-20261003-03",
+    "engcim/bootstrap/multica/MAPPING.md"
+  ],
+  "knowledgeType": "PROCEDURAL",
+  "statement": "Reporting label: PROPOSED PRACTICE — owner-reported scope error and bounded restoration.\n\nProblem and environment: A Codex-only model preference was over-applied to Multica, canceling runs and changing six role bindings. Execution-layer intent and exact role/field readbacks are private evidence SWARM-EXP-20261003-03.\n\nAttempts and observed results: Saved readbacks were used to restore only mistake-induced runtime/model/thinking fields. Instructions, Skills, permissions and concurrency were preserved. Cancellation events remain historical; configuration restoration does not undo them.\n\nConfirmed mechanism versus hypothesis: The owner reports a scope mistake and restoration, not that a particular model is universally correct or every affected run completed. Existing bootstrap guidance distinguishes saved configuration from actual effective runtime loading.\n\nProposed practice; owner/consumer: Before configuration changes, Supervisor/configuration owner names the execution layer, targets and allowed fields. Compare saved/current fields; restore only the erroneous delta while preserving unrelated fields and later legitimate edits. Retain affected run receipts and verify effective loading only when making that claim.\n\nApplicability/limitations: Reusable scope/restore discipline. Particular model preferences are changeable owner choices and remain in the private episode evidence; this record creates no model default, deployment authority or global instruction.\n\nNext verification: Review the six-role field diffs and unchanged instruction/Skill/permission/concurrency fields from the owner evidence. Preserve cancellations and distinguish later effective-run receipts. No configuration operation occurs here.",
+  "scope": "WORKSPACE",
+  "applicability": "Supervisor/configuration-owner changes spanning named Codex and Multica layers; scope and exact-field restoration.",
+  "limitations": [
+    "Particular model settings are changeable owner choices, not timeless knowledge.",
+    "Six-role restoration/cancellation facts are owner-reported; configuration readback is not per-run loaded-byte proof.",
+    "Public-safe local review draft; private evidence aliases and workspace/Mission scope must be resolved by the existing owner/Curator before live intake.",
+    "Owner-reported runtime facts are not independently native-readback-verified here.",
+    "No governance decision, capture receipt, live publication, runtime adoption or retrieval eligibility is created by this candidate."
+  ],
+  "evidenceRefs": [
+    "validation/rc10/swarm-engineering-learning-20261003/OBSERVATIONS.md#episode-03--execution-layer-configuration-scope",
+    "private-evidence:SWARM-EXP-20261003-03",
+    "engcim/bootstrap/multica/MAPPING.md"
+  ],
+  "conflictRefs": []
+}

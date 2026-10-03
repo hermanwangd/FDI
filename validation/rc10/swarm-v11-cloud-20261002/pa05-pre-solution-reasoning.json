@@ -1,0 +1,73 @@
+{
+  "classification": "SEALED_PRE_SOLUTION_SOURCE_REASONING_NOT_S05_OUTCOME",
+  "sealed_at_utc": "2026-10-02T16:15:07.863872+00:00",
+  "cutoff_inclusive": "2019-06-07T07:01:16Z",
+  "source_commit": "30bb4a75d3c9ca09ea22d15bfd88e59b153f4d18",
+  "source_path": "resilience4j-circuitbreaker/src/main/java/io/github/resilience4j/circuitbreaker/CircuitBreaker.java",
+  "source_sha256": "e8a0fa6b1c297614f5fc5d4f16da195011057f4995857948588edf9b5f05e2cf",
+  "allowed_comments": [
+    {
+      "id": 497675930,
+      "sha256": "dbc00821c48473eebde3acc2ff37aea3ef544867e407ad2a0abe93ffb992759f",
+      "created_at": "2019-05-31T11:28:04Z",
+      "updated_at": "2019-05-31T11:29:20Z"
+    },
+    {
+      "id": 497686509,
+      "sha256": "d30aeef1cea3a7da1c24fe687ee08d02787f45275ceff0143570df3e885f6a1e",
+      "created_at": "2019-05-31T12:11:08Z",
+      "updated_at": "2019-05-31T12:11:08Z"
+    },
+    {
+      "id": 497699789,
+      "sha256": "316d5ac96d4e5dfe57376fa0e8e79b66de7885050537ac68f19c120e544c9f09",
+      "created_at": "2019-05-31T13:00:16Z",
+      "updated_at": "2019-05-31T13:01:00Z"
+    },
+    {
+      "id": 497757016,
+      "sha256": "c82e6833ffccc5832daf06333eb97354566f00763b8984f6b9af9766a030619c",
+      "created_at": "2019-05-31T15:40:44Z",
+      "updated_at": "2019-05-31T15:40:44Z"
+    },
+    {
+      "id": 499780036,
+      "sha256": "baef6e6896ed375d7681c413e34b6bf7f90ad1f417f61f202e18dd6aeda68143",
+      "created_at": "2019-06-07T07:01:16Z",
+      "updated_at": "2019-06-07T07:01:16Z"
+    }
+  ],
+  "withheld": [
+    "current issue root edited after cutoff",
+    "later comments",
+    "target solution PR/code/reviews/checks"
+  ],
+  "hypothesis": "A successful CompletionStage<Void> has null result and null throwable. The pinned callback tests result != null, then Exception, and otherwise calls promise.completeExceptionally(null). This throws NPE in the callback, leaves the promise incomplete and omits success accounting; HALF_OPEN permits can be exhausted without enough success transitions.",
+  "prior_method": "Prior PR173 adds bounded CountDownLatch synchronization before callback-dependent assertions. This informs test discipline; it is not proof that observer timing causes this production failure.",
+  "design_intent": "Separate success/failure using throwable presence rather than non-null result. Preserve nullable successful payload and exactly-once success accounting. Test successful null and non-null results plus exception and Error paths. Use bounded completion/observer synchronization and verify HALF_OPEN transition after the configured successful probes.",
+  "experiment": {
+    "result": "PASS on Java17 for isolated JDK callback/null mechanism",
+    "boundary": "Does not compile/test pinned resilience4j; no library integration, solution comparison, governed knowledge publication or actual Architect action proved"
+  },
+  "unmet": [
+    "native prior PR-to-intent linkage",
+    "governed publication and retrieval",
+    "actual S05 decision/action",
+    "pinned project tests",
+    "sealed solution comparison"
+  ],
+  "public_export": {
+    "note": "Public-safe projection of sealed historical reasoning; local execution paths omitted. This projection is not the original sealed byte stream and does not establish the D1 Retry outcome. Full unchanged original remains in private delivered evidence.",
+    "source_git_commit": "e35303e97a5fb39dec24d3b4d31ec6d6a18ec899",
+    "source_file_sha256": "a361efda1254f9c6a499bd9fa6eac3ea87c42f7e71236b5ab21da8a8a1fb3a1c",
+    "removed_fields": [
+      "allowed_comments[0].file",
+      "allowed_comments[1].file",
+      "allowed_comments[2].file",
+      "allowed_comments[3].file",
+      "allowed_comments[4].file",
+      "experiment.source",
+      "experiment.log"
+    ]
+  }
+}

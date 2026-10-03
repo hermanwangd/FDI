@@ -1,0 +1,38 @@
+{
+  "proposalRef": "rc10wk-swarm-capacity-directory-waits-20261003-01",
+  "workspaceRef": "private-workspace:SWARM-EXP-20261003",
+  "sourceRefs": [
+    "validation/rc10/swarm-engineering-learning-20261003/sources/04.json",
+    "rc10-swarm-experience-learning-source-capacity-directory-waits-20261003-01",
+    "private-evidence:SWARM-EXP-20261003-04",
+    "engcim/bootstrap/overlays/multica/RC10-WORKSPACE-LEARNING.md",
+    "engcim/swarm/docs/rc10/RC10-IMPLEMENTATION-PLAN.md",
+    "engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/MulticaRuntimeBinding.java",
+    "engcim/swarm/baselines/rc6/runtime/package/engcim-swarm-package-RC6/skills/swarm-orchestration/SKILL.md",
+    "https://github.com/multica-ai/multica/blob/v0.6.1/server/internal/daemon/local_directory.go",
+    "https://github.com/multica-ai/multica/blob/v0.6.1/apps/docs/content/docs/project-resources.mdx"
+  ],
+  "knowledgeType": "PROCEDURAL",
+  "statement": "Reporting label: VERIFIED OBSERVATION — one resolved directory wait; other capacity/wake causes OPEN.\n\nProblem and environment: Agents shared an in_place resource. A later read-only local investigator found an explicit Coder-holder/baseline-Architect-waiter mapping in daemon logs and correlated native run readbacks. Exact identities/log lines/timestamps are private evidence SWARM-EXP-20261003-04; installed build remains unspecified and both receipts omit is_leader_task (UNKNOWN, not false).\n\nAttempts and observed results: An earlier parent-deadlock/missing-auto-resume interpretation relied on shared paths/waiting states without holder proof. The later investigation showed Coder held the directory, baseline C1 waited 177.407 seconds, acquired the same mutex after Coder completed, then started and completed automatically. Separate manual-assignment/capture workarounds remain history, not automatic-admission failure proof.\n\nConfirmed mechanism versus hypothesis: This named interval demonstrates legitimate shared-directory exclusion and automatic start, contradicting that interval's unsupported deadlock/missing-resume inference. No explicit release event exists, so exact release time is UNKNOWN. Other capacity/duplicate-wake episodes require their own evidence. Public v0.6.1 findings describe genuine IsLeaderTask=true bypassing directory binding, canonical-realpath ordinary-task serialization and waiters consuming slots; they do not establish the installed version/flags here.\n\nProposed practice; owner/consumer: Supervisor/Orchestrator maintainer correlates explicit holder, run, path, timestamps/timezone and native readbacks before naming a deadlock or absent resume. Reuse dispatch once/ACK/end and revision-aware deduplication. Select one initial trigger per work item; avoid reposting acknowledged/coalesced/deferred events while retaining distinct later completion events.\n\nApplicability/limitations: This covers the named interval only. No lock fix is justified by legitimate exclusion alone. Native directory/capacity admission are different; no lock file deletion, cwd alias, naive waiter subtraction or new FDI scheduler is supported. A later separately authorized native worktree integration belongs to the single integration owner; this source does not assert its execution or result. Worktree is a project-resource option for new runs, requiring committed Git/capability support and review of the delivered branch/commit.\n\nNext verification: Review the owner's exact log/native-read evidence and 177.407-second arithmetic. Preserve missing release/flags. Investigate remaining capacity/wake symptoms independently; do not reopen this wait or use a stub as native scheduling proof.",
+  "scope": "WORKSPACE",
+  "applicability": "Investigative method for native directory/capacity waits; explicit holder correlation before diagnosing deadlock/resume failure.",
+  "limitations": [
+    "Resolved interval and automatic start are attributed verified-local findings; native originals are owner-held.",
+    "Exact release, omitted leader flags and installed daemon build remain UNKNOWN; other waits are separate.",
+    "No lock fix/configuration result follows from this interval; later authorized worktree integration is separate.",
+    "Public-safe local review draft; private evidence aliases and workspace/Mission scope must be resolved by the existing owner/Curator before live intake.",
+    "Owner-reported runtime facts are not independently native-readback-verified here.",
+    "No governance decision, capture receipt, live publication, runtime adoption or retrieval eligibility is created by this candidate."
+  ],
+  "evidenceRefs": [
+    "validation/rc10/swarm-engineering-learning-20261003/OBSERVATIONS.md#episode-04--capacity-and-directory-waiting",
+    "private-evidence:SWARM-EXP-20261003-04",
+    "engcim/bootstrap/overlays/multica/RC10-WORKSPACE-LEARNING.md",
+    "engcim/swarm/docs/rc10/RC10-IMPLEMENTATION-PLAN.md",
+    "engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/MulticaRuntimeBinding.java",
+    "engcim/swarm/baselines/rc6/runtime/package/engcim-swarm-package-RC6/skills/swarm-orchestration/SKILL.md",
+    "https://github.com/multica-ai/multica/blob/v0.6.1/server/internal/daemon/local_directory.go",
+    "https://github.com/multica-ai/multica/blob/v0.6.1/apps/docs/content/docs/project-resources.mdx"
+  ],
+  "conflictRefs": []
+}

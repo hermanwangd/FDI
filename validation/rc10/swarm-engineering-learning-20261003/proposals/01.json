@@ -1,0 +1,29 @@
+{
+  "proposalRef": "rc10wk-swarm-repository-key-match-20261003-01",
+  "workspaceRef": "private-workspace:SWARM-EXP-20261003",
+  "sourceRefs": [
+    "validation/rc10/swarm-engineering-learning-20261003/sources/01.json",
+    "rc10-swarm-experience-learning-source-repository-key-match-20261003-01",
+    "private-evidence:SWARM-EXP-20261003-01",
+    "engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/SwarmKnowledgeGateway.java",
+    "engcim/bootstrap/overlays/multica/RC10-WORKSPACE-LEARNING.md"
+  ],
+  "knowledgeType": "PROCEDURAL",
+  "statement": "Reporting label: VERIFIED OBSERVATION — owner-reported single-variable correction; source exact-map mechanism inspected.\n\nProblem and environment: In a Swarm consumer-selection run, the provider used the public repository key github.com/hermanwangd/FDI while the typed request kept its full URL. The native runtime/JAR pin belongs to private evidence SWARM-EXP-20261003-01.\n\nAttempts and observed results: Exact-map selection failed. Only the request repository key was changed to the observed canonical representation; the next selection exited 0 with ELIGIBLE_CONTEXT. Record, proposal, JAR and raw provider pages were unchanged. This was a request correction, not a product code fix.\n\nConfirmed mechanism versus hypothesis: At the inspected source snapshot, SwarmKnowledgeGateway compares full repository revision maps with Map.equals and excludes any difference as SOURCE_REVISION_MISMATCH. The owner reports the isolated correction. Neither a universal canonicalizer nor a general code defect/fix is established.\n\nProposed practice; owner/consumer: The existing Supervisor/consumer owner compares exact request/provider identity maps and corrects only a demonstrated request-key mismatch within authority. Preserve revision values, raw evidence and genuine revision/set exclusions.\n\nApplicability/limitations: Applies to representation differences in typed repository maps; does not justify weakening eligibility, changing approved content or normalizing arbitrary URLs. Native originals are owner-held and were not inspected in this cloud task.\n\nNext verification: Existing Curator/source review resolves the evidence alias, checks the request-only diff and unchanged raw-page/proposal/JAR identities, and retains a real revision-mismatch exclusion. No repeat run is requested.",
+  "scope": "WORKSPACE",
+  "applicability": "Typed Swarm consumers with a demonstrated provider/request repository-key representation mismatch.",
+  "limitations": [
+    "Single-variable result is owner-reported; native originals and exact runtime pin are private evidence.",
+    "Source Map.equals behavior is inspected; no universal canonicalizer or product code fix is established.",
+    "Public-safe local review draft; private evidence aliases and workspace/Mission scope must be resolved by the existing owner/Curator before live intake.",
+    "Owner-reported runtime facts are not independently native-readback-verified here.",
+    "No governance decision, capture receipt, live publication, runtime adoption or retrieval eligibility is created by this candidate."
+  ],
+  "evidenceRefs": [
+    "validation/rc10/swarm-engineering-learning-20261003/OBSERVATIONS.md#episode-01--repository-identity-representation",
+    "private-evidence:SWARM-EXP-20261003-01",
+    "engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/SwarmKnowledgeGateway.java",
+    "engcim/bootstrap/overlays/multica/RC10-WORKSPACE-LEARNING.md"
+  ],
+  "conflictRefs": []
+}
