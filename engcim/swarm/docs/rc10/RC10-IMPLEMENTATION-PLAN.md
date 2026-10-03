@@ -926,7 +926,7 @@ The target solution PR is **not** the historical PR handed to the worker. It rem
 **Freeze before the run:**
 - target repository/product scope, target intent and cutoff T;
 - exact target-work Sources/revisions visible to the worker;
-- bounded historical search space and provider access available by T;
+- bounded historical search space plus exact historical-source snapshots, immutable revisions, or provider as-of receipts fixed at T; a live mutable provider read after T cannot substitute for the replay input;
 - evaluator-only withheld artifacts and solution references;
 - source-link/correlation rules, including which provider-native links count as explicit;
 - V1.1-D1 acceptance checks below. Do not change these after seeing the result.
@@ -938,7 +938,7 @@ The target solution PR is **not** the historical PR handed to the worker. It rem
 | Multi-source boundary | Every material worker-visible Source keeps its own type/ref/revision/provenance. Non-PR documents/artifacts remain valid Sources and are not relabeled as PR-derived knowledge. |
 | Change-first reconstruction | For each selected historical delivery, traversal starts from the completed PR/change and records repository/resulting revision, commits/changed content, reviews and available build/test evidence before tracing linked intent. |
 | Correlation fidelity | Provider-native explicit PR/work-item or commit/work-item links retain their native refs and PA-05 correlation method/strength. Missing linkage remains `UNKNOWN`/incomplete; semantic or temporal similarity may nominate a candidate but must not be presented as explicit linkage. |
-| Temporal isolation | No target solution PR content or other post-cutoff answer-bearing evidence reaches SA/SD before evaluation. Durable historical records may contain post-delivery data only when the replay harness filters it at T as required by PA-05 §4.13. |
+| Temporal isolation | No target solution PR content or other post-cutoff answer-bearing evidence reaches SA/SD before evaluation. Every worker-visible historical source is read from an exact snapshot/immutable revision or provider as-of receipt fixed at T; later edits, relinking, review changes or rerun checks cannot enter through a live API read. Durable historical records may contain post-delivery data only when the replay harness filters them to the frozen T snapshot as required by PA-05 §4.13. |
 | Historical/current boundary | Historical facts produce precedent or hypotheses only. Current applicability is confirmed, excluded or left unresolved using the current authorized sources/evidence; history does not establish current Change Surface or Product truth by itself. |
 | Honest incompleteness | Missing PRs, direct commits, review/check evidence, reverts/replacements or intent links remain explicit limitations; the run does not fabricate coverage. |
 | V1.1-D2 handoff | Any historical record/observation used downstream carries exact source refs, delivery-as-of, limitations and applicability status so V1.1-D2 can attribute whether it materially influenced SA/SD. V1.1-D1 does not require Product/Workspace Knowledge publication to pass. |
