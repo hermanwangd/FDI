@@ -140,7 +140,7 @@ class MissionFlowTests {
     }
 
     @Test
-    void unverifiedOptionalityCannotAuthorizeDispatchWithoutQualifiedKnowledge() {
+    void requiredKnowledgeCannotDispatchWithoutQualifiedContext() {
         for (boolean unavailable : List.of(false, true)) {
             WorkspaceKnowledgeRepository source = new WorkspaceKnowledgeRepository() {
                 @Override public void save(GovernedWorkspaceKnowledge knowledge) { throw new AssertionError("no writes"); }
@@ -157,8 +157,41 @@ class MissionFlowTests {
                     workspaceRef -> new WorkspaceKnowledgeProjectRef(workspaceRef, "workspace-knowledge-a", "Workspace Knowledge"));
             assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(knowledgeRequest())))
                     .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
-                    .hasMessageContaining("optional-context policy");
+                    .hasMessageContaining("Required knowledge context");
             assertThat(dispatches.get()).isZero();
+        }
+    }
+
+    @Test
+    void explicitlyOptionalKnowledgeContinuesWithAttributedEmptyOrUnavailableContext() {
+        for (boolean unavailable : List.of(false, true)) {
+            WorkspaceKnowledgeRepository source = new WorkspaceKnowledgeRepository() {
+                @Override public void save(GovernedWorkspaceKnowledge knowledge) { throw new AssertionError("no writes"); }
+                @Override public ReadResult findByWorkspace(String workspaceRef) {
+                    if (unavailable) throw new ProviderUnavailableException("provider unavailable");
+                    return new ReadResult(workspaceRef, "workspace-knowledge-a",
+                            Instant.parse("2026-10-02T00:00:00Z"), List.of());
+                }
+            };
+            var received = new ArrayList<MissionExecutionEnvelope>();
+            var swarm = new SwarmMissionGateway(execution -> {
+                received.add(execution);
+                return new BindingReceipt("binding:optional", "multica:optional", execution.executionRevision(),
+                        "COMMITTED", List.of("evidence:optional-context"));
+            }, new SwarmKnowledgeGateway(), source,
+                    workspaceRef -> new WorkspaceKnowledgeProjectRef(
+                            workspaceRef, "workspace-knowledge-a", "Workspace Knowledge"));
+
+            MissionRequest optional = knowledgeRequest().withKnowledgeContextRequirement(
+                    MissionRequest.KnowledgeContextRequirement.OPTIONAL);
+            swarm.execute(new MissionIntake().formulate(optional));
+
+            assertThat(received).singleElement().satisfies(execution -> {
+                assertThat(execution.eligibleKnowledge()).isEmpty();
+                assertThat(execution.knowledgeContextStatus()).isEqualTo(unavailable
+                        ? MissionExecutionEnvelope.KnowledgeContextStatus.PROVIDER_UNAVAILABLE
+                        : MissionExecutionEnvelope.KnowledgeContextStatus.NO_ELIGIBLE_RECORDS);
+            });
         }
     }
 
@@ -181,7 +214,7 @@ class MissionFlowTests {
                 List.of(), List.of("continue without stale method"), "rev-17", Map.of("repo-a", "rev-17")))))
                 .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
                 .hasMessageContaining("NO_ELIGIBLE_RECORDS")
-                .hasMessageContaining("optional-context policy");
+                .hasMessageContaining("Required knowledge context");
 
         assertThat(received).isEmpty();
     }
@@ -212,7 +245,7 @@ class MissionFlowTests {
         assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(request())))
                 .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
                 .hasMessageContaining("PROVIDER_UNAVAILABLE")
-                .hasMessageContaining("optional-context policy");
+                .hasMessageContaining("Required knowledge context");
 
         assertThat(received).isEmpty();
     }
@@ -287,7 +320,7 @@ class MissionFlowTests {
         assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(knowledgeRequest())))
                 .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
                 .hasMessageContaining("NO_ELIGIBLE_RECORDS")
-                .hasMessageContaining("optional-context policy");
+                .hasMessageContaining("Required knowledge context");
 
         assertThat(received).isEmpty();
         assertThat(cogneeSearches.get()).isEqualTo(2);
@@ -312,7 +345,7 @@ class MissionFlowTests {
         assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(knowledgeRequest())))
                 .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
                 .hasMessageContaining("PROVIDER_UNAVAILABLE")
-                .hasMessageContaining("optional-context policy");
+                .hasMessageContaining("Required knowledge context");
         assertThat(cogneeSearches.get()).isEqualTo(2);
         assertThat(received).isEmpty();
     }
@@ -342,7 +375,7 @@ class MissionFlowTests {
         assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(knowledgeRequest())))
                 .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
                 .hasMessageContaining("NO_ELIGIBLE_RECORDS")
-                .hasMessageContaining("optional-context policy");
+                .hasMessageContaining("Required knowledge context");
         assertThat(cogneeSearches.get()).isEqualTo(1);
         assertThat(received).isEmpty();
     }
@@ -388,7 +421,7 @@ class MissionFlowTests {
         assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(knowledgeRequest())))
                 .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
                 .hasMessageContaining("NO_ELIGIBLE_RECORDS")
-                .hasMessageContaining("optional-context policy");
+                .hasMessageContaining("Required knowledge context");
         assertThat(cogneeSearches.get()).isZero();
         assertThat(received).isEmpty();
     }
@@ -456,7 +489,7 @@ class MissionFlowTests {
         assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(knowledgeRequest())))
                 .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
                 .hasMessageContaining("NO_ELIGIBLE_RECORDS")
-                .hasMessageContaining("optional-context policy");
+                .hasMessageContaining("Required knowledge context");
         assertThat(readsAtSearch.get()).isEqualTo(1);
         assertThat(reads.get()).isEqualTo(2);
         assertThat(dispatches.get()).isZero();
@@ -512,7 +545,7 @@ class MissionFlowTests {
         assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(knowledgeRequest())))
                 .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
                 .hasMessageContaining("PROVIDER_UNAVAILABLE")
-                .hasMessageContaining("optional-context policy");
+                .hasMessageContaining("Required knowledge context");
 
         assertThat(received).isEmpty();
         assertThat(cogneeSearches.get()).isEqualTo(1);
@@ -536,7 +569,7 @@ class MissionFlowTests {
         assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(knowledgeRequest())))
                 .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
                 .hasMessageContaining("PROVIDER_UNAVAILABLE")
-                .hasMessageContaining("optional-context policy");
+                .hasMessageContaining("Required knowledge context");
 
         assertThat(received).isEmpty();
         assertThat(cogneeSearches.get()).isEqualTo(1);
@@ -560,7 +593,7 @@ class MissionFlowTests {
         assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(knowledgeRequest())))
                 .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
                 .hasMessageContaining("PROVIDER_UNAVAILABLE")
-                .hasMessageContaining("optional-context policy");
+                .hasMessageContaining("Required knowledge context");
 
         assertThat(received).isEmpty();
         assertThat(cogneeSearches.get()).isEqualTo(1);
@@ -584,7 +617,7 @@ class MissionFlowTests {
         assertThatThrownBy(() -> swarm.execute(new MissionIntake().formulate(knowledgeRequest())))
                 .isInstanceOf(com.featuredeliveryintelligence.fdi.shared.RuntimeContractException.class)
                 .hasMessageContaining("PROVIDER_UNAVAILABLE")
-                .hasMessageContaining("optional-context policy");
+                .hasMessageContaining("Required knowledge context");
 
         assertThat(received).isEmpty();
         assertThat(cogneeSearches.get()).isEqualTo(1);
