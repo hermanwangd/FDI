@@ -870,7 +870,7 @@ The release-level question is:
 
 > Can the existing Swarm combine current engineering evidence with applicable reusable knowledge to improve System Analysis and System Design on unfamiliar work, with attributable quality/evidence benefit and reduced avoidable search, rework or Human rescue?
 
-### Delta 1 — PR-first Engineering History
+### V1.1-D1 — PR-first Engineering History
 
 Extend the existing historical-delivery capability with provider-neutral, change-first history semantics:
 
@@ -892,7 +892,61 @@ Pull Request
 - Use suitable GitHub OSS history for external real-world validation under the existing approved PA-05 replay boundary: pin a case-specific temporal cutoff and exclude the target solution PR's post-cutoff changed content, review, test/check results and other post-cutoff evidence from the SA/SD reasoning input. Those withheld artifacts may be revealed only after the run as reference/evaluation evidence. Qualify Azure DevOps PR → PBI → Feature semantics after company migration.
 - Do not add `EngineeringChangeEpisode`, `ChangePattern`, `DesignPrecedent` or similar first-class contracts unless evidence demonstrates an independent lifecycle/responsibility that existing evidence/knowledge contracts cannot represent.
 
-### Delta 2 — P2-04 actual use → S05 SA/SD effectiveness
+#### V1.1-D1 qualification plan — PR-first history inside a multi-source engineering case
+
+V1.1-D1 qualifies one **historical-source traversal capability**, not the overall Source model. The qualification case may use any authorized, attributable Sources needed for the target work—such as requirements/specifications, design or architecture documents, implementation plans, issues/PBIs/features, repositories/code/configuration, tests/verification results, runtime evidence and current Mission artifacts. Those Sources retain their own provenance/authority and are not converted into PR-derived knowledge.
+
+Separate the case into two evidence sets before execution:
+
+```text
+Target work at cutoff T
+├─ intent / requirement sources
+├─ allowed product / engineering documents
+├─ current repository / code / API / schema / config
+├─ current tests / verification evidence
+└─ other authorized Mission inputs
+
+Pre-cutoff Engineering History
+└─ completed historical deliveries
+   └─ PR-first reconstruction
+      ├─ PR / resulting revision
+      ├─ commits / changed content
+      ├─ reviews
+      ├─ CI / build / test evidence
+      └─ provider-native linked work item / intent
+
+Evaluator-only withheld evidence
+├─ target solution PR
+├─ target post-cutoff code / reviews / checks
+└─ other post-cutoff answer-bearing artifacts
+```
+
+The target solution PR is **not** the historical PR handed to the worker. It remains evaluator-only until the run ends. V1.1-D1 operates on completed historical deliveries available by the cutoff and reconstructs those deliveries change-first. Existing PA-05/DH-01 semantics remain authoritative: stable delivery-unit/work-item identity, per-source correlation method/strength, completeness/limitations, conflicts/reverts/replacements, delivered-as-of and fact-level provenance remain intact. PR-first changes traversal order; it does not redefine DH-01 identity or make PR the only Source type.
+
+**Freeze before the run:**
+- target repository/product scope, target intent and cutoff T;
+- exact target-work Sources/revisions visible to the worker;
+- bounded historical search space plus exact historical-source snapshots, immutable revisions, or provider as-of receipts fixed at T; a live mutable provider read after T cannot substitute for the replay input;
+- evaluator-only withheld artifacts and solution references;
+- source-link/correlation rules, including which provider-native links count as explicit;
+- V1.1-D1 acceptance checks below. Do not change these after seeing the result.
+
+**V1.1-D1 acceptance:**
+
+| Check | Required evidence |
+| --- | --- |
+| Multi-source boundary | Every material worker-visible Source keeps its own type/ref/revision/provenance. Non-PR documents/artifacts remain valid Sources and are not relabeled as PR-derived knowledge. |
+| Change-first reconstruction | For each selected historical delivery, traversal starts from the completed PR/change and records repository/resulting revision, commits/changed content, reviews and available build/test evidence before tracing linked intent. |
+| Correlation fidelity | Provider-native explicit PR/work-item or commit/work-item links retain their native refs and PA-05 correlation method/strength. Missing linkage remains `UNKNOWN`/incomplete; semantic or temporal similarity may nominate a candidate but must not be presented as explicit linkage. |
+| Temporal isolation | No target solution PR content or other post-cutoff answer-bearing evidence reaches SA/SD before evaluation. Every worker-visible historical source is read from an exact snapshot/immutable revision or provider as-of receipt fixed at T; later edits, relinking, review changes or rerun checks cannot enter through a live API read. Durable historical records may contain post-delivery data only when the replay harness filters them to the frozen T snapshot as required by PA-05 §4.13. |
+| Historical/current boundary | Historical facts produce precedent or hypotheses only. Current applicability is confirmed, excluded or left unresolved using the current authorized sources/evidence; history does not establish current Change Surface or Product truth by itself. |
+| Honest incompleteness | Missing PRs, direct commits, review/check evidence, reverts/replacements or intent links remain explicit limitations; the run does not fabricate coverage. |
+| V1.1-D2 handoff | Any historical record/observation used downstream carries exact source refs, delivery-as-of, limitations and applicability status so V1.1-D2 can attribute whether it materially influenced SA/SD. V1.1-D1 does not require Product/Workspace Knowledge publication to pass. |
+| Negative protection | At least one bounded negative demonstrates that absent/ambiguous linkage, contradicted/reverted history, or a post-cutoff source is not silently promoted into a current engineering conclusion. |
+
+**V1.1-D1 disposition:** V1.1-D1 is satisfied for the bounded case when the PR-first historical reconstruction is reproducible, temporally isolated, provenance-preserving and safely handed to current investigation with honest limitations. Whether that historical input actually improves SA/SD quality or delivery time is **not a V1.1-D1 PASS condition**; those are V1.1-D2 and V1.1-D3 conclusions. A correct V1.1-D1 run may therefore coexist with `NO_MEASURABLE_UPLIFT` or `INCONCLUSIVE` downstream effectiveness.
+
+### V1.1-D2 — P2-04 actual use → S05 SA/SD effectiveness
 
 Keep P2-04a publication and P2-04c feedback/maintenance unchanged. Extend the P2-04b **actual consumer use** validation to demonstrate material influence on S05 engineering reasoning:
 
@@ -926,7 +980,7 @@ Preserve existing S05 responsibilities for affected scope, components/interfaces
 
 Retrieval/readback or an ADOPTED marker alone does not establish this delta; bind the selected knowledge revision to a material SA/SD reasoning use or decision and its resulting engineering outcome.
 
-### Delta 3 — Extend existing effectiveness evidence to engineering outcome
+### V1.1-D3 — Extend existing effectiveness evidence to engineering outcome
 
 Do not create a second validation or telemetry framework. Reuse the existing production-like comparison, SW2.0/SW2.8 measures and Phase 2 completion rules.
 
@@ -938,7 +992,7 @@ Continue to report acceleration separately using the existing comparable-case me
 
 GitHub external validation may establish real-world generalization of these deltas; it does not establish company/Azure qualification.
 
-For **Swarm v1.1 completion**, Delta 1 is not optional merely because the underlying Phase 2 P2-04/SW2.6 cycle can complete with another bounded knowledge source. Record PR-linked Engineering History within the existing P2-04/SW2.6 qualification evidence as one of: (a) exercised with the temporal-cutoff rule above and dispositioned from real evidence, or (b) explicitly deferred / NOT_SUPPORTED with missing evidence, owner, next trigger and accepted scope disposition. Do not create SW2.9 or a parallel completion gate. Phase 2 may retain its own bounded completion state independently; a Swarm v1.1 completion claim requires this additional Delta 1 disposition.
+For **Swarm v1.1 completion**, V1.1-D1 is not optional merely because the underlying Phase 2 P2-04/SW2.6 cycle can complete with another bounded knowledge source. Record PR-linked Engineering History within the existing P2-04/SW2.6 qualification evidence as one of: (a) exercised with the temporal-cutoff rule above and dispositioned from real evidence, or (b) explicitly deferred / NOT_SUPPORTED with missing evidence, owner, next trigger and accepted scope disposition. Do not create SW2.9 or a parallel completion gate. Phase 2 may retain its own bounded completion state independently; a Swarm v1.1 completion claim requires this additional V1.1-D1 disposition.
 
 ### Scope guardrail
 
