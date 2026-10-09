@@ -66,5 +66,12 @@
     "input": "raw command plus independently pinned Mission workspace UUID",
     "binding": "One leading exact assignment/export and known variable references; no environment inheritance or execution",
     "limits": "Preserve raw bytes and normalized view separately; unchanged scope checks still apply. Missing --workspace-id stays FAIL; unsupported syntax is method coverage gap, not proof of role violation."
+  },
+  "observationPublicContextReads": {
+    "provider": "role-unit-evidence-v3.mjs",
+    "export": "observeOwnedPublicContextReads",
+    "input": "normalized command plus explicitly bound physical/logical owned cwd roots",
+    "scope": "Only actual cat operand spans of exact two root public SDK context files; optional stderr2>/dev/null; quotation and surrounding programs retained",
+    "limits": "Private-path observation view only. Raw request and all actor/workspace/path/program/mutation checks retained. Does not authorize surrounding programs or mask nested paths, private writes, stdout redirection or quoted literals."
   }
 }

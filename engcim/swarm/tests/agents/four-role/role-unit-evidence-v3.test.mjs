@@ -71,3 +71,22 @@ test('single-quoted workspace variable stays literal, not a bound UUID',()=>{
  const r=evidenceProvider.normalizeKnownMissionWorkspaceCommand(raw,missionWorkspace);
  assert.equal(r.status,'NORMALIZED');assert.match(r.normalizedCommand,/'\$MISSION_WORKSPACE_ID'/);assert.doesNotMatch(r.normalizedCommand,new RegExp(missionWorkspace));
 });
+
+// Actual T seq20 normal shell composition; observation view only.
+const publicRoot='/private/tmp/51da4a84-d911-4f2a-8550-bcabc6f60d79';
+const publicResource=publicRoot+'/.multica/project/resources.json';
+for(const raw of ['cat '+publicResource,'cat '+publicResource+' 2>/dev/null','ls -la '+publicRoot+'; cat '+publicResource+' 2>/dev/null','ls -la "'+publicRoot+'" && cat "'+publicResource+'"'])test('public context actual readonly operand: '+raw,()=>{
+ const r=evidenceProvider.observeOwnedPublicContextReads(raw,[publicRoot]);assert.equal(r.rawCommand,raw);assert.equal(r.status,'MASKED');assert.equal(r.maskedPaths.length,1);assert.doesNotMatch(r.observedCommand,/\.multica/);assert.equal(r.maskedPaths[0].resolvedPath,publicResource);
+});
+test('quoted literal, nested/private target and stdout redirection do not become public reads',()=>{
+ for(const raw of ["echo 'cat "+publicResource+"'",'cat '+publicRoot+'/nested/.multica/project/resources.json','cat '+publicRoot+'/.multica/sessions/old','cat '+publicResource+' > '+publicResource,'printf x > '+publicResource,'cat '+publicResource+' 2> '+publicRoot+'/private.log']){const r=evidenceProvider.observeOwnedPublicContextReads(raw,[publicRoot]);assert.equal(r.maskedPaths.length,0,raw);assert.equal(r.observedCommand,raw);}
+});
+test('readonly mask does not conceal private writes or authorize surrounding programs',()=>{
+ for(const raw of ['printf x > '+publicResource+'; cat '+publicResource,'unknown-program; cat '+publicResource]){const r=evidenceProvider.observeOwnedPublicContextReads(raw,[publicRoot]);assert.equal(r.maskedPaths.length,1);assert.equal(r.rawCommand,raw);assert.match(r.observedCommand,/^(?:printf x > .*\.multica|unknown-program)/);}
+ assert.equal(evidenceProvider.observeOwnedPublicContextReads('cat "'+publicResource,[publicRoot]).status,'UNSUPPORTED');
+});
+
+test('quoted stderr token is an extra operand and comments are unsupported, never masked',()=>{
+ for(const suffix of [" '2>/dev/null'",' "2>/dev/null"',' ./other-file']){const raw='cat '+publicResource+suffix,r=evidenceProvider.observeOwnedPublicContextReads(raw,[publicRoot]);assert.equal(r.maskedPaths.length,0);assert.equal(r.observedCommand,raw);}
+ const raw='echo ok # ; cat '+publicResource,r=evidenceProvider.observeOwnedPublicContextReads(raw,[publicRoot]);assert.equal(r.status,'UNSUPPORTED');assert.equal(r.maskedPaths.length,0);assert.equal(r.observedCommand,raw);
+});

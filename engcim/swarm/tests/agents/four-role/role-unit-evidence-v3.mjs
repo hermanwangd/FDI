@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import crypto from 'node:crypto';
+import path from 'node:path';
 export const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
 
 // Observation only: normalize one explicitly supplied Mission binding.
@@ -28,6 +29,35 @@ export function normalizeKnownMissionWorkspaceCommand(rawCommand, expectedWorksp
   }
   if(quote)return unsupported('UNCLOSED_QUOTE');
   return {rawCommand,normalizedCommand:normalized,status:bound?'NORMALIZED':'UNCHANGED',reason:null};
+}
+
+
+// Redact only an actual readonly cat operand in the private-path observation view.
+// This view is not authorization; all original command/scope checks still apply.
+export function observeOwnedPublicContextReads(rawCommand, ownedRoots) {
+  const result=(status,observedCommand=rawCommand,maskedPaths=[])=>({rawCommand,observedCommand,maskedPaths,status});
+  if(typeof rawCommand!=='string'||rawCommand.length>65536||!Array.isArray(ownedRoots)||!ownedRoots.length||ownedRoots.some(x=>typeof x!=='string'||!path.isAbsolute(x))||/[\r\n\x00\x60\\]/.test(rawCommand))return result('UNSUPPORTED');
+  const groups=[[]];let word='',start=null,quote=null;
+  const flush=end=>{if(start!==null){groups.at(-1).push({word,start,end});word='';start=null;}};
+  for(let i=0;i<rawCommand.length;i++){
+    const ch=rawCommand[i];
+    if(quote){if(ch===quote)quote=null;else word+=ch;continue;}
+    if(ch==='#')return result('UNSUPPORTED');
+    if(ch==='"'||ch==="'"){if(start===null)start=i;quote=ch;continue;}
+    if(/\s/.test(ch)){flush(i);continue;}
+    if([';','|','&'].includes(ch)&&!(ch==='&'&&rawCommand[i-1]==='>')){flush(i);if(rawCommand[i+1]===ch)i++;groups.push([]);continue;}
+    if(start===null)start=i;word+=ch;
+  }
+  if(quote)return result('UNSUPPORTED');flush(rawCommand.length);
+  const masks=[];
+  for(const tokens of groups){
+    if(tokens[0]?.word!=='cat'||tokens.length<2||tokens.length>3||tokens.length===3&&rawCommand.slice(tokens[2].start,tokens[2].end)!=='2>/dev/null')continue;
+    const token=tokens[1],value=token.word;
+    if(/[~$<>]/.test(value)||value.split('/').includes('..'))continue;
+    for(const root of ownedRoots){const resolvedPath=path.resolve(root,value);if(['.multica/daemon_task_context.json','.multica/project/resources.json'].some(file=>resolvedPath===path.resolve(root,file))){masks.push({rawPath:rawCommand.slice(token.start,token.end),resolvedPath,start:token.start,end:token.end});break;}}
+  }
+  let view=rawCommand;for(const m of [...masks].reverse())view=view.slice(0,m.start)+'OWN_PUBLIC_CONTEXT'+view.slice(m.end);
+  return result(masks.length?'MASKED':'UNCHANGED',view,masks);
 }
 
 export function checkUnitEvidence(e,suite,profilePin=null){
