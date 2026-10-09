@@ -741,7 +741,7 @@
     "tests": {
       "path": "engcim/swarm/tests/agents/four-role",
       "manifest": "engcim/swarm/tests/agents/four-role/SOURCE-MANIFEST.json",
-      "manifestSha256": "9ed3e52fa3a52a7db76b17b76c5745573a06203c03e2886f8783d1afd719d5f2",
+      "manifestSha256": "9372c57a9aeffeb7c8f871c661cf9c6a789f386b16641c17bd4e1c76ee4e5619",
       "previousExternalDefinitions": "Read-only historical evidence, all future maintained test edits use this Git path",
       "capabilityInventory": {
         "path": "engcim/swarm/tests/agents/capabilities.json",
@@ -7739,7 +7739,7 @@
         },
         "responsibilityChange": "NONE; syntax observation and reply activation separated from delivery/gates",
         "fullLoading": "UNVERIFIED",
-        "native": "NO_NEW_RUN_YET",
+        "native": "TWO_CAPTURE_RUNS_CANCELLED_FULL_LOADING_UNVERIFIED",
         "anomaly": {
           "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZE-OPERATOR-ANOMALY.json",
           "bytes": 569,
@@ -7763,6 +7763,86 @@
             "sha256": "b8d375c3b11a6601cd79864b22763936b305bb9097acf7c721a10925055ccc47"
           },
           "result": "71PASS1FAIL_TO_72PASS; RAW_PARENT_AND_RELATIVE_TOKEN_GUARDS_RETAINED"
+        },
+        "nativeCapture": {
+          "status": "PARTIAL_FULL_LOADING_UNVERIFIED",
+          "result": {
+            "path": "PHASE-ZE-RESULT-r2.json",
+            "bytes": 14282,
+            "sha256": "fe8fae6e3af6b30325184229a22a9a4ce757773893eed75b2a1042ea4d296b5c"
+          },
+          "independentGrade": {
+            "path": "PHASE-ZE-INDEPENDENT-GRADE-r2-CLOSURE.json",
+            "bytes": 1945,
+            "sha256": "14ec380a9195a3863407b8d8363464c4bb3182903e1e136bc99b54985c85c3a2"
+          },
+          "sourceMethodCommit": "a1749035845588e30328d33a16701ab4312a6e6c",
+          "publishedPayloadSource": "c5989a4180e7a69ffc9d92cdac410939440e0e8c",
+          "cases": [
+            {
+              "actor": "orchestrator",
+              "issue": "01a12181-e330-72c2-ab8a-08e945a7c2c4",
+              "run": "01a1218a-c650-79a9-84bd-8fadf9072dbd",
+              "status": "cancelled",
+              "error": null,
+              "namedInstalledFiles": 7,
+              "requestedFiles": 7,
+              "renderBytes": 112340,
+              "renderSha256": "67b0f40b3c81d9048f8bd68e77e00073923e10ec157dd708d12e6471917c50db",
+              "roleBodyPresent": true,
+              "markerBinding": "AGENT_ISSUE_ONLY_NOT_RUN_SESSION_OR_TOOL_CWD"
+            },
+            {
+              "actor": "coder",
+              "issue": "01a12181-f4d3-7e60-9442-402b87379b5e",
+              "run": "01a12191-802d-780a-a96f-65babb0adbf3",
+              "status": "cancelled",
+              "error": null,
+              "namedInstalledFiles": 11,
+              "requestedFiles": 11,
+              "renderBytes": 19891,
+              "renderSha256": "de010fbbf9a11f8979a55bbe817ce27e773d4fc199b3143a6e0c0f407ce6ff23",
+              "roleBodyPresent": true,
+              "markerBinding": "AGENT_ISSUE_ONLY_NOT_RUN_SESSION_OR_TOOL_CWD"
+            }
+          ],
+          "observations": {
+            "installedNamedFiles": 18,
+            "readOutputStrings": 26,
+            "nonemptyReadFrames": 24,
+            "truncatedReadFrames": 7,
+            "terminalFramesWithoutOutput": 5,
+            "completeMatchesRecognizedByFrozenObserver": 0,
+            "recognitionLimit": "Numbered/paged text not reconstructed; zero matches is not zero returned bodies",
+            "completeExplicitDelivery": "UNVERIFIED",
+            "automaticLoading": "UNVERIFIED"
+          },
+          "limits": [
+            "Orchestrator own comment scan flags prescribed by generated wrapper missing from original classifier; first STOP retained and no retry",
+            "Coder normal in_progress status was outside this finite capture grant; record method/workflow incompatibility, no role defect inference",
+            "Read-file results retain numbered/paged output strings (26 frames,24 nonempty,7 truncated); five terminal frames omit output. Frozen whole-file matcher does not reconstruct pages, so zero recognized complete matches cannot mean zero public bodies or prove model did not receive content.",
+            "Direct single-agent topology differs from normal squad leader; no historical/private directory fallback"
+          ],
+          "allNativeTerminal": true,
+          "noRetry": true,
+          "noActiveNativeExecutor": true,
+          "budget": {
+            "prepReads": 19,
+            "prepMutations": 6,
+            "triggers": 2,
+            "activeReads": 8,
+            "byCase": {
+              "orchestrator": 4,
+              "coder": 4
+            },
+            "cancels": 2,
+            "closureReads": 19
+          },
+          "metadataPlanReview": {
+            "path": "PHASE-ZE-RESULT-SSOT-PLAN-REVIEW.json",
+            "bytes": 3159,
+            "sha256": "54edc984e4cb9b082c004ff151a8659d822938c152698a1a37d6e3b56f038b41"
+          }
         }
       }
     }
