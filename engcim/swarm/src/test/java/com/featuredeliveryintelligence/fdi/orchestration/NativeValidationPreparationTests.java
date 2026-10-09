@@ -151,6 +151,52 @@ class NativeValidationPreparationTests {
         assertThrows(IllegalArgumentException.class, () -> validatePostLaunch(sample, early));
     }
 
+    @Test void freshCreationAtLaunchNeedsNoFutureSessionIdentity() {
+        ObjectNode sample = freshLaunch();
+        assertFalse(sample.has("actualRunId"));
+        assertFalse(sample.path("sessionCreationControl").has("sessionId"));
+        validatePreTrigger(sample);
+        validatePostLaunch(sample, freshBinding());
+    }
+
+    @Test void resumedUnknownMissingAndForeignLaunchControlsReject() {
+        ObjectNode base = freshLaunch();
+        validatePreTrigger(base);
+        for (String field : List.of("sourceKind", "creationMethod", "evidenceRef", "actorId", "runtimeId", "projectId", "cwd", "issueId")) {
+            ObjectNode sample = base.deepCopy();
+            ((ObjectNode) sample.path("sessionCreationControl")).put(field, "UNKNOWN");
+            assertThrows(IllegalArgumentException.class, () -> validatePreTrigger(sample));
+        }
+        for (boolean absent : List.of(false, true)) {
+            ObjectNode sample = base.deepCopy();
+            ObjectNode control = (ObjectNode) sample.path("sessionCreationControl");
+            if (absent) control.remove("resumeRequested"); else control.put("resumeRequested", true);
+            assertThrows(IllegalArgumentException.class, () -> validatePreTrigger(sample));
+        }
+        ObjectNode late = base.deepCopy();
+        ((ObjectNode) late.path("sessionCreationControl")).put("observedAt", "2030-01-01T00:00:20Z");
+        assertThrows(IllegalArgumentException.class, () -> validatePreTrigger(late));
+    }
+
+    @Test void actualFreshLaunchCannotResumeReuseOrInventCreationTiming() {
+        ObjectNode preparation = freshLaunch();
+        validatePreTrigger(preparation);
+        for (String field : List.of("actualCreationMethod", "sessionId")) {
+            ObjectNode actual = freshBinding(); actual.put(field, "UNKNOWN");
+            assertThrows(IllegalArgumentException.class, () -> validatePostLaunch(preparation, actual));
+        }
+        ObjectNode resumed = freshBinding(); resumed.put("actualCreationMethod", "SESSION_RESUME");
+        assertThrows(IllegalArgumentException.class, () -> validatePostLaunch(preparation, resumed));
+        ObjectNode reused = freshBinding(); reused.put("sessionId", "old-session");
+        assertThrows(IllegalArgumentException.class, () -> validatePostLaunch(preparation, reused));
+        for (String time : List.of("2030-01-01T00:00:00Z", "2030-01-01T00:00:20Z")) {
+            ObjectNode actual = freshBinding(); actual.put("sessionCreatedAt", time);
+            assertThrows(IllegalArgumentException.class, () -> validatePostLaunch(preparation, actual));
+        }
+        ObjectNode foreign = freshBinding(); foreign.put("cwd", "/public/other");
+        assertThrows(IllegalArgumentException.class, () -> validatePostLaunch(preparation, foreign));
+    }
+
     private static void validateSubmittedTask(JsonNode expected, String title, String body) {
         require(expected.path("title").asText().equals(title), "Unexpected submitted title");
         require(expected.path("body").asText().equals(body), "Unexpected submitted task bytes");
@@ -173,26 +219,47 @@ class NativeValidationPreparationTests {
         Instant inventory = Instant.parse(sample.path("inventoryAt").asText());
         Instant planned = Instant.parse(sample.path("plannedTriggerAt").asText());
         require(!inventory.isAfter(planned), "Post-trigger inventory cannot prove pre-trigger isolation");
-        JsonNode session = sample.path("sessionReservation");
-        require(session.path("sourceKind").asText().equals("SUPPORTED_PUBLIC_SESSION_RESERVATION"), "Unsupported session evidence");
-        require(session.path("freshness").asText().equals("NEW_EMPTY") && session.path("priorMessageCount").isInt()
-                && session.path("priorMessageCount").asInt() == 0, "Unknown/nonempty session");
-        require(known(session, "sessionId") && known(session, "evidenceRef"), "Missing session identity/evidence");
-        for (JsonNode old : sample.path("priorSessionIds")) require(!old.asText().equals(session.path("sessionId").asText()), "Reused session");
+        boolean reserved = sample.has("sessionReservation");
+        require(reserved != sample.has("sessionCreationControl"), "Exactly one supported session preparation mode");
+        JsonNode session = sample.path(reserved ? "sessionReservation" : "sessionCreationControl");
+        require(known(session, "evidenceRef"), "Missing session evidence");
+        if (reserved) {
+            require(session.path("sourceKind").asText().equals("SUPPORTED_PUBLIC_SESSION_RESERVATION"), "Unsupported session evidence");
+            require(session.path("freshness").asText().equals("NEW_EMPTY") && session.path("priorMessageCount").isInt()
+                    && session.path("priorMessageCount").asInt() == 0, "Unknown/nonempty session");
+            require(known(session, "sessionId"), "Missing session identity");
+            for (JsonNode old : sample.path("priorSessionIds")) require(!old.asText().equals(session.path("sessionId").asText()), "Reused session");
+            require(!Instant.parse(session.path("createdAt").asText()).isAfter(inventory), "Reservation after inventory");
+        } else {
+            require(session.path("sourceKind").asText().equals("SUPPORTED_PUBLIC_FRESH_LAUNCH_CONTROL"), "Unsupported fresh-launch control");
+            require(session.path("creationMethod").asText().equals("SESSION_NEW")
+                    && session.path("resumeRequested").isBoolean() && !session.path("resumeRequested").asBoolean(), "Unknown/resumed launch");
+            require(!Instant.parse(session.path("observedAt").asText()).isAfter(planned), "Control after preparation");
+        }
         for (String field : List.of("actorId", "runtimeId", "projectId", "cwd", "issueId")) {
             require(known(sample, field) && sample.path(field).asText().equals(session.path(field).asText()), "Foreign session: " + field);
         }
-        require(!Instant.parse(session.path("createdAt").asText()).isAfter(inventory), "Reservation after inventory");
     }
 
     private static void validatePostLaunch(JsonNode preparation, JsonNode actual) {
         validatePreTrigger(preparation);
         require(actual.path("sourceKind").asText().equals("SUPPORTED_PUBLIC_RUN_SESSION_BINDING"), "Unsupported actual binding");
         require(known(actual, "actualRunId") && known(actual, "evidenceRef"), "Missing actual run evidence");
-        for (String field : List.of("sessionId", "actorId", "runtimeId", "projectId", "cwd", "issueId")) {
-            require(known(actual, field) && actual.path(field).asText().equals(preparation.path("sessionReservation").path(field).asText()), "Actual binding mismatch: " + field);
+        for (String field : List.of("actorId", "runtimeId", "projectId", "cwd", "issueId")) {
+            require(known(actual, field) && actual.path(field).asText().equals(preparation.path(field).asText()), "Actual binding mismatch: " + field);
         }
-        require(!Instant.parse(actual.path("startedAt").asText()).isBefore(Instant.parse(preparation.path("plannedTriggerAt").asText())), "Run before preparation");
+        require(known(actual, "sessionId"), "Missing actual session identity");
+        Instant start = Instant.parse(actual.path("startedAt").asText());
+        require(!start.isBefore(Instant.parse(preparation.path("plannedTriggerAt").asText())), "Run before preparation");
+        if (preparation.has("sessionReservation")) {
+            require(actual.path("sessionId").asText().equals(preparation.path("sessionReservation").path("sessionId").asText()), "Actual reserved session mismatch");
+        } else {
+            require(actual.path("actualCreationMethod").asText().equals("SESSION_NEW"), "Actual session creation unverified/resumed");
+            for (JsonNode old : preparation.path("priorSessionIds")) require(!old.asText().equals(actual.path("sessionId").asText()), "Actual session reused");
+            Instant created = Instant.parse(actual.path("sessionCreatedAt").asText());
+            Instant prompt = Instant.parse(actual.path("promptStartedAt").asText());
+            require(!created.isBefore(start) && !created.isAfter(prompt), "Creation outside actual launch");
+        }
     }
 
     private static boolean known(JsonNode object, String field) {
@@ -224,6 +291,22 @@ class NativeValidationPreparationTests {
         actual.put("sourceKind", "SUPPORTED_PUBLIC_RUN_SESSION_BINDING").put("actualRunId", "new-run")
                 .put("startedAt", "2030-01-01T00:00:11Z").put("evidenceRef", "synthetic-run");
         return actual;
+    }
+    private static ObjectNode freshLaunch() {
+        ObjectNode sample = clean();
+        ObjectNode control = JSON.createObjectNode();
+        for (String field : List.of("actorId", "runtimeId", "projectId", "cwd", "issueId")) control.set(field, sample.path(field));
+        control.put("sourceKind", "SUPPORTED_PUBLIC_FRESH_LAUNCH_CONTROL").put("creationMethod", "SESSION_NEW")
+                .put("resumeRequested", false).put("evidenceRef", "synthetic-launch-control")
+                .put("observedAt", "2030-01-01T00:00:05Z");
+        sample.remove("sessionReservation");
+        sample.set("sessionCreationControl", control);
+        return sample;
+    }
+    private static ObjectNode freshBinding() {
+        return binding().put("actualCreationMethod", "SESSION_NEW")
+                .put("sessionCreatedAt", "2030-01-01T00:00:11.500Z")
+                .put("promptStartedAt", "2030-01-01T00:00:12Z");
     }
     private static JsonNode contract() throws Exception {
         Path path = root().resolve(ASSETS + "native-preparation.json");
