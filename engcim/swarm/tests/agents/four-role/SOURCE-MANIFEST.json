@@ -395,8 +395,8 @@
   "native": "NOT_RUN; full loading/baseline/capability/no regression UNVERIFIED",
   "readme": {
     "path": "README.md",
-    "sha256": "12930df6d130f9d8df94caee873f6e46baead69970542bc3cfd20eaa1af44522",
-    "bytes": 22453
+    "sha256": "30803670d9f062be1983e4fb13fd4852a432ad011dbd7c62ec1f1d4348e06b70",
+    "bytes": 25619
   },
   "capabilityInventoryScope": "Shared all-role capability inventory; four-role case definitions/tools/fixtures remain here",
   "sourceConvergenceBranch": "codex/overnight-plan-freeze",
@@ -675,7 +675,7 @@
         }
       },
       "loadingContinuation": {
-        "status": "LOCAL_METHOD_PASS_NATIVE_NOT_STARTED",
+        "status": "LOCAL_CHECKS_PASS_NATIVE_PARTIAL_OPERATOR_DEADLINE_FAIL",
         "baseCommit": "268bf68dc1e36220212d7dc0c199fe5abb49ebd9",
         "sourceRevision": "ENCLOSING_GIT_TREE_METHOD_ONLY",
         "planReview": {
@@ -702,8 +702,114 @@
         "totalLocalChecks": 85,
         "byteDelivery": "UNVERIFIED_NUMBERED_FRAMING",
         "automaticLoading": "UNVERIFIED",
-        "native": "NOT_STARTED",
-        "sourceResponsibilitiesChanged": false
+        "native": "TERMINAL_PARTIAL",
+        "sourceResponsibilitiesChanged": false,
+        "methodSourceCommit": "17a45392887f9fecd86081b8dc3321074c8c7c2b",
+        "nativeResult": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-NATIVE-RESULT.json",
+          "bytes": 20008,
+          "sha256": "bb518b4561492a99418aae8e13c24e1df574340907b88649d73da0f82b182e6c"
+        },
+        "independentNativeGrade": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-NATIVE-INDEPENDENT-GRADE.json",
+          "bytes": 82110,
+          "sha256": "e85c0ad67d14634b0041ebf5759b1f42727a09edc1c6463e395d85b3ab689349"
+        },
+        "protectedClosure": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-PROTECTED-CLOSURE.json",
+          "bytes": 4651,
+          "sha256": "44636a78bac18e95fd1d9f5fde2da2660f60b0733512b26220092c29eea9a62d"
+        },
+        "operatorDeadlineAnomaly": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-OPERATOR-DEADLINE-ANOMALY.json",
+          "bytes": 2204,
+          "sha256": "6fed3e2ab18e31379a5197ac75edb9d821c3657a6633675d62012280247ea422"
+        },
+        "terminalClosure": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-TERMINAL-CLOSURE.json",
+          "bytes": 1180,
+          "sha256": "6a3dfb81858aaa589bb8f27d22e9df235b6326f218cae429235fcb6d8374073d"
+        },
+        "closurePlanReview": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-CLOSURE-PLAN-REVIEW.json",
+          "bytes": 3751,
+          "sha256": "312de8725c5bb3af9ad02e1aaa1b16787495bdae5831903790ffae3d8108a5f7"
+        },
+        "executionReview": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-LOADING-EXECUTION-REVIEW-r2.json",
+          "bytes": 6963,
+          "sha256": "64ed01fd865f00afe8a9f074433f1142b97d25684ff6c5f09ed64a3ec37859ab"
+        },
+        "nativeCases": [
+          {
+            "actor": "9e98e1d4-7bb5-4efe-9b32-e90962683e71",
+            "issue": "01a12202-75eb-7eab-92ad-914441bdb546",
+            "run": "01a1220b-f5a1-7664-be88-30cc555d743e",
+            "status": "completed",
+            "completeSourceTextFiles": 10,
+            "installed": 11,
+            "roleBodyText": "MATCH_COMPLETE_TEXT_LINES",
+            "fullRenderText": "PENDING_TEXT_LINES",
+            "missing": [
+              {
+                "path": "/private/tmp/8c770c8d-0f7d-4bf6-b6c8-480ab9c1f5a1/AGENTS.md",
+                "ranges": [
+                  [
+                    110,
+                    120
+                  ]
+                ],
+                "status": "PENDING_TEXT_LINES"
+              }
+            ],
+            "nativeFinalPresent": true,
+            "publication": "MATCH_ACTOR_RUN_ISSUE_PUBLIC_TEXT",
+            "publicationExactBytes": false
+          },
+          {
+            "actor": "809ffefe-3fc4-4686-8401-a8dd50285840",
+            "issue": "01a12202-8697-707d-aecc-1a0187374ba5",
+            "run": "01a12211-4370-713b-bc4b-ab235e880cac",
+            "status": "cancelled",
+            "completeSourceTextFiles": 6,
+            "installed": 7,
+            "roleBodyText": "MATCH_COMPLETE_TEXT_LINES",
+            "fullRenderText": "MATCH_COMPLETE_TEXT_LINES",
+            "missing": [
+              {
+                "path": "/private/tmp/81061215-e30e-4690-a276-34a175f30fcf/.kimi/skills/swarm-telemetry/SKILL.md",
+                "ranges": [
+                  [
+                    53,
+                    53
+                  ]
+                ],
+                "status": "PENDING_PUBLIC_REDACTION"
+              }
+            ],
+            "nativeFinalPresent": false,
+            "publication": "MATCH_ACTOR_RUN_ISSUE_PUBLIC_TEXT",
+            "publicationExactBytes": false
+          }
+        ],
+        "overallAcceptance": "PARTIAL_NATIVE_ACCEPTANCE_OPERATOR_DEADLINE_FAIL",
+        "semanticGrade": "PASS_NAMED_FILE_RESPONSIBILITIES_18_FILES",
+        "publicTextCoverage": {
+          "complete": 16,
+          "total": 18
+        },
+        "deadlineEnforcement": "FAILED_300S_BOUND_RECOVERED_ROOT_CAUSE_UNRESOLVED",
+        "noNewNativeRetry": true,
+        "protectedSourceConfigurationUnchanged": true,
+        "knownGaps": [
+          "Explicit manual content capture distinct from automaticinitialloading and normal squadtopology",
+          "Numbered tool public output cannot prove finalLF/byte delivery",
+          "Public text gaps do not prove model lacked content or a role defect",
+          "Native final kept separate from actual published coordinationartifact",
+          "No additionalrun/retry/sourceconfigurationedit",
+          "OldZE cancelled outcomes unchanged",
+          "QA/Architect/Reviewer native repair not covered by thisloading package"
+        ]
       }
     }
   }
