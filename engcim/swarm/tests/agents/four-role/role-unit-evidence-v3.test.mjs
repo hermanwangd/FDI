@@ -33,3 +33,41 @@ test('partial actual probes retain profile binding without declaring full policy
 test('profile file drift, missing probe, denied fixture bypass and guard-failed cannot pass',()=>{for(const mutate of [e=>e.profileAfter={sha256:'drift'},e=>{const v=JSON.parse(e.trace[1].output);v.probes.pop();e.trace[1].output=JSON.stringify(v);},e=>{const v=JSON.parse(e.trace[1].output);v.probes.at(-1).decision='missing';v.status='guard-failed';e.trace[1].output=JSON.stringify(v);},e=>{const v=JSON.parse(e.trace[1].output);v.probes[0].guardInstalled=false;v.status='guard-failed';e.trace[1].output=JSON.stringify(v); }]){const e=reviewer();mutate(e);assert.equal(checkUnitEvidence(e,reviewerSuite,profilePin).status,'FAIL');}});
 
 test('preknown MCP fixtures cannot masquerade as missing builtin probes',()=>{for(const fixture of [false,undefined,'false']){const e=reviewer(),v=JSON.parse(e.trace[1].output);for(const p of v.probes.filter(p=>p.name.startsWith('mcp__'))){p.fixture=fixture;p.decision='missing';}v.status='partial';e.trace[1].output=JSON.stringify(v);assert.equal(checkUnitEvidence(e,reviewerSuite,profilePin).status,'FAIL');}});
+
+// Actual R seq9/17/19 syntax: controller parsing, never shell execution.
+import * as evidenceProvider from './role-unit-evidence-v3.mjs';
+const missionWorkspace='0b02adb6-a395-46bd-bd92-6fec14dee20e';
+const ownIssue='01a11ff1-70ca-7ce5-aa0c-c4170cf69b6d';
+const actualScopedCommands=[
+ 'multica --workspace-id "$MISSION_WORKSPACE_ID" issue comment list '+ownIssue+' --roots-only --summary --compact --output json',
+ 'multica --workspace-id "$MISSION_WORKSPACE_ID" issue comment add '+ownIssue+' --content-file ./reply.md --output json && rm ./reply.md',
+ 'multica --workspace-id "$MISSION_WORKSPACE_ID" issue status '+ownIssue+' in_review'
+];
+for(const [i,command] of actualScopedCommands.entries())test('actual R workspace export/newline seq '+[9,17,19][i],()=>{
+ const raw='export MISSION_WORKSPACE_ID='+missionWorkspace+'\n'+command;
+ const r=evidenceProvider.normalizeKnownMissionWorkspaceCommand(raw,missionWorkspace);
+ assert.equal(r.status,'NORMALIZED');assert.equal(r.rawCommand,raw);
+ assert.equal(r.normalizedCommand,command.replace('$MISSION_WORKSPACE_ID',missionWorkspace));
+});
+test('normalization preserves literal command and never repairs missing scope',()=>{
+ const raw='multica issue get '+ownIssue+' --output json';
+ const r=evidenceProvider.normalizeKnownMissionWorkspaceCommand(raw,missionWorkspace);
+ assert.equal(r.status,'UNCHANGED');assert.equal(r.normalizedCommand,raw);assert.doesNotMatch(r.normalizedCommand,/--workspace-id/);
+});
+test('workspace normalization rejects unknown, missing, empty and mismatched bindings and shell expansion',()=>{
+ for(const raw of [
+  'MISSION_WORKSPACE_ID="" ; multica issue get '+ownIssue,
+  'export MISSION_WORKSPACE_ID=11111111-1111-1111-1111-111111111111\nmultica --workspace-id "$MISSION_WORKSPACE_ID" issue get '+ownIssue,
+  'multica --workspace-id "$MISSION_WORKSPACE_ID" issue get '+ownIssue,
+  'export OTHER='+missionWorkspace+'\nmultica --workspace-id "$OTHER" issue get '+ownIssue,
+  'export MISSION_WORKSPACE_ID='+missionWorkspace+'\nmultica --workspace-id "$(echo '+missionWorkspace+')" issue get '+ownIssue,
+  'export MISSION_WORKSPACE_ID='+missionWorkspace+'\nmultica --workspace-id "$MISSION_WORKSPACE_IDsuffix" issue get '+ownIssue,
+  'export MISSION_WORKSPACE_ID='+missionWorkspace+'\nMISSION_WORKSPACE_ID=other; multica --workspace-id "$MISSION_WORKSPACE_ID" issue get '+ownIssue,
+  'export MISSION_WORKSPACE_ID='+missionWorkspace+'\nmultica --workspace-id "$MISSION_WORKSPACE_ID" issue get '+ownIssue+'\nrm ./reply.md'
+ ]){const r=evidenceProvider.normalizeKnownMissionWorkspaceCommand(raw,missionWorkspace);assert.equal(r.status,'UNSUPPORTED',raw);assert.equal(r.rawCommand,raw);assert.equal(r.normalizedCommand,null);}
+});
+test('single-quoted workspace variable stays literal, not a bound UUID',()=>{
+ const raw='export MISSION_WORKSPACE_ID='+missionWorkspace+"\nmultica --workspace-id '$MISSION_WORKSPACE_ID' issue get "+ownIssue;
+ const r=evidenceProvider.normalizeKnownMissionWorkspaceCommand(raw,missionWorkspace);
+ assert.equal(r.status,'NORMALIZED');assert.match(r.normalizedCommand,/'\$MISSION_WORKSPACE_ID'/);assert.doesNotMatch(r.normalizedCommand,new RegExp(missionWorkspace));
+});

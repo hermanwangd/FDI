@@ -67,12 +67,12 @@
     },
     {
       "path": "native-preparation.json",
-      "sha256": "69849188a8f53b31f7472121aaa66476f616ad807af006710fb227c7afcf4344",
+      "sha256": "455a47ad7cb3b6619ec04bb69cca6e444b2d0a006c22314900e79f923fb41ae6",
       "cases": 0,
       "status": "ACTIVE_PREPARATION_CONTRACT_NATIVE_HOLD",
       "methodId": "M2_NEUTRAL_INPUT_AND_PUBLIC_ISOLATION",
       "inputCriteriaUnchanged": false,
-      "change": "New neutral title/body projection and explicit public cwd/session evidence requirements; original 88 case objects unchanged",
+      "change": "New neutral title/body projection and explicit public cwd/session evidence requirements; original 88 case objects unchanged; existing external provider reference only, actor task bytes unchanged",
       "preparationRevision": "M2_SESSION_CREATION_TIMING_2"
     }
   ],
@@ -80,10 +80,10 @@
     {
       "path": "role-unit-evidence-v3.test.mjs",
       "originalSha256": "1ae03e4c410becb8dbf7531dc3a034c84634b21da802124d4e4b81b8106a5f56",
-      "sha256": "1ae03e4c410becb8dbf7531dc3a034c84634b21da802124d4e4b81b8106a5f56",
-      "bytes": 7974,
+      "sha256": "0311f0862252c2feb3bef43a2d8d8aac43413c9cca1c8764836d5dcbacb2f3e5",
+      "bytes": 11150,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_SELF_TEST",
-      "change": "BYTE_IDENTICAL"
+      "change": "ADDITIVE_BOUNDED_KNOWN_WORKSPACE_OBSERVATION; ORIGINAL_UNIT_POLICY_UNCHANGED"
     },
     {
       "path": "role-unit-output-schema-r1.test.mjs",
@@ -128,10 +128,10 @@
     {
       "path": "role-unit-evidence-v3.mjs",
       "originalSha256": "b04c8c8d5e3f248d0cb38ab01c69b821948c1a84fb8c88206690b95d028c5fbb",
-      "sha256": "b04c8c8d5e3f248d0cb38ab01c69b821948c1a84fb8c88206690b95d028c5fbb",
-      "bytes": 7080,
+      "sha256": "d40335dd413cdea2dd6f4da76a483cff4bf1dbe8be156c80aebe1e577e78a6cc",
+      "bytes": 8910,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_HELPER",
-      "change": "BYTE_IDENTICAL"
+      "change": "ADDITIVE_BOUNDED_KNOWN_WORKSPACE_OBSERVATION; ORIGINAL_UNIT_POLICY_UNCHANGED"
     },
     {
       "path": "role-unit-output-schema-r1.mjs",
@@ -364,8 +364,8 @@
           "role-unit-evidence-v3.test.mjs",
           "role-unit-output-schema-r1.test.mjs"
         ],
-        "assertions": 16,
-        "stdoutSha256": "18b841fadf1f5e3c97da754a1b817526508f1f253dbfc3b072a0d0e3d288c68c",
+        "assertions": 22,
+        "stdoutSha256": "d53e55050f3d8f7b8567e5e83686f108fc32e4cf1e942ae53bfc720a75c35698",
         "exitCode": 0
       },
       {
@@ -394,8 +394,8 @@
   "native": "NOT_RUN; full loading/baseline/capability/no regression UNVERIFIED",
   "readme": {
     "path": "README.md",
-    "sha256": "b015c0376677ad396804477d76fea2216f14da7858671facfec5cfc02412b51f",
-    "bytes": 4976
+    "sha256": "03fba8ce6e6d5082bd52db87f44ed2a62c8314c78e2aa363758badd1e070df18",
+    "bytes": 6246
   },
   "capabilityInventoryScope": "Shared all-role capability inventory; four-role case definitions/tools/fixtures remain here",
   "sourceConvergenceBranch": "codex/overnight-plan-freeze",

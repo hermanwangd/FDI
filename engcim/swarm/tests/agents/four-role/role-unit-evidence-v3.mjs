@@ -1,6 +1,35 @@
 import fs from 'node:fs';
 import crypto from 'node:crypto';
 export const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
+
+// Observation only: normalize one explicitly supplied Mission binding.
+// Never execute shell text, consult the environment, or supply a missing flag.
+export function normalizeKnownMissionWorkspaceCommand(rawCommand, expectedWorkspace) {
+  const unsupported=reason=>({rawCommand,normalizedCommand:null,status:'UNSUPPORTED',reason});
+  const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+  if(typeof rawCommand!=='string'||rawCommand.length>65536||!uuid.test(expectedWorkspace||''))return unsupported('INVALID_INPUT_OR_WORKSPACE');
+  let command=rawCommand,bound=false;
+  const assignment=/^[ \t]*(?:export[ \t]+)?MISSION_WORKSPACE_ID=(?:"([^"\r\n]*)"|'([^'\r\n]*)'|([^\s;]+))[ \t]*(?:\r?\n|;)[ \t]*/.exec(command);
+  if(assignment){
+    if((assignment[1]??assignment[2]??assignment[3])!==expectedWorkspace)return unsupported('WORKSPACE_BINDING_MISMATCH');
+    bound=true;command=command.slice(assignment[0].length);
+  }
+  if(!command.trim()||/[\r\n\x00\x60\\~]/.test(command)||/\bMISSION_WORKSPACE_ID\s*=/.test(command))return unsupported('UNSUPPORTED_SHELL_FORM');
+  let normalized='',quote=null;
+  for(let i=0;i<command.length;i++){
+    const ch=command[i];
+    if(ch==="'"&&quote!=='"'){quote=quote==="'"?null:"'";normalized+=ch;continue;}
+    if(ch==='"'&&quote!=="'"){quote=quote==='"'?null:'"';normalized+=ch;continue;}
+    if(ch==='$'&&quote!=="'"){
+      const variable=/^(?:\$MISSION_WORKSPACE_ID(?![A-Za-z0-9_])|\$\{MISSION_WORKSPACE_ID\})/.exec(command.slice(i));
+      if(!bound||!variable)return unsupported('UNBOUND_OR_UNSUPPORTED_EXPANSION');
+      normalized+=expectedWorkspace;i+=variable[0].length-1;
+    }else normalized+=ch;
+  }
+  if(quote)return unsupported('UNCLOSED_QUOTE');
+  return {rawCommand,normalizedCommand:normalized,status:bound?'NORMALIZED':'UNCHANGED',reason:null};
+}
+
 export function checkUnitEvidence(e,suite,profilePin=null){
   const checks=[];const expect=(name,actual,expected)=>checks.push({name,actual,expected,status:JSON.stringify(actual)===JSON.stringify(expected)?'PASS':'FAIL'});
   const pin=suite.sourcePins[e.role];if(!pin)throw new Error('Unknown role');
