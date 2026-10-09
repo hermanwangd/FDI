@@ -504,7 +504,7 @@
         "path": "engcim/swarm/generated/multica-cli.md",
         "sha256": "571a892eb3a77359fc6ebff6b3b1453aaef31d95006d00fe833aa6a00814cb9c",
         "bytes": 16023,
-        "status": "LOCAL_NATIVE_WORKSPACE_CANDIDATE__NOT_PUBLISHED_OR_CONSUMED",
+        "status": "STORED_PROVIDER_MATCH__NATIVE_MATERIALIZATION_MATCH__CONSUMPTION_UNVERIFIED",
         "maintenance_source": {
           "path": "validation/rc10/current-work-package-candidate/materialized/multica-cli.md",
           "basis": "Parent-designated existing tracked materialization seam for this same-ID correction; no global canonical uniqueness claim",
@@ -610,7 +610,32 @@
           "source_relationship": "New local generation relationship; Lucy original seam and receipt preserved",
           "native_adoption": "UNVERIFIED"
         },
-        "retainedHistoricalStatus": "LOCAL_SSOT_CONVERGED_TO_HISTORICALLY_PUBLISHED_BYTES__CURRENT_PROVIDER_AND_CONSUMPTION_NOT_RECHECKED"
+        "retainedHistoricalStatus": "LOCAL_SSOT_CONVERGED_TO_HISTORICALLY_PUBLISHED_BYTES__CURRENT_PROVIDER_AND_CONSUMPTION_NOT_RECHECKED",
+        "retainedBeforeWorkspacePublicationStatus": "LOCAL_NATIVE_WORKSPACE_CANDIDATE__NOT_PUBLISHED_OR_CONSUMED",
+        "currentWorkspacePublication": {
+          "sourceCommit": "f0cb56a03f26cdcf7a9d21b0c528dba066a65f59",
+          "at": "2026-10-09T11:58:42.919Z",
+          "status": "EXACT_THREE_CONTENT_READBACK_MATCH",
+          "receipt": {
+            "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-X-PUBLICATION-RESULT.json",
+            "sha256": "8ddade9d7e725deffde056b6505973217c8440874d56e893e9d05222a3d69bd3"
+          },
+          "targets": [
+            {
+              "id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+              "storedSha256": "76f40fef6119190fa87f48fa2150137f543fda5837742e9fa37b830f48394c26"
+            },
+            {
+              "id": "5b3c5337-eef3-4cc3-9174-025e4ddc28dc",
+              "storedSha256": "3dc160569d659b4508aa14d7c2fb8df0e268741e235c4a3010b64b739833f405"
+            },
+            {
+              "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+              "storedSha256": "571a892eb3a77359fc6ebff6b3b1453aaef31d95006d00fe833aa6a00814cb9c"
+            }
+          ],
+          "actualConsumption": "UNVERIFIED"
+        }
       }
     ],
     "independent_plan_review": {
@@ -715,7 +740,7 @@
     "tests": {
       "path": "engcim/swarm/tests/agents/four-role",
       "manifest": "engcim/swarm/tests/agents/four-role/SOURCE-MANIFEST.json",
-      "manifestSha256": "8d584a3334d563a5708f04c27393c3083ea299ed13532ae0d0ff016a17e74ba0",
+      "manifestSha256": "da1f72356aa0304a074dbdaaf1383de6ce2aa28c77ff519a8cf0225a0ea25a9b",
       "previousExternalDefinitions": "Read-only historical evidence, all future maintained test edits use this Git path",
       "capabilityInventory": {
         "path": "engcim/swarm/tests/agents/capabilities.json",
@@ -1640,9 +1665,14 @@
             "responseSha256": "e37e5cca4a484abd867d9e4f55de74a104f052a0243d2e8209df173643ec641e",
             "rawResponseRetention": "NOT_RETAINED_FOR_INITIAL_OBSERVATION; independently reviewable later readback below"
           },
-          "newProviderPublication": "NOT_PERFORMED",
+          "newProviderPublication": "EXACT_SAME_ID_STORED_READBACK_MATCH",
           "runtimeConsumption": "UNVERIFIED",
-          "behavior": "NOT_TESTED"
+          "behavior": "NOT_TESTED",
+          "retainedBeforePublicationLabel": "NOT_PERFORMED",
+          "latestPublication": {
+            "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-X-PUBLICATION-RESULT.json",
+            "sha256": "8ddade9d7e725deffde056b6505973217c8440874d56e893e9d05222a3d69bd3"
+          }
         },
         {
           "key": "qa",
@@ -1715,9 +1745,14 @@
             "responseSha256": "93b53ae918b15d00f4b7a490424f6577664a2900c31d650238c92eb7d855a394",
             "rawResponseRetention": "NOT_RETAINED_FOR_INITIAL_OBSERVATION; independently reviewable later readback below"
           },
-          "newProviderPublication": "NOT_PERFORMED",
+          "newProviderPublication": "EXACT_SAME_ID_STORED_READBACK_MATCH",
           "runtimeConsumption": "UNVERIFIED",
-          "behavior": "NOT_TESTED"
+          "behavior": "NOT_TESTED",
+          "retainedBeforePublicationLabel": "NOT_PERFORMED",
+          "latestPublication": {
+            "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-X-PUBLICATION-RESULT.json",
+            "sha256": "8ddade9d7e725deffde056b6505973217c8440874d56e893e9d05222a3d69bd3"
+          }
         }
       ],
       "roleConfigurations": {
@@ -7301,11 +7336,59 @@
       "nativeAcceptance": "UNTESTED_FOR_THIS_CANDIDATE"
     },
     "nativeWorkspaceCorrection": {
-      "status": "LOCAL_CANDIDATE_NOT_PUBLISHED",
+      "status": "SAME_ID_PUBLICATION_MATCH__NATIVE_MATERIALIZATION_MATCH__ROUTING_NOT_DEMONSTRATED",
       "baseCommit": "97354afe755b14a79d33195c580e15b33330856d",
       "scope": "Orchestrator workspace clause, orchestration Skill workspace section, shared CLI workspace replacement and canonical observation helper",
       "actualConsumption": "UNVERIFIED",
-      "sharedConsumerGap": "Knowledge Curator separate stricter clause remains; other native consumer behavior untested"
+      "sharedConsumerGap": "Knowledge Curator separate stricter clause remains; other native consumer behavior untested",
+      "retainedBeforePublicationStatus": "LOCAL_CANDIDATE_NOT_PUBLISHED",
+      "sourceCommit": "f0cb56a03f26cdcf7a9d21b0c528dba066a65f59",
+      "publication": {
+        "sourceCommit": "f0cb56a03f26cdcf7a9d21b0c528dba066a65f59",
+        "at": "2026-10-09T11:58:42.919Z",
+        "status": "EXACT_THREE_CONTENT_READBACK_MATCH",
+        "receipt": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-X-PUBLICATION-RESULT.json",
+          "sha256": "8ddade9d7e725deffde056b6505973217c8440874d56e893e9d05222a3d69bd3"
+        },
+        "targets": [
+          {
+            "id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+            "storedSha256": "76f40fef6119190fa87f48fa2150137f543fda5837742e9fa37b830f48394c26"
+          },
+          {
+            "id": "5b3c5337-eef3-4cc3-9174-025e4ddc28dc",
+            "storedSha256": "3dc160569d659b4508aa14d7c2fb8df0e268741e235c4a3010b64b739833f405"
+          },
+          {
+            "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+            "storedSha256": "571a892eb3a77359fc6ebff6b3b1453aaef31d95006d00fe833aa6a00814cb9c"
+          }
+        ],
+        "actualConsumption": "UNVERIFIED"
+      },
+      "focusedNative": {
+        "identifier": "RC10VAL-321",
+        "issueId": "01a12089-4db0-768d-81ef-51a7628dd2f9",
+        "runId": "01a1208b-b9d9-7b2d-b8bf-7c2647ad74ed",
+        "status": "SAFE_STOP_CLOSED__PROFESSIONAL_ROUTING_NOT_DEMONSTRATED",
+        "receipt": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-XN-RESULT.json",
+          "sha256": "ce267c8b37696dbfd537484971a2e7054b398fe85080039af178e9419c746cf6"
+        },
+        "fullRender": "ROLE_EXACT_ONCE",
+        "assignedSkillMaterialization": "FOUR_CURRENT_BODY_PINS_MATCH",
+        "consumption": "UNVERIFIED",
+        "actualEnvironment": "UNVERIFIED",
+        "professionalRouting": "NOT_DEMONSTRATED",
+        "activeOwnedRuns": 0,
+        "resumePoint": "Supported public roster/assignedSkill/leaderreceipt discovery; preserve privateguards and unknown-effect evidence. No automatic retry.",
+        "independentReview": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-XN-INDEPENDENT-RESULT.json",
+          "sha256": "312f0dcb0ea916de2f06fe80768c3b51761178b7ba95d6aa582172871b6e33ae"
+        },
+        "stopLimits": "Request-to-stop detection50.640s; outputless results do not prove prevented read or no leakage; second-precision terminal timestamp cannot order seq48 relative to actual terminal."
+      }
     }
   }
 }
