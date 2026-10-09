@@ -741,7 +741,7 @@
     "tests": {
       "path": "engcim/swarm/tests/agents/four-role",
       "manifest": "engcim/swarm/tests/agents/four-role/SOURCE-MANIFEST.json",
-      "manifestSha256": "ab365ef062af9c08030c67f8e27a3311890c23bcfaecbae729ccf6c0de4dc1f1",
+      "manifestSha256": "16eec4e15a6ebc84bc83e858a25899aad302af71d00d89d53a1abc0cea8fff4a",
       "previousExternalDefinitions": "Read-only historical evidence, all future maintained test edits use this Git path",
       "capabilityInventory": {
         "path": "engcim/swarm/tests/agents/capabilities.json",
@@ -7495,8 +7495,8 @@
       }
     },
     "sameIssueObservationRepair": {
-      "status": "LOCAL_METHOD_CANDIDATE__NATIVE_NOT_RUN",
-      "sourceRevision": "ENCLOSING_GIT_TREE_METHOD_ONLY",
+      "status": "LOCAL_METHOD_COMMITTED__NATIVE_PARTIAL_DIRECTORY_BINDING_STOP",
+      "sourceRevision": "7575c3b4c67dafb52b16b52be454519e6d2e7703",
       "baseCommit": "ea26845c420ca5098433ec52aa761025780c32ef",
       "publishedPayloadSource": "c5989a4180e7a69ffc9d92cdac410939440e0e8c",
       "providerPublication": "NONE_REQUIRED__ROLE_AND_SKILL_BYTES_UNCHANGED",
@@ -7530,7 +7530,49 @@
         "kind": "LOCAL_SYNTHETIC_METHOD_ONLY"
       },
       "responsibilityChange": "NONE; existing legitimate same-issue exception recognized by observer",
-      "native": "NOT_RUN",
+      "native": {
+        "case": "RC10VAL-323",
+        "issueId": "01a12116-aa0f-736c-a09f-ee760cb1213a",
+        "result": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Z-RESULT.json",
+          "bytes": 12562,
+          "sha256": "e441d137ffa4e27a75cda4f8090486ae937cc8ea850c0a5dddb798d035814c92"
+        },
+        "independentGrade": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Z-RESULT-INDEPENDENT-REVIEW.json",
+          "bytes": 13955,
+          "sha256": "83ef83c5c5459d110bb1b5624bcf12ebacafa5fe3e4bb4863560f886b787a6fe"
+        },
+        "executionManifest": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Z-EXACT-PREPARATION.json",
+          "bytes": 14944,
+          "sha256": "5e334f96d87c1c72dc1c895ed811607cffde651c2487e26f20048330378994a9"
+        },
+        "executionReview": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Z-PREPARATION-INDEPENDENT-REVIEW.json",
+          "bytes": 10356,
+          "sha256": "845834aeaaf204d424b24ccf9f1da5b58278096d2b13825e2686044ed0682484"
+        },
+        "routing": "ACTUAL_CODER_STARTED_PUBLIC_BINDING_MATCH",
+        "producer": "CANCELLED_PARTIAL_247_BYTES",
+        "functional": "NOT_RUN",
+        "stop": "CWD_MISMATCH_COMPLETED_PUBLIC_RECORD_NOT_PROVEN_TOOL_CWD",
+        "cause": "UNKNOWN",
+        "allTerminal": true,
+        "noNativeRetry": true,
+        "perRunSyntheticChecks": 67,
+        "protectedRoleSkillModelRuntimeAssignments": "UNCHANGED",
+        "coderRenderedBody": "MATCH_OWN_SAME_CASE_PRESENCE_ONLY",
+        "automaticConsumption": "UNVERIFIED",
+        "fanInAndIndependentGates": "NOT_EVALUATED",
+        "resume": "Existing native preparation/observer: bind resource local_path, each actor effective cwd and completed work_dir with supported exact run evidence; do not read reported out-of-scope directory or widen guards without reviewed scope",
+        "resultErratum": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Z-RESULT-r2.json",
+          "bytes": 13406,
+          "sha256": "64e6b0b55558cdf0e92c2d5e3fde141c9bc2d368d2537ad5a95c757fd736ecf0"
+        },
+        "independentGradeSubject": "First result e441 retained; r2 one-field narrowing required by this same independent grade, closed by exact metadata/result review"
+      },
       "fullConsumption": "UNVERIFIED",
       "reviewClosure": {
         "firstReview": {
@@ -7544,6 +7586,41 @@
         "red": "57PASS1FAIL source checker,54PASS1FAIL adapter",
         "green": "58PASS source checker,55PASS adapter",
         "localHelp": "Same scoped local CLI help confirmed --full supported; no HTTP state read/native/public preparation"
+      },
+      "retainedLocalCandidateState": {
+        "status": "LOCAL_METHOD_CANDIDATE__NATIVE_NOT_RUN",
+        "sourceRevision": "ENCLOSING_GIT_TREE_METHOD_ONLY",
+        "native": "NOT_RUN"
+      },
+      "localCommit": {
+        "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Z-LOCAL-COMMIT-RESULT.json",
+        "bytes": 613,
+        "sha256": "7994ca146dcafa51a39164939bd200afe371a28cf5a24ee7865491c5ab104bd6"
+      },
+      "localCommitReview": {
+        "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Z-LOCAL-CLOSURE-INDEPENDENT-REVIEW-r2.json",
+        "bytes": 4103,
+        "sha256": "7b19a3de8b72d3c21a9290ac2abed026a02fa6ac0f32e940bf40256306523f63"
+      },
+      "learning": {
+        "firstStopRetained": true,
+        "rootCauseNotResolved": true,
+        "originalYNRetained": true,
+        "retainedTraces": "25 Orchestrator +19 Coder; EOF empty, no private lookup request in this bounded capture",
+        "teardown": "Owned generated public context absent after terminal; prior same-case owned capture retained, no private fallback",
+        "existingOwner": "Same native preparation and observation method, not another permanent runner/store"
+      },
+      "bookkeepingValidation": {
+        "firstFailure": "Active README size/hash pin not synchronized; 24PASS1FAIL retained PHASE-Z-SSOT-JAVA.stdout",
+        "correction": "Update owning manifest README size/hash, derived map manifest digest and existing release rows; no assertion/source weakened",
+        "correctedResult": {
+          "status": "25PASS_JAVA17",
+          "receipt": {
+            "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Z-SSOT-JAVA-CORRECTED.stdout",
+            "bytes": 3504,
+            "sha256": "53dff58be26b946e555b15fd65ef9a64b5d251e745fd5f2acff1ed1a419ba785"
+          }
+        }
       }
     }
   }
