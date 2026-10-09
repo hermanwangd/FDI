@@ -334,3 +334,68 @@ test('ZG unknown stop reasons reject without cancelling timer or calling provide
 test('ZG mutating caller context cannot change frozen subject start or disarm with invented date',async()=>{
  const f=zgFixture();let calls=0;const w=ze.startOwnedCaptureDeadline(f.context,async()=>calls++,f.clock);const original=f.context.run.started_at;f.context.run.started_at='2026-10-09T00:00:00Z';assert.equal(w.identity.startedAt,original);assert.throws(()=>w.markTerminal(f.terminal()));f.advance(100);await w.done;assert.equal(calls,1);
 });
+
+// ZH: immutable public request bytes are data, never executed or dereferenced.
+const zhFs=await import('node:fs');
+const zhFixture=JSON.parse(zhFs.readFileSync('fixtures/ZG-METHOD-INTERPRETATION-REGRESSION.json','utf8'));
+const zhRaw=zhFixture.records.selfTest.input.command;
+const zhCleanup=zhFixture.records.cleanup.input.command;
+const zhCapture=zhFixture.records.captureCompound.input.command;
+const zhContext={actorRole:'coder',ownedRoots:['/private/tmp/owned-zh','/tmp/owned-zh']};
+const zhCaptureContext={issue:zhFixture.records.captureCompound.issue_id,workspace:zeCtx.workspace,ownedRoots:['/private/tmp/cf808244-f363-4c8a-870e-d79b94e30b02']};
+test('ZH shared interpretation separates method gap, missing evidence and matched observation',()=>{
+ assert.equal(typeof ze.interpretMethodObservation,'function');
+ const scopeCtx={callerKind:'external',expectedWorkspace:workspaceX};
+ const positives=[ze.inspectSupportedSquadMemberRead(['multica','squad','member','list',ySquad,'--output','json'],yContext),inspectZ(zBody,zParent,{stage:'request'}),inspectZ(zBody,zParent,{stage:'bound',comment:zComment,run:zCoderRun}),ze.inspectMulticaWorkspaceScope(['multica','--workspace-id',workspaceX,'issue','get',zhCaptureContext.issue],scopeCtx)];
+ for(const r of positives)assert.equal(ze.interpretMethodObservation(r).classification,'SUPPORTED_OBSERVATION');
+ const missing=ze.inspectMulticaWorkspaceScope(['multica','issue','get',zhCaptureContext.issue],{...scopeCtx,callerKind:'native'});assert.equal(ze.interpretMethodObservation(missing).classification,'EVIDENCE_INCOMPLETE');
+ const grammar=ze.inspectMulticaWorkspaceScope(['multica','issue','get',zhCaptureContext.issue,'--workspace-id',workspaceX],scopeCtx);assert.equal(ze.interpretMethodObservation(grammar).classification,'METHOD_UNSUPPORTED');
+ const foreign=ze.inspectMulticaWorkspaceScope(['multica','--workspace-id','11111111-1111-1111-1111-111111111111','issue','get',zhCaptureContext.issue],scopeCtx);assert.equal(ze.interpretMethodObservation(foreign).classification,'CONTRACT_CONFLICT');
+ for(const [result,classification] of [[ze.observeOwnedJavaSelfTest('echo unknown',zhContext),'METHOD_UNSUPPORTED'],[inspectZD({...zdWorker,work_dir:null}),'EVIDENCE_INCOMPLETE'],[inspectZD(zdWorker),'SUPPORTED_OBSERVATION']]){
+  const original=JSON.stringify(result),v=ze.interpretMethodObservation(result);assert.equal(v.classification,classification);assert.equal(v.roleAcceptance,'UNVERIFIED');assert.equal(v.operationAuthority,'NONE');assert.equal(JSON.stringify(result),original);
+ }
+});
+test('ZH explicit no-start discrepancy is a contract conflict without rewriting legacy raw status',()=>{
+ const raw=ze.inspectOwnedCaptureCommand('multica issue status '+zhCaptureContext.issue+' in_progress',zhCaptureContext);assert.equal(raw.status,'METHOD_UNSUPPORTED');
+ const v=ze.interpretMethodObservation(raw);assert.equal(v.classification,'CONTRACT_CONFLICT');assert.equal(v.roleAcceptance,'UNVERIFIED');assert.equal(v.privateRequest,'NOT_ESTABLISHED');
+});
+test('ZH capture compound grant conflict is distinct from private path request',()=>{
+ const v=ze.inspectOwnedCaptureCommand(zhCapture,zhCaptureContext);assert.equal(v.status,'SCOPE_REJECT');assert.equal(v.reason,'MULTIPLE_COMMANDS_OUTSIDE_CAPTURE_GRANT');
+ assert.equal(ze.interpretMethodObservation(v).privateRequest,'NOT_ESTABLISHED');
+ const p=ze.inspectOwnedCaptureCommand(zhCapture+' /Users/user/.multica/sessions/old',zhCaptureContext);assert.equal(p.reason,'PRIVATE_CAPTURE_PATH_REQUEST');assert.equal(ze.interpretMethodObservation(p).privateRequest,'RAW_PATH_PATTERN_ONLY');
+ const literal=ze.observeOwnedJavaSelfTest(zhRaw.replace('public class','// /Users/user/.multica/sessions/old\npublic class'),zhContext);assert.equal(ze.interpretMethodObservation(literal).privateRequest,'RAW_PATH_PATTERN_ONLY');assert.equal(ze.interpretMethodObservation(literal).effects,'UNVERIFIED');
+});
+test('ZH unsupported capture expansion is a method gap while foreign workspace remains conflict',()=>{
+ const own='multica issue status '+zhCaptureContext.issue+' in_progress --no-start';
+ for(const cmd of [own.replace(zhCaptureContext.issue,"'"+zhCaptureContext.issue+"'"),own.replace(zhCaptureContext.issue,'$ISSUE')])assert.equal(ze.inspectOwnedCaptureCommand(cmd,zhCaptureContext).status,'METHOD_UNSUPPORTED');
+ const u=ze.inspectOwnedCaptureCommand(own+' $UNBOUND',zhCaptureContext);assert.equal(u.status,'METHOD_UNSUPPORTED');assert.equal(ze.interpretMethodObservation(u).classification,'METHOD_UNSUPPORTED');
+ const foreign=ze.inspectOwnedCaptureCommand('multica --workspace-id 11111111-1111-1111-1111-111111111111 issue status '+zhCaptureContext.issue+' in_progress --no-start',zhCaptureContext);assert.equal(ze.interpretMethodObservation(foreign).classification,'CONTRACT_CONFLICT');
+});
+test('ZH actual quoted heredoc before Java17 compilation is recognized without effects acceptance',()=>{
+ const v=ze.observeOwnedJavaSelfTest(zhRaw,zhContext);assert.equal(v.status,'MATCH_LITERAL_OWNED_JAVA_SELFTEST');assert.equal(v.target,'LabelSlug');assert.equal(v.probe,'SlugTest');assert.equal(v.directory,'deliverable');assert.equal(v.rawCommand,zhRaw);assert.ok(v.literalBody.includes('System.exit(1)'));assert.ok(!v.shellCommand.includes('System.exit'));assert.equal(v.execution,'UNVERIFIED');
+ const unfamiliar=zhRaw.replaceAll('deliverable','fresh/utility').replaceAll('LabelSlug','OtherTool').replaceAll('SlugTest','OtherCheck').replaceAll('EOF','CHECK_END');assert.equal(ze.observeOwnedJavaSelfTest(unfamiliar,zhContext).status,'MATCH_LITERAL_OWNED_JAVA_SELFTEST');
+});
+test('ZH same-directory cleanup requires prior syntax match, never grants wildcard filesystem authority',()=>{
+ const v=ze.observeOwnedJavaSelfTest(zhCleanup,{...zhContext,priorSelfTestCommand:zhRaw});assert.equal(v.status,'MATCH_LITERAL_OWNED_JAVA_CLEANUP');assert.equal(v.execution,'UNVERIFIED');assert.equal(v.filesystemExpansion,'UNVERIFIED');assert.equal(v.priorRunBinding,'UNVERIFIED');assert.equal(v.authority,'OBSERVATION_ONLY');
+ assert.equal(ze.observeOwnedJavaSelfTest(zhCleanup,zhContext).status,'METHOD_UNSUPPORTED');
+ for(const cmd of [zhCleanup.replace('deliverable','other'),zhCleanup.replace('SlugTest.java','Other.java'),zhCleanup+' && echo extra'])assert.notEqual(ze.observeOwnedJavaSelfTest(cmd,{...zhContext,priorSelfTestCommand:zhRaw}).status,'MATCH_LITERAL_OWNED_JAVA_CLEANUP');
+});
+test('ZH observed Java variants preserve actor private traversal mutation and grammar guards',()=>{
+ for(const cmd of [zhRaw.replace('cd deliverable','cd ../foreign'),zhRaw.replace('public class','// /Users/user/.multica/sessions/old\npublic class'),zhRaw.replace('public class','// curl https://example.test\npublic class'),zhRaw.replace('public class','// multica agent update\npublic class')])assert.equal(ze.observeOwnedJavaSelfTest(cmd,zhContext).status,'SCOPE_REJECT');
+ assert.equal(ze.observeOwnedJavaSelfTest(zhRaw,{...zhContext,actorRole:'orchestrator'}).status,'SCOPE_REJECT');
+ for(const cmd of [zhRaw.replace("<<'EOF'",'<<EOF'),zhRaw+' && echo extra',zhCleanup.replace('rm SlugTest.java *.class','rm -rf *')])assert.equal(ze.observeOwnedJavaSelfTest(cmd,{...zhContext,priorSelfTestCommand:zhRaw}).status,'METHOD_UNSUPPORTED');
+ assert.equal(ze.observeOwnedJavaSelfTest(zhRaw.replace('SlugTest.java','LabelSlug.java'),zhContext).status,'SCOPE_REJECT');
+});
+test('ZH malformed unknown and naked PASS statuses cannot become supported observation',()=>{
+ for(const x of [null,[],{}, {status:'PASS'}, {status:'MATCH_FAKE'}, {status:'SCOPE_REJECT',reason:'SHELL_OR_PRIVATE_CAPTURE_REQUEST'}, {status:'MATCH_LITERAL_OWNED_JAVA_SELFTEST',reason:'conflict'}]){const v=ze.interpretMethodObservation(x);assert.equal(v.classification,'EVIDENCE_INCOMPLETE');assert.equal(v.roleAcceptance,'UNVERIFIED');assert.equal(v.operationAuthority,'NONE');}
+});
+test('ZH review unknown and incompatible scope reasons remain incomplete',()=>{
+ for(const reason of ['FUTURE_UNKNOWN_GRAMMAR','INVALID_CAPTURE_COMMAND_INPUT','START_NOT_SUPPRESSED','PUBLIC_','WAKEUP_','DELEGATING_','DIRECTORY_']){
+  const v=ze.interpretMethodObservation({status:'SCOPE_REJECT',reason});assert.equal(v.classification,'EVIDENCE_INCOMPLETE');assert.equal(v.privateRequest,'NOT_ESTABLISHED');assert.equal(v.roleAcceptance,'UNVERIFIED');
+ }
+ for(const reason of ['PRIVATE_CAPTURE_PATH_REQUEST','FOREIGN_CAPTURE_ISSUE','MULTIPLE_COMMANDS_OUTSIDE_CAPTURE_GRANT'])assert.equal(ze.interpretMethodObservation({status:'SCOPE_REJECT',reason}).classification,'CONTRACT_CONFLICT');
+ assert.equal(ze.interpretMethodObservation({status:'MATCH_OWNED_CAPTURE_COMMAND',reason:'PRIVATE_CAPTURE_PATH_REQUEST'}).classification,'EVIDENCE_INCOMPLETE');
+});
+test('ZH parsed raw literal escapes are preserved, not diagnosed from JSON display',()=>{
+ const record=JSON.parse(JSON.stringify(zhFixture.records.selfTest));assert.equal(record.input.command,zhRaw);const v=ze.observeOwnedJavaSelfTest(record.input.command,zhContext);assert.equal(v.status,'MATCH_LITERAL_OWNED_JAVA_SELFTEST');assert.ok(v.literalBody.includes('"a\\tb\\nc"'));assert.ok(v.literalBody.includes('\\"%s\\"'));
+});

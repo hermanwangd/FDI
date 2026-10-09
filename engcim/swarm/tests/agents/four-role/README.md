@@ -139,3 +139,11 @@ T1 focused coordination PASS: exact45B orange-box reply, zero specialist runs/ch
 Coder2 complete public text9/11 includes full agent.md and four main Skills; check_command.py41–42 and check_path.py21–23 remain missing. Semantic support21/22 is partial; all-files availability claim lacks public support. Own comment plus own cleanup violates the single-CLI capture grant; final null, byte delivery and automatic loading UNVERIFIED. No cross-run coverage union. Unfamiliar case NOT_RUN/NOT_READY. All five owned runs terminal; no native subject executor active. Two full actor records (only updated_at ignored) and seven full Skill records unchanged. General native admission HOLD remains distinct from this exact focused exception. Four-role65 full comparable baselines/after and regression remain NOT_DEMONSTRATED/UNASSESSED.
 
 Result: `/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZG-NATIVE-RESULT.json`; independent grades: `PHASE-ZG-CODER2-T1-INDEPENDENT-GRADE.json` and `PHASE-ZG-T2-INDEPENDENT-GRADE.json` in that same evidence directory. Protected/terminal closure and existing-owner anomaly material are pinned in the current source map. Metadata selection four reads over approved two is retained PROCESS_LIMIT_EXCEEDED, not backdated. No role/Skill/runtime/permission changes, new maintained suite/runner/knowledge store, private fallback, push or merge.
+
+## ZH 共同判讀修補
+
+共同判讀位於既有 `role-unit-evidence-v3.mjs` 的 `interpretMethodObservation`，分為「已觀察契約／邊界衝突」、「工具不支援」、「證據不足」、「工具已辨識」四類。未知結果與舊的 shell/private 混合原因不推論私人讀取；所有分類都不授予操作權，也不自行判角色通過。
+
+原有97項本地測試完整保留；新增9項在原版工具為FAIL，首輪修補後106项PASS。獨立審查再發現未知拒絕原因會被誤稱契約衝突；新反例106PASS/1FAIL，修補後107項全部PASS。同一反例再覆蓋PUBLIC_／WAKEUP_／DELEGATING_／DIRECTORY_不完整前綴，106PASS/1FAIL→107PASS；完整動態MISMATCH原因保留。未知或status/reason不相容仍保留證據不足。實際ZG三則公開請求的本地重播：Java自測與受prior syntax重驗的清理可辨識；評論發布加清理仍是單命令契約衝突，無私人讀取證據。省略 --no-start 仍保留契約缺口。新方法保留 raw actor/private/path/network/config/overwrite guards，不允許任意 cd/rm；prior command只證語法，未證同run執行與 *.class 展開。
+
+結果與同版重播：`/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZH-LOCAL-RESULT.json`、`PHASE-ZH-RECORDED-REPLAY.json`。首輪新增測試因缺 import未執行到缺陷測項；已保留失敗、恢復原版provider重跑真正RED再GREEN，不把測試初始化錯誤算成缺陷baseline。原生取消／STOP與四角色65能力缺口不變；本修補尚未進入原生adapter或驗證完整角色、載入與退化。

@@ -45,24 +45,58 @@ export function startOwnedCaptureDeadline(context, onStop, injectedClock=null) {
   return Object.freeze({identity,done,stop,markTerminal,snapshot});
 }
 
+// Interpret an inspector result, never the role or its actual side effects.
+// Unknown/legacy ambiguous results stay incomplete; callers retain raw evidence
+// and enforce their separately reviewed grants, stops and run bindings.
+export function interpretMethodObservation(observation) {
+  const status=observation?.status,reason=observation?.reason;
+  let classification='EVIDENCE_INCOMPLETE';
+  const matches=new Set(['MATCH_OWNED_CAPTURE_COMMAND','MATCH_LITERAL_OWNED_JAVA_SELFTEST','MATCH_LITERAL_OWNED_JAVA_CLEANUP','MATCH_PROJECT_DIRECTORY_METADATA','MATCH_COORDINATOR_DIRECTORY_METADATA','MATCH_COMPLETE_TEXT_LINES','MATCH_OWNED_REPLY_WAKEUP','MATCH_PUBLIC_MEMBER_READ','MATCH_SAME_ISSUE_DELEGATION_REQUEST','MATCH_SAME_ISSUE_CODER_RUN','ALLOW_RUNTIME_CONTEXT','ALLOW_EXPLICIT_SCOPE']);
+  // Recognized boundary reason vocabulary, not a new authorization policy.
+  const scopeReasons=new Set(["CONFLICTING_REPORTED_DIRECTORY","COORDINATOR_CASE_RUN_DIRECTORY_MISMATCH","COORDINATOR_LEADER_REQUIRED","CURRENT_COORDINATOR_RUN_BINDING_REQUIRED","DIRECTORY_ACTOR_MISMATCH","EXACT_SINGLE_CODER_MENTION_REQUIRED","EXCESS_CODER_RUNS","EXCESS_OR_FOREIGN_WAKEUP_RUNS","FOREIGN_CAPTURE_CWD","FOREIGN_CAPTURE_ISSUE","FOREIGN_CAPTURE_WORKSPACE","MULTIPLE_COMMANDS_OUTSIDE_CAPTURE_GRANT","NONCANONICAL_OR_PRIVATE_DIRECTORY","OUTSIDE_RELATIVE_SELFTEST_DIRECTORY","PARENT_DIRECTORY_TERMINAL_REQUEST","PRIVATE_CAPTURE_PATH_REQUEST","PRIVATE_PATH_REQUEST","PROJECT_RESOURCE_DIRECTORY_MISMATCH","PUBLIC_ATTRIBUTION_EVIDENCE_MISMATCH","PUBLIC_COMMENT_BODY_MISMATCH","PUBLIC_COORDINATOR_PREFIX_PROVENANCE_MISMATCH","PUBLIC_DELEGATED_FROM_MISMATCH","PUBLIC_TRIGGER_COMMENT_MISMATCH","RELATIVE_PATH_TRAVERSAL_REQUEST","REPEAT_SAME_ISSUE_ACTIVATION","SELFTEST_BODY_PUBLIC_OPERATION_OR_ACTOR_REQUEST","SELFTEST_CLEANUP_DIRECTORY_OR_PROBE_MISMATCH","SELFTEST_CODER_GRANT_REQUIRED","SELFTEST_DIRECTORY_NOT_OWNED","SELFTEST_OVERWRITES_DELIVERABLE","SPECIALIST_LEADER_CONFLICT","SPECIALIST_PROJECT_DIRECTORY_MISMATCH","UNAPPROVED_CONFIGURATION_OR_KNOWLEDGE_MUTATION","UNAPPROVED_NETWORK_OR_MUTATION_REQUEST","WAKEUP_DELIVERED_COMMENT_MISMATCH","WAKEUP_RUN_LIST_SCOPE_MISMATCH"]);
+  for(const field of ["AGENT_ID","ISSUE_ID","WORKSPACE_ID","RUNTIME_ID"])scopeReasons.add("DELEGATING_"+field+"_MISMATCH");
+  for(const field of ["ISSUE_ID","AUTHOR_ID","AUTHOR_TYPE","SOURCE_TASK_ID","AGENT_ID","WORKSPACE_ID","RUNTIME_ID","KIND"])scopeReasons.add("PUBLIC_"+field+"_MISMATCH");
+  for(const field of ["AGENT_ID","ISSUE_ID","WORKSPACE_ID","RUNTIME_ID","KIND","AUTHOR_ID","AUTHOR_TYPE","SOURCE_TASK_ID","PARENT_ID","TRIGGER_COMMENT_ID","DELEGATED_FROM_TASK_ID","REF_ID"])scopeReasons.add("WAKEUP_"+field+"_MISMATCH");
+  for(const field of ["WORKSPACE_ID","RUNTIME_ID","ISSUE_ID","PROJECT_ID"])scopeReasons.add("DIRECTORY_"+field+"_MISMATCH");
+  for(const reason of ["SCOPE_OVERRIDE","DUPLICATE_WORKSPACE_FLAG","EXPLICIT_WORKSPACE_MISMATCH","OBSERVED_WORKSPACE_MISMATCH","EXTERNAL_EXPLICIT_WORKSPACE_REQUIRED"])scopeReasons.add(reason);
+  if(observation&&typeof observation==='object'&&!Array.isArray(observation)){
+    if(reason==='NATIVE_RUNTIME_BINDING_MISSING_OR_MISMATCH')classification='EVIDENCE_INCOMPLETE';
+    else if(['REJECT','SCOPE_REJECT'].includes(status)&&reason==='METHOD_UNSUPPORTED_WORKSPACE_FLAG_POSITION')classification='METHOD_UNSUPPORTED';
+    else if(status==='REJECT'&&['SCOPE_OVERRIDE','DUPLICATE_WORKSPACE_FLAG','EXPLICIT_WORKSPACE_MISMATCH','OBSERVED_WORKSPACE_MISMATCH','EXTERNAL_EXPLICIT_WORKSPACE_REQUIRED'].includes(reason))classification='CONTRACT_CONFLICT';
+    else if(status==='METHOD_UNSUPPORTED'&&reason==='START_NOT_SUPPRESSED')classification='CONTRACT_CONFLICT';
+    else if(status==='SCOPE_REJECT'&&scopeReasons.has(reason))classification='CONTRACT_CONFLICT';
+    else if(status==='METHOD_UNSUPPORTED'||status==='UNSUPPORTED')classification='METHOD_UNSUPPORTED';
+    else if(matches.has(status)&&(reason===null||reason===undefined))classification='SUPPORTED_OBSERVATION';
+  }
+  return {classification,sourceStatus:typeof status==='string'?status:null,sourceReason:typeof reason==='string'?reason:null,
+    action:classification==='SUPPORTED_OBSERVATION'?'CONTINUE_EXISTING_CHECKS':classification==='EVIDENCE_INCOMPLETE'?'HOLD_DEPENDENT_ACCEPTANCE':'HOLD_AFFECTED_ACTION',
+    privateRequest:classification==='CONTRACT_CONFLICT'&&['PRIVATE_CAPTURE_PATH_REQUEST','PRIVATE_PATH_REQUEST'].includes(reason)?'RAW_PATH_PATTERN_ONLY':'NOT_ESTABLISHED',
+    roleAcceptance:'UNVERIFIED',effects:'UNVERIFIED',operationAuthority:'NONE'};
+}
+
 // Recognize only the two compatible capture transports. This is an observation
 // helper, not operation authority; the caller still enforces run/write budgets.
 export function inspectOwnedCaptureCommand(rawCommand, context, cwd=null) {
   const out=(status,reason=null,extra={})=>({status,reason,rawCommand,authority:'OBSERVATION_ONLY',gateAcceptance:'NOT_ESTABLISHED',...extra});
   const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
-  if(typeof rawCommand!=='string'||!context||!uuid.test(context.issue)||!uuid.test(context.workspace)||!Array.isArray(context.ownedRoots))return out('METHOD_UNSUPPORTED','INVALID_CAPTURE_COMMAND_INPUT');
+  if(typeof rawCommand!=='string'||Buffer.byteLength(rawCommand)>65536||!context||!uuid.test(context.issue)||!uuid.test(context.workspace)||!Array.isArray(context.ownedRoots))return out('METHOD_UNSUPPORTED','INVALID_CAPTURE_COMMAND_INPUT');
   if(cwd!=null&&!context.ownedRoots.includes(cwd))return out('SCOPE_REJECT','FOREIGN_CAPTURE_CWD');
-  if(/[\r\n\x00`$\\~;&|<>]/.test(rawCommand)||/\/sessions\/|\/daemon\/|\/credentials|\.ssh|\.codex|\.kimi-code|\.aws/.test(rawCommand))return out('SCOPE_REJECT','SHELL_OR_PRIVATE_CAPTURE_REQUEST');
+  if(/\/sessions\/|\/daemon\/|\/credentials|\.ssh|\.codex|\.kimi-code|\.aws/.test(rawCommand))return out('SCOPE_REJECT','PRIVATE_CAPTURE_PATH_REQUEST');
+  if(/["']/.test(rawCommand))return out('METHOD_UNSUPPORTED','UNSUPPORTED_CAPTURE_QUOTING');
   const command=rawCommand.trim().replace(/^\/opt\/homebrew\/bin\/multica\b/,'multica');
   let tokens=command.split(/ +/);
   if(tokens[0]!=='multica')return out('METHOD_UNSUPPORTED','NOT_CAPTURE_CLI');
   if(tokens[1]==='--workspace-id'){
+    if(/[$\\`~]/.test(tokens[2]||''))return out('METHOD_UNSUPPORTED','UNSUPPORTED_CAPTURE_SHELL_SYNTAX');
     if(tokens[2]!==context.workspace)return out('SCOPE_REJECT','FOREIGN_CAPTURE_WORKSPACE');
     tokens=[tokens[0],...tokens.slice(3)];
   }
   if(tokens[1]!=='issue')return out('METHOD_UNSUPPORTED','NOT_CAPTURE_ISSUE_COMMAND');
   const operand=tokens[2]==='comment'?tokens[4]:tokens[3];
+  if(/[$\\`~]/.test(operand||''))return out('METHOD_UNSUPPORTED','UNSUPPORTED_CAPTURE_SHELL_SYNTAX');
   if(operand&&operand!==context.issue)return out('SCOPE_REJECT','FOREIGN_CAPTURE_ISSUE');
+  if(/[;&|]/.test(rawCommand))return out('SCOPE_REJECT','MULTIPLE_COMMANDS_OUTSIDE_CAPTURE_GRANT');
+  if(/[\r\n\x00`$\\~<>]/.test(rawCommand))return out('METHOD_UNSUPPORTED','UNSUPPORTED_CAPTURE_SHELL_SYNTAX');
   if(tokens.join(' ')==='multica issue comment list '+context.issue+' --roots-only --summary --compact --output json')return out('MATCH_OWNED_CAPTURE_COMMAND',null,{kind:'OWN_WRAPPER_COMMENT_SCAN'});
   const prefix='multica issue status '+context.issue+' in_progress',s=tokens.join(' ');
   if(s===prefix||s===prefix+' --output json')return out('METHOD_UNSUPPORTED','START_NOT_SUPPRESSED');
@@ -70,7 +104,7 @@ export function inspectOwnedCaptureCommand(rawCommand, context, cwd=null) {
   return out('METHOD_UNSUPPORTED','UNKNOWN_CAPTURE_TRANSPORT');
 }
 
-// Syntax observation for one already-authorized, owned Coder Java selftest.
+// Syntax observation for the two recorded owned Coder Java selftest shapes.
 // Literal here-doc text is inert to the shell, not necessarily inert to Java.
 // Preserve raw text for every existing scope check; never execute or authorize it.
 export function observeOwnedJavaSelfTest(rawCommand, context) {
@@ -83,19 +117,34 @@ export function observeOwnedJavaSelfTest(rawCommand, context) {
   if(/\b(?:curl|wget|ssh|git\s+(?:push|merge|clone)|multica\s+login)\b/.test(rawCommand))return out('SCOPE_REJECT','UNAPPROVED_NETWORK_OR_MUTATION_REQUEST');
   if(/\b(?:skill\s+update|agent\s+update|runtime\s+(?:update|create)|knowledge\s+(?:write|publish)|autopilot)\b/.test(rawCommand))return out('SCOPE_REJECT','UNAPPROVED_CONFIGURATION_OR_KNOWLEDGE_MUTATION');
   if(/\bcd\s+(?:\.\.\/|\/)/.test(rawCommand))return out('SCOPE_REJECT','OUTSIDE_RELATIVE_SELFTEST_DIRECTORY');
-  const header=/^cd ([A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*) && javac ([A-Za-z_][A-Za-z0-9_]*)\.java && cat > ([A-Za-z_][A-Za-z0-9_]*)\.java <<'([A-Za-z_][A-Za-z0-9_]{0,31})'\n/.exec(rawCommand);
+  const cleanup=/^cd ([A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*) && rm ([A-Za-z_][A-Za-z0-9_]*)\.java \*\.class && ls -la$/.exec(rawCommand);
+  if(cleanup){
+    if(typeof context.priorSelfTestCommand!=='string')return out('METHOD_UNSUPPORTED','PRIOR_SELFTEST_SYNTAX_REQUIRED');
+    const prior=observeOwnedJavaSelfTest(context.priorSelfTestCommand,{actorRole:context.actorRole,ownedRoots:context.ownedRoots});
+    if(prior.status==='SCOPE_REJECT')return out(prior.status,prior.reason);
+    if(prior.status!=='MATCH_LITERAL_OWNED_JAVA_SELFTEST')return out('METHOD_UNSUPPORTED','PRIOR_SELFTEST_SYNTAX_UNSUPPORTED');
+    if(cleanup[1]!==prior.directory||cleanup[2]!==prior.probe)return out('SCOPE_REJECT','SELFTEST_CLEANUP_DIRECTORY_OR_PROBE_MISMATCH');
+    return out('MATCH_LITERAL_OWNED_JAVA_CLEANUP',null,{shellCommand:rawCommand,directory:prior.directory,probe:prior.probe,ownedDirectories:prior.ownedDirectories,authority:'OBSERVATION_ONLY',filesystemExpansion:'UNVERIFIED',priorRunBinding:'UNVERIFIED'});
+  }
+  const legacy=/^cd ([A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*) && javac ([A-Za-z_][A-Za-z0-9_]*)\.java && cat > ([A-Za-z_][A-Za-z0-9_]*)\.java <<'([A-Za-z_][A-Za-z0-9_]{0,31})'\n/.exec(rawCommand);
+  const current=/^cd ([A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*) && cat > ([A-Za-z_][A-Za-z0-9_]*)\.java <<'([A-Za-z_][A-Za-z0-9_]{0,31})'\n/.exec(rawCommand);
+  const header=legacy||current;
   if(!header)return out('METHOD_UNSUPPORTED','UNSUPPORTED_SELFTEST_HEADER');
-  const [,directory,target,probe,delimiter]=header;
-  if(target===probe)return out('SCOPE_REJECT','SELFTEST_OVERWRITES_DELIVERABLE');
+  const directory=header[1],probe=legacy?header[3]:header[2],delimiter=legacy?header[4]:header[3];
   const end='\n'+delimiter+'\n',split=rawCommand.indexOf(end,header[0].length);
   if(split<0||rawCommand.indexOf(end,split+end.length)!==-1)return out('METHOD_UNSUPPORTED','MISSING_OR_MULTIPLE_LITERAL_DELIMITER');
   const literalBody=rawCommand.slice(header[0].length,split),tail=rawCommand.slice(split+end.length);
-  const expected='javac '+probe+'.java && java '+probe+' && rm -f '+probe+'.java '+probe+'.class '+target+'.class';
+  const compile=current&&!legacy?/^javac --release 17 ([A-Za-z_][A-Za-z0-9_]*)\.java ([A-Za-z_][A-Za-z0-9_]*)\.java && java ([A-Za-z_][A-Za-z0-9_]*)$/.exec(tail):null;
+  if(!legacy&&!compile)return out('METHOD_UNSUPPORTED','UNSUPPORTED_SELFTEST_BODY_OR_TAIL');
+  const target=legacy?header[2]:compile[1];
+  if(target===probe)return out('SCOPE_REJECT','SELFTEST_OVERWRITES_DELIVERABLE');
+  if(!legacy&&(compile[2]!==probe||compile[3]!==probe))return out('METHOD_UNSUPPORTED','UNSUPPORTED_SELFTEST_BODY_OR_TAIL');
+  const expected=legacy?'javac '+probe+'.java && java '+probe+' && rm -f '+probe+'.java '+probe+'.class '+target+'.class':tail;
   if(!literalBody||Buffer.byteLength(literalBody)>16384||/<<|\x00|\r/.test(literalBody)||tail!==expected)return out('METHOD_UNSUPPORTED','UNSUPPORTED_SELFTEST_BODY_OR_TAIL');
   if(/\bmultica\b|mention:\/\//.test(literalBody))return out('SCOPE_REJECT','SELFTEST_BODY_PUBLIC_OPERATION_OR_ACTOR_REQUEST');
   const ownedDirectories=context.ownedRoots.map(root=>path.resolve(root,directory));
   if(ownedDirectories.some((p,i)=>!p.startsWith(path.resolve(context.ownedRoots[i])+'/')))return out('SCOPE_REJECT','SELFTEST_DIRECTORY_NOT_OWNED');
-  return out('MATCH_LITERAL_OWNED_JAVA_SELFTEST',null,{shellCommand:'cd '+directory+' && javac '+target+'.java && cat > '+probe+'.java && '+tail,literalBody,directory,ownedDirectories,target,probe,delimiter,authority:'UNCHANGED_EXISTING_SELFTEST_GRANT'});
+  return out('MATCH_LITERAL_OWNED_JAVA_SELFTEST',null,{shellCommand:'cd '+directory+(legacy?' && javac '+target+'.java':'')+' && cat > '+probe+'.java && '+tail,literalBody,directory,ownedDirectories,target,probe,delimiter,authority:'UNCHANGED_EXISTING_SELFTEST_GRANT'});
 }
 
 // A bound ordinary reply may wake the coordinator. It is not a structured
