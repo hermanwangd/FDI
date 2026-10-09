@@ -189,3 +189,39 @@ export function inspectSameIssueCoderDelegation(body, sourceRun, context, eviden
   if(!uuid.test(comment.id||'')||!uuid.test(run.id||'')||run.id===sourceRun.id||['issue_id','author_id','author_type','source_task_id','content'].some(k=>comment[k]==null)||['agent_id','issue_id','workspace_id','runtime_id','kind','trigger_comment_id'].some(k=>run[k]==null)||!run.attribution?.delegated_from_task_id||!run.attribution?.evidence)return result('PENDING_PUBLIC_DELEGATION_EVIDENCE','PUBLIC_BINDING_INCOMPLETE',eligible);
   return result('MATCH_SAME_ISSUE_CODER_RUN',null,{...eligible,comment:comment.id,run:run.id,execution:'PUBLIC_BINDING_ONLY',completion:run.status==='completed'&&typeof run.started_at==='string'&&Number.isFinite(Date.parse(run.started_at))&&run.error==null?'COMPLETED_RUN_ONLY':'NOT_DEMONSTRATED'});
 }
+
+// Directory metadata is not a filesystem grant or proof of each tool's cwd.
+// Squad leaders skip the in_place project assignment; workers retain it.
+export function inspectNativeDirectoryBinding(run, context) {
+  const out=(status,reason=null,extra={})=>({status,reason,actualToolCwd:'UNVERIFIED',filesystemAuthority:'UNCHANGED_PROJECT_ROOT_ONLY',...extra});
+  const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+  const canonical=p=>typeof p==='string'&&p.startsWith('/')&&path.posix.normalize(p)===p&&!/[~$\\\r\n]/.test(p)&&!p.split('/').some(s=>['.','..','.multica','.kimi-code','.codex','.ssh','.aws','credentials','sessions','daemon'].includes(s));
+  if(!context||!run||['workspace','runtime','issue','project','resourceId','daemon','orchestrator','coder'].some(k=>!uuid.test(context[k]||''))||!canonical(context.physical)||!canonical(context.logical))return out('METHOD_UNSUPPORTED','INVALID_DIRECTORY_CONTEXT');
+  for(const [field,key] of [['workspace_id','workspace'],['runtime_id','runtime'],['issue_id','issue'],['project_id','project']])if(run[field]!=null&&run[field]!==context[key])return out('SCOPE_REJECT','DIRECTORY_'+field.toUpperCase()+'_MISMATCH');
+  if(run.agent_id!=null&&![context.orchestrator,context.coder].includes(run.agent_id))return out('SCOPE_REJECT','DIRECTORY_ACTOR_MISMATCH');
+  if(!uuid.test(run.id||'')||['workspace_id','runtime_id','issue_id','agent_id'].some(k=>run[k]==null))return out('PENDING_DIRECTORY_EVIDENCE','RUN_IDENTITY_MISSING');
+  const resource=context.resource,ref=resource?.resource_ref;
+  if(!resource||!ref)return out('PENDING_DIRECTORY_EVIDENCE','RESOURCE_BINDING_MISSING');
+  if(resource.id!==context.resourceId||resource.workspace_id!==context.workspace||resource.project_id!==context.project||resource.resource_type!=='local_directory'||ref.daemon_id!==context.daemon||ref.execution_mode!=='in_place'||ref.local_path!==context.physical)return out('SCOPE_REJECT','PROJECT_RESOURCE_DIRECTORY_MISMATCH');
+  if(run.work_dir!=null&&run.result?.work_dir!=null&&run.work_dir!==run.result.work_dir)return out('SCOPE_REJECT','CONFLICTING_REPORTED_DIRECTORY');
+  const reported=run.work_dir??run.result?.work_dir;
+  if(reported==null||reported==='')return out('PENDING_DIRECTORY_EVIDENCE','PUBLIC_WORK_DIR_MISSING');
+  if(!canonical(reported))return out('SCOPE_REJECT','NONCANONICAL_OR_PRIVATE_DIRECTORY');
+  if(run.agent_id===context.coder){
+    if(run.is_leader_task===true)return out('SCOPE_REJECT','SPECIALIST_LEADER_CONFLICT');
+    if(![context.physical,context.logical].includes(reported))return out('SCOPE_REJECT','SPECIALIST_PROJECT_DIRECTORY_MISMATCH');
+    return out('MATCH_PROJECT_DIRECTORY_METADATA',null,{run:run.id,reportedWorkDir:reported});
+  }
+  if(run.is_leader_task==null)return out('PENDING_DIRECTORY_EVIDENCE','PUBLIC_LEADER_BINDING_MISSING');
+  if(run.is_leader_task!==true)return out('SCOPE_REJECT','COORDINATOR_LEADER_REQUIRED');
+  const source=context.coordinatorRootSource,parent=context.coordinatorPublicParent;
+  if(source&&[['agent_id','orchestrator'],['workspace_id','workspace'],['runtime_id','runtime']].some(([field,key])=>source[field]!=null&&source[field]!==context[key]))return out('SCOPE_REJECT','PUBLIC_COORDINATOR_PREFIX_PROVENANCE_MISMATCH');
+  if(parent!=null&&(!canonical(parent)||!parent.endsWith('-'+context.workspace.slice(-12))))return out('SCOPE_REJECT','PUBLIC_COORDINATOR_PREFIX_PROVENANCE_MISMATCH');
+  if(!source||!parent||!uuid.test(source.id||'')||!uuid.test(source.issue_id||'')||!source.identifier)return out('PENDING_DIRECTORY_EVIDENCE','PUBLIC_COORDINATOR_PREFIX_PROVENANCE_MISSING');
+  if(source.agent_id!==context.orchestrator||source.workspace_id!==context.workspace||source.runtime_id!==context.runtime||source.is_leader_task!==true||!parent.endsWith('-'+context.workspace.slice(-12))||source.work_dir!==parent+'/'+source.identifier.toLowerCase()+'-'+source.id.slice(-12)+'/workdir')return out('SCOPE_REJECT','PUBLIC_COORDINATOR_PREFIX_PROVENANCE_MISMATCH');
+  const rows=context.coordinatorRuns;
+  if(!/^[A-Z][A-Z0-9]*-[1-9][0-9]*$/.test(context.identifier||'')||!Array.isArray(rows)||rows.length<1||rows.length>2||new Set(rows.map(r=>r?.id)).size!==rows.length||rows.some(r=>!uuid.test(r?.id||'')||r.agent_id!==context.orchestrator||r.issue_id!==context.issue||r.workspace_id!==context.workspace||r.runtime_id!==context.runtime)||!rows.some(r=>r.id===run.id))return out('SCOPE_REJECT','CURRENT_COORDINATOR_RUN_BINDING_REQUIRED');
+  const allowed=rows.map(r=>parent+'/'+context.identifier.toLowerCase()+'-'+r.id.slice(-12)+'/workdir');
+  if(!allowed.includes(reported))return out('SCOPE_REJECT','COORDINATOR_CASE_RUN_DIRECTORY_MISMATCH');
+  return out('MATCH_COORDINATOR_DIRECTORY_METADATA',null,{run:run.id,reportedWorkDir:reported,metadataOnly:true});
+}

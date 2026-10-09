@@ -741,7 +741,7 @@
     "tests": {
       "path": "engcim/swarm/tests/agents/four-role",
       "manifest": "engcim/swarm/tests/agents/four-role/SOURCE-MANIFEST.json",
-      "manifestSha256": "16eec4e15a6ebc84bc83e858a25899aad302af71d00d89d53a1abc0cea8fff4a",
+      "manifestSha256": "5b7b3fc14126847276e4e6f05dc081458e48cc4b36f210ad7eccb9e74a97214f",
       "previousExternalDefinitions": "Read-only historical evidence, all future maintained test edits use this Git path",
       "capabilityInventory": {
         "path": "engcim/swarm/tests/agents/capabilities.json",
@@ -7621,6 +7621,49 @@
             "sha256": "53dff58be26b946e555b15fd65ef9a64b5d251e745fd5f2acff1ed1a419ba785"
           }
         }
+      }
+    },
+    "directoryObservationRepair": {
+      "status": "LOCAL_METHOD_CANDIDATE_NATIVE_NOT_RUN",
+      "baseCommit": "37d020abef99e143831ff58d80767b522964ba81",
+      "sourceRevision": "ENCLOSING_GIT_TREE_METHOD_ONLY",
+      "publishedPayloadSource": "c5989a4180e7a69ffc9d92cdac410939440e0e8c",
+      "diagnosis": {
+        "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Z-DIRECTORY-DIAGNOSIS-r2.json",
+        "bytes": 3608,
+        "sha256": "25e8fdce9fc48631ee54ff9f11b5492015123a6b6f3113adb47fafb1a7716f0f"
+      },
+      "planReview": {
+        "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Z-DIRECTORY-REPAIR-PLAN-REVIEW-r2.json",
+        "bytes": 1711,
+        "sha256": "6d6da93850ecfb0e3766108c541e08483667028543db2a68f3055d5f2c728477"
+      },
+      "provider": {
+        "path": "/Users/herman_mbp2023/.codex/worktrees/swarm-role-test-entry/Feature-Delivery-Intelligence/engcim/swarm/tests/agents/four-role/role-unit-evidence-v3.mjs",
+        "bytes": 24058,
+        "sha256": "d889cbad899b16dd0b0d4a7446ac3ea1c1763dd97956c4324a159e6f8ef95e68"
+      },
+      "before": {
+        "originalProvider": 53,
+        "schema": 5,
+        "actualZOldRule": "CWD_MISMATCH",
+        "nativeOriginal": "PARTIAL_RETAINED",
+        "sourceNewGroupsRed": "53PASS8FAIL"
+      },
+      "after": {
+        "provider": 61,
+        "schema": 5,
+        "total": 66,
+        "perRunAdapter": 71,
+        "kind": "LOCAL_SYNTHETIC_METHOD_ONLY",
+        "native": "NOT_RUN"
+      },
+      "responsibilityChange": "NONE; coordinator metadata directory vs specialist projectroot separated, no filesystem grant expansion",
+      "actualToolCwd": "UNVERIFIED_UNLESS_SEPARATELY_OBSERVED",
+      "firstFailures": {
+        "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZD-OPERATOR-ANOMALIES.json",
+        "bytes": 1239,
+        "sha256": "26b5cf93f25bf21a9a6bb745bb115c64e219c4172f050b6b1fab9e7d1b856f3f"
       }
     }
   }

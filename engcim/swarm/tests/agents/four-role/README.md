@@ -63,3 +63,5 @@ Z 有限原生重測（RC10VAL-323）：方法來源 `7575c3b4`；角色發布�
 | 有限 native 觀察、精確來源、停止紀錄 | per-run adapter self-test | 原55通過 | 67通過；來源缺漏與第一次STOP保留有負向測項 | synthetic 不等於 native acceptance；目錄原因仍UNKNOWN |
 | Specialist 完成交付與功能 | 同版中性T2；凍結Java17七例probe | YN草稿未完成／未驗 | Z取消後247B草稿；probe未执行 | 完成交付與功能仍未證實 |
 | 角色完整render與自動載入 | 自有目錄render／公開SDK context | UNVERIFIED | Coder正文presence相符；完整automatic consumption未驗 | Orchestrator完整render未取得；獨立gates／19角色未驗 |
+
+目錄觀察修補（ZD）：`inspectNativeDirectoryBinding` 分開 project resource、completed run 的公開目錄紀錄與每個工具的實際 cwd。原觀察器把專案目錄等值要求也套到 squad leader；官方 v0.6.1 的 leader 不使用 `in_place` project assignment。新方法只接受精確自有 case／run 與已獨立綁定的公開 coordinator prefix，屬 metadata 判定，不授予該目錄的檔案存取。Coder 仍只接受同 daemon 專案資源的 physical／logical root，未知目錄保留 PENDING；functional 驗證前須 source Orchestrator 與 completed Coder 兩者紀錄綁定。原58方法／schema測項保留，8組正負測項後66通過；per-run adapter 原67保留後71通過。原RC10VAL-323 STOP與其未執行草稿保持原判定，新native尚未執行；版本與結果集中既有map的 `development_ssot.directoryObservationRepair`。
