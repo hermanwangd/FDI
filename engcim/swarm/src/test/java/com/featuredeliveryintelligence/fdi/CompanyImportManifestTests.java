@@ -9,10 +9,85 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class CompanyImportManifestTests {
     private final ObjectMapper json = new ObjectMapper();
+
+    @Test
+    void importIncludesTheModuleBuildPom() throws Exception {
+        Path root = repositoryRoot();
+        JsonNode entries = json.readTree(root.resolve(
+                "engcim/swarm/docs/rc10/RC10-COMPANY-REPO-IMPORT-MANIFEST.json").toFile()).path("entries");
+        assertModulePom(root, entries);
+        var missing = json.createArrayNode();
+        for (JsonNode entry : entries) {
+            if (!entry.path("destination").asText().equals("engcim/swarm/pom.xml")) missing.add(entry);
+        }
+        Assertions.assertThrows(AssertionError.class, () -> assertModulePom(root, missing));
+    }
+
+    private static void assertModulePom(Path root, JsonNode entries) throws Exception {
+        JsonNode pom = null;
+        for (JsonNode entry : entries) {
+            if (entry.path("destination").asText().equals("engcim/swarm/pom.xml")) pom = entry;
+        }
+        assertThat(pom).as("The imported aggregator requires its module POM").isNotNull();
+        assertThat(pom.path("source").asText()).isEqualTo("NEW:engcim/swarm/pom.xml");
+        assertThat(pom.path("action").asText()).isEqualTo("ADD_PHASE_2");
+        assertThat(pom.path("authority").asText()).isEqualTo("SWARM_EXECUTABLE_BUILD");
+        assertThat(pom.path("sha256").asText()).isEqualTo(sha256(root.resolve("engcim/swarm/pom.xml")));
+        assertThat(pom.path("size_bytes").asLong()).isEqualTo(Files.size(root.resolve("engcim/swarm/pom.xml")));
+    }
+
+    @Test
+    void importManifestIncludesEveryActiveMainJavaSource() throws Exception {
+        Path root = repositoryRoot();
+        JsonNode manifest = json.readTree(root.resolve(
+                "engcim/swarm/docs/rc10/RC10-COMPANY-REPO-IMPORT-MANIFEST.json").toFile());
+        assertMainSourceCoverage(root, manifest.path("entries"));
+        for (String missing : Set.of("CogneeSearchClient.java", "CurrentWorkPackageAudit.java")) {
+            var incomplete = json.createArrayNode();
+            for (JsonNode entry : manifest.path("entries")) {
+                if (!entry.path("destination").asText().endsWith("/" + missing)) incomplete.add(entry);
+            }
+            Assertions.assertThrows(AssertionError.class, () -> assertMainSourceCoverage(root, incomplete), missing);
+        }
+    }
+
+    private static void assertMainSourceCoverage(Path root, JsonNode entries) throws Exception {
+        Set<String> imported = new HashSet<>();
+        for (JsonNode entry : entries) {
+            if (Set.of("MOVE_PHASE_1", "MOVE_PHASE_1_COMPAT_SYMLINK", "MOVE_PHASE_2", "ADD_PHASE_2")
+                    .contains(entry.path("action").asText())) imported.add(entry.path("destination").asText());
+        }
+        try (var files = Files.walk(root.resolve("engcim/swarm/src/main/java"))) {
+            Set<String> sources = files.filter(Files::isRegularFile)
+                    .filter(p -> p.toString().endsWith(".java"))
+                    .map(root::relativize).map(Path::toString).collect(Collectors.toSet());
+            assertThat(imported).as("Every active main Java source must be importable").containsAll(sources);
+        }
+    }
+
+    @Test
+    void reportAuditImportIncludesItsWorkPackageHelper() throws Exception {
+        Path root = repositoryRoot();
+        JsonNode manifest = json.readTree(root.resolve(
+                "engcim/swarm/docs/rc10/RC10-COMPANY-REPO-IMPORT-MANIFEST.json").toFile());
+        String helper = "engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/CurrentWorkPackageAudit.java";
+        JsonNode entry = null;
+        for (JsonNode candidate : manifest.path("entries")) {
+            if (helper.equals(candidate.path("destination").asText())) entry = candidate;
+        }
+        assertThat(entry).as("Report audit requires an importable CurrentWorkPackageAudit source").isNotNull();
+        assertThat(entry.path("source").asText()).isEqualTo("NEW:" + helper);
+        assertThat(entry.path("action").asText()).isEqualTo("ADD_PHASE_2");
+        assertThat(entry.path("authority").asText()).isEqualTo("SWARM_EXECUTABLE");
+        assertThat(entry.path("sha256").asText()).isEqualTo(sha256(root.resolve(helper)));
+        assertThat(entry.path("size_bytes").asLong()).isEqualTo(Files.size(root.resolve(helper)));
+    }
 
     @Test
     void importManifestAccountsForMovesAdditionsAndExcludedLocalState() throws Exception {
@@ -92,7 +167,8 @@ class CompanyImportManifestTests {
         assertThat(phaseOneCompatibilityMoves).isEqualTo(summary.path("move_phase_1_compat_symlink").asInt());
         assertThat(phaseTwoMoves).isEqualTo(10);
         assertThat(phaseTwoMoves).isEqualTo(summary.path("move_phase_2").asInt());
-        assertThat(phaseTwoAdds).isEqualTo(8);
+        // Eight original additions, two required helpers, and the existing module POM.
+        assertThat(phaseTwoAdds).isEqualTo(11);
         assertThat(phaseTwoAdds).isEqualTo(summary.path("add_phase_2").asInt());
         assertThat(liveStateExclusions).isEqualTo(summary.path("exclude_live_state").asInt());
         assertThat(localControlExclusions).isEqualTo(1);

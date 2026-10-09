@@ -1,0 +1,621 @@
+{
+  "status": "DRAFT_QA_ONLY_BINDING_SAMPLE_NOT_CURRENT_RUNTIME_AUTHORITY",
+  "template_reference": "qa.md",
+  "source_inventory_sha256": "ecbc5ae8526713e4850c9abf12ed7a17205ae1e8db8209d82acb0c8fc92da2e5",
+  "source_counts": {
+    "standard_role_named": 133,
+    "metadata_match": 73,
+    "metadata_diff": 60,
+    "nonstandard_role_mapping_unverified": 70,
+    "inventory_total": 203,
+    "workspaces": 8,
+    "configured_kimi": 203,
+    "behavior_tested_instances": 1,
+    "behavior_runs": 2,
+    "current_unit_pass_instances": 0,
+    "untested_instances": 202
+  },
+  "QA_rows": 7,
+  "bindings": [
+    {
+      "workspace_id": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+      "agent_id": "3f254bc6-ec7a-4517-aa4c-ba0ae7f81bc1",
+      "native_name": "Swarm QA Tester",
+      "template": {
+        "id": "SWARM-QA-TEMPLATE",
+        "revision": "A1",
+        "path": "qa.md",
+        "adoption": "PROPOSED_NOT_ADOPTED",
+        "sha256": "3bac9f6b6529dbf25d073701df7b4168102141b2f18b716d29ee9c9a4f4bb737"
+      },
+      "assigned_capabilities": [
+        "SWARM-QA-CAP-001",
+        "SWARM-QA-CAP-002",
+        "SWARM-QA-CAP-003"
+      ],
+      "assignment_status": "PROPOSED_ROLE_MATCH_NOT_ACTUAL_ASSIGNMENT",
+      "source_configured_model": "kimi-code/kimi-for-coding",
+      "source_configured_runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+      "source_config_pin": {
+        "instructions_sha256": "7381d32b1f9d5f05ec0790d57d1a180107daafd0f02eb329f3c80fbe0cedeb8d",
+        "skill_metadata_sha256": "1dea69fe272efd4a04a7fc15ed482177123274cf4851fda6f7f9161a3909c5bc",
+        "skill_assignments": [
+          {
+            "description": "Use at artifact handoffs to detect missing trace links, stale revisions, contradictory decisions, and unimplemented requirements across Intention Spec, design, Development Result, Verification Result, and change artifacts (S04-S08)",
+            "enabled": true,
+            "id": "ee94ee8e-9d20-44b8-ac49-7d85c6db005f",
+            "name": "artifact-consistency"
+          },
+          {
+            "description": "Quick reference for the multica CLI commands agents use to manage issues, comments, status, mentions, and squad activity during a run",
+            "enabled": true,
+            "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+            "name": "multica-cli"
+          },
+          {
+            "description": "Use when the Swarm QA Tester needs to assess coverage of approved acceptance criteria before implementation, regression testing, or release validation.",
+            "enabled": true,
+            "id": "9b36b624-fa1a-4db7-98d8-535efacbad09",
+            "name": "qa-planning"
+          },
+          {
+            "description": "Use when verification requires exercising a running UI/API/service rather than only reading tests; captures real interactions, logs, screenshots or HTTP evidence, and reproducible failures (S06/S08)",
+            "enabled": true,
+            "id": "1ad73f60-eabd-4070-ab93-3e0b02b1394c",
+            "name": "runtime-qa"
+          },
+          {
+            "description": "Use when determining test depth from risk, mapping requirements to evidence, assessing NFR evidence, and producing a release-quality gate instead of relying on intuition (S06/S07/S08)",
+            "enabled": true,
+            "id": "4d12657a-001d-4ae4-87c6-846b4f3dcd34",
+            "name": "test-architecture"
+          },
+          {
+            "description": "Use when designing test plans with equivalence partitioning, boundary values, state transitions and scenario tests, or defining regression strategy and coverage targets (S05/S06/S10)",
+            "enabled": true,
+            "id": "741ab02a-8ef5-4122-86d0-bb8d4d5c2777",
+            "name": "test-design"
+          }
+        ],
+        "skill_content_versions": "NOT_EXPOSED_IN_AGENT_INVENTORY"
+      },
+      "source_metadata_applicability": "MATCHING_ROLE_INSTRUCTIONS_AND_SKILL_METADATA; actualSkillcontent/runtimeconsumption stillunproven",
+      "A1_applicability": "UNVERIFIED_NEW_REQUIREMENT_VERSION_AND_CONSUMPTION",
+      "source_test_status": "QA_METHOD_V1_AND_V2_REVISE; otherownedcasesNOT_RUN",
+      "source_actual_consumed_model": "PROVEN_KIMI_NATIVE_USAGE_V1_V2",
+      "source_actual_consumed_skills": "NOT_PROVEN",
+      "owned_suite": {
+        "definitions": "../../../../../validation/rc10/agent-capability-tests/qa/TEST-SPEC.md",
+        "version": "A1",
+        "ownership": "PROPOSED_FOR_THIS_INSTANCE_NOT_DEPLOYED",
+        "fixed_inputs": "NOT_FROZEN",
+        "current_A1_result": "NOT_RUN",
+        "definition_ids": [
+          "U-QA-METHOD-DESIGN-POS",
+          "U-QA-METHOD-DESIGN-NEG",
+          "U-QA-METHOD-DESIGN-EDGE-DEPENDENCY",
+          "U-QA-COVERAGE-DESIGN-POS",
+          "U-QA-COVERAGE-DESIGN-NEG",
+          "U-QA-COVERAGE-DESIGN-EDGE-VERSION",
+          "U-QA-PROTOCOL-ACCOUNTING-POS",
+          "U-QA-PROTOCOL-ACCOUNTING-NEG",
+          "U-QA-PROTOCOL-ACCOUNTING-EDGE-UNKNOWN-ACK",
+          "U-QA-PROTOCOL-ACCOUNTING-RECOVERY"
+        ],
+        "definitions_sha256": "2dc9fb265227f7d6edaf6dc4e29a35587d3cd2ec41bd9708aecf178627573853"
+      },
+      "evidence": [
+        {
+          "base": "repository_root",
+          "path": "validation/rc10/agent-capability-tests/qa/retained/U-QA-Kimi-v1-INDEPENDENT-EVALUATION.json",
+          "sha256": "7eb27bb4469e566c25ee43e916c8894539e8c30116630f349a4fba881d047f13",
+          "status": "RETAINED_REVISE_NOT_A1_ACCEPTANCE"
+        },
+        {
+          "base": "repository_root",
+          "path": "validation/rc10/agent-capability-tests/qa/retained/U-QA-Kimi-v2-INDEPENDENT-EVALUATION.json",
+          "sha256": "63518ee3b250cfc1ea705623305764c99c392c98e9557a72e0bcac0796ecf8d6",
+          "status": "RETAINED_REVISE_NOT_A1_ACCEPTANCE"
+        }
+      ],
+      "gaps": [
+        "Full assigned/consumed Skill content versions unproven",
+        "A1 template applicability/adoption not accepted",
+        "Owned exact fixture/oracle/operation scope and native result not established"
+      ]
+    },
+    {
+      "workspace_id": "44625a34-7b76-41f1-8ce8-a191b7cf6b46",
+      "agent_id": "dd35fcda-f118-4574-8a58-fdb16c60d5b2",
+      "native_name": "Swarm QA Tester",
+      "template": {
+        "id": "SWARM-QA-TEMPLATE",
+        "revision": "A1",
+        "path": "qa.md",
+        "adoption": "PROPOSED_NOT_ADOPTED",
+        "sha256": "3bac9f6b6529dbf25d073701df7b4168102141b2f18b716d29ee9c9a4f4bb737"
+      },
+      "assigned_capabilities": [
+        "SWARM-QA-CAP-001",
+        "SWARM-QA-CAP-002",
+        "SWARM-QA-CAP-003"
+      ],
+      "assignment_status": "PROPOSED_ROLE_MATCH_NOT_ACTUAL_ASSIGNMENT",
+      "source_configured_model": "kimi-code/kimi-for-coding",
+      "source_configured_runtime_id": "31052d85-36a0-432c-b316-701618bcbf5f",
+      "source_config_pin": {
+        "instructions_sha256": "7381d32b1f9d5f05ec0790d57d1a180107daafd0f02eb329f3c80fbe0cedeb8d",
+        "skill_metadata_sha256": "401809884a0b1a88f4cbab084a43c04cc0c65961517475e9ec05b45e8264108c",
+        "skill_assignments": [
+          {
+            "description": "Use at artifact handoffs to detect missing trace links, stale revisions, contradictory decisions, and unimplemented requirements across Intention Spec, design, Development Result, Verification Result, and change artifacts (S04-S08)",
+            "enabled": true,
+            "id": "f92c75d7-c9c9-4001-90bd-17d27b24b869",
+            "name": "artifact-consistency"
+          },
+          {
+            "description": "Quick reference for the multica CLI commands agents use to manage issues, comments, status, mentions, and squad activity during a run",
+            "enabled": true,
+            "id": "446978be-1336-4bf5-9a0f-4ed7f221c99f",
+            "name": "multica-cli"
+          },
+          {
+            "description": "Use when verification requires exercising a running UI/API/service rather than only reading tests; captures real interactions, logs, screenshots or HTTP evidence, and reproducible failures (S06/S08)",
+            "enabled": true,
+            "id": "1e70db75-269b-405d-bd16-d6d210663a97",
+            "name": "runtime-qa"
+          },
+          {
+            "description": "Use when determining test depth from risk, mapping requirements to evidence, assessing NFR evidence, and producing a release-quality gate instead of relying on intuition (S06/S07/S08)",
+            "enabled": true,
+            "id": "bfb25f67-c6fd-443a-a790-bf3f2384bf09",
+            "name": "test-architecture"
+          },
+          {
+            "description": "Use when designing test plans with equivalence partitioning, boundary values, state transitions and scenario tests, or defining regression strategy and coverage targets (S05/S06/S10)",
+            "enabled": true,
+            "id": "c06d3e09-1241-4567-a0e0-f5445de3ac27",
+            "name": "test-design"
+          }
+        ],
+        "skill_content_versions": "NOT_EXPOSED_IN_AGENT_INVENTORY"
+      },
+      "source_metadata_applicability": "NAME_MATCH_ONLY; instruction/Skillmetadatadelta needs review beforetemplate reuse",
+      "A1_applicability": "UNVERIFIED_NEW_REQUIREMENT_VERSION_AND_CONSUMPTION",
+      "source_test_status": "NOT_RUN_IN_CURRENT_KIMI_COHORT",
+      "source_actual_consumed_model": "NOT_PROVEN",
+      "source_actual_consumed_skills": "NOT_PROVEN",
+      "owned_suite": {
+        "definitions": "../../../../../validation/rc10/agent-capability-tests/qa/TEST-SPEC.md",
+        "version": "A1",
+        "ownership": "PROPOSED_FOR_THIS_INSTANCE_NOT_DEPLOYED",
+        "fixed_inputs": "NOT_FROZEN",
+        "current_A1_result": "NOT_RUN",
+        "definition_ids": [
+          "U-QA-METHOD-DESIGN-POS",
+          "U-QA-METHOD-DESIGN-NEG",
+          "U-QA-METHOD-DESIGN-EDGE-DEPENDENCY",
+          "U-QA-COVERAGE-DESIGN-POS",
+          "U-QA-COVERAGE-DESIGN-NEG",
+          "U-QA-COVERAGE-DESIGN-EDGE-VERSION",
+          "U-QA-PROTOCOL-ACCOUNTING-POS",
+          "U-QA-PROTOCOL-ACCOUNTING-NEG",
+          "U-QA-PROTOCOL-ACCOUNTING-EDGE-UNKNOWN-ACK",
+          "U-QA-PROTOCOL-ACCOUNTING-RECOVERY"
+        ],
+        "definitions_sha256": "2dc9fb265227f7d6edaf6dc4e29a35587d3cd2ec41bd9708aecf178627573853"
+      },
+      "evidence": [],
+      "gaps": [
+        "Full assigned/consumed Skill content versions unproven",
+        "A1 template applicability/adoption not accepted",
+        "Owned exact fixture/oracle/operation scope and native result not established"
+      ]
+    },
+    {
+      "workspace_id": "49d38da8-68c1-4eb7-925c-abfa2b81943b",
+      "agent_id": "014ba9ab-744e-4526-8f41-fd9c779433ce",
+      "native_name": "Swarm QA Tester",
+      "template": {
+        "id": "SWARM-QA-TEMPLATE",
+        "revision": "A1",
+        "path": "qa.md",
+        "adoption": "PROPOSED_NOT_ADOPTED",
+        "sha256": "3bac9f6b6529dbf25d073701df7b4168102141b2f18b716d29ee9c9a4f4bb737"
+      },
+      "assigned_capabilities": [
+        "SWARM-QA-CAP-001",
+        "SWARM-QA-CAP-002",
+        "SWARM-QA-CAP-003"
+      ],
+      "assignment_status": "PROPOSED_ROLE_MATCH_NOT_ACTUAL_ASSIGNMENT",
+      "source_configured_model": "kimi-code/kimi-for-coding",
+      "source_configured_runtime_id": "5dbada27-9d4e-407e-a21e-c817ef8a3b90",
+      "source_config_pin": {
+        "instructions_sha256": "7381d32b1f9d5f05ec0790d57d1a180107daafd0f02eb329f3c80fbe0cedeb8d",
+        "skill_metadata_sha256": "45080b17534ac5918271fc09d3a9fb1383296ce0c9d7cdc440a389acdfd07ed3",
+        "skill_assignments": [
+          {
+            "description": "Quick reference for the multica CLI commands agents use to manage issues, comments, status, mentions, and squad activity during a run",
+            "enabled": true,
+            "id": "237b1982-c007-49b4-ab15-bb2810f80990",
+            "name": "multica-cli"
+          },
+          {
+            "description": "Use when designing test plans with equivalence partitioning, boundary values, state transitions and scenario tests, or defining regression strategy and coverage targets (S05/S06/S10)",
+            "enabled": true,
+            "id": "a1d1690b-b17d-4733-9124-1cce6876cdeb",
+            "name": "test-design"
+          }
+        ],
+        "skill_content_versions": "NOT_EXPOSED_IN_AGENT_INVENTORY"
+      },
+      "source_metadata_applicability": "NAME_MATCH_ONLY; instruction/Skillmetadatadelta needs review beforetemplate reuse",
+      "A1_applicability": "UNVERIFIED_NEW_REQUIREMENT_VERSION_AND_CONSUMPTION",
+      "source_test_status": "NOT_RUN_IN_CURRENT_KIMI_COHORT",
+      "source_actual_consumed_model": "NOT_PROVEN",
+      "source_actual_consumed_skills": "NOT_PROVEN",
+      "owned_suite": {
+        "definitions": "../../../../../validation/rc10/agent-capability-tests/qa/TEST-SPEC.md",
+        "version": "A1",
+        "ownership": "PROPOSED_FOR_THIS_INSTANCE_NOT_DEPLOYED",
+        "fixed_inputs": "NOT_FROZEN",
+        "current_A1_result": "NOT_RUN",
+        "definition_ids": [
+          "U-QA-METHOD-DESIGN-POS",
+          "U-QA-METHOD-DESIGN-NEG",
+          "U-QA-METHOD-DESIGN-EDGE-DEPENDENCY",
+          "U-QA-COVERAGE-DESIGN-POS",
+          "U-QA-COVERAGE-DESIGN-NEG",
+          "U-QA-COVERAGE-DESIGN-EDGE-VERSION",
+          "U-QA-PROTOCOL-ACCOUNTING-POS",
+          "U-QA-PROTOCOL-ACCOUNTING-NEG",
+          "U-QA-PROTOCOL-ACCOUNTING-EDGE-UNKNOWN-ACK",
+          "U-QA-PROTOCOL-ACCOUNTING-RECOVERY"
+        ],
+        "definitions_sha256": "2dc9fb265227f7d6edaf6dc4e29a35587d3cd2ec41bd9708aecf178627573853"
+      },
+      "evidence": [],
+      "gaps": [
+        "Full assigned/consumed Skill content versions unproven",
+        "A1 template applicability/adoption not accepted",
+        "Owned exact fixture/oracle/operation scope and native result not established"
+      ]
+    },
+    {
+      "workspace_id": "9d1fc96a-0f5b-496d-aecf-c55f0625a6ba",
+      "agent_id": "47ae0911-18f5-4d49-8d8f-47236239d64a",
+      "native_name": "Swarm QA Tester",
+      "template": {
+        "id": "SWARM-QA-TEMPLATE",
+        "revision": "A1",
+        "path": "qa.md",
+        "adoption": "PROPOSED_NOT_ADOPTED",
+        "sha256": "3bac9f6b6529dbf25d073701df7b4168102141b2f18b716d29ee9c9a4f4bb737"
+      },
+      "assigned_capabilities": [
+        "SWARM-QA-CAP-001",
+        "SWARM-QA-CAP-002",
+        "SWARM-QA-CAP-003"
+      ],
+      "assignment_status": "PROPOSED_ROLE_MATCH_NOT_ACTUAL_ASSIGNMENT",
+      "source_configured_model": "kimi-code/kimi-for-coding",
+      "source_configured_runtime_id": "bf2b5eb5-ebcb-4cfa-b606-bb515f1f7605",
+      "source_config_pin": {
+        "instructions_sha256": "7381d32b1f9d5f05ec0790d57d1a180107daafd0f02eb329f3c80fbe0cedeb8d",
+        "skill_metadata_sha256": "401809884a0b1a88f4cbab084a43c04cc0c65961517475e9ec05b45e8264108c",
+        "skill_assignments": [
+          {
+            "description": "Use at artifact handoffs to detect missing trace links, stale revisions, contradictory decisions, and unimplemented requirements across Intention Spec, design, Development Result, Verification Result, and change artifacts (S04-S08)",
+            "enabled": true,
+            "id": "e3c6e37b-33b0-490a-ab6e-006034835f82",
+            "name": "artifact-consistency"
+          },
+          {
+            "description": "Quick reference for the multica CLI commands agents use to manage issues, comments, status, mentions, and squad activity during a run",
+            "enabled": true,
+            "id": "4b13418b-f089-4e87-9394-e5ee6ccff9f0",
+            "name": "multica-cli"
+          },
+          {
+            "description": "Use when verification requires exercising a running UI/API/service rather than only reading tests; captures real interactions, logs, screenshots or HTTP evidence, and reproducible failures (S06/S08)",
+            "enabled": true,
+            "id": "123e91e6-b3ec-4d86-a646-12d2364aec55",
+            "name": "runtime-qa"
+          },
+          {
+            "description": "Use when determining test depth from risk, mapping requirements to evidence, assessing NFR evidence, and producing a release-quality gate instead of relying on intuition (S06/S07/S08)",
+            "enabled": true,
+            "id": "f53dc3bf-4cbd-4cc0-8fda-b9a2da0fba41",
+            "name": "test-architecture"
+          },
+          {
+            "description": "Use when designing test plans with equivalence partitioning, boundary values, state transitions and scenario tests, or defining regression strategy and coverage targets (S05/S06/S10)",
+            "enabled": true,
+            "id": "8e371bcf-6e46-4022-a6af-74b3dd190945",
+            "name": "test-design"
+          }
+        ],
+        "skill_content_versions": "NOT_EXPOSED_IN_AGENT_INVENTORY"
+      },
+      "source_metadata_applicability": "NAME_MATCH_ONLY; instruction/Skillmetadatadelta needs review beforetemplate reuse",
+      "A1_applicability": "UNVERIFIED_NEW_REQUIREMENT_VERSION_AND_CONSUMPTION",
+      "source_test_status": "NOT_RUN_IN_CURRENT_KIMI_COHORT",
+      "source_actual_consumed_model": "NOT_PROVEN",
+      "source_actual_consumed_skills": "NOT_PROVEN",
+      "owned_suite": {
+        "definitions": "../../../../../validation/rc10/agent-capability-tests/qa/TEST-SPEC.md",
+        "version": "A1",
+        "ownership": "PROPOSED_FOR_THIS_INSTANCE_NOT_DEPLOYED",
+        "fixed_inputs": "NOT_FROZEN",
+        "current_A1_result": "NOT_RUN",
+        "definition_ids": [
+          "U-QA-METHOD-DESIGN-POS",
+          "U-QA-METHOD-DESIGN-NEG",
+          "U-QA-METHOD-DESIGN-EDGE-DEPENDENCY",
+          "U-QA-COVERAGE-DESIGN-POS",
+          "U-QA-COVERAGE-DESIGN-NEG",
+          "U-QA-COVERAGE-DESIGN-EDGE-VERSION",
+          "U-QA-PROTOCOL-ACCOUNTING-POS",
+          "U-QA-PROTOCOL-ACCOUNTING-NEG",
+          "U-QA-PROTOCOL-ACCOUNTING-EDGE-UNKNOWN-ACK",
+          "U-QA-PROTOCOL-ACCOUNTING-RECOVERY"
+        ],
+        "definitions_sha256": "2dc9fb265227f7d6edaf6dc4e29a35587d3cd2ec41bd9708aecf178627573853"
+      },
+      "evidence": [],
+      "gaps": [
+        "Full assigned/consumed Skill content versions unproven",
+        "A1 template applicability/adoption not accepted",
+        "Owned exact fixture/oracle/operation scope and native result not established"
+      ]
+    },
+    {
+      "workspace_id": "b5451db6-f36b-418c-959b-5b68f6b708d2",
+      "agent_id": "f3288f90-d90f-49a9-b3f0-605e95c0c2e6",
+      "native_name": "Swarm QA Tester",
+      "template": {
+        "id": "SWARM-QA-TEMPLATE",
+        "revision": "A1",
+        "path": "qa.md",
+        "adoption": "PROPOSED_NOT_ADOPTED",
+        "sha256": "3bac9f6b6529dbf25d073701df7b4168102141b2f18b716d29ee9c9a4f4bb737"
+      },
+      "assigned_capabilities": [
+        "SWARM-QA-CAP-001",
+        "SWARM-QA-CAP-002",
+        "SWARM-QA-CAP-003"
+      ],
+      "assignment_status": "PROPOSED_ROLE_MATCH_NOT_ACTUAL_ASSIGNMENT",
+      "source_configured_model": "kimi-code/kimi-for-coding",
+      "source_configured_runtime_id": "be9527be-60d9-4318-bf7e-0859cd1cf64e",
+      "source_config_pin": {
+        "instructions_sha256": "7381d32b1f9d5f05ec0790d57d1a180107daafd0f02eb329f3c80fbe0cedeb8d",
+        "skill_metadata_sha256": "45080b17534ac5918271fc09d3a9fb1383296ce0c9d7cdc440a389acdfd07ed3",
+        "skill_assignments": [
+          {
+            "description": "Quick reference for the multica CLI commands agents use to manage issues, comments, status, mentions, and squad activity during a run",
+            "enabled": true,
+            "id": "590c9922-7edb-4cfa-ac90-8ec9d369a661",
+            "name": "multica-cli"
+          },
+          {
+            "description": "Use when designing test plans with equivalence partitioning, boundary values, state transitions and scenario tests, or defining regression strategy and coverage targets (S05/S06/S10)",
+            "enabled": true,
+            "id": "f77b0681-5a36-4ab0-a9d3-0d6fcad305df",
+            "name": "test-design"
+          }
+        ],
+        "skill_content_versions": "NOT_EXPOSED_IN_AGENT_INVENTORY"
+      },
+      "source_metadata_applicability": "NAME_MATCH_ONLY; instruction/Skillmetadatadelta needs review beforetemplate reuse",
+      "A1_applicability": "UNVERIFIED_NEW_REQUIREMENT_VERSION_AND_CONSUMPTION",
+      "source_test_status": "NOT_RUN_IN_CURRENT_KIMI_COHORT",
+      "source_actual_consumed_model": "NOT_PROVEN",
+      "source_actual_consumed_skills": "NOT_PROVEN",
+      "owned_suite": {
+        "definitions": "../../../../../validation/rc10/agent-capability-tests/qa/TEST-SPEC.md",
+        "version": "A1",
+        "ownership": "PROPOSED_FOR_THIS_INSTANCE_NOT_DEPLOYED",
+        "fixed_inputs": "NOT_FROZEN",
+        "current_A1_result": "NOT_RUN",
+        "definition_ids": [
+          "U-QA-METHOD-DESIGN-POS",
+          "U-QA-METHOD-DESIGN-NEG",
+          "U-QA-METHOD-DESIGN-EDGE-DEPENDENCY",
+          "U-QA-COVERAGE-DESIGN-POS",
+          "U-QA-COVERAGE-DESIGN-NEG",
+          "U-QA-COVERAGE-DESIGN-EDGE-VERSION",
+          "U-QA-PROTOCOL-ACCOUNTING-POS",
+          "U-QA-PROTOCOL-ACCOUNTING-NEG",
+          "U-QA-PROTOCOL-ACCOUNTING-EDGE-UNKNOWN-ACK",
+          "U-QA-PROTOCOL-ACCOUNTING-RECOVERY"
+        ],
+        "definitions_sha256": "2dc9fb265227f7d6edaf6dc4e29a35587d3cd2ec41bd9708aecf178627573853"
+      },
+      "evidence": [],
+      "gaps": [
+        "Full assigned/consumed Skill content versions unproven",
+        "A1 template applicability/adoption not accepted",
+        "Owned exact fixture/oracle/operation scope and native result not established"
+      ]
+    },
+    {
+      "workspace_id": "d91054ef-1b00-4011-b81f-a6e82cb0e7f7",
+      "agent_id": "f601925d-1538-4deb-a528-effb6b401c61",
+      "native_name": "Swarm QA Tester",
+      "template": {
+        "id": "SWARM-QA-TEMPLATE",
+        "revision": "A1",
+        "path": "qa.md",
+        "adoption": "PROPOSED_NOT_ADOPTED",
+        "sha256": "3bac9f6b6529dbf25d073701df7b4168102141b2f18b716d29ee9c9a4f4bb737"
+      },
+      "assigned_capabilities": [
+        "SWARM-QA-CAP-001",
+        "SWARM-QA-CAP-002",
+        "SWARM-QA-CAP-003"
+      ],
+      "assignment_status": "PROPOSED_ROLE_MATCH_NOT_ACTUAL_ASSIGNMENT",
+      "source_configured_model": "kimi-code/kimi-for-coding",
+      "source_configured_runtime_id": "b34d36c9-e336-4dbe-9c58-dfd691b36ba9",
+      "source_config_pin": {
+        "instructions_sha256": "7381d32b1f9d5f05ec0790d57d1a180107daafd0f02eb329f3c80fbe0cedeb8d",
+        "skill_metadata_sha256": "401809884a0b1a88f4cbab084a43c04cc0c65961517475e9ec05b45e8264108c",
+        "skill_assignments": [
+          {
+            "description": "Use at artifact handoffs to detect missing trace links, stale revisions, contradictory decisions, and unimplemented requirements across Intention Spec, design, Development Result, Verification Result, and change artifacts (S04-S08)",
+            "enabled": true,
+            "id": "1b80cc72-1f29-4482-89a0-21b176bed9d1",
+            "name": "artifact-consistency"
+          },
+          {
+            "description": "Quick reference for the multica CLI commands agents use to manage issues, comments, status, mentions, and squad activity during a run",
+            "enabled": true,
+            "id": "566a10d4-94ce-4733-bc1b-b669454d5f86",
+            "name": "multica-cli"
+          },
+          {
+            "description": "Use when verification requires exercising a running UI/API/service rather than only reading tests; captures real interactions, logs, screenshots or HTTP evidence, and reproducible failures (S06/S08)",
+            "enabled": true,
+            "id": "1495a823-7ffd-4510-8a5d-e729d71cb8e3",
+            "name": "runtime-qa"
+          },
+          {
+            "description": "Use when determining test depth from risk, mapping requirements to evidence, assessing NFR evidence, and producing a release-quality gate instead of relying on intuition (S06/S07/S08)",
+            "enabled": true,
+            "id": "81dedbd9-d1a7-4af3-8257-cee998c51288",
+            "name": "test-architecture"
+          },
+          {
+            "description": "Use when designing test plans with equivalence partitioning, boundary values, state transitions and scenario tests, or defining regression strategy and coverage targets (S05/S06/S10)",
+            "enabled": true,
+            "id": "08ed4361-c2a3-4338-8ee1-3ccf3c71f995",
+            "name": "test-design"
+          }
+        ],
+        "skill_content_versions": "NOT_EXPOSED_IN_AGENT_INVENTORY"
+      },
+      "source_metadata_applicability": "NAME_MATCH_ONLY; instruction/Skillmetadatadelta needs review beforetemplate reuse",
+      "A1_applicability": "UNVERIFIED_NEW_REQUIREMENT_VERSION_AND_CONSUMPTION",
+      "source_test_status": "NOT_RUN_IN_CURRENT_KIMI_COHORT",
+      "source_actual_consumed_model": "NOT_PROVEN",
+      "source_actual_consumed_skills": "NOT_PROVEN",
+      "owned_suite": {
+        "definitions": "../../../../../validation/rc10/agent-capability-tests/qa/TEST-SPEC.md",
+        "version": "A1",
+        "ownership": "PROPOSED_FOR_THIS_INSTANCE_NOT_DEPLOYED",
+        "fixed_inputs": "NOT_FROZEN",
+        "current_A1_result": "NOT_RUN",
+        "definition_ids": [
+          "U-QA-METHOD-DESIGN-POS",
+          "U-QA-METHOD-DESIGN-NEG",
+          "U-QA-METHOD-DESIGN-EDGE-DEPENDENCY",
+          "U-QA-COVERAGE-DESIGN-POS",
+          "U-QA-COVERAGE-DESIGN-NEG",
+          "U-QA-COVERAGE-DESIGN-EDGE-VERSION",
+          "U-QA-PROTOCOL-ACCOUNTING-POS",
+          "U-QA-PROTOCOL-ACCOUNTING-NEG",
+          "U-QA-PROTOCOL-ACCOUNTING-EDGE-UNKNOWN-ACK",
+          "U-QA-PROTOCOL-ACCOUNTING-RECOVERY"
+        ],
+        "definitions_sha256": "2dc9fb265227f7d6edaf6dc4e29a35587d3cd2ec41bd9708aecf178627573853"
+      },
+      "evidence": [],
+      "gaps": [
+        "Full assigned/consumed Skill content versions unproven",
+        "A1 template applicability/adoption not accepted",
+        "Owned exact fixture/oracle/operation scope and native result not established"
+      ]
+    },
+    {
+      "workspace_id": "fd5e23a9-75e7-4079-b2f2-30dc2f3f065c",
+      "agent_id": "6136c9c5-b4be-4c97-9c47-a5c261989333",
+      "native_name": "Swarm QA Tester",
+      "template": {
+        "id": "SWARM-QA-TEMPLATE",
+        "revision": "A1",
+        "path": "qa.md",
+        "adoption": "PROPOSED_NOT_ADOPTED",
+        "sha256": "3bac9f6b6529dbf25d073701df7b4168102141b2f18b716d29ee9c9a4f4bb737"
+      },
+      "assigned_capabilities": [
+        "SWARM-QA-CAP-001",
+        "SWARM-QA-CAP-002",
+        "SWARM-QA-CAP-003"
+      ],
+      "assignment_status": "PROPOSED_ROLE_MATCH_NOT_ACTUAL_ASSIGNMENT",
+      "source_configured_model": "kimi-code/kimi-for-coding",
+      "source_configured_runtime_id": "be3e16aa-fd2d-4195-9ea6-cf7865f3a8b6",
+      "source_config_pin": {
+        "instructions_sha256": "7381d32b1f9d5f05ec0790d57d1a180107daafd0f02eb329f3c80fbe0cedeb8d",
+        "skill_metadata_sha256": "401809884a0b1a88f4cbab084a43c04cc0c65961517475e9ec05b45e8264108c",
+        "skill_assignments": [
+          {
+            "description": "Use at artifact handoffs to detect missing trace links, stale revisions, contradictory decisions, and unimplemented requirements across Intention Spec, design, Development Result, Verification Result, and change artifacts (S04-S08)",
+            "enabled": true,
+            "id": "83fb92d1-6aff-4770-b7ce-b9a1a9d2bc48",
+            "name": "artifact-consistency"
+          },
+          {
+            "description": "Quick reference for the multica CLI commands agents use to manage issues, comments, status, mentions, and squad activity during a run",
+            "enabled": true,
+            "id": "a358c3b8-84c4-44c0-bb09-9d30f502b8ba",
+            "name": "multica-cli"
+          },
+          {
+            "description": "Use when verification requires exercising a running UI/API/service rather than only reading tests; captures real interactions, logs, screenshots or HTTP evidence, and reproducible failures (S06/S08)",
+            "enabled": true,
+            "id": "0bd05ff1-a81a-445d-aa4b-e72b5a54e1a2",
+            "name": "runtime-qa"
+          },
+          {
+            "description": "Use when determining test depth from risk, mapping requirements to evidence, assessing NFR evidence, and producing a release-quality gate instead of relying on intuition (S06/S07/S08)",
+            "enabled": true,
+            "id": "c31541a4-db4b-4115-9148-f727351de272",
+            "name": "test-architecture"
+          },
+          {
+            "description": "Use when designing test plans with equivalence partitioning, boundary values, state transitions and scenario tests, or defining regression strategy and coverage targets (S05/S06/S10)",
+            "enabled": true,
+            "id": "de0fab18-ddd9-48e2-86f5-2c2aa9fb8aa6",
+            "name": "test-design"
+          }
+        ],
+        "skill_content_versions": "NOT_EXPOSED_IN_AGENT_INVENTORY"
+      },
+      "source_metadata_applicability": "NAME_MATCH_ONLY; instruction/Skillmetadatadelta needs review beforetemplate reuse",
+      "A1_applicability": "UNVERIFIED_NEW_REQUIREMENT_VERSION_AND_CONSUMPTION",
+      "source_test_status": "NOT_RUN_IN_CURRENT_KIMI_COHORT",
+      "source_actual_consumed_model": "NOT_PROVEN",
+      "source_actual_consumed_skills": "NOT_PROVEN",
+      "owned_suite": {
+        "definitions": "../../../../../validation/rc10/agent-capability-tests/qa/TEST-SPEC.md",
+        "version": "A1",
+        "ownership": "PROPOSED_FOR_THIS_INSTANCE_NOT_DEPLOYED",
+        "fixed_inputs": "NOT_FROZEN",
+        "current_A1_result": "NOT_RUN",
+        "definition_ids": [
+          "U-QA-METHOD-DESIGN-POS",
+          "U-QA-METHOD-DESIGN-NEG",
+          "U-QA-METHOD-DESIGN-EDGE-DEPENDENCY",
+          "U-QA-COVERAGE-DESIGN-POS",
+          "U-QA-COVERAGE-DESIGN-NEG",
+          "U-QA-COVERAGE-DESIGN-EDGE-VERSION",
+          "U-QA-PROTOCOL-ACCOUNTING-POS",
+          "U-QA-PROTOCOL-ACCOUNTING-NEG",
+          "U-QA-PROTOCOL-ACCOUNTING-EDGE-UNKNOWN-ACK",
+          "U-QA-PROTOCOL-ACCOUNTING-RECOVERY"
+        ],
+        "definitions_sha256": "2dc9fb265227f7d6edaf6dc4e29a35587d3cd2ec41bd9708aecf178627573853"
+      },
+      "evidence": [],
+      "gaps": [
+        "Full assigned/consumed Skill content versions unproven",
+        "A1 template applicability/adoption not accepted",
+        "Owned exact fixture/oracle/operation scope and native result not established"
+      ]
+    }
+  ],
+  "remaining": "Other instances stay in supplied draft203manifest; no203duplicatefiles, role-name adoption or PASS transfer. This sample does not assign capabilities live. Each actual instance suite needs exact applicability/version and its own evidence."
+}

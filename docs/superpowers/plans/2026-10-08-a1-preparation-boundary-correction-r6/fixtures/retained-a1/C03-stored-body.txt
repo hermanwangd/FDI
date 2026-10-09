@@ -1,0 +1,107 @@
+## Work-Package Plan: A1.Author.prepare (Declared Revision: r1)
+
+### 1. Identity & Binding Metadata
+- **mission**: Pilot A / A1 UNSTAGED frozen two-source handoff comparison
+- **workPackage**: ENGCIM-CURRENT-WORK-PACKAGE-r2 (candidate: `b37df84a3cf185a0fbfd3333287e041d3d3115c7`, canonical SHA: `cbb28442a072233a326ace9e3b8bb3d7a2f99f4576d1f1aaee80c9a9ad431b42`)
+- **action**: A1.Author.prepare (Protocol-only preparation for Author comparative analysis)
+- **actor**: Swarm Architect (`668dadac-fd7a-4523-855a-f6a842301555`)
+- **role**: Author (Architect)
+- **stage**: UNSTAGED
+- **issueId**: `01a117df-c9b4-7d66-8f0f-15fdb9d6718f` (RC10VAL-286)
+- **workspaceId**: `0b02adb6-a395-46bd-bd92-6fec14dee20e`
+- **triggerCommentId**: `01a117e5-75e7-7023-aeb9-b7e49fd32cb8` (native revision 1)
+- **declaredPlanRevision**: r1
+- **planCommentId**: UNKNOWN (to be bound on readback; unknown IDs are not prefilled)
+- **approvalStatus**: PENDING_INDEPENDENT_REVIEW (self-approval prohibited; requires independent Reviewer APPROVE with explicit `reviewed_plan_id`)
+
+### 2. Scope & Non-Scope Boundaries
+- **Current Preparation Scope (A1.Author.prepare)**:
+  - Protocol-only formulation of Author comparative analysis methodology for later substantive comparison of the two frozen sources.
+  - Systematic separation of supplied public facts, unknowns, dependencies, and proposed comparative evidence.
+  - Identification of the exact input/dependency tuple required before `A1.Author.execute`.
+  - Protocol scratch restricted to workdir `protocol/plan.txt` (UTF-8, <= 32 KiB; no `/tmp` usage).
+  - Bounded protocol routing to Swarm Reviewer (`53a77a8b-aec9-4d7b-821e-0dae15e48c0c`) for independent Plan Review.
+- **Non-Scope / Strictly Prohibited in this Phase**:
+  - No reading or substantive investigation of the two frozen sources in this preparation phase.
+  - No assumption or declaration that pinned hashes have been verified (pins are unobserved in this phase).
+  - No test execution, baseline execution, or runtime experiments.
+  - No modification to product code, test files, configuration, runtime, model, or Skills.
+  - No modification to issue status, assignment, or metadata.
+  - No pre-approval of unknown future inputs or self-approval of this method.
+
+### 3. Supplied Facts, Unknowns, and Dependency Tuple
+- **Supplied Public Facts**:
+  - Public Request (Frozen N04, verbatim): "Determine whether the frozen RC6 scenarios S04 section and pm-intention Skill describe the same S04 intention-spec handoff. Assess inputs, outputs, Intent Challenge and handoff conditions, separating facts, differences and unknowns."
+  - Public Constraints (verbatim):
+    1. Only the two named read-only sources may be investigated.
+    2. No product mutation, tests, runtime or configuration change.
+    3. Do not infer actual runtime behavior from labels.
+  - Frozen Source Pins (pins only; unobserved/unread in this phase):
+    - Source A: `/Users/herman_mbp2023/Documents/Codex/2026-10-08/task/plan-review-repo/engcim/swarm/baselines/rc6/runtime/package/engcim-swarm-package-RC6/docs/scenarios.md` (SHA-256 pin: `9eefc7b72c01af62bab81bd4d4c19ff29a8c212170066f2e673245c6699f1f1b`)
+    - Source B: `/Users/herman_mbp2023/Documents/Codex/2026-10-08/task/plan-review-repo/engcim/swarm/baselines/rc6/runtime/package/engcim-swarm-package-RC6/skills/pm-intention/SKILL.md` (SHA-256 pin: `517a4eec491d509eebe605b81f62f1f4738a35f10c79ec42d9cdb8722ce04c8b`)
+  - Operational Rules: Procedure `ENGCIM-CURRENT-WORK-PACKAGE-r2`; max 2 protocol scratch files <= 32 KiB in `protocol/`.
+- **Unknowns (Pending Future Resolution)**:
+  - Actual contents and verified SHA-256 digests of Source A and Source B (unobserved until authorized execution).
+  - Independent Reviewer decision on this Author plan (`reviewed_plan_id`, decision APPROVE/REVISE, comment ID, digest).
+  - Execution trigger comment ID and authorization for `A1.Author.execute`.
+  - Substantive similarities, divergences, and gaps between Source A and Source B across the 4 dimensions.
+- **Exact Input/Dependency Tuple Required Prior to Author.execute**:
+  - `(author_plan_comment_id, author_plan_native_revision, author_plan_body_sha256, author_plan_review_comment_id, author_plan_review_decision == 'APPROVE', author_execute_trigger_comment_id)`
+  - Condition: This entire tuple must be independently refreshed and verified upon receipt of the `Author.execute` trigger before any substantive evaluation begins.
+
+### 4. Author Method for Later Comparative Analysis (Author.execute)
+Upon receiving explicit independent `APPROVE` on this plan and separate `A1.Author.execute` trigger:
+1. **Binding & Freshness Verification**:
+   - Refresh and verify the Plan Review decision tuple (`author_plan_review_comment_id`, decision `APPROVE`, reviewed plan ID, stored body digest).
+   - Verify execution authorization and caller context.
+2. **Authorized Source Reading & Verification**:
+   - Perform read-only exact-path access to Source A (`docs/scenarios.md`) and Source B (`skills/pm-intention/SKILL.md`).
+   - Compute and verify actual SHA-256 digests against pinned values (`9eefc7b7...` and `517a4eec...`).
+   - Extract relevant sections: S04 section in Source A; intention-spec and handoff definitions in Source B.
+3. **Four-Dimensional Comparative Analysis (Frozen N04 Requirements)**:
+   - **Inputs Comparison**:
+     - Extract inputs defined for S04 intention-spec in Source A (scenarios S04).
+     - Extract inputs defined for intention-spec in Source B (pm-intention Skill).
+     - Compare input types, schemas, preconditions, and required fields.
+   - **Outputs Comparison**:
+     - Extract outputs defined for S04 intention-spec in Source A.
+     - Extract outputs defined for intention-spec in Source B.
+     - Compare artifact schemas, formats, deliverables, and downstream consumer targets.
+   - **Intent Challenge Comparison**:
+     - Analyze Intent Challenge mechanisms, trigger conditions, participant roles, and resolution paths in Source A.
+     - Analyze Intent Challenge mechanisms, trigger conditions, participant roles, and resolution paths in Source B.
+     - Determine whether Intent Challenge semantics and invocation criteria match or differ.
+   - **Handoff Conditions Comparison**:
+     - Analyze completion criteria, handoff gates, validation checks, and transition rules in Source A.
+     - Analyze completion criteria, handoff gates, validation checks, and transition rules in Source B.
+     - Compare handoff preconditions, gate definitions, and handoff recipient roles.
+4. **Three-Tier Categorization & Evidence Grounding**:
+   - Strictly classify every finding into:
+     - (a) **Verified Facts**: Direct verbatim text citations with file paths and line references proving matching properties.
+     - (b) **Concrete Differences**: Explicit divergent statements, conflicting specifications, or incompatible schemas with exact citations.
+     - (c) **Unknowns / Ambiguities**: Gaps, unspecified mechanisms, or ambiguous formulations where neither source provides conclusive definition.
+   - Strictly prohibit inferring actual runtime behavior from labels alone.
+5. **Output Deliverable**:
+   - Produce a structured comparative analysis report (Author substantive result) posted as a comment under the triggering thread:
+     - Summary verdict on whether Source A and Source B describe the same S04 intention-spec handoff.
+     - Detailed 4-dimension comparative matrix (Inputs, Outputs, Intent Challenge, Handoff Conditions).
+     - Cleanly partitioned Facts, Differences, and Unknowns sections.
+     - Exact source citations, observed hashes, and read receipts.
+
+### 5. Allowed Operations & Scratch Budget
+- **Allowed Operations**:
+  - Read issue and thread comments via `multica` CLI with explicit `--workspace-id 0b02adb6-a395-46bd-bd92-6fec14dee20e`.
+  - Write protocol scratch exclusively to `protocol/plan.txt` (<= 32 KiB UTF-8).
+  - Submit single plan comment as reply to trigger comment `01a117e5-75e7-7023-aeb9-b7e49fd32cb8`.
+  - Read back comment receipt to verify native revision and stored-body SHA-256.
+- **Prohibited Operations**:
+  - No writes to `/tmp` or paths outside `protocol/`.
+  - No deletion of scratch files without explicit grant.
+  - No retries or extra wake-ups on denial/uncertain ACK.
+  - No status or assignment updates.
+  - No modification to product code, test files, configuration, runtime, model, or Skills.
+
+### 6. Protocol Routing
+Next-target routing (protocol handoff for independent Plan Review):
+[@Swarm Reviewer](mention://agent/53a77a8b-aec9-4d7b-821e-0dae15e48c0c) — Plan Review of A1.Author.prepare (Declared Revision: r1).
+*(Note: Bounded protocol routing only; independent Reviewer evaluates plans and issues formal Plan Review decision.)*

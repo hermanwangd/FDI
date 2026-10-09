@@ -1,0 +1,63 @@
+{
+  "revision": 1,
+  "unseeded": true,
+  "requests": [
+    {
+      "case": "N01",
+      "role": "Swarm Product Manager",
+      "stage": "S04",
+      "goal": "Turn the following product intent into an Intention Spec: our new standalone Java17 utility library should constrain an integer to caller-supplied lower and upper bounds. Explain compatibility, non-goals, unknown Product Context and observable acceptance intent. The library has no existing Product Knowledge supplied.",
+      "public_constraints": [
+        "No claim of existing governed Product facts without evidence.",
+        "No code, runtime or provider configuration change.",
+        "Return the scoped intent artifact and explicitly unresolved decisions."
+      ],
+      "source_refs": [
+        "RC6/docs/scenarios.md#s04",
+        "RC6/skills/pm-intention/SKILL.md"
+      ]
+    },
+    {
+      "case": "N02",
+      "role": "Swarm Orchestrator",
+      "stage": "S05",
+      "goal": "Implement integer clamp in the fresh isolated Java17 fixture. Function clamp(int value,int lower,int upper) returns lower below lower, upper above upper, otherwise unchanged; when lower>upper throw IllegalArgumentException, equal bounds always return that bound. Integer inputs only.",
+      "public_constraints": [
+        "Use existing specialist roles, no new dependency or service.",
+        "Only fixture Java source/tests and local artifacts may change.",
+        "No I/O, clock, network or persistence.",
+        "Provide scoped development output and actual self-test evidence.",
+        "Do not start S06 unless separately requested."
+      ],
+      "fixture_baseline": "fixture-README.txt (exact bytes; initially no product code)"
+    },
+    {
+      "case": "N03",
+      "role": "Swarm QA Tester / Swarm Verifier",
+      "stage": "S06",
+      "goal": "Independently test the pinned Java17 clamp candidate supplied by the controller against its public clamp contract. Return actual coverage, defects and execution evidence.",
+      "public_constraints": [
+        "Candidate source read-only.",
+        "Candidate identity must match supplied artifact receipt.",
+        "No product fix inside this task.",
+        "Native role results remain separate."
+      ],
+      "candidate_provenance": "N02 accepted development fixture receipt; verify exact bytes before use"
+    },
+    {
+      "case": "N04",
+      "role": "Swarm Architect",
+      "stage": "UNSTAGED",
+      "goal": "Determine whether the frozen RC6 scenarios S04 section and pm-intention Skill describe the same S04 intention-spec handoff. Assess inputs, outputs, Intent Challenge and handoff conditions, separating facts, differences and unknowns.",
+      "public_constraints": [
+        "Only the two named read-only sources may be investigated.",
+        "No product mutation, tests, runtime or configuration change.",
+        "Do not infer actual runtime behavior from labels."
+      ],
+      "source_refs": [
+        "RC6/docs/scenarios.md#s04",
+        "RC6/skills/pm-intention/SKILL.md"
+      ]
+    }
+  ]
+}

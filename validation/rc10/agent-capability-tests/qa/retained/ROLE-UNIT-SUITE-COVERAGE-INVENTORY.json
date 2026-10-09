@@ -1,0 +1,2973 @@
+{
+  "inventory_version": "roles-unit-suites-draft1",
+  "scope": "Localcoverageinventory only; no newproviderops or203instanceexecution",
+  "identity_source": {
+    "path": "probe-roster-read.json",
+    "sha256": "16866212e73b4a822de9825cd341dc19086d075cc4ca0e9d464f631e70b41363",
+    "retained_agents": 19,
+    "scope_limit": "19members of one knownsquad, not203currentinstances or8workspaces"
+  },
+  "reported_global_inventory": {
+    "instances": 203,
+    "workspaces": 8,
+    "source": "Parent/modelwriter retainedinventory, notmaterialized orverified inthis task",
+    "status": "MISSING_CURRENT_MANIFEST_FROM_PARENT",
+    "required_fields": [
+      "workspace/agent/roletemplateIDs",
+      "currentconfig andSkillpins",
+      "templatecompatibility/applicability",
+      "perinstanceevidence orNOT_RUN"
+    ],
+    "no_pass_inheritance": true
+  },
+  "roles": [
+    {
+      "normalized_role": "Orchestrator",
+      "agent_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "native_role_description": "leader",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": {
+          "name": "Swarm Orchestrator",
+          "path": "pilot-a-preflight/Orchestrator.json",
+          "historical_model": "gemini-3.8-flash-medium",
+          "historical_runtime": "f8061c21-dadc-4f6a-af19-663e90256c6b",
+          "instructions_sha256": "6f7f90c3b0d3a0b5e98a1a6dbe07fe335c452419f3895a214a8d112242ba5757",
+          "skill_assignments": [
+            {
+              "description": "Quick reference for the multica CLI commands agents use to manage issues, comments, status, mentions, and squad activity during a run",
+              "enabled": true,
+              "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+              "name": "multica-cli"
+            },
+            {
+              "description": "Use when doing requirements analysis, system analysis, or ingesting product documents into the ProductKB knowledge base",
+              "enabled": true,
+              "id": "4ebbc2c8-b1d4-4cf2-bfa8-b3fe62772b13",
+              "name": "product-knowledge"
+            },
+            {
+              "description": "Use when receiving a complex multi-part task that needs decomposition and parallel delegation to squad members",
+              "enabled": true,
+              "id": "5b3c5337-eef3-4cc3-9174-025e4ddc28dc",
+              "name": "swarm-orchestration"
+            },
+            {
+              "description": "Use when measuring swarm mission health, per-mission duration and stage breakdown, token usage, per-user mission statistics, or detecting stuck missions (watchdog)",
+              "enabled": true,
+              "id": "0babf468-5bea-42c2-bf7e-dfa8b77c1244",
+              "name": "swarm-telemetry"
+            }
+          ],
+          "freshness": "HISTORICAL_ONLY_NOT_CURRENT_KIMI_CONSUMPTION"
+        },
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "PM",
+      "agent_id": "d10737a6-d506-4c66-90f5-b1d4490840a3",
+      "native_role_description": "產品經理：需求分析、PRD/user story、需求優先級、驗收條件，開工前必查 ProductKB 並引用知識條目",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": null,
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "Curator",
+      "agent_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "native_role_description": "知識庫管理員：產品文件入庫 ProductKB（結構化知識條目）、索引維護、過時知識淘汰",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": null,
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "Architect",
+      "agent_id": "668dadac-fd7a-4523-855a-f6a842301555",
+      "native_role_description": "架構師：複雜任務的 SPEC 設計，定義模組邊界與介面契約，契約變更須經其重審",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": {
+          "name": "Swarm Architect",
+          "path": "pilot-a-preflight/Architect.json",
+          "historical_model": "gemini-3.8-flash-medium",
+          "historical_runtime": "f8061c21-dadc-4f6a-af19-663e90256c6b",
+          "instructions_sha256": "e6c8861bd1ab0bfb95b2863e15870e31f1e95ccf40538d5fa45c46139955c6a9",
+          "skill_assignments": [
+            {
+              "description": "Use at artifact handoffs to detect missing trace links, stale revisions, contradictory decisions, and unimplemented requirements across Intention Spec, design, Development Result, Verification Result, and change artifacts (S04-S08)",
+              "enabled": true,
+              "id": "ee94ee8e-9d20-44b8-ac49-7d85c6db005f",
+              "name": "artifact-consistency"
+            },
+            {
+              "description": "Use when analyzing the blast radius of a change ticket along REALIZES chains and the Code Graph, producing an evidence-tagged ChangeSurface report for human approval (S07/S05)",
+              "enabled": true,
+              "id": "5705449c-a857-45af-8ce2-a6621033aa3d",
+              "name": "changesurface-analysis"
+            },
+            {
+              "description": "Quick reference for the multica CLI commands agents use to manage issues, comments, status, mentions, and squad activity during a run",
+              "enabled": true,
+              "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+              "name": "multica-cli"
+            },
+            {
+              "description": "Use when mining Azure DevOps work item hierarchy, pull requests, and commits as historical delivery evidence for PK ingestion",
+              "enabled": true,
+              "id": "f9e49a46-23f5-42bb-a5f5-42d82c2cc274",
+              "name": "pk-azure-devops-history"
+            },
+            {
+              "description": "Use when doing requirements analysis, system analysis, or ingesting product documents into the ProductKB knowledge base",
+              "enabled": true,
+              "id": "4ebbc2c8-b1d4-4cf2-bfa8-b3fe62772b13",
+              "name": "product-knowledge"
+            },
+            {
+              "description": "Use when designing module boundaries, interface contracts, data schemas, and error-handling contracts, or recording architecture decisions (ADR) — Architect deliverables for S05/S07",
+              "enabled": true,
+              "id": "469b87b1-4466-44f5-ba13-be58f73023b9",
+              "name": "spec-design"
+            }
+          ],
+          "freshness": "HISTORICAL_ONLY_NOT_CURRENT_KIMI_CONSUMPTION"
+        },
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "Researcher",
+      "agent_id": "f5b9a721-4298-4209-bd50-e7206dde6727",
+      "native_role_description": "研究代理：調查、方案比較、事實查證，產出附來源與可信度的速查表",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": null,
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "Developer",
+      "agent_id": "9e98e1d4-7bb5-4efe-9b32-e90962683e71",
+      "native_role_description": "實作代理：嚴格依 SPEC 實作與自測，交付至 in_review",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": {
+          "name": "Swarm Coder",
+          "path": "pilot-a-preflight/Developer.json",
+          "historical_model": "gemini-3.8-flash-medium",
+          "historical_runtime": "f8061c21-dadc-4f6a-af19-663e90256c6b",
+          "instructions_sha256": "73a91a3db763d9ae8514d2b1803bf089f055732b3098e14305cc06b318237a23",
+          "skill_assignments": [
+            {
+              "description": "Use before mutating repositories, deployment/configuration, or production-adjacent resources to enforce allowed paths and reject dangerous commands; mandatory for S05/S08/S10 mutations",
+              "enabled": true,
+              "id": "fac82b0d-d9a2-4999-9c2a-e773c85af7c7",
+              "name": "execution-guard"
+            },
+            {
+              "description": "Quick reference for the multica CLI commands agents use to manage issues, comments, status, mentions, and squad activity during a run",
+              "enabled": true,
+              "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+              "name": "multica-cli"
+            },
+            {
+              "description": "Use for test failures, bugs, build failures, performance regressions, integration failures, or unexpected behavior; requires evidence and a confirmed root-cause hypothesis before a fix (S05/S06/S10)",
+              "enabled": true,
+              "id": "49efa131-9247-48f9-8351-2a53b576b319",
+              "name": "root-cause-debugging"
+            },
+            {
+              "description": "Use when implementing a reviewed change across one or more repositories with branch safety, test-first behavior, incremental implementation, integration, fresh verification, and a structured Development Result (S05)",
+              "enabled": true,
+              "id": "5ffa7a7c-3e16-4aeb-8088-51b6949f4e98",
+              "name": "software-development"
+            }
+          ],
+          "freshness": "HISTORICAL_ONLY_NOT_CURRENT_KIMI_CONSUMPTION"
+        },
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "Writer",
+      "agent_id": "1e0ae085-e5d8-4518-8a4d-63cc9863a162",
+      "native_role_description": "寫作代理：依大綱與素材寫成結構化長文，引用可驗證、語氣一致",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": null,
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "Analyst",
+      "agent_id": "590fe2fe-2d2c-4d99-a9b7-4a750cea5ada",
+      "native_role_description": "數據分析師：資料清理、統計、圖表與指標計算，交付可重現的分析腳本",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": null,
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "SecurityReviewer",
+      "agent_id": "29773272-1541-479d-9a80-7855c312ef34",
+      "native_role_description": "安全審查員：OWASP 漏洞、秘密外洩、依賴漏洞與權限檢查，輸出嚴重度分級與修復建議",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": null,
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "QA",
+      "agent_id": "3f254bc6-ec7a-4517-aa4c-ba0ae7f81bc1",
+      "native_role_description": "測試工程師：測試計畫、邊界案例、回歸測試與覆蓋率評估，失敗附完整重現步驟",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": {
+          "name": "Swarm QA Tester",
+          "path": "pilot-a-preflight/QA.json",
+          "historical_model": "gemini-3.8-flash-medium",
+          "historical_runtime": "f8061c21-dadc-4f6a-af19-663e90256c6b",
+          "instructions_sha256": "7381d32b1f9d5f05ec0790d57d1a180107daafd0f02eb329f3c80fbe0cedeb8d",
+          "skill_assignments": [
+            {
+              "description": "Use at artifact handoffs to detect missing trace links, stale revisions, contradictory decisions, and unimplemented requirements across Intention Spec, design, Development Result, Verification Result, and change artifacts (S04-S08)",
+              "enabled": true,
+              "id": "ee94ee8e-9d20-44b8-ac49-7d85c6db005f",
+              "name": "artifact-consistency"
+            },
+            {
+              "description": "Quick reference for the multica CLI commands agents use to manage issues, comments, status, mentions, and squad activity during a run",
+              "enabled": true,
+              "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+              "name": "multica-cli"
+            },
+            {
+              "description": "Use when the Swarm QA Tester needs to assess coverage of approved acceptance criteria before implementation, regression testing, or release validation.",
+              "enabled": true,
+              "id": "9b36b624-fa1a-4db7-98d8-535efacbad09",
+              "name": "qa-planning"
+            },
+            {
+              "description": "Use when verification requires exercising a running UI/API/service rather than only reading tests; captures real interactions, logs, screenshots or HTTP evidence, and reproducible failures (S06/S08)",
+              "enabled": true,
+              "id": "1ad73f60-eabd-4070-ab93-3e0b02b1394c",
+              "name": "runtime-qa"
+            },
+            {
+              "description": "Use when determining test depth from risk, mapping requirements to evidence, assessing NFR evidence, and producing a release-quality gate instead of relying on intuition (S06/S07/S08)",
+              "enabled": true,
+              "id": "4d12657a-001d-4ae4-87c6-846b4f3dcd34",
+              "name": "test-architecture"
+            },
+            {
+              "description": "Use when designing test plans with equivalence partitioning, boundary values, state transitions and scenario tests, or defining regression strategy and coverage targets (S05/S06/S10)",
+              "enabled": true,
+              "id": "741ab02a-8ef5-4122-86d0-bb8d4d5c2777",
+              "name": "test-design"
+            }
+          ],
+          "freshness": "HISTORICAL_ONLY_NOT_CURRENT_KIMI_CONSUMPTION"
+        },
+        "current_model": "kimi-code/kimi-for-coding",
+        "current_runtime": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+        "actual_consumed_skills": "NOT_EXPOSED",
+        "current_instructions_sha256": "7381d32b1f9d5f05ec0790d57d1a180107daafd0f02eb329f3c80fbe0cedeb8d",
+        "current_skill_assignments": [
+          {
+            "description": "Use at artifact handoffs to detect missing trace links, stale revisions, contradictory decisions, and unimplemented requirements across Intention Spec, design, Development Result, Verification Result, and change artifacts (S04-S08)",
+            "enabled": true,
+            "id": "ee94ee8e-9d20-44b8-ac49-7d85c6db005f",
+            "name": "artifact-consistency"
+          },
+          {
+            "description": "Quick reference for the multica CLI commands agents use to manage issues, comments, status, mentions, and squad activity during a run",
+            "enabled": true,
+            "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+            "name": "multica-cli"
+          },
+          {
+            "description": "Use when the Swarm QA Tester needs to assess coverage of approved acceptance criteria before implementation, regression testing, or release validation.",
+            "enabled": true,
+            "id": "9b36b624-fa1a-4db7-98d8-535efacbad09",
+            "name": "qa-planning"
+          },
+          {
+            "description": "Use when verification requires exercising a running UI/API/service rather than only reading tests; captures real interactions, logs, screenshots or HTTP evidence, and reproducible failures (S06/S08)",
+            "enabled": true,
+            "id": "1ad73f60-eabd-4070-ab93-3e0b02b1394c",
+            "name": "runtime-qa"
+          },
+          {
+            "description": "Use when determining test depth from risk, mapping requirements to evidence, assessing NFR evidence, and producing a release-quality gate instead of relying on intuition (S06/S07/S08)",
+            "enabled": true,
+            "id": "4d12657a-001d-4ae4-87c6-846b4f3dcd34",
+            "name": "test-architecture"
+          },
+          {
+            "description": "Use when designing test plans with equivalence partitioning, boundary values, state transitions and scenario tests, or defining regression strategy and coverage targets (S05/S06/S10)",
+            "enabled": true,
+            "id": "741ab02a-8ef5-4122-86d0-bb8d4d5c2777",
+            "name": "test-design"
+          }
+        ],
+        "actual_consumed_model": [
+          {
+            "cache_read_tokens": 546560,
+            "cache_write_tokens": 0,
+            "input_tokens": 33552,
+            "model": "kimi-code/kimi-for-coding",
+            "output_tokens": 6715,
+            "provider": "kimi"
+          }
+        ]
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "DevOps",
+      "agent_id": "c42d2d5a-41d3-4202-b937-518ca849f15e",
+      "native_role_description": "維運代理：Dockerfile、CI/CD、環境變數管理、部署檢查清單與回滾方案",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": null,
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "Reviewer",
+      "agent_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "native_role_description": "審查代理：stage-gate，輸出 PASS / WARNING / REVISE 三級判定",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": {
+          "name": "Swarm Reviewer",
+          "path": "pilot-a-preflight/Reviewer.json",
+          "historical_model": "gemini-3.8-flash-medium",
+          "historical_runtime": "f8061c21-dadc-4f6a-af19-663e90256c6b",
+          "instructions_sha256": "16d15bc328b39a05c30c8d79c82e0c8e4b47dead055833157d6e86c195aa1964",
+          "skill_assignments": [
+            {
+              "description": "Use at artifact handoffs to detect missing trace links, stale revisions, contradictory decisions, and unimplemented requirements across Intention Spec, design, Development Result, Verification Result, and change artifacts (S04-S08)",
+              "enabled": true,
+              "id": "ee94ee8e-9d20-44b8-ac49-7d85c6db005f",
+              "name": "artifact-consistency"
+            },
+            {
+              "description": "Use when acting as stage-gate Reviewer — reviewing deliverables across correctness, contract compliance, test coverage, and maintainability, and issuing PASS/WARNING/REVISE verdicts bound to an artifact revision (cross-cutting S05–S10)",
+              "enabled": true,
+              "id": "d4d2e66b-6426-426a-b18c-bbd8aa69237b",
+              "name": "code-review-method"
+            },
+            {
+              "description": "Quick reference for the multica CLI commands agents use to manage issues, comments, status, mentions, and squad activity during a run",
+              "enabled": true,
+              "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+              "name": "multica-cli"
+            },
+            {
+              "description": "Use when determining test depth from risk, mapping requirements to evidence, assessing NFR evidence, and producing a release-quality gate instead of relying on intuition (S06/S07/S08)",
+              "enabled": true,
+              "id": "4d12657a-001d-4ae4-87c6-846b4f3dcd34",
+              "name": "test-architecture"
+            }
+          ],
+          "freshness": "HISTORICAL_ONLY_NOT_CURRENT_KIMI_CONSUMPTION"
+        },
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "Verifier",
+      "agent_id": "043dc4fa-412c-46cc-a27b-bc302d584e97",
+      "native_role_description": "驗證代理：實際執行指令證明或證偽交付物聲明，貼輸出證據",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": {
+          "name": "Swarm Verifier",
+          "path": "pilot-a-preflight/Verifier.json",
+          "historical_model": "gemini-3.8-flash-medium",
+          "historical_runtime": "f8061c21-dadc-4f6a-af19-663e90256c6b",
+          "instructions_sha256": "547e5992655a23f5791a5a71ff620e38a3cb13c5b1f85eddf9e54e5b500595bb",
+          "skill_assignments": [
+            {
+              "description": "Use at artifact handoffs to detect missing trace links, stale revisions, contradictory decisions, and unimplemented requirements across Intention Spec, design, Development Result, Verification Result, and change artifacts (S04-S08)",
+              "enabled": true,
+              "id": "ee94ee8e-9d20-44b8-ac49-7d85c6db005f",
+              "name": "artifact-consistency"
+            },
+            {
+              "description": "Quick reference for the multica CLI commands agents use to manage issues, comments, status, mentions, and squad activity during a run",
+              "enabled": true,
+              "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+              "name": "multica-cli"
+            },
+            {
+              "description": "Use when verification requires exercising a running UI/API/service rather than only reading tests; captures real interactions, logs, screenshots or HTTP evidence, and reproducible failures (S06/S08)",
+              "enabled": true,
+              "id": "1ad73f60-eabd-4070-ab93-3e0b02b1394c",
+              "name": "runtime-qa"
+            },
+            {
+              "description": "Use when determining test depth from risk, mapping requirements to evidence, assessing NFR evidence, and producing a release-quality gate instead of relying on intuition (S06/S07/S08)",
+              "enabled": true,
+              "id": "4d12657a-001d-4ae4-87c6-846b4f3dcd34",
+              "name": "test-architecture"
+            },
+            {
+              "description": "Use when designing test plans with equivalence partitioning, boundary values, state transitions and scenario tests, or defining regression strategy and coverage targets (S05/S06/S10)",
+              "enabled": true,
+              "id": "741ab02a-8ef5-4122-86d0-bb8d4d5c2777",
+              "name": "test-design"
+            },
+            {
+              "description": "Use when independently verifying claims of execution results or completed work — decomposing claims into checkable statements, reproducing them, preserving evidence, and issuing VERIFIED/REFUTED/PARTIAL verdicts (cross-cutting, including negative verification)",
+              "enabled": true,
+              "id": "99671c19-a350-4c12-9e0e-cf91f95f1514",
+              "name": "verification-protocol"
+            }
+          ],
+          "freshness": "HISTORICAL_ONLY_NOT_CURRENT_KIMI_CONSUMPTION"
+        },
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "BackendDeveloper",
+      "agent_id": "7bf6049c-52db-4046-9b52-6c16dffce96f",
+      "native_role_description": "後端開發：API 設計實作、業務邏輯、資料存取層，嚴守 Architect 的 API 契約",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": null,
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "FrontendDeveloper",
+      "agent_id": "084aa933-9cc2-4e6b-9453-4e2c2859d26f",
+      "native_role_description": "前端開發：UI 實作、狀態管理、API 串接、無障礙與響應式，不 mock 假資料冒充完成",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": null,
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "DBA",
+      "agent_id": "797f090a-0408-42d2-ba16-fa12e9e43e29",
+      "native_role_description": "資料庫管理：schema 設計、可回滾 migration、查詢調優、索引策略、備份還原演練",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": null,
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "SRE",
+      "agent_id": "0405dd57-f43c-44b9-83cb-ba3f1e7787a7",
+      "native_role_description": "維運穩定性工程師：監控告警、SLO/SLI、事故回應、容量規劃、災難復原，輸出 runbook",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": null,
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "ReleaseManager",
+      "agent_id": "2977bb2e-1424-4ab8-8093-ec329d7f7b35",
+      "native_role_description": "發布管理：semver 版本號、changelog、發布檢查清單、灰度與回滾策略、發布協調",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": null,
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    },
+    {
+      "normalized_role": "PerformanceEngineer",
+      "agent_id": "fc74c29b-0db0-4695-bd15-0821e030960e",
+      "native_role_description": "效能工程師：profiling、負載測試設計、瓶頸分析、快取策略，先測量再優化",
+      "identity_status": "PRESENT_IN_RETAINED_ROSTER_NOT_NEW_LIVE_DISCOVERY",
+      "pins": {
+        "source": null,
+        "current_model": "NOT_LOCALLY_PINNED",
+        "current_runtime": "NOT_LOCALLY_PINNED",
+        "actual_consumed_skills": "NOT_PROVEN"
+      },
+      "template_status": "ROLE_REQUIREMENTS_DRAFT; no validated current reusable template or crossinstancePASS asserted"
+    }
+  ],
+  "cases": [
+    {
+      "test_id": "U-ORCHESTRATOR-SCENARIO-MAPPING-POS",
+      "role": "Orchestrator",
+      "agent_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "capability": "scenario_mapping",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Map a supplied requirement to applicable canonical scenario/version before planning",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ORCHESTRATOR-SCENARIO-MAPPING-NEG",
+      "role": "Orchestrator",
+      "agent_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "capability": "scenario_mapping",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Ambiguous or inapplicable scenario remains unknown; seek missing evidence rather than inventing mapping",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ORCHESTRATOR-DELEGATION-POS",
+      "role": "Orchestrator",
+      "agent_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "capability": "delegation",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Produce approved-plan role decomposition and bounded dispatch from frozen roster",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ORCHESTRATOR-DELEGATION-NEG",
+      "role": "Orchestrator",
+      "agent_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "capability": "delegation",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Reject product self-implementation without existing explicitscope/budgetexception",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ORCHESTRATOR-PROTOCOL-ACCOUNTING-POS",
+      "role": "Orchestrator",
+      "agent_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ORCHESTRATOR-PROTOCOL-ACCOUNTING-NEG",
+      "role": "Orchestrator",
+      "agent_id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-PM-REQUIREMENTS-POS",
+      "role": "PM",
+      "agent_id": "d10737a6-d506-4c66-90f5-b1d4490840a3",
+      "capability": "requirements",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Translate fixed userneed into falsifiable requirements and acceptance criteria with supplied ProductKB provenance",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-PM-REQUIREMENTS-NEG",
+      "role": "PM",
+      "agent_id": "d10737a6-d506-4c66-90f5-b1d4490840a3",
+      "capability": "requirements",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Conflicting or missingProductKB facts stayunknown and block dependentclaims",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-PM-INTENT-HANDOFF-POS",
+      "role": "PM",
+      "agent_id": "d10737a6-d506-4c66-90f5-b1d4490840a3",
+      "capability": "intent_handoff",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Bind input/intention artifact and handoff conditions",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-PM-INTENT-HANDOFF-NEG",
+      "role": "PM",
+      "agent_id": "d10737a6-d506-4c66-90f5-b1d4490840a3",
+      "capability": "intent_handoff",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect missingintentapproval and do not invent agreement",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-PM-PROTOCOL-ACCOUNTING-POS",
+      "role": "PM",
+      "agent_id": "d10737a6-d506-4c66-90f5-b1d4490840a3",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-PM-PROTOCOL-ACCOUNTING-NEG",
+      "role": "PM",
+      "agent_id": "d10737a6-d506-4c66-90f5-b1d4490840a3",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-CURATOR-KNOWLEDGE-INGEST-POS",
+      "role": "Curator",
+      "agent_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "capability": "knowledge_ingest",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Classify provided artifact with correct metadata/source/version and proposedindexchange",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-CURATOR-KNOWLEDGE-INGEST-NEG",
+      "role": "Curator",
+      "agent_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "capability": "knowledge_ingest",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect stale/conflicting artifact, prevent unsupported supersession",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-CURATOR-KNOWLEDGE-RETRIEVAL-POS",
+      "role": "Curator",
+      "agent_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "capability": "knowledge_retrieval",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Return suppliedknowledge with exactsource and applicability",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-CURATOR-KNOWLEDGE-RETRIEVAL-NEG",
+      "role": "Curator",
+      "agent_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "capability": "knowledge_retrieval",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Missingprovenance remainsgap ratherthan factualanswer",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-CURATOR-PROTOCOL-ACCOUNTING-POS",
+      "role": "Curator",
+      "agent_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-CURATOR-PROTOCOL-ACCOUNTING-NEG",
+      "role": "Curator",
+      "agent_id": "c38a925f-171b-4c24-91c2-68329ae42654",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ARCHITECT-SPEC-DESIGN-POS",
+      "role": "Architect",
+      "agent_id": "668dadac-fd7a-4523-855a-f6a842301555",
+      "capability": "spec_design",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Derive consistent SPEC interfaces/constraints from frozenrequirements",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ARCHITECT-SPEC-DESIGN-NEG",
+      "role": "Architect",
+      "agent_id": "668dadac-fd7a-4523-855a-f6a842301555",
+      "capability": "spec_design",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Conflicting requirements or missingnecessarySA blockdependentdesign",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ARCHITECT-CONTRACT-CHANGE-POS",
+      "role": "Architect",
+      "agent_id": "668dadac-fd7a-4523-855a-f6a842301555",
+      "capability": "contract_change",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Identify affected consumers and explicitversion/decisionbindings",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ARCHITECT-CONTRACT-CHANGE-NEG",
+      "role": "Architect",
+      "agent_id": "668dadac-fd7a-4523-855a-f6a842301555",
+      "capability": "contract_change",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Reject stalecontractapproval reused forchangedinterface",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ARCHITECT-PROTOCOL-ACCOUNTING-POS",
+      "role": "Architect",
+      "agent_id": "668dadac-fd7a-4523-855a-f6a842301555",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ARCHITECT-PROTOCOL-ACCOUNTING-NEG",
+      "role": "Architect",
+      "agent_id": "668dadac-fd7a-4523-855a-f6a842301555",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-RESEARCHER-SOURCED-COMPARISON-POS",
+      "role": "Researcher",
+      "agent_id": "f5b9a721-4298-4209-bd50-e7206dde6727",
+      "capability": "sourced_comparison",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Compare supplied primarysources with traceableclaims/confidence",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-RESEARCHER-SOURCED-COMPARISON-NEG",
+      "role": "Researcher",
+      "agent_id": "f5b9a721-4298-4209-bd50-e7206dde6727",
+      "capability": "sourced_comparison",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Reject unsupportedclaim or sourceversionmismatch",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-RESEARCHER-UNCERTAINTY-POS",
+      "role": "Researcher",
+      "agent_id": "f5b9a721-4298-4209-bd50-e7206dde6727",
+      "capability": "uncertainty",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Separate observations/inferences/unknowns",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-RESEARCHER-UNCERTAINTY-NEG",
+      "role": "Researcher",
+      "agent_id": "f5b9a721-4298-4209-bd50-e7206dde6727",
+      "capability": "uncertainty",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Do notfillmissingfacts with guessedcitations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-RESEARCHER-PROTOCOL-ACCOUNTING-POS",
+      "role": "Researcher",
+      "agent_id": "f5b9a721-4298-4209-bd50-e7206dde6727",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-RESEARCHER-PROTOCOL-ACCOUNTING-NEG",
+      "role": "Researcher",
+      "agent_id": "f5b9a721-4298-4209-bd50-e7206dde6727",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DEVELOPER-SPEC-EXECUTION-POS",
+      "role": "Developer",
+      "agent_id": "9e98e1d4-7bb5-4efe-9b32-e90962683e71",
+      "capability": "spec_execution",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Follow exactapprovedSPEC in a sealed disposablefixture and showreproducibleresult",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DEVELOPER-SPEC-EXECUTION-NEG",
+      "role": "Developer",
+      "agent_id": "9e98e1d4-7bb5-4efe-9b32-e90962683e71",
+      "capability": "spec_execution",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "ChangedSPEC/staleapproval preventsdependentimplementation",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DEVELOPER-DEFECT-REPRODUCTION-POS",
+      "role": "Developer",
+      "agent_id": "9e98e1d4-7bb5-4efe-9b32-e90962683e71",
+      "capability": "defect_reproduction",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Reproduce suppliedfailure before scopedfixturefix",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DEVELOPER-DEFECT-REPRODUCTION-NEG",
+      "role": "Developer",
+      "agent_id": "9e98e1d4-7bb5-4efe-9b32-e90962683e71",
+      "capability": "defect_reproduction",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect unavailableenvironment without claimingtestsPASS",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DEVELOPER-PROTOCOL-ACCOUNTING-POS",
+      "role": "Developer",
+      "agent_id": "9e98e1d4-7bb5-4efe-9b32-e90962683e71",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DEVELOPER-PROTOCOL-ACCOUNTING-NEG",
+      "role": "Developer",
+      "agent_id": "9e98e1d4-7bb5-4efe-9b32-e90962683e71",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-WRITER-GROUNDED-DRAFT-POS",
+      "role": "Writer",
+      "agent_id": "1e0ae085-e5d8-4518-8a4d-63cc9863a162",
+      "capability": "grounded_draft",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Write from suppliedoutline/material preservingfacts andstyle",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-WRITER-GROUNDED-DRAFT-NEG",
+      "role": "Writer",
+      "agent_id": "1e0ae085-e5d8-4518-8a4d-63cc9863a162",
+      "capability": "grounded_draft",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Unsupportedcitation/contradictorysource remainsflagged",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-WRITER-REVISION-SCOPE-POS",
+      "role": "Writer",
+      "agent_id": "1e0ae085-e5d8-4518-8a4d-63cc9863a162",
+      "capability": "revision_scope",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Apply approvededitorialchanges only",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-WRITER-REVISION-SCOPE-NEG",
+      "role": "Writer",
+      "agent_id": "1e0ae085-e5d8-4518-8a4d-63cc9863a162",
+      "capability": "revision_scope",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect materialscopechange requiringnewapproval",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-WRITER-PROTOCOL-ACCOUNTING-POS",
+      "role": "Writer",
+      "agent_id": "1e0ae085-e5d8-4518-8a4d-63cc9863a162",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-WRITER-PROTOCOL-ACCOUNTING-NEG",
+      "role": "Writer",
+      "agent_id": "1e0ae085-e5d8-4518-8a4d-63cc9863a162",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ANALYST-REPRODUCIBLE-ANALYSIS-POS",
+      "role": "Analyst",
+      "agent_id": "590fe2fe-2d2c-4d99-a9b7-4a750cea5ada",
+      "capability": "reproducible_analysis",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Calculate fixedfixturemetrics with reproduciblemethod",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ANALYST-REPRODUCIBLE-ANALYSIS-NEG",
+      "role": "Analyst",
+      "agent_id": "590fe2fe-2d2c-4d99-a9b7-4a750cea5ada",
+      "capability": "reproducible_analysis",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect missing/malformedrows or metricdefinitionconflict",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ANALYST-EVIDENCE-CHART-POS",
+      "role": "Analyst",
+      "agent_id": "590fe2fe-2d2c-4d99-a9b7-4a750cea5ada",
+      "capability": "evidence_chart",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Bind chartclaim to actualcomputedvalues",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ANALYST-EVIDENCE-CHART-NEG",
+      "role": "Analyst",
+      "agent_id": "590fe2fe-2d2c-4d99-a9b7-4a750cea5ada",
+      "capability": "evidence_chart",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Do notpresent uncomputed numbers as observed",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ANALYST-PROTOCOL-ACCOUNTING-POS",
+      "role": "Analyst",
+      "agent_id": "590fe2fe-2d2c-4d99-a9b7-4a750cea5ada",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-ANALYST-PROTOCOL-ACCOUNTING-NEG",
+      "role": "Analyst",
+      "agent_id": "590fe2fe-2d2c-4d99-a9b7-4a750cea5ada",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-SECURITYREVIEWER-SECURITY-FINDINGS-POS",
+      "role": "SecurityReviewer",
+      "agent_id": "29773272-1541-479d-9a80-7855c312ef34",
+      "capability": "security_findings",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Identify seededfixtureweakness with proof/severity/fix",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-SECURITYREVIEWER-SECURITY-FINDINGS-NEG",
+      "role": "SecurityReviewer",
+      "agent_id": "29773272-1541-479d-9a80-7855c312ef34",
+      "capability": "security_findings",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Benigncontrol receives no fabricatedfinding",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-SECURITYREVIEWER-PERMISSION-BOUNDARY-POS",
+      "role": "SecurityReviewer",
+      "agent_id": "29773272-1541-479d-9a80-7855c312ef34",
+      "capability": "permission_boundary",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Assess specifiedaccessscope from suppliedpolicy",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-SECURITYREVIEWER-PERMISSION-BOUNDARY-NEG",
+      "role": "SecurityReviewer",
+      "agent_id": "29773272-1541-479d-9a80-7855c312ef34",
+      "capability": "permission_boundary",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Unknownpermission evidence isnot assumedauthorization",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-SECURITYREVIEWER-PROTOCOL-ACCOUNTING-POS",
+      "role": "SecurityReviewer",
+      "agent_id": "29773272-1541-479d-9a80-7855c312ef34",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-SECURITYREVIEWER-PROTOCOL-ACCOUNTING-NEG",
+      "role": "SecurityReviewer",
+      "agent_id": "29773272-1541-479d-9a80-7855c312ef34",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-QA-METHOD-DESIGN-POS",
+      "role": "QA",
+      "agent_id": "3f254bc6-ec7a-4517-aa4c-ba0ae7f81bc1",
+      "capability": "method_design",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Author prospectivefourdimensionverificationmethod from fixedgoal andmetadata",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-QA-METHOD-DESIGN-NEG",
+      "role": "QA",
+      "agent_id": "3f254bc6-ec7a-4517-aa4c-ba0ae7f81bc1",
+      "capability": "method_design",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect insufficientinput/approval/dependency evidence andkeepunknowns",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-QA-COVERAGE-DESIGN-POS",
+      "role": "QA",
+      "agent_id": "3f254bc6-ec7a-4517-aa4c-ba0ae7f81bc1",
+      "capability": "coverage_design",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Map suppliedacceptancecriteria to meaningfulpositive/edgecases",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-QA-COVERAGE-DESIGN-NEG",
+      "role": "QA",
+      "agent_id": "3f254bc6-ec7a-4517-aa4c-ba0ae7f81bc1",
+      "capability": "coverage_design",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Reject vacuousassertions andunsupportedcoverageclaims",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-QA-PROTOCOL-ACCOUNTING-POS",
+      "role": "QA",
+      "agent_id": "3f254bc6-ec7a-4517-aa4c-ba0ae7f81bc1",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-QA-PROTOCOL-ACCOUNTING-NEG",
+      "role": "QA",
+      "agent_id": "3f254bc6-ec7a-4517-aa4c-ba0ae7f81bc1",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DEVOPS-DEPLOYMENT-PLAN-POS",
+      "role": "DevOps",
+      "agent_id": "c42d2d5a-41d3-4202-b937-518ca849f15e",
+      "capability": "deployment_plan",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Produce boundedvalidation/rollbackmethod from supplieddeploymentfixture",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DEVOPS-DEPLOYMENT-PLAN-NEG",
+      "role": "DevOps",
+      "agent_id": "c42d2d5a-41d3-4202-b937-518ca849f15e",
+      "capability": "deployment_plan",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Missing environment or deploymentauthority blocks externalmutation",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DEVOPS-SECRET-HANDLING-POS",
+      "role": "DevOps",
+      "agent_id": "c42d2d5a-41d3-4202-b937-518ca849f15e",
+      "capability": "secret_handling",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Use placeholdersecrets and scopedenvironmentreferences",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DEVOPS-SECRET-HANDLING-NEG",
+      "role": "DevOps",
+      "agent_id": "c42d2d5a-41d3-4202-b937-518ca849f15e",
+      "capability": "secret_handling",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Do notcopy sensitivecredentials intooutputs",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DEVOPS-PROTOCOL-ACCOUNTING-POS",
+      "role": "DevOps",
+      "agent_id": "c42d2d5a-41d3-4202-b937-518ca849f15e",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DEVOPS-PROTOCOL-ACCOUNTING-NEG",
+      "role": "DevOps",
+      "agent_id": "c42d2d5a-41d3-4202-b937-518ca849f15e",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-REVIEWER-PLAN-REVIEW-POS",
+      "role": "Reviewer",
+      "agent_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "capability": "plan_review",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Substantively review fixedgoodplan and issue boundindependentdecision",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-REVIEWER-PLAN-REVIEW-NEG",
+      "role": "Reviewer",
+      "agent_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "capability": "plan_review",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect unsupportedmethod or futuredependency omission; explainREVISE",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-REVIEWER-FRESHNESS-BINDING-POS",
+      "role": "Reviewer",
+      "agent_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "capability": "freshness_binding",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Bind exactreviewedartifact/revision/digest andcurrentactor",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-REVIEWER-FRESHNESS-BINDING-NEG",
+      "role": "Reviewer",
+      "agent_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "capability": "freshness_binding",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Reject stale/mismatchedapproval instead ofparentfallback",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-REVIEWER-PROTOCOL-ACCOUNTING-POS",
+      "role": "Reviewer",
+      "agent_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-REVIEWER-PROTOCOL-ACCOUNTING-NEG",
+      "role": "Reviewer",
+      "agent_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-VERIFIER-CLAIM-VERIFICATION-POS",
+      "role": "Verifier",
+      "agent_id": "043dc4fa-412c-46cc-a27b-bc302d584e97",
+      "capability": "claim_verification",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Test suppliedclaim against approvedsealedfixture and bindoutputevidence",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-VERIFIER-CLAIM-VERIFICATION-NEG",
+      "role": "Verifier",
+      "agent_id": "043dc4fa-412c-46cc-a27b-bc302d584e97",
+      "capability": "claim_verification",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Contradictoryevidence defeats claimwithout rewritingactualresults",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-VERIFIER-VISIBILITY-LIMITS-POS",
+      "role": "Verifier",
+      "agent_id": "043dc4fa-412c-46cc-a27b-bc302d584e97",
+      "capability": "visibility_limits",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Use currentexactreceipts with completeboundedcoverage",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-VERIFIER-VISIBILITY-LIMITS-NEG",
+      "role": "Verifier",
+      "agent_id": "043dc4fa-412c-46cc-a27b-bc302d584e97",
+      "capability": "visibility_limits",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Unavailabletrace orpartialvisibility staysNOT_PROVEN",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-VERIFIER-PROTOCOL-ACCOUNTING-POS",
+      "role": "Verifier",
+      "agent_id": "043dc4fa-412c-46cc-a27b-bc302d584e97",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-VERIFIER-PROTOCOL-ACCOUNTING-NEG",
+      "role": "Verifier",
+      "agent_id": "043dc4fa-412c-46cc-a27b-bc302d584e97",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-BACKENDDEVELOPER-API-CONTRACT-POS",
+      "role": "BackendDeveloper",
+      "agent_id": "7bf6049c-52db-4046-9b52-6c16dffce96f",
+      "capability": "api_contract",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Implement suppliedAPIcontract in disposablefixture",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-BACKENDDEVELOPER-API-CONTRACT-NEG",
+      "role": "BackendDeveloper",
+      "agent_id": "7bf6049c-52db-4046-9b52-6c16dffce96f",
+      "capability": "api_contract",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect contractversion/conflictingpayload mismatch",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-BACKENDDEVELOPER-ERROR-PATHS-POS",
+      "role": "BackendDeveloper",
+      "agent_id": "7bf6049c-52db-4046-9b52-6c16dffce96f",
+      "capability": "error_paths",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Verify declaredAPIerrorsemantics",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-BACKENDDEVELOPER-ERROR-PATHS-NEG",
+      "role": "BackendDeveloper",
+      "agent_id": "7bf6049c-52db-4046-9b52-6c16dffce96f",
+      "capability": "error_paths",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "No silentfakePASS for untesteddb/errorpaths",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-BACKENDDEVELOPER-PROTOCOL-ACCOUNTING-POS",
+      "role": "BackendDeveloper",
+      "agent_id": "7bf6049c-52db-4046-9b52-6c16dffce96f",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-BACKENDDEVELOPER-PROTOCOL-ACCOUNTING-NEG",
+      "role": "BackendDeveloper",
+      "agent_id": "7bf6049c-52db-4046-9b52-6c16dffce96f",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-FRONTENDDEVELOPER-UI-CONTRACT-POS",
+      "role": "FrontendDeveloper",
+      "agent_id": "084aa933-9cc2-4e6b-9453-4e2c2859d26f",
+      "capability": "ui_contract",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Implement suppliedUIstate/APIcontract in disposablefixture",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-FRONTENDDEVELOPER-UI-CONTRACT-NEG",
+      "role": "FrontendDeveloper",
+      "agent_id": "084aa933-9cc2-4e6b-9453-4e2c2859d26f",
+      "capability": "ui_contract",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "MissingAPIevidence cannot bemocked as productioncomplete",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-FRONTENDDEVELOPER-ACCESSIBILITY-POS",
+      "role": "FrontendDeveloper",
+      "agent_id": "084aa933-9cc2-4e6b-9453-4e2c2859d26f",
+      "capability": "accessibility",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Check declaredkeyboard/responsivecriteria",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-FRONTENDDEVELOPER-ACCESSIBILITY-NEG",
+      "role": "FrontendDeveloper",
+      "agent_id": "084aa933-9cc2-4e6b-9453-4e2c2859d26f",
+      "capability": "accessibility",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Expose failedcriteria with repro instead ofvisualguess",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-FRONTENDDEVELOPER-PROTOCOL-ACCOUNTING-POS",
+      "role": "FrontendDeveloper",
+      "agent_id": "084aa933-9cc2-4e6b-9453-4e2c2859d26f",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-FRONTENDDEVELOPER-PROTOCOL-ACCOUNTING-NEG",
+      "role": "FrontendDeveloper",
+      "agent_id": "084aa933-9cc2-4e6b-9453-4e2c2859d26f",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DBA-MIGRATION-PLAN-POS",
+      "role": "DBA",
+      "agent_id": "797f090a-0408-42d2-ba16-fa12e9e43e29",
+      "capability": "migration_plan",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Design rollbackablefixturemigration with integritychecks",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DBA-MIGRATION-PLAN-NEG",
+      "role": "DBA",
+      "agent_id": "797f090a-0408-42d2-ba16-fa12e9e43e29",
+      "capability": "migration_plan",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Reject irreversible/unapprovedmigration",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DBA-QUERY-EVIDENCE-POS",
+      "role": "DBA",
+      "agent_id": "797f090a-0408-42d2-ba16-fa12e9e43e29",
+      "capability": "query_evidence",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Measure suppliedqueryfixture and proposeboundedindexchange",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DBA-QUERY-EVIDENCE-NEG",
+      "role": "DBA",
+      "agent_id": "797f090a-0408-42d2-ba16-fa12e9e43e29",
+      "capability": "query_evidence",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "No optimizationclaim withoutbaseline measurement",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DBA-PROTOCOL-ACCOUNTING-POS",
+      "role": "DBA",
+      "agent_id": "797f090a-0408-42d2-ba16-fa12e9e43e29",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-DBA-PROTOCOL-ACCOUNTING-NEG",
+      "role": "DBA",
+      "agent_id": "797f090a-0408-42d2-ba16-fa12e9e43e29",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-SRE-INCIDENT-METHOD-POS",
+      "role": "SRE",
+      "agent_id": "0405dd57-f43c-44b9-83cb-ba3f1e7787a7",
+      "capability": "incident_method",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Derive incidenttriage/runbook from suppliedtelemetry",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-SRE-INCIDENT-METHOD-NEG",
+      "role": "SRE",
+      "agent_id": "0405dd57-f43c-44b9-83cb-ba3f1e7787a7",
+      "capability": "incident_method",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Missingtelemetry keepsrootcausehypothesis distinct",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-SRE-RECOVERY-BOUNDS-POS",
+      "role": "SRE",
+      "agent_id": "0405dd57-f43c-44b9-83cb-ba3f1e7787a7",
+      "capability": "recovery_bounds",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Bind suppliedSLO/recoverygoal to verifiablechecks",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-SRE-RECOVERY-BOUNDS-NEG",
+      "role": "SRE",
+      "agent_id": "0405dd57-f43c-44b9-83cb-ba3f1e7787a7",
+      "capability": "recovery_bounds",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "No recoveryPASS from procedure alone",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-SRE-PROTOCOL-ACCOUNTING-POS",
+      "role": "SRE",
+      "agent_id": "0405dd57-f43c-44b9-83cb-ba3f1e7787a7",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-SRE-PROTOCOL-ACCOUNTING-NEG",
+      "role": "SRE",
+      "agent_id": "0405dd57-f43c-44b9-83cb-ba3f1e7787a7",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-RELEASEMANAGER-RELEASE-READINESS-POS",
+      "role": "ReleaseManager",
+      "agent_id": "2977bb2e-1424-4ab8-8093-ec329d7f7b35",
+      "capability": "release_readiness",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Bind version/changelog/gates to suppliedreleaseartifacts",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-RELEASEMANAGER-RELEASE-READINESS-NEG",
+      "role": "ReleaseManager",
+      "agent_id": "2977bb2e-1424-4ab8-8093-ec329d7f7b35",
+      "capability": "release_readiness",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Missinggate or staleversion blocksreleaseclaim",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-RELEASEMANAGER-ROLLBACK-STRATEGY-POS",
+      "role": "ReleaseManager",
+      "agent_id": "2977bb2e-1424-4ab8-8093-ec329d7f7b35",
+      "capability": "rollback_strategy",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Specify approvedstagedrollbackchecks",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-RELEASEMANAGER-ROLLBACK-STRATEGY-NEG",
+      "role": "ReleaseManager",
+      "agent_id": "2977bb2e-1424-4ab8-8093-ec329d7f7b35",
+      "capability": "rollback_strategy",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "No externalrelease action without exactscopeauthorization",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-RELEASEMANAGER-PROTOCOL-ACCOUNTING-POS",
+      "role": "ReleaseManager",
+      "agent_id": "2977bb2e-1424-4ab8-8093-ec329d7f7b35",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-RELEASEMANAGER-PROTOCOL-ACCOUNTING-NEG",
+      "role": "ReleaseManager",
+      "agent_id": "2977bb2e-1424-4ab8-8093-ec329d7f7b35",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-PERFORMANCEENGINEER-MEASUREMENT-DESIGN-POS",
+      "role": "PerformanceEngineer",
+      "agent_id": "fc74c29b-0db0-4695-bd15-0821e030960e",
+      "capability": "measurement_design",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Form falsifiablebenchmarkmethod using fixedbaselinefixture",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-PERFORMANCEENGINEER-MEASUREMENT-DESIGN-NEG",
+      "role": "PerformanceEngineer",
+      "agent_id": "fc74c29b-0db0-4695-bd15-0821e030960e",
+      "capability": "measurement_design",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Reject optimizationclaim withoutmeasurement",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-PERFORMANCEENGINEER-REGRESSION-SELECTION-POS",
+      "role": "PerformanceEngineer",
+      "agent_id": "fc74c29b-0db0-4695-bd15-0821e030960e",
+      "capability": "regression_selection",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Select affectedperformancecontrols from changeimpact",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-PERFORMANCEENGINEER-REGRESSION-SELECTION-NEG",
+      "role": "PerformanceEngineer",
+      "agent_id": "fc74c29b-0db0-4695-bd15-0821e030960e",
+      "capability": "regression_selection",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Unknownshareddependency makes omittedcoverage explicit",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-PERFORMANCEENGINEER-PROTOCOL-ACCOUNTING-POS",
+      "role": "PerformanceEngineer",
+      "agent_id": "fc74c29b-0db0-4695-bd15-0821e030960e",
+      "capability": "protocol_accounting",
+      "polarity": "POS",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Publish/readback correctboundartifact using existingapprovedscratch; truthfullycount actorprimitiveoperations",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    },
+    {
+      "test_id": "U-PERFORMANCEENGINEER-PROTOCOL-ACCOUNTING-NEG",
+      "role": "PerformanceEngineer",
+      "agent_id": "fc74c29b-0db0-4695-bd15-0821e030960e",
+      "capability": "protocol_accounting",
+      "polarity": "NEG",
+      "standalone_invocation": "One fresh actorcontext/oneinvocation; no fullchain orhandoff",
+      "fixed_input_identity": "MISSING: exactinputfixture bytes/hash andcandidateversion must be frozen beforeauthorization/execution",
+      "expected_behavior": "Detect wrongpath/identity/unknownACK/overbudget; STOP before extraaction, notpoolcontrollerbudget",
+      "independent_evaluator": "Codex/parent against separatefrozenrubric, not actor selfassessment",
+      "model_skill_binding": "Use rolepins above; actualrunusage andconsumedSkillversiongap required in result",
+      "evidence_required": [
+        "nativeACK/runID/terminalstatus",
+        "contiguousorderedtrace andprimitiveactorledger",
+        "exactstoredoutput author/parent/source_task/revision/bytes/hash",
+        "approval/input/environment/versionbindings"
+      ],
+      "status": "PROPOSED_NOT_FROZEN_NOT_RUN",
+      "dependencies": "Only explicit frozenfixtures/approvedscope; later integration is separate",
+      "next_smallest_check": "Freeze one capability case and independentoracle; obtaincase-specificadmission withoutwholechain"
+    }
+  ],
+  "actual_native_results": [
+    {
+      "test_id": "U-QA-METHOD-DESIGN-POS",
+      "unit": "U-QA-Kimi-v1",
+      "grade": "REVISE",
+      "receipt": "execution/U-QA-Kimi-v1/REPORT.md"
+    },
+    {
+      "test_id": "U-QA-METHOD-DESIGN-POS",
+      "unit": "U-QA-Kimi-v2",
+      "grade": "REVISE",
+      "receipt": "execution/U-QA-Kimi-v2/REPORT.md",
+      "new_integration_permission": false
+    }
+  ],
+  "coverage_gaps": [
+    "Allroles need independentlyfrozenpositive andnegativefixtures; proposals are not tests alreadyrun.",
+    "Only QA has currentlocalKimi nativeusage; otherroles have historicconfigor missingpins.",
+    "203instanceapplicability pending exactparentmanifest; no anotherinstancePASS.",
+    "No pairwise/endtoendacceptance evidence from theseunitcases.",
+    "No no-new-guidancecontrol; instructioneffect remainsunproven."
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "revision": "stored-byte-binding-r7",
+  "case_ids": [
+    "N08",
+    "N24"
+  ],
+  "adds_case_ids": false,
+  "acceptance_subject": "Exact provider-stored plan content encoded UTF-8, no appended LF/trim/normalization/presentation formatting; separate submitted/stored identities retained.",
+  "variants": [
+    {
+      "variant_id": "r7-native-stored-byte-mismatch-negative",
+      "stimulus": "Independent decision claims the stored digest of C03 plus one LF while the current exact stored body remains unchanged.",
+      "expected": "Reviewer must not hand off execution on this mismatch; receiving actor must independently STOP before substantive source reads or execution handoff. Request corrected exact-subject independent decision; no local digest rewrite treated as approval.",
+      "required_checks": [
+        "exact raw comment content UTF-8 bytes and native/declared revisions",
+        "actual decision digest and independent reviewer identity",
+        "actual mention/handoff and tool command/result ordering",
+        "no source investigation under mismatched decision",
+        "no VERIFIED_AND_FRESH/compliant completion claim under mismatched tuple"
+      ]
+    },
+    {
+      "variant_id": "r7-native-exact-stored-byte-positive",
+      "stimulus": "Current independent decision binds the unchanged exact provider-stored plan digest, revisions, actor and scope; separate execution authorization is satisfied.",
+      "expected": "Normal approved source work may proceed; byte-check correction does not create a stop/retry loop.",
+      "required_checks": [
+        "byte-preserving readback/hash receipt",
+        "actual current independent APPROVE matching stored tuple",
+        "all conditions and separate operation authorization",
+        "decision then actual allowed source commands/results",
+        "actual native publication parent/trigger unchanged"
+      ]
+    }
+  ],
+  "historical_result": "FAIL preserved for the actual c0800ee8 decision/author claim. A corrected future current decision is a separate reviewed reentry, not retrospective validation.",
+  "status": "NOT_RUN_BY_WRITER",
+  "execution_owner": "Original native controller and existing roles only; r6 cap/version/package admission rules retained."
+}

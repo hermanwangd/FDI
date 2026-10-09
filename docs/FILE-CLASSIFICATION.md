@@ -14,6 +14,10 @@ Every tracked or proposed path must have exactly one primary classification. Cla
 | `contracts/public/**`, `contracts/providers/**` | Shared executable/public/provider contracts | Company-wide schemas and provider surfaces | Validate JSON/schema consumers after changes |
 | `engcim/swarm/contracts/**` | ENGCIM executable/public contracts | RC6/RC10 schemas and Swarm boundary surfaces | Validate affected Java/schema consumers after changes |
 | `agent/skills/**`, `agent/workflows/**` | Agent procedures | Operational instructions and workflows | Keep procedures separate from executable Java |
+| `engcim/swarm/instructions/**`, `engcim/swarm/skills/**` | Swarm instruction/Skill authoring | Owning role/profile text and transformation records; no runtime-adoption authority | Update owning source; preserve historical inputs and regenerate exact payloads |
+| `engcim/swarm/tests/agents/**` | Active agent test definitions/providers and immutable fixtures | Development test source; fixtures and local checks are not native acceptance | Version definitions/tools; retain original cases and immutable fixture bytes |
+| `engcim/swarm/generated/**` | Derived Swarm payloads | Delivery candidates, never alternate authoring | Regenerate from pinned inputs and owning records; check full bytes |
+| `engcim/swarm/SOURCE-TO-EFFECTIVE.json` | Swarm development source/version bindings | Current layout plus explicitly historical receipts; no governing/live authority | Bind each owning source and output separately; preserve historical publication records |
 | `engcim/swarm/src/main/**`, `engcim/swarm/src/test/**` | ENGCIM Java runtime and tests | Executable implementation and automated verification | Java 17/Spring Boot 3.4.1; verify affected tests |
 | `engcim/swarm/tooling/verification/**` | ENGCIM import/runtime verification | Swarm composition gate and path-by-path import manifest verifier | Keep repository root as an explicit input; verify destination hashes |
 | `tooling/**`, `tests/**` | FDI-wide tooling and closed migration baseline | Repository packaging, governance verification, migration wrappers, and tests | Do not add Java framework behavior here |

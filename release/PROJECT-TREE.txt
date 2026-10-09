@@ -1,4 +1,4 @@
-swarm-v11-composition-dry-run/
+Feature-Delivery-Intelligence/
 ├── .mvn/
 │   └── wrapper/
 │       └── maven-wrapper.properties
@@ -195,6 +195,44 @@ swarm-v11-composition-dry-run/
 │   │           └── PA-01-MINIMAL-PRODUCT-SEMANTICS-PROFILE-v0.1-approval-candidate.md
 │   ├── superpowers/
 │   │   ├── plans/
+│   │   │   ├── 2026-10-08-a1-preparation-boundary-correction-r6/
+│   │   │   │   ├── fixtures/
+│   │   │   │   │   ├── retained-a1/
+│   │   │   │   │   │   ├── A1-DIRECT-USER-CAP-AMENDMENT.json
+│   │   │   │   │   │   ├── Arch-boundary-monitor-messages.json
+│   │   │   │   │   │   ├── boundary-02-runs.json
+│   │   │   │   │   │   ├── C01-stored-body.txt
+│   │   │   │   │   │   ├── C02-stored-body.txt
+│   │   │   │   │   │   ├── C03-stored-body.txt
+│   │   │   │   │   │   ├── controller-current-family-read-ledger.json
+│   │   │   │   │   │   ├── CURRENT-CHECKPOINT.json
+│   │   │   │   │   │   └── QA-terminal-messages.json
+│   │   │   │   │   ├── assertions.json
+│   │   │   │   │   ├── native-regression-expectations.json
+│   │   │   │   │   └── operation-witnesses.json
+│   │   │   │   └── FIXTURE-PINS.json
+│   │   │   ├── 2026-10-08-a1-stored-byte-binding-freeze-r7/
+│   │   │   │   ├── fixtures/
+│   │   │   │   │   ├── retained-a1/
+│   │   │   │   │   │   ├── C03-stored-body.txt
+│   │   │   │   │   │   ├── handoff-current-comments.json
+│   │   │   │   │   │   └── handoff-current-runs.json
+│   │   │   │   │   ├── assertions.json
+│   │   │   │   │   ├── C03-plus-one-LF.bin
+│   │   │   │   │   ├── native-regression-expectations.json
+│   │   │   │   │   └── stored-byte-witness.json
+│   │   │   │   └── FIXTURE-PINS.json
+│   │   │   ├── 2026-10-08-audit-grant-raw-receipt-repair-r10/
+│   │   │   │   └── fixtures/
+│   │   │   │       └── assertions.json
+│   │   │   ├── 2026-10-08-current-work-package-qa-freeze-r2/
+│   │   │   │   ├── fixtures/
+│   │   │   │   │   ├── fixture-README.txt
+│   │   │   │   │   ├── ledger-fixtures.json
+│   │   │   │   │   ├── native-oracle.json
+│   │   │   │   │   └── requests.json
+│   │   │   │   ├── FIXTURE-PINS.json
+│   │   │   │   └── QA-REGRESSION-PLAN.md
 │   │   │   └── 2026-09-04-project-folder-reorganization.md
 │   │   └── specs/
 │   │       ├── 2026-09-03-graphify-provider-migration-design.md
@@ -234,7 +272,6 @@ swarm-v11-composition-dry-run/
 │   │   │   │           └── WORKSPACE-BOOTSTRAP-RUNBOOK-v0.1.md
 │   │   │   └── multica/
 │   │   │       ├── RC10-ORCHESTRATOR-PARENT-REPORT.md
-│   │   │       ├── RC10-S05-S06-ROLE-GUIDANCE.md
 │   │   │       └── RC10-WORKSPACE-LEARNING.md
 │   │   ├── state-templates/
 │   │   │   ├── mission-state/
@@ -784,6 +821,11 @@ swarm-v11-composition-dry-run/
 │   │   │       └── WorkspaceKnowledgeProposal.schema.json
 │   │   ├── docs/
 │   │   │   └── rc10/
+│   │   │       ├── agent-capabilities/
+│   │   │       │   ├── instance-bindings.json
+│   │   │       │   ├── qa.md
+│   │   │       │   ├── SAMPLE-PINS.json
+│   │   │       │   └── SOURCE-PINS.json
 │   │   │       ├── assets/
 │   │   │       │   ├── ENGCIM-SWARM-MODULE-ALIGNMENT-v1.png
 │   │   │       │   ├── ENGCIM-SWARM-MODULE-ALIGNMENT-v1.prompt.md
@@ -801,12 +843,121 @@ swarm-v11-composition-dry-run/
 │   │   │       ├── RC10-RUNTIME-MATERIALIZATION.md
 │   │   │       ├── RC6-TO-RC10-GAP-REPORT.md
 │   │   │       ├── RC6-TO-RC10-SOURCE-TO-RUNTIME-GAP-MATRIX.md
+│   │   │       ├── SWARM-AGENT-CAPABILITY-DESIGN-ADDENDUM.md
 │   │   │       ├── SWARM-V11-MAC-INTEGRATION.md
 │   │   │       ├── SWARM-V11-Q1-QUALIFICATION-PLAN.md
 │   │   │       └── SWARM-V11-THREE-PR-SPLIT.md
+│   │   ├── generated/
+│   │   │   ├── multica-cli.md
+│   │   │   └── reviewer.instructions.txt
+│   │   ├── instructions/
+│   │   │   ├── architect/
+│   │   │   │   └── instructions.md
+│   │   │   ├── backend-dev/
+│   │   │   │   └── instructions.md
+│   │   │   ├── coder/
+│   │   │   │   └── instructions.md
+│   │   │   ├── data-analyst/
+│   │   │   │   └── instructions.md
+│   │   │   ├── dba/
+│   │   │   │   └── instructions.md
+│   │   │   ├── devops/
+│   │   │   │   └── instructions.md
+│   │   │   ├── frontend-dev/
+│   │   │   │   └── instructions.md
+│   │   │   ├── knowledge-curator/
+│   │   │   │   └── instructions.md
+│   │   │   ├── orchestrator/
+│   │   │   │   └── instructions.md
+│   │   │   ├── performance-engineer/
+│   │   │   │   └── instructions.md
+│   │   │   ├── product-manager/
+│   │   │   │   └── instructions.md
+│   │   │   ├── qa/
+│   │   │   │   └── instructions.md
+│   │   │   ├── release-manager/
+│   │   │   │   └── instructions.md
+│   │   │   ├── researcher/
+│   │   │   │   └── instructions.md
+│   │   │   ├── reviewer/
+│   │   │   │   └── source.json
+│   │   │   ├── security-auditor/
+│   │   │   │   └── instructions.md
+│   │   │   ├── sre/
+│   │   │   │   └── instructions.md
+│   │   │   ├── verifier/
+│   │   │   │   └── instructions.md
+│   │   │   ├── writer/
+│   │   │   │   └── instructions.md
+│   │   │   └── ROLE-GUIDANCE.md
 │   │   ├── release/
 │   │   │   └── RC10-CANDIDATE-PACKAGE/
 │   │   │       └── README.md
+│   │   ├── skills/
+│   │   │   ├── artifact-consistency/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── changesurface-analysis/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── cicd-automation/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── code-review-method/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── deployment-verification/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── execution-guard/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── incident-response/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── multica-cli/
+│   │   │   │   └── source.json
+│   │   │   ├── observability-slo/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── performance-benchmark/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── pk-azure-devops-history/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── pk-correlation-synthesis/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── pk-document-analysis/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── pk-file-ingestion/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── pk-repository-analysis/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── pk-tkms-ingestion/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── pm-intention/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── post-change-canary/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── product-knowledge/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── qa-planning/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── release-management/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── root-cause-debugging/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── runtime-qa/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── security-review/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── software-development/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── spec-design/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── swarm-dev/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── swarm-orchestration/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── swarm-telemetry/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── test-architecture/
+│   │   │   │   └── SKILL.md
+│   │   │   ├── test-design/
+│   │   │   │   └── SKILL.md
+│   │   │   └── verification-protocol/
+│   │   │       └── SKILL.md
 │   │   ├── src/
 │   │   │   ├── main/
 │   │   │   │   └── java/
@@ -826,6 +977,7 @@ swarm-v11-composition-dry-run/
 │   │   │   │                   │   ├── ClaudeSupervisorGateway.java
 │   │   │   │                   │   ├── CogneeSearchClient.java
 │   │   │   │                   │   ├── ControlResult.java
+│   │   │   │                   │   ├── CurrentWorkPackageAudit.java
 │   │   │   │                   │   ├── GovernedWorkspaceKnowledge.java
 │   │   │   │                   │   ├── InMemoryWorkspaceKnowledgeRepository.java
 │   │   │   │                   │   ├── IntakeStatus.java
@@ -910,6 +1062,7 @@ swarm-v11-composition-dry-run/
 │   │   │       │               │   ├── CogneeHandoffOrderTests.java
 │   │   │       │               │   ├── CogneeSearchBoundaryTests.java
 │   │   │       │               │   ├── CogneeSearchClientTests.java
+│   │   │       │               │   ├── CurrentWorkPackageAuditTests.java
 │   │   │       │               │   ├── KnowledgePipelineTests.java
 │   │   │       │               │   ├── LearningBoundaryTests.java
 │   │   │       │               │   ├── MissionFlowTests.java
@@ -920,6 +1073,7 @@ swarm-v11-composition-dry-run/
 │   │   │       │               │   ├── Rc10Phase2KnowledgeConsumerFixtureTests.java
 │   │   │       │               │   ├── SupervisorBoundaryTests.java
 │   │   │       │               │   ├── SupervisorPathTests.java
+│   │   │       │               │   ├── SwarmSourceLayoutTests.java
 │   │   │       │               │   ├── WorkspaceKnowledgeLifecycleTests.java
 │   │   │       │               │   └── WorkspaceKnowledgeRetrievalTests.java
 │   │   │       │               ├── CompanyImportManifestTests.java
@@ -940,11 +1094,60 @@ swarm-v11-composition-dry-run/
 │   │   │                   │   ├── RetryPolicyOracle.java
 │   │   │                   │   └── scenario.json
 │   │   │                   └── knowledge-consumer-cases.json
+│   │   ├── tests/
+│   │   │   └── agents/
+│   │   │       ├── four-role/
+│   │   │       │   ├── fixtures/
+│   │   │       │   │   ├── baseline-inventory-architect-instructions.md
+│   │   │       │   │   ├── baseline-inventory-orchestrator-instructions.md
+│   │   │       │   │   ├── baseline-inventory-qa-instructions.md
+│   │   │       │   │   ├── baseline-inventory-reviewer-instructions.md
+│   │   │       │   │   ├── baseline-orchestrator-skill-pre-fix-7dd934e0.md
+│   │   │       │   │   ├── baseline-skill-artifact-consistency.md
+│   │   │       │   │   ├── baseline-skill-changesurface-analysis.md
+│   │   │       │   │   ├── baseline-skill-code-review-method.md
+│   │   │       │   │   ├── baseline-skill-multica-cli.md
+│   │   │       │   │   ├── baseline-skill-pk-azure-devops-history.md
+│   │   │       │   │   ├── baseline-skill-product-knowledge.md
+│   │   │       │   │   ├── baseline-skill-qa-planning.md
+│   │   │       │   │   ├── baseline-skill-runtime-qa.md
+│   │   │       │   │   ├── baseline-skill-spec-design.md
+│   │   │       │   │   ├── baseline-skill-swarm-orchestration.md
+│   │   │       │   │   ├── baseline-skill-swarm-telemetry.md
+│   │   │       │   │   ├── baseline-skill-test-architecture.md
+│   │   │       │   │   ├── baseline-skill-test-design.md
+│   │   │       │   │   ├── native-qa-own-issue-r2-before-original.evidence.json
+│   │   │       │   │   ├── native-qa-own-issue-r3-before-original.evidence.json
+│   │   │       │   │   ├── native-reviewer-common-cli-after-supplement.native-result.md
+│   │   │       │   │   ├── native-reviewer-common-cli-before-supplement.native-result.md
+│   │   │       │   │   ├── ORCHESTRATOR-SUITE-FROZEN.json
+│   │   │       │   │   ├── qa-own-issue-before-original-driver-r3-DRAFT.mjs.txt
+│   │   │       │   │   ├── QA-OWN-ISSUE-BEFORE-ORIGINAL-MANIFEST-r4-DRAFT.json
+│   │   │       │   │   ├── REVIEWER-COMMON-CLI-after-supplement-SUITE.json
+│   │   │       │   │   └── shared-cli-skill-drift-current-20261009.md
+│   │   │       │   ├── focused-suite.json
+│   │   │       │   ├── original-branch-suite.json
+│   │   │       │   ├── qa-own-issue-component-guard-r4-DRAFT.mjs
+│   │   │       │   ├── qa-own-issue-filesystem-boundary-r2-DRAFT.mjs
+│   │   │       │   ├── qa-own-issue-harness-r4.unit.mjs
+│   │   │       │   ├── qa-reused-fixture-scope-r3.unit.mjs
+│   │   │       │   ├── README.md
+│   │   │       │   ├── role-json-only-final-contract-r1.mjs
+│   │   │       │   ├── role-paged-source-read-evidence-r1.mjs
+│   │   │       │   ├── role-unit-evidence-v3.mjs
+│   │   │       │   ├── role-unit-evidence-v3.test.mjs
+│   │   │       │   ├── role-unit-output-schema-r1.mjs
+│   │   │       │   ├── role-unit-output-schema-r1.test.mjs
+│   │   │       │   ├── SOURCE-MANIFEST.json
+│   │   │       │   ├── supplement-suite.json
+│   │   │       │   └── unit-suite.json
+│   │   │       └── capabilities.json
 │   │   ├── tooling/
 │   │   │   └── verification/
 │   │   │       └── verify_swarm_runtime.sh
 │   │   ├── pom.xml
-│   │   └── README.md
+│   │   ├── README.md
+│   │   └── SOURCE-TO-EFFECTIVE.json
 │   └── targets/
 │       ├── scenarios/
 │       │   └── S05-DESIGN-QUALITY-v1.yaml
@@ -1041,6 +1244,17 @@ swarm-v11-composition-dry-run/
 │   │   └── schemas/
 │   │       └── execution-record-v0.2.schema.json
 │   └── rc10/
+│       ├── agent-capability-tests/
+│       │   └── qa/
+│       │       ├── retained/
+│       │       │   ├── COVERAGE-RECONCILIATION-203-r1.json
+│       │       │   ├── ROLE-UNIT-SUITE-COVERAGE-INVENTORY.json
+│       │       │   ├── SWARM-V11-RELEASE-PACKAGE-DESIGN-v4.md
+│       │       │   ├── U-QA-Kimi-v1-INDEPENDENT-EVALUATION.json
+│       │       │   └── U-QA-Kimi-v2-INDEPENDENT-EVALUATION.json
+│       │       ├── DOC-CHECKS.json
+│       │       ├── INDEPENDENT-SAMPLE-REVIEW.md
+│       │       └── TEST-SPEC.md
 │       ├── candidate-runtime/
 │       │   ├── learning-input-download/
 │       │   │   └── pk-store-s01-rc10val10-candidate-r3.tar.gz
@@ -2119,6 +2333,23 @@ swarm-v11-composition-dry-run/
 │       │   ├── update-outcome-orchestrator.stderr.txt
 │       │   ├── workspace.json
 │       │   └── workspace.stderr.txt
+│       ├── current-work-package-candidate/
+│       │   ├── supplemental-current-source-r13/
+│       │   │   ├── multica-cli-before.md
+│       │   │   └── reviewer-before.instructions.txt
+│       │   ├── supplemental-native-parent-r4/
+│       │   │   ├── ASSERTION-PINS.json
+│       │   │   └── assertions.json
+│       │   ├── supplemental-preparation-r8/
+│       │   │   └── retained-a1-final/
+│       │   │       └── FINAL-A1-DIAGNOSTIC-REPORT.md
+│       │   └── supplemental-review-r3/
+│       │       ├── ASSERTION-PINS.json
+│       │       ├── assertions.json
+│       │       ├── foreign-required-evidence.json
+│       │       ├── later-distinct-revise.json
+│       │       ├── null-required-stage.json
+│       │       └── uncertain-required-action.json
 │       ├── rc6-baseline-2026-09-26/
 │       │   ├── BASELINE-RECORD.md
 │       │   ├── installed-source-RC6.zip

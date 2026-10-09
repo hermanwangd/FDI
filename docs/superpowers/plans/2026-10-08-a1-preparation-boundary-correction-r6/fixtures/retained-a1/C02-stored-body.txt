@@ -1,0 +1,98 @@
+## Work-Package Plan: A1.QA.prepare (Declared Revision: r1)
+
+### 1. Identity & Binding Metadata
+- **mission**: Pilot A / A1 UNSTAGED frozen two-source handoff comparison
+- **workPackage**: ENGCIM-CURRENT-WORK-PACKAGE-r2 (candidate: `b37df84a3cf185a0fbfd3333287e041d3d3115c7`, canonical SHA: `cbb28442a072233a326ace9e3b8bb3d7a2f99f4576d1f1aaee80c9a9ad431b42`)
+- **action**: A1.QA.prepare (Protocol-only preparation for QA outcome & coverage evidence assessment)
+- **actor**: Swarm QA Tester (`3f254bc6-ec7a-4517-aa4c-ba0ae7f81bc1`)
+- **role**: QA Tester
+- **stage**: UNSTAGED
+- **issueId**: `01a117df-c9b4-7d66-8f0f-15fdb9d6718f` (RC10VAL-286)
+- **workspaceId**: `0b02adb6-a395-46bd-bd92-6fec14dee20e`
+- **triggerCommentId**: `01a117e2-469f-765f-aa39-e6c52be28638` (native revision 1)
+- **declaredPlanRevision**: r1
+- **planCommentId**: UNKNOWN (to be bound on readback; unknown IDs are not prefilled)
+- **approvalStatus**: PENDING_INDEPENDENT_REVIEW (self-approval prohibited; requires independent Reviewer APPROVE with explicit `reviewed_plan_id`)
+
+### 2. Scope & Non-Scope Boundaries
+- **Current Preparation Scope (A1.QA.prepare)**:
+  - Protocol-only formulation of QA evaluation methodology for later outcome and coverage evidence assessment.
+  - Systematic separation of supplied public facts, unknowns, dependencies, and proposed evidence.
+  - Identification of the exact input/dependency tuple required before `A1.QA.execute`.
+  - Protocol scratch restricted to workdir `protocol/plan.txt` (UTF-8, <= 32 KiB; no /tmp usage).
+  - Bounded protocol routing to Swarm Architect (`668dadac-fd7a-4523-855a-f6a842301555`) for `A1.Author.prepare`.
+- **Non-Scope / Strictly Prohibited in this Phase**:
+  - No reading or substantive investigation of the two frozen sources in this preparation phase.
+  - No investigation, extraction, or publication of frozen oracle contents, expected case answers, or solution sequences.
+  - No evaluation of Author substantive delivery (Author result does not yet exist).
+  - No test execution, baseline execution, or runtime experiments.
+  - No modification to product code, test files, configuration, runtime, model, or Skills.
+  - No modification to issue status or assignment.
+  - No pre-approval of unknown future inputs or self-approval of this method.
+
+### 3. Supplied Facts, Unknowns, and Dependency Tuple
+- **Supplied Public Facts**:
+  - Public Request (Frozen N04, verbatim): "Determine whether the frozen RC6 scenarios S04 section and pm-intention Skill describe the same S04 intention-spec handoff. Assess inputs, outputs, Intent Challenge and handoff conditions, separating facts, differences and unknowns."
+  - Public Constraints (verbatim):
+    1. Only the two named read-only sources may be investigated.
+    2. No product mutation, tests, runtime or configuration change.
+    3. Do not infer actual runtime behavior from labels.
+  - Frozen Source Pins (pins only; unobserved/unread in this phase):
+    - Source A: `/Users/herman_mbp2023/Documents/Codex/2026-10-08/task/plan-review-repo/engcim/swarm/baselines/rc6/runtime/package/engcim-swarm-package-RC6/docs/scenarios.md` (SHA-256 pin: `9eefc7b72c01af62bab81bd4d4c19ff29a8c212170066f2e673245c6699f1f1b`)
+    - Source B: `/Users/herman_mbp2023/Documents/Codex/2026-10-08/task/plan-review-repo/engcim/swarm/baselines/rc6/runtime/package/engcim-swarm-package-RC6/skills/pm-intention/SKILL.md` (SHA-256 pin: `517a4eec491d509eebe605b81f62f1f4738a35f10c79ec42d9cdb8722ce04c8b`)
+  - Operational Rules: Procedure `ENGCIM-CURRENT-WORK-PACKAGE-r2`; max 2 protocol scratch files <= 32 KiB in `protocol/`.
+- **Unknowns (Pending Future Resolution)**:
+  - Author plan publication, Author plan review decision, and Author substantive result delivery.
+  - Author result comment ID, native comment revision, and stored-body SHA-256 digest.
+  - Independent Reviewer decision on this QA plan (`reviewed_plan_id`, decision APPROVE/REVISE, comment ID, digest).
+  - Execution trigger ID and authorization for `A1.QA.execute`.
+  - Ground-truth evaluation criteria and oracle path verification (sealed until QA-only authorized execution).
+- **Exact Input/Dependency Tuple Required Prior to QA.execute**:
+  - `(author_result_comment_id, author_result_native_revision, author_result_body_sha256, qa_plan_review_comment_id, qa_plan_review_decision == 'APPROVE', qa_execute_trigger_comment_id)`
+  - Condition: This entire tuple must be independently refreshed and verified upon receipt of the `QA.execute` trigger before any substantive evaluation begins.
+
+### 4. QA Method for Later Outcome & Coverage Evidence Assessment (QA.execute)
+Upon receiving explicit independent `APPROVE` on this plan and separate `A1.QA.execute` trigger:
+1. **Binding & Freshness Verification**:
+   - Refresh and verify the Author delivery tuple (`author_result_comment_id`, native revision, stored body digest).
+   - Verify Author result is published under the proper parent/thread and adheres to caller/actor attribution.
+2. **Boundary & Constraint Conformance Check**:
+   - Verify Author did not modify repository files, tests, configurations, or runtime.
+   - Verify Author did not exceed read scope beyond the two pinned source paths.
+   - Verify Author did not infer runtime behavior from labels alone.
+3. **Substantive Coverage Assessment (4 Dimensions of Frozen N04)**:
+   - **Inputs Coverage**: Verify Author systematically compared S04 section inputs vs pm-intention Skill inputs.
+   - **Outputs Coverage**: Verify Author systematically compared S04 section outputs vs pm-intention Skill outputs.
+   - **Intent Challenge Coverage**: Verify Author evaluated Intent Challenge mechanisms, trigger conditions, and handling across both sources.
+   - **Handoff Conditions Coverage**: Verify Author analyzed completion/handoff gates and preconditions across both sources.
+   - **Categorization Integrity**: Verify Author cleanly separated findings into:
+     - (a) Verified facts (direct text citations from sources).
+     - (b) Concrete differences (explicit divergent statements/contracts).
+     - (c) Unknowns / ambiguities (gaps not defined by either source).
+4. **QA-Only Exact-Path Reading & Verification Evidence**:
+   - In `QA.execute` phase only, perform authorized exact-path reads of Source A and Source B.
+   - Verify SHA-256 digests against pinned values (`9eefc7b7...` and `517a4eec...`).
+   - Cross-examine Author's cited quotes and claims against raw source text to identify discrepancies, omissions, or hallucinated claims.
+5. **Output Deliverable**:
+   - Publish structured QA Assessment Report containing:
+     - Complete Coverage Matrix (4 dimensions × facts/differences/unknowns).
+     - Discrepancy & Hallucination Audit.
+     - Constraint & Protocol Conformance Verdict.
+     - Verifiable operation & read receipts.
+
+### 5. Allowed Operations & Scratch Budget
+- **Allowed Operations**:
+  - Read issue and thread comments via `multica` CLI with explicit `--workspace-id 0b02adb6-a395-46bd-bd92-6fec14dee20e`.
+  - Write protocol scratch exclusively to `protocol/plan.txt` (<= 32 KiB UTF-8).
+  - Submit single plan comment as reply to trigger comment `01a117e2-469f-765f-aa39-e6c52be28638`.
+  - Read back comment receipt to verify native revision and stored-body SHA-256.
+- **Prohibited Operations**:
+  - No writes to `/tmp` or paths outside `protocol/`.
+  - No deletion of scratch files without explicit grant.
+  - No retries or extra wake-ups on denial/uncertain ACK.
+  - No status or assignment updates.
+
+### 6. Protocol Routing
+Next-target routing (protocol handoff for Author preparation):
+[@Swarm Architect](mention://agent/668dadac-fd7a-4523-855a-f6a842301555) — A1.Author.prepare only.
+*(Note: Bounded protocol routing only; not QA-method approval or permission for substantive analysis.)*

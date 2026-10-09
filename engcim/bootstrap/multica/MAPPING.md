@@ -1,5 +1,18 @@
 # Multica Mapping
 
+## Swarm Dev development source entry
+
+Use [the Swarm module README](../../swarm/README.md) for the current work-package
+layout and the unique body for each development/documentation subject. Source,
+provider and runtime identities remain in the existing
+[source-to-effective map](../../swarm/SOURCE-TO-EFFECTIVE.json); test usage belongs
+to the [four-role test README](../../swarm/tests/agents/four-role/README.md).
+
+This file owns bootstrap role/profile routing and the dated configuration lineage
+below. It does not maintain another Swarm authoring list or development procedure.
+Historical profile adoption does not adopt later local amendments; current source
+ownership does not prove main integration, provider synchronization or runtime use.
+
 | Runtime role | Primary local content |
 | --- | --- |
 | Workflow Lead | `docs/overview/FDI-PROJECT-OVERVIEW.md`, Layer 1 approved specs, `agent/skills/layer1/*` |
@@ -31,7 +44,7 @@ The bootstrap runbook describes preconditions and partial-update recovery.
 ## RC10 adopted S05 profile mapping
 
 When the selected RC10 candidate adopts `ENGCIM-S05-REVIEWED-DELIVERY-v0.1`,
-resolve `engcim/bootstrap/overlays/multica/RC10-S05-S06-ROLE-GUIDANCE.md` and
+resolve `engcim/swarm/instructions/ROLE-GUIDANCE.md` and
 the exact adoption receipt named in that source. This is candidate procedure
 content, not a replacement for RC6 source or governing authority.
 

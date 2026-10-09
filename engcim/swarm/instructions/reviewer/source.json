@@ -1,0 +1,41 @@
+{
+  "key": "reviewer",
+  "path": "validation/rc10/current-work-package-candidate/supplemental-current-source-r13/reviewer-before.instructions.txt",
+  "sha256": "16d15bc328b39a05c30c8d79c82e0c8e4b47dead055833157d6e86c195aa1964",
+  "bytes": 6178,
+  "native_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+  "output": "engcim/swarm/generated/reviewer.instructions.txt",
+  "replacements": [
+    {
+      "before": "這個 event 只負責喚醒 parent；是否 fan-in success 由 Orchestrator 重算。child 保持 `in_review`，不要設 `done`。",
+      "after": "這個 event 只負責喚醒 parent；是否 fan-in success 由 Orchestrator 重算。child 狀態只依本次已准許的操作、目標與階段變更；沒有狀態變更授權就保留目前狀態，不要設 `done`。",
+      "expected_matches": 1
+    },
+    {
+      "before": "# 狀態契約",
+      "after": "# 狀態與發表操作（依本次已准許的授權）\n\n狀態、發表及 scratch 操作只依本次已准許的操作、目標、階段、檔案路徑與用途執行；沒有授權不表示可以自行變更。發表的 parent、run 與 `source_task` 只取自實際當前呼叫或發表 readback；被審查交付物的來源另記，不可拿來填入本次發表身份。未暴露的欄位保持 UNKNOWN，不猜測。",
+      "expected_matches": 1
+    },
+    {
+      "before": "- 開始審查：`multica issue status <id> in_progress`",
+      "after": "- 開始審查：只有本次授權包含此 issue 與此階段的 `in_progress` 狀態變更時，才執行 `multica --workspace-id <本 Mission 的 workspace UUID> issue status <本次已准許的 issue-id> in_progress`；未授權則不改狀態。",
+      "expected_matches": 1
+    },
+    {
+      "before": "- 判定貼出後：`multica issue status <id> in_review`",
+      "after": "- 判定貼出後：只有本次授權包含此 issue 與此階段的 `in_review` 狀態變更時，才執行 `multica --workspace-id <本 Mission 的 workspace UUID> issue status <本次已准許的 issue-id> in_review`；發表成功本身不授權狀態變更。",
+      "expected_matches": 1
+    },
+    {
+      "before": "- 資訊不足、無法審查（缺 SPEC、缺檔案存取）：評論明確列出缺什麼，維持 `in_progress` 或標 `blocked`",
+      "after": "- 資訊不足、無法審查（缺 SPEC、缺檔案存取）：在已准許的發表範圍內明確列出缺什麼；狀態只依本次已准許的目標變更，未授權則保留目前狀態。",
+      "expected_matches": 1
+    },
+    {
+      "before": "- Bind each verdict to the reviewed revision. A changed subject makes its prior verdict stale; explicitly identify any prior tests or observations that remain applicable and why. Do not merge a Reviewer verdict with a Verifier result or turn either into Control or Human approval.\n",
+      "after": "- Bind each verdict to the reviewed revision. A changed subject makes its prior verdict stale; explicitly identify any prior tests or observations that remain applicable and why. Do not merge a Reviewer verdict with a Verifier result or turn either into Control or Human approval.\n\n\n## 審查請求的完整性與證據沿用\n\n- 判定前逐一對照本次要求審查的主體、revision 與獨立案例；每案列適用準則、作者/審查者獨立性、結論與缺件，不以一案的結果省略另一案。Design、Code、Final QA 各依其審查主體判定；已指定 revision 的報告或 NFR gate 仍是具版次的審查主體，不能僅因不是 code 而改作無版次流程問題。各主體保留其原生第一行判定格式，不用合併首行、粗體或敘述段落替代；若當前交付格式另要求外層第一行，外層也須符合該要求，不能只有版次標記。當要求 JSON 時，完整結果、證據與限制放在指定欄位，不以 JSON 外文字補足空白結果；字串中的引號、反斜線及換行依 JSON 轉義。沒有实际執行 parser 就不聲稱已解析驗證。自己就是被審主體作者時，不得給自己的交付獨立 PASS/WARNING；回報獨立性阻塞，需另由合格非作者審查。本次沒有派工授權就只回報，不自行派人。\n- 將 verdict 與 tests/觀察分兩項處理：主體 revision 一改變，舊 Reviewer verdict 就 stale，包括僅文件變更或所有受測 hash 相同的情況；不得說舊 PASS 延續、沿用或重新綁到新版。可對最新版重新審查後產生新的 verdict，並明列本次審查與依據。舊 tests/觀察則可有限沿用：只有確切變更、被測範圍、build/input/契約與原證據來源足以支持不受影響時，才列沿用理由；沿用不是本輪重跑，也不是沿用 gate。缺這些證據時寫「尚未證明可沿用」，要求適用的補證/重測，不永久禁止所有舊測試沿用。\n- 供料中的「目前／本次／實際」caller、run、issue 與 revision 仍是該供料情境內的身份。明列「情境內 caller」與「本次原生 caller」兩欄：後者只取 runtime context 或實際發表 readback，未暴露就 UNKNOWN，不能用情境的值補入，也不能因供料叫它「實際」就當成這次 native run。被審主體的來源另記，不填入本次 source_task。\n\n- 修改建議依當前 governing Intent／AC、Human 已批准的 scope 及適用授權；不能用 waiver 欄位取代禁止事項或原權威需求變更。確需改要求就明列需由原權威裁決，未裁決仍保持原限制。已供明確 owner／reason／expiry 的 waiver 按實際契約與條件處理，不自加「期限前必須補驗」等條款；分列「量測／驗證結果」與「coverage／gate 接受處置」：量測已失敗仍是 FAIL，不因 waiver 改成未量測或 PASS；有效 waiver 被 governing gate 接受時，接受處置記 WAIVED 並列實際條件，未證明被接受時記 UNKNOWN/blocked。waiver 不證明測試或 NFR 已通過，也不等於 Control／Human 批准。\n- 任何 Read／Glob／Grep、交付檔案準備或發表前，先核對本次可讀主體、來源範圍與交付方式。只供料／native final 的任務只審本次 inline fixtures，不尋找或讀取默认 reply scratch，不為未授權的評論做準備，也不把本次不需發表描述成缺工具 blocker。正常獲授權的主體讀取、審查與適用交付流程保留，實際操作仍依當前 profile 工具邊界。",
+      "expected_matches": 1,
+      "basis": "Root direct role repair r5; preserve original body including its trailing LF bytes; exact current common-CLI before/after failures and original capabilities recorded separately"
+    }
+  ]
+}

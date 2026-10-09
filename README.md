@@ -15,6 +15,10 @@ This is a **self-contained FDI project baseline for Multica**. It fixes the v0.4
 9. [`docs/planning/DEVELOPMENT-BACKLOG.md`](docs/planning/DEVELOPMENT-BACKLOG.md)
 10. [`agent/handoff/MULTICA-HANDOFF.md`](agent/handoff/MULTICA-HANDOFF.md)
 
+## Swarm development
+
+Use [engcim/swarm](engcim/swarm/README.md) for current Swarm instructions, Skills, code, agent tests and derived payloads. The module documents its physical layout and verifies source/derivation contracts through Maven. Dated validation evidence and sealed baselines are historical; they are not alternate editing entries. This development work package is not integrated main or native adoption.
+
 ## Standalone invariant
 
 Every active governing module ID MUST resolve to a local file/directory and matching digest. The project tree enumerates every Markdown file; placeholder-only authority is prohibited.

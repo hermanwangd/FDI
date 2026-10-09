@@ -1,0 +1,183 @@
+{
+  "checkpoint_recorded_utc": "2026-10-07T19:47:10.573742+00:00",
+  "last_completed_controller_operation": {
+    "argv": [
+      "/opt/homebrew/bin/multica",
+      "--workspace-id",
+      "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+      "issue",
+      "comment",
+      "list",
+      "01a117df-c9b4-7d66-8f0f-15fdb9d6718f",
+      "--output",
+      "json"
+    ],
+    "utc_start": "2026-10-07T19:44:51.866733+00:00",
+    "exit": 0,
+    "stdout_sha256": "773ff6fd9167f2f10fb7f78318fa13367bcc608039e05551d7d69189b0c53dbf"
+  },
+  "root_create": {
+    "operation": "A1.root.create",
+    "argv": [
+      "/opt/homebrew/bin/multica",
+      "--workspace-id",
+      "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+      "issue",
+      "create",
+      "--title",
+      "Pilot A1 UNSTAGED frozen two-source handoff comparison",
+      "--description-file",
+      "/Users/herman_mbp2023/Documents/Codex/2026-10-07/task-2/pilot-a-entry/A1-root-description-r4.txt",
+      "--project",
+      "456a4559-da0c-4844-aa28-7ccd3239fd41",
+      "--output",
+      "json"
+    ],
+    "utc_start": "2026-10-07T19:38:23.761549+00:00",
+    "utc_end": "2026-10-07T19:38:24.632200+00:00",
+    "exit": 0,
+    "stdout_sha256": "34dd6fe61487626db8b2724af5f3c0e85c954d807f76ad198073ca97bab1de3e",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "possible_write_reserved": 1,
+    "retry_authorized": false
+  },
+  "admission_reconciliation": {
+    "issue_id": "01a117df-c9b4-7d66-8f0f-15fdb9d6718f",
+    "identifier": "RC10VAL-286",
+    "revision": 1,
+    "actual_creator_id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+    "actual_creator_type": "member",
+    "submitted_description_sha256": "0dbd7271ce6683d926bad6c98ed4cb0de98722168d9a4de2813abd7620214c21",
+    "stored_description_sha256": "6343cb409d6f738defc5fae9f6d4f0c71e951606662f54e19ca64b321d01a8f9",
+    "normalization": "provider removed exactly one final LF; all other bytes match",
+    "runs_before_C01": [],
+    "admission_reconciled": true,
+    "actual_provider_writes": 1,
+    "actual_controller_current_family_reads": 2,
+    "actual_entry_reads": 24,
+    "global_actual_controller_reads": 26,
+    "role_decision_owner_not_native_creator": "Lucy delegated entry decision remains separate from actual provider creator"
+  },
+  "C01": {
+    "operation": "A1.C01",
+    "argv": [
+      "/opt/homebrew/bin/multica",
+      "--workspace-id",
+      "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+      "issue",
+      "comment",
+      "add",
+      "01a117df-c9b4-7d66-8f0f-15fdb9d6718f",
+      "--content-file",
+      "/Users/herman_mbp2023/Documents/Codex/2026-10-07/task-2/pilot-a-execution/A1/C01-submitted-body.txt",
+      "--output",
+      "json"
+    ],
+    "utc_start": "2026-10-07T19:41:06.757635+00:00",
+    "utc_end": "2026-10-07T19:41:07.523695+00:00",
+    "exit": 0,
+    "stdout_sha256": "dc99635d3260f39b78576106e346d29174f27164f071ecb04bd63596d8aa2a31",
+    "body_sha256": "7c6e024b8c20c618015b63636e173acc3a822217c5affd7e6fad2f9f19cab1a1",
+    "possible_write_reserved": 1,
+    "single_target": "3f254bc6-ec7a-4517-aa4c-ba0ae7f81bc1",
+    "retry_authorized": false
+  },
+  "native_comments_asof_19_44_51": [
+    {
+      "id": "01a117e2-469f-765f-aa39-e6c52be28638",
+      "parent_id": null,
+      "author_id": "87261ec4-8bcd-4355-8e50-57514c7e1345",
+      "author_type": "member",
+      "revision": 1,
+      "utc": "2026-10-07T19:41:07Z",
+      "stored_body_sha256": "0a00bf941b29d2a80cd1926ca7ab5152b6b7030619f061f5db2d9dbb2d1a0f8c"
+    },
+    {
+      "id": "01a117e5-75e7-7023-aeb9-b7e49fd32cb8",
+      "parent_id": "01a117e2-469f-765f-aa39-e6c52be28638",
+      "author_id": "3f254bc6-ec7a-4517-aa4c-ba0ae7f81bc1",
+      "author_type": "agent",
+      "revision": 1,
+      "utc": "2026-10-07T19:44:36Z",
+      "stored_body_sha256": "f8573f21c8a5f9b7dd853713f52405526dec2a73907150fd21c12b971d468d93"
+    }
+  ],
+  "native_runs_asof_19_44_51": [
+    {
+      "id": "01a117e5-75fc-7426-bfe3-c2ae026a7179",
+      "agent_id": "668dadac-fd7a-4523-855a-f6a842301555",
+      "status": "running",
+      "runtime_id": "f8061c21-dadc-4f6a-af19-663e90256c6b",
+      "trigger_comment_id": "01a117e5-75e7-7023-aeb9-b7e49fd32cb8",
+      "started_at": "2026-10-07T19:44:36Z"
+    },
+    {
+      "id": "01a117e2-46a9-7bd1-9751-b0647ec45395",
+      "agent_id": "3f254bc6-ec7a-4517-aa4c-ba0ae7f81bc1",
+      "status": "running",
+      "runtime_id": "f8061c21-dadc-4f6a-af19-663e90256c6b",
+      "trigger_comment_id": "01a117e2-469f-765f-aa39-e6c52be28638",
+      "started_at": "2026-10-07T19:41:08Z"
+    }
+  ],
+  "controller_status": "STOP_NEW_DISPATCH_ON_OBSERVED_SCOPE_DEVIATION;NO_CANCEL_OR_CORRECTIVE_COMMENT;PARENT_DECISION_NEEDED",
+  "scope_deviations_observed": [
+    {
+      "seq": 7,
+      "utc": "2026-10-07T19:41:38.3551Z",
+      "fact": "writes issue_desc_full.txt outside the approved protocol/plan.txt or protocol/reply.txt paths",
+      "result_seq": 8
+    },
+    {
+      "seq": 15,
+      "utc": "2026-10-07T19:42:03.920007Z",
+      "fact": "rm -f issue_desc_full.txt without a deletion grant",
+      "result_seq": 16
+    },
+    {
+      "seq": 19,
+      "utc": "2026-10-07T19:42:15.253825Z",
+      "fact": "git log worktree inventory before current method approval; supplied public request/source-pin metadata were the allowed preparation inputs",
+      "result_seq": 20
+    },
+    {
+      "seq": 27,
+      "utc": "2026-10-07T19:42:39.565658Z",
+      "fact": "workspace-wide issue list beyond current A1 evidence family",
+      "result_seq": 28
+    }
+  ],
+  "visible_qa_cli_reads_at_monitored_seq28": {
+    "count": 7,
+    "seq": [
+      1,
+      3,
+      5,
+      7,
+      9,
+      11,
+      27
+    ]
+  },
+  "read_counter_lower_bound": {
+    "entry": 24,
+    "controller_current_family": 6,
+    "observed_actor_CLI_reads": 7,
+    "visible_CLI_total_lower_bound": 37,
+    "other_observed_native_read_tool_operations": 6,
+    "conservative_visible_read_total_lower_bound": 43,
+    "native_actor_continued_after_snapshot": "UNKNOWN_PENDING_FRESH_MESSAGES;do not claim complete final counters"
+  },
+  "writes_asof_snapshot": {
+    "create": 1,
+    "controller_C01": 1,
+    "QA_C02": 1,
+    "total": 3,
+    "comments": 2,
+    "planned_runs_admitted": 2
+  },
+  "all_actual_tests": "NOT_RUN_NO_TEST_EXECUTION_EVIDENCE_IN_SNAPSHOT",
+  "no_duplicate_create": true,
+  "current_exec_command_running": false,
+  "old_denial_preserved": "historical before new direct user authorization; current same route create succeeded"
+}

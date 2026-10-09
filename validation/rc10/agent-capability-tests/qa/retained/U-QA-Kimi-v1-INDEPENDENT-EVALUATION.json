@@ -1,0 +1,144 @@
+{
+  "unit": "U-QA-Kimi-v1",
+  "grade": "REVISE",
+  "native_status": "completed",
+  "authorization": "direct user, exactly one QA unit test on existing A1",
+  "issue_id": "01a117df-c9b4-7d66-8f0f-15fdb9d6718f",
+  "trigger_comment_id": "01a118a1-e19c-7d46-be1f-283680c06892",
+  "qa_run_id": "01a118a1-e1a9-7f27-bb97-2937288bb18f",
+  "qa_output_comment_id": "01a118a3-688c-78ec-b0af-07a37b017c5a",
+  "qa_output_revision": 1,
+  "qa_output_parent_id": "01a118a1-e19c-7d46-be1f-283680c06892",
+  "qa_output_source_task_id": "01a118a1-e1a9-7f27-bb97-2937288bb18f",
+  "qa_output_bytes": 7990,
+  "qa_output_sha256": "a80a0b09770d65cfd1d5aec9a36d1f745d9b070c80d1d6e982533b03266714b2",
+  "started_at_utc": "2026-10-07T23:10:25Z",
+  "completed_at_utc": "2026-10-07T23:12:15Z",
+  "configured_model": "kimi-code/kimi-for-coding",
+  "configured_runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+  "actual_runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+  "actual_usage": [
+    {
+      "cache_read_tokens": 193792,
+      "cache_write_tokens": 0,
+      "input_tokens": 30139,
+      "model": "kimi-code/kimi-for-coding",
+      "output_tokens": 6101,
+      "provider": "kimi"
+    }
+  ],
+  "model_consumption_status": "PROVEN_BY_NATIVE_USAGE_RECEIPT",
+  "cohort_role_instructions_sha256": "7381d32b1f9d5f05ec0790d57d1a180107daafd0f02eb329f3c80fbe0cedeb8d",
+  "assigned_skills": [
+    {
+      "description": "Use at artifact handoffs to detect missing trace links, stale revisions, contradictory decisions, and unimplemented requirements across Intention Spec, design, Development Result, Verification Result, and change artifacts (S04-S08)",
+      "enabled": true,
+      "id": "ee94ee8e-9d20-44b8-ac49-7d85c6db005f",
+      "name": "artifact-consistency"
+    },
+    {
+      "description": "Quick reference for the multica CLI commands agents use to manage issues, comments, status, mentions, and squad activity during a run",
+      "enabled": true,
+      "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+      "name": "multica-cli"
+    },
+    {
+      "description": "Use when the Swarm QA Tester needs to assess coverage of approved acceptance criteria before implementation, regression testing, or release validation.",
+      "enabled": true,
+      "id": "9b36b624-fa1a-4db7-98d8-535efacbad09",
+      "name": "qa-planning"
+    },
+    {
+      "description": "Use when verification requires exercising a running UI/API/service rather than only reading tests; captures real interactions, logs, screenshots or HTTP evidence, and reproducible failures (S06/S08)",
+      "enabled": true,
+      "id": "1ad73f60-eabd-4070-ab93-3e0b02b1394c",
+      "name": "runtime-qa"
+    },
+    {
+      "description": "Use when determining test depth from risk, mapping requirements to evidence, assessing NFR evidence, and producing a release-quality gate instead of relying on intuition (S06/S07/S08)",
+      "enabled": true,
+      "id": "4d12657a-001d-4ae4-87c6-846b4f3dcd34",
+      "name": "test-architecture"
+    },
+    {
+      "description": "Use when designing test plans with equivalence partitioning, boundary values, state transitions and scenario tests, or defining regression strategy and coverage targets (S05/S06/S10)",
+      "enabled": true,
+      "id": "741ab02a-8ef5-4122-86d0-bb8d4d5c2777",
+      "name": "test-design"
+    }
+  ],
+  "full_trace_seq": [
+    1,
+    55
+  ],
+  "full_trace_contiguous": true,
+  "tool_use_result_pairs": 5,
+  "terminal_result_payloads": "All four terminal results omit output/exit status; write_file result exposes bytes. Paired presence alone does not prove command success or cleanup. Stored comment independently proves publication.",
+  "read_accounting": {
+    "qa_issued_primitives": 3,
+    "qa_cap": 6,
+    "controller_preflight": 3,
+    "controller_terminal": 3,
+    "controller_total": 6,
+    "combined_increment": 9,
+    "prior_reentry_used": 45,
+    "reentry_after_unit_used": 54,
+    "reentry_remaining_of_200": 146,
+    "historical_overages_remain_fail": true
+  },
+  "native_effects": {
+    "new_runs": 1,
+    "new_comments": 2,
+    "active_mentions_in_qa_output": 0,
+    "status_change_tool_calls": 0,
+    "source_oracle_read_tool_calls": 0,
+    "scratch_write_path": "./reply.md",
+    "scratch_write_bytes": 7991,
+    "scratch_delete_command_issued": true,
+    "scratch_delete_success": "NOT_PROVEN"
+  },
+  "positive_findings": [
+    "Four comparison dimensions, materiality rule, fact/difference/unknown separation; no fabricated source comparison result.",
+    "Independent method review separated from later execute authorization; stops on mismatch or uncertain ACK.",
+    "3 actual reads matches actor count and stays within cap6; no source/oracle investigation or additional actor trigger visible.",
+    "Actual stored output binds correct author, source_task and trigger parent; 7991 submitted bytes reconcile to7990 stored bytes by removal of finalLF."
+  ],
+  "findings": [
+    {
+      "id": "UQ1",
+      "severity": "protocol_violation",
+      "evidence": "trace seq44 write_file ./reply.md; prompt allows actualcwd/protocol/plan.txt or reply.txt only",
+      "required_change": "Use the already allowed protocol scratch path; no new policy needed."
+    },
+    {
+      "id": "UQ2",
+      "severity": "missing_protocol_evidence",
+      "evidence": "seq46 publishes then issues rm; no post-publication readback toolcall before terminal; final binding paragraph promises storedID/revision/digest without producing it",
+      "required_change": "Use bounded readback of own output and bind exact stored tuple before stopping, within remaining3reads. Controller reconstruction does not substitute for actor compliance."
+    },
+    {
+      "id": "UQ3",
+      "severity": "unsupported_budget_claim",
+      "evidence": "method section5 claims A1 headroom10runs/14comments/1create; preflight already had10runs and historical15comments; unit ended11runs/17comments",
+      "required_change": "Bind this new isolated unit allocation separately; do not treat old issue schedule as remaining authority. Future22-read plan must include admission/dependency/readback operations."
+    },
+    {
+      "id": "UQ4",
+      "severity": "method_dependency_incomplete",
+      "evidence": "FutureVerifier appears only under unknowns; no conditionalfutureVerifier receipt/admission binding before dependent execution/verdict",
+      "required_change": "Keep the future scheduled Verifier as a conditional dependency with required identity/decision receipts; its current non-admission is not removal."
+    },
+    {
+      "id": "UQ5",
+      "severity": "method_completeness_incomplete",
+      "evidence": "method asserts100percent complete bytes, uses ellipsispaths/digests, but provides no concrete approved acquisition/output-limit strategy or way to detect missing chunks",
+      "required_change": "Resolve exact paths/full supplied pins at future admission and specify bounded acquisition/hash/completeness checks and honest perprimitive budget."
+    }
+  ],
+  "causal_notes": {
+    "observed": "QA first reads existing issue and root summaries; retained issue description contains selectedr2 and old10runs/14comments schedule. Short unit trigger selectsr5. Output repeats the old schedule.",
+    "hypothesis": "Inherited existing A1 context likely contaminated new unit budget, while generic publication instructions may conflict with allowed scratch path. This is not proof of exact runtime prompt precedence or full Skill consumption.",
+    "unknown": "Actual loaded system/runtime prompt and complete Skill versions, terminal read output payloads, and deletion result are not exposed in the retained trace. Do not infer private reasoning."
+  },
+  "scope_end": "Stop after this unit; no other native actor, revision or chain admitted."
+}

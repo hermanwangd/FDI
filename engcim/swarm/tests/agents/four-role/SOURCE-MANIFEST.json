@@ -1,0 +1,387 @@
+{
+  "schemaVersion": 1,
+  "status": "DEVELOPMENT_TEST_SSOT_NOT_NATIVE_ACCEPTANCE",
+  "maintainedSourceMap": "engcim/swarm/SOURCE-TO-EFFECTIVE.json",
+  "selectedBranch": "codex/swarm-1-1-ssot-integration",
+  "preConvergenceCommit": "3175e09a9a6a8c1d5260e3f0123ba048a2d3c3b7",
+  "sourceEvidenceDirectory": "/Users/herman_mbp2023/Documents/Codex/2026-10-08/task-9/orchestrator-minimal-repair-20261008/resume-20261008",
+  "sourceEvidenceClassification": "READ_ONLY_HISTORICAL_INPUTS_RESULTS_NOT_MAINTENANCE",
+  "definitions": [
+    {
+      "path": "unit-suite.json",
+      "sourceEvidenceFile": "FOUR-ROLE-BASELINE-UNIT-SUITE-r1.json",
+      "sourceSha256": "f98610ca555cd3c5b5b96609b66be3be6533fe76458eeabbf6bf82ee35f471a2",
+      "sha256": "57a243a8dadc9fc266669d6578285718eb95ef53c9aadde58100bc2b56dde1da",
+      "cases": 36,
+      "semanticCasesSha256": "e010ab96bcb8105552cd395c337abe11ce3b929379fe4ca4661a44d61f37179f",
+      "status": "ACTIVE_DEFINITION_NOT_NATIVE_ADMISSION",
+      "inputCriteriaUnchanged": true
+    },
+    {
+      "path": "supplement-suite.json",
+      "sourceEvidenceFile": "FOUR-ROLE-BASELINE-SUPPLEMENT-r5-DRAFT.json",
+      "sourceSha256": "b379189d780cfc11fd56ffd1b641ba046911f6a8b79598f6c86739167d04bcf9",
+      "sha256": "34fece40a60bef74df2fd06230d9f4da83e1778cd77957b2595e5e5b4e5a722e",
+      "cases": 37,
+      "semanticCasesSha256": "12e5610303667830d37bb7492c3b6c0a13882f67c94bc591ceff5c7fba5a6a89",
+      "status": "ACTIVE_DEFINITION_NOT_NATIVE_ADMISSION",
+      "inputCriteriaUnchanged": true
+    },
+    {
+      "path": "original-branch-suite.json",
+      "sourceEvidenceFile": "MISSING-ORIGINAL-ROLE-BRANCH-UNIT-SUITE-r2-DRAFT.json",
+      "sourceSha256": "1d2d4dcc7a0954712136a241a1b0bcbda23b23860ea2266f1576666399b8b615",
+      "sha256": "ff7d087254fafbc09df8f1c3433de60e1ca0a0c431cb1a903668e88b39a5ca2f",
+      "cases": 6,
+      "semanticCasesSha256": "8f1a0eaf2230525e28d22b3d3facc3a1cb946739812efd38d960e47aaffc2efd",
+      "status": "ACTIVE_DEFINITION_NOT_NATIVE_ADMISSION",
+      "inputCriteriaUnchanged": true
+    },
+    {
+      "path": "focused-suite.json",
+      "sourceEvidenceFile": "FOUR-ROLE-SUITE-FROZEN.json",
+      "sourceSha256": "b92b462fce6d51a020d6b073f8e4d4c9dc73baad5664b7a2e24415ca9fe2d4a2",
+      "sha256": "ccdf7c83023f2a3d91c1828efa66ce44554e480afac54cc0e450cd7c6d3dd177",
+      "cases": 8,
+      "semanticCasesSha256": "16826465b88fc2290e9b3caa23f310447f886c986ba6aff751040c74b53ece0d",
+      "status": "ACTIVE_DEFINITION_NOT_NATIVE_ADMISSION",
+      "inputCriteriaUnchanged": true
+    },
+    {
+      "path": "../capabilities.json",
+      "sourceEvidenceFile": "FOUR-ROLE-SOURCE-CAPABILITY-CATALOG-r5-DRAFT.json",
+      "sourceSha256": "408abd3513c758fc40418cf31926283f97597461bca23797fe8a8e38c9d35a58",
+      "sha256": "fdc8e8adcf1c3a6da086c9dec9861624c7293119ae4e81d0fb60325841e74e59",
+      "cases": null,
+      "semanticCasesSha256": null,
+      "status": "ACTIVE_DEFINITION_NOT_NATIVE_ADMISSION",
+      "inputCriteriaUnchanged": true,
+      "sourceSha256UnchangedNote": "Retained original external inventory origin; current SHA includes 19-role references and unchanged 65 mappings"
+    }
+  ],
+  "tools": [
+    {
+      "path": "role-unit-evidence-v3.test.mjs",
+      "originalSha256": "1ae03e4c410becb8dbf7531dc3a034c84634b21da802124d4e4b81b8106a5f56",
+      "sha256": "1ae03e4c410becb8dbf7531dc3a034c84634b21da802124d4e4b81b8106a5f56",
+      "bytes": 7974,
+      "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_SELF_TEST",
+      "change": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "role-unit-output-schema-r1.test.mjs",
+      "originalSha256": "bdfa8e2852c62e06541dbcf6449ba9f00cb58fda7e23e05bfd4bd62cdb9a7dd8",
+      "sha256": "94bcbb4c0346119fcd1a109b0097f4aa0f32b44c4043cbb695e3331e82f607d0",
+      "bytes": 1988,
+      "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_SELF_TEST",
+      "change": "LOCAL_FIXTURE_READ_PATHS_ONLY; TRACE_SCENARIO_AND_CRITERIA_UNCHANGED"
+    },
+    {
+      "path": "qa-own-issue-harness-r4.unit.mjs",
+      "originalSha256": "a7b9b783e0cdd6c7627decb3c4467b501bbda3d84b02e3768eaf606c711dd3f5",
+      "sha256": "4a22478b57435d6e53eac8f8a13db3ec4c6cd87552940038ff6aa547783c1853",
+      "bytes": 9998,
+      "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_SELF_TEST",
+      "change": "LOCAL_FIXTURE_READ_PATHS_ONLY; TRACE_SCENARIO_AND_CRITERIA_UNCHANGED"
+    },
+    {
+      "path": "qa-reused-fixture-scope-r3.unit.mjs",
+      "originalSha256": "30e317299ae1ee8a3e86db9d83c3cbb3772fa9461bb53920677b91e1193d36ea",
+      "sha256": "4b33efcfec7177af7cfb6240a3b9d8de1b0836bcfa9364cd3e49c6cb01773222",
+      "bytes": 2111,
+      "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_SELF_TEST",
+      "change": "LOCAL_FIXTURE_READ_PATHS_ONLY; TRACE_SCENARIO_AND_CRITERIA_UNCHANGED"
+    },
+    {
+      "path": "role-paged-source-read-evidence-r1.mjs",
+      "originalSha256": "9f6682e205cfeb1e0075b952924ed3999be77940406223a799953d28432577ba",
+      "sha256": "9f6682e205cfeb1e0075b952924ed3999be77940406223a799953d28432577ba",
+      "bytes": 3367,
+      "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_HELPER",
+      "change": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "role-json-only-final-contract-r1.mjs",
+      "originalSha256": "18e6f01d25143090f1a5469052fe1bb56ff7459d0fd9acc9a8e13922e1a0340c",
+      "sha256": "18e6f01d25143090f1a5469052fe1bb56ff7459d0fd9acc9a8e13922e1a0340c",
+      "bytes": 782,
+      "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_HELPER",
+      "change": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "role-unit-evidence-v3.mjs",
+      "originalSha256": "b04c8c8d5e3f248d0cb38ab01c69b821948c1a84fb8c88206690b95d028c5fbb",
+      "sha256": "b04c8c8d5e3f248d0cb38ab01c69b821948c1a84fb8c88206690b95d028c5fbb",
+      "bytes": 7080,
+      "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_HELPER",
+      "change": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "role-unit-output-schema-r1.mjs",
+      "originalSha256": "04218cdfd4324f7f7770139ee149f1cce2b4b55c758c4b446321712048a0b8ce",
+      "sha256": "04218cdfd4324f7f7770139ee149f1cce2b4b55c758c4b446321712048a0b8ce",
+      "bytes": 1829,
+      "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_HELPER",
+      "change": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "qa-own-issue-component-guard-r4-DRAFT.mjs",
+      "originalSha256": "cf5c6f071847d74497c278eb67167f252cfa38ab129e98b2f23fed1ed920e82e",
+      "sha256": "cf5c6f071847d74497c278eb67167f252cfa38ab129e98b2f23fed1ed920e82e",
+      "bytes": 7794,
+      "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_HELPER",
+      "change": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "qa-own-issue-filesystem-boundary-r2-DRAFT.mjs",
+      "originalSha256": "33e3b34674a75f34d5e370615ac302cbfcdc4a298f5b86a34a9dc0941cbcc97c",
+      "sha256": "33e3b34674a75f34d5e370615ac302cbfcdc4a298f5b86a34a9dc0941cbcc97c",
+      "bytes": 972,
+      "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_HELPER",
+      "change": "BYTE_IDENTICAL"
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "fixtures/baseline-inventory-orchestrator-instructions.md",
+      "bytes": 93351,
+      "sha256": "6f7f90c3b0d3a0b5e98a1a6dbe07fe335c452419f3895a214a8d112242ba5757",
+      "sourceEvidenceFile": "baseline-inventory-orchestrator-instructions.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-skill-multica-cli.md",
+      "bytes": 13467,
+      "sha256": "8f35032f7f055e54b7edc4914272d5bfa4bd2258be782f77e16e878ca8f9d808",
+      "sourceEvidenceFile": "baseline-skill-multica-cli.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-skill-product-knowledge.md",
+      "bytes": 23223,
+      "sha256": "16afe5467ef8655c9c7d5199e213d5be074269581961e4eb5eb504791d0b1e26",
+      "sourceEvidenceFile": "baseline-skill-product-knowledge.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-skill-swarm-orchestration.md",
+      "bytes": 23406,
+      "sha256": "18cca8353cd3c2bb4b68098e980649ea70fa03be1949dca120b147af05dac23f",
+      "sourceEvidenceFile": "baseline-skill-swarm-orchestration.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-skill-swarm-telemetry.md",
+      "bytes": 11183,
+      "sha256": "44a36a2047303cccac0327cc4218fb6e94aa9f7a75353dee9f462ababfacfb8b",
+      "sourceEvidenceFile": "baseline-skill-swarm-telemetry.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-inventory-qa-instructions.md",
+      "bytes": 3060,
+      "sha256": "7381d32b1f9d5f05ec0790d57d1a180107daafd0f02eb329f3c80fbe0cedeb8d",
+      "sourceEvidenceFile": "baseline-inventory-qa-instructions.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-skill-artifact-consistency.md",
+      "bytes": 1290,
+      "sha256": "d27ce19c45e3636715a20e0333ee2a1e297a8d0d22458959e9d7e062feec8c61",
+      "sourceEvidenceFile": "baseline-skill-artifact-consistency.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-skill-qa-planning.md",
+      "bytes": 6563,
+      "sha256": "de6b0ed41aac8a8d649f290d20dee1490d7fb3a4bbcb5f24529d8c90f09e6ae6",
+      "sourceEvidenceFile": "baseline-skill-qa-planning.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-skill-runtime-qa.md",
+      "bytes": 1419,
+      "sha256": "c376170500182170fdcc006fed6004370b24f4223faa75b7f48388645bcacd5e",
+      "sourceEvidenceFile": "baseline-skill-runtime-qa.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-skill-test-architecture.md",
+      "bytes": 1698,
+      "sha256": "eef28362b091c849083ffce8530086b2b44e33de66415278c60860194393c06d",
+      "sourceEvidenceFile": "baseline-skill-test-architecture.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-skill-test-design.md",
+      "bytes": 4267,
+      "sha256": "b0bf47ee4f8b704c61c0043adccfe1942c749052434773d3a728b7e551debce9",
+      "sourceEvidenceFile": "baseline-skill-test-design.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-inventory-architect-instructions.md",
+      "bytes": 7313,
+      "sha256": "e6c8861bd1ab0bfb95b2863e15870e31f1e95ccf40538d5fa45c46139955c6a9",
+      "sourceEvidenceFile": "baseline-inventory-architect-instructions.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-skill-changesurface-analysis.md",
+      "bytes": 5426,
+      "sha256": "1645fb8678288a02e987e21649505d344d682de84183c656da20984c63719f52",
+      "sourceEvidenceFile": "baseline-skill-changesurface-analysis.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-skill-pk-azure-devops-history.md",
+      "bytes": 5472,
+      "sha256": "68688296f8245eff3976bdc8a706713d9cb59c929cf007e9a4492bf351210f34",
+      "sourceEvidenceFile": "baseline-skill-pk-azure-devops-history.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-skill-spec-design.md",
+      "bytes": 5303,
+      "sha256": "1eed049eeeaa503ad7f24ae8961f460ac90ae90a4a56f9252f5964bda5a92fa7",
+      "sourceEvidenceFile": "baseline-skill-spec-design.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-inventory-reviewer-instructions.md",
+      "bytes": 7147,
+      "sha256": "3409e98d5021b325e1a3e277bd7e88af354efc2b39a5ad1c644f4ef3849c0501",
+      "sourceEvidenceFile": "baseline-inventory-reviewer-instructions.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/baseline-skill-code-review-method.md",
+      "bytes": 6545,
+      "sha256": "f1ab9c1ba23a76885d7b09cf9531d59c953d0b1278a662e2055dd7a661a50679",
+      "sourceEvidenceFile": "baseline-skill-code-review-method.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/shared-cli-skill-drift-current-20261009.md",
+      "bytes": 16008,
+      "sha256": "4949ce26f39794e6d278fd7d61a63e194b1bffb4f3853d18e7f5d257fabaef8a",
+      "sourceEvidenceFile": "shared-cli-skill-drift-current-20261009.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/native-reviewer-common-cli-before-supplement.native-result.md",
+      "bytes": 12554,
+      "sha256": "3b4c6d717adaa573a7042f6aae75fb0d94f98e565a79f241b18e2f7150217caf",
+      "sourceEvidenceFile": "native-reviewer-common-cli-before-supplement.native-result.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/native-reviewer-common-cli-after-supplement.native-result.md",
+      "bytes": 15541,
+      "sha256": "9d61024d97dcacca1bd552df84f89d75cc100cdb3b75733113665f87a672f37e",
+      "sourceEvidenceFile": "native-reviewer-common-cli-after-supplement.native-result.md",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/REVIEWER-COMMON-CLI-after-supplement-SUITE.json",
+      "bytes": 19010,
+      "sha256": "8ccc5e277683a1da901d9e1d4993215c3b612e4500fa174f36c79db90a2530fe",
+      "sourceEvidenceFile": "REVIEWER-COMMON-CLI-after-supplement-SUITE.json",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/QA-OWN-ISSUE-BEFORE-ORIGINAL-MANIFEST-r4-DRAFT.json",
+      "bytes": 12814,
+      "sha256": "829aab4cb4741b57db2bf965dcc186ed119462eb4391a1b6c1defdaaaef1e96e",
+      "sourceEvidenceFile": "QA-OWN-ISSUE-BEFORE-ORIGINAL-MANIFEST-r4-DRAFT.json",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/native-qa-own-issue-r2-before-original.evidence.json",
+      "bytes": 734396,
+      "sha256": "99f705d8a7d542c3dd0b6d6b14716ac6427e3bf36fe880e159d31aaf33704f1f",
+      "sourceEvidenceFile": "native-qa-own-issue-r2-before-original.evidence.json",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/native-qa-own-issue-r3-before-original.evidence.json",
+      "bytes": 678047,
+      "sha256": "56924752866a7e2c01649ca6814bcdaf8654a1f928a96dca5e489161d55d20c6",
+      "sourceEvidenceFile": "native-qa-own-issue-r3-before-original.evidence.json",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/ORCHESTRATOR-SUITE-FROZEN.json",
+      "bytes": 2390,
+      "sha256": "29d82932fdc20bf6a6b20591cfc6d3f7d3e327f5af54ab9c883f5a9d35d87b87",
+      "sourceEvidenceFile": "ORCHESTRATOR-SUITE-FROZEN.json",
+      "classification": "IMMUTABLE_HISTORICAL_TEST_FIXTURE_NOT_ROLE_AUTHORING"
+    },
+    {
+      "path": "fixtures/qa-own-issue-before-original-driver-r3-DRAFT.mjs.txt",
+      "bytes": 13140,
+      "sha256": "668eb3ea50425f03866e2cd1362eaa9d0aac16e9a3945d185b994ad4d6748ab4",
+      "sourceEvidenceFile": "qa-own-issue-before-original-driver-r3-DRAFT.mjs",
+      "classification": "READ_ONLY_DRIVER_SOURCE_TEXT; PURE_GUARD_EXTRACTION_ONLY; NEVER_NATIVE_DRIVER_IMPORT"
+    },
+    {
+      "path": "fixtures/baseline-orchestrator-skill-pre-fix-7dd934e0.md",
+      "bytes": 22594,
+      "sha256": "cbe44f833512ffdb191bcd9c9e065e3da6e69877a7f4aa2d8b12f5306ee3bb5d",
+      "kind": "IMMUTABLE_HISTORICAL_PRE_FIX_SNAPSHOT",
+      "sourceCommit": "7dd934e0f75b710f03b0982f44adff90af9a3241",
+      "sourcePath": "engcim/swarm/baselines/rc6/runtime/package/engcim-swarm-package-RC6/skills/swarm-orchestration/SKILL.md",
+      "maintenance": "NOT_ROLE_AUTHORING_NOT_SEALED_1_1_BASELINE"
+    }
+  ],
+  "existingFocusedOrchestrator": "Only focused-suite.json T1/T2 active; original two-case file immutable historical fixture",
+  "fixtureRebinding": "Only reference/read paths changed. Case inputs/criteria and trace scenario paths retained.",
+  "selfTests": {
+    "status": "PASS_LOCAL_TOOL_TESTS_ONLY",
+    "commands": [
+      {
+        "command": [
+          "node",
+          "--max-old-space-size=256",
+          "--test",
+          "role-unit-evidence-v3.test.mjs",
+          "role-unit-output-schema-r1.test.mjs"
+        ],
+        "assertions": 16,
+        "stdoutSha256": "18b841fadf1f5e3c97da754a1b817526508f1f253dbfc3b072a0d0e3d288c68c",
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "node",
+          "--max-old-space-size=256",
+          "qa-own-issue-harness-r4.unit.mjs"
+        ],
+        "assertions": 46,
+        "stdoutSha256": "9f20996ebd0a8cf21ce367d05195bd10f2fd913e7504ff3225e777a86dbc8ec1",
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "node",
+          "--max-old-space-size=256",
+          "qa-reused-fixture-scope-r3.unit.mjs"
+        ],
+        "assertions": 9,
+        "stdoutSha256": "87ea0601bd9634ef571aff680066202e29f1bea57f5ca2dd09034d82e99d0b57",
+        "exitCode": 0
+      }
+    ],
+    "scope": "No native/provider operation, no new framework behavior; original failures not converted to PASS"
+  },
+  "native": "NOT_RUN; full loading/baseline/capability/no regression UNVERIFIED",
+  "readme": {
+    "path": "README.md",
+    "sha256": "5c4542ce6bf1ed392b2b0935de725f04b2df9ea40fdc148cdf6bb9ca9be2c74a",
+    "bytes": 3011
+  },
+  "capabilityInventoryScope": "Shared all-role capability inventory; four-role case definitions/tools/fixtures remain here",
+  "sourceConvergenceBranch": "codex/overnight-plan-freeze",
+  "integrationBaseCommit": "37c901fbdbc5dcc0fc858be489f0c9b17e68e83b",
+  "selectedSourceCommit": "e87ac10c96db4519264b418b6037aa7f5c86a790"
+}

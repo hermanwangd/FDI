@@ -1,0 +1,2259 @@
+{
+  "revision": "native-parent-supplement-r4",
+  "authority": "Parent-authorized independent reviewer caller-compatibility finding at accepted audit9cb9d31; source thread01a10ec6-ca58-713f-be8e-fd34dd04a0f4",
+  "reviewed_candidate": "9cb9d31a74ca42fe0599e521b45f04d215d17dbb",
+  "fixture_base_sha256": "811c7deed3975f773d3f58bfe63cbef9a53c1716291806dc34252fb0e499ce3c",
+  "denominator": "14 subordinate assertions within existing U03/U07/C04; unchanged16unit/6contract/8static/24native; no new caseIDs",
+  "contract": "Decision reviewed_plan_id explicitly names reviewed plan independently of actual native parent_id. If reviewed_plan_id is present it must be a nonempty string and exact currentplan ID; never fall back from invalid explicit value. Legacy receipts omitting it retain parent_id-as-subject. Actual parent must be explicitly recorded as nonempty string or observed null (top-level); never invent a plan-thread parent. When a non-null observed trigger_comment_id is supplied, actual parent equals it. Null trigger records no comment trigger. source_task retained unchanged; raw native context authenticity is separate. Revisions/hash and all existing current actor/scope/input/conditions checks stay required. History groups by reviewed subject, not publication parent.",
+  "level": "LOCAL_SYNTHETIC_NOT_NATIVE",
+  "variants": [
+    {
+      "case": "C04",
+      "variant": "native-trigger-parent-differs-reviewed-plan",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [
+          {
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "plans": [
+          {
+            "id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "native_revision": 1,
+            "declared_revision": 2,
+            "stored_body": "Plan: read/hash/compare bounded sources.\n",
+            "created_at": "2026-10-08T00:00:00Z",
+            "stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "decisions": [
+          {
+            "id": "decision-A",
+            "parent_id": "review-request-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:00Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "reviewed_plan_id": "plan-A",
+            "trigger_comment_id": "review-request-A",
+            "source_task": {
+              "kind": "COMMENT_TRIGGER",
+              "trigger_comment_id": "review-request-A",
+              "source_task_id": "fixture-source-task-review-request-A"
+            }
+          }
+        ],
+        "operations": [
+          {
+            "id": "op-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "SOURCE_READ",
+            "locator": "RC6/docs/scenarios.md",
+            "input_revision": "RC6",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:00Z",
+            "command": "read named source",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "output-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-A",
+            "actor_id": "architect-A",
+            "content": "source output",
+            "sha256": "8b9f15ff83aa611046eb772984701958aac45b897f388f4bd5a51eca5adf4f12"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "COMPLIANT_COMPLETED",
+        "required_evidence": [
+          "output-A"
+        ],
+        "expected_actions": [
+          "analyse-A"
+        ]
+      },
+      "status": "CLEAN",
+      "required_findings": []
+    },
+    {
+      "case": "C04",
+      "variant": "explicit-plan-subject-with-observed-top-level-null-parent",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [
+          {
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "plans": [
+          {
+            "id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "native_revision": 1,
+            "declared_revision": 2,
+            "stored_body": "Plan: read/hash/compare bounded sources.\n",
+            "created_at": "2026-10-08T00:00:00Z",
+            "stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "decisions": [
+          {
+            "id": "decision-A",
+            "parent_id": null,
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:00Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "reviewed_plan_id": "plan-A",
+            "trigger_comment_id": null,
+            "source_task": {
+              "kind": "ISSUE_TRIGGER",
+              "source_task_id": "fixture-source-task-issue-A"
+            }
+          }
+        ],
+        "operations": [
+          {
+            "id": "op-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "SOURCE_READ",
+            "locator": "RC6/docs/scenarios.md",
+            "input_revision": "RC6",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:00Z",
+            "command": "read named source",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "output-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-A",
+            "actor_id": "architect-A",
+            "content": "source output",
+            "sha256": "8b9f15ff83aa611046eb772984701958aac45b897f388f4bd5a51eca5adf4f12"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "COMPLIANT_COMPLETED",
+        "required_evidence": [
+          "output-A"
+        ],
+        "expected_actions": [
+          "analyse-A"
+        ]
+      },
+      "status": "CLEAN",
+      "required_findings": []
+    },
+    {
+      "case": "C04",
+      "variant": "legacy-parent-is-plan-without-explicit-subject",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [
+          {
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "plans": [
+          {
+            "id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "native_revision": 1,
+            "declared_revision": 2,
+            "stored_body": "Plan: read/hash/compare bounded sources.\n",
+            "created_at": "2026-10-08T00:00:00Z",
+            "stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "decisions": [
+          {
+            "id": "decision-A",
+            "parent_id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:00Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ]
+          }
+        ],
+        "operations": [
+          {
+            "id": "op-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "SOURCE_READ",
+            "locator": "RC6/docs/scenarios.md",
+            "input_revision": "RC6",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:00Z",
+            "command": "read named source",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "output-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-A",
+            "actor_id": "architect-A",
+            "content": "source output",
+            "sha256": "8b9f15ff83aa611046eb772984701958aac45b897f388f4bd5a51eca5adf4f12"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "COMPLIANT_COMPLETED",
+        "required_evidence": [
+          "output-A"
+        ],
+        "expected_actions": [
+          "analyse-A"
+        ]
+      },
+      "status": "CLEAN",
+      "required_findings": []
+    },
+    {
+      "case": "C04",
+      "variant": "parent-rewritten-to-plan-conflicts-actual-trigger",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [
+          {
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "plans": [
+          {
+            "id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "native_revision": 1,
+            "declared_revision": 2,
+            "stored_body": "Plan: read/hash/compare bounded sources.\n",
+            "created_at": "2026-10-08T00:00:00Z",
+            "stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "decisions": [
+          {
+            "id": "decision-A",
+            "parent_id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:00Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "reviewed_plan_id": "plan-A",
+            "trigger_comment_id": "review-request-A",
+            "source_task": {
+              "kind": "COMMENT_TRIGGER",
+              "trigger_comment_id": "review-request-A",
+              "source_task_id": "fixture-source-task-review-request-A"
+            }
+          }
+        ],
+        "operations": [
+          {
+            "id": "op-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "SOURCE_READ",
+            "locator": "RC6/docs/scenarios.md",
+            "input_revision": "RC6",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:00Z",
+            "command": "read named source",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "output-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-A",
+            "actor_id": "architect-A",
+            "content": "source output",
+            "sha256": "8b9f15ff83aa611046eb772984701958aac45b897f388f4bd5a51eca5adf4f12"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "COMPLIANT_COMPLETED",
+        "required_evidence": [
+          "output-A"
+        ],
+        "expected_actions": [
+          "analyse-A"
+        ]
+      },
+      "status": "FINDINGS",
+      "required_findings": [
+        "PLAN_BINDING_MISMATCH"
+      ]
+    },
+    {
+      "case": "U07",
+      "variant": "explicit-wrong-subject-no-parent-fallback",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [
+          {
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "plans": [
+          {
+            "id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "native_revision": 1,
+            "declared_revision": 2,
+            "stored_body": "Plan: read/hash/compare bounded sources.\n",
+            "created_at": "2026-10-08T00:00:00Z",
+            "stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "decisions": [
+          {
+            "id": "decision-A",
+            "parent_id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:00Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "reviewed_plan_id": "wrong-plan-B"
+          }
+        ],
+        "operations": [
+          {
+            "id": "op-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "SOURCE_READ",
+            "locator": "RC6/docs/scenarios.md",
+            "input_revision": "RC6",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:00Z",
+            "command": "read named source",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "output-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-A",
+            "actor_id": "architect-A",
+            "content": "source output",
+            "sha256": "8b9f15ff83aa611046eb772984701958aac45b897f388f4bd5a51eca5adf4f12"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "COMPLIANT_COMPLETED",
+        "required_evidence": [
+          "output-A"
+        ],
+        "expected_actions": [
+          "analyse-A"
+        ]
+      },
+      "status": "FINDINGS",
+      "required_findings": [
+        "PLAN_BINDING_MISMATCH"
+      ]
+    },
+    {
+      "case": "U07",
+      "variant": "explicit-subject-invalid-native_plan_revision",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [
+          {
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "plans": [
+          {
+            "id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "native_revision": 1,
+            "declared_revision": 2,
+            "stored_body": "Plan: read/hash/compare bounded sources.\n",
+            "created_at": "2026-10-08T00:00:00Z",
+            "stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "decisions": [
+          {
+            "id": "decision-A",
+            "parent_id": "review-request-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 2,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:00Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "reviewed_plan_id": "plan-A",
+            "trigger_comment_id": "review-request-A",
+            "source_task": {
+              "kind": "COMMENT_TRIGGER",
+              "trigger_comment_id": "review-request-A",
+              "source_task_id": "fixture-source-task-review-request-A"
+            }
+          }
+        ],
+        "operations": [
+          {
+            "id": "op-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "SOURCE_READ",
+            "locator": "RC6/docs/scenarios.md",
+            "input_revision": "RC6",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:00Z",
+            "command": "read named source",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "output-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-A",
+            "actor_id": "architect-A",
+            "content": "source output",
+            "sha256": "8b9f15ff83aa611046eb772984701958aac45b897f388f4bd5a51eca5adf4f12"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "COMPLIANT_COMPLETED",
+        "required_evidence": [
+          "output-A"
+        ],
+        "expected_actions": [
+          "analyse-A"
+        ]
+      },
+      "status": "FINDINGS",
+      "required_findings": [
+        "PLAN_BINDING_MISMATCH"
+      ]
+    },
+    {
+      "case": "U07",
+      "variant": "explicit-subject-invalid-declared_plan_revision",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [
+          {
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "plans": [
+          {
+            "id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "native_revision": 1,
+            "declared_revision": 2,
+            "stored_body": "Plan: read/hash/compare bounded sources.\n",
+            "created_at": "2026-10-08T00:00:00Z",
+            "stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "decisions": [
+          {
+            "id": "decision-A",
+            "parent_id": "review-request-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 1,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:00Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "reviewed_plan_id": "plan-A",
+            "trigger_comment_id": "review-request-A",
+            "source_task": {
+              "kind": "COMMENT_TRIGGER",
+              "trigger_comment_id": "review-request-A",
+              "source_task_id": "fixture-source-task-review-request-A"
+            }
+          }
+        ],
+        "operations": [
+          {
+            "id": "op-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "SOURCE_READ",
+            "locator": "RC6/docs/scenarios.md",
+            "input_revision": "RC6",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:00Z",
+            "command": "read named source",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "output-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-A",
+            "actor_id": "architect-A",
+            "content": "source output",
+            "sha256": "8b9f15ff83aa611046eb772984701958aac45b897f388f4bd5a51eca5adf4f12"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "COMPLIANT_COMPLETED",
+        "required_evidence": [
+          "output-A"
+        ],
+        "expected_actions": [
+          "analyse-A"
+        ]
+      },
+      "status": "FINDINGS",
+      "required_findings": [
+        "PLAN_BINDING_MISMATCH"
+      ]
+    },
+    {
+      "case": "U07",
+      "variant": "explicit-subject-invalid-plan_stored_sha256",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [
+          {
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "plans": [
+          {
+            "id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "native_revision": 1,
+            "declared_revision": 2,
+            "stored_body": "Plan: read/hash/compare bounded sources.\n",
+            "created_at": "2026-10-08T00:00:00Z",
+            "stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "decisions": [
+          {
+            "id": "decision-A",
+            "parent_id": "review-request-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:00Z",
+            "plan_stored_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "reviewed_plan_id": "plan-A",
+            "trigger_comment_id": "review-request-A",
+            "source_task": {
+              "kind": "COMMENT_TRIGGER",
+              "trigger_comment_id": "review-request-A",
+              "source_task_id": "fixture-source-task-review-request-A"
+            }
+          }
+        ],
+        "operations": [
+          {
+            "id": "op-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "SOURCE_READ",
+            "locator": "RC6/docs/scenarios.md",
+            "input_revision": "RC6",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:00Z",
+            "command": "read named source",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "output-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-A",
+            "actor_id": "architect-A",
+            "content": "source output",
+            "sha256": "8b9f15ff83aa611046eb772984701958aac45b897f388f4bd5a51eca5adf4f12"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "COMPLIANT_COMPLETED",
+        "required_evidence": [
+          "output-A"
+        ],
+        "expected_actions": [
+          "analyse-A"
+        ]
+      },
+      "status": "FINDINGS",
+      "required_findings": [
+        "PLAN_BINDING_MISMATCH"
+      ]
+    },
+    {
+      "case": "U07",
+      "variant": "explicit-subject-invalid-reviewed_plan_id",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [
+          {
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "plans": [
+          {
+            "id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "native_revision": 1,
+            "declared_revision": 2,
+            "stored_body": "Plan: read/hash/compare bounded sources.\n",
+            "created_at": "2026-10-08T00:00:00Z",
+            "stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "decisions": [
+          {
+            "id": "decision-A",
+            "parent_id": "review-request-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:00Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "reviewed_plan_id": null,
+            "trigger_comment_id": "review-request-A",
+            "source_task": {
+              "kind": "COMMENT_TRIGGER",
+              "trigger_comment_id": "review-request-A",
+              "source_task_id": "fixture-source-task-review-request-A"
+            }
+          }
+        ],
+        "operations": [
+          {
+            "id": "op-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "SOURCE_READ",
+            "locator": "RC6/docs/scenarios.md",
+            "input_revision": "RC6",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:00Z",
+            "command": "read named source",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "output-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-A",
+            "actor_id": "architect-A",
+            "content": "source output",
+            "sha256": "8b9f15ff83aa611046eb772984701958aac45b897f388f4bd5a51eca5adf4f12"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "COMPLIANT_COMPLETED",
+        "required_evidence": [
+          "output-A"
+        ],
+        "expected_actions": [
+          "analyse-A"
+        ]
+      },
+      "status": "FINDINGS",
+      "required_findings": [
+        "PLAN_BINDING_MISMATCH"
+      ]
+    },
+    {
+      "case": "U07",
+      "variant": "explicit-subject-invalid-reviewed_plan_id",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [
+          {
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "plans": [
+          {
+            "id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "native_revision": 1,
+            "declared_revision": 2,
+            "stored_body": "Plan: read/hash/compare bounded sources.\n",
+            "created_at": "2026-10-08T00:00:00Z",
+            "stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "decisions": [
+          {
+            "id": "decision-A",
+            "parent_id": "review-request-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:00Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "reviewed_plan_id": 17,
+            "trigger_comment_id": "review-request-A",
+            "source_task": {
+              "kind": "COMMENT_TRIGGER",
+              "trigger_comment_id": "review-request-A",
+              "source_task_id": "fixture-source-task-review-request-A"
+            }
+          }
+        ],
+        "operations": [
+          {
+            "id": "op-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "SOURCE_READ",
+            "locator": "RC6/docs/scenarios.md",
+            "input_revision": "RC6",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:00Z",
+            "command": "read named source",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "output-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-A",
+            "actor_id": "architect-A",
+            "content": "source output",
+            "sha256": "8b9f15ff83aa611046eb772984701958aac45b897f388f4bd5a51eca5adf4f12"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "COMPLIANT_COMPLETED",
+        "required_evidence": [
+          "output-A"
+        ],
+        "expected_actions": [
+          "analyse-A"
+        ]
+      },
+      "status": "FINDINGS",
+      "required_findings": [
+        "PLAN_BINDING_MISMATCH"
+      ]
+    },
+    {
+      "case": "U07",
+      "variant": "different-parent-missing-explicit-reviewed-subject",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [
+          {
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "plans": [
+          {
+            "id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "native_revision": 1,
+            "declared_revision": 2,
+            "stored_body": "Plan: read/hash/compare bounded sources.\n",
+            "created_at": "2026-10-08T00:00:00Z",
+            "stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "decisions": [
+          {
+            "id": "decision-A",
+            "parent_id": "review-request-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:00Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "trigger_comment_id": "review-request-A",
+            "source_task": {
+              "kind": "COMMENT_TRIGGER",
+              "trigger_comment_id": "review-request-A",
+              "source_task_id": "fixture-source-task-review-request-A"
+            }
+          }
+        ],
+        "operations": [
+          {
+            "id": "op-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "SOURCE_READ",
+            "locator": "RC6/docs/scenarios.md",
+            "input_revision": "RC6",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:00Z",
+            "command": "read named source",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "output-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-A",
+            "actor_id": "architect-A",
+            "content": "source output",
+            "sha256": "8b9f15ff83aa611046eb772984701958aac45b897f388f4bd5a51eca5adf4f12"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "COMPLIANT_COMPLETED",
+        "required_evidence": [
+          "output-A"
+        ],
+        "expected_actions": [
+          "analyse-A"
+        ]
+      },
+      "status": "FINDINGS",
+      "required_findings": [
+        "PLAN_BINDING_MISMATCH"
+      ]
+    },
+    {
+      "case": "U03",
+      "variant": "same-plan-revise-under-other-native-parent",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [
+          {
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "plans": [
+          {
+            "id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "native_revision": 1,
+            "declared_revision": 2,
+            "stored_body": "Plan: read/hash/compare bounded sources.\n",
+            "created_at": "2026-10-08T00:00:00Z",
+            "stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "decisions": [
+          {
+            "id": "decision-A",
+            "parent_id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:00Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ]
+          },
+          {
+            "id": "decision-B",
+            "parent_id": "review-request-B",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "REVISE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:30Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "reviewed_plan_id": "plan-A",
+            "trigger_comment_id": "review-request-B",
+            "source_task": {
+              "kind": "COMMENT_TRIGGER",
+              "trigger_comment_id": "review-request-B",
+              "source_task_id": "fixture-source-task-review-request-B"
+            }
+          }
+        ],
+        "operations": [
+          {
+            "id": "op-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "SOURCE_READ",
+            "locator": "RC6/docs/scenarios.md",
+            "input_revision": "RC6",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:00Z",
+            "command": "read named source",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "output-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-A",
+            "actor_id": "architect-A",
+            "content": "source output",
+            "sha256": "8b9f15ff83aa611046eb772984701958aac45b897f388f4bd5a51eca5adf4f12"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "COMPLIANT_COMPLETED",
+        "required_evidence": [
+          "output-A"
+        ],
+        "expected_actions": [
+          "analyse-A"
+        ]
+      },
+      "status": "FINDINGS",
+      "required_findings": [
+        "ACTION_NOT_APPROVED"
+      ]
+    },
+    {
+      "case": "U03",
+      "variant": "future-revise-under-other-parent-not-retroactive",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [
+          {
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "plans": [
+          {
+            "id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "native_revision": 1,
+            "declared_revision": 2,
+            "stored_body": "Plan: read/hash/compare bounded sources.\n",
+            "created_at": "2026-10-08T00:00:00Z",
+            "stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "decisions": [
+          {
+            "id": "decision-A",
+            "parent_id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:00Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ]
+          },
+          {
+            "id": "decision-B",
+            "parent_id": "review-request-B",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "REVISE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:02:30Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "reviewed_plan_id": "plan-A",
+            "trigger_comment_id": "review-request-B",
+            "source_task": {
+              "kind": "COMMENT_TRIGGER",
+              "trigger_comment_id": "review-request-B",
+              "source_task_id": "fixture-source-task-review-request-B"
+            }
+          }
+        ],
+        "operations": [
+          {
+            "id": "op-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "SOURCE_READ",
+            "locator": "RC6/docs/scenarios.md",
+            "input_revision": "RC6",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:00Z",
+            "command": "read named source",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "output-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-A",
+            "actor_id": "architect-A",
+            "content": "source output",
+            "sha256": "8b9f15ff83aa611046eb772984701958aac45b897f388f4bd5a51eca5adf4f12"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "COMPLIANT_COMPLETED",
+        "required_evidence": [
+          "output-A"
+        ],
+        "expected_actions": [
+          "analyse-A"
+        ]
+      },
+      "status": "CLEAN",
+      "required_findings": []
+    },
+    {
+      "case": "U03",
+      "variant": "revised-current-approval-under-current-native-trigger",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [
+          {
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "plans": [
+          {
+            "id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "native_revision": 1,
+            "declared_revision": 2,
+            "stored_body": "Plan: read/hash/compare bounded sources.\n",
+            "created_at": "2026-10-08T00:00:00Z",
+            "stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "decisions": [
+          {
+            "id": "decision-A",
+            "parent_id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:00Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ]
+          },
+          {
+            "id": "decision-B",
+            "parent_id": "review-request-B",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "REVISE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:30Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "reviewed_plan_id": "plan-A",
+            "trigger_comment_id": "review-request-B",
+            "source_task": {
+              "kind": "COMMENT_TRIGGER",
+              "trigger_comment_id": "review-request-B",
+              "source_task_id": "fixture-source-task-review-request-B"
+            }
+          },
+          {
+            "id": "decision-C",
+            "parent_id": "review-request-C",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:45Z",
+            "plan_stored_sha256": "17b0340705b039ac31560228e20ffab25b19e2f3f889b7dac94bde085a87ae19",
+            "category": "UNSTAGED",
+            "stage": "UNSTAGED",
+            "scope": [
+              "RC6/docs/scenarios.md",
+              "RC6/skills/pm-intention/SKILL.md"
+            ],
+            "method": "read/hash/compare bounded sources",
+            "inputs": [
+              {
+                "locator": "RC6/docs/scenarios.md",
+                "revision": "RC6",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "reviewed_plan_id": "plan-A",
+            "trigger_comment_id": "review-request-C",
+            "source_task": {
+              "kind": "COMMENT_TRIGGER",
+              "trigger_comment_id": "review-request-C",
+              "source_task_id": "fixture-source-task-review-request-C"
+            }
+          }
+        ],
+        "operations": [
+          {
+            "id": "op-A",
+            "package_id": "SA-A",
+            "action_id": "analyse-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "SOURCE_READ",
+            "locator": "RC6/docs/scenarios.md",
+            "input_revision": "RC6",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-C",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:00Z",
+            "command": "read named source",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "output-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-A",
+            "actor_id": "architect-A",
+            "content": "source output",
+            "sha256": "8b9f15ff83aa611046eb772984701958aac45b897f388f4bd5a51eca5adf4f12"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "COMPLIANT_COMPLETED",
+        "required_evidence": [
+          "output-A"
+        ],
+        "expected_actions": [
+          "analyse-A"
+        ]
+      },
+      "status": "CLEAN",
+      "required_findings": []
+    }
+  ]
+}
