@@ -3,6 +3,63 @@ import crypto from 'node:crypto';
 import path from 'node:path';
 export const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
 
+// Syntax observation for one already-authorized, owned Coder Java selftest.
+// Literal here-doc text is inert to the shell, not necessarily inert to Java.
+// Preserve raw text for every existing scope check; never execute or authorize it.
+export function observeOwnedJavaSelfTest(rawCommand, context) {
+  const out=(status,reason=null,extra={})=>({status,reason,rawCommand,shellCommand:null,execution:'UNVERIFIED',...extra});
+  if(typeof rawCommand!=='string'||Buffer.byteLength(rawCommand)>65536||!context||!Array.isArray(context.ownedRoots)||!context.ownedRoots.length||context.ownedRoots.some(x=>typeof x!=='string'||!path.isAbsolute(x)))return out('METHOD_UNSUPPORTED','INVALID_LITERAL_SELFTEST_INPUT');
+  if(context.actorRole!=='coder')return out('SCOPE_REJECT','SELFTEST_CODER_GRANT_REQUIRED');
+  if(/(?:^|[\s'"])(?:\.\.\/)/.test(rawCommand))return out('SCOPE_REJECT','PARENT_DIRECTORY_TERMINAL_REQUEST');
+  for(const [token] of rawCommand.matchAll(/[^\s"';&|<>]+/g))if(token.includes('/')&&token.split('/').includes('..')&&context.ownedRoots.some(root=>{const p=path.resolve(root,token),base=path.resolve(root);return p!==base&&!p.startsWith(base+'/');}))return out('SCOPE_REJECT','RELATIVE_PATH_TRAVERSAL_REQUEST');
+  if(/(?:^|[\/~])(?:\.kimi-code|\.multica|\.codex|\.ssh|\.aws)(?:\/|[\s"']|$)|\/credentials\b|\/sessions\/|\/daemon\//i.test(rawCommand))return out('SCOPE_REJECT','PRIVATE_PATH_REQUEST');
+  if(/\b(?:curl|wget|ssh|git\s+(?:push|merge|clone)|multica\s+login)\b/.test(rawCommand))return out('SCOPE_REJECT','UNAPPROVED_NETWORK_OR_MUTATION_REQUEST');
+  if(/\b(?:skill\s+update|agent\s+update|runtime\s+(?:update|create)|knowledge\s+(?:write|publish)|autopilot)\b/.test(rawCommand))return out('SCOPE_REJECT','UNAPPROVED_CONFIGURATION_OR_KNOWLEDGE_MUTATION');
+  if(/\bcd\s+(?:\.\.\/|\/)/.test(rawCommand))return out('SCOPE_REJECT','OUTSIDE_RELATIVE_SELFTEST_DIRECTORY');
+  const header=/^cd ([A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*) && javac ([A-Za-z_][A-Za-z0-9_]*)\.java && cat > ([A-Za-z_][A-Za-z0-9_]*)\.java <<'([A-Za-z_][A-Za-z0-9_]{0,31})'\n/.exec(rawCommand);
+  if(!header)return out('METHOD_UNSUPPORTED','UNSUPPORTED_SELFTEST_HEADER');
+  const [,directory,target,probe,delimiter]=header;
+  if(target===probe)return out('SCOPE_REJECT','SELFTEST_OVERWRITES_DELIVERABLE');
+  const end='\n'+delimiter+'\n',split=rawCommand.indexOf(end,header[0].length);
+  if(split<0||rawCommand.indexOf(end,split+end.length)!==-1)return out('METHOD_UNSUPPORTED','MISSING_OR_MULTIPLE_LITERAL_DELIMITER');
+  const literalBody=rawCommand.slice(header[0].length,split),tail=rawCommand.slice(split+end.length);
+  const expected='javac '+probe+'.java && java '+probe+' && rm -f '+probe+'.java '+probe+'.class '+target+'.class';
+  if(!literalBody||Buffer.byteLength(literalBody)>16384||/<<|\x00|\r/.test(literalBody)||tail!==expected)return out('METHOD_UNSUPPORTED','UNSUPPORTED_SELFTEST_BODY_OR_TAIL');
+  if(/\bmultica\b|mention:\/\//.test(literalBody))return out('SCOPE_REJECT','SELFTEST_BODY_PUBLIC_OPERATION_OR_ACTOR_REQUEST');
+  const ownedDirectories=context.ownedRoots.map(root=>path.resolve(root,directory));
+  if(ownedDirectories.some((p,i)=>!p.startsWith(path.resolve(context.ownedRoots[i])+'/')))return out('SCOPE_REJECT','SELFTEST_DIRECTORY_NOT_OWNED');
+  return out('MATCH_LITERAL_OWNED_JAVA_SELFTEST',null,{shellCommand:'cd '+directory+' && javac '+target+'.java && cat > '+probe+'.java && '+tail,literalBody,directory,ownedDirectories,target,probe,delimiter,authority:'UNCHANGED_EXISTING_SELFTEST_GRANT'});
+}
+
+// A bound ordinary reply may wake the coordinator. It is not a structured
+// delivery event and cannot establish fan-in, review, verification or completion.
+export function inspectOwnedReplyWakeup(evidence, context) {
+  const out=(status,reason=null)=>({status,reason,acceptance:'WAKEUP_ONLY',structuredEvent:'PENDING_REQUIRED_STRUCTURED_EVENT',fanIn:'NOT_ESTABLISHED'});
+  const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+  if(!evidence||!context||['workspace','runtime','issue','orchestrator','coder'].some(k=>!uuid.test(context[k]||'')))return out('METHOD_UNSUPPORTED','INVALID_WAKEUP_INPUT');
+  const {sourceRun,dispatch,coderRun,reply,reentry,coderRuns,orchestratorRuns}=evidence;
+  const checks=[
+    [sourceRun,'agent_id',context.orchestrator],[sourceRun,'issue_id',context.issue],[sourceRun,'workspace_id',context.workspace],[sourceRun,'runtime_id',context.runtime],[sourceRun,'kind','direct'],
+    [dispatch,'author_id',context.orchestrator],[dispatch,'author_type','agent'],[dispatch,'issue_id',context.issue],[dispatch,'source_task_id',sourceRun?.id],
+    [coderRun,'agent_id',context.coder],[coderRun,'issue_id',context.issue],[coderRun,'workspace_id',context.workspace],[coderRun,'runtime_id',context.runtime],
+    [reply,'author_id',context.coder],[reply,'author_type','agent'],[reply,'issue_id',context.issue],[reply,'source_task_id',coderRun?.id],[reply,'parent_id',dispatch?.id],
+    [reentry,'agent_id',context.orchestrator],[reentry,'issue_id',context.issue],[reentry,'workspace_id',context.workspace],[reentry,'runtime_id',context.runtime],[reentry,'kind','comment'],[reentry,'trigger_comment_id',reply?.id],
+    [reentry?.attribution,'delegated_from_task_id',coderRun?.id],[reentry?.attribution?.evidence,'kind','comment'],[reentry?.attribution?.evidence,'ref_id',reply?.id],
+    [sourceRun?.attribution?.evidence,'kind','issue_assignment'],[sourceRun?.attribution?.evidence,'ref_id',context.issue]
+  ];
+  // Known conflicts win over incomplete public fields.
+  for(const [object,key,expected] of checks)if(object?.[key]!=null&&expected!=null&&object[key]!==expected)return out('SCOPE_REJECT','WAKEUP_'+key.toUpperCase()+'_MISMATCH');
+  for(const [rows,expectedIds,actor] of [[coderRuns,[coderRun?.id],context.coder],[orchestratorRuns,[sourceRun?.id,reentry?.id],context.orchestrator]]){
+    if(rows!=null&&(!Array.isArray(rows)||rows.length!==expectedIds.length||new Set(rows.map(x=>x?.id)).size!==rows.length||rows.some(x=>!expectedIds.includes(x?.id)||x.agent_id!==actor)))return out('SCOPE_REJECT','EXCESS_OR_FOREIGN_WAKEUP_RUNS');
+    if(Array.isArray(rows))for(const row of rows)for(const [key,value] of [['workspace_id',context.workspace],['runtime_id',context.runtime],['issue_id',context.issue]])if(row[key]!=null&&row[key]!==value)return out('SCOPE_REJECT','WAKEUP_RUN_LIST_SCOPE_MISMATCH');
+  }
+  if(reentry?.delivered_comment_ids!=null&&(!Array.isArray(reentry.delivered_comment_ids)||reentry.delivered_comment_ids.length!==1||reentry.delivered_comment_ids[0]!==reply?.id))return out('SCOPE_REJECT','WAKEUP_DELIVERED_COMMENT_MISMATCH');
+  const delegation=inspectSameIssueCoderDelegation(dispatch?.content,sourceRun,context,{stage:'bound',comment:dispatch,run:coderRun,coderRuns});
+  if(delegation.status==='SCOPE_REJECT')return out('SCOPE_REJECT',delegation.reason);
+  if([sourceRun,dispatch,coderRun,reply,reentry].some(x=>!uuid.test(x?.id||''))||new Set([sourceRun?.id,coderRun?.id,reentry?.id]).size!==3||checks.some(([o,k])=>o?.[k]==null)||typeof reply?.content!=='string'||!reply.content||!Array.isArray(coderRuns)||!Array.isArray(orchestratorRuns)||!Array.isArray(reentry?.delivered_comment_ids)||delegation.status!=='MATCH_SAME_ISSUE_CODER_RUN'||delegation.completion!=='COMPLETED_RUN_ONLY'||coderRun.status!=='completed'||coderRun.error!==null)return out('PENDING_PUBLIC_WAKEUP_EVIDENCE','WAKEUP_BINDING_INCOMPLETE_OR_PRODUCER_NOT_COMPLETED');
+  return out('MATCH_OWNED_REPLY_WAKEUP');
+}
+
 // Observation only: normalize one explicitly supplied Mission binding.
 // Never execute shell text, consult the environment, or supply a missing flag.
 export function normalizeKnownMissionWorkspaceCommand(rawCommand, expectedWorkspace) {

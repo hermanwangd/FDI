@@ -159,3 +159,46 @@ test('ZD wrong resource identity project workspace daemon mode path cannot bind 
 test('ZD sibling old private traversal and noncanonical directory records reject',()=>{for(const work_dir of [zdOrch.work_dir.replace('rc10val-323','rc10val-322'),zdOrch.work_dir.replace('3d9acd665d08','111111111111'),zdParentRoot+'/../rc10val-323-3d9acd665d08/workdir',zdParentRoot+'/.multica/sessions/old',zdOrch.work_dir+'/',zdScratch])assert.equal(inspectZD({...zdOrch,work_dir}).status,'SCOPE_REJECT');for(const work_dir of [zdScratch+'/nested','/private/tmp/foreign',zdParentRoot+'/other/workdir'])assert.equal(inspectZD({...zdWorker,work_dir}).status,'SCOPE_REJECT');});
 test('ZD coordinator requires leader current-run and independently pinned public prefix provenance',()=>{assert.equal(inspectZD({...zdOrch,is_leader_task:false}).status,'SCOPE_REJECT');assert.equal(inspectZD({...zdWorker,is_leader_task:true}).status,'SCOPE_REJECT');assert.equal(inspectZD(zdOrch,{...zdContext,coordinatorRuns:[]}).status,'SCOPE_REJECT');assert.equal(inspectZD(zdOrch,{...zdContext,coordinatorRootSource:{...zdOrch,workspace_id:'11111111-1111-1111-1111-111111111111'}}).status,'SCOPE_REJECT');assert.equal(inspectZD(zdOrch,{...zdContext,coordinatorPublicParent:'/private/tmp/foreign'}).status,'SCOPE_REJECT');});
 test('ZD current-case natural reentry may reuse current initial directory; conflicting DTO result rejects',()=>{const reentry={...zdOrch,id:'22222222-2222-2222-2222-222222222222'};assert.equal(inspectZD(reentry,{...zdContext,coordinatorRuns:[zdOrch,reentry]}).status,'MATCH_COORDINATOR_DIRECTORY_METADATA');assert.equal(inspectZD({...zdOrch,result:{work_dir:zdScratch}}).status,'SCOPE_REJECT');});
+
+// ZE: captured shell bytes are an immutable inline regression, never executed.
+const ze=await import('./role-unit-evidence-v3.mjs');
+const zeCommand="cd deliverable && javac LabelSlug.java && cat > LabelSlugCheck.java <<'EOF'\npublic class LabelSlugCheck {\n    public static void main(String[] args) {\n        check(null, \"\");\n        check(\"\", \"\");\n        check(\"  Hello World  \", \"hello-world\");\n        check(\"a   b\\t c\\n d\", \"a-b-c-d\");\n        check(\"MIXED Case Text\", \"mixed-case-text\");\n        check(\"   \", \"\");\n        check(\"NoSpaces\", \"nospaces\");\n        check(\"  ALREADY-lower \", \"already-lower\");\n        System.out.println(\"ALL CHECKS PASSED\");\n    }\n    static void check(String input, String expected) {\n        String actual = LabelSlug.slug(input);\n        if (!actual.equals(expected)) {\n            throw new AssertionError(\"slug(\" + input + \") = [\" + actual + \"], expected [\" + expected + \"]\");\n        }\n        System.out.println(\"OK: slug(\" + (input == null ? \"null\" : \"\\\"\" + input + \"\\\"\") + \") = \\\"\" + actual + \"\\\"\");\n    }\n}\nEOF\njavac LabelSlugCheck.java && java LabelSlugCheck && rm -f LabelSlugCheck.java LabelSlugCheck.class LabelSlug.class";
+const zeShellContext={ownedRoots:['/private/tmp/owned-ze','/tmp/owned-ze'],actorRole:'coder'};
+test('ZE quoted owned Java selftest actual and unfamiliar grammar',()=>{
+  assert.equal(typeof ze.observeOwnedJavaSelfTest,'function');
+  for(const raw of [zeCommand,zeCommand.replaceAll('LabelSlug','UnfamiliarLabel').replaceAll('EOF','CHECK_END')]){
+    const v=ze.observeOwnedJavaSelfTest(raw,zeShellContext);assert.equal(v.status,'MATCH_LITERAL_OWNED_JAVA_SELFTEST');assert.equal(v.rawCommand,raw);assert.ok(v.literalBody.includes('public class'));assert.equal(v.execution,'UNVERIFIED');assert.ok(!v.shellCommand.includes('AssertionError'));
+  }
+});
+test('ZE shell expansion, unknown tail, multiple and broken heredocs stay unsupported',()=>{
+  assert.equal(typeof ze.observeOwnedJavaSelfTest,'function');
+  for(const raw of [zeCommand.replace("<<'EOF'",'<<EOF'),zeCommand.replace("<<'EOF'",'<<"EOF"'),zeCommand.replace('\nEOF\n','\nOTHER\n'),zeCommand+'; echo injected',zeCommand.replace('cd deliverable','cd $DIR'),zeCommand.replace('\nEOF\n','\nEOF\necho unsafe\n'),zeCommand.replace('public class',"cat <<'MORE'\npublic class"),zeCommand.replace('public class','x'.repeat(70000)+'public class')])assert.equal(ze.observeOwnedJavaSelfTest(raw,zeShellContext).status,'METHOD_UNSUPPORTED');
+});
+test('ZE full raw scope guards and actor boundary survive literal-body classification',()=>{
+  assert.equal(typeof ze.observeOwnedJavaSelfTest,'function');
+  for(const raw of [zeCommand.replace('cd deliverable','cd ../foreign'),zeCommand.replace('cd deliverable','cd /other/root'),zeCommand.replace('public class','// /Users/example/.multica/sessions/old\npublic class'),zeCommand.replace('public class','// ../foreign\npublic class'),zeCommand.replace('public class','// curl https://example.test\npublic class'),zeCommand.replace('public class','// multica agent update\npublic class')])assert.equal(ze.observeOwnedJavaSelfTest(raw,zeShellContext).status,'SCOPE_REJECT');
+  assert.equal(ze.observeOwnedJavaSelfTest(zeCommand,{...zeShellContext,actorRole:'orchestrator'}).status,'SCOPE_REJECT');
+});
+const zeCtx={workspace:'0b02adb6-a395-46bd-bd92-6fec14dee20e',runtime:'4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d',issue:'01a12148-f1ed-737f-858d-d91d57762e6b',orchestrator:'809ffefe-3fc4-4686-8401-a8dd50285840',coder:'9e98e1d4-7bb5-4efe-9b32-e90962683e71'};
+function zeWake(){
+  const sourceRun={id:'01a1214e-27b6-79c6-857d-60211d3f15c7',agent_id:zeCtx.orchestrator,issue_id:zeCtx.issue,workspace_id:zeCtx.workspace,runtime_id:zeCtx.runtime,kind:'direct',attribution:{evidence:{kind:'issue_assignment',ref_id:zeCtx.issue}}};
+  const dispatch={id:'01a1214e-e1b1-7cad-979e-1d2f27da4aa4',issue_id:zeCtx.issue,author_id:zeCtx.orchestrator,author_type:'agent',source_task_id:sourceRun.id,content:'mention://agent/'+zeCtx.coder};
+  const coderRun={id:'01a1214e-e1c5-7b50-8efb-f78b7722fa22',agent_id:zeCtx.coder,issue_id:zeCtx.issue,workspace_id:zeCtx.workspace,runtime_id:zeCtx.runtime,kind:'comment',trigger_comment_id:dispatch.id,attribution:{delegated_from_task_id:sourceRun.id,evidence:{kind:'comment',ref_id:dispatch.id}},status:'completed',error:null,started_at:'2026-10-09T15:36:21Z'};
+  const reply={id:'01a1214f-bcbe-711b-8e6e-266f846819cd',issue_id:zeCtx.issue,author_id:zeCtx.coder,author_type:'agent',source_task_id:coderRun.id,parent_id:dispatch.id,content:'Delivery summary'};
+  const reentry={id:'01a1214f-bcd0-75f9-b12c-36ea5d029481',agent_id:zeCtx.orchestrator,issue_id:zeCtx.issue,workspace_id:zeCtx.workspace,runtime_id:zeCtx.runtime,kind:'comment',trigger_comment_id:reply.id,attribution:{delegated_from_task_id:coderRun.id,evidence:{kind:'comment',ref_id:reply.id}},delivered_comment_ids:[reply.id]};
+  return {sourceRun,dispatch,coderRun,reply,reentry,coderRuns:[coderRun],orchestratorRuns:[sourceRun,reentry]};
+}
+test('ZE exact ordinary reply is wakeup only, never structured fanin acceptance',()=>{
+  assert.equal(typeof ze.inspectOwnedReplyWakeup,'function');
+  const v=ze.inspectOwnedReplyWakeup(zeWake(),zeCtx);assert.equal(v.status,'MATCH_OWNED_REPLY_WAKEUP');assert.equal(v.acceptance,'WAKEUP_ONLY');assert.equal(v.structuredEvent,'PENDING_REQUIRED_STRUCTURED_EVENT');assert.equal(v.fanIn,'NOT_ESTABLISHED');
+  const ids=new Set(Object.values(zeCtx));Object.values(zeWake()).filter(x=>x&&!Array.isArray(x)).forEach(x=>{if(x.id)ids.add(x.id);});let n=0;const replacements=new Map([...ids].map(x=>[x,'11111111-1111-4111-8111-'+String(++n).padStart(12,'0')]));const unfamiliar=x=>JSON.parse([...replacements].reduce((s,[a,b])=>s.replaceAll(a,b),JSON.stringify(x)));
+  assert.equal(ze.inspectOwnedReplyWakeup(unfamiliar(zeWake()),unfamiliar(zeCtx)).status,'MATCH_OWNED_REPLY_WAKEUP');
+});
+test('ZE foreign/forged reply provenance and excess runs reject before missing evidence',()=>{
+  assert.equal(typeof ze.inspectOwnedReplyWakeup,'function');
+  for(const mutate of [e=>e.reply.author_id='foreign',e=>e.reply.source_task_id='foreign',e=>e.reply.parent_id='foreign',e=>e.reentry.trigger_comment_id='foreign',e=>e.reentry.workspace_id='foreign',e=>e.reentry.runtime_id='foreign',e=>e.reentry.agent_id='foreign',e=>e.reentry.attribution.delegated_from_task_id='foreign',e=>e.reentry.attribution.evidence.ref_id='foreign',e=>e.reentry.delivered_comment_ids=['foreign'],e=>e.coderRuns.push({...e.coderRun,id:'22222222-2222-4222-8222-222222222222'}),e=>e.orchestratorRuns.push({...e.reentry,id:'22222222-2222-4222-8222-222222222222'}),e=>{delete e.reply.content;e.reply.author_id='foreign';}]){const e=zeWake();mutate(e);assert.equal(ze.inspectOwnedReplyWakeup(e,zeCtx).status,'SCOPE_REJECT');}
+});
+test('ZE missing public binding and incomplete producer stay pending',()=>{
+  assert.equal(typeof ze.inspectOwnedReplyWakeup,'function');
+  for(const mutate of [e=>delete e.reply.parent_id,e=>delete e.reply.content,e=>delete e.reentry.delivered_comment_ids,e=>delete e.reentry.attribution,e=>delete e.sourceRun.kind,e=>e.coderRun.status='running',e=>delete e.coderRun.error]){const e=zeWake();mutate(e);assert.match(ze.inspectOwnedReplyWakeup(e,zeCtx).status,/^PENDING/);}
+});

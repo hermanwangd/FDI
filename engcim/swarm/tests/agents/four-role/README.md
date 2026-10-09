@@ -78,3 +78,20 @@ ZD 有限原生結果（RC10VAL-324）：方法來源 `90faa7f9`，角色／Skil
 | 完整render／自動載入 | Coder正文presence，完整consumption未驗 | 自有19893B render包含相同Coder正文與已掛Skill檔pin | presence不等於consumption；Orchestrator完整render未讀、仍UNVERIFIED |
 
 原observer不能判讀 quoted heredoc，故在producer已completed後STOP；獨立手動核對全部12請求及終止圖後，另准同一已交付檔案的有限功能檢查，未將generic方法改判PASS。第二Orchestrator由普通reply喚醒，非凍結 `nativeChildEvent` 所要求structured正文；已取消且無tool請求，不能因此宣稱fanin PASS。37＋21＋7序列與空EOF完整，三run terminal；角色body／Skills／model／runtime／permission欄位相同，actor updated_at與runtime last_seen_at改變。兩個方法缺口的最早修正入口仍為既有觀察方法／事件consumer適用性檢查；本輪沒有改其契約或另建測試來源。完整結果、獨立分欄評分與原STOP由同一map row綁定；整體native維持PARTIAL。
+
+## ZE observation method closure
+
+This is a method correction in the existing provider, not a role or Skill publication. Published payload remains `c5989a4180e7a69ffc9d92cdac410939440e0e8c`. The literal Java helper recognizes one already authorized Coder selftest shell shape; it does not prove arbitrary Java side effects are absent. Full raw scope guards stay active. The reply helper recognizes owned ordinary-comment wakeup only; structured delivery and independent gates remain required.
+
+| Preserved capability or defect | Before | After | Regression / limit |
+|---|---|---|---|
+| Original provider and schema checks | 66 PASS | 66 PASS | Original assertions retained |
+| Literal selftest and ordinary reply binding | 6 added groups FAIL | 6 groups PASS | Actual and unfamiliar grammar/IDs, malformed/foreign/private/run bounds |
+| Existing per-run observer assertions | 71 PASS retained | 71 PASS plus 4 new checks | 75 local method assertions, no role acceptance |
+| Immutable ZD trace replay | Original heredoc STOP retained | 12 requests classified without method rejection | Replay only; original native outcome is not rewritten |
+| Owned ordinary reply | Conflated with structured event | WAKEUP_ONLY | Structured event pending; fan-in not established |
+| Full instruction and Skill use | UNVERIFIED | UNVERIFIED pending separate capture | Explicit delivery and automatic loading are separate claims |
+
+Evidence: `/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZE-LOCAL-SUBJECT.json`; local plan review and baseline ordering anomaly are retained in the same evidence directory. No new maintained suite/runner and no responsibility or filesystem authority expansion.
+
+Independent review found a body-masked raw relative-path guard. Its `../foreign` counterexample is retained as 71 PASS / 1 FAIL before correction, then 72 PASS; both raw parent and relative token guards remain active. Original 74-check adapter receipt remains frozen; the corrected adapter adds one guard regression (75 PASS).
