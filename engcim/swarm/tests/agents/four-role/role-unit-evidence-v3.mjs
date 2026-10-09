@@ -3,6 +3,33 @@ import crypto from 'node:crypto';
 import path from 'node:path';
 export const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
 
+export {inspectOwnedReadPages} from './role-paged-source-read-evidence-r1.mjs';
+
+// Recognize only the two compatible capture transports. This is an observation
+// helper, not operation authority; the caller still enforces run/write budgets.
+export function inspectOwnedCaptureCommand(rawCommand, context, cwd=null) {
+  const out=(status,reason=null,extra={})=>({status,reason,rawCommand,authority:'OBSERVATION_ONLY',gateAcceptance:'NOT_ESTABLISHED',...extra});
+  const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+  if(typeof rawCommand!=='string'||!context||!uuid.test(context.issue)||!uuid.test(context.workspace)||!Array.isArray(context.ownedRoots))return out('METHOD_UNSUPPORTED','INVALID_CAPTURE_COMMAND_INPUT');
+  if(cwd!=null&&!context.ownedRoots.includes(cwd))return out('SCOPE_REJECT','FOREIGN_CAPTURE_CWD');
+  if(/[\r\n\x00`$\\~;&|<>]/.test(rawCommand)||/\/sessions\/|\/daemon\/|\/credentials|\.ssh|\.codex|\.kimi-code|\.aws/.test(rawCommand))return out('SCOPE_REJECT','SHELL_OR_PRIVATE_CAPTURE_REQUEST');
+  const command=rawCommand.trim().replace(/^\/opt\/homebrew\/bin\/multica\b/,'multica');
+  let tokens=command.split(/ +/);
+  if(tokens[0]!=='multica')return out('METHOD_UNSUPPORTED','NOT_CAPTURE_CLI');
+  if(tokens[1]==='--workspace-id'){
+    if(tokens[2]!==context.workspace)return out('SCOPE_REJECT','FOREIGN_CAPTURE_WORKSPACE');
+    tokens=[tokens[0],...tokens.slice(3)];
+  }
+  if(tokens[1]!=='issue')return out('METHOD_UNSUPPORTED','NOT_CAPTURE_ISSUE_COMMAND');
+  const operand=tokens[2]==='comment'?tokens[4]:tokens[3];
+  if(operand&&operand!==context.issue)return out('SCOPE_REJECT','FOREIGN_CAPTURE_ISSUE');
+  if(tokens.join(' ')==='multica issue comment list '+context.issue+' --roots-only --summary --compact --output json')return out('MATCH_OWNED_CAPTURE_COMMAND',null,{kind:'OWN_WRAPPER_COMMENT_SCAN'});
+  const prefix='multica issue status '+context.issue+' in_progress',s=tokens.join(' ');
+  if(s===prefix||s===prefix+' --output json')return out('METHOD_UNSUPPORTED','START_NOT_SUPPRESSED');
+  if(s===prefix+' --no-start'||s===prefix+' --no-start --output json')return out('MATCH_OWNED_CAPTURE_COMMAND',null,{kind:'OWN_IN_PROGRESS_NO_START'});
+  return out('METHOD_UNSUPPORTED','UNKNOWN_CAPTURE_TRANSPORT');
+}
+
 // Syntax observation for one already-authorized, owned Coder Java selftest.
 // Literal here-doc text is inert to the shell, not necessarily inert to Java.
 // Preserve raw text for every existing scope check; never execute or authorize it.

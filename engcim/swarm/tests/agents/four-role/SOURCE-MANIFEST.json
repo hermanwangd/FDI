@@ -67,24 +67,24 @@
     },
     {
       "path": "native-preparation.json",
-      "sha256": "cad9db02a3127a37c804b82cfdfb5e47e0631374c6e3f1cc59cb5195a876e927",
+      "sha256": "20f4d27ac90549ede0334b3e0723216e6a8807b2000a1128ede818e4b4599000",
       "cases": 0,
       "status": "ACTIVE_PREPARATION_CONTRACT_NATIVE_HOLD",
       "methodId": "M2_NEUTRAL_INPUT_AND_PUBLIC_ISOLATION",
       "inputCriteriaUnchanged": false,
-      "change": "ADDITIVE_LITERAL_SELFTEST_AND_OWNED_REPLY_WAKEUP; ORIGINAL_UNIT_AND_EVENT_CONTRACTS_RETAINED",
+      "change": "ADDITIVE_OWNED_PAGE_AND_CAPTURE_OBSERVATION; ORIGINAL_CONTRACTS_RETAINED",
       "preparationRevision": "M2_SESSION_CREATION_TIMING_2",
-      "bytes": 9804
+      "bytes": 10655
     }
   ],
   "tools": [
     {
       "path": "role-unit-evidence-v3.test.mjs",
       "originalSha256": "1ae03e4c410becb8dbf7531dc3a034c84634b21da802124d4e4b81b8106a5f56",
-      "sha256": "a248c3c3d4d61c92b2a167135d0cb129556a3e0049684a39ef98737447515308",
-      "bytes": 41571,
+      "sha256": "63c9265f5e3581d950294edfc26ac564a721116aaa952e9a6449c9f6a6320449",
+      "bytes": 51033,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_SELF_TEST",
-      "change": "ADDITIVE_LITERAL_SELFTEST_AND_OWNED_REPLY_WAKEUP; ORIGINAL_UNIT_AND_EVENT_CONTRACTS_RETAINED"
+      "change": "ADDITIVE_OWNED_PAGE_AND_CAPTURE_OBSERVATION; ORIGINAL_CONTRACTS_RETAINED"
     },
     {
       "path": "role-unit-output-schema-r1.test.mjs",
@@ -113,10 +113,10 @@
     {
       "path": "role-paged-source-read-evidence-r1.mjs",
       "originalSha256": "9f6682e205cfeb1e0075b952924ed3999be77940406223a799953d28432577ba",
-      "sha256": "9f6682e205cfeb1e0075b952924ed3999be77940406223a799953d28432577ba",
-      "bytes": 3367,
+      "sha256": "bce7376a86bb6188688ba2bf21241f5e2e1febfee4863358746b286f408d47a7",
+      "bytes": 8442,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_HELPER",
-      "change": "BYTE_IDENTICAL"
+      "change": "ADDITIVE_OWNED_PAGE_AND_CAPTURE_OBSERVATION; ORIGINAL_CONTRACTS_RETAINED"
     },
     {
       "path": "role-json-only-final-contract-r1.mjs",
@@ -129,10 +129,10 @@
     {
       "path": "role-unit-evidence-v3.mjs",
       "originalSha256": "b04c8c8d5e3f248d0cb38ab01c69b821948c1a84fb8c88206690b95d028c5fbb",
-      "sha256": "4eae91084ed64c1cc821ff6ebf22f1a97adfcfda8b0a2c3bdf5bcccb5d4caa5d",
-      "bytes": 31539,
+      "sha256": "08452fb58f99b226de5c033d87bf9b0a94b5ea207300da72936b9d272c92a944",
+      "bytes": 33805,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_HELPER",
-      "change": "ADDITIVE_LITERAL_SELFTEST_AND_OWNED_REPLY_WAKEUP; ORIGINAL_UNIT_AND_EVENT_CONTRACTS_RETAINED"
+      "change": "ADDITIVE_OWNED_PAGE_AND_CAPTURE_OBSERVATION; ORIGINAL_CONTRACTS_RETAINED"
     },
     {
       "path": "role-unit-output-schema-r1.mjs",
@@ -395,8 +395,8 @@
   "native": "NOT_RUN; full loading/baseline/capability/no regression UNVERIFIED",
   "readme": {
     "path": "README.md",
-    "sha256": "76a8375c55c1ddb300ff74f10b7d1311e63e5a7e77ff0cb18884afdd561aff27",
-    "bytes": 20959
+    "sha256": "12930df6d130f9d8df94caee873f6e46baead69970542bc3cfd20eaa1af44522",
+    "bytes": 22453
   },
   "capabilityInventoryScope": "Shared all-role capability inventory; four-role case definitions/tools/fixtures remain here",
   "sourceConvergenceBranch": "codex/overnight-plan-freeze",
@@ -673,6 +673,37 @@
           "bytes": 3159,
           "sha256": "54edc984e4cb9b082c004ff151a8659d822938c152698a1a37d6e3b56f038b41"
         }
+      },
+      "loadingContinuation": {
+        "status": "LOCAL_METHOD_PASS_NATIVE_NOT_STARTED",
+        "baseCommit": "268bf68dc1e36220212d7dc0c199fe5abb49ebd9",
+        "sourceRevision": "ENCLOSING_GIT_TREE_METHOD_ONLY",
+        "planReview": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-PLAN-REVIEW.json",
+          "bytes": 5577,
+          "sha256": "7b51a52ee90098f31a0e786088f64a71ad36f5ffc4e1147625a096dbbfd7baaf"
+        },
+        "result": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-LOCAL-RESULT.json",
+          "bytes": 7475,
+          "sha256": "4cdf25be1d01923ac94332737c2a83927fda93821ee8cceb0521c671dc51cc66"
+        },
+        "provider": {
+          "path": "/Users/herman_mbp2023/.codex/worktrees/swarm-role-test-entry/Feature-Delivery-Intelligence/engcim/swarm/tests/agents/four-role/role-paged-source-read-evidence-r1.mjs",
+          "bytes": 8442,
+          "sha256": "bce7376a86bb6188688ba2bf21241f5e2e1febfee4863358746b286f408d47a7"
+        },
+        "commandProvider": {
+          "path": "/Users/herman_mbp2023/.codex/worktrees/swarm-role-test-entry/Feature-Delivery-Intelligence/engcim/swarm/tests/agents/four-role/role-unit-evidence-v3.mjs",
+          "bytes": 33805,
+          "sha256": "08452fb58f99b226de5c033d87bf9b0a94b5ea207300da72936b9d272c92a944"
+        },
+        "originalChecks": 72,
+        "totalLocalChecks": 85,
+        "byteDelivery": "UNVERIFIED_NUMBERED_FRAMING",
+        "automaticLoading": "UNVERIFIED",
+        "native": "NOT_STARTED",
+        "sourceResponsibilitiesChanged": false
       }
     }
   }

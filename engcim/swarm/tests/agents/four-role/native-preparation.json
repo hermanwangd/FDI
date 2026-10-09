@@ -132,5 +132,19 @@
     "structuredEvent": "PENDING_REQUIRED_STRUCTURED_EVENT",
     "fanIn": "NOT_ESTABLISHED",
     "limits": "Ordinary comment activation is distinct from required structured delivery/revision/review/verification gates. Existing child event, mention and unit policies unchanged."
+  },
+  "publicReadPageObservation": {
+    "provider": "role-paged-source-read-evidence-r1.mjs",
+    "export": "inspectOwnedReadPages",
+    "textDelivery": "Exact numbered source lines, same run/issue/call/path/snapshot and ordered trace; gap/prefix/empty/redaction remains PENDING",
+    "byteDelivery": "UNVERIFIED_NUMBERED_FRAMING; original final LF not encoded",
+    "automaticLoading": "UNVERIFIED",
+    "protected": "No private/foreign read, role/config/model/permission change or retrospective native acceptance",
+    "normalTransport": {
+      "provider": "role-unit-evidence-v3.mjs",
+      "export": "inspectOwnedCaptureCommand",
+      "grants": "Observation only of exact own wrapper comment scan and own in_progress --no-start; per-run authority/budgets remain required",
+      "noFlagStatus": "METHOD_UNSUPPORTED_START_NOT_SUPPRESSED"
+    }
   }
 }

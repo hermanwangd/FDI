@@ -202,3 +202,86 @@ test('ZE missing public binding and incomplete producer stay pending',()=>{
   assert.equal(typeof ze.inspectOwnedReplyWakeup,'function');
   for(const mutate of [e=>delete e.reply.parent_id,e=>delete e.reply.content,e=>delete e.reentry.delivered_comment_ids,e=>delete e.reentry.attribution,e=>delete e.sourceRun.kind,e=>e.coderRun.status='running',e=>delete e.coderRun.error]){const e=zeWake();mutate(e);assert.match(ze.inspectOwnedReplyWakeup(e,zeCtx).status,/^PENDING/);}
 });
+
+const zfPath='/private/tmp/zf-owned/AGENTS.md';
+const zfContext={run:'11111111-1111-4111-8111-111111111111',issue:'22222222-2222-4222-8222-222222222222',ownedPaths:[zfPath],startedAt:'2026-10-10T01:00:00Z'};
+function zfFixture(content='alpha\n空白\t保留\nend\n') {
+ const snapshot={path:zfPath,content,bytes:Buffer.byteLength(content),sha256:hash(content),at:'2026-10-10T01:00:01Z'};
+ const context={...zfContext,sourceSha256:snapshot.sha256};
+ const frames=[];
+ const page=(output,offset=1,truncated=false)=>{
+  const call_id='page-'+frames.length,base={task_id:context.run,issue_id:context.issue,call_id,tool:'read_file'};
+  frames.push({...base,seq:frames.length+1,type:'tool_use',input:{path:zfPath,line_offset:offset,max_chars:4000}});
+  frames.push({...base,seq:frames.length+1,type:'tool_result',output,output_truncated:truncated});
+ };
+ return {snapshot,context,frames,page};
+}
+test('ZF complete numbered pages preserve whitespace and separate text delivery from byte EOF',()=>{
+ assert.equal(typeof ze.inspectOwnedReadPages,'function');
+ const f=zfFixture();f.page('1\talpha\n2\t空白\t保留');f.page('3\tend',3);
+ const r=ze.inspectOwnedReadPages(f.frames,f.snapshot,f.context);
+ assert.equal(r.status,'MATCH_COMPLETE_TEXT_LINES');assert.equal(r.coveredLines,3);assert.deepEqual(r.missingRanges,[]);
+ assert.equal(r.byteDelivery,'UNVERIFIED_NUMBERED_FRAMING');assert.equal(r.automaticLoading,'UNVERIFIED');
+ assert.equal(r.pages[0].output,f.frames[1].output);
+});
+test('ZF truncated or unflagged final partial line cannot fill missing source text',()=>{
+ assert.equal(typeof ze.inspectOwnedReadPages,'function');
+ for(const trunc of [false,true]){const f=zfFixture();f.page('1\talpha\n2\t空白\t保',1,trunc);const r=ze.inspectOwnedReadPages(f.frames,f.snapshot,f.context);assert.equal(r.status,'PENDING_TEXT_LINES');assert.equal(r.coveredLines,1);assert.deepEqual(r.missingRanges,[[2,3]]);assert.equal(r.pages[0].partialLine,2);}
+ const f=zfFixture();f.page('1\talpha\n2\t空白\t保',1,true);f.page('2\t空白\t保留\n3\tend',2);assert.equal(ze.inspectOwnedReadPages(f.frames,f.snapshot,f.context).status,'MATCH_COMPLETE_TEXT_LINES');
+});
+test('ZF empty sentinel and line gaps do not manufacture coverage',()=>{
+ assert.equal(typeof ze.inspectOwnedReadPages,'function');
+ const f=zfFixture();f.page('1\talpha');f.page('Tool output is empty.',50);f.page('3\tend',3);
+ const r=ze.inspectOwnedReadPages(f.frames,f.snapshot,f.context);assert.equal(r.status,'PENDING_TEXT_LINES');assert.deepEqual(r.missingRanges,[[2,2]]);assert.equal(r.pages[1].verifiedLines.length,0);
+ const empty=zfFixture('');empty.page('Tool output is empty.');assert.equal(ze.inspectOwnedReadPages(empty.frames,empty.snapshot,empty.context).status,'PENDING_EMPTY_FILE_DELIVERY');
+});
+test('ZF source mismatch, malformed/nonconsecutive/out-of-range numbering rejected',()=>{
+ assert.equal(typeof ze.inspectOwnedReadPages,'function');
+ for(const output of ['1\twrong','0\talpha','4\tforeign','1\talpha\n3\tend','alpha','01\talpha','1\talpha\n2\tbroken\n3\tend']){const f=zfFixture();f.page(output);assert.equal(ze.inspectOwnedReadPages(f.frames,f.snapshot,f.context).status,'SCOPE_REJECT',output);}
+});
+test('ZF foreign run/issue/path/call/tool and conflicting aliases rejected before missing results',()=>{
+ assert.equal(typeof ze.inspectOwnedReadPages,'function');
+ for(const mutate of [f=>f.frames[1].task_id='foreign',f=>f.frames[0].issue_id='foreign',f=>f.frames[0].input.path='/private/tmp/foreign/AGENTS.md',f=>f.frames[1].call_id='other',f=>f.frames[1].tool='terminal',f=>f.frames[0].input.file_path='/private/tmp/foreign/AGENTS.md',f=>f.frames[1].seq=5,f=>f.frames[0].input.line_offset=2]){const f=zfFixture();f.page('1\talpha');mutate(f);assert.equal(ze.inspectOwnedReadPages(f.frames,f.snapshot,f.context).status,'SCOPE_REJECT');}
+ const f=zfFixture();f.page('1\talpha');f.frames.pop();assert.equal(ze.inspectOwnedReadPages(f.frames,f.snapshot,f.context).status,'PENDING_READ_RESULT');
+});
+test('ZF stale/hash/byte-changed snapshot cannot establish source binding',()=>{
+ assert.equal(typeof ze.inspectOwnedReadPages,'function');
+ for(const mutate of [f=>f.snapshot.sha256='bad',f=>f.context.sourceSha256='old',f=>f.snapshot.bytes++,f=>f.snapshot.at='2026-10-09T01:00:00Z',f=>f.snapshot.content+='changed',f=>f.snapshot.path='/private/tmp/foreign/AGENTS.md']){const f=zfFixture();f.page('1\talpha');mutate(f);assert.equal(ze.inspectOwnedReadPages(f.frames,f.snapshot,f.context).status,'SCOPE_REJECT');}
+});
+test('ZF duplicate call/result and incompatible overlapping content fail without conflating ordinary re-read',()=>{
+ assert.equal(typeof ze.inspectOwnedReadPages,'function');
+ const f=zfFixture();f.page('1\talpha');f.page('1\talpha\n2\t空白\t保留\n3\tend');assert.equal(ze.inspectOwnedReadPages(f.frames,f.snapshot,f.context).status,'MATCH_COMPLETE_TEXT_LINES');
+ for(const mutate of [x=>x.frames[2].call_id=x.frames[0].call_id,x=>x.frames[3].call_id=x.frames[1].call_id,x=>x.frames[3].output='1\tALPHA']){const x=zfFixture();x.page('1\talpha');x.page('1\talpha');mutate(x);assert.equal(ze.inspectOwnedReadPages(x.frames,x.snapshot,x.context).status,'SCOPE_REJECT');}
+});
+test('ZF unfamiliar source, no terminal newline, CR and sentinel-looking source preserve exact text',()=>{
+ assert.equal(typeof ze.inspectOwnedReadPages,'function');
+ for(const content of ['unfamiliar\n\nlast','a\r\nb\r\n','Tool output is empty.']){const f=zfFixture(content),lines=content.endsWith('\n')?content.slice(0,-1).split('\n'):content.split('\n');f.page(lines.map((s,i)=>(i+1)+'\t'+s).join('\n'));assert.equal(ze.inspectOwnedReadPages(f.frames,f.snapshot,f.context).status,'MATCH_COMPLETE_TEXT_LINES');}
+});
+test('ZF exact own no-start status and wrapper comment query are observation only',()=>{
+ assert.equal(typeof ze.inspectOwnedCaptureCommand,'function');
+ const c={issue:zfContext.issue,workspace:zeCtx.workspace,ownedRoots:['/private/tmp/zf-owned']};
+ for(const cmd of ['multica issue status '+c.issue+' in_progress --no-start','multica issue status '+c.issue+' in_progress --no-start --output json','multica issue comment list '+c.issue+' --roots-only --summary --compact --output json']){const r=ze.inspectOwnedCaptureCommand(cmd,c);assert.equal(r.status,'MATCH_OWNED_CAPTURE_COMMAND');assert.equal(r.authority,'OBSERVATION_ONLY');assert.equal(r.gateAcceptance,'NOT_ESTABLISHED');}
+ const old=ze.inspectOwnedCaptureCommand('multica issue status '+c.issue+' in_progress',c);assert.equal(old.status,'METHOD_UNSUPPORTED');assert.equal(old.reason,'START_NOT_SUPPRESSED');
+});
+test('ZF public redaction cannot prove source equality or become a role scope defect',()=>{
+ const f=zfFixture();f.page('1\t[REDACTED CREDENTIAL]\n2\t空白\t保留\n3\tend');
+ const r=ze.inspectOwnedReadPages(f.frames,f.snapshot,f.context);assert.equal(r.status,'PENDING_PUBLIC_REDACTION');assert.equal(r.byteDelivery,'UNVERIFIED_NUMBERED_FRAMING');assert.equal(r.pages[0].redactedLines[0],1);
+});
+test('ZF existing n_lines pagination stays exact and bounded',()=>{
+ const f=zfFixture();f.page('1\talpha\n2\t空白\t保留');f.frames[0].input.n_lines=2;f.page('3\tend',3);f.frames[2].input.n_lines=1;assert.equal(ze.inspectOwnedReadPages(f.frames,f.snapshot,f.context).status,'MATCH_COMPLETE_TEXT_LINES');
+ for(const n of [0,1,201,'2']){const x=zfFixture();x.page('1\talpha\n2\t空白\t保留');x.frames[0].input.n_lines=n;assert.equal(ze.inspectOwnedReadPages(x.frames,x.snapshot,x.context).status,'SCOPE_REJECT');}
+});
+test('ZF flagged truncation in final line prefix or framing LF remains pending, never a role scope defect',()=>{
+ for(const output of ['1\talpha\n2','1\talpha\n']){const f=zfFixture();f.page(output,1,true);const r=ze.inspectOwnedReadPages(f.frames,f.snapshot,f.context);assert.equal(r.status,'PENDING_PUBLIC_FRAMING');assert.equal(r.coveredLines,1);assert.equal(r.pages[0].output,output);}
+ for(const output of ['1\talpha\n2','1\talpha\n','1\talpha\nforeign']){const f=zfFixture();f.page(output,1,false);assert.equal(ze.inspectOwnedReadPages(f.frames,f.snapshot,f.context).status,'SCOPE_REJECT');}
+ const f=zfFixture();f.page('1\talpha\n2\t空白\t保留\n3\tend\n',1,true);assert.equal(ze.inspectOwnedReadPages(f.frames,f.snapshot,f.context).status,'PENDING_PUBLIC_FRAMING');
+ const recovered=zfFixture();recovered.page('1\talpha\n2',1,true);recovered.page('1\talpha\n2\t空白\t保留\n3\tend');assert.equal(ze.inspectOwnedReadPages(recovered.frames,recovered.snapshot,recovered.context).status,'MATCH_COMPLETE_TEXT_LINES');
+});
+test('ZF foreign workspace/issue/private/cwd and arbitrary status/shell remain rejected or unsupported',()=>{
+ assert.equal(typeof ze.inspectOwnedCaptureCommand,'function');
+ const c={issue:zfContext.issue,workspace:zeCtx.workspace,ownedRoots:['/private/tmp/zf-owned']};
+ const own='multica issue status '+c.issue+' in_progress --no-start';
+ for(const cmd of [own.replace(c.issue,zeCtx.issue),'multica --workspace-id '+zeCtx.issue+' issue status '+c.issue+' in_progress --no-start',own+'; echo injected',own+' --content-file /Users/user/.multica/sessions/old'])assert.equal(ze.inspectOwnedCaptureCommand(cmd,c).status,'SCOPE_REJECT');
+ assert.equal(ze.inspectOwnedCaptureCommand(own,c,'/private/tmp/foreign').status,'SCOPE_REJECT');
+ for(const cmd of [own.replace('in_progress','done'),own+' --no-start',own.replace('status','update'),'echo harmless'])assert.equal(ze.inspectOwnedCaptureCommand(cmd,c).status,'METHOD_UNSUPPORTED');
+});
