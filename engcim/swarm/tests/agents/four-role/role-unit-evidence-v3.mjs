@@ -156,3 +156,36 @@ export function inspectSupportedSquadMemberRead(tokens, context) {
   if(!help&&!json)return unsupported('UNCLASSIFIED_MEMBER_READ_FORM');
   return {status:'MATCH_PUBLIC_MEMBER_READ',reason:null,workspace,approvedSquad:context.approvedSquad,help,mentionBinding:'NOT_PROVIDED_BY_THIS_READ',leaderReceipt:'NOT_PROVIDED_BY_THIS_READ',effect:'UNVERIFIED'};
 }
+
+// Pure observation of the existing same-issue dispatch contract. Request
+// eligibility does not fabricate an ACK; public comment/run binding comes later.
+// The surrounding observer still owns paths, commands, gates and all run budgets.
+export function inspectSameIssueCoderDelegation(body, sourceRun, context, evidence={}) {
+  const result=(status,reason=null,extra={})=>({status,reason,execution:'UNVERIFIED',completion:'NOT_DEMONSTRATED',functionalAcceptance:'UNVERIFIED',...extra});
+  const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+  if(typeof body!=='string'||Buffer.byteLength(body)>1048576||!context||!evidence||typeof evidence!=='object'||Array.isArray(evidence)||['workspace','runtime','issue','orchestrator','coder'].some(k=>!uuid.test(context[k]||''))||!['request','bound'].includes(evidence.stage||'request'))return result('METHOD_UNSUPPORTED','INVALID_DELEGATION_INPUT');
+  for(const [field,key] of [['agent_id','orchestrator'],['issue_id','issue'],['workspace_id','workspace'],['runtime_id','runtime']])if(sourceRun?.[field]!=null&&sourceRun[field]!==context[key])return result('SCOPE_REJECT','DELEGATING_'+field.toUpperCase()+'_MISMATCH');
+  if(!uuid.test(sourceRun?.id||'')||['agent_id','issue_id','workspace_id','runtime_id'].some(k=>sourceRun[k]==null))return result('PENDING_REQUEST_BINDING','SOURCE_RUN_BINDING_MISSING');
+  const mentions=[...body.matchAll(/mention:\/\/([^/\s]+)\/([^\s)'"\]>]+)/g)];
+  if(mentions.length!==1||mentions[0][1]!=='agent'||mentions[0][2]!==context.coder)return result('SCOPE_REJECT','EXACT_SINGLE_CODER_MENTION_REQUIRED');
+  if(evidence.coderRuns!==undefined){
+    if(!Array.isArray(evidence.coderRuns)||evidence.coderRuns.some(r=>!uuid.test(r?.id||'')))return result('METHOD_UNSUPPORTED','CODER_RUN_LIST_UNCLASSIFIABLE');
+    if(new Set(evidence.coderRuns.filter(r=>r.agent_id===context.coder).map(r=>r.id)).size>1)return result('SCOPE_REJECT','EXCESS_CODER_RUNS');
+  }
+  if(evidence.priorRequestKey!=null&&evidence.priorRequestKey!==evidence.requestKey)return result('SCOPE_REJECT','REPEAT_SAME_ISSUE_ACTIVATION');
+  const eligible={sourceRun:sourceRun.id,issue:context.issue,coder:context.coder};
+  if((evidence.stage||'request')==='request')return result('MATCH_SAME_ISSUE_DELEGATION_REQUEST',null,eligible);
+  const comment=evidence.comment,run=evidence.run;
+  if(!comment||!run)return result('PENDING_PUBLIC_DELEGATION_EVIDENCE','PUBLIC_COMMENT_OR_RUN_MISSING',eligible);
+  for(const [object,field,expected] of [
+    [comment,'issue_id',context.issue],[comment,'author_id',context.orchestrator],[comment,'author_type','agent'],[comment,'source_task_id',sourceRun.id],
+    [run,'agent_id',context.coder],[run,'issue_id',context.issue],[run,'workspace_id',context.workspace],[run,'runtime_id',context.runtime],[run,'kind','comment']
+  ])if(object[field]!=null&&object[field]!==expected)return result('SCOPE_REJECT','PUBLIC_'+field.toUpperCase()+'_MISMATCH',eligible);
+  if(comment.content!=null&&typeof comment.content!=='string')return result('METHOD_UNSUPPORTED','PUBLIC_COMMENT_BODY_UNCLASSIFIABLE',eligible);
+  if(typeof comment.content==='string'&&comment.content!==body&&comment.content!==body.replace(/\n$/,''))return result('SCOPE_REJECT','PUBLIC_COMMENT_BODY_MISMATCH',eligible);
+  if(run.trigger_comment_id!=null&&comment.id!=null&&run.trigger_comment_id!==comment.id)return result('SCOPE_REJECT','PUBLIC_TRIGGER_COMMENT_MISMATCH',eligible);
+  if(run.attribution?.delegated_from_task_id!=null&&run.attribution.delegated_from_task_id!==sourceRun.id)return result('SCOPE_REJECT','PUBLIC_DELEGATED_FROM_MISMATCH',eligible);
+  if(run.attribution?.evidence&&(run.attribution.evidence.kind!=='comment'||run.attribution.evidence.ref_id!==comment.id))return result('SCOPE_REJECT','PUBLIC_ATTRIBUTION_EVIDENCE_MISMATCH',eligible);
+  if(!uuid.test(comment.id||'')||!uuid.test(run.id||'')||run.id===sourceRun.id||['issue_id','author_id','author_type','source_task_id','content'].some(k=>comment[k]==null)||['agent_id','issue_id','workspace_id','runtime_id','kind','trigger_comment_id'].some(k=>run[k]==null)||!run.attribution?.delegated_from_task_id||!run.attribution?.evidence)return result('PENDING_PUBLIC_DELEGATION_EVIDENCE','PUBLIC_BINDING_INCOMPLETE',eligible);
+  return result('MATCH_SAME_ISSUE_CODER_RUN',null,{...eligible,comment:comment.id,run:run.id,execution:'PUBLIC_BINDING_ONLY',completion:run.status==='completed'&&typeof run.started_at==='string'&&Number.isFinite(Date.parse(run.started_at))&&run.error==null?'COMPLETED_RUN_ONLY':'NOT_DEMONSTRATED'});
+}

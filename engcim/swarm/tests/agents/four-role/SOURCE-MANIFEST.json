@@ -67,24 +67,24 @@
     },
     {
       "path": "native-preparation.json",
-      "sha256": "5f3bc18b531f9ad99164c0c2e59d496b6bdc82b703a1c49728f393c2186cf278",
+      "sha256": "bf650a39d03fcd087adce2c6397e491352bf340c603b85d595397560122ceb7f",
       "cases": 0,
       "status": "ACTIVE_PREPARATION_CONTRACT_NATIVE_HOLD",
       "methodId": "M2_NEUTRAL_INPUT_AND_PUBLIC_ISOLATION",
       "inputCriteriaUnchanged": false,
       "change": "ADDITIVE_PUBLIC_MEMBER_READ_AND_DISCOVERY_CONTRACT; ORIGINAL_UNIT_POLICY_UNCHANGED",
       "preparationRevision": "M2_SESSION_CREATION_TIMING_2",
-      "bytes": 6423
+      "bytes": 7461
     }
   ],
   "tools": [
     {
       "path": "role-unit-evidence-v3.test.mjs",
       "originalSha256": "1ae03e4c410becb8dbf7531dc3a034c84634b21da802124d4e4b81b8106a5f56",
-      "sha256": "5e9bd6294e0fd3d97a60fffc779eed1ab07699afb53da1a6450f8029ef35c411",
-      "bytes": 22570,
+      "sha256": "f3b1408e0e1fb94fdd5804dc08852bca227b25eecbe21c277588d6bc8f9d1d1f",
+      "bytes": 29413,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_SELF_TEST",
-      "change": "ADDITIVE_PUBLIC_MEMBER_READ_AND_DISCOVERY_CONTRACT; ORIGINAL_UNIT_POLICY_UNCHANGED"
+      "change": "ADDITIVE_SAME_ISSUE_CODER_OBSERVATION; ORIGINAL_UNIT_POLICY_AND_PREFIX_UNCHANGED"
     },
     {
       "path": "role-unit-output-schema-r1.test.mjs",
@@ -129,10 +129,10 @@
     {
       "path": "role-unit-evidence-v3.mjs",
       "originalSha256": "b04c8c8d5e3f248d0cb38ab01c69b821948c1a84fb8c88206690b95d028c5fbb",
-      "sha256": "f5fac22a9980aa8c357c7e2ff1830af9eacf295ac5df94a80af5d134c811d9a2",
-      "bytes": 14708,
+      "sha256": "885eee6b461d26b5bdcf98646af39a02de24e4e2c2bf48a0b0c445db15ebd7a8",
+      "bytes": 19264,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_HELPER",
-      "change": "ADDITIVE_PUBLIC_MEMBER_READ_AND_DISCOVERY_CONTRACT; ORIGINAL_UNIT_POLICY_UNCHANGED"
+      "change": "ADDITIVE_SAME_ISSUE_CODER_OBSERVATION; ORIGINAL_UNIT_POLICY_AND_PREFIX_UNCHANGED"
     },
     {
       "path": "role-unit-output-schema-r1.mjs",
@@ -395,8 +395,8 @@
   "native": "NOT_RUN; full loading/baseline/capability/no regression UNVERIFIED",
   "readme": {
     "path": "README.md",
-    "sha256": "284bfad32a3dde31d8e59011541258f289df578ce36a72b3fcb48ce3b1ec3132",
-    "bytes": 10642
+    "sha256": "7e43b7439a541d999919e795f90d8939ecb7ee11ab594aeb020921432ce1c496",
+    "bytes": 11524
   },
   "capabilityInventoryScope": "Shared all-role capability inventory; four-role case definitions/tools/fixtures remain here",
   "sourceConvergenceBranch": "codex/overnight-plan-freeze",
@@ -466,5 +466,17 @@
     },
     "payloadSourceCommit": "c5989a4180e7a69ffc9d92cdac410939440e0e8c",
     "runtimeConsumption": "UNVERIFIED"
+  },
+  "sameIssueObservationRepair": {
+    "sourceRevision": "ENCLOSING_GIT_TREE_METHOD_ONLY",
+    "formalContract": "Orchestrator core4(a) / orchestration wayA; wayB preferred when independent tracking required",
+    "originalProviderChecks": 42,
+    "unchangedSchemaChecks": 5,
+    "newChecks": 11,
+    "localAfter": 58,
+    "native": "NOT_RUN_FOR_THIS_METHOD",
+    "historicalYN": "PARTIAL retained; no retroactive PASS",
+    "originalPolicy": "UNMODIFIED",
+    "reviewClosure": "Malformed body remains METHOD_UNSUPPORTED, full public threads preserve legitimate reply. First review REVISE/RED retained."
   }
 }
