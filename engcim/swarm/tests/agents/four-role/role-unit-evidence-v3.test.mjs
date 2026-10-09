@@ -285,3 +285,52 @@ test('ZF foreign workspace/issue/private/cwd and arbitrary status/shell remain r
  assert.equal(ze.inspectOwnedCaptureCommand(own,c,'/private/tmp/foreign').status,'SCOPE_REJECT');
  for(const cmd of [own.replace('in_progress','done'),own+' --no-start',own.replace('status','update'),'echo harmless'])assert.equal(ze.inspectOwnedCaptureCommand(cmd,c).status,'METHOD_UNSUPPORTED');
 });
+
+// ZG deadline observation remains in this existing external provider suite.
+const zgUuid={workspace:'11111111-1111-4111-8111-111111111111',issue:'22222222-2222-4222-8222-222222222222',actor:'33333333-3333-4333-8333-333333333333',runtime:'44444444-4444-4444-8444-444444444444',run:'55555555-5555-4555-8555-555555555555'};
+function zgFixture(budgetMs=100){
+ let mono=0,wall=Date.parse('2026-10-10T00:00:00Z'),next=0;const timers=new Map();
+ const run={id:zgUuid.run,workspace_id:zgUuid.workspace,issue_id:zgUuid.issue,agent_id:zgUuid.actor,runtime_id:zgUuid.runtime,started_at:new Date(wall).toISOString(),status:'running'};
+ const context={...zgUuid,run,budgetMs};
+ const clock={wallNow:()=>wall,monotonicNow:()=>mono,schedule:(fn,ms)=>{const id=++next;timers.set(id,{fn,at:mono+ms});return id;},clear:id=>timers.delete(id)};
+ const advance=ms=>{mono+=ms;wall+=ms;for(const [id,t]of [...timers])if(t.at<=mono){timers.delete(id);t.fn();}};
+ return{context,clock,advance,run,wallJump:ms=>wall+=ms,terminal:()=>({...run,status:'completed',completed_at:new Date(wall).toISOString()})};
+}
+test('ZG matching early terminal disarms deadline and cannot claim loading/operation authority',async()=>{
+ assert.equal(typeof ze.startOwnedCaptureDeadline,'function');const f=zgFixture();let calls=0;const w=ze.startOwnedCaptureDeadline(f.context,async()=>calls++,f.clock);await w.markTerminal(f.terminal());f.advance(1000);const r=await w.done;assert.equal(calls,0);assert.equal(r.status,'TERMINAL_BEFORE_DEADLINE');assert.equal(r.acceptance,'NOT_ESTABLISHED');assert.equal(r.operationAuthority,'CALLER_REVIEWED_SCOPE_ONLY');assert.ok(Object.isFrozen(w.identity));
+});
+test('ZG deadline fires without another observer invocation while async process remains pending',async()=>{
+ assert.equal(typeof ze.startOwnedCaptureDeadline,'function');const {execFile}=await import('node:child_process');let childDone=false;const child=new Promise((resolve,reject)=>execFile(process.execPath,['--max-old-space-size=32','-e','setTimeout(()=>process.stdout.write("done"),400)'],{timeout:2000},(e,out)=>{childDone=true;e?reject(e):resolve(out);}));
+ const now=Date.now(),f=zgFixture(60);f.context.run.started_at=new Date(now).toISOString();let observedPending=false;const w=ze.startOwnedCaptureDeadline(f.context,async()=>{observedPending=!childDone;});const r=await w.done;assert.equal(r.status,'STOP_CALLBACK_COMPLETE');assert.equal(r.reason,'CASE_TIMEOUT');assert.equal(observedPending,true);assert.equal(await child,'done');assert.equal(w.snapshot().terminalSeen,false);
+});
+test('ZG old poll-after-wait counterfactual fails the deadline outcome instead of rewriting original FAIL',async()=>{
+ const {execFile}=await import('node:child_process');const start=performance.now(),budget=20;await new Promise((resolve,reject)=>execFile(process.execPath,['--max-old-space-size=32','-e','setTimeout(()=>{},100)'],{timeout:2000},e=>e?reject(e):resolve()));const oldObserved=performance.now()-start;assert.ok(oldObserved>budget,'old manual check only after wait exceedsdeadline');
+});
+test('ZG timer and manual stop share a single claim in both race orders',async()=>{
+ assert.equal(typeof ze.startOwnedCaptureDeadline,'function');for(const timerFirst of [false,true]){const f=zgFixture();let calls=0;const w=ze.startOwnedCaptureDeadline(f.context,async()=>calls++,f.clock);if(timerFirst){f.advance(100);assert.equal(w.stop('SCOPE_STOP'),false);}else{assert.equal(w.stop('SCOPE_STOP'),true);f.advance(100);}await w.done;assert.equal(calls,1);assert.equal(w.stop('OPERATION_FAILED'),false);}
+});
+test('ZG foreign or incomplete running receipt cannot arm cancellation',()=>{
+ assert.equal(typeof ze.startOwnedCaptureDeadline,'function');for(const field of ['id','workspace_id','issue_id','agent_id','runtime_id','started_at','status']){const f=zgFixture();f.context.run[field]='foreign';assert.throws(()=>ze.startOwnedCaptureDeadline(f.context,async()=>{},f.clock));}
+ for(const field of ['workspace','issue','actor','runtime']){const f=zgFixture();delete f.context[field];assert.throws(()=>ze.startOwnedCaptureDeadline(f.context,async()=>{},f.clock));}
+});
+test('ZG only exact matching terminal receipt disarms an active timer',async()=>{
+ assert.equal(typeof ze.startOwnedCaptureDeadline,'function');const f=zgFixture();let calls=0;const w=ze.startOwnedCaptureDeadline(f.context,async()=>calls++,f.clock);for(const field of ['id','workspace_id','issue_id','agent_id','runtime_id','started_at','status']){const r=f.terminal();r[field]='foreign';assert.throws(()=>w.markTerminal(r));}f.advance(100);await w.done;assert.equal(calls,1);
+});
+test('ZG invalid/future start and unbounded budget reject; expired original deadline fires immediately',async()=>{
+ assert.equal(typeof ze.startOwnedCaptureDeadline,'function');for(const b of [0,-1,600001,NaN,'100']){const f=zgFixture(b);assert.throws(()=>ze.startOwnedCaptureDeadline(f.context,async()=>{},f.clock));}for(const date of ['invalid','2026-10-11T00:00:00Z']){const f=zgFixture();f.context.run.started_at=date;assert.throws(()=>ze.startOwnedCaptureDeadline(f.context,async()=>{},f.clock));}const f=zgFixture();f.advance(200);let calls=0;const w=ze.startOwnedCaptureDeadline(f.context,async()=>calls++,f.clock);f.advance(0);const r=await w.done;assert.equal(calls,1);assert.equal(r.lateMs,100);
+});
+test('ZG callback failure is retained with no retry and does not prove native terminal',async()=>{
+ assert.equal(typeof ze.startOwnedCaptureDeadline,'function');const f=zgFixture();let calls=0;const w=ze.startOwnedCaptureDeadline(f.context,async()=>{calls++;throw Error('public cancel failed');},f.clock);f.advance(100);const r=await w.done;assert.equal(r.status,'STOP_CALLBACK_FAILED');assert.equal(r.error,'public cancel failed');assert.equal(r.terminalSeen,false);f.advance(100);assert.equal(calls,1);
+});
+test('ZG wall-clock changes after arming do not extend monotonic deadline',async()=>{
+ assert.equal(typeof ze.startOwnedCaptureDeadline,'function');const f=zgFixture();let calls=0;const w=ze.startOwnedCaptureDeadline(f.context,async()=>calls++,f.clock);f.wallJump(-3600000);f.advance(100);const r=await w.done;assert.equal(calls,1);assert.equal(r.elapsedMs,100);assert.equal(r.lateMs,0);
+});
+test('ZG terminal-after-stop does not erase first timeout or bypass pending callback',async()=>{
+ assert.equal(typeof ze.startOwnedCaptureDeadline,'function');const f=zgFixture();let release;const pending=new Promise(r=>release=r);const w=ze.startOwnedCaptureDeadline(f.context,async()=>pending,f.clock);f.advance(100);w.markTerminal(f.terminal());assert.equal(w.snapshot().status,'STOP_CALLBACK_RUNNING');release({ack:true});const r=await w.done;assert.equal(r.reason,'CASE_TIMEOUT');assert.equal(r.terminalSeen,true);assert.deepEqual(r.callbackResult,{ack:true});
+});
+test('ZG unknown stop reasons reject without cancelling timer or calling provider',async()=>{
+ assert.equal(typeof ze.startOwnedCaptureDeadline,'function');const f=zgFixture();let calls=0;const w=ze.startOwnedCaptureDeadline(f.context,async()=>calls++,f.clock);assert.throws(()=>w.stop('PRODUCTION_DONE'));await w.markTerminal(f.terminal());assert.equal(calls,0);
+});
+test('ZG mutating caller context cannot change frozen subject start or disarm with invented date',async()=>{
+ const f=zgFixture();let calls=0;const w=ze.startOwnedCaptureDeadline(f.context,async()=>calls++,f.clock);const original=f.context.run.started_at;f.context.run.started_at='2026-10-09T00:00:00Z';assert.equal(w.identity.startedAt,original);assert.throws(()=>w.markTerminal(f.terminal()));f.advance(100);await w.done;assert.equal(calls,1);
+});

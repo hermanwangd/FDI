@@ -5,6 +5,46 @@ export const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
 
 export {inspectOwnedReadPages} from './role-paged-source-read-evidence-r1.mjs';
 
+// Lifecycle for the existing external capture method. The callback belongs to
+// the separately reviewed caller; this helper grants no provider operation.
+// Pending CLI work must be asynchronous: timers cannot preempt sync CPU/work.
+export function startOwnedCaptureDeadline(context, onStop, injectedClock=null) {
+  const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+  if(!context||typeof onStop!=='function')throw Error('INVALID_DEADLINE_CONTEXT');
+  const expected={run:context.run?.id,workspace:context.workspace,issue:context.issue,actor:context.actor,runtime:context.runtime};
+  if(Object.values(expected).some(x=>typeof x!=='string'||!uuid.test(x)))throw Error('INVALID_DEADLINE_IDENTITY');
+  const startedAt=context.run.started_at;
+  const same=r=>r&&r.id===expected.run&&r.workspace_id===expected.workspace&&r.issue_id===expected.issue&&r.agent_id===expected.actor&&r.runtime_id===expected.runtime&&r.started_at===startedAt;
+  const r=context.run,started=Date.parse(startedAt);
+  const clock=injectedClock||{wallNow:()=>Date.now(),monotonicNow:()=>performance.now(),schedule:(f,ms)=>setTimeout(f,ms),clear:id=>clearTimeout(id)};
+  if(['wallNow','monotonicNow','schedule','clear'].some(k=>typeof clock[k]!=='function'))throw Error('INVALID_DEADLINE_CLOCK');
+  const wall=clock.wallNow(),mono=clock.monotonicNow(),budget=context.budgetMs;
+  if(!same(r)||r.status!=='running'||typeof r.started_at!=='string'||!Number.isFinite(started)||!Number.isFinite(wall)||!Number.isFinite(mono)||started>wall||!Number.isSafeInteger(budget)||budget<1||budget>600000)throw Error('UNBOUND_DEADLINE_RUN_OR_BUDGET');
+  const identity=Object.freeze({...expected,startedAt:r.started_at,budgetMs:budget}),remaining=started+budget-wall,target=mono+remaining;
+  let status='ARMED',reason=null,terminalSeen=false,timer,requestedAt=null,elapsedMs=null,lateMs=null,error=null,callbackResult=null,resolveDone;
+  const done=new Promise(resolve=>resolveDone=resolve);
+  const snapshot=()=>({identity,status,reason,deadlineAt:new Date(started+budget).toISOString(),requestedAt,elapsedMs,lateMs,terminalSeen,error,callbackResult,operationAuthority:'CALLER_REVIEWED_SCOPE_ONLY',acceptance:'NOT_ESTABLISHED'});
+  function stop(why) {
+    if(!['CASE_TIMEOUT','SCOPE_STOP','OPERATION_FAILED'].includes(why))throw Error('UNKNOWN_DEADLINE_STOP_REASON');
+    if(status!=='ARMED')return false;
+    status='STOP_CALLBACK_RUNNING';reason=why;clock.clear(timer);
+    requestedAt=new Date(clock.wallNow()).toISOString();elapsedMs=wall-started+clock.monotonicNow()-mono;lateMs=Math.max(0,clock.monotonicNow()-target);
+    // Claim synchronously before any callback/await, including manual-stop races.
+    Promise.resolve().then(()=>onStop(Object.freeze(snapshot()))).then(value=>{
+      callbackResult=value??null;status='STOP_CALLBACK_COMPLETE';resolveDone(snapshot());
+    },cause=>{error=cause instanceof Error?cause.message:String(cause);status='STOP_CALLBACK_FAILED';resolveDone(snapshot());});
+    return true;
+  }
+  function markTerminal(receipt) {
+    if(!same(receipt)||!['completed','cancelled','failed'].includes(receipt.status))throw Error('FOREIGN_OR_NONTERMINAL_DEADLINE_RECEIPT');
+    terminalSeen=true;
+    if(status==='ARMED'){clock.clear(timer);status='TERMINAL_BEFORE_DEADLINE';resolveDone(snapshot());}
+    return done;
+  }
+  timer=clock.schedule(()=>stop('CASE_TIMEOUT'),Math.max(0,remaining));
+  return Object.freeze({identity,done,stop,markTerminal,snapshot});
+}
+
 // Recognize only the two compatible capture transports. This is an observation
 // helper, not operation authority; the caller still enforces run/write budgets.
 export function inspectOwnedCaptureCommand(rawCommand, context, cwd=null) {
