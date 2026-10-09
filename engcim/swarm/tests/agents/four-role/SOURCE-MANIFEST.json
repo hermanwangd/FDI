@@ -67,24 +67,24 @@
     },
     {
       "path": "native-preparation.json",
-      "sha256": "ac9b4b5386d09b8d487183e348ef2c8699383fb1204712cfdea2bf122ff2dd5e",
+      "sha256": "5f3bc18b531f9ad99164c0c2e59d496b6bdc82b703a1c49728f393c2186cf278",
       "cases": 0,
       "status": "ACTIVE_PREPARATION_CONTRACT_NATIVE_HOLD",
       "methodId": "M2_NEUTRAL_INPUT_AND_PUBLIC_ISOLATION",
       "inputCriteriaUnchanged": false,
-      "change": "ADDITIVE_NATIVE_WORKSPACE_SCOPE_INSPECTION; ORIGINAL_UNIT_POLICY_UNCHANGED",
+      "change": "ADDITIVE_PUBLIC_MEMBER_READ_AND_DISCOVERY_CONTRACT; ORIGINAL_UNIT_POLICY_UNCHANGED",
       "preparationRevision": "M2_SESSION_CREATION_TIMING_2",
-      "bytes": 5777
+      "bytes": 6423
     }
   ],
   "tools": [
     {
       "path": "role-unit-evidence-v3.test.mjs",
       "originalSha256": "1ae03e4c410becb8dbf7531dc3a034c84634b21da802124d4e4b81b8106a5f56",
-      "sha256": "eecca7c21f427a637c7c3f34c2680b2f89bcff135eeac2af9d1323286274b033",
-      "bytes": 17587,
+      "sha256": "5e9bd6294e0fd3d97a60fffc779eed1ab07699afb53da1a6450f8029ef35c411",
+      "bytes": 22570,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_SELF_TEST",
-      "change": "ADDITIVE_NATIVE_WORKSPACE_SCOPE_INSPECTION; ORIGINAL_UNIT_POLICY_UNCHANGED"
+      "change": "ADDITIVE_PUBLIC_MEMBER_READ_AND_DISCOVERY_CONTRACT; ORIGINAL_UNIT_POLICY_UNCHANGED"
     },
     {
       "path": "role-unit-output-schema-r1.test.mjs",
@@ -129,10 +129,10 @@
     {
       "path": "role-unit-evidence-v3.mjs",
       "originalSha256": "b04c8c8d5e3f248d0cb38ab01c69b821948c1a84fb8c88206690b95d028c5fbb",
-      "sha256": "d2e5210916f42ed0eb6b4c444c96f7a162e8a52098735a3c0de548d2611936d8",
-      "bytes": 13240,
+      "sha256": "f5fac22a9980aa8c357c7e2ff1830af9eacf295ac5df94a80af5d134c811d9a2",
+      "bytes": 14708,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_HELPER",
-      "change": "ADDITIVE_NATIVE_WORKSPACE_SCOPE_INSPECTION; ORIGINAL_UNIT_POLICY_UNCHANGED"
+      "change": "ADDITIVE_PUBLIC_MEMBER_READ_AND_DISCOVERY_CONTRACT; ORIGINAL_UNIT_POLICY_UNCHANGED"
     },
     {
       "path": "role-unit-output-schema-r1.mjs",
@@ -365,8 +365,8 @@
           "role-unit-evidence-v3.test.mjs",
           "role-unit-output-schema-r1.test.mjs"
         ],
-        "assertions": 38,
-        "stdoutSha256": "d2c9607342b83048e681cc430267f5130f64c6d1bf19df9970b149cac4c3f1fb",
+        "assertions": 47,
+        "stdoutSha256": "cf410487539f26bb5b16a84aaf7bda447b7d752cf04adddff84d730726f023b2",
         "exitCode": 0
       },
       {
@@ -395,8 +395,8 @@
   "native": "NOT_RUN; full loading/baseline/capability/no regression UNVERIFIED",
   "readme": {
     "path": "README.md",
-    "sha256": "d1f9ad13ba224f3bf40e806f4dc27c7f4860fe03be4f37b5a0df2d540440e6e4",
-    "bytes": 8847
+    "sha256": "7654c8dddb2adde1e4c4c24da54c2391f2fc25ad014bc7cd4e8eddc5956c5871",
+    "bytes": 9735
   },
   "capabilityInventoryScope": "Shared all-role capability inventory; four-role case definitions/tools/fixtures remain here",
   "sourceConvergenceBranch": "codex/overnight-plan-freeze",
@@ -412,5 +412,38 @@
     "status": "SAFE_STOP__PROFESSIONAL_ROUTING_NOT_DEMONSTRATED",
     "fourRoleAcceptance": "UNVERIFIED",
     "originalNativeSuiteDeclarationRetained": true
+  },
+  "publicDiscoveryCorrection": {
+    "status": "LOCAL_ONLY_NOT_NATIVE_ACCEPTANCE",
+    "originalChecks": 38,
+    "newChecks": 9,
+    "red": {
+      "originalPass": 38,
+      "newFail": 8,
+      "stdoutSha256": "48b339466475d0f496104fe37b643578f16a63d9bc9c0fb9c3a506ac2a33f1af"
+    },
+    "green": {
+      "pass": 47,
+      "fail": 0,
+      "stdoutSha256": "cf410487539f26bb5b16a84aaf7bda447b7d752cf04adddff84d730726f023b2"
+    },
+    "native": "NOT_RUN_FOR_THIS_CANDIDATE",
+    "historicalXNRetained": true,
+    "initialNewChecks": 8,
+    "retainedFirstGreen": {
+      "pass": 46,
+      "fail": 0,
+      "stdoutSha256": "823bfd61035cd85eacfb8506c0cf7831dedcf6a2e721910b7d9f496d2758ec11"
+    },
+    "reviewClosure": {
+      "reason": "Workspace inspector explicitly unsupported flag position must propagate METHOD_UNSUPPORTED, not SCOPE_REJECT",
+      "red": {
+        "pass": 46,
+        "fail": 1,
+        "stdoutSha256": "2b2aacd0e845cc0caa48660c92eb004e822c618143122997c0caf3d9874c339b"
+      },
+      "trueScopeRejections": "Foreign prefix workspace, profile/duplicate/missing native runtime preserved",
+      "native": "NOT_RUN"
+    }
   }
 }

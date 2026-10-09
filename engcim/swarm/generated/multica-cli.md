@@ -166,7 +166,7 @@ multica --workspace-id <本 Mission 的 workspace UUID> issue runs <issue-id> --
 multica --workspace-id <本 Mission 的 workspace UUID> issue run-messages <run-id> --issue <issue-id> --output json
 ```
 
-以上查詢也必須帶 workspace flag；不得因為查的是目前 issue 或 run 就省略。
+上述一般 issue／run 查詢沿用本 Skill 的 workspace 規則：Multica 原生 agent 使用已綁定任務的 MULTICA_WORKSPACE_ID；Supervisor／Swarm Dev 等外部 caller 必須明確帶 workspace flag。不得跨 workspace、改寫 runtime binding 或另選 profile／server。本 Skill 的精確捕捉程序保留自己的 argv 綁定要求。
 
 ## Squad 評估紀錄（leader 用）
 

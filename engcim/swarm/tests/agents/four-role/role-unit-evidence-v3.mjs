@@ -139,3 +139,20 @@ if(process.argv[1]?.endsWith('/role-unit-evidence-v3.mjs')){
   const e=JSON.parse(fs.readFileSync(process.argv[2])),s=JSON.parse(fs.readFileSync(process.argv[3]));
   const v=checkUnitEvidence(e,s,process.argv[4]?JSON.parse(fs.readFileSync(process.argv[4])):null);console.log(JSON.stringify(v,null,2));process.exitCode=v.status==='PASS'?0:1;
 }
+
+// Bounded public member-read classification, separate from all operation/actor/path grants.
+// The bound squad comes from reviewed public evidence; member IDs never imply mentions/receipt.
+export function inspectSupportedSquadMemberRead(tokens, context) {
+  const workspace=inspectMulticaWorkspaceScope(tokens,context);
+  if(workspace.status==='REJECT')return {status:workspace.reason==='METHOD_UNSUPPORTED_WORKSPACE_FLAG_POSITION'?'METHOD_UNSUPPORTED':'SCOPE_REJECT',reason:workspace.reason,workspace,effect:'UNVERIFIED'};
+  const unsupported=reason=>({status:'METHOD_UNSUPPORTED',reason,workspace,effect:'UNVERIFIED'});
+  const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+  if(!uuid.test(context?.approvedSquad||''))return unsupported('BOUND_SQUAD_REQUIRED');
+  const args=workspace.args;
+  if(args[0]!=='squad'||args[1]!=='member'||args[2]!=='list')return unsupported('NOT_SUPPORTED_MEMBER_READ');
+  const tail=args.slice(3);
+  const help=tail.length===1&&tail[0]==='--help'||tail.length===2&&tail[0]===context.approvedSquad&&tail[1]==='--help';
+  const json=tail.length===3&&tail[0]===context.approvedSquad&&tail[1]==='--output'&&tail[2]==='json';
+  if(!help&&!json)return unsupported('UNCLASSIFIED_MEMBER_READ_FORM');
+  return {status:'MATCH_PUBLIC_MEMBER_READ',reason:null,workspace,approvedSquad:context.approvedSquad,help,mentionBinding:'NOT_PROVIDED_BY_THIS_READ',leaderReceipt:'NOT_PROVIDED_BY_THIS_READ',effect:'UNVERIFIED'};
+}

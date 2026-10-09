@@ -79,5 +79,12 @@
     "export": "inspectMulticaWorkspaceScope",
     "input": "Existing tokenizer output; pinned caller kind, expected workspace and native run workspace; independently observed CLI scope if available",
     "limits": "Native runtime metadata permits bounded already-authorized observation; actual environment/effect remains UNVERIFIED without observed scope. External callers require explicit workspace. Foreign/duplicate/override/missing native binding rejected. Operation, path, actor, project, write and dispatch guards remain mandatory; no flag insertion."
+  },
+  "observationPublicMemberReads": {
+    "provider": "role-unit-evidence-v3.mjs",
+    "export": "inspectSupportedSquadMemberRead",
+    "input": "Existing tokenizer output; pinned workspace/caller/native run binding and independently reviewed approved squad UUID",
+    "scope": "Only exact same-squad member list JSON or supported help form; no command execution",
+    "limits": "Method classification only; JSON IDs/roles are not exact system Roster mentions or is_leader_task receipt. Preserve original operation/actor/path/project/dispatch/gate checks. Unsupported valid grammar is a method gap. Frozen prior controllers remain unchanged."
   }
 }
