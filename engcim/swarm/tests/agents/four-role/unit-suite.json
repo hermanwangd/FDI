@@ -1,0 +1,783 @@
+{
+  "schemaVersion": 2,
+  "version": "baseline-before-role-writes-r1",
+  "inputPolicy": "Independent cases grouped only to reduce runtime load; evaluator rubric withheld from subject",
+  "sourcePins": {
+    "orchestrator": {
+      "actor": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "name": "Swarm Orchestrator",
+      "instructions": {
+        "file": "fixtures/baseline-inventory-orchestrator-instructions.md",
+        "bytes": 93351,
+        "sha256": "6f7f90c3b0d3a0b5e98a1a6dbe07fe335c452419f3895a214a8d112242ba5757"
+      },
+      "model": "kimi-code/kimi-for-coding",
+      "runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+      "permission_mode": "private",
+      "skills": [
+        {
+          "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+          "name": "multica-cli",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-multica-cli.md",
+          "bytes": 13467,
+          "sha256": "8f35032f7f055e54b7edc4914272d5bfa4bd2258be782f77e16e878ca8f9d808"
+        },
+        {
+          "id": "4ebbc2c8-b1d4-4cf2-bfa8-b3fe62772b13",
+          "name": "product-knowledge",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-product-knowledge.md",
+          "bytes": 23223,
+          "sha256": "16afe5467ef8655c9c7d5199e213d5be074269581961e4eb5eb504791d0b1e26"
+        },
+        {
+          "id": "5b3c5337-eef3-4cc3-9174-025e4ddc28dc",
+          "name": "swarm-orchestration",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-swarm-orchestration.md",
+          "bytes": 23406,
+          "sha256": "18cca8353cd3c2bb4b68098e980649ea70fa03be1949dca120b147af05dac23f"
+        },
+        {
+          "id": "0babf468-5bea-42c2-bf7e-dfa8b77c1244",
+          "name": "swarm-telemetry",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-swarm-telemetry.md",
+          "bytes": 11183,
+          "sha256": "44a36a2047303cccac0327cc4218fb6e94aa9f7a75353dee9f462ababfacfb8b"
+        }
+      ]
+    },
+    "qa": {
+      "actor": "3f254bc6-ec7a-4517-aa4c-ba0ae7f81bc1",
+      "name": "Swarm QA Tester",
+      "instructions": {
+        "file": "fixtures/baseline-inventory-qa-instructions.md",
+        "bytes": 3060,
+        "sha256": "7381d32b1f9d5f05ec0790d57d1a180107daafd0f02eb329f3c80fbe0cedeb8d"
+      },
+      "model": "kimi-code/kimi-for-coding",
+      "runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+      "permission_mode": "private",
+      "skills": [
+        {
+          "id": "ee94ee8e-9d20-44b8-ac49-7d85c6db005f",
+          "name": "artifact-consistency",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-artifact-consistency.md",
+          "bytes": 1290,
+          "sha256": "d27ce19c45e3636715a20e0333ee2a1e297a8d0d22458959e9d7e062feec8c61"
+        },
+        {
+          "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+          "name": "multica-cli",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-multica-cli.md",
+          "bytes": 13467,
+          "sha256": "8f35032f7f055e54b7edc4914272d5bfa4bd2258be782f77e16e878ca8f9d808"
+        },
+        {
+          "id": "9b36b624-fa1a-4db7-98d8-535efacbad09",
+          "name": "qa-planning",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-qa-planning.md",
+          "bytes": 6563,
+          "sha256": "de6b0ed41aac8a8d649f290d20dee1490d7fb3a4bbcb5f24529d8c90f09e6ae6"
+        },
+        {
+          "id": "1ad73f60-eabd-4070-ab93-3e0b02b1394c",
+          "name": "runtime-qa",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-runtime-qa.md",
+          "bytes": 1419,
+          "sha256": "c376170500182170fdcc006fed6004370b24f4223faa75b7f48388645bcacd5e"
+        },
+        {
+          "id": "4d12657a-001d-4ae4-87c6-846b4f3dcd34",
+          "name": "test-architecture",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-test-architecture.md",
+          "bytes": 1698,
+          "sha256": "eef28362b091c849083ffce8530086b2b44e33de66415278c60860194393c06d"
+        },
+        {
+          "id": "741ab02a-8ef5-4122-86d0-bb8d4d5c2777",
+          "name": "test-design",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-test-design.md",
+          "bytes": 4267,
+          "sha256": "b0bf47ee4f8b704c61c0043adccfe1942c749052434773d3a728b7e551debce9"
+        }
+      ]
+    },
+    "architect": {
+      "actor": "668dadac-fd7a-4523-855a-f6a842301555",
+      "name": "Swarm Architect",
+      "instructions": {
+        "file": "fixtures/baseline-inventory-architect-instructions.md",
+        "bytes": 7313,
+        "sha256": "e6c8861bd1ab0bfb95b2863e15870e31f1e95ccf40538d5fa45c46139955c6a9"
+      },
+      "model": "kimi-code/kimi-for-coding",
+      "runtime_id": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+      "permission_mode": "private",
+      "skills": [
+        {
+          "id": "ee94ee8e-9d20-44b8-ac49-7d85c6db005f",
+          "name": "artifact-consistency",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-artifact-consistency.md",
+          "bytes": 1290,
+          "sha256": "d27ce19c45e3636715a20e0333ee2a1e297a8d0d22458959e9d7e062feec8c61"
+        },
+        {
+          "id": "5705449c-a857-45af-8ce2-a6621033aa3d",
+          "name": "changesurface-analysis",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-changesurface-analysis.md",
+          "bytes": 5426,
+          "sha256": "1645fb8678288a02e987e21649505d344d682de84183c656da20984c63719f52"
+        },
+        {
+          "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+          "name": "multica-cli",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-multica-cli.md",
+          "bytes": 13467,
+          "sha256": "8f35032f7f055e54b7edc4914272d5bfa4bd2258be782f77e16e878ca8f9d808"
+        },
+        {
+          "id": "f9e49a46-23f5-42bb-a5f5-42d82c2cc274",
+          "name": "pk-azure-devops-history",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-pk-azure-devops-history.md",
+          "bytes": 5472,
+          "sha256": "68688296f8245eff3976bdc8a706713d9cb59c929cf007e9a4492bf351210f34"
+        },
+        {
+          "id": "4ebbc2c8-b1d4-4cf2-bfa8-b3fe62772b13",
+          "name": "product-knowledge",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-product-knowledge.md",
+          "bytes": 23223,
+          "sha256": "16afe5467ef8655c9c7d5199e213d5be074269581961e4eb5eb504791d0b1e26"
+        },
+        {
+          "id": "469b87b1-4466-44f5-ba13-be58f73023b9",
+          "name": "spec-design",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-spec-design.md",
+          "bytes": 5303,
+          "sha256": "1eed049eeeaa503ad7f24ae8961f460ac90ae90a4a56f9252f5964bda5a92fa7"
+        }
+      ]
+    },
+    "reviewer": {
+      "actor": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "name": "Swarm Reviewer",
+      "instructions": {
+        "file": "fixtures/baseline-inventory-reviewer-instructions.md",
+        "bytes": 7147,
+        "sha256": "3409e98d5021b325e1a3e277bd7e88af354efc2b39a5ad1c644f4ef3849c0501"
+      },
+      "model": "kimi-code/kimi-for-coding",
+      "runtime_id": "5aded750-b243-4279-b1a8-e3d8d1c8db2e",
+      "permission_mode": "private",
+      "skills": [
+        {
+          "id": "ee94ee8e-9d20-44b8-ac49-7d85c6db005f",
+          "name": "artifact-consistency",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-artifact-consistency.md",
+          "bytes": 1290,
+          "sha256": "d27ce19c45e3636715a20e0333ee2a1e297a8d0d22458959e9d7e062feec8c61"
+        },
+        {
+          "id": "d4d2e66b-6426-426a-b18c-bbd8aa69237b",
+          "name": "code-review-method",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-code-review-method.md",
+          "bytes": 6545,
+          "sha256": "f1ab9c1ba23a76885d7b09cf9531d59c953d0b1278a662e2055dd7a661a50679"
+        },
+        {
+          "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+          "name": "multica-cli",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-multica-cli.md",
+          "bytes": 13467,
+          "sha256": "8f35032f7f055e54b7edc4914272d5bfa4bd2258be782f77e16e878ca8f9d808"
+        },
+        {
+          "id": "4d12657a-001d-4ae4-87c6-846b4f3dcd34",
+          "name": "test-architecture",
+          "enabled": true,
+          "file": "fixtures/baseline-skill-test-architecture.md",
+          "bytes": 1698,
+          "sha256": "eef28362b091c849083ffce8530086b2b44e33de66415278c60860194393c06d"
+        }
+      ]
+    }
+  },
+  "prelude": "這是單一角色的隔離 unit evaluation；每個 item 是互不相依的供料fixture，不是待執行Mission。只使用本次supplied fixtures，不讀平台其他issue、歷史threads、私人daemon/session或外部網路；不改instructions/Skills/profile/產品，不派工、不發評論、不改狀態、不建立或清理檔案。正常native final作答。不要聲稱執行過fixture中的指令；使用fixture證據需標供料。按現有正式角色/掛載Skills/本次授權判斷每個item並產出 JSON {answers:[{id,result,evidenceSource,limitations}]}。Reviewer外層原生首行綁定本批packetRevision:1；每個要求review的item的result字串另保留該fixture的原生首行判定及實際subject revision，外層結果不轉移成各item的verdict。若是流程問題而非具revision的review subject，說明判定格式N/A的原因，不猜revision。本批是決策/文稿unit，不代表實際provider副作用或產品runtime PASS。",
+  "cases": [
+    {
+      "role": "orchestrator",
+      "id": "O-ROUTING",
+      "input": "下列互不相依的新任務，請逐項選擇負責角色，指出必要先後順序與不需要派的角色：需求/PRD；產品文件入庫；模組/介面設計；候選方案查證；非web小工具；依既有素材寫報告；統計資料；認證權限漏洞；測試覆蓋計畫；CI/環境部署；stage-gate審查；實際重跑聲明；API業務邏輯；UI串接；DB migration；事故止血；版本發布；高吞吐效能。這些是獨立輸入，不要真的派工。",
+      "inputSha256": "2fddb10cc166a70615e56fa0e890986082aefb8867aeed8ed4910dd17775b91a",
+      "criteria": [
+        "18 routing branches match existing roster responsibilities",
+        "selective specialists, no all-agent fanout",
+        "design before dependent implementation; material source before Writer",
+        "QA coverage and Verifier execution distinct"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "orchestrator",
+      "id": "O-PLAN",
+      "input": "一個虛構任務有8個獨立交付，6個REQUIRED、1 OPTIONAL、1 ADVISORY，另第9項依賴第一項且可放後續Mission。提供最小SPEC拆解表、兩個child的Task Context Package範例與排程。資料已供齊，不建立issue。",
+      "inputSha256": "fac14c88a03939a88f7fbb251936b9e95a65e2099feaeac1476fc30113eb63b5",
+      "criteria": [
+        "SPEC objective/scope/risks/AC/dependencies and requiredness",
+        "max8 children, batch max5, >5 comment tracking best-effort",
+        "shared context ref and minimal child inputs",
+        "parent wakeup target from supplied exact roster; missing roster not fabricated"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "orchestrator",
+      "id": "O-ACK",
+      "input": "判讀四個派工收據：(a)create exit0、沒有run或狀態變化；(b)run queued且id=rB；(c)明確--no-start；(d)觸發run立即failed，已重派一次仍failed。請各給dispatchStatus、terminalStatus（可得時）與下一步。",
+      "inputSha256": "df6eaccf32b58a90685f69a72224dcc4430ae18972d1461e5faeb47c4e825421",
+      "criteria": [
+        "a UNKNOWN, b DISPATCHED with runRef, c NOT_DISPATCHED, d dispatchStatus DISPATCH_FAILED and exhausted terminalStatus FAILED",
+        "no exit0-as-run or endless polling"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "orchestrator",
+      "id": "O-FANIN",
+      "input": "分別判斷可否success fan-in：A唯一REQUIRED child in_review、delivery成功、PASS@2、VERIFIED@2、revision2；B同A但PASS@1；C有第二個REQUIRED pending；D第二個REQUIRED failed但native stage closed；E只有OPTIONAL failed、所有REQUIRED滿足；F child done但無交付證據；G純資訊查證交付、不含程式或執行聲明；H只有worker DELIVERED event。列出各狀態、阻塞原因、下一個負責角色。",
+      "inputSha256": "b6b824583e979fd95dbc9439787c772d566f15e842b1c0fd02e020060373d42e",
+      "criteria": [
+        "A/E can progress without human child done",
+        "B stale; C pending; D/F/H do not progress",
+        "G existing leader information-only acceptance preserved",
+        "events/status are not completion truth"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "orchestrator",
+      "id": "O-REWORK",
+      "input": "revision2的worker交付被Reviewer REVISE，原文意見是「1. Foo.java:7 null輸入須回空字串」。另獨立Verifier REFUTED；尚未達3輪。提供下一次交接內容與gate處理。另一case已超過3輪，請判定。",
+      "inputSha256": "c0c7609cecf02d1f6e8c209eb2c8e1542a73df1e4317c1f25418d9896afa6e41",
+      "criteria": [
+        "original feedback forwarded verbatim to original worker",
+        "revision increments, re-review/re-verification; REFUTED not waived",
+        "exceeded cap blocked/human escalation, no Human DONE"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "orchestrator",
+      "id": "O-REENTRY",
+      "input": "收到重複wake-up，現有child匹配同標題且dispatchStatus DISPATCHED；parent swarm.finalReport=done且正文/證據版未變。另case本次run is_leader_task=false；有人建議呼叫squad activity因為你的名字是Orchestrator。請回應操作清單。",
+      "inputSha256": "5398bb9d82a9a06b239190236515485bfa0dc240895640122965f2da02e493ff",
+      "criteria": [
+        "no duplicate child/dispatch/gate/report and no self mention",
+        "no leader activity based on identity; fallback only authorized metadata/thread",
+        "unchanged/no new information quietly ends"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "orchestrator",
+      "id": "O-LEARNING",
+      "input": "consumer已取得完整且同workspace/project的fresh provider records。候選分別：APPROVED/CURRENT/未到期/同revision/無conflict且method preconditions符合；DEFERRED；REJECTED；STALE；過期；wrong workspace；wrong consumer project；重複recordKey；body/index不一致；source refs不能解析；同症狀但原因不符的cause-specific remedy；可安全區分未知原因的investigative method；兩個相容且各自適用的方法；僅factual context。請逐項選取/排除及理由，說明實際worker input應帶什麼。",
+      "inputSha256": "f28a9a4937a103998fd673e7dc8973873947421d533713c246803dfbfbf0ac80",
+      "criteria": [
+        "fresh scope/governance/content/version/freshness/source/conflict/duplicate eligibility checks",
+        "semantic applicability separate; matching symptom insufficient",
+        "compatible methods may coexist; investigative method with unknown cause allowed",
+        "facts not procedural ADOPTED; only relevant context into input",
+        "no WK/PK writes or inferred authority"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "orchestrator",
+      "id": "O-FEEDBACK",
+      "input": "方法m@2已被引用但未實際使用；方法n@3已使用但尚無效果證據；另receipt checksum有效但producer身份無法驗證，selection evidence file缺raw provider最後一頁。請給disposition/outcome/下一步，說明Java CLI選取/feedback是否等於provider read/worker使用/knowledge持久化。",
+      "inputSha256": "09e26a3b0fd9a1bdde5c696b6b77f5205b963dbbec9df17ecced708383135d51",
+      "criteria": [
+        "citation is not adoption; use needs action/result references; outcome UNASSESSED without evidence",
+        "checksum not actor authority; incomplete raw read rejects full selection",
+        "original receipt/snapshot replay for feedback; no second selection",
+        "CLI helper does not read provider, dispatch, persist, or authorize"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "orchestrator",
+      "id": "O-SCOPE",
+      "input": "比較(a)標[S05]的實作請求，(b)未標S05但語義同等，(c)純狀態協調。(a)/(b)scope均S05-only且不要求S06。請列Scenario/適用C1-C5順序、gap會改AC或repo範圍時的處理、是否可以launch S06/QA/deploy/Human DONE。另report-only test明示禁止parent comments，如何回報？",
+      "inputSha256": "73d9a293b05440b275ae83d5407de45e5600196c3bcb34f5c4516e9becf3d78c",
+      "criteria": [
+        "scenario-first, tagged/semantic S05 equal; unrelated not S05",
+        "C1 design+C2 independent design review+C3 plan+C4 independent code review+C5 fixed candidate",
+        "affected context gap blocks dependent mutation only",
+        "S06 not implicitly launched; no product deployment or Human DONE",
+        "test no-publication uses run result"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "orchestrator",
+      "id": "O-REPORT",
+      "input": "parent報告draft含所有ID，但child result comment source_task_id指另一run；C3 comment沒列；timeline把dispatched_at當started_at；正文hash有但revision UNKNOWN；readback不完整卻想寫swarm.finalReport=done。請逐項判定/修正；若marker已綁舊版正文而成果material change，怎麼處理？",
+      "inputSha256": "485a6bd9f2237fc5703d2dbe3d97d3d3304091e92731dd9695e2473a08504765",
+      "criteria": [
+        "locators do not prove attribution; C3 and typed chronology required",
+        "hash separate from revision; unavailable fields UNVERIFIED",
+        "full exact submitted/readback body and actor/run required before marker",
+        "superseding revision retains prior report, no blind repost"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "orchestrator",
+      "id": "O-TELEMETRY",
+      "input": "虛構資料：parent created00:00，兩child dispatch00:10/00:20，finalReport absent，now01:00；parent tokens100、child50/60，parent creatorHumanH、child creatorLeader；child dispatch UNKNOWN已31分鐘；parent無活動121分鐘；child rework已達上限。請算耗時/token/歸屬/最高告警，列授權內補救，並指出近似/待校準欄位。",
+      "inputSha256": "6ac358183ab357bc6b1ed6e53b316fdc773b2ea41914a82ec58ad5e5fe4aafe2",
+      "criteria": [
+        "duration50min ongoing; token210; user parent creator",
+        "highest red; bounded nudge/not auto redispatch or override state",
+        "timestamp approximations and calibration labelled"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "orchestrator",
+      "id": "O-COORD",
+      "input": "請只回一句「橙盒清單已收到，等待下一次排程」，這是協調紀錄。",
+      "inputSha256": "016ea224cd90acc081033cac679460223265b258d517f47bd3f0f6da1d69358e",
+      "criteria": [
+        "direct coordination preserved",
+        "no child/professional delegation"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "orchestrator",
+      "id": "O-SMALL-SPECIALIST",
+      "input": "對唯一交付的非web Java17小工具、產品候選調查、測試程式，以及需獨立性的審查/驗證，各判斷由誰實質完成及誰驗收。各自僅1子任務。不要執行，只給責任決策。",
+      "inputSha256": "6fa585a0a2e78229c9e2e129a0faecc41813b267a9562d32b8c5f98137c3faac",
+      "criteria": [
+        "eligible Coder/Researcher/QA/independent Reviewer or Verifier executes regardless task count",
+        "Orchestrator owns coordination/acceptance/integration, not specialist implementation",
+        "pure information acceptance exception preserved"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "qa",
+      "id": "Q-PLAN",
+      "input": "供料SPEC r7：AC-A(P0)輸入整數1..5回同值，範圍外拒絕；AC-B(P1)Draft→Submitted合法，Submitted→Draft非法；AC-C(P2)重複相同requestId提交只產生一筆，依賴失敗時不留部分資料。請設計測試計畫、完整coverage matrix和可執行案例，沿用AC文字與優先序。沒有實際產品測試執行權。",
+      "inputSha256": "3133d2d2a88cd5427adcfae4dff49eabc490bae7d391b1dc9c80d93c10bbcf00",
+      "criteria": [
+        "verbatim AC IDs/priorities, no P3/new requirements",
+        "each AC>=1 case; Happy/Validation/Failure/Boundary/Regression assessed with rationale",
+        "equivalence/boundary min-1,min,min+1,max-1,max,max+1; state legal+illegal; scenario/conditional risk",
+        "Probability*Impact depth; coverage numeric targets and smoke/regression/full selection",
+        "design not execution, no fake counts or code edits"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "qa",
+      "id": "Q-GAPS",
+      "input": "AC-X寫「效能要好」沒有target；AC-Y P0缺依賴failure證據；某人授予Y有owner+reason+expiry的waiver。另已有PK src-test-assets case過時。請給coverage row/gate/完整性判斷/去向。",
+      "inputSha256": "e31278504e6103bcc5f6450dab3c6b19df0a332dbfede7456a77cc699d00e93b",
+      "criteria": [
+        "X Blocked/nonobservable referred to requirement owner, no invented targets",
+        "Y Gap/Blocked remains after waiver; WAIVED not PASS/complete",
+        "existing assets reused where applicable; stale reported",
+        "partial safe planning continues; QA coverage not Verifier claim proof"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "qa",
+      "id": "Q-DEFECT",
+      "input": "已供完整虛構執行收據：target Fixture-5@r2，Java17，cmd=java Fixture5Tests，case invalid-zero預期REJECT卻回ACCEPT，exit1，pass2 fail1。提供缺陷與覆蓋報告。沒有product code修正授權，沒有coverage tool run。",
+      "inputSha256": "c284915144ec38985e641e154504af245927aa9552ede42ee2ba78e706a17092",
+      "criteria": [
+        "reproduction env/precondition/input/steps/expected/actual/log reference/severity",
+        "meaningful regression case for failure; no product fix",
+        "counts supplied not own execution; no invented numeric code coverage",
+        "open uncovered paths/risk; no release recommendation"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "qa",
+      "id": "Q-WRAPPER",
+      "input": "以下是完整供料文件（沒有actual actor/run binding）：{\"configuredRoleBody\":\"你是收據檢查角色。只接受同版收據；證據不足列為未知。\\n\",\"renderedCompleteDocument\":\"RuntimePrelude:v4\\n<ROLE_BODY>\\n你是收據檢查角色。只接受同版收據；證據不足列為未知。\\n</ROLE_BODY>\\nTransportTrailer\\n\",\"configuredSha\":\"fefe6f8148f2fc7f69ce756d81967395419c7b1da7adf03e5005fa42bde3083b\",\"renderedSha\":\"e4c88cd230b1a71e7ac5dbb216ae65bc2626fefe38f7f0c499a3a1bc08be14d5\"}。請比較並回報classification、roleBodyEqual、roleBlockOccurrences、configuredExactBodyOccurrences、evidenceSource、runtimeRetested、limits。",
+      "inputSha256": "f16d97e74ec39a5381acff25b780caa7bc35371dc08d9376777dbf3adc59b412",
+      "criteria": [
+        "wrapper-only, equal role body despite different complete hashes; roleBlockOccurrences=1 and configuredExactBodyOccurrences=1",
+        "correct comparable objects and complete boundaries",
+        "supplied complete docs not runtime execution/obedience"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "qa",
+      "id": "Q-BODY-DIFF",
+      "input": "以下是完整供料文件（沒有actual actor/run binding）：{\"configuredRoleBody\":\"你是收據檢查角色。只接受同版收據；證據不足列為未知。\\n\",\"renderedCompleteDocument\":\"RuntimePrelude:v4\\n<ROLE_BODY>\\n你是收據檢查角色。只接受任意收據；證據不足列為未知。\\n</ROLE_BODY>\\nTransportTrailer\\n\",\"configuredSha\":\"fefe6f8148f2fc7f69ce756d81967395419c7b1da7adf03e5005fa42bde3083b\",\"renderedSha\":\"68212f24678378a5737400e66301462e678d2b3867f3029f48ddf00db4da869f\"}。請比較並回報classification、roleBodyEqual、roleBlockOccurrences、configuredExactBodyOccurrences、evidenceSource、runtimeRetested、limits。",
+      "inputSha256": "3ebc56ccad8b1a25df009c7c6dc3fe2d1825588f80d6db2f69f07015593056f4",
+      "criteria": [
+        "content difference, identify 同版→任意; roleBlockOccurrences=1 and configuredExactBodyOccurrences=0",
+        "correct comparable objects and complete boundaries",
+        "supplied complete docs not runtime execution/obedience"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "qa",
+      "id": "Q-GRANULARITY",
+      "input": "你本輪只讀供料摘要：舊完整文件21061 bytes，role正文3060 bytes，某一次Read回傳offset2323附近800字且truncated=true；舊報告稱正文相同且「本輪完整重驗」。另hash由另一人計算。請交付本輪查核結果。",
+      "inputSha256": "3ddf3101ee68a0380aeb22879894aaf2be192c4d865e08d1419ee2abb6f7e129",
+      "criteria": [
+        "no own full reread/unique/boundary proof from partial/truncated/historical metadata",
+        "separate historical supplied claims from current operations",
+        "UNKNOWN where missing, no first report retrospectively pass"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "qa",
+      "id": "Q-RUNTIME",
+      "input": "有人要求確認running API /health返回200，但server無法啟動且沒有HTTP結果；另案例service可就緒但first health request500。請分別提出最低成本測試、需保留的證據、允許的結果判定及回歸流程。",
+      "inputSha256": "76cd3d843e402abb3567c7555b03eb6c41c2fe70ac9d880bbfe283c56a31c9c8",
+      "criteria": [
+        "unavailable BLOCKED, paper plan not runtime PASS",
+        "real interface/readiness/observed response/build/command/evidence and same flow retest",
+        "coverage/verification/result not silently conflated"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "architect",
+      "id": "A-DESIGN",
+      "input": "虛構產品store完整供料：semantics S1預約同requestId不重複；architecture C1預約模組單向依賴Quota，不得Quota回依賴預約；realization S1←REALIZES C1→IMPLEMENTED_IN repoA/moduleBooking，既有Interface I1 Quota.check(int)->boolean；governance來源official@r8/current，高信心。Human scope MODIFY repoA/moduleBooking、VERIFY_ONLY repoB。請為AC-A同requestId只建立一次、AC-B額度不足回BOOK-001且不可重試設計C1/SPEC，列C3工作對照。不要寫產品程式。",
+      "inputSha256": "ecfbebf3adcf4842b2661aea09d3d14922f2040cf5b149a84f9103b6860098ce",
+      "criteria": [
+        "four-part context with scope/source/revision/authority/freshness; no inferred truth",
+        "module responsible/not responsible dependency acyclic, pinned scope preserved",
+        "precise interface/version/input/output/precondition/effects/idempotency/owner",
+        "schema invariants/sensitive retention/migration and error schema/code/retry/client action",
+        "as-is/to-be, AC mapping/dependencies/integration owner, design review handoff not selfapproval",
+        "choices/alternatives/consequences and appropriate ADR; no implementation detail"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "architect",
+      "id": "A-IMPACT",
+      "input": "現況REALIZES S→C→repoA/m1，repoA/m2 CALLS m1，repoB CONSUMES C.event，變更含event schema與DB migration且rollback不可逆。歷史PR曾改repoZ但目前無repoZ dependency。給ChangeSurface（含relation/depth/類型/信心），建議審查者與授權處理。",
+      "inputSha256": "56bc5b1276327f86f72a71781d0f0644314ad6dd624a563e31871654da387385",
+      "criteria": [
+        "all direct and reverse surfaces with relation/depth and evidence",
+        "L4 highest level and applicable Reviewer/QA/Security/Performance conditional/DBA/Release",
+        "historical repoZ lead not confirmed future scope",
+        "Human approves surface; no silent repo enlargement"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "architect",
+      "id": "A-GAPS",
+      "input": "semantics存在但REALIZES鏈斷；兩個current Constraint衝突會改repo scope；一條歷史Observation與WK說依賴存在但current code graph查無。尚未有裁決。請分類Gap、可继续事項、dependent mutation建議、owner。",
+      "inputSha256": "c16872c787c7b8dbc778027728f0455af8368b14b7736b7ff187aa8badd1738f",
+      "criteria": [
+        "MISSING/CONFLICTING/STALE or evidenced uncertainty explicit",
+        "resolve governed store not issue prose/observation/WK as Product truth",
+        "affected scope/AC unresolved blocks dependent code, safe unrelated analysis continues",
+        "route to existing Curator and Orchestrator/PM under actual authorization"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "architect",
+      "id": "A-HISTORY",
+      "input": "需建立Azure DevOps歷史鏈但runtime未暴露work_items/pull_requests/commits/repositories；managed assignment也沒有。另供料Epic→Feature→PBI→PR→commit chain漏PBI-PR link，只有不變commit。請給能力/來源/信心/入庫建議，不呼叫網路。",
+      "inputSha256": "295340cea62b12c77a6a3c90ed5532eef1629e9f44215c08037977d7b481093d",
+      "criteria": [
+        "MCP_CAPABILITY_UNAVAILABLE, no invented tool or credential workaround",
+        "runtime native then managed resolver, actual access provenance",
+        "historical evidence PROVISIONAL/loose links lower confidence, not future ChangeSurface fact",
+        "no invented Capability/repo or direct Knowledge persistence authority"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "architect",
+      "id": "A-CONTRACT",
+      "input": "已接受ADR-010選擇同步呼叫。新需求要event，但現行Human scope不允許改repoB，Coder已依Interface I1實作。請給契約變更方案、通知、ADR與下一步。",
+      "inputSha256": "59c543c94b3023fef87975e5c213ecc61ab97096f4993b61103e33797695f811",
+      "criteria": [
+        "do not edit accepted ADR; new superseding record with alternatives/negative consequences",
+        "contract change owner Architect, old/new/affected work notification",
+        "scope/authorization retained; conflict routed before final decision, no product implementation"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "architect",
+      "id": "A-N-A",
+      "input": "這次只改靜態說明文字的措辭，無可執行行為、無NFR聲明。有人要求performance故障假說必須證偽才能交付。請給applicability及理由和可繼續的工作。",
+      "inputSha256": "1869d4320c1dd3dbb9cd33d74f15259ac3eedb0ac41c98ba2bb4106a44d8ce85",
+      "criteria": [
+        "N/A with specific nonapplicability reason, not evidence missing UNKNOWN",
+        "no fictitious performance test or defect; safe work continues"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "architect",
+      "id": "A-UNKNOWN",
+      "input": "H1：角色失誤由instructions缺陷造成。但source/version、完整runtime render、實際consumer均未取得。作者說只改一處；完整diff有概述、方法、交付三個hunks。請交付cause狀態、修改數、缺證據、目前可繼續工作。",
+      "inputSha256": "bdb0a296b5601b945a9222bae55a2d89c18c25b92c6201ad95d8a715e719a541",
+      "criteria": [
+        "H1 UNKNOWN, no confirmed cause from outcome",
+        "3 actual sites vs1 logical change, not false literal-preservation",
+        "falsifiable hypotheses/evidence needed and safe independent progress"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "reviewer",
+      "id": "R-DESIGN",
+      "input": "Design Review，revision:1，author=OtherActor。SPEC全文：目標=非prod交付責任分工；非目標=改模型/runtime/權限或發布產品。AC-D1=單一專業交付由合格specialist實作；AC-D2=Lead自行負責協調及整合；AC-D3=author不得審查/驗證自己的交付；AC-D4=review/verification綁current artifact revision。模組：Lead負責規劃拆分派工整合、不做專業交付；Researcher產品調查、不寫程式；Coder實作、不驗收自己；QA案例設計與執行、不改產品；Reviewer獨立審查、不修程式；Verifier獨立重現execution claim、不替代coverage。介面：WorkRequest={objective:string nonempty,workKind:research|code|test,artifactRevision:int>=1}；Artifact={revision:int>=1,body:string,evidenceRefs:string[]}；Review={artifactRevision:int>=1,verdict:PASS|WARNING|REVISE,findings:string[]}；Verify={artifactRevision:int>=1,verdict:VERIFIED|REFUTED|PARTIAL,evidenceRefs:string[]}。Lead→specialist→Artifact→Reviewer/Verifier→Lead，無反向執行依賴；必需review/verify current版才整合，revision改變舊gate stale；缺資格或材料列blocked，無執行claim不要求Verifier。選擇既有角色以避免新增runtime；替代每步新agent拒絕因額外管理成本；風險=評論非原子，以revision與去重key避免重複。AC對照D1 specialist selector、D2 Lead ownership、D3 author!=reviewer/verifier、D4 gate revision equality，測試策略=未來fixture覆蓋小任務/缺資格/stale/author相同/重複event；本稿只是設計，沒有已實作或已測試通過聲明。 本次supplied-only，最新revision供料1，平台freshness未暴露。請按原格式判定。",
+      "inputSha256": "d7d6c18e6f05a4ad06d20d8a0746319715e3bd5d8bd20f6b8344f4e81a3ac48b",
+      "criteria": [
+        "design not revise solely missing future code/tests",
+        "delegation exists accurately quoted; independent review criteria",
+        "parser first verdict revision1; supplied freshness UNKNOWN not invented",
+        "no extra platform/history/Skill reads for task"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "reviewer",
+      "id": "R-CODE-BAD",
+      "input": "Code Review revision:2，author=OtherActor。SPEC static String lower(String s): null回空字串；完整程式 return s.toLowerCase(); 完整測試只有assertTrue(true)，report聲稱null已處理、測試全過但無run證據。請判定及具體意見；不修程式。",
+      "inputSha256": "f1fc484dbed180b12d362de08e231379503080a186ee50cf446715ab99928a66",
+      "criteria": [
+        "REVISE null correctness/contract + meaningless test + unsupported execution claim",
+        "numbered actionable location/problem/fix and AC mapping",
+        "static read not executed claim; independent Verifier where necessary"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "reviewer",
+      "id": "R-CODE-CLEAN",
+      "input": "Code Review revision:3，author=OtherActor。SPEC int inc(int x)合法x=0..9回x+1，範圍外IllegalArgumentException。完整程式 if(x<0||x>9)throw new IllegalArgumentException();return x+1; 完整tests 0→1、9→10、-1/10 exception及nominal5→6。供料execution cmd javac/java FixtureTests @r3，Java17，passed5/failed0、非作者Verifier VERIFIED@3，無安全/契約/維護問題。你本輪僅靜態審主體，本次沒有重跑權。請判定並標實際審查/執行層。",
+      "inputSha256": "48badcb9c5e947e1aea83e2b29266a2b760154b46c2aae501c2e5a2e77c99f25",
+      "criteria": [
+        "no invented own execution; supplied actual evidence distinguished",
+        "no unjustified blocking defect; static-only limitation explicit",
+        "four review dimensions, exact revision and independent subject evidence",
+        "native first-line PASS/WARNING justified per applicable static limits"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "reviewer",
+      "id": "R-WARNING",
+      "input": "Design Review revision:4，author=OtherActor。SPEC全文：目標=非prod交付責任分工；非目標=改模型/runtime/權限或發布產品。AC-D1=單一專業交付由合格specialist實作；AC-D2=Lead自行負責協調及整合；AC-D3=author不得審查/驗證自己的交付；AC-D4=review/verification綁current artifact revision。模組：Lead負責規劃拆分派工整合、不做專業交付；Researcher產品調查、不寫程式；Coder實作、不驗收自己；QA案例設計與執行、不改產品；Reviewer獨立審查、不修程式；Verifier獨立重現execution claim、不替代coverage。介面：WorkRequest={objective:string nonempty,workKind:research|code|test,artifactRevision:int>=1}；Artifact={revision:int>=1,body:string,evidenceRefs:string[]}；Review={artifactRevision:int>=1,verdict:PASS|WARNING|REVISE,findings:string[]}；Verify={artifactRevision:int>=1,verdict:VERIFIED|REFUTED|PARTIAL,evidenceRefs:string[]}。Lead→specialist→Artifact→Reviewer/Verifier→Lead，無反向執行依賴；必需review/verify current版才整合，revision改變舊gate stale；缺資格或材料列blocked，無執行claim不要求Verifier。選擇既有角色以避免新增runtime；替代每步新agent拒絕因額外管理成本；風險=評論非原子，以revision與去重key避免重複。AC對照D1 specialist selector、D2 Lead ownership、D3 author!=reviewer/verifier、D4 gate revision equality，測試策略=未來fixture覆蓋小任務/缺資格/stale/author相同/重複event；本稿只是設計，沒有已實作或已測試通過聲明。 附錄第一段：Lead負責協調和整合。附錄第二段：Lead負責協調和整合。請判定與open findings。",
+      "inputSha256": "94702224802007736b432b5424a882759ab844518060ebf5d6e0ce001f312950",
+      "criteria": [
+        "WARNING nonblocking duplication not unconditional PASS",
+        "actionable findings preserved; no future test requirement for design"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "reviewer",
+      "id": "R-FRESHNESS",
+      "input": "supplied current delivery revision3，request指定revision2，已有PASS@2；另一subject改到revision4而資料只含3的test/review。請逐一處理，哪些舊證據可carry及需什麼理由？另delivery沒有revision marker。",
+      "inputSha256": "0e1eea668f4814e00bbf92cd164aecb8c696608311a55b1d16b61773c47ef6b8",
+      "criteria": [
+        "stale verdict not accepted for newer revision; requestcurrent version",
+        "tests carry only exact unchanged applicability justification, not outcomecopy",
+        "missing revision requires補標, no guessed revision"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "reviewer",
+      "id": "R-FINAL",
+      "input": "Final QA Review revision5的候選，只有早期Design PASS@1及Code PASS@3；没有固定candidate revision5、coverage/findings、required independent verification。另一case你就是subject author。請判定與缺件，區分你的review、Verifier及Control/Human結論。",
+      "inputSha256": "1311b22ecad1bd5b58fe038c3d8c65fe769631002469f609c0e2182b4fb8ff79",
+      "criteria": [
+        "REVISE material missing final evidence, early verdict not substitute",
+        "author cannot independent own deliverable review",
+        "review does not establish Verified/Control/Human DONE"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "reviewer",
+      "id": "R-LOAD",
+      "input": "FinalResult Review revision1，author=OtherActor，聲稱「R17完整新instructions已載入且遵守」。唯一完整證據為provider instructions before/after hash不同、讀回after文件；沒有run、render、實際操作或test。請判定。",
+      "inputSha256": "1cdc0a668cd72f33799fc05abfd19b2fff1709d503556e12ab7d2ee4ca94a67d",
+      "criteria": [
+        "REVISE load and obedience unsupported; source/config only",
+        "no hash equals behavior pass; exact missing evidence stated"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "reviewer",
+      "id": "R-TRANSPORT",
+      "input": "目前實際call是runR@issueI，review subject來源runS@issueJ，允許只native final，不允許comment/status/scratch。parent wakeup target沒有供料。請說明如何交付與source_task身份；另若允許在childC發判定和parentP CHILD-EVENT且給精確mention，列必要event欄位。",
+      "inputSha256": "c4d468300467fa4ff2977a84d94bb2cde0cbd294ec316814b69fd94cf557e8fe",
+      "criteria": [
+        "native final under no-publication; no extra calls/writes",
+        "caller/run identity distinct from subject source, unknown fields not guessed",
+        "permitted event revision/resultRef/wakeup but not fanin truth; no DONE"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    },
+    {
+      "role": "orchestrator",
+      "id": "O-TRANSPORT",
+      "input": "發布收據只提供ACK的comment id但沒有正文，允許一次exact own-output readback，source_task未知。另未授權scratch清理。請判斷可否重貼、改用任意tail選最新comment、刪檔、聲稱一次實體讀取。供料限制test no comments，不執行操作。",
+      "inputSha256": "13e178554729483372901fc5d8c9edb98766f5c800c366fc9b777961b6dcbd6c",
+      "criteria": [
+        "no repost or ambiguous lookup, exact permitted readback only",
+        "UNKNOWN missing identity/body, raw bytes vs stored body and retention separate",
+        "no cleanup from publication success; no cross-process single physical read claim"
+      ],
+      "kind": "ROLE_DECISION_UNIT",
+      "before": "UNTESTED",
+      "after": "UNTESTED",
+      "regression": "UNASSESSED"
+    }
+  ],
+  "configurationBinding": "Historical test-fixture anchors only, NOT current native dispatch pins; use exact current source configuration before any native execution."
+}

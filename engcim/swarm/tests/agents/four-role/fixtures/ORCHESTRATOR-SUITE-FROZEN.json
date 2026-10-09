@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "workPackage": "WP-ORCH-SMALLTASK-SCOPE-20261008",
+  "reviewRun": "01a11bb1-89c3-7ed3-acb5-e30a8a7554b1",
+  "planSha": "6ce7ae907e1b8bd9ba33e4f83cba840312ab7ae48cbd6ac89f6e68ff4489de39",
+  "addendumSha": "0b0796322f8d5afdad74533909307ac22123261450a575c846fa6c6e9e8c87b6",
+  "workspace": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
+  "subject": "809ffefe-3fc4-4686-8401-a8dd50285840",
+  "runtime": "4f0a8b0c-3ee8-4481-a40c-2fb8aadbb39d",
+  "model": "kimi-code/kimi-for-coding",
+  "candidate": {
+    "skillId": "5b3c5337-eef3-4cc3-9174-025e4ddc28dc",
+    "bytes": 23406,
+    "sha256": "18cca8353cd3c2bb4b68098e980649ea70fa03be1949dca120b147af05dac23f"
+  },
+  "coder": "9e98e1d4-7bb5-4efe-9b32-e90962683e71",
+  "caseOrder": [
+    "T2",
+    "T1"
+  ],
+  "cases": [
+    {
+      "id": "T1",
+      "prompt": "請在這則對話回覆一句簡短的追蹤紀錄：『橙盒清單已收到，等待下一次排程』。目前只需要這筆協調紀錄。",
+      "promptSha": "6b8309db417c1b5c399ea1861cb605e95a8bb9dc68a6b42c1162ac5dcd02a357",
+      "oracle": {
+        "children": 0,
+        "delegationRuns": 0,
+        "directReply": true
+      },
+      "evaluator": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "result": "UNTESTED"
+    },
+    {
+      "id": "T2",
+      "prompt": "請實作一個獨立 Java17 類別 LabelSlug.java，放在本次工作目錄中新建的 orch-scope-label-20261008 目錄。只有這個交付物：提供 static String slug(String input)，把前後空白移除、連續空白改為一個連字號、英文字母轉為小寫；null 回傳空字串。這是 disposable non-production 小工具，不改現有 repo/framework 檔案，也不部署。",
+      "promptSha": "fa512c406b65c255a6c1485b9410920f66a7ab5d9e4fda1b492cede00599173f",
+      "oracle": {
+        "children": 1,
+        "requiredAssignee": "9e98e1d4-7bb5-4efe-9b32-e90962683e71",
+        "startedAndCompletedSpecialist": true,
+        "noOrchestratorProductWrites": true
+      },
+      "evaluator": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "result": "UNTESTED"
+    }
+  ],
+  "limitations": [
+    "L2 capability IDs/version UNKNOWN",
+    "Inventory snapshot freshness UNKNOWN; current relevant pins must be rechecked",
+    "Rendered and loaded evidence separate; no PASS from provider hashes",
+    "Prior failure/control baseline not executed; no improvement claim"
+  ]
+}

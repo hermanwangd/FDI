@@ -151,6 +151,19 @@ public final class OrchestratorReportAudit {
         }
         checkTimeline(evidence, parent, readback, phase, runs, comments, draftBody, facts, findings);
 
+        if (evidence.path("work_package_amendment_selected").isBoolean()
+                && evidence.path("work_package_amendment_selected").asBoolean()) {
+            JsonNode ledger = evidence.get("work_packages");
+            if (ledger == null || ledger.isNull()) {
+                findings.add(new Finding("WORK_PACKAGE_LEDGER_MISSING", "work_packages",
+                        "The selected current-work-package amendment requires its exact operation/plan/review ledger."));
+            } else {
+                AuditResult packageAudit = CurrentWorkPackageAudit.audit(ledger);
+                facts.addAll(packageAudit.facts());
+                findings.addAll(packageAudit.findings());
+            }
+        }
+
         String status = findings.isEmpty() ? "CLEAN" : "FINDINGS";
         return new AuditResult(status, facts, findings, findings.isEmpty() ? 0 : 1);
     }

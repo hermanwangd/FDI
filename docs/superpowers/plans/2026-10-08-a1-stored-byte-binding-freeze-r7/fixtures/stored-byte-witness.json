@@ -1,0 +1,52 @@
+{
+  "classification": "derived index of retained native records, not a new execution receipt",
+  "plan": {
+    "id": "01a117ea-da30-78e2-9e80-ac8a116bdc88",
+    "revision": 1,
+    "parent_id": "01a117e5-75e7-7023-aeb9-b7e49fd32cb8",
+    "author_id": "668dadac-fd7a-4523-855a-f6a842301555",
+    "created_at": "2026-10-07T19:50:29Z",
+    "stored_utf8_bytes": 8743,
+    "stored_sha256": "da7d186d9d88cf9e09162e9002cc3d101f4b2dfca977f1369b432e4ee856b169",
+    "ends_lf": false
+  },
+  "decision": {
+    "id": "01a117f0-57f8-7bee-935b-82b572469f30",
+    "revision": 1,
+    "parent_id": "01a117ea-da30-78e2-9e80-ac8a116bdc88",
+    "author_id": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+    "created_at": "2026-10-07T19:56:29Z",
+    "content_sha256": "4c0945f80686ad704cfaa92bf6e5abc86d33dad7a42a3711a8cdcf4aa078e7cd",
+    "claimed_stored_sha256": "c0800ee8e2f0dd51096831cdd10dd890d99ca3b0d9bae877519d7466e69ca210",
+    "source_line": 59
+  },
+  "author_result": {
+    "id": "01a117f6-68ba-788f-86bc-6364f9b376c1",
+    "revision": 1,
+    "parent_id": "01a117f0-57f8-7bee-935b-82b572469f30",
+    "author_id": "668dadac-fd7a-4523-855a-f6a842301555",
+    "created_at": "2026-10-07T20:03:07Z",
+    "content_sha256": "e6c38e41514c02a3a89f14b51aa9fc9911da766c507eca42f3f022cfad022046",
+    "claimed_plan_sha256": "c0800ee8e2f0dd51096831cdd10dd890d99ca3b0d9bae877519d7466e69ca210",
+    "claimed_dependency_tuple_status": "VERIFIED_AND_FRESH",
+    "source_line": 77
+  },
+  "author_run": {
+    "id": "01a117f0-580a-74d3-a9fa-adfa446139a9",
+    "agent_id": "668dadac-fd7a-4523-855a-f6a842301555",
+    "status": "completed",
+    "trigger_comment_id": "01a117f0-57f8-7bee-935b-82b572469f30",
+    "completed_at": "2026-10-07T20:03:29Z",
+    "delivered_comment_ids": [
+      "01a117f0-57f8-7bee-935b-82b572469f30"
+    ]
+  },
+  "run_completed_source_line": 71,
+  "byte_transformation_witness": {
+    "operation": "append exactly one LF to frozen C03 bytes",
+    "original_sha256": "da7d186d9d88cf9e09162e9002cc3d101f4b2dfca977f1369b432e4ee856b169",
+    "derived_sha256": "c0800ee8e2f0dd51096831cdd10dd890d99ca3b0d9bae877519d7466e69ca210",
+    "mechanism_limit": "Equality to the one-LF hash is proven. The actual historical hash-generation command is not established by these handoff receipts."
+  },
+  "historical_acceptance": "FAIL: exact stored subject did not match approval/author claim; future correction cannot validate prior action. Actual source tool ordering needs full run-message receipts, not final result prose alone."
+}

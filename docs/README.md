@@ -33,8 +33,14 @@ The authoritative path rule for all current and future files is [`FILE-CLASSIFIC
 
 These are related but are not interchangeable authorities.
 
-## ENGCIM RC10 delivery
+## Swarm development and RC10 material
 
-The current RC6-to-RC10 implementation evidence and company import map are
-indexed under [`engcim/swarm/docs/rc10`](../engcim/swarm/docs/rc10/RC6-TO-RC10-SOURCE-TO-RUNTIME-GAP-MATRIX.md).
-The folder map remains a proposal and does not itself grant company adoption.
+The [Swarm module README](../engcim/swarm/README.md) is the current work-package
+documentation entry. Its subject table links the single maintained body for
+methods, selected profiles, source bindings, tests and proposed designs. File
+classification and approved governance retain their own authority.
+
+The module also indexes RC10 plans, import proposals and dated delivery reports.
+Their recorded checkpoints are historical evidence, not today's four-role repair
+status or company adoption. Preserve their bytes and use current owning sources
+for development; generated release inventories are navigation only.

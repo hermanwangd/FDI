@@ -1,0 +1,1695 @@
+{
+  "revision": "grant-and-raw-receipt-r10-preimplementation",
+  "independent_reviewed_repair_criteria": "Parent-provided twoP1 repair findings/negative and positive criteria; exact expanded local variants pinned here before code. No fabricated review receipt.",
+  "base_implementation_commit": "b72beb4f01f55148a753eede50a0cbc4a7ac87fe",
+  "denominator": {
+    "unit": 16,
+    "contract": 6,
+    "static": 8,
+    "native": 24,
+    "new_case_ids": 0,
+    "new_subassertions": 18,
+    "previous_r6_r7_subassertions": 27,
+    "composite_local_subassertions": 45
+  },
+  "assertions": [
+    {
+      "variant_id": "r10-scratch-foreign-grant",
+      "case_id": "U14",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "foreign-issue-B",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "A grant cannot define its own current issue; use the independently declared ledger identity."
+      }
+    },
+    {
+      "variant_id": "r10-context-foreign-grant",
+      "case_id": "U15",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "read exact current supplied request",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "foreign-issue-B",
+            "target_kind": "CURRENT_ISSUE",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "foreign-issue-B"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "foreign-issue-B",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "A grant cannot define its own current issue; use the independently declared ledger identity."
+      }
+    },
+    {
+      "variant_id": "r10-scope-foreign-grant-and-trace",
+      "case_id": "U11",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          },
+          {
+            "id": "retained-run-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Synthetic complete run receipt.\n",
+            "sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "foreign-issue-B",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "reported_scope_compliance": "COMPLIANT",
+        "trace_reconciliation": {
+          "issue_id": "foreign-issue-B",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "complete": true,
+          "observed_operation_ids": [
+            "scratch-A"
+          ],
+          "reconciled_operation_ids": [
+            "scratch-A"
+          ],
+          "deviations": [],
+          "gaps": [],
+          "raw_receipt_ref": "retained-run-A",
+          "raw_receipt_sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH",
+          "PACKAGE_IDENTITY_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Matching foreign grant/trace does not attest current-issue compliance."
+      }
+    },
+    {
+      "variant_id": "r10-scratch-current-grant-positive",
+      "case_id": "U14",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "CLEAN",
+        "finding_codes": [],
+        "required_fact_codes": [
+          "PROTOCOL_SCRATCH_ALLOWED",
+          "FILE_WRITE_RECORDED"
+        ],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Current named scratch grant remains live."
+      }
+    },
+    {
+      "variant_id": "r10-context-current-grant-positive",
+      "case_id": "U15",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "read exact current supplied request",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "fixture-mission-A",
+            "target_kind": "CURRENT_ISSUE",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "fixture-mission-A"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "CLEAN",
+        "finding_codes": [],
+        "required_fact_codes": [
+          "PROTOCOL_CONTEXT_ALLOWED"
+        ],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Exact current issue context remains live."
+      }
+    },
+    {
+      "variant_id": "r10-explicit-current-child-positive",
+      "case_id": "U15",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "read exact current supplied request",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "current-child-A",
+            "target_kind": "CURRENT_ISSUE",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "current-child-A"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "current-child-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "current_issue_id": "current-child-A"
+      },
+      "expected": {
+        "local_audit_status": "CLEAN",
+        "finding_codes": [],
+        "required_fact_codes": [
+          "PROTOCOL_CONTEXT_ALLOWED"
+        ],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "An explicit independently declared current issue can differ from Mission ID; absence retains mission_id as the legacy issue declaration."
+      }
+    },
+    {
+      "variant_id": "r10-invalid-current-issue-null",
+      "case_id": "U15",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "read exact current supplied request",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "fixture-mission-A",
+            "target_kind": "CURRENT_ISSUE",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "fixture-mission-A"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "current_issue_id": null
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "LEDGER_INVALID"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Invalid explicit current issue must never fall back to Mission or grant."
+      }
+    },
+    {
+      "variant_id": "r10-invalid-current-issue-numeric",
+      "case_id": "U15",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "read exact current supplied request",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "fixture-mission-A",
+            "target_kind": "CURRENT_ISSUE",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "fixture-mission-A"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "current_issue_id": 0
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "LEDGER_INVALID"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Invalid explicit current issue must never fall back to Mission or grant."
+      }
+    },
+    {
+      "variant_id": "r10-invalid-current-issue-empty",
+      "case_id": "U15",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "read exact current supplied request",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "fixture-mission-A",
+            "target_kind": "CURRENT_ISSUE",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "fixture-mission-A"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "current_issue_id": ""
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "LEDGER_INVALID"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Invalid explicit current issue must never fall back to Mission or grant."
+      }
+    },
+    {
+      "variant_id": "r10-invalid-grant-issue-null",
+      "case_id": "U15",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "read exact current supplied request",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "fixture-mission-A",
+            "target_kind": "CURRENT_ISSUE",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "fixture-mission-A"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": null,
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Grant issue identity must be a nonempty string."
+      }
+    },
+    {
+      "variant_id": "r10-invalid-grant-issue-numeric",
+      "case_id": "U15",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "read exact current supplied request",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "fixture-mission-A",
+            "target_kind": "CURRENT_ISSUE",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "fixture-mission-A"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": 0,
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Grant issue identity must be a nonempty string."
+      }
+    },
+    {
+      "variant_id": "r10-numeric-context-target",
+      "case_id": "U15",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "read exact current supplied request",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": 123,
+            "target_kind": "CURRENT_ISSUE",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "123"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "123",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "current_issue_id": "123"
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Matching scalar stringification is not a typed target identity."
+      }
+    },
+    {
+      "variant_id": "r10-numeric-context-workspace",
+      "case_id": "U15",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "read exact current supplied request",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": 123,
+            "target_issue_id": "fixture-mission-A",
+            "target_kind": "CURRENT_ISSUE",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "fixture-mission-A"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "123",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Workspace must be textual, even if numeric value stringifies to the grant."
+      }
+    },
+    {
+      "variant_id": "r10-raw-truncation-marker",
+      "case_id": "U11",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          },
+          {
+            "id": "retained-run-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "<truncated 7 lines>\npartial run receipt",
+            "sha256": "f47db2eda29501c3a0d30131833ace21abad9e522b596b2c4df66a5527f57547"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "reported_scope_compliance": "COMPLIANT",
+        "trace_reconciliation": {
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "complete": true,
+          "observed_operation_ids": [
+            "scratch-A"
+          ],
+          "reconciled_operation_ids": [
+            "scratch-A"
+          ],
+          "deviations": [],
+          "gaps": [],
+          "raw_receipt_ref": "retained-run-A",
+          "raw_receipt_sha256": "f47db2eda29501c3a0d30131833ace21abad9e522b596b2c4df66a5527f57547"
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "ACTION_EVIDENCE_INCOMPLETE"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Recomputed digest and complete:true cannot override visible raw receipt truncation."
+      }
+    },
+    {
+      "variant_id": "r10-raw-leading-whitespace-truncation",
+      "case_id": "U11",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          },
+          {
+            "id": "retained-run-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": " \n<truncated 9 bytes>\npartial",
+            "sha256": "a0e62c9e73489ec86524e0a12318e4a8ea712bd67fa48b4712ed609f445d46a8"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "reported_scope_compliance": "COMPLIANT",
+        "trace_reconciliation": {
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "complete": true,
+          "observed_operation_ids": [
+            "scratch-A"
+          ],
+          "reconciled_operation_ids": [
+            "scratch-A"
+          ],
+          "deviations": [],
+          "gaps": [],
+          "raw_receipt_ref": "retained-run-A",
+          "raw_receipt_sha256": "a0e62c9e73489ec86524e0a12318e4a8ea712bd67fa48b4712ed609f445d46a8"
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "ACTION_EVIDENCE_INCOMPLETE"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Recognized leading raw output marker remains incomplete with matching hashes."
+      }
+    },
+    {
+      "variant_id": "r10-raw-truncation-flag-true",
+      "case_id": "U11",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          },
+          {
+            "id": "retained-run-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Synthetic complete run receipt.\n",
+            "sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c",
+            "output_truncated": true
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "reported_scope_compliance": "COMPLIANT",
+        "trace_reconciliation": {
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "complete": true,
+          "observed_operation_ids": [
+            "scratch-A"
+          ],
+          "reconciled_operation_ids": [
+            "scratch-A"
+          ],
+          "deviations": [],
+          "gaps": [],
+          "raw_receipt_ref": "retained-run-A",
+          "raw_receipt_sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "ACTION_EVIDENCE_INCOMPLETE"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Explicit raw completeness flags must be false Booleans."
+      }
+    },
+    {
+      "variant_id": "r10-raw-truncation-flag-nonboolean",
+      "case_id": "U11",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          },
+          {
+            "id": "retained-run-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Synthetic complete run receipt.\n",
+            "sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c",
+            "output_truncated": "false"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "reported_scope_compliance": "COMPLIANT",
+        "trace_reconciliation": {
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "complete": true,
+          "observed_operation_ids": [
+            "scratch-A"
+          ],
+          "reconciled_operation_ids": [
+            "scratch-A"
+          ],
+          "deviations": [],
+          "gaps": [],
+          "raw_receipt_ref": "retained-run-A",
+          "raw_receipt_sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "ACTION_EVIDENCE_INCOMPLETE"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Explicit raw completeness flags must be false Booleans."
+      }
+    },
+    {
+      "variant_id": "r10-raw-complete-positive",
+      "case_id": "U11",
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          },
+          {
+            "id": "retained-run-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Synthetic complete run receipt.\n",
+            "sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c",
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "reported_scope_compliance": "COMPLIANT",
+        "trace_reconciliation": {
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "complete": true,
+          "observed_operation_ids": [
+            "scratch-A"
+          ],
+          "reconciled_operation_ids": [
+            "scratch-A"
+          ],
+          "deviations": [],
+          "gaps": [],
+          "raw_receipt_ref": "retained-run-A",
+          "raw_receipt_sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+        }
+      },
+      "expected": {
+        "local_audit_status": "CLEAN",
+        "finding_codes": [],
+        "required_fact_codes": [
+          "PROTOCOL_SCRATCH_ALLOWED",
+          "FILE_WRITE_RECORDED"
+        ],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Complete matching raw receipt remains a consistency positive, never native authenticity proof."
+      }
+    }
+  ]
+}

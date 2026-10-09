@@ -1,0 +1,2584 @@
+{
+  "revision": "a1-preparation-r6-preimplementation",
+  "classification": "independently reviewable proposed local expectations; synthetic inputs are not native receipts",
+  "denominator": {
+    "U01-U16": 16,
+    "C01-C06": 6,
+    "S01-S08": 8,
+    "N01-N24": 24,
+    "new_case_ids": 0,
+    "supplemental_assertions": 25,
+    "unit_mapping": {
+      "U14": 8,
+      "U15": 9,
+      "U11": 8
+    }
+  },
+  "expected_codes_are_proposed_contract": true,
+  "fixture_basis_sha256": "811c7deed3975f773d3f58bfe63cbef9a53c1716291806dc34252fb0e499ce3c",
+  "assertions": [
+    {
+      "variant_id": "r6-U14-granted-reply",
+      "case_id": "U14",
+      "native_mapping": [
+        "N19"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "CLEAN",
+        "finding_codes": [],
+        "required_fact_codes": [
+          "PROTOCOL_SCRATCH_ALLOWED",
+          "FILE_WRITE_RECORDED"
+        ],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Exact granted reply path; preparation remains live."
+      },
+      "pre_fix_expectation": "source prediction; not executed in this freeze"
+    },
+    {
+      "variant_id": "r6-U14-granted-plan",
+      "case_id": "U14",
+      "native_mapping": [
+        "N19"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/plan.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "CLEAN",
+        "finding_codes": [],
+        "required_fact_codes": [
+          "PROTOCOL_SCRATCH_ALLOWED",
+          "FILE_WRITE_RECORDED"
+        ],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Exact granted plan path."
+      },
+      "pre_fix_expectation": "source prediction; not executed in this freeze"
+    },
+    {
+      "variant_id": "r6-U14-both-granted-files",
+      "case_id": "U14",
+      "native_mapping": [
+        "N19"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          },
+          {
+            "id": "scratch-plan",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/plan.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "CLEAN",
+        "finding_codes": [],
+        "required_fact_codes": [
+          "PROTOCOL_SCRATCH_ALLOWED",
+          "FILE_WRITE_RECORDED"
+        ],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Two explicitly granted files, no deletion."
+      },
+      "pre_fix_expectation": "source prediction; not executed in this freeze"
+    },
+    {
+      "variant_id": "r6-U14-ungranted-filename",
+      "case_id": "U14",
+      "native_mapping": [
+        "N20"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/issue_desc_full.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Workdir containment alone cannot grant a filename."
+      },
+      "pre_fix_expectation": "Known source false-CLEAN: checkProtocol accepts any contained path; expected post-fix FINDINGS."
+    },
+    {
+      "variant_id": "r6-U14-ungranted-deletion",
+      "case_id": "U14",
+      "native_mapping": [
+        "N20"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "DELETE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Cleanup is a distinct ungranted operation; preserve it."
+      },
+      "pre_fix_expectation": "Already rejected by audit; native failure shows procedure still needs correction."
+    },
+    {
+      "variant_id": "r6-U14-narrower-grant",
+      "case_id": "U14",
+      "native_mapping": [
+        "N20"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Current caller may narrow to plan.txt; broad canonical wording must not expand it."
+      },
+      "pre_fix_expectation": "Source predicts false-CLEAN: current audit does not inspect caller path grant."
+    },
+    {
+      "variant_id": "r6-U14-over-byte-cap",
+      "case_id": "U14",
+      "native_mapping": [
+        "N20"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "cd72c76486c91c4032a0b357522fe03413380d37ad7d8661bd98feb5209f1bf6",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "sha256": "cd72c76486c91c4032a0b357522fe03413380d37ad7d8661bd98feb5209f1bf6"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "UTF-8 byte cap is enforced without filesystem access."
+      },
+      "pre_fix_expectation": "Source predicts false-CLEAN: no byte bound checked."
+    },
+    {
+      "variant_id": "r6-U14-outside-grant",
+      "case_id": "U14",
+      "native_mapping": [
+        "N20"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/tmp/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "No inherited /tmp authority."
+      },
+      "pre_fix_expectation": "Already rejected by audit; must remain rejected."
+    },
+    {
+      "variant_id": "r6-U15-exact-current-issue",
+      "case_id": "U15",
+      "native_mapping": [
+        "N19",
+        "N23"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "read exact current supplied request",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "fixture-mission-A",
+            "target_kind": "CURRENT_ISSUE",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "fixture-mission-A"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "CLEAN",
+        "finding_codes": [],
+        "required_fact_codes": [
+          "PROTOCOL_CONTEXT_ALLOWED"
+        ],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Bounded current supplied context or CLI syntax help is preparation, not substantive investigation."
+      },
+      "pre_fix_expectation": "Source predicts false finding: new bounded kind currently unrecognized. Native actor acceptance still requires raw command reconciliation."
+    },
+    {
+      "variant_id": "r6-U15-exact-trigger-thread",
+      "case_id": "U15",
+      "native_mapping": [
+        "N19",
+        "N23"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "read exact current supplied request",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "fixture-mission-A",
+            "target_kind": "CURRENT_THREAD",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "fixture-mission-A"
+            ],
+            "output_truncated": false,
+            "content_truncated": false,
+            "target_thread_id": "trigger-A"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "CLEAN",
+        "finding_codes": [],
+        "required_fact_codes": [
+          "PROTOCOL_CONTEXT_ALLOWED"
+        ],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Bounded current supplied context or CLI syntax help is preparation, not substantive investigation."
+      },
+      "pre_fix_expectation": "Source predicts false finding: new bounded kind currently unrecognized. Native actor acceptance still requires raw command reconciliation."
+    },
+    {
+      "variant_id": "r6-U15-workspace-identity-help",
+      "case_id": "U15",
+      "native_mapping": [
+        "N19",
+        "N23"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "multica --workspace-id workspace-A --help",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "fixture-mission-A",
+            "target_kind": "IDENTITY_HELP",
+            "provider_write": false,
+            "returned_issue_ids": [],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "CLEAN",
+        "finding_codes": [],
+        "required_fact_codes": [
+          "PROTOCOL_CONTEXT_ALLOWED"
+        ],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Bounded current supplied context or CLI syntax help is preparation, not substantive investigation."
+      },
+      "pre_fix_expectation": "Source predicts false finding: new bounded kind currently unrecognized. Native actor acceptance still requires raw command reconciliation."
+    },
+    {
+      "variant_id": "r6-U15-workspace-foreign-discovery",
+      "case_id": "U15",
+      "native_mapping": [
+        "N23"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "multica --workspace-id workspace-A issue list",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "fixture-mission-A",
+            "target_kind": "WORKSPACE_ISSUE_LIST",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "foreign-issue-B"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Routing help/current-family metadata never exempts foreign discovery or source investigation."
+      },
+      "pre_fix_expectation": "Current audit rejects unknown kind indiscriminately; correction must preserve these negatives while admitting scoped positives."
+    },
+    {
+      "variant_id": "r6-U15-global-agent-discovery",
+      "case_id": "U15",
+      "native_mapping": [
+        "N23"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "multica agent list",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "fixture-mission-A",
+            "target_kind": "GLOBAL_AGENT_LIST",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "fixture-mission-A"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Routing help/current-family metadata never exempts foreign discovery or source investigation."
+      },
+      "pre_fix_expectation": "Current audit rejects unknown kind indiscriminately; correction must preserve these negatives while admitting scoped positives."
+    },
+    {
+      "variant_id": "r6-U15-older-overlay-investigation",
+      "case_id": "U15",
+      "native_mapping": [
+        "N23"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "old/RC10-S05-S06-ROLE-GUIDANCE.md",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "view_file old/RC10-S05-S06-ROLE-GUIDANCE.md",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "fixture-mission-A",
+            "target_kind": "REPOSITORY_SOURCE",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "fixture-mission-A"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Routing help/current-family metadata never exempts foreign discovery or source investigation."
+      },
+      "pre_fix_expectation": "Current audit rejects unknown kind indiscriminately; correction must preserve these negatives while admitting scoped positives."
+    },
+    {
+      "variant_id": "r6-U15-missing-workspace",
+      "case_id": "U15",
+      "native_mapping": [
+        "N23"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "read exact current supplied request",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "",
+            "target_issue_id": "fixture-mission-A",
+            "target_kind": "CURRENT_ISSUE",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "fixture-mission-A"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Routing help/current-family metadata never exempts foreign discovery or source investigation."
+      },
+      "pre_fix_expectation": "Current audit rejects unknown kind indiscriminately; correction must preserve these negatives while admitting scoped positives."
+    },
+    {
+      "variant_id": "r6-U15-wrong-current-issue",
+      "case_id": "U15",
+      "native_mapping": [
+        "N23"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "read exact current supplied request",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "foreign-issue-B",
+            "target_kind": "CURRENT_ISSUE",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "foreign-issue-B"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Current public request only.\n",
+            "sha256": "b78a42be9e05abea7479a9fb2a5f9371e47ab5b2e38d2865e0bc10ededb6c66a"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "PROTOCOL_SCOPE_OR_KIND_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Routing help/current-family metadata never exempts foreign discovery or source investigation."
+      },
+      "pre_fix_expectation": "Current audit rejects unknown kind indiscriminately; correction must preserve these negatives while admitting scoped positives."
+    },
+    {
+      "variant_id": "r6-U15-approved-repository-operations",
+      "case_id": "U15",
+      "native_mapping": [
+        "N21"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [
+          {
+            "package_id": "SA-A",
+            "action_id": "develop-A",
+            "category": "STAGE_ACTION",
+            "stage": "S05",
+            "actor_id": "developer-A",
+            "role": "Developer",
+            "scope": [
+              "NamedFixture.java"
+            ],
+            "method": "approved bounded Git/compile/test operations",
+            "inputs": [
+              {
+                "locator": "NamedFixture.java",
+                "revision": "fixture-r1",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "plans": [
+          {
+            "id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "develop-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "developer-A",
+            "role": "Developer",
+            "native_revision": 1,
+            "declared_revision": 2,
+            "stored_body": "Plan: approved bounded Git/compile/test operations.\n",
+            "created_at": "2026-10-08T00:00:00Z",
+            "stored_sha256": "724935ecf29f874325f3d19a4944ea0784dcd895bb11b8d0dddb7e1a7bdf4b27",
+            "category": "STAGE_ACTION",
+            "stage": "S05",
+            "scope": [
+              "NamedFixture.java"
+            ],
+            "method": "approved bounded Git/compile/test operations",
+            "inputs": [
+              {
+                "locator": "NamedFixture.java",
+                "revision": "fixture-r1",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ],
+            "dependencies": []
+          }
+        ],
+        "decisions": [
+          {
+            "id": "decision-A",
+            "parent_id": "plan-A",
+            "package_id": "SA-A",
+            "action_id": "develop-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "developer-A",
+            "role": "Developer",
+            "reviewer_id": "reviewer-A",
+            "decision": "APPROVE",
+            "native_plan_revision": 1,
+            "declared_plan_revision": 2,
+            "conditions": [],
+            "created_at": "2026-10-08T00:01:00Z",
+            "plan_stored_sha256": "724935ecf29f874325f3d19a4944ea0784dcd895bb11b8d0dddb7e1a7bdf4b27",
+            "category": "STAGE_ACTION",
+            "stage": "S05",
+            "scope": [
+              "NamedFixture.java"
+            ],
+            "method": "approved bounded Git/compile/test operations",
+            "inputs": [
+              {
+                "locator": "NamedFixture.java",
+                "revision": "fixture-r1",
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            ]
+          }
+        ],
+        "operations": [
+          {
+            "id": "approved-repo-op-0",
+            "package_id": "SA-A",
+            "action_id": "develop-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "developer-A",
+            "role": "Developer",
+            "kind": "REPOSITORY_OPERATION",
+            "locator": "NamedFixture.java",
+            "input_revision": "fixture-r1",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:00Z",
+            "command": "git status --short",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          },
+          {
+            "id": "approved-repo-op-1",
+            "package_id": "SA-A",
+            "action_id": "develop-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "developer-A",
+            "role": "Developer",
+            "kind": "REPOSITORY_OPERATION",
+            "locator": "NamedFixture.java",
+            "input_revision": "fixture-r1",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:01Z",
+            "command": "git diff --stat",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          },
+          {
+            "id": "approved-repo-op-2",
+            "package_id": "SA-A",
+            "action_id": "develop-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "developer-A",
+            "role": "Developer",
+            "kind": "REPOSITORY_OPERATION",
+            "locator": "NamedFixture.java",
+            "input_revision": "fixture-r1",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:02Z",
+            "command": "git log -n 2 --oneline",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          },
+          {
+            "id": "approved-repo-op-3",
+            "package_id": "SA-A",
+            "action_id": "develop-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "developer-A",
+            "role": "Developer",
+            "kind": "REPOSITORY_OPERATION",
+            "locator": "NamedFixture.java",
+            "input_revision": "fixture-r1",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:03Z",
+            "command": "javac NamedFixture.java",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          },
+          {
+            "id": "approved-repo-op-4",
+            "package_id": "SA-A",
+            "action_id": "develop-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "developer-A",
+            "role": "Developer",
+            "kind": "REPOSITORY_OPERATION",
+            "locator": "NamedFixture.java",
+            "input_revision": "fixture-r1",
+            "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "plan_id": "plan-A",
+            "decision_id": "decision-A",
+            "run_id": "run-A",
+            "at": "2026-10-08T00:02:04Z",
+            "command": "mvn -o test -Dtest=NamedFixtureTests",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "output-A",
+            "consumed": true,
+            "ack": "KNOWN",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "output-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-A",
+            "actor_id": "developer-A",
+            "content": "source output",
+            "sha256": "8b9f15ff83aa611046eb772984701958aac45b897f388f4bd5a51eca5adf4f12"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "COMPLIANT_COMPLETED",
+        "required_evidence": [
+          "output-A"
+        ],
+        "expected_actions": [
+          "develop-A"
+        ]
+      },
+      "expected": {
+        "local_audit_status": "CLEAN",
+        "finding_codes": [],
+        "required_fact_codes": [
+          "ACTION_ATTEMPT_RECORDED",
+          "ACTION_CONFIRMED"
+        ],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Approved real operations remain legal; these supplied fixtures do not demonstrate actual Git/compiler execution."
+      },
+      "pre_fix_expectation": "Existing approved-package path is expected CLEAN; broad prep restrictions must not affect it."
+    },
+    {
+      "variant_id": "r6-U11-claim-contradicted-by-trace",
+      "case_id": "U11",
+      "native_mapping": [
+        "N24"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          },
+          {
+            "id": "retained-run-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Synthetic complete run receipt.\n",
+            "sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "reported_scope_compliance": "COMPLIANT",
+        "trace_reconciliation": {
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "complete": true,
+          "observed_operation_ids": [
+            "scratch-A"
+          ],
+          "reconciled_operation_ids": [
+            "scratch-A"
+          ],
+          "deviations": [
+            {
+              "operation_id": "scratch-A",
+              "reason": "ungranted filename/deletion in raw receipt"
+            }
+          ],
+          "gaps": [],
+          "raw_receipt_ref": "retained-run-A",
+          "raw_receipt_sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "SCOPE_COMPLIANCE_CONTRADICTED"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "A compliance claim contradicted by supplied independent trace reconciliation fails."
+      },
+      "pre_fix_expectation": "Source predicts false-CLEAN: reported scope claim and reconciliation are currently ignored.",
+      "related_acceptance_criteria": [
+        "AC09"
+      ]
+    },
+    {
+      "variant_id": "r6-U11-complete-honest-scope",
+      "case_id": "U11",
+      "native_mapping": [
+        "N24"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          },
+          {
+            "id": "retained-run-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Synthetic complete run receipt.\n",
+            "sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "reported_scope_compliance": "COMPLIANT",
+        "trace_reconciliation": {
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "complete": true,
+          "observed_operation_ids": [
+            "scratch-A"
+          ],
+          "reconciled_operation_ids": [
+            "scratch-A"
+          ],
+          "deviations": [],
+          "gaps": [],
+          "raw_receipt_ref": "retained-run-A",
+          "raw_receipt_sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+        }
+      },
+      "expected": {
+        "local_audit_status": "CLEAN",
+        "finding_codes": [],
+        "required_fact_codes": [
+          "PROTOCOL_SCRATCH_ALLOWED",
+          "FILE_WRITE_RECORDED"
+        ],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Complete supplied reconciliation with no deviation is a local consistency positive; native completeness is independently verified."
+      },
+      "pre_fix_expectation": "Current CLEAN is consistent but does not validate added reconciliation fields.",
+      "related_acceptance_criteria": [
+        "AC09"
+      ]
+    },
+    {
+      "variant_id": "r6-U11-incomplete-reconciliation",
+      "case_id": "U11",
+      "native_mapping": [
+        "N24"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          },
+          {
+            "id": "retained-run-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Synthetic complete run receipt.\n",
+            "sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "reported_scope_compliance": "COMPLIANT",
+        "trace_reconciliation": {
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "complete": false,
+          "observed_operation_ids": [
+            "scratch-A"
+          ],
+          "reconciled_operation_ids": [
+            "scratch-A"
+          ],
+          "deviations": [],
+          "gaps": [
+            "missing terminal range"
+          ],
+          "raw_receipt_ref": "retained-run-A",
+          "raw_receipt_sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "ACTION_EVIDENCE_INCOMPLETE"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Missing or truncated trace cannot establish strict compliance."
+      },
+      "pre_fix_expectation": "Source predicts false-CLEAN: reconciliation is ignored.",
+      "related_acceptance_criteria": [
+        "AC09"
+      ]
+    },
+    {
+      "variant_id": "r6-U11-unaccounted-operation",
+      "case_id": "U11",
+      "native_mapping": [
+        "N24"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          },
+          {
+            "id": "retained-run-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Synthetic complete run receipt.\n",
+            "sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "reported_scope_compliance": "COMPLIANT",
+        "trace_reconciliation": {
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "complete": true,
+          "observed_operation_ids": [
+            "scratch-A",
+            "unexpected-delete"
+          ],
+          "reconciled_operation_ids": [
+            "scratch-A"
+          ],
+          "deviations": [],
+          "gaps": [],
+          "raw_receipt_ref": "retained-run-A",
+          "raw_receipt_sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "ACTION_EVIDENCE_INCOMPLETE"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Every observed operation must be represented/reconciled, including failed or unexpected operations."
+      },
+      "pre_fix_expectation": "Source predicts false-CLEAN: observed inventory is ignored.",
+      "related_acceptance_criteria": [
+        "AC09"
+      ]
+    },
+    {
+      "variant_id": "r6-U11-literal-truncation-marker",
+      "case_id": "U11",
+      "native_mapping": [
+        "N24",
+        "N23"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_CONTEXT_READ",
+            "locator": "fixture-mission-A",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "read exact current supplied request",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "NONE",
+            "purpose": "CURRENT_PLAN_PREPARATION",
+            "workspace_id": "workspace-A",
+            "target_issue_id": "fixture-mission-A",
+            "target_kind": "CURRENT_ISSUE",
+            "provider_write": false,
+            "returned_issue_ids": [
+              "fixture-mission-A"
+            ],
+            "output_truncated": false,
+            "content_truncated": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "<truncated 7 lines>\npartial description",
+            "sha256": "655a75aece360a2203832d3598883b2950c4da732d4dbaede8de053943308f9c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "ACTION_EVIDENCE_INCOMPLETE"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Leading tool truncation marker defeats a false output_truncated flag; no inference of full description."
+      },
+      "pre_fix_expectation": "Current unknown-kind finding cannot establish this specific completeness check.",
+      "related_acceptance_criteria": [
+        "AC09"
+      ]
+    },
+    {
+      "variant_id": "r6-U11-false-zero-write-claim",
+      "case_id": "U11",
+      "native_mapping": [
+        "N24"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          },
+          {
+            "id": "retained-run-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Synthetic complete run receipt.\n",
+            "sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "reported_scope_compliance": "COMPLIANT",
+        "trace_reconciliation": {
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "complete": true,
+          "observed_operation_ids": [
+            "scratch-A"
+          ],
+          "reconciled_operation_ids": [
+            "scratch-A"
+          ],
+          "deviations": [],
+          "gaps": [],
+          "raw_receipt_ref": "retained-run-A",
+          "raw_receipt_sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+        },
+        "reported_file_writes": 0
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "SCOPE_COMPLIANCE_CONTRADICTED"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Recorded scratch write contradicts a zero-write claim."
+      },
+      "pre_fix_expectation": "Source predicts false-CLEAN: zero-write claim is currently ignored.",
+      "related_acceptance_criteria": [
+        "AC09"
+      ]
+    },
+    {
+      "variant_id": "r6-U11-old-run-reconciliation",
+      "case_id": "U11",
+      "native_mapping": [
+        "N24"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          },
+          {
+            "id": "retained-run-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Synthetic complete run receipt.\n",
+            "sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "reported_scope_compliance": "COMPLIANT",
+        "trace_reconciliation": {
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "old-run-B",
+          "complete": true,
+          "observed_operation_ids": [
+            "scratch-A"
+          ],
+          "reconciled_operation_ids": [
+            "scratch-A"
+          ],
+          "deviations": [],
+          "gaps": [],
+          "raw_receipt_ref": "retained-run-A",
+          "raw_receipt_sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+        }
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "ACTOR_ROLE_MISMATCH"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "Foreign/old run trace cannot attest current run compliance."
+      },
+      "pre_fix_expectation": "Source predicts false-CLEAN: reconciliation run binding ignored.",
+      "related_acceptance_criteria": [
+        "AC09"
+      ]
+    },
+    {
+      "variant_id": "r6-U11-missing-claim-reconciliation",
+      "case_id": "U11",
+      "native_mapping": [
+        "N24"
+      ],
+      "input": {
+        "amendment_revision": "candidate-r1",
+        "mission_id": "fixture-mission-A",
+        "case_id": "fixture-case-A",
+        "packages": [],
+        "plans": [],
+        "decisions": [],
+        "operations": [
+          {
+            "id": "scratch-A",
+            "mission_id": "fixture-mission-A",
+            "case_id": "fixture-case-A",
+            "actor_id": "architect-A",
+            "role": "Architect",
+            "kind": "PROTOCOL_SCRATCH",
+            "locator": "/fixture/actor-A/protocol/reply.txt",
+            "run_id": "run-protocol-A",
+            "at": "2026-10-08T00:00:30Z",
+            "command": "write UTF-8 protocol reply inside granted working directory",
+            "command_truncated": false,
+            "exit_status": 0,
+            "output_ref": "scratch-A-output",
+            "consumed": false,
+            "ack": "NOT_APPLICABLE",
+            "evidence_kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "filesystem_effect": "WRITE",
+            "content_sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c",
+            "purpose": "PLAN_REPLY_PREPARATION",
+            "deletion": false
+          }
+        ],
+        "evidence": [
+          {
+            "id": "scratch-A-output",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Protocol reply.\n",
+            "sha256": "ebe1b42d2fc98bcb8ce0343f8055d1cae52a6f78fe2d7b671d6e67fd2eba7c2c"
+          },
+          {
+            "id": "retained-run-A",
+            "kind": "NATIVE",
+            "cohort": "candidate-r1",
+            "run_id": "run-protocol-A",
+            "actor_id": "architect-A",
+            "content": "Synthetic complete run receipt.\n",
+            "sha256": "fd39daa0d452aa7af4887147e444ccd26d02184e3a81181cc09c911cfd4edd9c"
+          }
+        ],
+        "protocol_workdir": "/fixture/actor-A",
+        "completion_claim": "PROTOCOL_ONLY",
+        "required_evidence": [],
+        "expected_actions": [],
+        "preparation_grant": {
+          "workspace_id": "workspace-A",
+          "issue_id": "fixture-mission-A",
+          "actor_id": "architect-A",
+          "run_id": "run-protocol-A",
+          "thread_ids": [
+            "trigger-A"
+          ],
+          "scratch_paths": [
+            "/fixture/actor-A/protocol/plan.txt",
+            "/fixture/actor-A/protocol/reply.txt"
+          ],
+          "max_scratch_files": 2,
+          "max_scratch_bytes": 32768,
+          "deletion_allowed": false
+        },
+        "reported_scope_compliance": "COMPLIANT"
+      },
+      "expected": {
+        "local_audit_status": "FINDINGS",
+        "finding_codes": [
+          "ACTION_EVIDENCE_INCOMPLETE"
+        ],
+        "required_fact_codes": [],
+        "forbidden_fact_codes": [
+          "ZERO_FILE_WRITES"
+        ],
+        "native_acceptance_claim": false,
+        "acceptance_reason": "An explicitly audited strict scope claim needs actual reconciliation evidence; legacy receipts make no new claim."
+      },
+      "pre_fix_expectation": "Source predicts false-CLEAN: strict scope claim currently ignored.",
+      "related_acceptance_criteria": [
+        "AC09"
+      ]
+    }
+  ]
+}

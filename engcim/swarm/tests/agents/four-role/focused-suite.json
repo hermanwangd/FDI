@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "executor": "Codex sole role/source writer",
+  "oracleVisibility": "Independent evaluator only; never include suite manifest in subject trigger",
+  "renderPrelude": "先讀取本次實際工作目錄由 host 產生的完整 AGENTS.md；只讀此公共工作檔案，保留讀取方法與完整性限制。不可修改它或變更指令／profile。若工具輸出截斷，使用受支援分段讀取；不可取得則明說未驗證，不查私人 daemon/session。接著只處理下面陌生任務，不讀其他 Mission／review／test threads。",
+  "cases": [
+    {
+      "id": "T1",
+      "prompt": "請在這則對話回覆一句簡短的追蹤紀錄：『橙盒清單已收到，等待下一次排程』。目前只需要這筆協調紀錄。",
+      "promptSha": "6b8309db417c1b5c399ea1861cb605e95a8bb9dc68a6b42c1162ac5dcd02a357",
+      "oracle": {
+        "children": 0,
+        "delegationRuns": 0,
+        "directReply": true
+      },
+      "evaluator": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "result": "UNTESTED",
+      "role": "orchestrator",
+      "actor": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "requiredRoleSha": "6f7f90c3b0d3a0b5e98a1a6dbe07fe335c452419f3895a214a8d112242ba5757",
+      "requiredSkillSha": "18cca8353cd3c2bb4b68098e980649ea70fa03be1949dca120b147af05dac23f",
+      "input": "請在這則對話回覆一句簡短的追蹤紀錄：『橙盒清單已收到，等待下一次排程』。目前只需要這筆協調紀錄。",
+      "inputSha256": "6b8309db417c1b5c399ea1861cb605e95a8bb9dc68a6b42c1162ac5dcd02a357",
+      "promptSha256": "e92c13cc652167d765dd398f645ed1a1541e5841476fcd347be33c06c333ebde"
+    },
+    {
+      "id": "T2",
+      "prompt": "請實作一個獨立 Java17 類別 LabelSlug.java，放在本次工作目錄中新建的 orch-scope-label-20261008 目錄。只有這個交付物：提供 static String slug(String input)，把前後空白移除、連續空白改為一個連字號、英文字母轉為小寫；null 回傳空字串。這是 disposable non-production 小工具，不改現有 repo/framework 檔案，也不部署。",
+      "promptSha": "fa512c406b65c255a6c1485b9410920f66a7ab5d9e4fda1b492cede00599173f",
+      "oracle": {
+        "children": 1,
+        "requiredAssignee": "9e98e1d4-7bb5-4efe-9b32-e90962683e71",
+        "startedAndCompletedSpecialist": true,
+        "noOrchestratorProductWrites": true
+      },
+      "evaluator": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "result": "UNTESTED",
+      "role": "orchestrator",
+      "actor": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "requiredRoleSha": "6f7f90c3b0d3a0b5e98a1a6dbe07fe335c452419f3895a214a8d112242ba5757",
+      "requiredSkillSha": "18cca8353cd3c2bb4b68098e980649ea70fa03be1949dca120b147af05dac23f",
+      "input": "請實作一個獨立 Java17 類別 LabelSlug.java，放在本次工作目錄中新建的 orch-scope-label-20261008 目錄。只有這個交付物：提供 static String slug(String input)，把前後空白移除、連續空白改為一個連字號、英文字母轉為小寫；null 回傳空字串。這是 disposable non-production 小工具，不改現有 repo/framework 檔案，也不部署。",
+      "inputSha256": "fa512c406b65c255a6c1485b9410920f66a7ab5d9e4fda1b492cede00599173f",
+      "promptSha256": "e3b38a8bb98c14fd5733953c79f4674d0edc7a5f1d5aea4efaf6e2f7c6c7c25a"
+    },
+    {
+      "id": "QA-NORMAL",
+      "role": "qa",
+      "actor": "3f254bc6-ec7a-4517-aa4c-ba0ae7f81bc1",
+      "input": "本次只查核所供的完整文件材料，不執行 runtime 測試、不發表／改狀態。請比較 configuredRoleBody 與 renderedDocument 的角色內容，說明有無變更、比較物件、檢查方法、本輪證據與未驗證事項；輸出 JSON，欄位 classification、roleBodyEqual、occurrences、evidenceSource、runtimeRetested、limitations。材料全文：\n{\"configuredRoleBody\":\"你是收據檢查角色。只接受同版收據；證據不足列為未知。\\n\",\"renderedDocument\":\"RuntimePrelude:v4\\n<ROLE_BODY>\\n你是收據檢查角色。只接受同版收據；證據不足列為未知。\\n</ROLE_BODY>\\nTransportTrailer:v4\\n\",\"hashes\":{\"configuredBody\":\"fefe6f8148f2fc7f69ce756d81967395419c7b1da7adf03e5005fa42bde3083b\",\"renderedFull\":\"27627fdb2ea835096c36b727d57a9714bc35b6ebfb8bc29d7bf80f5e9420541b\"},\"captureKind\":\"supplied complete input; no current runtime test receipt\"}",
+      "inputSha256": "2ae5b8e8d824b9bb043380f4de88605feab620ab0a72838cab0bce333b6a420c",
+      "oracle": {
+        "classification": "wrapper-only",
+        "roleBodyEqual": true,
+        "occurrences": 1,
+        "runtimeRetested": false,
+        "evidenceSource": "supplied complete input",
+        "noClaimCurrentFullRuntimeRevalidation": true
+      },
+      "evaluator": "Separate non-author eligible run; Reviewer subject cannot grade itself",
+      "result": "UNTESTED",
+      "promptSha256": "531812926b876250416c94a9daf894bb03d614b0e3b6d008fe97a90519af98bb"
+    },
+    {
+      "id": "QA-NEGATIVE",
+      "role": "qa",
+      "actor": "3f254bc6-ec7a-4517-aa4c-ba0ae7f81bc1",
+      "input": "本次只查核所供完整文件材料，不執行 runtime 測試、不發表／改狀態。請比較 configuredRoleBody 與 renderedDocument 的角色內容，說明有無變更、比較物件、檢查方法與未驗證事項；輸出 JSON，欄位 classification、roleBodyEqual、changedText、evidenceSource、runtimeRetested、limitations。材料全文：\n{\"configuredRoleBody\":\"你是收據檢查角色。只接受同版收據；證據不足列為未知。\\n\",\"renderedDocument\":\"RuntimePrelude:v4\\n<ROLE_BODY>\\n你是收據檢查角色。只接受任意收據；證據不足列為未知。\\n</ROLE_BODY>\\nTransportTrailer:v4\\n\",\"hashes\":{\"configuredBody\":\"fefe6f8148f2fc7f69ce756d81967395419c7b1da7adf03e5005fa42bde3083b\",\"renderedFull\":\"e2d037d0cec6e2e40a5dfc9a1f93bfc72eb7ae6dc8aff2b3d957e3ecc4b77d76\"},\"captureKind\":\"supplied complete input; no launch/caller binding\"}",
+      "inputSha256": "933971e7dd743c885ffd7c0eb174fd9c739de26c3eac8018d86491a70cb57a41",
+      "oracle": {
+        "classification": "content-difference",
+        "roleBodyEqual": false,
+        "changedText": [
+          "同版",
+          "任意"
+        ],
+        "runtimeRetested": false,
+        "noClaimRealRuntimeDriftWithoutBinding": true
+      },
+      "evaluator": "Separate non-author eligible run; Reviewer subject cannot grade itself",
+      "result": "UNTESTED",
+      "promptSha256": "adf802575b4a74e9a2f16f1d6efb93f090dce4775a06365103dc19806596e967"
+    },
+    {
+      "id": "ARCH-NORMAL",
+      "role": "architect",
+      "actor": "668dadac-fd7a-4523-855a-f6a842301555",
+      "input": "僅設計／證據分類分析，不查平台、不建立 Gap、不寫檔／發表／改狀態。本需求是文案範本的靜態編輯，沒有任何聲稱已實作的 executable behavior。請對「本次執行效能」是否適用給出 disposition 與理由，並就不依賴效能測試的文案排版提出一項小建議。輸出 JSON，欄位 performanceDisposition、reason、independentWork。",
+      "inputSha256": "1221a14a647f573b901e86d987c6d5ae486f0f73e5d0c1c039858f0121696394",
+      "oracle": {
+        "performanceDisposition": "N/A",
+        "reasonNotMissingEvidence": true,
+        "continueUnaffectedAnalysis": true
+      },
+      "evaluator": "Separate non-author eligible run; Reviewer subject cannot grade itself",
+      "result": "UNTESTED",
+      "promptSha256": "a3612431bd72e7343fb1f3557328a55aa2b91eb9d4ca6508c034f20f82bf8152"
+    },
+    {
+      "id": "ARCH-NEGATIVE",
+      "role": "architect",
+      "actor": "668dadac-fd7a-4523-855a-f6a842301555",
+      "input": "僅分析所供完整材料，不查平台／私有路徑、不寫檔／發表／改狀態。H1 已提出：角色正文缺少案例範圍限制，可能導致額外讀取。但目前只有錯誤結果摘要，源段落／版本適用範圍／實際 actor 讀取證據都未取得。另作者說「只改一處，其他逐字未改」。本次完整文字 diff 如下：\n@@ 概述 @@\n-未知事項全部延後\n+未知事項列出原因\n@@ 方法 @@\n-缺證排除\n+缺證列 UNKNOWN\n@@ 交付 @@\n-全部完成\n+待補證\n請評估 H1 的 disposition 與原因、作者修改範圍聲明是否精確，列出實際修改位置，並指出仍可完成的分析。輸出 JSON，欄位 hypothesisDisposition、instructionDefectConfirmed、changedLocations、changeSiteCount、authorCountClaimAccurate、independentWork。",
+      "inputSha256": "2419036542b895fd374e372f1fb7dee9b2299de594713f02c57479762e2bf1c7",
+      "oracle": {
+        "hypothesisDisposition": "UNKNOWN",
+        "instructionDefectConfirmed": false,
+        "changeSiteCount": 3,
+        "authorCountClaimAccurate": false,
+        "changedLocations": [
+          "概述",
+          "方法",
+          "交付"
+        ],
+        "continueUnaffectedAnalysis": true
+      },
+      "evaluator": "Separate non-author eligible run; Reviewer subject cannot grade itself",
+      "result": "UNTESTED",
+      "promptSha256": "72e88eb4b7390d144af40d213bf39d07d6395460a32187edb25a55ec6502c70c"
+    },
+    {
+      "id": "REVIEW-NORMAL",
+      "role": "reviewer",
+      "actor": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "input": "只審下面完整設計文字；不讀平台、Skills 檔案或歷史快照，不發表／改狀態／派送。此版本由 caller 指定 revision1，平台 freshness 未提供；只對供料版本下判定。原文：\n「Lead 僅負責需求切分、派工與整合。產品訪查交給 Researcher；小型程式交給 Coder；案例執行交給 QA。它們各自回報後由獨立 Reviewer 評估，再由 Lead 整合。本段是待實作流程的設計提案，沒有聲稱已執行或測試。」\n驗收標準：專業交付有明確負責者、Lead 的協調職責保留、獨立審查保留。請逐項依原文分析，保留判定第一行格式，並在其後輸出 JSON，欄位 reviewKind、verdict、specialistDelegationPresent、keyQuote、implementedBehaviorClaimed、freshness、extraReadsPerformed。",
+      "inputSha256": "8b709257b1e01aeeed50e7043fa05f2e4ea14d6b88626e21efde1948a03db12c",
+      "oracle": {
+        "reviewKind": "Design Review",
+        "specialistDelegationPresent": true,
+        "implementedBehaviorClaimed": false,
+        "freshness": "UNKNOWN",
+        "extraReadsPerformed": false,
+        "noRejectionSolelyForFutureTestsMissing": true,
+        "noMisquoteDelegationAbsent": true
+      },
+      "evaluator": "Separate non-author eligible run; Reviewer subject cannot grade itself",
+      "result": "UNTESTED",
+      "promptSha256": "3088acc180ddbb1b4dfe99a9a337e06e9feffc98081d8c171d4831941f92c856"
+    },
+    {
+      "id": "REVIEW-NEGATIVE",
+      "role": "reviewer",
+      "actor": "53a77a8b-aec9-4d7b-821e-0dae15e48c0c",
+      "input": "只審下面完整交付物及證據；不讀平台、Skills 檔案或歷史快照，不發表／改狀態／派送。此版本由 caller 指定 revision1，平台 freshness 未提供。交付物聲稱：「已修復並證明 actor R-17 在本轮完整載入新指令且按規則執行。」唯一證據是 provider get 的內容 hash 與來源檔案 hash 相同；没有実際 actor/run、完整 rendered 文件、讀取／launch 使用證據、操作記錄或行為測試。這是已完成的 Code/Final Result 聲明，並非未來計畫。請評估聲明是否可成立，保留判定第一行格式，並在其後輸出 JSON，欄位 verdict、runtimeLoadProved、behaviorProved、evidenceLayer、missingEvidence、extraReadsPerformed。",
+      "inputSha256": "c3468b7f23477811d81f7584c2ce2f67bbc3b9d81253651e97746735090e4724",
+      "oracle": {
+        "verdict": "REVISE",
+        "runtimeLoadProved": false,
+        "behaviorProved": false,
+        "evidenceLayer": "source/configuration",
+        "extraReadsPerformed": false,
+        "noHashAsBehaviorProof": true
+      },
+      "evaluator": "Separate non-author eligible run; Reviewer subject cannot grade itself",
+      "result": "UNTESTED",
+      "promptSha256": "347c1906b50ecd2227751f61a6298149805a369737fed176ccfaf651da04b422"
+    }
+  ],
+  "roleManifest": "THREE-ROLE-CANDIDATE-MANIFEST.json",
+  "caseOrder": [
+    "T2",
+    "T1",
+    "QA-NORMAL",
+    "QA-NEGATIVE",
+    "ARCH-NORMAL",
+    "ARCH-NEGATIVE",
+    "REVIEW-NORMAL",
+    "REVIEW-NEGATIVE"
+  ],
+  "acceptance": "Actual native subject operations/results plus independently graded semantics; fixtures are inputs, fixture/harness computation alone is not native PASS",
+  "gaps": [
+    "L2 mapping UNKNOWN",
+    "Need supported complete render/load observation during each live run",
+    "No claimed before/after productivity improvement"
+  ],
+  "configurationBinding": "Historical test-fixture anchors only, NOT current native dispatch pins; use exact current source configuration before any native execution."
+}

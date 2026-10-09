@@ -369,8 +369,8 @@
       "destination": "engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/OrchestratorReportAudit.java",
       "action": "ADD_PHASE_2",
       "authority": "SWARM_EXECUTABLE",
-      "sha256": "6bd50ff746b052850f6023c02f4aea99b35bfc6be183e53cb78d88a5c7d0e008",
-      "size_bytes": 44985,
+      "sha256": "a8980e6e07be3d350ec9b4b5af483ed485619449de094cece8094b9a0ecc19bc",
+      "size_bytes": 45704,
       "note": "Created in Phase 2; required by the reconciled Dev204 report-audit CLI."
     },
     {
@@ -3683,8 +3683,8 @@
       "destination": "engcim/bootstrap/multica/MAPPING.md",
       "action": "MOVE_PHASE_1",
       "authority": "MULTICA_OPERATIONAL_CONFIG",
-      "sha256": "97da29cd399949e248dcbf3f7ec5be7f5ec6e691fa1096acd2701e7acca9f1b9",
-      "size_bytes": 5901
+      "sha256": "78b297f4acc29706b9a7f4335fa156a211dad07b7f3e13035ee492dc8b29126d",
+      "size_bytes": 6630
     },
     {
       "source": "config/multica/PROJECT-INSTRUCTIONS.md",
@@ -3874,8 +3874,8 @@
       "destination": "engcim/swarm/src/test/java/com/featuredeliveryintelligence/fdi/CompanyImportManifestTests.java",
       "action": "ADD_PHASE_2",
       "authority": "SWARM_IMPORT_MANIFEST_VERIFIER",
-      "sha256": "fdba6f1a6f92a29ca465591d02a2d8199546ffdc5eed33a2b24a62c1fc7dd5e0",
-      "size_bytes": 8648,
+      "sha256": "8d0bd4c2460012ab1550f2a4646c4093b8ed417ba2cef284b5fa28bcdd39c9fa",
+      "size_bytes": 13054,
       "note": "Created as a Java 17 JUnit verifier to comply with the repository source policy."
     },
     {
@@ -3927,8 +3927,8 @@
       "destination": "",
       "action": "KEEP_ROOT_UPDATE_IN_PHASE_1",
       "authority": "COMPANY_CLASSIFICATION_POLICY",
-      "sha256": "2dff094d8eeb21eb0daf734b6b8f285c8485a36690ac05bc9960c7a4f4760225",
-      "size_bytes": 5525,
+      "sha256": "342431c19e476af610729a05359dde01bcb5c42ba51d131e4fa2f840553f52c0",
+      "size_bytes": 6480,
       "note": "Keep root and update path families after the move."
     },
     {
@@ -3949,21 +3949,49 @@
       "size_bytes": 22969
     },
     {
-      "source": "NEW:engcim/bootstrap/overlays/multica/RC10-S05-S06-ROLE-GUIDANCE.md",
-      "destination": "engcim/bootstrap/overlays/multica/RC10-S05-S06-ROLE-GUIDANCE.md",
+      "source": "NEW:engcim/swarm/instructions/ROLE-GUIDANCE.md",
+      "destination": "engcim/swarm/instructions/ROLE-GUIDANCE.md",
       "action": "ADD_PHASE_2",
       "authority": "MULTICA_OPERATIONAL_CONFIG",
-      "note": "Adopted RC10 S05 profile role guidance; isolated runtime validation required.",
-      "sha256": "a09e9fbd2cbeecceede25c9d80612002a1c6369367450422986bdb208bcbe4e9",
-      "size_bytes": 7799
+      "note": "Existing profile source relocated to its sole maintained module entry; current local amendments do not imply native adoption. Historical adoption receipts retain their original revisions.",
+      "sha256": "afef4bef9b2f3b9b19be9cdd1c9f152cf6a8a098eb2e9aea89f2c30f88aa4c65",
+      "size_bytes": 32768,
+      "previous_destination": "engcim/bootstrap/overlays/multica/RC10-S05-S06-ROLE-GUIDANCE.md"
+    },
+    {
+      "source": "NEW:engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/CurrentWorkPackageAudit.java",
+      "destination": "engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/CurrentWorkPackageAudit.java",
+      "action": "ADD_PHASE_2",
+      "authority": "SWARM_EXECUTABLE",
+      "note": "Required by the explicitly selected work-package bridge in OrchestratorReportAudit; local Java behavior, not native adoption.",
+      "sha256": "24ba4fa83243b67dee9116724ef4dfd37e0fdee2ab47a17f89fe39b9e67a97bb",
+      "size_bytes": 40616
+    },
+    {
+      "source": "NEW:engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/CogneeSearchClient.java",
+      "destination": "engcim/swarm/src/main/java/com/featuredeliveryintelligence/fdi/orchestration/CogneeSearchClient.java",
+      "action": "ADD_PHASE_2",
+      "authority": "SWARM_EXECUTABLE",
+      "sha256": "506f163a5294f68881996d38f06de47ae6aa7ee2321954f77535db5c0cfc4878",
+      "size_bytes": 25069,
+      "note": "Existing 1.1 source required by Dev204Cli, SwarmKnowledgeGateway and SwarmMissionGateway; exact base bytes reused, no behavior change."
+    },
+    {
+      "source": "NEW:engcim/swarm/pom.xml",
+      "destination": "engcim/swarm/pom.xml",
+      "action": "ADD_PHASE_2",
+      "authority": "SWARM_EXECUTABLE_BUILD",
+      "sha256": "23471b8aa02fabdea73d25a5116c7d6a237aa3b13df28330c499fca733fde066",
+      "size_bytes": 1830,
+      "note": "Existing Java17/SpringBoot3.4.1 module build seam required by imported root aggregator; unchanged 1.1 base bytes."
     }
   ],
   "summary": {
-    "total_entries": 490,
+    "total_entries": 493,
     "move_phase_1": 435,
     "move_phase_1_compat_symlink": 25,
     "move_phase_2": 10,
-    "add_phase_2": 8,
+    "add_phase_2": 11,
     "exclude_live_state": 3,
     "exclude_local_candidate": 5,
     "exclude_local_control": 1,
@@ -3971,5 +3999,12 @@
     "manifest_self_record": 1,
     "keep_root_update_in_phase_1": 3
   },
-  "reconciled_after": "RC10 implementation worktree: focused knowledge/runtime contract fixes, no uncomposed lifecycle model, refreshed reports, verified Multica CLI record seams, and local control-state exclusion"
+  "reconciled_after": "RC10 implementation worktree: focused knowledge/runtime contract fixes, no uncomposed lifecycle model, refreshed reports, verified Multica CLI record seams, and local control-state exclusion",
+  "local_ssot_integration": {
+    "base_commit": "37c901fbdbc5dcc0fc858be489f0c9b17e68e83b",
+    "selected_source_commit": "e87ac10c96db4519264b418b6037aa7f5c86a790",
+    "scope": "Existing bounded company import with relocated profile, all current module main Java sources and module POM; not a full 19-role authoring/test export",
+    "runtime_acceptance": "UNVERIFIED",
+    "external_build_tool": "Existing repository Mavenwrapper used with -f materialized module POM; wrapper is not silently added to company import package"
+  }
 }
