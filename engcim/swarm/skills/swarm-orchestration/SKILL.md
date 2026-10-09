@@ -1,6 +1,6 @@
 ---
 name: swarm-orchestration
-description: Use when receiving a complex multi-part task that needs decomposition and parallel delegation to squad members
+description: Use for every Swarm Orchestrator request, including small tasks, to select direct coordination or specialist delegation before planning, dispatch, delivery and fan-in.
 ---
 
 # Swarm Orchestration
