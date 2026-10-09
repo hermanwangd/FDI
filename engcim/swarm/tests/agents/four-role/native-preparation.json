@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "methodId": "M2_NEUTRAL_INPUT_AND_PUBLIC_ISOLATION",
+  "status": "LOCAL_PREPARATION_CONTRACT_NOT_NATIVE_ACCEPTANCE",
+  "sourceSuite": "focused-suite.json",
+  "sourceSuiteSha256": "7b724b526f3442b4b13f7f58f661395f5f1aa67e0478205792da6787e4a48b6d",
+  "actorTasks": [
+    {
+      "caseId": "T1",
+      "title": "文字紀錄",
+      "body": "請在這則對話回覆一句簡短的追蹤紀錄：『橙盒清單已收到，等待下一次排程』。目前只需要這筆協調紀錄。"
+    },
+    {
+      "caseId": "T2",
+      "title": "文字整理工具",
+      "body": "請實作一個獨立 Java17 類別 LabelSlug.java，放在本次工作目錄中新建的 deliverable 目錄。只有這個交付物：提供 static String slug(String input)，把前後空白移除、連續空白改為一個連字號、英文字母轉為小寫；null 回傳空字串。這是 disposable non-production 小工具，不改現有 repo/framework 檔案，也不部署。"
+    }
+  ],
+  "submissionProjection": "TITLE_AND_BODY_ONLY",
+  "controllerOnlyFields": [
+    "caseId",
+    "methodId",
+    "sourceCommit",
+    "sourceTree",
+    "configurationPins",
+    "oracle",
+    "evaluator",
+    "priorResults",
+    "beforeAfterLabel",
+    "environmentEvidence",
+    "sessionEvidence"
+  ],
+  "derivation": {
+    "T1": "Exact focused-suite T1.input",
+    "T2": "Exact focused-suite T2.input with only orch-scope-label-20261008 replaced by deliverable",
+    "extraPrelude": "NONE; runtime instructions and legitimate grants require separate reviewed disclosure"
+  },
+  "comparisonLimit": "M2 differs from historical M1 in destination and preparation. M1/M2 results cannot establish instruction-change causation. A future before/after pair must use the same M2 method and inputs.",
+  "isolation": {
+    "preTrigger": [
+      "exclusive fresh public cwd bound to actor/runtime/project/new issue",
+      "pre-trigger complete visible-entry inventory; only neutral AGENTS.md/agent.md seed names permitted",
+      "no additional directories or links to prior evidence; complete inherited instructions and initial listing disclosure",
+      "supported public new-empty session reservation/creation evidence bound to actor/runtime/project/cwd/issue; prior-message count zero; no reuse"
+    ],
+    "postLaunch": [
+      "separate supported public actual run/session binding matching reservation and protected identities",
+      "actual run starts after pre-trigger observation; stop affected validation on mismatch"
+    ],
+    "evidenceRule": "Field declarations, synthetic receipts, source/readback, fresh issue or fresh cwd alone do not prove isolation. Independent review must inspect exact supported public evidence. Missing or UNKNOWN evidence retains HOLD.",
+    "privateFallback": "PROHIBITED; do not follow private daemon/session/credential paths"
+  },
+  "currentNativeAdmission": "HOLD",
+  "realSessionBinding": "UNVERIFIED",
+  "currentMissingEvidence": [
+    "supported public session reservation/creation and actual native run binding",
+    "full same-run initial consumed context and inherited instruction exposure"
+  ],
+  "retainedHistory": "Original FAILs and bounded T1 PASS remain unchanged; synthetic checker PASS is not role acceptance"
+}

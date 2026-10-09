@@ -12,6 +12,14 @@ This directory is the single editable four-role test source on the selected Git 
 
 These are definitions, not admission or PASS. The former two-case Orchestrator suite is an immutable historical fixture, not a second active source. Keep one active filename per object; retain prior versions in Git. Use the same committed input/criteria, configuration and method for any claimed before/after comparison.
 
+## Native preparation
+
+[native-preparation.json](native-preparation.json) owns the current M2 preparation method for T1/T2. Submit only its neutral title/body projection; case ID, source/configuration pins, prior results and oracle stay controller-side. T1 derives from the original focused input exactly; T2 changes only the destination locator to `deliverable`. The original nine cases remain unchanged. M2 differs from historical M1; results across those methods cannot establish an instruction-change effect.
+
+A fresh filename or issue does not isolate a working-directory listing or session history. Before triggering, disclose inherited instructions and every visible root, retain a fresh public cwd inventory and supported new-empty session reservation evidence. After launch, separately bind the actual run/session to that reservation. Missing or UNKNOWN evidence means HOLD. The installed Kimi runtime can add a cwd listing during prompt preparation; this mechanism alone does not prove a particular run consumed it.
+
+The Java `NativeValidationPreparationTests` checks canonical task derivation and rejects contamination, old artifacts and incomplete/mismatched isolation declarations using synthetic samples. It is a local test/preparation check, not a deployed admission service. Synthetic PASS and receipt fields cannot replace independent inspection of actual public evidence. Real fresh-session binding and native clean baseline remain UNVERIFIED. No private daemon/session fallback is permitted.
+
 ## Existing local checks
 
 From this directory, with Node heap limited to 256 MiB:
