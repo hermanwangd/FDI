@@ -1,21 +1,23 @@
 ---
 name: swarm-orchestration
-description: Use for every Swarm Orchestrator request, including small tasks, to select direct coordination or specialist delegation before planning, dispatch, delivery and fan-in.
+description: Use when receiving a complex multi-part task that needs decomposition and parallel delegation to squad members
 ---
 
 # Swarm Orchestration
 
 
-## Mandatory MultiCA workspace scope
+## MultiCA workspace binding
 
-Resolve the exact workspace UUID from the triggering Mission and set shell variable
-`MISSION_WORKSPACE_ID` to that value before using the CLI; do not inherit it from
-the environment. Every `multica` invocation, including `--help`, issue reads, run/run-message
-lookups, comments, status changes, and squad activity, must put
-`--workspace-id "$MISSION_WORKSPACE_ID"` immediately after `multica`. This
-requirement overrides every older example below and any configured CLI default.
-If the Mission workspace UUID is missing or ambiguous, do not call the provider;
-request the exact UUID.
+Native MultiCA agents use the runtime-supplied task-scoped `MULTICA_WORKSPACE_ID`;
+they do not need to repeat `--workspace-id` on each CLI call. Do not overwrite
+that binding or switch workspace/profile. If it is absent or differs from the
+authorized task, stop affected provider operations and report the mismatch.
+
+External Supervisor/Swarm Dev callers without native task context must resolve
+the exact authorized Mission workspace and explicitly pass `--workspace-id`.
+Older explicit-flag examples remain valid; native callers may omit that flag
+and use their runtime binding. An explicit override must match the task.
+Workspace binding does not authorize any operation, actor, path or dispatch.
 
 掛給 Swarm Orchestrator（squad leader）的編排流程 skill。設計依據與逐節對應見
 `docs/swarm-execution-model.md`（Part Z，Z1–Z22）。以下所有 `multica` 指令的細節 flag 以

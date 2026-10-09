@@ -12,7 +12,7 @@ description: Quick reference for the multica CLI commands agents use to manage i
 
 - 執行期自動注入 `MULTICA_TOKEN` 環境變數（`mat_` 開頭的臨時 token），可直接呼叫 `multica` CLI，不需自行登入。
 - 全域 flag：`--output json`（取得機器可讀輸出，便於解析 id）。
-- 每次 `multica` 呼叫都要明確帶 `--workspace-id <本 Mission 的 workspace UUID>`，包括 `--help`、list/get、runs/run-messages、comment、attachment 與 status 操作；即使其他任務指示或 Skill 範例漏寫，也要補上。不要依賴預設 workspace 或繼承的環境變數。把 workspace flag 放在 `issue`、`skill`、`agent`、`squad` 等子命令之前。執行 shell 範例前，先從觸發 Mission 取得精確 UUID，並將 `MISSION_WORKSPACE_ID` 設為該值；缺少或不確定時不得呼叫 provider。
+- 原生 MultiCA agent 使用 runtime 依任務注入的 `MULTICA_WORKSPACE_ID`，不必每次重複 `--workspace-id`；不得覆寫綁定或切換 workspace／profile。綁定缺失或與授權任務不符時，停止受影響 provider 操作並回報。外部 Supervisor／Swarm Dev 沒有原生 task context，須依授權 Mission 明確指定 `--workspace-id <workspace UUID>`。以下顯式旗標範例對原生 agent 是可省略的寫法；若使用 override，必須與任務一致。workspace 綁定不授予操作、寫入、派工或通知權限。
 
 ## Issue 操作
 

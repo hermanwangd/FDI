@@ -60,6 +60,11 @@
       "before": "\n## 失敗行為備忘\n\n- run 失敗且該 issue 無其他 run 時，issue 會自動退回 `todo`；平台預設自動重試 2 次（官方文件明示的行為）。\n- dispatch 後即停：派工方結束 run，被評論喚醒時再處理後續。\n\n",
       "after": "\n## 失敗行為備忘\n\n- CLI 缺命令／必要 flag、操作失敗或遭拒絕時，記錄實際 argv、exit／錯誤與未完成步驟，停止受影響操作；未完成不得寫成完成。需要 Web 操作時說明該步驟，不能以私有 HTTP API／`curl`、另一個 workspace／profile／actor 或新 run 繞過拒絕；不得偽造 credentials。\n- 不明寫入 ACK／缺正文不得盲重試或重貼；只有既有授權的精確 readback 可補證。純 DNS／傳輸錯誤可依既有授權沿正常路徑診斷／重試，不能把權限拒絕當傳輸錯誤；本段不放寬上方 capture 的不重試及其他更窄限制。\n- 平台自動重試不等於 caller 重新派工／發表的授權。\n\n- run 失敗且該 issue 無其他 run 時，issue 會自動退回 `todo`；平台預設自動重試 2 次（官方文件明示的行為）。\n- dispatch 後即停：派工方結束 run，被評論喚醒時再處理後續。\n\n",
       "expected_matches": 1
+    },
+    {
+      "before": "- 每次 `multica` 呼叫都要明確帶 `--workspace-id <本 Mission 的 workspace UUID>`，包括 `--help`、list/get、runs/run-messages、comment、attachment 與 status 操作；即使其他任務指示或 Skill 範例漏寫，也要補上。不要依賴預設 workspace 或繼承的環境變數。把 workspace flag 放在 `issue`、`skill`、`agent`、`squad` 等子命令之前。執行 shell 範例前，先從觸發 Mission 取得精確 UUID，並將 `MISSION_WORKSPACE_ID` 設為該值；缺少或不確定時不得呼叫 provider。",
+      "after": "- 原生 MultiCA agent 使用 runtime 依任務注入的 `MULTICA_WORKSPACE_ID`，不必每次重複 `--workspace-id`；不得覆寫綁定或切換 workspace／profile。綁定缺失或與授權任務不符時，停止受影響 provider 操作並回報。外部 Supervisor／Swarm Dev 沒有原生 task context，須依授權 Mission 明確指定 `--workspace-id <workspace UUID>`。以下顯式旗標範例對原生 agent 是可省略的寫法；若使用 override，必須與任務一致。workspace 綁定不授予操作、寫入、派工或通知權限。",
+      "expected_matches": 1
     }
   ]
 }

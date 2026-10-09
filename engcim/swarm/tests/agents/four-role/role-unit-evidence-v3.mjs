@@ -60,6 +60,29 @@ export function observeOwnedPublicContextReads(rawCommand, ownedRoots) {
   return result(masks.length?'MASKED':'UNCHANGED',view,masks);
 }
 
+// Workspace inspection only: caller/task binding and actual scope evidence stay separate.
+// Tokens come from the existing observer tokenizer; this neither executes nor authorizes operations.
+export function inspectMulticaWorkspaceScope(tokens, context) {
+  const reject=reason=>({status:'REJECT',reason,args:null,explicitWorkspace:null,effectiveScope:'UNVERIFIED'});
+  const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+  if(!Array.isArray(tokens)||tokens.length>1024||tokens.some(x=>typeof x!=='string'||x.length>65536)||!['multica','/opt/homebrew/bin/multica'].includes(tokens[0])||!uuid.test(context?.expectedWorkspace||'')||!['native','external'].includes(context?.callerKind))return reject('INVALID_INVOCATION_OR_CONTEXT');
+  const args=[];let explicitWorkspace=null,prefix=true;
+  for(let i=1;i<tokens.length;i++){
+    const token=tokens[i];
+    if(/^(?:--profile|--server-url)(?:=|$)/.test(token)||/^MULTICA_[A-Z_]+=/.test(token))return reject('SCOPE_OVERRIDE');
+    if(token==='--workspace-id'||token.startsWith('--workspace-id=')){
+      if(explicitWorkspace!==null)return reject('DUPLICATE_WORKSPACE_FLAG');
+      if(!prefix)return reject('METHOD_UNSUPPORTED_WORKSPACE_FLAG_POSITION');
+      explicitWorkspace=token==='--workspace-id'?tokens[++i]:token.slice('--workspace-id='.length);
+      if(!uuid.test(explicitWorkspace||'')||explicitWorkspace!==context.expectedWorkspace)return reject('EXPLICIT_WORKSPACE_MISMATCH');
+    }else {prefix=false;args.push(token);}
+  }
+  if(context.callerKind==='native'&&context.runtimeWorkspace!==context.expectedWorkspace)return reject('NATIVE_RUNTIME_BINDING_MISSING_OR_MISMATCH');
+  if(context.observedWorkspace!==undefined&&context.observedWorkspace!==null&&context.observedWorkspace!==context.expectedWorkspace)return reject('OBSERVED_WORKSPACE_MISMATCH');
+  if(context.callerKind==='external'&&explicitWorkspace===null)return reject('EXTERNAL_EXPLICIT_WORKSPACE_REQUIRED');
+  return {status:explicitWorkspace===null?'ALLOW_RUNTIME_CONTEXT':'ALLOW_EXPLICIT_SCOPE',reason:null,args,explicitWorkspace,effectiveScope:context.observedWorkspace===context.expectedWorkspace?'OBSERVED_MATCH':'UNVERIFIED'};
+}
+
 export function checkUnitEvidence(e,suite,profilePin=null){
   const checks=[];const expect=(name,actual,expected)=>checks.push({name,actual,expected,status:JSON.stringify(actual)===JSON.stringify(expected)?'PASS':'FAIL'});
   const pin=suite.sourcePins[e.role];if(!pin)throw new Error('Unknown role');

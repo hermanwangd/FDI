@@ -502,9 +502,9 @@
       },
       {
         "path": "engcim/swarm/generated/multica-cli.md",
-        "sha256": "4949ce26f39794e6d278fd7d61a63e194b1bffb4f3853d18e7f5d257fabaef8a",
-        "bytes": 16008,
-        "status": "LOCAL_SSOT_CONVERGED_TO_HISTORICALLY_PUBLISHED_BYTES__CURRENT_PROVIDER_AND_CONSUMPTION_NOT_RECHECKED",
+        "sha256": "571a892eb3a77359fc6ebff6b3b1453aaef31d95006d00fe833aa6a00814cb9c",
+        "bytes": 16023,
+        "status": "LOCAL_NATIVE_WORKSPACE_CANDIDATE__NOT_PUBLISHED_OR_CONSUMED",
         "maintenance_source": {
           "path": "validation/rc10/current-work-package-candidate/materialized/multica-cli.md",
           "basis": "Parent-designated existing tracked materialization seam for this same-ID correction; no global canonical uniqueness claim",
@@ -603,13 +603,14 @@
         "local_authoring": {
           "path": "engcim/swarm/skills/multica-cli/source.json",
           "anchor": "replacements",
-          "sha256": "e3b5c3d92c030d669b3db0662bea95b726b2f6f6e0dec2e25d519575590c6b5d",
+          "sha256": "1d8729130d3540ae4c7b92b32c0569fb7075d926cfd06531b70a0384da049890",
           "pre_convergence_commit": "90de0448319f582777bcd6770b4fdfb49bb52f57",
           "lineage_source_commit": "39022b57322f0a89f84f4fd8f1df6e062db74d3a",
           "lineage_receipt_commit": "060b2b4eb00162c1caa7ac788b4180f5046d6da8",
           "source_relationship": "New local generation relationship; Lucy original seam and receipt preserved",
           "native_adoption": "UNVERIFIED"
-        }
+        },
+        "retainedHistoricalStatus": "LOCAL_SSOT_CONVERGED_TO_HISTORICALLY_PUBLISHED_BYTES__CURRENT_PROVIDER_AND_CONSUMPTION_NOT_RECHECKED"
       }
     ],
     "independent_plan_review": {
@@ -714,7 +715,7 @@
     "tests": {
       "path": "engcim/swarm/tests/agents/four-role",
       "manifest": "engcim/swarm/tests/agents/four-role/SOURCE-MANIFEST.json",
-      "manifestSha256": "aefbdad1299854d5aee59d58692703895bab0a4f8bebeb4e74e7327441eb2796",
+      "manifestSha256": "8d584a3334d563a5708f04c27393c3083ea299ed13532ae0d0ff016a17e74ba0",
       "previousExternalDefinitions": "Read-only historical evidence, all future maintained test edits use this Git path",
       "capabilityInventory": {
         "path": "engcim/swarm/tests/agents/capabilities.json",
@@ -740,7 +741,7 @@
       "authoring": {
         "path": "engcim/swarm/skills/multica-cli/source.json",
         "anchor": "replacements",
-        "sha256": "e3b5c3d92c030d669b3db0662bea95b726b2f6f6e0dec2e25d519575590c6b5d",
+        "sha256": "1d8729130d3540ae4c7b92b32c0569fb7075d926cfd06531b70a0384da049890",
         "pre_convergence_commit": "90de0448319f582777bcd6770b4fdfb49bb52f57",
         "lineage_source_commit": "39022b57322f0a89f84f4fd8f1df6e062db74d3a",
         "lineage_receipt_commit": "060b2b4eb00162c1caa7ac788b4180f5046d6da8",
@@ -962,7 +963,7 @@
       {
         "key": "multica-cli",
         "path": "engcim/swarm/skills/multica-cli/source.json",
-        "sha256": "e3b5c3d92c030d669b3db0662bea95b726b2f6f6e0dec2e25d519575590c6b5d"
+        "sha256": "1d8729130d3540ae4c7b92b32c0569fb7075d926cfd06531b70a0384da049890"
       },
       {
         "key": "swarm-dev",
@@ -972,7 +973,7 @@
       {
         "key": "orchestrator",
         "path": "engcim/swarm/instructions/orchestrator/instructions.md",
-        "sha256": "6f7f90c3b0d3a0b5e98a1a6dbe07fe335c452419f3895a214a8d112242ba5757"
+        "sha256": "76f40fef6119190fa87f48fa2150137f543fda5837742e9fa37b830f48394c26"
       },
       {
         "key": "qa",
@@ -987,7 +988,7 @@
       {
         "key": "orchestratorSkill",
         "path": "engcim/swarm/skills/swarm-orchestration/SKILL.md",
-        "sha256": "d411d6217e15862cee95164d81556803cc07cd4c8c486133b81b1e630df5df76"
+        "sha256": "3dc160569d659b4508aa14d7c2fb8df0e268741e235c4a3010b64b739833f405"
       },
       {
         "key": "skill:product-knowledge",
@@ -1623,11 +1624,11 @@
           "path": "engcim/swarm/instructions/orchestrator/instructions.md",
           "targetType": "agent",
           "targetId": "809ffefe-3fc4-4686-8401-a8dd50285840",
-          "bytes": 93351,
-          "sha256": "6f7f90c3b0d3a0b5e98a1a6dbe07fe335c452419f3895a214a8d112242ba5757",
+          "bytes": 93479,
+          "sha256": "76f40fef6119190fa87f48fa2150137f543fda5837742e9fa37b830f48394c26",
           "sourceRevision": "ENCLOSING_GIT_TREE",
           "derivation": "IDENTITY_UTF8_NO_NORMALIZATION",
-          "parity": "MATCH_AT_OBSERVATION",
+          "parity": "SOURCE_DIFFERS_FROM_PROVIDER_ORIGIN",
           "providerOrigin": {
             "id": "809ffefe-3fc4-4686-8401-a8dd50285840",
             "workspaceId": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
@@ -1698,8 +1699,8 @@
           "path": "engcim/swarm/skills/swarm-orchestration/SKILL.md",
           "targetType": "skill",
           "targetId": "5b3c5337-eef3-4cc3-9174-025e4ddc28dc",
-          "bytes": 23463,
-          "sha256": "d411d6217e15862cee95164d81556803cc07cd4c8c486133b81b1e630df5df76",
+          "bytes": 23514,
+          "sha256": "3dc160569d659b4508aa14d7c2fb8df0e268741e235c4a3010b64b739833f405",
           "sourceRevision": "ENCLOSING_GIT_TREE",
           "derivation": "IDENTITY_UTF8_NO_NORMALIZATION",
           "parity": "SOURCE_DIFFERS_FROM_PROVIDER_ORIGIN",
@@ -2393,13 +2394,13 @@
           "name": "Swarm Orchestrator",
           "authoringSource": {
             "path": "engcim/swarm/instructions/orchestrator/instructions.md",
-            "bytes": 93351,
-            "sha256": "6f7f90c3b0d3a0b5e98a1a6dbe07fe335c452419f3895a214a8d112242ba5757"
+            "bytes": 93479,
+            "sha256": "76f40fef6119190fa87f48fa2150137f543fda5837742e9fa37b830f48394c26"
           },
           "candidateBody": {
             "path": "engcim/swarm/instructions/orchestrator/instructions.md",
-            "bytes": 93351,
-            "sha256": "6f7f90c3b0d3a0b5e98a1a6dbe07fe335c452419f3895a214a8d112242ba5757"
+            "bytes": 93479,
+            "sha256": "76f40fef6119190fa87f48fa2150137f543fda5837742e9fa37b830f48394c26"
           },
           "providerBody": {
             "bytes": 93351,
@@ -2442,7 +2443,7 @@
           ],
           "preexistingEditableUpstream": "UNKNOWN_EXCEPT_EXPLICIT_EXISTING_TRANSFORMATION_LINEAGE",
           "runtimeConsumption": "UNVERIFIED",
-          "parity": "MATCH_AT_OBSERVATION"
+          "parity": "SOURCE_DIFFERS_FROM_PROVIDER_ORIGIN"
         },
         {
           "role": "PM",
@@ -3534,13 +3535,13 @@
           "workspaceId": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
           "authoringSource": {
             "path": "engcim/swarm/skills/multica-cli/source.json",
-            "bytes": 20445,
-            "sha256": "e3b5c3d92c030d669b3db0662bea95b726b2f6f6e0dec2e25d519575590c6b5d"
+            "bytes": 21628,
+            "sha256": "1d8729130d3540ae4c7b92b32c0569fb7075d926cfd06531b70a0384da049890"
           },
           "candidateBody": {
             "path": "engcim/swarm/generated/multica-cli.md",
-            "bytes": 16008,
-            "sha256": "4949ce26f39794e6d278fd7d61a63e194b1bffb4f3853d18e7f5d257fabaef8a"
+            "bytes": 16023,
+            "sha256": "571a892eb3a77359fc6ebff6b3b1453aaef31d95006d00fe833aa6a00814cb9c"
           },
           "providerBody": {
             "bytes": 16008,
@@ -3625,7 +3626,7 @@
           "attachedFiles": [],
           "packageAuthoring": "BODY_ONLY_ATTACHED_FILE_MAINTENANCE_NOT_CONVERGED",
           "runtimeConsumption": "UNVERIFIED",
-          "parity": "MATCH_AT_OBSERVATION"
+          "parity": "SOURCE_DIFFERS_FROM_PROVIDER_ORIGIN"
         },
         {
           "id": "4ebbc2c8-b1d4-4cf2-bfa8-b3fe62772b13",
@@ -3768,13 +3769,13 @@
           "workspaceId": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
           "authoringSource": {
             "path": "engcim/swarm/skills/swarm-orchestration/SKILL.md",
-            "bytes": 23463,
-            "sha256": "d411d6217e15862cee95164d81556803cc07cd4c8c486133b81b1e630df5df76"
+            "bytes": 23514,
+            "sha256": "3dc160569d659b4508aa14d7c2fb8df0e268741e235c4a3010b64b739833f405"
           },
           "candidateBody": {
             "path": "engcim/swarm/skills/swarm-orchestration/SKILL.md",
-            "bytes": 23463,
-            "sha256": "d411d6217e15862cee95164d81556803cc07cd4c8c486133b81b1e630df5df76"
+            "bytes": 23514,
+            "sha256": "3dc160569d659b4508aa14d7c2fb8df0e268741e235c4a3010b64b739833f405"
           },
           "providerBody": {
             "bytes": 23406,
@@ -7298,6 +7299,13 @@
       },
       "providerPublication": "NOT_PERFORMED_AT_THIS_CANDIDATE_CREATION",
       "nativeAcceptance": "UNTESTED_FOR_THIS_CANDIDATE"
+    },
+    "nativeWorkspaceCorrection": {
+      "status": "LOCAL_CANDIDATE_NOT_PUBLISHED",
+      "baseCommit": "97354afe755b14a79d33195c580e15b33330856d",
+      "scope": "Orchestrator workspace clause, orchestration Skill workspace section, shared CLI workspace replacement and canonical observation helper",
+      "actualConsumption": "UNVERIFIED",
+      "sharedConsumerGap": "Knowledge Curator separate stricter clause remains; other native consumer behavior untested"
     }
   }
 }
