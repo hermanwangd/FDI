@@ -741,7 +741,7 @@
     "tests": {
       "path": "engcim/swarm/tests/agents/four-role",
       "manifest": "engcim/swarm/tests/agents/four-role/SOURCE-MANIFEST.json",
-      "manifestSha256": "c4d18dc9f1d31b79a855a5820f4bdfbf9ae0a28a36992842d923f049c6f6e497",
+      "manifestSha256": "962d68e736efa4ace9382492f0edef37c09bba4f10ee6e2ae0c1513d15ac4aeb",
       "previousExternalDefinitions": "Read-only historical evidence, all future maintained test edits use this Git path",
       "capabilityInventory": {
         "path": "engcim/swarm/tests/agents/capabilities.json",
@@ -783,7 +783,18 @@
         "publishedAt": "2026-10-08T16:08:28Z",
         "readbackSha256": "4949ce26f39794e6d278fd7d61a63e194b1bffb4f3853d18e7f5d257fabaef8a"
       },
-      "currentProvider": "NOT_RECHECKED",
+      "currentProvider": {
+        "retainedPriorObservation": "NOT_RECHECKED",
+        "skillId": "25cd0abc-f81c-48ab-8813-845834619f9a",
+        "sourceCommit": "c5989a4180e7a69ffc9d92cdac410939440e0e8c",
+        "readbackSha256": "6a60e98f609a0652efd5621a319562d5a03af55ea9d326dffd6d6dcd15935211",
+        "receipt": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Y-PUBLICATION-RESULT.json",
+          "bytes": 1042,
+          "sha256": "c0e75cbf3aea1ebcae3866463da2ee13e49bfd2a570da89df8f66eb5b351dc58"
+        },
+        "runtimeConsumption": "UNVERIFIED"
+      },
       "runtimeConsumption": "UNVERIFIED",
       "historicalCaveatContext": "current_source_materialization.root_reviewer_repair.dependencyCaveat remains the unmodified historical Reviewer repair record. Its retained-old-CLI statement is superseded for current development by this local CLI convergence, not rewritten as prior adoption."
     },
@@ -7392,9 +7403,9 @@
       }
     },
     "publicDiscoveryCorrection": {
-      "status": "LOCAL_CANDIDATE_NOT_PUBLISHED",
+      "status": "SAME_ID_PUBLICATION_MATCH__NATIVE_ROUTING_STARTED__METHOD_SCOPE_PARTIAL",
       "baseCommit": "18fa36c561c2ba38eb4af2be05d3ba9c3dc9d31f",
-      "sourceRevision": "ENCLOSING_GIT_TREE",
+      "sourceRevision": "PAYLOAD_SOURCE_c5989a4180e7a69ffc9d92cdac410939440e0e8c__ENCLOSING_METADATA_ONLY",
       "scope": "Own/public discovery, requiredRoster input gap, optional activity fallback, ordinary CLI query workspace contradiction and bounded public member read classifier",
       "planReview": {
         "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PLAN-Y-CONCRETE-INDEPENDENT-REVIEW.json",
@@ -7407,14 +7418,81 @@
       "tests": {
         "before": "38PASS original canonical baseline; new8FAIL with original38PASS",
         "after": "47PASS local only; original38 retained,9 additive checks",
-        "native": "NOT_RUN_FOR_THIS_CANDIDATE",
+        "native": "RC10VAL-322_PARTIAL__METHOD_SCOPE_TOO_NARROW__ROUTING_STARTED_CONFIRMED",
         "retainedFirstGreen": "46PASS local only",
         "reviewCounterexample": "46PASS1FAIL then47PASS; method grammar gap no longer upgraded to scope failure"
       },
-      "inputGap": "Public squad member list has19 IDs/roles but no exact systemRoster mentions; normal squad assignment effect remains UNKNOWN",
+      "inputGap": "Normal squad entry produced is_leader_task=true and exact persisted Coder mention/run; complete injected Roster still UNVERIFIED",
       "causality": "Source and method both change; native source-only causal repair/no-regression not demonstrated",
       "runtimeConsumption": "UNVERIFIED",
-      "publication": "NOT_PERFORMED"
+      "publication": {
+        "sourceCommit": "c5989a4180e7a69ffc9d92cdac410939440e0e8c",
+        "at": "2026-10-09T13:21:12.869Z",
+        "status": "EXACT_THREE_CONTENT_READBACK_MATCH",
+        "receipt": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Y-PUBLICATION-RESULT.json",
+          "bytes": 1042,
+          "sha256": "c0e75cbf3aea1ebcae3866463da2ee13e49bfd2a570da89df8f66eb5b351dc58"
+        },
+        "independentReview": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Y-PUBLICATION-RESULT-INDEPENDENT-REVIEW.json",
+          "bytes": 3423,
+          "sha256": "ac3ecdbb504d85fdcb0cb18fe04a61afb6c65b8911b71e9512b7b2d31f40a40f"
+        },
+        "targets": [
+          {
+            "id": "809ffefe-3fc4-4686-8401-a8dd50285840",
+            "storedSha256": "f222aadde8fd3e56ff814a874893587ee8167f7674b5dedb03b183134af2fc06"
+          },
+          {
+            "id": "5b3c5337-eef3-4cc3-9174-025e4ddc28dc",
+            "storedSha256": "0a7810efe2eda0599bbda83d4246430b8c455b071f44210627c44a57d75059d2"
+          },
+          {
+            "id": "25cd0abc-f81c-48ab-8813-845834619f9a",
+            "storedSha256": "6a60e98f609a0652efd5621a319562d5a03af55ea9d326dffd6d6dcd15935211"
+          }
+        ],
+        "actualConsumption": "UNVERIFIED"
+      },
+      "retainedCandidateCreation": {
+        "status": "LOCAL_CANDIDATE_NOT_PUBLISHED",
+        "publication": "NOT_PERFORMED",
+        "native": "NOT_RUN_FOR_THIS_CANDIDATE",
+        "inputGap": "Public squad member list has19 IDs/roles but no exact systemRoster mentions; normal squad assignment effect remains UNKNOWN"
+      },
+      "sourceCommit": "c5989a4180e7a69ffc9d92cdac410939440e0e8c",
+      "focusedNative": {
+        "identifier": "RC10VAL-322",
+        "issueId": "01a120dd-5ce2-7365-912d-ae8c0bafcddc",
+        "orchestratorRun": "01a120e7-dee8-76f0-b1e3-1a7f768dd0ad",
+        "coderRun": "01a120e8-c987-7315-85c8-8092ac519bb4",
+        "status": "STOPPED__SAME_ISSUE_CODER_DELEGATION_OBSERVED__FROZEN_CHILD_METHOD_MISMATCH",
+        "receipt": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-YN-RESULT.json",
+          "bytes": 7421,
+          "sha256": "b1a5401d6d49bb17a6bb5e4d656800adb3acb049fc4251c67768724265bbce08"
+        },
+        "independentReview": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-YN-RESULT-INDEPENDENT-REVIEW.json",
+          "bytes": 10358,
+          "sha256": "d8e5817cc4fb392a1ff97d8c34fe781d3b6c9f2470025b03a92334933fa2cae8"
+        },
+        "professionalRouting": "STARTED_CONFIRMED__COMPLETION_NOT_DEMONSTRATED",
+        "sameIssueDelegation": true,
+        "childIssues": 0,
+        "artifact": {
+          "bytes": 942,
+          "sha256": "4fd17f489b17a2889eab85cd4444c661ea5512e246bf4fd79402d2a715116800",
+          "functionalTest": "NOT_RUN_CANCELLED_DRAFT"
+        },
+        "fullRender": "UNVERIFIED",
+        "consumption": "UNVERIFIED",
+        "activeOwnedRuns": 0,
+        "resumePoint": "Repair existing observation method to admit formally supported exact same-issue Coder delegation before any separately reviewed finite retest; preserve private guards.",
+        "originalStop": "UNAPPROVED_MENTION_ACTIVATION retained; method mismatch, not established role defect",
+        "cancelLimits": "Post-request polling; terminal cancellation metadata does not prove prevented effects. Later owned write ACK retained."
+      }
     }
   }
 }
