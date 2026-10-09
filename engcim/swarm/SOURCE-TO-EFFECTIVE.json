@@ -714,12 +714,12 @@
     "tests": {
       "path": "engcim/swarm/tests/agents/four-role",
       "manifest": "engcim/swarm/tests/agents/four-role/SOURCE-MANIFEST.json",
-      "manifestSha256": "02bedaac8afdc32ede8b66cfec1b611a90bc1f7675a91a89432976d3a5a783ab",
+      "manifestSha256": "888e178cb2c5a262648e76baf63e916fe32a55c90dbaee48616b3f494f4c1545",
       "previousExternalDefinitions": "Read-only historical evidence, all future maintained test edits use this Git path",
       "capabilityInventory": {
         "path": "engcim/swarm/tests/agents/capabilities.json",
-        "bytes": 230341,
-        "sha256": "fdc8e8adcf1c3a6da086c9dec9861624c7293119ae4e81d0fb60325841e74e59"
+        "bytes": 230560,
+        "sha256": "54ec4b2dc0f776eb959d5986fa1ee14ed1392525a47055d4d700f3fe457f9a34"
       }
     },
     "unresolvedLiveAuthoring": {
@@ -972,7 +972,7 @@
       {
         "key": "orchestrator",
         "path": "engcim/swarm/instructions/orchestrator/instructions.md",
-        "sha256": "6f7f90c3b0d3a0b5e98a1a6dbe07fe335c452419f3895a214a8d112242ba5757"
+        "sha256": "7b25c7a9289fa069179c0b20556c4930a6c40182c99b0c72ca42202ec6eafe7f"
       },
       {
         "key": "qa",
@@ -1623,11 +1623,11 @@
           "path": "engcim/swarm/instructions/orchestrator/instructions.md",
           "targetType": "agent",
           "targetId": "809ffefe-3fc4-4686-8401-a8dd50285840",
-          "bytes": 93351,
-          "sha256": "6f7f90c3b0d3a0b5e98a1a6dbe07fe335c452419f3895a214a8d112242ba5757",
+          "bytes": 93754,
+          "sha256": "7b25c7a9289fa069179c0b20556c4930a6c40182c99b0c72ca42202ec6eafe7f",
           "sourceRevision": "ENCLOSING_GIT_TREE",
           "derivation": "IDENTITY_UTF8_NO_NORMALIZATION",
-          "parity": "MATCH_AT_OBSERVATION",
+          "parity": "SOURCE_DIFFERS_FROM_PROVIDER_ORIGIN",
           "providerOrigin": {
             "id": "809ffefe-3fc4-4686-8401-a8dd50285840",
             "workspaceId": "0b02adb6-a395-46bd-bd92-6fec14dee20e",
@@ -2380,10 +2380,10 @@
       },
       "capabilityInventory": {
         "path": "engcim/swarm/tests/agents/capabilities.json",
-        "bytes": 230341,
-        "sha256": "fdc8e8adcf1c3a6da086c9dec9861624c7293119ae4e81d0fb60325841e74e59"
+        "bytes": 230560,
+        "sha256": "54ec4b2dc0f776eb959d5986fa1ee14ed1392525a47055d4d700f3fe457f9a34"
       },
-      "retainedFourRoleCapabilitiesSemanticSha256": "f0c2e3f8394e5266575e02b9cced663c14a8b042b7a59d751de14277643f2c64",
+      "retainedFourRoleCapabilitiesSemanticSha256": "d2c57a04a749ae5e57a7d1f16772062c0f1fdfa5ce2faf635608dcf6d7a7556b",
       "roles": [
         {
           "role": "Orchestrator",
@@ -2393,13 +2393,13 @@
           "name": "Swarm Orchestrator",
           "authoringSource": {
             "path": "engcim/swarm/instructions/orchestrator/instructions.md",
-            "bytes": 93351,
-            "sha256": "6f7f90c3b0d3a0b5e98a1a6dbe07fe335c452419f3895a214a8d112242ba5757"
+            "bytes": 93754,
+            "sha256": "7b25c7a9289fa069179c0b20556c4930a6c40182c99b0c72ca42202ec6eafe7f"
           },
           "candidateBody": {
             "path": "engcim/swarm/instructions/orchestrator/instructions.md",
-            "bytes": 93351,
-            "sha256": "6f7f90c3b0d3a0b5e98a1a6dbe07fe335c452419f3895a214a8d112242ba5757"
+            "bytes": 93754,
+            "sha256": "7b25c7a9289fa069179c0b20556c4930a6c40182c99b0c72ca42202ec6eafe7f"
           },
           "providerBody": {
             "bytes": 93351,
@@ -2442,7 +2442,7 @@
           ],
           "preexistingEditableUpstream": "UNKNOWN_EXCEPT_EXPLICIT_EXISTING_TRANSFORMATION_LINEAGE",
           "runtimeConsumption": "UNVERIFIED",
-          "parity": "MATCH_AT_OBSERVATION"
+          "parity": "SOURCE_DIFFERS_FROM_PROVIDER_ORIGIN"
         },
         {
           "role": "PM",
@@ -7262,6 +7262,18 @@
           "history": "Git retains exact before and selected revisions; do not depend on automatic rename detection across amended bodies"
         }
       ]
+    },
+    "o02BoundaryRepair": {
+      "sourceRevision": "ENCLOSING_GIT_TREE",
+      "candidateBody": {
+        "bytes": 93754,
+        "sha256": "7b25c7a9289fa069179c0b20556c4930a6c40182c99b0c72ca42202ec6eafe7f"
+      },
+      "change": "One 403-byte role-introduction clarification; no capability removal or Skill change",
+      "newFocusedCase": "O-SPECIALIST-UNFAMILIAR",
+      "providerPublication": "NOT_PERFORMED_FOR_THIS_CANDIDATE",
+      "nativeAcceptance": "UNTESTED_FOR_THIS_CANDIDATE",
+      "baseline": "External actual-T1 PASS/actual-T2 FAIL under original configuration; original failures retained"
     }
   }
 }

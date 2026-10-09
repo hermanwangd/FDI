@@ -7,7 +7,7 @@ This directory is the single editable four-role test source on the selected Git 
 - [unit-suite.json](unit-suite.json): original 36 decision cases.
 - [supplement-suite.json](supplement-suite.json): 37 supplemental cases.
 - [original-branch-suite.json](original-branch-suite.json): six original QA/Architect responsibility branches.
-- [focused-suite.json](focused-suite.json): eight focused native cases, including the two Orchestrator cases.
+- [focused-suite.json](focused-suite.json): nine focused native cases, including T1/T2 and the added O-SPECIALIST-UNFAMILIAR case for the same Orchestrator responsibility boundary. Original eight definitions remain unchanged; the new case is UNTESTED.
 - [shared capabilities.json](../capabilities.json): 65 original detailed ability mappings plus all 19 role/source/Skill/test references. The other roles retain their six historical draft cases each; current fixtures, admission and native results remain gaps.
 
 These are definitions, not admission or PASS. The former two-case Orchestrator suite is an immutable historical fixture, not a second active source. Keep one active filename per object; retain prior versions in Git. Use the same committed input/criteria, configuration and method for any claimed before/after comparison.

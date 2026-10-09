@@ -41,22 +41,28 @@
       "path": "focused-suite.json",
       "sourceEvidenceFile": "FOUR-ROLE-SUITE-FROZEN.json",
       "sourceSha256": "b92b462fce6d51a020d6b073f8e4d4c9dc73baad5664b7a2e24415ca9fe2d4a2",
-      "sha256": "ccdf7c83023f2a3d91c1828efa66ce44554e480afac54cc0e450cd7c6d3dd177",
-      "cases": 8,
-      "semanticCasesSha256": "16826465b88fc2290e9b3caa23f310447f886c986ba6aff751040c74b53ece0d",
+      "sha256": "c3abb1bebd4cde252c6b772e67042ba50e94e183e260585d0d145fe12d6ddeb5",
+      "cases": 9,
+      "semanticCasesSha256": "ded278eab68b8ac3a34ef97b5adb76ab17bacffb6fdb1a1c0f7c3b12805ef585",
       "status": "ACTIVE_DEFINITION_NOT_NATIVE_ADMISSION",
-      "inputCriteriaUnchanged": true
+      "inputCriteriaUnchanged": false,
+      "currentChange": {
+        "originalEightCasesUnchanged": true,
+        "appendedCase": "O-SPECIALIST-UNFAMILIAR",
+        "nativeAcceptance": "UNTESTED"
+      }
     },
     {
       "path": "../capabilities.json",
       "sourceEvidenceFile": "FOUR-ROLE-SOURCE-CAPABILITY-CATALOG-r5-DRAFT.json",
       "sourceSha256": "408abd3513c758fc40418cf31926283f97597461bca23797fe8a8e38c9d35a58",
-      "sha256": "fdc8e8adcf1c3a6da086c9dec9861624c7293119ae4e81d0fb60325841e74e59",
+      "sha256": "54ec4b2dc0f776eb959d5986fa1ee14ed1392525a47055d4d700f3fe457f9a34",
       "cases": null,
       "semanticCasesSha256": null,
       "status": "ACTIVE_DEFINITION_NOT_NATIVE_ADMISSION",
       "inputCriteriaUnchanged": true,
-      "sourceSha256UnchangedNote": "Retained original external inventory origin; current SHA includes 19-role references and unchanged 65 mappings"
+      "sourceSha256UnchangedNote": "Retained original external inventory origin; current SHA includes 19-role references and unchanged 65 mappings",
+      "currentChange": "65 original capabilities and testIds retained; O02 current focused refs added"
     }
   ],
   "tools": [
@@ -334,7 +340,7 @@
       "maintenance": "NOT_ROLE_AUTHORING_NOT_SEALED_1_1_BASELINE"
     }
   ],
-  "existingFocusedOrchestrator": "Only focused-suite.json T1/T2 active; original two-case file immutable historical fixture",
+  "existingFocusedOrchestrator": "Only focused-suite.json T1/T2 and O-SPECIALIST-UNFAMILIAR active; original two-case file immutable historical fixture",
   "fixtureRebinding": "Only reference/read paths changed. Case inputs/criteria and trace scenario paths retained.",
   "selfTests": {
     "status": "PASS_LOCAL_TOOL_TESTS_ONLY",
@@ -377,8 +383,8 @@
   "native": "NOT_RUN; full loading/baseline/capability/no regression UNVERIFIED",
   "readme": {
     "path": "README.md",
-    "sha256": "5c4542ce6bf1ed392b2b0935de725f04b2df9ea40fdc148cdf6bb9ca9be2c74a",
-    "bytes": 3011
+    "sha256": "11296c320cf972d66221570ec4947377d37f78dab11feb424c2b63f51a790c48",
+    "bytes": 3153
   },
   "capabilityInventoryScope": "Shared all-role capability inventory; four-role case definitions/tools/fixtures remain here",
   "sourceConvergenceBranch": "codex/overnight-plan-freeze",

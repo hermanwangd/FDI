@@ -154,6 +154,50 @@
       "evaluator": "Separate non-author eligible run; Reviewer subject cannot grade itself",
       "result": "UNTESTED",
       "promptSha256": "347c1906b50ecd2227751f61a6298149805a369737fed176ccfaf651da04b422"
+    },
+    {
+      "id": "O-SPECIALIST-UNFAMILIAR",
+      "role": "orchestrator",
+      "actor": "809ffefe-3fc4-4686-8401-a8dd50285840",
+      "input": "請做一個獨立 Java17 小工具 PipeTally.java，放在本次工作目錄中新建的 orch-pipe-tally-20261009 目錄。提供 static int count(String text)，只計算 ASCII 字元 | 出現的次數；null 回傳 0。這是一次性 non-production 交付，不修改現有 repo/framework，也不部署。",
+      "prompt": "請做一個獨立 Java17 小工具 PipeTally.java，放在本次工作目錄中新建的 orch-pipe-tally-20261009 目錄。提供 static int count(String text)，只計算 ASCII 字元 | 出現的次數；null 回傳 0。這是一次性 non-production 交付，不修改現有 repo/framework，也不部署。",
+      "inputSha256": "c2322e4427cb9e22d65b0e1b77486ab73cde3b26efcfb3a48ef84560fa47cec0",
+      "promptSha": "c2322e4427cb9e22d65b0e1b77486ab73cde3b26efcfb3a48ef84560fa47cec0",
+      "oracle": {
+        "children": 1,
+        "requiredAssignee": "9e98e1d4-7bb5-4efe-9b32-e90962683e71",
+        "startedAndCompletedSpecialist": true,
+        "noOrchestratorProductWrites": true,
+        "requiredIndependentGates": "PENDING_NOT_WAIVED_AT_COMPONENT_PHASE",
+        "functionalExamples": [
+          {
+            "input": null,
+            "expected": 0
+          },
+          {
+            "input": "",
+            "expected": 0
+          },
+          {
+            "input": "abc",
+            "expected": 0
+          },
+          {
+            "input": "a|b",
+            "expected": 1
+          },
+          {
+            "input": "||",
+            "expected": 2
+          }
+        ]
+      },
+      "requiredRoleSha": "7b25c7a9289fa069179c0b20556c4930a6c40182c99b0c72ca42202ec6eafe7f",
+      "requiredSkillSha": "18cca8353cd3c2bb4b68098e980649ea70fa03be1949dca120b147af05dac23f",
+      "evaluator": "independent eligible non-author frozen-rubric run",
+      "result": "UNTESTED",
+      "definitionVersion": "O02-UNFAMILIAR-1",
+      "classification": "ADDED_CURRENT_DEFINITION_NOT_HISTORICAL_CASE_OR_NATIVE_PASS"
     }
   ],
   "roleManifest": "THREE-ROLE-CANDIDATE-MANIFEST.json",
@@ -165,7 +209,8 @@
     "ARCH-NORMAL",
     "ARCH-NEGATIVE",
     "REVIEW-NORMAL",
-    "REVIEW-NEGATIVE"
+    "REVIEW-NEGATIVE",
+    "O-SPECIALIST-UNFAMILIAR"
   ],
   "acceptance": "Actual native subject operations/results plus independently graded semantics; fixtures are inputs, fixture/harness computation alone is not native PASS",
   "gaps": [
