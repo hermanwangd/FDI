@@ -64,4 +64,17 @@ Z 有限原生重測（RC10VAL-323）：方法來源 `7575c3b4`；角色發布�
 | Specialist 完成交付與功能 | 同版中性T2；凍結Java17七例probe | YN草稿未完成／未驗 | Z取消後247B草稿；probe未执行 | 完成交付與功能仍未證實 |
 | 角色完整render與自動載入 | 自有目錄render／公開SDK context | UNVERIFIED | Coder正文presence相符；完整automatic consumption未驗 | Orchestrator完整render未取得；獨立gates／19角色未驗 |
 
-目錄觀察修補（ZD）：`inspectNativeDirectoryBinding` 分開 project resource、completed run 的公開目錄紀錄與每個工具的實際 cwd。原觀察器把專案目錄等值要求也套到 squad leader；官方 v0.6.1 的 leader 不使用 `in_place` project assignment。新方法只接受精確自有 case／run 與已獨立綁定的公開 coordinator prefix，屬 metadata 判定，不授予該目錄的檔案存取。Coder 仍只接受同 daemon 專案資源的 physical／logical root，未知目錄保留 PENDING；functional 驗證前須 source Orchestrator 與 completed Coder 兩者紀錄綁定。原58方法／schema測項保留，8組正負測項後66通過；per-run adapter 原67保留後71通過。原RC10VAL-323 STOP與其未執行草稿保持原判定，新native尚未執行；版本與結果集中既有map的 `development_ssot.directoryObservationRepair`。
+目錄觀察修補（ZD）：`inspectNativeDirectoryBinding` 分開 project resource、completed run 的公開目錄紀錄與每個工具的實際 cwd。原觀察器把專案目錄等值要求也套到 squad leader；官方 v0.6.1 的 leader 不使用 `in_place` project assignment。新方法只接受精確自有 case／run 與已獨立綁定的公開 coordinator prefix，屬 metadata 判定，不授予該目錄的檔案存取。Coder 仍只接受同 daemon 專案資源的 physical／logical root，未知目錄保留 PENDING；functional 驗證前須 source Orchestrator 與 completed Coder 兩者紀錄綁定。原58方法／schema測項保留，8組正負測項後66通過；per-run adapter 原67保留後71通過。原RC10VAL-323 STOP與其未執行草稿保持原判定；新RC10VAL-324已完成有限交付及功能驗證，整體native仍PARTIAL（見下文）。版本與結果集中既有map的 `development_ssot.directoryObservationRepair`。
+
+
+ZD 有限原生結果（RC10VAL-324）：方法來源 `90faa7f9`，角色／Skill發布來源仍為 `c5989a41`。Orchestrator 的同 issue 精確派工綁定實際 Coder run；initial leader 的公開 coordinator 目錄與 completed Coder 的 project resource 目錄分別 MATCH，屬 metadata 證據，未增加任何目錄存取權限。Coder completed、error=null，282B交付檔與同 run write／ACK／物理讀回一致；終止後原樣執行一次 Java17 compile＋凍結七例 probe，7/7 PASS，經獨立結果評分確認。原始碼未改動，沒有再次派送。
+
+| 能力／測項 | 修改前（保留Z） | 修改後（ZD；同發布角色版本） | 退化／驗收限制 |
+|---|---|---|---|
+| 目錄觀察：initial leader／worker 的精確公開紀錄 | 原等值規則誤擋 leader，STOP | 兩者各自 MATCH；原58方法/schema全保留，新正負測項後66 PASS | metadata不證明每個tool actual cwd；保護根目錄未放寬 |
+| 專業工作派工與完成交付：中性T2 | Coder啟動但被取消；247B草稿未完成 | 精確派工與completed Coder綁定，282B交付原碼一致 | 僅本次focused能力，非四／19角色整體驗收 |
+| 交付程式功能：同一凍結Java17七例 | NOT_RUN | compile＋7/7 PASS，source unchanged，獨立評分 | 不把native自稱八例通過當工具執行證據 |
+| generic shell觀察／正式structured event | 尚無此case證據 | quoted heredoc方法STOP保留；普通交付reply自動喚醒第二Orchestrator | generic parser與formal event未過；fanin及最終gates未评 |
+| 完整render／自動載入 | Coder正文presence，完整consumption未驗 | 自有19893B render包含相同Coder正文與已掛Skill檔pin | presence不等於consumption；Orchestrator完整render未讀、仍UNVERIFIED |
+
+原observer不能判讀 quoted heredoc，故在producer已completed後STOP；獨立手動核對全部12請求及終止圖後，另准同一已交付檔案的有限功能檢查，未將generic方法改判PASS。第二Orchestrator由普通reply喚醒，非凍結 `nativeChildEvent` 所要求structured正文；已取消且無tool請求，不能因此宣稱fanin PASS。37＋21＋7序列與空EOF完整，三run terminal；角色body／Skills／model／runtime／permission欄位相同，actor updated_at與runtime last_seen_at改變。兩個方法缺口的最早修正入口仍為既有觀察方法／事件consumer適用性檢查；本輪沒有改其契約或另建測試來源。完整結果、獨立分欄評分與原STOP由同一map row綁定；整體native維持PARTIAL。
