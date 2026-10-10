@@ -67,48 +67,56 @@
     },
     {
       "path": "native-preparation.json",
-      "sha256": "637b4b7a523ae89bf96c0a8af4fed360d4fa48642d2ce922a1eea171cd2ee43e",
+      "sha256": "0299f1662a700856c648b33d8f2361deae25a3be290d2ae1ca706884775689a0",
       "cases": 0,
       "status": "ACTIVE_PREPARATION_CONTRACT_NATIVE_HOLD",
       "methodId": "M2_NEUTRAL_INPUT_AND_PUBLIC_ISOLATION",
       "inputCriteriaUnchanged": false,
       "change": "ADDITIVE_COMMON_OBSERVATION_INTERPRETATION; PRIOR_INPUT_AND_CONTRACTS_RETAINED",
       "preparationRevision": "M2_SESSION_CREATION_TIMING_2",
-      "bytes": 12701
+      "bytes": 12773
     }
   ],
   "tools": [
     {
       "path": "role-unit-evidence-v3.test.mjs",
       "originalSha256": "1ae03e4c410becb8dbf7531dc3a034c84634b21da802124d4e4b81b8106a5f56",
-      "sha256": "c77cf87e2a1aedcb6eaf3f704b096b58dbbfe97d0ff423ca14b65836f9dd853f",
-      "bytes": 67759,
+      "sha256": "5a0468568055a7416cc55de676fbd582e359e50c163ad15372f91b8d7f0cbe21",
+      "bytes": 67784,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_SELF_TEST",
-      "change": "ADDITIVE_COMMON_OBSERVATION_INTERPRETATION_AND_RECORDED_JAVA_SHAPES; ORIGINAL_CONTRACTS_RETAINED"
+      "change": "EXISTING_CONSUMER_GROUPS_MOVED_TO_NATIVE_ADAPTER; FIXTURE_READ_URL_ONLY"
+    },
+    {
+      "path": "native-adapter/consumer.test.mjs",
+      "bytes": 23409,
+      "sha256": "907e133999f8a6cd5782e39dc7d1dc23579a835da7d4a2ba2d0d113629b4429b",
+      "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_SELF_TEST",
+      "change": "RELOCATED_EXISTING_17_CONSUMER_GROUPS; ASSERTIONS_AND_SYNTHETIC_CONTEXT_PRESERVED",
+      "movedFrom": "role-unit-evidence-v3.test.mjs"
     },
     {
       "path": "role-unit-output-schema-r1.test.mjs",
       "originalSha256": "bdfa8e2852c62e06541dbcf6449ba9f00cb58fda7e23e05bfd4bd62cdb9a7dd8",
-      "sha256": "94bcbb4c0346119fcd1a109b0097f4aa0f32b44c4043cbb695e3331e82f607d0",
-      "bytes": 1988,
+      "sha256": "d13e78ba64bbdd35ecc479d11847a16cc37b67666e845b56d4a57f3edb571006",
+      "bytes": 2063,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_SELF_TEST",
-      "change": "LOCAL_FIXTURE_READ_PATHS_ONLY; TRACE_SCENARIO_AND_CRITERIA_UNCHANGED"
+      "change": "MODULE_ANCHORED_FIXTURE_READ_PATHS_ONLY; ASSERTIONS_AND_FIXTURE_BYTES_UNCHANGED"
     },
     {
       "path": "qa-own-issue-harness-r4.unit.mjs",
       "originalSha256": "a7b9b783e0cdd6c7627decb3c4467b501bbda3d84b02e3768eaf606c711dd3f5",
-      "sha256": "4a22478b57435d6e53eac8f8a13db3ec4c6cd87552940038ff6aa547783c1853",
-      "bytes": 9998,
+      "sha256": "bd23cb6fe575ddd85cb4d891d9982aa40b35dc73121175bcc8a941852471fbcc",
+      "bytes": 10113,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_SELF_TEST",
-      "change": "LOCAL_FIXTURE_READ_PATHS_ONLY; TRACE_SCENARIO_AND_CRITERIA_UNCHANGED"
+      "change": "MODULE_ANCHORED_FIXTURE_READ_PATHS_ONLY; ASSERTIONS_AND_FIXTURE_BYTES_UNCHANGED"
     },
     {
       "path": "qa-reused-fixture-scope-r3.unit.mjs",
       "originalSha256": "30e317299ae1ee8a3e86db9d83c3cbb3772fa9461bb53920677b91e1193d36ea",
-      "sha256": "4b33efcfec7177af7cfb6240a3b9d8de1b0836bcfa9364cd3e49c6cb01773222",
-      "bytes": 2111,
+      "sha256": "8f23d83c04367260f536951cf7bc658832bb62c30303b8eac69d7f782c4d02b1",
+      "bytes": 2161,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_SELF_TEST",
-      "change": "LOCAL_FIXTURE_READ_PATHS_ONLY; TRACE_SCENARIO_AND_CRITERIA_UNCHANGED"
+      "change": "MODULE_ANCHORED_FIXTURE_READ_PATHS_ONLY; ASSERTIONS_AND_FIXTURE_BYTES_UNCHANGED"
     },
     {
       "path": "role-paged-source-read-evidence-r1.mjs",
@@ -157,6 +165,42 @@
       "bytes": 972,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_HELPER",
       "change": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "native-adapter/controller.cjs",
+      "bytes": 18636,
+      "sha256": "069db0bf7a4f6a3deb5bbf334d635c4dff85d117c0731ae0206074c47b74b234",
+      "kind": "EXISTING_EXTERNAL_NATIVE_TEST_OPERATOR",
+      "historicalSource": "ZG-EXECUTION-5",
+      "historicalSha256": "71efc90dc3883195e165265c0c052a0f6d3141dd63eef9ba1507df6a9a92c254",
+      "change": "MAINTAINED_EXISTING_OPERATOR_COMMON_INTERPRETATION_AND_EXPLICIT_CONTEXT"
+    },
+    {
+      "path": "native-adapter/capture-method.cjs",
+      "bytes": 5325,
+      "sha256": "ba4df85478a6cee62e04cb6af2516c9d44d7a7d348ab8ef64767aede71c1e3e1",
+      "kind": "EXISTING_EXTERNAL_NATIVE_TEST_OPERATOR",
+      "historicalSource": "ZG-EXECUTION-5",
+      "historicalSha256": "983a7357d6ccd5b6661aba13e04638895c4ce69fe52588ebaa33a3c2e59d8def",
+      "change": "MAINTAINED_EXISTING_OPERATOR_COMMON_INTERPRETATION_AND_EXPLICIT_CONTEXT"
+    },
+    {
+      "path": "native-adapter/routing-method.cjs",
+      "bytes": 19528,
+      "sha256": "21baa3df4b7f95606e914c14d93156d01dc83da888bff27c19f856144031ee55",
+      "kind": "EXISTING_EXTERNAL_NATIVE_TEST_OPERATOR",
+      "historicalSource": "ZG-EXECUTION-5",
+      "historicalSha256": "86cd9e8e18cd2440eb8f90ad90cf39dc86c35396bf4283d50876a860752a3223",
+      "change": "MAINTAINED_EXISTING_OPERATOR_COMMON_INTERPRETATION_AND_EXPLICIT_CONTEXT"
+    },
+    {
+      "path": "native-adapter/operations.cjs",
+      "bytes": 6845,
+      "sha256": "08f6d88e79e98758a000e89038d0bab087cdd2026b435262c92ad85e9d42d96f",
+      "kind": "EXISTING_EXTERNAL_NATIVE_TEST_OPERATOR",
+      "historicalSource": "ZG-EXECUTION-5",
+      "historicalSha256": "829977aa71b91efd5682bc658fca63554490efe28f6bf3410bc5d5dd92941a23",
+      "change": "MAINTAINED_EXISTING_OPERATOR_COMMON_INTERPRETATION_AND_EXPLICIT_CONTEXT"
     }
   ],
   "fixtures": [
@@ -363,24 +407,69 @@
   "fixtureRebinding": "Only reference/read paths changed. Case inputs/criteria and trace scenario paths retained.",
   "selfTests": {
     "status": "PASS_LOCAL_TOOL_TESTS_ONLY",
+    "historicalExecution": {
+      "classification": "HISTORICAL_PRIOR_EXECUTION_ONLY",
+      "record": {
+        "status": "PASS_LOCAL_TOOL_TESTS_ONLY",
+        "commands": [
+          {
+            "command": [
+              "node",
+              "--max-old-space-size=256",
+              "--test",
+              "role-unit-evidence-v3.test.mjs",
+              "role-unit-output-schema-r1.test.mjs"
+            ],
+            "assertions": 47,
+            "stdoutSha256": "cf410487539f26bb5b16a84aaf7bda447b7d752cf04adddff84d730726f023b2",
+            "exitCode": 0
+          },
+          {
+            "command": [
+              "node",
+              "--max-old-space-size=256",
+              "qa-own-issue-harness-r4.unit.mjs"
+            ],
+            "assertions": 46,
+            "stdoutSha256": "9f20996ebd0a8cf21ce367d05195bd10f2fd913e7504ff3225e777a86dbc8ec1",
+            "exitCode": 0
+          },
+          {
+            "command": [
+              "node",
+              "--max-old-space-size=256",
+              "qa-reused-fixture-scope-r3.unit.mjs"
+            ],
+            "assertions": 9,
+            "stdoutSha256": "87ea0601bd9634ef571aff680066202e29f1bea57f5ca2dd09034d82e99d0b57",
+            "exitCode": 0
+          }
+        ],
+        "scope": "No native/provider operation, no new framework behavior; original failures not converted to PASS"
+      },
+      "copiedFromManifestSha256": "db9e9f7b75cab40d4c6ca28d0b85e9d5378db13800b216518a543c5167c0f0d7",
+      "provenanceScope": "Container relocation provenance only; this digest is not the historical47-assertion execution source manifest"
+    },
+    "cwd": "REPOSITORY_ROOT",
     "commands": [
       {
         "command": [
           "node",
           "--max-old-space-size=256",
           "--test",
-          "role-unit-evidence-v3.test.mjs",
-          "role-unit-output-schema-r1.test.mjs"
+          "engcim/swarm/tests/agents/four-role/role-unit-evidence-v3.test.mjs",
+          "engcim/swarm/tests/agents/four-role/role-unit-output-schema-r1.test.mjs",
+          "engcim/swarm/tests/agents/four-role/native-adapter/consumer.test.mjs"
         ],
-        "assertions": 47,
-        "stdoutSha256": "cf410487539f26bb5b16a84aaf7bda447b7d752cf04adddff84d730726f023b2",
+        "assertions": 124,
+        "stdoutSha256": "314a9ca2cbc5c8d604bcf65729f1444cd5a73bbd4c4344b72dcb9d3e959e24b0",
         "exitCode": 0
       },
       {
         "command": [
           "node",
           "--max-old-space-size=256",
-          "qa-own-issue-harness-r4.unit.mjs"
+          "engcim/swarm/tests/agents/four-role/qa-own-issue-harness-r4.unit.mjs"
         ],
         "assertions": 46,
         "stdoutSha256": "9f20996ebd0a8cf21ce367d05195bd10f2fd913e7504ff3225e777a86dbc8ec1",
@@ -390,20 +479,25 @@
         "command": [
           "node",
           "--max-old-space-size=256",
-          "qa-reused-fixture-scope-r3.unit.mjs"
+          "engcim/swarm/tests/agents/four-role/qa-reused-fixture-scope-r3.unit.mjs"
         ],
         "assertions": 9,
         "stdoutSha256": "87ea0601bd9634ef571aff680066202e29f1bea57f5ca2dd09034d82e99d0b57",
         "exitCode": 0
       }
     ],
-    "scope": "No native/provider operation, no new framework behavior; original failures not converted to PASS"
+    "sourceBinding": {
+      "toolsSha256": "5dc5b335f029f2b8ab2eb1248e7f842956efa28c03e20f316d8199a19aaee528",
+      "fixturesSha256": "847a1b03661d86648a372003bfbd59fbae42fd457311ce0080d3a881f579d2ed",
+      "definitionsSha256": "c4af6e089b9936ff8bfbe9250526dc69bc848c191ce454d9b805c861e147afb5"
+    },
+    "scope": "Same existing local checks; no native/provider operation or role acceptance; all original assertions and fixtures retained"
   },
   "native": "NOT_RUN; full loading/baseline/capability/no regression UNVERIFIED",
   "readme": {
     "path": "README.md",
-    "bytes": 31940,
-    "sha256": "4304206e88b2f8ecf1a58a27e30666afafe5848b28cd4e18ed2bae7afc1cb6b4"
+    "bytes": 43480,
+    "sha256": "03713fdabf7311afcf6c34dd7ca9bc9b4ab6d2b238471f984722d0341d4c723a"
   },
   "capabilityInventoryScope": "Shared all-role capability inventory; four-role case definitions/tools/fixtures remain here",
   "sourceConvergenceBranch": "codex/overnight-plan-freeze",
@@ -992,5 +1086,15 @@
         }
       }
     }
+  },
+  "nativeAdapter": {
+    "entry": "native-adapter/controller.cjs",
+    "contract": "EXISTING_EXTERNAL_TEST_OPERATOR_NOT_FDI_RUNTIME",
+    "status": "LOCAL_CONSUMER_TESTED_NATIVE_UNVERIFIED",
+    "historicalSubject": "ZG-EXECUTION-5",
+    "historicalEvidence": "NATIVE-CONSUMER-LOCATION-RESULT.json",
+    "importSideEffects": "NONE",
+    "nativeAdmission": "REQUIRES_NEW_EXACT_SUBJECT_CONTEXT_AND_DEPENDENCY_REVIEW",
+    "selfTest": "native-adapter/consumer.test.mjs"
   }
 }

@@ -337,7 +337,7 @@ test('ZG mutating caller context cannot change frozen subject start or disarm wi
 
 // ZH: immutable public request bytes are data, never executed or dereferenced.
 const zhFs=await import('node:fs');
-const zhFixture=JSON.parse(zhFs.readFileSync('fixtures/ZG-METHOD-INTERPRETATION-REGRESSION.json','utf8'));
+const zhFixture=JSON.parse(zhFs.readFileSync(new URL('fixtures/ZG-METHOD-INTERPRETATION-REGRESSION.json',import.meta.url),'utf8'));
 const zhRaw=zhFixture.records.selfTest.input.command;
 const zhCleanup=zhFixture.records.cleanup.input.command;
 const zhCapture=zhFixture.records.captureCompound.input.command;

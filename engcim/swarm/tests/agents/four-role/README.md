@@ -22,19 +22,71 @@ The Java `NativeValidationPreparationTests` checks canonical task derivation and
 
 ## Existing local checks
 
-From this directory, with Node heap limited to 256 MiB:
+From this directory, with Node heap limited to 256 MiB. Fixture reads resolve from each test module, so the caller working directory does not select fixture content:
 
 ```sh
-node --max-old-space-size=256 --test role-unit-evidence-v3.test.mjs role-unit-output-schema-r1.test.mjs
+node --max-old-space-size=256 --test role-unit-evidence-v3.test.mjs role-unit-output-schema-r1.test.mjs native-adapter/consumer.test.mjs
 node --max-old-space-size=256 qa-own-issue-harness-r4.unit.mjs
 node --max-old-space-size=256 qa-reused-fixture-scope-r3.unit.mjs
 ```
 
+The same checks from the repository root:
+
+```sh
+node --max-old-space-size=256 --test engcim/swarm/tests/agents/four-role/role-unit-evidence-v3.test.mjs engcim/swarm/tests/agents/four-role/role-unit-output-schema-r1.test.mjs engcim/swarm/tests/agents/four-role/native-adapter/consumer.test.mjs
+node --max-old-space-size=256 engcim/swarm/tests/agents/four-role/qa-own-issue-harness-r4.unit.mjs
+node --max-old-space-size=256 engcim/swarm/tests/agents/four-role/qa-reused-fixture-scope-r3.unit.mjs
+```
+
+Provider/schema checks retain 107 cases; [Adapter consumer checks](native-adapter/consumer.test.mjs) own the same 17 memory-only regression groups beside their subject. They remain one local suite with 124 cases. The consumer file also runs independently with `node --max-old-space-size=256 --test native-adapter/consumer.test.mjs` from this directory. QA checks retain 46 and 9 assertions. These are local checker results. The shared 19-role inventory and native acceptance gaps are unchanged.
+
+SOURCE-MANIFEST keeps historical command receipts under `selfTests.historicalExecution`; current commands/results bind the current tools, fixtures and definitions separately. Older phase notes below retain their then-current cwd requirements and results; use these current commands for local checks.
+
 These are existing external test-provider assets, not a new FDI runner or framework CLI. Their self-tests validate local checker behavior only. Java runtime/tests stay in `engcim/swarm/src/`; native role runs and independent semantic grading retain their existing procedures.
+
+## Native adapter maintenance and local integration
+
+The located ZG consumer consists of `phaseZG-controller.cjs`, `phaseZG-capture-method.cjs`, `phaseZG-routing-method.cjs` and `phaseZG-ops.cjs` in the owned historical evidence directory. `PHASE-ZG-EXECUTION-SUBJECT.json` revision `ZG-EXECUTION-5` pins those files; `PHASE-ZG-DERIVATION.json` explicitly labels them `PER_RUN_EXTERNAL_EVIDENCE_ONLY_NOT_MAINTAINED_FRAMEWORK`. Their exact paths are absent from the inspected Git tree and local-ref history. This does not establish that no external adapter exists. The source-location result is `NATIVE-CONSUMER-LOCATION-RESULT.json` in that evidence directory; it is a result, not another authoring source.
+
+The single maintenance location for the local candidate of that same consumer is `engcim/swarm/tests/agents/four-role/native-adapter/`, owned by the assigned Swarm Dev implementer. Stable filenames replace the phase-suffixed source names; historical evidence stays unchanged. The import and exact file versions are bound in SOURCE-MANIFEST, not in a second suite or executable source directory.
+
+| Maintained candidate below `native-adapter/` | Historical source reused | Responsibility |
+| --- | --- | --- |
+| `controller.cjs` | `phaseZG-controller.cjs` | Exact reviewed subject, dispatch/observation lifecycle, bounded STOP and terminal closure |
+| `capture-method.cjs` | `phaseZG-capture-method.cjs` | Owned loading-source observation and capture request checks |
+| `routing-method.cjs` | `phaseZG-routing-method.cjs` | Owned delegation, directory and request observations |
+| `operations.cjs` | `phaseZG-ops.cjs` | Explicitly scoped external CLI operations, budgets and durable evidence |
+
+**The four sources are imported into the local candidate and exercised only with mocked operations; no fresh Native execution is established.** Current independent plan review classifies them by their actual responsibility: the existing external test operator, confined to the agent-test assets, with no FDI runtime/API/service/CLI integration or new actor authority. This is not a Node framework exception. New executable FDI framework behavior still belongs in Java 17; a directory name or passing `JavaOnlySourcePolicyTests` cannot grant an exception. That test currently checks only for Python files under `src/main`. The historical per-run scripts remain evidence, not a competing editable source.
+
+The maintained controller requires an explicit physical evidence root, case key and caller/workspace/runtime context, matching the exact execution subject and review. Main takes admission before using preparation, and the operator locks the first valid subject hash computed from the same bytes it parses; every later read/operation rejects subject replacement, even if a new review matches that replacement. A fresh operator instance can admit a newly reviewed subject. Importing the four modules performs no filesystem observation, dispatch or CLI operation. Repository helper imports are relative. The current controller, both methods, operations, evidence provider and paged-source helper must all have current dependency pins before dispatch. Preparation and both agent capability records require unique named dependency pins; their verified bytes are parsed before use. An existing dispatch-wait supplement requires a named pin before it can enlarge preparation budgets. Conditional unfamiliar readiness is pinned by the exact execution review, with its verdict and subject hash checked before every operation; this avoids a circular subject/readiness hash. Original `PHASE-ZG-*` evidence filenames remain the compatible per-run record format; they do not select the code version or grant reuse of a prior review. No ambient working-directory default, private evidence root, workspace override or blind operation retry is admitted. This source change grants no native execution permission; fresh execution still needs its exact applicable subject review.
+
+### Minimal integration scope
+
+1. Reuse the four located sources and their exact historical pins; retain the originals as immutable results. Repository-owned helper imports resolve relative to the maintained module, while per-run inputs explicitly bind evidence output, actor/workspace/runtime/run, approved public roots and budgets. Per-run preparation/state/results remain evidence, never editable code SSOT. Operations now require exact admission and current dependency/context matching before every CLI request, including preparatory budget kinds; evidence-root scope, workspace overrides and invalid operation labels are rejected before any operation. These are disclosed operator-boundary changes, not role-capability changes.
+2. Preserve structured inspector results at the capture `inspectOwnedCaptureCommand` boundary and the routing workspace/member/Java/delegation/directory boundaries before they become reason strings. Reuse existing `workspaceInspections` and normalized receipts; supplement missing observations instead of duplicating them. Bind each retained raw result to its request/trace identity, run and sequence, and the inspector/classifier source version. Do not reconstruct a fabricated status from a flattened reason.
+3. Apply the existing `interpretMethodObservation` to those raw results and retain a separate interpretation beside the original evidence. The controller currently aggregates `method.scope` reasons into `violations` and routes them to `SCOPE_STOP`; retain those reasons, grants, STOP behavior and budgets. Unsupported/incomplete interpretation does not authorize continuation, establish an actual private read, or produce a role verdict. Unknown or absent evidence remains incomplete; real contract conflicts remain conflicts. Do not introduce a second classification vocabulary.
+4. Keep mechanical checks, method interpretation, effects/loading, controller settlement and independent semantic acceptance separate. The classifier's `roleAcceptance: UNVERIFIED` is intentional. Changing observer coverage does not repair a role instruction, establish full capability coverage or upgrade a historical STOP.
+5. Update active file pins in the existing SOURCE-MANIFEST, the source-map binding and corresponding release rows together. Freeze a new exact execution subject and obtain its applicable independent review before a future native invocation. The historical subject pins provider SHA `459c46934b983ae3f86f044bf6e920d8af1e7a7d098d33a8ea164dc7f358a716`; its admission cannot be reused with the later classifier version.
+
+### Verification plan and pending acceptance
+
+The existing suite retains provider/schema checks in their owning test files and the same 17 consumer groups in native-adapter/consumer.test.mjs; fixtures stay in their existing location. Original provider/schema baseline: 107 PASS. Two consumer checks first failed because the maintained entry was absent; after integration they passed. Further regressions exercise actual capture/routing calls, whole-controller normal and stopped paths with in-memory filesystem/CLI, import purity, admission/dependency/context rejection and durable once-only failure/budget handling. The first running-controller mock used non-UUID identities and correctly hit the existing deadline identity guard; that failed attempt is retained and the mock corrected without weakening the guard. Independent review reproduced a missing-input-pin gap: changing an unsealed preparation target could reach a mocked foreign assignment. Four regression groups first produced 118 PASS / 4 FAIL; named-input guards corrected them. A further independent counterexample swapped subject and matching review after assignment while the controller retained old preparation; the frozen-subject regression produced 123 PASS / 1 FAIL and passed after subject locking. The final local suite has 124 PASS, including late capability/readiness changes and zero-operation rejection for missing, duplicate or changed inputs. Positive mocks now seal the complete relevant input closure, so their result is local operator evidence only. Local method evidence never becomes Native or role acceptance. Fresh native expiry and unfamiliar cases remain unexecuted.
+
+| Criterion | Current evidence or gap | Required after integration |
+| --- | --- | --- |
+| Structured observation reaches common interpretation | Original provider/test references existed without maintained native caller | Local candidate consumer retains raw result, separate interpretation, run/seq/provider pin and execution-subject dependency pins; no native adoption or role PASS inferred |
+| Legal supported observations | Historical same-issue/directory/heredoc cases and existing helper regressions retained | Same pinned requests recognized; existing operation guards unchanged |
+| Unsupported syntax, unknown evidence and conflicting contracts | Existing classifier separates these locally | Consumer records preserve that distinction; original STOP/limits and UNVERIFIED acceptance remain |
+| Private/foreign identity or unauthorized mutation | Existing raw guards and original reasons retained | Positive/negative consumer regressions preserve rejection; trace replay is not prevention of actual effects |
+| Deadline and closure | Asynchronous ZG consumer ran; forced native expiry still UNTESTED | Local single-claim/closure checks retained; separate finite native expiry evidence for request, ACK and terminal status |
+| Native adoption and role acceptance | Classifier adoption, complete loading and comparable four-role regression remain unverified | A separately reviewed same-version focused native/negative or unfamiliar case; independent semantic grading and explicit residual gaps |
+
+Before/after results must bind the same case input, criteria and consumer/provider versions. Recorded replay, local consumer checks and fresh native acceptance remain separate results. Full 19-role inventory and the four-role 65-capability baseline/after gaps are unchanged by this plan.
 
 ## Fixture boundary
 
-`fixtures/` contains immutable role/Skill snapshots, raw traces, old outputs and old suites used by the checks. Original failures remain failures. Literal historical actor paths inside traces/manifests describe the scenario; local self-tests read repository fixture bytes and do not access those paths. The dispatch driver is stored only as `.mjs.txt`; the existing guard test extracts two pure comparisons, never imports or executes the native driver. No commands here dispatch, publish or update roles.
+`fixtures/` contains immutable role/Skill snapshots, raw traces, old outputs and old suites used by the checks. Original failures remain failures. Literal historical actor paths inside traces/manifests describe the scenario; local self-tests read repository fixture bytes and do not access those paths. The historical QA dispatch driver is stored only as `.mjs.txt`; the existing guard test extracts two pure comparisons, never imports or executes that driver. Listed local checks and adapter imports do not dispatch, publish or update roles; invoking the maintained native operator is a separate exact reviewed action.
 
 To change a definition or provider, update its owning file and SOURCE-MANIFEST in the same reviewed commit. Do not edit fixtures to manufacture a pass, reuse an old result under a new hash, or treat fixture snapshots as role authoring. Complete render, automatic Skill loading and full role acceptance remain UNVERIFIED.
 
