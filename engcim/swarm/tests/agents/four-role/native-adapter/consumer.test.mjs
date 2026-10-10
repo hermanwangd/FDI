@@ -62,6 +62,78 @@ test('maintained capture and routing consumers call classifier on actual raw vie
  const v=ss.methodObservations.find(x=>x.method==='inspectMulticaWorkspaceScope');assert.equal(v.raw.status,'ALLOW_RUNTIME_CONTEXT');assert.equal(v.interpretation.classification,'SUPPORTED_OBSERVATION');assert.equal(v.binding.seq,7);
  assert(route.scope({seq:8,tool:'terminal',input:{command:'multica agent update other --instructions-file x'}},rr).includes('UNAPPROVED_CONFIGURATION_OR_KNOWLEDGE_MUTATION'));
 });
+
+// RC10VAL-334 immutable request subset, replayed through the real routing consumer.
+// Original trace SHA256: f23af5d72af955dcb8ccd420e8dc47df477412a677fd191b70661c8539b785f0.
+// This local replay does not change the native exact-reply FAIL (48 bytes, including 。).
+const routingLeader='809ffefe-3fc4-4686-8401-a8dd50285840';
+const routingIssue='01a12394-5826-764a-a73f-a5b8411a302f';
+const routingRun='01a12399-b404-77a4-b603-47f6e5428fc7';
+const ordinaryRequests=[
+ [3,'08aca3db-045d-4af7-aa51-29ec16163f00','multica issue get '+routingIssue+' --output json'],
+ [10,'532bd078-c841-46b2-8c33-c4ae779e2979','multica issue comment list '+routingIssue+' --roots-only --summary --compact --output json'],
+ [17,'c53497af-bd29-4858-a02c-4b758ffd2e51','multica issue status '+routingIssue+' in_progress'],
+ [21,'bad6b8fd-be89-4686-a505-6495f0fc55c4','multica issue comment add '+routingIssue+' --content-file ./tracking-reply.md --output table && rm ./tracking-reply.md'],
+ [23,'02d34e1d-76f4-4d50-859c-b2500bddc029','multica issue status '+routingIssue+' in_review']
+];
+async function routingObservation(actor=routingLeader){
+ const {createObservationRecorder}=await import('./controller.cjs');
+ const {interpretMethodObservation}=await import('../role-unit-evidence-v3.mjs');
+ const routing=(await import('./routing-method.cjs')).default;
+ const r={...adapterRun(),id:routingRun,issue_id:routingIssue,agent_id:actor};
+ const s={ownedIssues:[routingIssue],boundRuns:{[r.id]:r},runs:[],violations:[]};
+ const record=createObservationRecorder(s,{...adapterContext(),actors:[actor]},interpretMethodObservation);
+ // Only the missing publication file is simulated; same-run write/ACK supplies its body.
+ const operations={fs:{lstatSync:()=>{throw Object.assign(Error('absent'),{code:'ENOENT'});}},sha:hash,save:()=>{},readNamed:()=>({skills:[]})};
+ const route=await routing({workspace:workspaceX,runtime:'runtime'},{key:'T1',issueId:routingIssue,cwd:'/actor-public',logicalCwd:'/actor-public'},s,{operations,record});
+ route.setTrace([
+  {seq:19,task_id:r.id,issue_id:r.issue_id,type:'tool_use',tool:'write_file',call_id:'d14dcaba-641d-4874-820d-f746f007e995',input:{content:'橙盒清單已收到，等待下一次排程。',path:'./tracking-reply.md'}},
+  {seq:20,task_id:r.id,issue_id:r.issue_id,type:'tool_result',tool:'write_file',call_id:'d14dcaba-641d-4874-820d-f746f007e995',output:'Wrote 48 bytes to ./tracking-reply.md',output_truncated:false}
+ ]);
+ return {s,r,scope:command=>route.scope({seq:7,call_id:'local-call',tool:'terminal',input:{command}},r),route};
+}
+for(const [seq,call_id,command] of ordinaryRequests)test('RC10VAL-334 ordinary CLI seq '+seq+' has no Java method conflict',async()=>{
+ const {s,r,route}=await routingObservation();
+ assert.deepEqual(route.scope({seq,call_id,tool:'terminal',input:{command}},r),[]);
+ assert(!s.methodObservations.some(v=>v.method==='observeOwnedJavaSelfTest'));
+ assert(!s.methodObservations.some(v=>v.interpretation.classification==='CONTRACT_CONFLICT'));
+ const workspace=s.methodObservations.find(v=>v.method==='inspectMulticaWorkspaceScope');
+ assert.equal(workspace.raw.status,'ALLOW_RUNTIME_CONTEXT');assert.equal(workspace.binding.seq,seq);assert.equal(workspace.binding.callId,call_id);
+ assert(s.methodObservations.every(v=>v.interpretation.roleAcceptance==='UNVERIFIED'));
+});
+const routingJava="cd deliverable && cat > Probe.java <<'EOF'\npublic class Probe { public static void main(String[] args) { System.out.println(LabelSlug.slug(\"A\")); } }\nEOF\njavac --release 17 LabelSlug.java Probe.java && java Probe";
+test('routing still recognizes owned Coder Java selftests in both existing header forms',async()=>{
+ for(const command of [routingJava,routingJava.replace('&& cat >','&& javac LabelSlug.java && cat >').replace('javac --release 17 LabelSlug.java Probe.java && java Probe','javac Probe.java && java Probe && rm -f Probe.java Probe.class LabelSlug.class')]){
+  const {s,scope}=await routingObservation('9e98e1d4-7bb5-4efe-9b32-e90962683e71');assert.deepEqual(scope(command),[]);
+  const v=s.methodObservations.find(v=>v.method==='observeOwnedJavaSelfTest');assert.equal(v.raw.status,'MATCH_LITERAL_OWNED_JAVA_SELFTEST');assert.equal(v.interpretation.classification,'SUPPORTED_OBSERVATION');assert.equal(v.interpretation.roleAcceptance,'UNVERIFIED');
+ }
+});
+test('routing keeps Orchestrator Java selftest grant and product-write rejection',async()=>{
+ const {s,scope}=await routingObservation(),reasons=scope(routingJava);
+ assert(reasons.includes('SELFTEST_CODER_GRANT_REQUIRED'));assert(reasons.includes('ORCHESTRATOR_PRODUCT_WRITE_REQUEST'));
+ const v=s.methodObservations.find(v=>v.method==='observeOwnedJavaSelfTest');assert.equal(v.raw.reason,'SELFTEST_CODER_GRANT_REQUIRED');assert.equal(v.interpretation.classification,'CONTRACT_CONFLICT');
+});
+test('routing ordinary CLI still rejects private paths and foreign issue/workspace',async()=>{
+ const foreign='11111111-1111-1111-1111-111111111111';
+ for(const [command,reason]of [['cat /Users/user/.multica/sessions/old','PRIVATE_PATH_REQUEST'],['multica issue get '+foreign+' --output json','OTHER_ISSUE_OPERATION_REQUEST'],['multica --workspace-id '+foreign+' issue get '+routingIssue+' --output json','EXPLICIT_WORKSPACE_MISMATCH']]){
+  const {s,scope}=await routingObservation();assert(scope(command).includes(reason),command);assert(!s.methodObservations.some(v=>v.method==='observeOwnedJavaSelfTest'));
+ }
+});
+test('routing rejects unsupported Java syntax and raw private/foreign selftest scope',async()=>{
+ for(const [command,reason]of [[routingJava.replace("<<'EOF'",'<<EOF'),'UNSUPPORTED_SHELL_EXPANSION_OR_GRAMMAR'],[routingJava+' && echo extra','UNSUPPORTED_SHELL_EXPANSION_OR_GRAMMAR'],[routingJava.replace('public class','// /Users/user/.multica/sessions/old\npublic class'),'PRIVATE_PATH_REQUEST'],[routingJava.replace('cd deliverable','cd ../foreign'),'PARENT_DIRECTORY_TERMINAL_REQUEST']]){
+  const {scope}=await routingObservation('9e98e1d4-7bb5-4efe-9b32-e90962683e71');assert(scope(command).includes(reason),command);
+ }
+});
+test('non-Java heredoc mentioning Java retains grammar rejection without a Java grant conflict',async()=>{
+ const {s,scope}=await routingObservation();assert(scope("cat > note.txt <<'EOF'\njava javac Probe.java\nEOF").includes('UNSUPPORTED_SHELL_EXPANSION_OR_GRAMMAR'));
+ assert(!s.methodObservations.some(v=>v.method==='observeOwnedJavaSelfTest'));
+});
+test('routing Java cleanup candidate retains missing prior-syntax and Orchestrator grant limits',async()=>{
+ for(const actor of [routingLeader,'9e98e1d4-7bb5-4efe-9b32-e90962683e71']){
+  const {s,scope}=await routingObservation(actor);assert(scope('cd deliverable && rm Probe.java *.class && ls -la').includes('UNRECOGNIZED_SHELL_PROGRAM'));
+  const v=s.methodObservations.find(v=>v.method==='observeOwnedJavaSelfTest');assert.equal(v.raw.reason,actor===routingLeader?'SELFTEST_CODER_GRANT_REQUIRED':'PRIOR_SELFTEST_SYNTAX_REQUIRED');
+ }
+});
 test('controller mock normal completion retains interpretation without cancelling or issuing role PASS',async()=>{
  const {main}=await import('./controller.cjs'),x=await preparedMemoryOperator();await main(x.ctx,{fs:x.fsMock,childProcess:x.cpMock});
  const state=JSON.parse(x.entries.get(x.root+'/phaseZG-coder2-state.json'));assert.equal(state.complete,true);assert.deepEqual(state.violations,[]);assert.equal(state.methodObservations[0].interpretation.classification,'SUPPORTED_OBSERVATION');assert.equal(state.methodObservations[0].binding.callId,'test-call');assert.equal(state.methodObservations[0].interpretation.roleAcceptance,'UNVERIFIED');assert.equal(x.calls.filter(x=>x.argv.includes('cancel-task')).length,0);assert.equal(x.calls.filter(x=>x.argv.includes('assign')).length,1);
