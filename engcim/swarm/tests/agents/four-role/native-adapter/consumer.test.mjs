@@ -92,6 +92,57 @@ async function routingObservation(actor=routingLeader){
  ]);
  return {s,r,scope:command=>route.scope({seq:7,call_id:'local-call',tool:'terminal',input:{command}},r),route};
 }
+// RC10VAL-335 actual seq18. Local replay never executes the shell or upgrades
+// the original cancelled run. Exact public comment effect is graded separately.
+const publicationIssue='01a123c0-a014-730f-aae2-9a1b09f536f4';
+const publicationRun='01a123c5-4562-7100-bce3-1547c41be306';
+const publicationBodyText='橙盒清單已收到，等待下一次排程';
+const publicationCommand="multica issue status "+publicationIssue+" in_progress && printf '"+publicationBodyText+"' > ./reply.md && multica issue comment add "+publicationIssue+" --content-file ./reply.md --output table && rm ./reply.md";
+async function publicationObservation({actor=routingLeader,staleFile=false}={}){
+ const {createObservationRecorder}=await import('./controller.cjs');
+ const {interpretMethodObservation}=await import('../role-unit-evidence-v3.mjs');
+ const routing=(await import('./routing-method.cjs')).default;
+ const r={...adapterRun(),id:publicationRun,issue_id:publicationIssue,agent_id:actor};
+ const s={ownedIssues:[publicationIssue],boundRuns:{[r.id]:r},runs:[],violations:[]},receipts=[];
+ let fileReads=0;
+ const operations={fs:{lstatSync:()=>{if(staleFile)return {isSymbolicLink:()=>false,size:5};throw Object.assign(Error('absent'),{code:'ENOENT'});},readFileSync:()=>{fileReads++;return 'stale';}},sha:hash,save:(name,value)=>receipts.push({name,value}),readNamed:()=>({skills:[]})};
+ const record=createObservationRecorder(s,{...adapterContext(),actors:[actor]},interpretMethodObservation);
+ const route=await routing({workspace:workspaceX,runtime:'runtime'},{key:'T1',issueId:publicationIssue,cwd:'/actor-public',logicalCwd:'/actor-public'},s,{operations,record});
+ route.setTrace([]);
+ return {s,r,receipts,fileReads:()=>fileReads,scope:command=>route.scope({seq:18,call_id:'7df6d252-fcc2-4e4a-a87e-b1d066b2febf',tool:'terminal',input:{command}},r)};
+}
+test('RC10VAL-335 exact printf publication request is observable without fabricated write or stored effect',async()=>{
+ const x=await publicationObservation();assert.deepEqual(x.scope(publicationCommand),[]);
+ const v=x.s.methodObservations.find(v=>v.method==='publicationBody');
+ assert.equal(v.raw.source,'SAME_TERMINAL_LITERAL_PRINTF_DECLARATION');assert.equal(v.raw.bytes,45);assert.equal(v.raw.sha256,hash(publicationBodyText));
+ assert.equal(v.raw.actualPublishedBody,'UNVERIFIED_UNTIL_OWN_COMMENT_READBACK');assert.equal(v.raw.actualCwd,'UNKNOWN');assert.equal(v.raw.cleanupEffect,'UNKNOWN');
+ assert.equal(v.interpretation.roleAcceptance,'UNVERIFIED');assert.equal(v.interpretation.effects,'UNVERIFIED');assert.equal(v.interpretation.operationAuthority,'NONE');
+ assert.equal(v.binding.seq,18);assert.equal(v.binding.callId,'7df6d252-fcc2-4e4a-a87e-b1d066b2febf');assert.equal(x.fileReads(),0);
+});
+test('literal declaration takes precedence over a stale project-root file without claiming receipt binding',async()=>{
+ const x=await publicationObservation({staleFile:true});x.s.comments=[{author_id:'foreign',source_task_id:'foreign',issue_id:publicationIssue,content:publicationBodyText}];
+ assert.deepEqual(x.scope(publicationCommand),[]);assert.equal(x.fileReads(),0);
+ const v=x.s.methodObservations.find(v=>v.method==='publicationBody');assert.equal(v.raw.sha256,hash(publicationBodyText));assert.equal(v.interpretation.roleAcceptance,'UNVERIFIED');assert.equal(v.raw.actualPublishedBody,'UNVERIFIED_UNTIL_OWN_COMMENT_READBACK');
+});
+test('bounded printf declaration supports owned reply without optional status or cleanup',async()=>{
+ const x=await publicationObservation();const command=publicationCommand.replace(/^multica issue status .*? && /,'').replace(' && rm ./reply.md','').replace('--output table','--output json');
+ assert.deepEqual(x.scope(command),[]);assert.equal(x.s.methodObservations.find(v=>v.method==='publicationBody').raw.sha256,hash(publicationBodyText));
+});
+test('unknown printf formats and shell expansions cannot use stale file publication provenance',async()=>{
+ for(const command of [publicationCommand.replace("printf '"+publicationBodyText+"'","printf '%s' '"+publicationBodyText+"'"),publicationCommand.replace("'"+publicationBodyText+"'",'"$REPLY"'),publicationCommand.replace(publicationBodyText,'$(cat other.md)'),publicationCommand.replace(publicationBodyText,'%b'),publicationCommand.replace(publicationBodyText,'`cat other.md`'),publicationCommand.replace(' > ./reply.md',' >> ./reply.md')]){
+  const x=await publicationObservation({staleFile:true});assert(x.scope(command).includes('METHOD_PUBLICATION_BODY_UNAVAILABLE'),command);assert.equal(x.fileReads(),0);
+ }
+});
+test('intervening payload changes, alternate branches and mismatched cleanup retain method stop',async()=>{
+ for(const command of [publicationCommand.replace(' && multica issue comment',' && echo changed > ./reply.md && multica issue comment'),publicationCommand.replace(' && multica issue comment','; multica issue comment'),publicationCommand.replace(' && multica issue comment',' || multica issue comment'),publicationCommand.replace(' && rm ./reply.md',' && rm ./other.md'),publicationCommand+' && echo extra']){
+  const x=await publicationObservation({staleFile:true});assert(x.scope(command).includes('METHOD_PUBLICATION_BODY_UNAVAILABLE'),command);assert.equal(x.fileReads(),0);
+ }
+});
+test('printf publication retains foreign issue, outside file, private path and mention guards',async()=>{
+ for(const [command,reason] of [[publicationCommand.replaceAll(publicationIssue,'11111111-1111-1111-1111-111111111111'),'OTHER_ISSUE_COMMENT_REQUEST'],[publicationCommand.replaceAll('./reply.md','/foreign/reply.md'),'OUTSIDE_CASE_COMMENT_FILE'],[publicationCommand.replaceAll('./reply.md','../reply.md'),'RELATIVE_PATH_TRAVERSAL_REQUEST'],[publicationCommand.replace(publicationBodyText,'/Users/user/.multica/sessions/old'),'PRIVATE_PATH_REQUEST'],[publicationCommand.replace(publicationBodyText,'mention://agent/9e98e1d4-7bb5-4efe-9b32-e90962683e71'),'UNAPPROVED_MENTION_ACTIVATION']]){
+  const x=await publicationObservation();assert(x.scope(command).includes(reason),command);
+ }
+});
 for(const [seq,call_id,command] of ordinaryRequests)test('RC10VAL-334 ordinary CLI seq '+seq+' has no Java method conflict',async()=>{
  const {s,r,route}=await routingObservation();
  assert.deepEqual(route.scope({seq,call_id,tool:'terminal',input:{command}},r),[]);
