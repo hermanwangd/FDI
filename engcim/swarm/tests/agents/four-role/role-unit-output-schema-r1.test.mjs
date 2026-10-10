@@ -18,9 +18,9 @@ test('ambiguous/missing JSON blocks rejected without guessing',()=>{
  assert.equal(checkOutputSchema(wrap({answers:[answer]})+'\n'+wrap({answers:[answer]}),['a']).stage,'JSON_BLOCK_COUNT');
 });
 test('retained actual before supplemental is parseable; first r4 after syntax failure remains failure',()=>{
- const before=fs.readFileSync('fixtures/native-reviewer-common-cli-before-supplement.native-result.md','utf8');
- const after=fs.readFileSync('fixtures/native-reviewer-common-cli-after-supplement.native-result.md','utf8');
- const suite=JSON.parse(fs.readFileSync('fixtures/REVIEWER-COMMON-CLI-after-supplement-SUITE.json'));
+ const before=fs.readFileSync(new URL('fixtures/native-reviewer-common-cli-before-supplement.native-result.md',import.meta.url),'utf8');
+ const after=fs.readFileSync(new URL('fixtures/native-reviewer-common-cli-after-supplement.native-result.md',import.meta.url),'utf8');
+ const suite=JSON.parse(fs.readFileSync(new URL('fixtures/REVIEWER-COMMON-CLI-after-supplement-SUITE.json',import.meta.url)));
  const ids=suite.cases.filter(c=>c.role==='reviewer').map(c=>c.id);
  assert.equal(checkOutputSchema(before,ids).status,'PASS');
  assert.equal(checkOutputSchema(after,ids).stage,'JSON_SYNTAX');
