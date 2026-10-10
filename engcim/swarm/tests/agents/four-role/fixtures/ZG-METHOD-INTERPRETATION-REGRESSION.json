@@ -1,0 +1,54 @@
+{
+  "classification": "IMMUTABLE_PUBLIC_TRACE_FIXTURE_NOT_EXECUTABLE_OR_ROLE_AUTHORING",
+  "sourceTraces": [
+    {
+      "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/phaseZG-T2-closure-1-terminal-trace-01a122ef-d7de-71af-a06b-3d1273e2245b.stdout",
+      "bytes": 9507,
+      "sha256": "27d3dbe4491bb9f43e29039fea066d0a122d19d8ff4d54bf1a587afb8f48cffb"
+    },
+    {
+      "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/phaseZG-coder2-closure-1-terminal-trace-01a122e9-0f45-7817-b3a3-125c9f778c65.stdout",
+      "bytes": 102889,
+      "sha256": "225ec5dd4e938371b0e87b3b87f759757731821c637a53fa9dc9b1ce1400d74f"
+    }
+  ],
+  "historical": "T2/Coder2 cancelled; original STOPs and acceptance unchanged",
+  "records": {
+    "selfTest": {
+      "call_id": "986ebe6b-bcb5-467b-97c2-a59ecfeb3969",
+      "created_at": "2026-10-09T23:12:09.469086Z",
+      "input": {
+        "command": "cd deliverable && cat > SlugTest.java <<'EOF'\npublic class SlugTest {\n    static int failed = 0;\n\n    static void check(String name, String actual, String expected) {\n        boolean ok = actual.equals(expected);\n        if (!ok) failed++;\n        System.out.printf(\"%-22s input=%-28s -> \\\"%s\\\" (expected \\\"%s\\\") %s%n\",\n                name, name, actual, expected, ok ? \"PASS\" : \"FAIL\");\n    }\n\n    public static void main(String[] args) {\n        check(\"null\", LabelSlug.slug(null), \"\");\n        check(\"empty\", LabelSlug.slug(\"\"), \"\");\n        check(\"all-whitespace\", LabelSlug.slug(\"   \"), \"\");\n        check(\"multi-space\", LabelSlug.slug(\"Hello   World\"), \"hello-world\");\n        check(\"mixed-case\", LabelSlug.slug(\"HeLLo WoRLD\"), \"hello-world\");\n        check(\"tabs-and-newlines\", LabelSlug.slug(\"a\\tb\\nc\"), \"a-b-c\");\n        check(\"leading-trailing\", LabelSlug.slug(\"  padded  text  \"), \"padded-text\");\n        check(\"single-word\", LabelSlug.slug(\"Label\"), \"label\");\n        check(\"already-slug\", LabelSlug.slug(\"already-a-slug\"), \"already-a-slug\");\n        check(\"non-ascii-kept\", LabelSlug.slug(\"繁體 ABC 測試\"), \"繁體-abc-測試\");\n        if (failed > 0) {\n            System.out.println(failed + \" case(s) FAILED\");\n            System.exit(1);\n        }\n        System.out.println(\"ALL PASS\");\n    }\n}\nEOF\njavac --release 17 LabelSlug.java SlugTest.java && java SlugTest"
+      },
+      "issue_id": "01a122d5-5f27-723f-8711-7214b6952571",
+      "seq": 16,
+      "task_id": "01a122ef-d7de-71af-a06b-3d1273e2245b",
+      "tool": "terminal",
+      "type": "tool_use"
+    },
+    "cleanup": {
+      "call_id": "e35c07a4-2549-4012-a3ce-89369074be6a",
+      "created_at": "2026-10-09T23:12:12.825944Z",
+      "input": {
+        "command": "cd deliverable && rm SlugTest.java *.class && ls -la"
+      },
+      "issue_id": "01a122d5-5f27-723f-8711-7214b6952571",
+      "seq": 24,
+      "task_id": "01a122ef-d7de-71af-a06b-3d1273e2245b",
+      "tool": "terminal",
+      "type": "tool_use"
+    },
+    "captureCompound": {
+      "call_id": "d6fefe83-bf4d-498c-b423-6d803867fcd6",
+      "created_at": "2026-10-09T23:07:07.461413Z",
+      "input": {
+        "command": "multica issue comment add 01a122e4-6dd0-7cf0-8d37-ab926b948b1c --content-file /private/tmp/cf808244-f363-4c8a-870e-d79b94e30b02/loading-reply.md --output json && rm /private/tmp/cf808244-f363-4c8a-870e-d79b94e30b02/loading-reply.md"
+      },
+      "issue_id": "01a122e4-6dd0-7cf0-8d37-ab926b948b1c",
+      "seq": 112,
+      "task_id": "01a122e9-0f45-7817-b3a3-125c9f778c65",
+      "tool": "terminal",
+      "type": "tool_use"
+    }
+  }
+}

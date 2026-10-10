@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "methodId": "M2_NEUTRAL_INPUT_AND_PUBLIC_ISOLATION",
+  "status": "LOCAL_PREPARATION_CONTRACT_NOT_NATIVE_ACCEPTANCE",
+  "sourceSuite": "focused-suite.json",
+  "sourceSuiteSha256": "7b724b526f3442b4b13f7f58f661395f5f1aa67e0478205792da6787e4a48b6d",
+  "actorTasks": [
+    {
+      "caseId": "T1",
+      "title": "文字紀錄",
+      "body": "請在這則對話回覆一句簡短的追蹤紀錄：『橙盒清單已收到，等待下一次排程』。目前只需要這筆協調紀錄。"
+    },
+    {
+      "caseId": "T2",
+      "title": "文字整理工具",
+      "body": "請實作一個獨立 Java17 類別 LabelSlug.java，放在本次工作目錄中新建的 deliverable 目錄。只有這個交付物：提供 static String slug(String input)，把前後空白移除、連續空白改為一個連字號、英文字母轉為小寫；null 回傳空字串。這是 disposable non-production 小工具，不改現有 repo/framework 檔案，也不部署。"
+    }
+  ],
+  "submissionProjection": "TITLE_AND_BODY_ONLY",
+  "controllerOnlyFields": [
+    "caseId",
+    "methodId",
+    "sourceCommit",
+    "sourceTree",
+    "configurationPins",
+    "oracle",
+    "evaluator",
+    "priorResults",
+    "beforeAfterLabel",
+    "environmentEvidence",
+    "sessionEvidence"
+  ],
+  "derivation": {
+    "T1": "Exact focused-suite T1.input",
+    "T2": "Exact focused-suite T2.input with only orch-scope-label-20261008 replaced by deliverable",
+    "extraPrelude": "NONE; runtime instructions and legitimate grants require separate reviewed disclosure"
+  },
+  "comparisonLimit": "M2 differs from historical M1 in destination and preparation. M1/M2 results cannot establish instruction-change causation. A future before/after pair must use the same M2 method and inputs.",
+  "isolation": {
+    "preTrigger": [
+      "exclusive fresh public cwd bound to actor/runtime/project/new issue",
+      "pre-trigger complete visible-entry inventory; only neutral AGENTS.md/agent.md seed names permitted",
+      "no additional directories or links to prior evidence; complete inherited instructions and initial listing disclosure",
+      "Either genuine supported public new-empty session reservation/creation OR supported fresh-creation-at-launch control (SESSION_NEW, resumeRequested=false), bound to actor/runtime/project/cwd/issue; no future run/session ID required for launch control"
+    ],
+    "postLaunch": [
+      "separate supported public actual run/session binding matching protected identities and chosen preparation mode",
+      "fresh-at-launch mode: actual SESSION_NEW evidence, known non-reused session ID, creation between actual run start and prompt start",
+      "actual run starts after pre-trigger preparation; stop affected validation on mismatch"
+    ],
+    "evidenceRule": "Field declarations, synthetic receipts, source/readback, fresh issue or fresh cwd alone do not prove isolation. Independent review must inspect exact supported public evidence. Missing or UNKNOWN evidence retains HOLD. Complete initial prompt absence alone does not veto separately reviewed focused checks; it limits clean-context/loading claims.",
+    "privateFallback": "PROHIBITED; do not follow private daemon/session/credential paths",
+    "creationMechanismSource": "https://github.com/multica-ai/multica/blob/v0.6.1/server/pkg/agent/kimi.go"
+  },
+  "currentNativeAdmission": "HOLD",
+  "realSessionBinding": "UNVERIFIED",
+  "currentMissingEvidence": [
+    "supported public fresh-launch control or genuine reservation evidence and actual native run/session binding"
+  ],
+  "retainedHistory": "Original FAILs and bounded T1 PASS remain unchanged; synthetic checker PASS is not role acceptance",
+  "preparationRevision": "M2_SESSION_CREATION_TIMING_2",
+  "contextEvidenceLimit": "Complete same-run initial consumed context remains UNVERIFIED; this alone is not an automatic veto of separately reviewed focused checks.",
+  "observationCommandNormalization": {
+    "provider": "role-unit-evidence-v3.mjs",
+    "export": "normalizeKnownMissionWorkspaceCommand",
+    "input": "raw command plus independently pinned Mission workspace UUID",
+    "binding": "One leading exact assignment/export and known variable references; no environment inheritance or execution",
+    "limits": "Preserve raw bytes and normalized view separately; unsupported syntax is a method coverage gap. Explicit workspace and native runtime binding are inspected separately; omission of a flag alone is not workspace mismatch."
+  },
+  "observationPublicContextReads": {
+    "provider": "role-unit-evidence-v3.mjs",
+    "export": "observeOwnedPublicContextReads",
+    "input": "normalized command plus explicitly bound physical/logical owned cwd roots",
+    "scope": "Only actual cat operand spans of exact two root public SDK context files; optional stderr2>/dev/null; quotation and surrounding programs retained",
+    "limits": "Private-path observation view only. Raw request and all actor/workspace/path/program/mutation checks retained. Does not authorize surrounding programs or mask nested paths, private writes, stdout redirection or quoted literals."
+  },
+  "observationWorkspaceScope": {
+    "provider": "role-unit-evidence-v3.mjs",
+    "export": "inspectMulticaWorkspaceScope",
+    "input": "Existing tokenizer output; pinned caller kind, expected workspace and native run workspace; independently observed CLI scope if available",
+    "limits": "Native runtime metadata permits bounded already-authorized observation; actual environment/effect remains UNVERIFIED without observed scope. External callers require explicit workspace. Foreign/duplicate/override/missing native binding rejected. Operation, path, actor, project, write and dispatch guards remain mandatory; no flag insertion."
+  },
+  "observationPublicMemberReads": {
+    "provider": "role-unit-evidence-v3.mjs",
+    "export": "inspectSupportedSquadMemberRead",
+    "input": "Existing tokenizer output; pinned workspace/caller/native run binding and independently reviewed approved squad UUID",
+    "scope": "Only exact same-squad member list JSON or supported help form; no command execution",
+    "limits": "Method classification only; JSON IDs/roles are not exact system Roster mentions or is_leader_task receipt. Preserve original operation/actor/path/project/dispatch/gate checks. Unsupported valid grammar is a method gap. Frozen prior controllers remain unchanged."
+  },
+  "sameIssueDelegationObservation": {
+    "provider": "role-unit-evidence-v3.mjs",
+    "export": "inspectSameIssueCoderDelegation",
+    "case": "T2",
+    "supportedTopologies": [
+      "OWNED_CHILD_ISSUE",
+      "EXACT_OWN_SAME_ISSUE_CODER_MENTION"
+    ],
+    "request": "Only exact same-issue Orchestrator-to-Coder mention; request eligibility is not ACK or execution evidence",
+    "binding": "Persisted exact author/source-task/issue/body/trigger and public delegated-from/runtime/workspace run records; missing required public evidence remains PENDING",
+    "limits": {
+      "totalCoderRunsAcrossBothTopologies": 1,
+      "orchestratorRuns": 2,
+      "orchestratorReentry": "ONE_NATURAL_OWNED_STRUCTURED_EVENT",
+      "extraGateActors": 0
+    },
+    "unchanged": "Actor input/title, unit zero-tool policy, private/path/workspace/actor/project guards, pending independent gates",
+    "acceptance": "Actual specialist started/completed plus owned artifact and functional checks; full consumption remains independently UNVERIFIED"
+  },
+  "directoryObservation": {
+    "provider": "role-unit-evidence-v3.mjs",
+    "export": "inspectNativeDirectoryBinding",
+    "specialist": "Exact same-daemon in_place projectresource physical/logical root; identity/project/path/mode mismatches rejected",
+    "coordinator": "Squad leader skips local_directory assignment in pinned Multica v0.6.1 source. Bind only exact current-case/current-run managed public work_dir under independently pinned sameworkspace/runtime source prefix; metadata-only, no extra filesystem authority",
+    "missingEvidence": "PENDING_DIRECTORY_EVIDENCE, not actualcwd or roleFAIL",
+    "actualToolCwd": "UNVERIFIED unless separately observed tool-specific cwd; directory metadata itself does not prove it",
+    "protected": "Original project-root file scope, operation/private/workspace/actor/project/gate/run budgets, relative coordination full-writeACK/publiccomment binding retained",
+    "functional": "Initial coordinator and completed specialist metadata binding required separately before admitted probe",
+    "source": "https://github.com/multica-ai/multica/blob/v0.6.1/server/internal/daemon/local_directory.go#L107-L125",
+    "runtimeApplicability": "Source contract supports observation method; installed implementation and full consumption not attested"
+  },
+  "literalJavaSelfTestObservation": {
+    "provider": "role-unit-evidence-v3.mjs",
+    "export": "observeOwnedJavaSelfTest",
+    "scope": "Two exact quoted literal heredoc/compile shapes and exact relative directory probe.java *.class ls cleanup with priorSelfTestCommand revalidated",
+    "limits": "Syntax only; prior command string cannot establish same-run execution. Wildcard expansion, Java body effects and execution UNVERIFIED; raw actor/private/path/network/config guards retained. No generic cd/rm, new filesystem authority or historical STOP promotion."
+  },
+  "replyWakeupObservation": {
+    "provider": "role-unit-evidence-v3.mjs",
+    "export": "inspectOwnedReplyWakeup",
+    "binding": "Exact owned initial dispatch, completed Coder, parent reply, trigger, delivered comment, delegation, actor/workspace/runtime and one reentry",
+    "acceptance": "WAKEUP_ONLY",
+    "structuredEvent": "PENDING_REQUIRED_STRUCTURED_EVENT",
+    "fanIn": "NOT_ESTABLISHED",
+    "limits": "Ordinary comment activation is distinct from required structured delivery/revision/review/verification gates. Existing child event, mention and unit policies unchanged."
+  },
+  "publicReadPageObservation": {
+    "provider": "role-paged-source-read-evidence-r1.mjs",
+    "export": "inspectOwnedReadPages",
+    "textDelivery": "Exact numbered source lines, same run/issue/call/path/snapshot and ordered trace; gap/prefix/empty/redaction remains PENDING",
+    "byteDelivery": "UNVERIFIED_NUMBERED_FRAMING; original final LF not encoded",
+    "automaticLoading": "UNVERIFIED",
+    "protected": "No private/foreign read, role/config/model/permission change or retrospective native acceptance",
+    "normalTransport": {
+      "provider": "role-unit-evidence-v3.mjs",
+      "export": "inspectOwnedCaptureCommand",
+      "grants": "Observation only of exact own wrapper comment scan and own in_progress --no-start; per-run authority/budgets remain required",
+      "noFlagStatus": "METHOD_UNSUPPORTED_START_NOT_SUPPRESSED"
+    }
+  },
+  "ownedDeadlineObservation": {
+    "provider": "role-unit-evidence-v3.mjs",
+    "export": "startOwnedCaptureDeadline",
+    "scope": "Existing externalcapture lifecycle only; callback authority belongs to exact separately reviewed per-run controller",
+    "binding": "Exact prepared workspace/issue/actor/runtime/run and original started_at; matchingterminalonly disarm",
+    "clock": "Original run deadline converted to monotonic timer; asynchronous CLI waiting required; synchronousblockage not preemptible",
+    "cancellation": "Single callbackclaim shared between timer/scope/operationstop; no blindretry; callbackfailurenotterminal",
+    "foreground": "Await callback/cancel and separate matchingpublicterminalclosure; no backgroundcompletion claim",
+    "currentNativeAdapter": "EXECUTED_EXACT_REVIEWED_ASYNC_FOREGROUND_ZG_PARTIAL",
+    "acceptance": "LOCAL_METHOD_ONLY; no role acceptance",
+    "currentNativeResult": {
+      "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZG-NATIVE-RESULT.json",
+      "bytes": 6397,
+      "sha256": "2b96ec955d47e5dde62d2e1c46193e428fc46e0a1be1ad2db1bc30ef2983c7fb"
+    },
+    "nativeForcedExpiry": "UNTESTED"
+  },
+  "methodInterpretationObservation": {
+    "provider": "role-unit-evidence-v3.mjs",
+    "export": "interpretMethodObservation",
+    "categories": [
+      "CONTRACT_CONFLICT",
+      "METHOD_UNSUPPORTED",
+      "EVIDENCE_INCOMPLETE",
+      "SUPPORTED_OBSERVATION"
+    ],
+    "limits": "Interpret structured inspector output only; preserve raw evidence. Method syntax match is not role PASS, execution, loading or authority. Unknown/ambiguous legacy results remain incomplete. Existing caller grants/STOP/run bindings remain mandatory.",
+    "privateRequest": "Raw protected-path pattern in request bytes only; not evidence command read path or leaked data",
+    "current": "LOCAL_METHOD_ONLY_NATIVE_ADAPTER_NOT_UPDATED"
+  }
+}

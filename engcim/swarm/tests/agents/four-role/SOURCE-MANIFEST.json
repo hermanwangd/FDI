@@ -41,32 +41,50 @@
       "path": "focused-suite.json",
       "sourceEvidenceFile": "FOUR-ROLE-SUITE-FROZEN.json",
       "sourceSha256": "b92b462fce6d51a020d6b073f8e4d4c9dc73baad5664b7a2e24415ca9fe2d4a2",
-      "sha256": "ccdf7c83023f2a3d91c1828efa66ce44554e480afac54cc0e450cd7c6d3dd177",
-      "cases": 8,
-      "semanticCasesSha256": "16826465b88fc2290e9b3caa23f310447f886c986ba6aff751040c74b53ece0d",
+      "sha256": "7b724b526f3442b4b13f7f58f661395f5f1aa67e0478205792da6787e4a48b6d",
+      "cases": 9,
+      "semanticCasesSha256": "cf40c824584258721b1dbea60073798d42b05ae505c133bf5059f98f2c11e04b",
       "status": "ACTIVE_DEFINITION_NOT_NATIVE_ADMISSION",
-      "inputCriteriaUnchanged": true
+      "inputCriteriaUnchanged": false,
+      "currentChange": {
+        "originalEightCasesUnchanged": true,
+        "appendedCase": "O-SPECIALIST-UNFAMILIAR",
+        "nativeAcceptance": "UNTESTED",
+        "configurationOnlyRevision": "O02-UNFAMILIAR-2_CONFIG_ONLY; input/oracle unchanged, role6f7f and Skilld411"
+      }
     },
     {
       "path": "../capabilities.json",
       "sourceEvidenceFile": "FOUR-ROLE-SOURCE-CAPABILITY-CATALOG-r5-DRAFT.json",
       "sourceSha256": "408abd3513c758fc40418cf31926283f97597461bca23797fe8a8e38c9d35a58",
-      "sha256": "fdc8e8adcf1c3a6da086c9dec9861624c7293119ae4e81d0fb60325841e74e59",
+      "sha256": "a4777069887418a30a59e51417fc965e5d1492df60088cafef62fffd475523e8",
       "cases": null,
       "semanticCasesSha256": null,
       "status": "ACTIVE_DEFINITION_NOT_NATIVE_ADMISSION",
       "inputCriteriaUnchanged": true,
-      "sourceSha256UnchangedNote": "Retained original external inventory origin; current SHA includes 19-role references and unchanged 65 mappings"
+      "sourceSha256UnchangedNote": "Retained original external inventory origin; current SHA includes 19-role references and unchanged 65 mappings",
+      "currentChange": "65 original capabilities and testIds retained; O02 current focused refs added"
+    },
+    {
+      "path": "native-preparation.json",
+      "sha256": "637b4b7a523ae89bf96c0a8af4fed360d4fa48642d2ce922a1eea171cd2ee43e",
+      "cases": 0,
+      "status": "ACTIVE_PREPARATION_CONTRACT_NATIVE_HOLD",
+      "methodId": "M2_NEUTRAL_INPUT_AND_PUBLIC_ISOLATION",
+      "inputCriteriaUnchanged": false,
+      "change": "ADDITIVE_COMMON_OBSERVATION_INTERPRETATION; PRIOR_INPUT_AND_CONTRACTS_RETAINED",
+      "preparationRevision": "M2_SESSION_CREATION_TIMING_2",
+      "bytes": 12701
     }
   ],
   "tools": [
     {
       "path": "role-unit-evidence-v3.test.mjs",
       "originalSha256": "1ae03e4c410becb8dbf7531dc3a034c84634b21da802124d4e4b81b8106a5f56",
-      "sha256": "1ae03e4c410becb8dbf7531dc3a034c84634b21da802124d4e4b81b8106a5f56",
-      "bytes": 7974,
+      "sha256": "c77cf87e2a1aedcb6eaf3f704b096b58dbbfe97d0ff423ca14b65836f9dd853f",
+      "bytes": 67759,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_SELF_TEST",
-      "change": "BYTE_IDENTICAL"
+      "change": "ADDITIVE_COMMON_OBSERVATION_INTERPRETATION_AND_RECORDED_JAVA_SHAPES; ORIGINAL_CONTRACTS_RETAINED"
     },
     {
       "path": "role-unit-output-schema-r1.test.mjs",
@@ -95,10 +113,10 @@
     {
       "path": "role-paged-source-read-evidence-r1.mjs",
       "originalSha256": "9f6682e205cfeb1e0075b952924ed3999be77940406223a799953d28432577ba",
-      "sha256": "9f6682e205cfeb1e0075b952924ed3999be77940406223a799953d28432577ba",
-      "bytes": 3367,
+      "sha256": "bce7376a86bb6188688ba2bf21241f5e2e1febfee4863358746b286f408d47a7",
+      "bytes": 8442,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_HELPER",
-      "change": "BYTE_IDENTICAL"
+      "change": "ADDITIVE_OWNED_PAGE_AND_CAPTURE_OBSERVATION; ORIGINAL_CONTRACTS_RETAINED"
     },
     {
       "path": "role-json-only-final-contract-r1.mjs",
@@ -111,10 +129,10 @@
     {
       "path": "role-unit-evidence-v3.mjs",
       "originalSha256": "b04c8c8d5e3f248d0cb38ab01c69b821948c1a84fb8c88206690b95d028c5fbb",
-      "sha256": "b04c8c8d5e3f248d0cb38ab01c69b821948c1a84fb8c88206690b95d028c5fbb",
-      "bytes": 7080,
+      "sha256": "778b11157388544a6e40c3ea5147d8433eee3ebddcb834dfc4a92d37bde786d5",
+      "bytes": 44023,
       "kind": "EXISTING_EXTERNAL_TEST_PROVIDER_HELPER",
-      "change": "BYTE_IDENTICAL"
+      "change": "ADDITIVE_COMMON_OBSERVATION_INTERPRETATION_AND_RECORDED_JAVA_SHAPES; ORIGINAL_CONTRACTS_RETAINED"
     },
     {
       "path": "role-unit-output-schema-r1.mjs",
@@ -332,9 +350,16 @@
       "sourceCommit": "7dd934e0f75b710f03b0982f44adff90af9a3241",
       "sourcePath": "engcim/swarm/baselines/rc6/runtime/package/engcim-swarm-package-RC6/skills/swarm-orchestration/SKILL.md",
       "maintenance": "NOT_ROLE_AUTHORING_NOT_SEALED_1_1_BASELINE"
+    },
+    {
+      "path": "fixtures/ZG-METHOD-INTERPRETATION-REGRESSION.json",
+      "bytes": 3690,
+      "sha256": "ec2d4e95172ec0b21eb095721b4ce9fa5ff2f1b5a27727fec7f5a4f970437fdd",
+      "sourceEvidenceFile": "Exact current ZG public terminal trace seq16/24/112, source trace pins embedded",
+      "classification": "IMMUTABLE_HISTORICAL_PUBLIC_TRACE_FIXTURE_NOT_EXECUTABLE_OR_ROLE_AUTHORING"
     }
   ],
-  "existingFocusedOrchestrator": "Only focused-suite.json T1/T2 active; original two-case file immutable historical fixture",
+  "existingFocusedOrchestrator": "Only focused-suite.json T1/T2 and O-SPECIALIST-UNFAMILIAR active; original two-case file immutable historical fixture",
   "fixtureRebinding": "Only reference/read paths changed. Case inputs/criteria and trace scenario paths retained.",
   "selfTests": {
     "status": "PASS_LOCAL_TOOL_TESTS_ONLY",
@@ -347,8 +372,8 @@
           "role-unit-evidence-v3.test.mjs",
           "role-unit-output-schema-r1.test.mjs"
         ],
-        "assertions": 16,
-        "stdoutSha256": "18b841fadf1f5e3c97da754a1b817526508f1f253dbfc3b072a0d0e3d288c68c",
+        "assertions": 47,
+        "stdoutSha256": "cf410487539f26bb5b16a84aaf7bda447b7d752cf04adddff84d730726f023b2",
         "exitCode": 0
       },
       {
@@ -377,11 +402,595 @@
   "native": "NOT_RUN; full loading/baseline/capability/no regression UNVERIFIED",
   "readme": {
     "path": "README.md",
-    "sha256": "5c4542ce6bf1ed392b2b0935de725f04b2df9ea40fdc148cdf6bb9ca9be2c74a",
-    "bytes": 3011
+    "bytes": 31940,
+    "sha256": "4304206e88b2f8ecf1a58a27e30666afafe5848b28cd4e18ed2bae7afc1cb6b4"
   },
   "capabilityInventoryScope": "Shared all-role capability inventory; four-role case definitions/tools/fixtures remain here",
   "sourceConvergenceBranch": "codex/overnight-plan-freeze",
   "integrationBaseCommit": "37c901fbdbc5dcc0fc858be489f0c9b17e68e83b",
-  "selectedSourceCommit": "e87ac10c96db4519264b418b6037aa7f5c86a790"
+  "selectedSourceCommit": "e87ac10c96db4519264b418b6037aa7f5c86a790",
+  "focusedNativeWorkspaceResult": {
+    "sourceCommit": "f0cb56a03f26cdcf7a9d21b0c528dba066a65f59",
+    "identifier": "RC10VAL-321",
+    "resultReceipt": {
+      "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-XN-RESULT.json",
+      "sha256": "ce267c8b37696dbfd537484971a2e7054b398fe85080039af178e9419c746cf6"
+    },
+    "status": "SAFE_STOP__PROFESSIONAL_ROUTING_NOT_DEMONSTRATED",
+    "fourRoleAcceptance": "UNVERIFIED",
+    "originalNativeSuiteDeclarationRetained": true
+  },
+  "publicDiscoveryCorrection": {
+    "status": "PUBLISHED_READBACK_MATCH__NATIVE_PARTIAL_METHOD_SCOPE",
+    "originalChecks": 38,
+    "newChecks": 9,
+    "red": {
+      "originalPass": 38,
+      "newFail": 8,
+      "stdoutSha256": "48b339466475d0f496104fe37b643578f16a63d9bc9c0fb9c3a506ac2a33f1af"
+    },
+    "green": {
+      "pass": 47,
+      "fail": 0,
+      "stdoutSha256": "cf410487539f26bb5b16a84aaf7bda447b7d752cf04adddff84d730726f023b2"
+    },
+    "native": "RC10VAL-322_PARTIAL__ROUTING_STARTED_CONFIRMED",
+    "historicalXNRetained": true,
+    "initialNewChecks": 8,
+    "retainedFirstGreen": {
+      "pass": 46,
+      "fail": 0,
+      "stdoutSha256": "823bfd61035cd85eacfb8506c0cf7831dedcf6a2e721910b7d9f496d2758ec11"
+    },
+    "reviewClosure": {
+      "reason": "Workspace inspector explicitly unsupported flag position must propagate METHOD_UNSUPPORTED, not SCOPE_REJECT",
+      "red": {
+        "pass": 46,
+        "fail": 1,
+        "stdoutSha256": "2b2aacd0e845cc0caa48660c92eb004e822c618143122997c0caf3d9874c339b"
+      },
+      "trueScopeRejections": "Foreign prefix workspace, profile/duplicate/missing native runtime preserved",
+      "native": "NOT_RUN"
+    },
+    "retainedCandidateCreation": {
+      "status": "LOCAL_ONLY_NOT_NATIVE_ACCEPTANCE",
+      "native": "NOT_RUN_FOR_THIS_CANDIDATE"
+    },
+    "publicationReceipt": {
+      "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Y-PUBLICATION-RESULT.json",
+      "bytes": 1042,
+      "sha256": "c0e75cbf3aea1ebcae3866463da2ee13e49bfd2a570da89df8f66eb5b351dc58"
+    },
+    "nativeResult": {
+      "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-YN-RESULT.json",
+      "bytes": 7421,
+      "sha256": "b1a5401d6d49bb17a6bb5e4d656800adb3acb049fc4251c67768724265bbce08"
+    },
+    "nativeIndependentReview": {
+      "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-YN-RESULT-INDEPENDENT-REVIEW.json",
+      "bytes": 10358,
+      "sha256": "d8e5817cc4fb392a1ff97d8c34fe781d3b6c9f2470025b03a92334933fa2cae8"
+    },
+    "payloadSourceCommit": "c5989a4180e7a69ffc9d92cdac410939440e0e8c",
+    "runtimeConsumption": "UNVERIFIED"
+  },
+  "sameIssueObservationRepair": {
+    "sourceRevision": "7575c3b4c67dafb52b16b52be454519e6d2e7703",
+    "formalContract": "Orchestrator core4(a) / orchestration wayA; wayB preferred when independent tracking required",
+    "originalProviderChecks": 42,
+    "unchangedSchemaChecks": 5,
+    "newChecks": 11,
+    "localAfter": 58,
+    "native": "LOCAL_METHOD_COMMITTED__NATIVE_PARTIAL_DIRECTORY_BINDING_STOP",
+    "historicalYN": "PARTIAL retained; no retroactive PASS",
+    "originalPolicy": "UNMODIFIED",
+    "reviewClosure": "Malformed body remains METHOD_UNSUPPORTED, full public threads preserve legitimate reply. First review REVISE/RED retained.",
+    "retainedLocalCandidateNativeStatus": "NOT_RUN_FOR_THIS_METHOD",
+    "nativeResult": {
+      "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Z-RESULT.json",
+      "bytes": 12562,
+      "sha256": "e441d137ffa4e27a75cda4f8090486ae937cc8ea850c0a5dddb798d035814c92"
+    },
+    "nativeIndependentReview": {
+      "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Z-RESULT-INDEPENDENT-REVIEW.json",
+      "bytes": 13955,
+      "sha256": "83ef83c5c5459d110bb1b5624bcf12ebacafa5fe3e4bb4863560f886b787a6fe"
+    },
+    "perRunSyntheticChecks": 67,
+    "nativeLimits": "Actual routing/start confirmed; completed public directory record differs, cause UNKNOWN; cancelled247B draft unexecuted; full consumption and gates unverified",
+    "nativeResultErratum": {
+      "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-Z-RESULT-r2.json",
+      "bytes": 13406,
+      "sha256": "64e6b0b55558cdf0e92c2d5e3fde141c9bc2d368d2537ad5a95c757fd736ecf0"
+    }
+  },
+  "directoryObservationRepair": {
+    "status": "FOCUSED_NATIVE_FUNCTION_PASS_PROTOCOL_PARTIAL",
+    "originalMethodChecks": 58,
+    "newGroups": 8,
+    "localAfter": 66,
+    "perRunAdapterChecks": 71,
+    "originalPolicy": "UNCHANGED",
+    "historicalSTOP": "RETAINED",
+    "filesystemAuthority": "UNCHANGED_PROJECT_ROOT_ONLY",
+    "native": "RC10VAL-324_FOCUSED_DELIVERY_FUNCTION_PASS_PROTOCOL_PARTIAL",
+    "nativeResult": {
+      "case": "RC10VAL-324",
+      "methodSourceCommit": "90faa7f9284848730805b4db5ca5271461287c05",
+      "result": {
+        "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZD-RESULT.json",
+        "bytes": 12088,
+        "sha256": "807b4e7bce8676e98a40e210cc94058e17754cce233e8ad2aeecd90bf8d69d3f"
+      },
+      "independentGrade": {
+        "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZD-INDEPENDENT-GRADE.json",
+        "bytes": 9275,
+        "sha256": "5dffa0ac8359744f044e2811e8d785cf04acc8063f98c9e9f0bf03ad45b25828"
+      },
+      "overall": "PARTIAL",
+      "focusedRoutingDeliveryFunction": "PASS",
+      "functionalCases": 7,
+      "sourceUnchanged": true,
+      "firstSTOP": "RETAINED_HEREDOC_METHOD_UNSUPPORTED",
+      "ordinaryReplyReentry": "FORMAL_STRUCTURED_EVENT_NOT_PASSED",
+      "fullFanInGates": "NOT_EVALUATED",
+      "fullConsumption": "UNVERIFIED",
+      "nativeRetries": 0
+    },
+    "methodFollowup": {
+      "status": "LOCAL_METHOD_PASS_LOADING_UNVERIFIED",
+      "baseCommit": "60265e7c63f71738d042d7d717b2898f234eeecc",
+      "sourceRevision": "ENCLOSING_GIT_TREE_METHOD_ONLY",
+      "publishedPayloadSource": "c5989a4180e7a69ffc9d92cdac410939440e0e8c",
+      "analysis": {
+        "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZE-ANALYSIS.json",
+        "bytes": 10650,
+        "sha256": "104b47895290b5c887fd1c841127d748bef477a3d30e0cd9ff40d846fa00ecf0"
+      },
+      "planReview": {
+        "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZE-IMPLEMENTATION-PLAN-REVIEW.json",
+        "bytes": 7901,
+        "sha256": "451cc72669fb8341f3f482583ffdcb5fdc81fd837467e12e5675342f3b964a6d"
+      },
+      "provider": {
+        "path": "/Users/herman_mbp2023/.codex/worktrees/swarm-role-test-entry/Feature-Delivery-Intelligence/engcim/swarm/tests/agents/four-role/role-unit-evidence-v3.mjs",
+        "bytes": 31539,
+        "sha256": "4eae91084ed64c1cc821ff6ebf22f1a97adfcfda8b0a2c3bdf5bcccb5d4caa5d"
+      },
+      "before": {
+        "original": 66,
+        "newFail": 6,
+        "earlyBaseline": "Observed before plan approval; anomaly retained, approval not backdated"
+      },
+      "after": {
+        "original": 66,
+        "addedGroups": 6,
+        "total": 72,
+        "adapter": 75,
+        "kind": "LOCAL_METHOD_ONLY"
+      },
+      "replay": {
+        "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZE-ZD-REPLAY.json",
+        "bytes": 1608,
+        "sha256": "c2d99f553282b0696a37543c13b33a28aca314df59fc0813271fcac2807c0b28"
+      },
+      "responsibilityChange": "NONE; syntax observation and reply activation separated from delivery/gates",
+      "fullLoading": "UNVERIFIED",
+      "native": "TWO_CAPTURE_RUNS_CANCELLED_FULL_LOADING_UNVERIFIED",
+      "anomaly": {
+        "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZE-OPERATOR-ANOMALY.json",
+        "bytes": 569,
+        "sha256": "8f2bd149b373aaea9398451d26e7c4d328c38e9259108cd2ff74b1dd559e9577"
+      },
+      "reviewCorrection": {
+        "finding": "ZE-RAW-TRAVERSAL-GUARD-MASKED",
+        "review": {
+          "path": "PHASE-ZE-LOCAL-INDEPENDENT-REVIEW.json",
+          "bytes": 4858,
+          "sha256": "9586cd8450f866ace95e3a27644586a3c20f6274eeaf628de99b755cf47bd322"
+        },
+        "red": {
+          "path": "phaseZE-review-red.stdout",
+          "bytes": 18325,
+          "sha256": "b017091e8bd2db01ea50e1150fa979024bfee85be410ad5511d750cfc82cfc36"
+        },
+        "green": {
+          "path": "phaseZE-review-green.stdout",
+          "bytes": 17246,
+          "sha256": "b8d375c3b11a6601cd79864b22763936b305bb9097acf7c721a10925055ccc47"
+        },
+        "result": "71PASS1FAIL_TO_72PASS; RAW_PARENT_AND_RELATIVE_TOKEN_GUARDS_RETAINED"
+      },
+      "nativeCapture": {
+        "status": "PARTIAL_FULL_LOADING_UNVERIFIED",
+        "result": {
+          "path": "PHASE-ZE-RESULT-r2.json",
+          "bytes": 14282,
+          "sha256": "fe8fae6e3af6b30325184229a22a9a4ce757773893eed75b2a1042ea4d296b5c"
+        },
+        "independentGrade": {
+          "path": "PHASE-ZE-INDEPENDENT-GRADE-r2-CLOSURE.json",
+          "bytes": 1945,
+          "sha256": "14ec380a9195a3863407b8d8363464c4bb3182903e1e136bc99b54985c85c3a2"
+        },
+        "sourceMethodCommit": "a1749035845588e30328d33a16701ab4312a6e6c",
+        "publishedPayloadSource": "c5989a4180e7a69ffc9d92cdac410939440e0e8c",
+        "cases": [
+          {
+            "actor": "orchestrator",
+            "issue": "01a12181-e330-72c2-ab8a-08e945a7c2c4",
+            "run": "01a1218a-c650-79a9-84bd-8fadf9072dbd",
+            "status": "cancelled",
+            "error": null,
+            "namedInstalledFiles": 7,
+            "requestedFiles": 7,
+            "renderBytes": 112340,
+            "renderSha256": "67b0f40b3c81d9048f8bd68e77e00073923e10ec157dd708d12e6471917c50db",
+            "roleBodyPresent": true,
+            "markerBinding": "AGENT_ISSUE_ONLY_NOT_RUN_SESSION_OR_TOOL_CWD"
+          },
+          {
+            "actor": "coder",
+            "issue": "01a12181-f4d3-7e60-9442-402b87379b5e",
+            "run": "01a12191-802d-780a-a96f-65babb0adbf3",
+            "status": "cancelled",
+            "error": null,
+            "namedInstalledFiles": 11,
+            "requestedFiles": 11,
+            "renderBytes": 19891,
+            "renderSha256": "de010fbbf9a11f8979a55bbe817ce27e773d4fc199b3143a6e0c0f407ce6ff23",
+            "roleBodyPresent": true,
+            "markerBinding": "AGENT_ISSUE_ONLY_NOT_RUN_SESSION_OR_TOOL_CWD"
+          }
+        ],
+        "observations": {
+          "installedNamedFiles": 18,
+          "readOutputStrings": 26,
+          "nonemptyReadFrames": 24,
+          "truncatedReadFrames": 7,
+          "terminalFramesWithoutOutput": 5,
+          "completeMatchesRecognizedByFrozenObserver": 0,
+          "recognitionLimit": "Numbered/paged text not reconstructed; zero matches is not zero returned bodies",
+          "completeExplicitDelivery": "UNVERIFIED",
+          "automaticLoading": "UNVERIFIED"
+        },
+        "limits": [
+          "Orchestrator own comment scan flags prescribed by generated wrapper missing from original classifier; first STOP retained and no retry",
+          "Coder normal in_progress status was outside this finite capture grant; record method/workflow incompatibility, no role defect inference",
+          "Read-file results retain numbered/paged output strings (26 frames,24 nonempty,7 truncated); five terminal frames omit output. Frozen whole-file matcher does not reconstruct pages, so zero recognized complete matches cannot mean zero public bodies or prove model did not receive content.",
+          "Direct single-agent topology differs from normal squad leader; no historical/private directory fallback"
+        ],
+        "allNativeTerminal": true,
+        "noRetry": true,
+        "noActiveNativeExecutor": true,
+        "budget": {
+          "prepReads": 19,
+          "prepMutations": 6,
+          "triggers": 2,
+          "activeReads": 8,
+          "byCase": {
+            "orchestrator": 4,
+            "coder": 4
+          },
+          "cancels": 2,
+          "closureReads": 19
+        },
+        "metadataPlanReview": {
+          "path": "PHASE-ZE-RESULT-SSOT-PLAN-REVIEW.json",
+          "bytes": 3159,
+          "sha256": "54edc984e4cb9b082c004ff151a8659d822938c152698a1a37d6e3b56f038b41"
+        }
+      },
+      "loadingContinuation": {
+        "status": "LOCAL_CHECKS_PASS_NATIVE_PARTIAL_OPERATOR_DEADLINE_FAIL",
+        "baseCommit": "268bf68dc1e36220212d7dc0c199fe5abb49ebd9",
+        "sourceRevision": "ENCLOSING_GIT_TREE_METHOD_ONLY",
+        "planReview": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-PLAN-REVIEW.json",
+          "bytes": 5577,
+          "sha256": "7b51a52ee90098f31a0e786088f64a71ad36f5ffc4e1147625a096dbbfd7baaf"
+        },
+        "result": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-LOCAL-RESULT.json",
+          "bytes": 7475,
+          "sha256": "4cdf25be1d01923ac94332737c2a83927fda93821ee8cceb0521c671dc51cc66"
+        },
+        "provider": {
+          "path": "/Users/herman_mbp2023/.codex/worktrees/swarm-role-test-entry/Feature-Delivery-Intelligence/engcim/swarm/tests/agents/four-role/role-paged-source-read-evidence-r1.mjs",
+          "bytes": 8442,
+          "sha256": "bce7376a86bb6188688ba2bf21241f5e2e1febfee4863358746b286f408d47a7"
+        },
+        "commandProvider": {
+          "path": "/Users/herman_mbp2023/.codex/worktrees/swarm-role-test-entry/Feature-Delivery-Intelligence/engcim/swarm/tests/agents/four-role/role-unit-evidence-v3.mjs",
+          "bytes": 33805,
+          "sha256": "08452fb58f99b226de5c033d87bf9b0a94b5ea207300da72936b9d272c92a944"
+        },
+        "originalChecks": 72,
+        "totalLocalChecks": 85,
+        "byteDelivery": "UNVERIFIED_NUMBERED_FRAMING",
+        "automaticLoading": "UNVERIFIED",
+        "native": "TERMINAL_PARTIAL",
+        "sourceResponsibilitiesChanged": false,
+        "methodSourceCommit": "17a45392887f9fecd86081b8dc3321074c8c7c2b",
+        "nativeResult": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-NATIVE-RESULT.json",
+          "bytes": 20008,
+          "sha256": "bb518b4561492a99418aae8e13c24e1df574340907b88649d73da0f82b182e6c"
+        },
+        "independentNativeGrade": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-NATIVE-INDEPENDENT-GRADE.json",
+          "bytes": 82110,
+          "sha256": "e85c0ad67d14634b0041ebf5759b1f42727a09edc1c6463e395d85b3ab689349"
+        },
+        "protectedClosure": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-PROTECTED-CLOSURE.json",
+          "bytes": 4651,
+          "sha256": "44636a78bac18e95fd1d9f5fde2da2660f60b0733512b26220092c29eea9a62d"
+        },
+        "operatorDeadlineAnomaly": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-OPERATOR-DEADLINE-ANOMALY.json",
+          "bytes": 2204,
+          "sha256": "6fed3e2ab18e31379a5197ac75edb9d821c3657a6633675d62012280247ea422"
+        },
+        "terminalClosure": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-TERMINAL-CLOSURE.json",
+          "bytes": 1180,
+          "sha256": "6a3dfb81858aaa589bb8f27d22e9df235b6326f218cae429235fcb6d8374073d"
+        },
+        "closurePlanReview": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-CLOSURE-PLAN-REVIEW.json",
+          "bytes": 3751,
+          "sha256": "312de8725c5bb3af9ad02e1aaa1b16787495bdae5831903790ffae3d8108a5f7"
+        },
+        "executionReview": {
+          "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-LOADING-EXECUTION-REVIEW-r2.json",
+          "bytes": 6963,
+          "sha256": "64ed01fd865f00afe8a9f074433f1142b97d25684ff6c5f09ed64a3ec37859ab"
+        },
+        "nativeCases": [
+          {
+            "actor": "9e98e1d4-7bb5-4efe-9b32-e90962683e71",
+            "issue": "01a12202-75eb-7eab-92ad-914441bdb546",
+            "run": "01a1220b-f5a1-7664-be88-30cc555d743e",
+            "status": "completed",
+            "completeSourceTextFiles": 10,
+            "installed": 11,
+            "roleBodyText": "MATCH_COMPLETE_TEXT_LINES",
+            "fullRenderText": "PENDING_TEXT_LINES",
+            "missing": [
+              {
+                "path": "/private/tmp/8c770c8d-0f7d-4bf6-b6c8-480ab9c1f5a1/AGENTS.md",
+                "ranges": [
+                  [
+                    110,
+                    120
+                  ]
+                ],
+                "status": "PENDING_TEXT_LINES"
+              }
+            ],
+            "nativeFinalPresent": true,
+            "publication": "MATCH_ACTOR_RUN_ISSUE_PUBLIC_TEXT",
+            "publicationExactBytes": false
+          },
+          {
+            "actor": "809ffefe-3fc4-4686-8401-a8dd50285840",
+            "issue": "01a12202-8697-707d-aecc-1a0187374ba5",
+            "run": "01a12211-4370-713b-bc4b-ab235e880cac",
+            "status": "cancelled",
+            "completeSourceTextFiles": 6,
+            "installed": 7,
+            "roleBodyText": "MATCH_COMPLETE_TEXT_LINES",
+            "fullRenderText": "MATCH_COMPLETE_TEXT_LINES",
+            "missing": [
+              {
+                "path": "/private/tmp/81061215-e30e-4690-a276-34a175f30fcf/.kimi/skills/swarm-telemetry/SKILL.md",
+                "ranges": [
+                  [
+                    53,
+                    53
+                  ]
+                ],
+                "status": "PENDING_PUBLIC_REDACTION"
+              }
+            ],
+            "nativeFinalPresent": false,
+            "publication": "MATCH_ACTOR_RUN_ISSUE_PUBLIC_TEXT",
+            "publicationExactBytes": false
+          }
+        ],
+        "overallAcceptance": "PARTIAL_NATIVE_ACCEPTANCE_OPERATOR_DEADLINE_FAIL",
+        "semanticGrade": "PASS_NAMED_FILE_RESPONSIBILITIES_18_FILES",
+        "publicTextCoverage": {
+          "complete": 16,
+          "total": 18
+        },
+        "deadlineEnforcement": "FAILED_300S_BOUND_RECOVERED_ROOT_CAUSE_UNRESOLVED",
+        "noNewNativeRetry": true,
+        "protectedSourceConfigurationUnchanged": true,
+        "knownGaps": [
+          "Explicit manual content capture distinct from automaticinitialloading and normal squadtopology",
+          "Numbered tool public output cannot prove finalLF/byte delivery",
+          "Public text gaps do not prove model lacked content or a role defect",
+          "Native final kept separate from actual published coordinationartifact",
+          "No additionalrun/retry/sourceconfigurationedit",
+          "OldZE cancelled outcomes unchanged",
+          "QA/Architect/Reviewer native repair not covered by thisloading package"
+        ],
+        "deadlineFollowup": {
+          "status": "LOCAL_DEADLINE_PASS_NATIVE_FOCUSED_PARTIAL_FULL_ROLE_UNVERIFIED",
+          "baseCommit": "f253df66117b2ab2a1e5a5b1d66a4cf9f26cf746",
+          "sourceRevision": "ENCLOSING_GIT_TREE_EXTERNAL_METHOD_ONLY",
+          "planReview": {
+            "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZG-IMPLEMENTATION-PLAN-REVIEW.json",
+            "bytes": 2988,
+            "sha256": "cdad19da7efe2bf0e63bf53dae9473c27b6c31a0a65677761d7c83ef7cfdb3b5"
+          },
+          "analysis": {
+            "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZG-ANALYSIS.json",
+            "bytes": 3377,
+            "sha256": "52fa999b036dd0fd9665a8252e27ae5a0b8362590e4ebebe9fa4258dfa40d18d"
+          },
+          "result": {
+            "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZG-LOCAL-RESULT.json",
+            "bytes": 6589,
+            "sha256": "8e00c198bf84fcdae30154b79c9cca6a8bf3f83878f4f6afaa36ae97bfd28a7a"
+          },
+          "provider": {
+            "path": "/Users/herman_mbp2023/.codex/worktrees/swarm-role-test-entry/Feature-Delivery-Intelligence/engcim/swarm/tests/agents/four-role/role-unit-evidence-v3.mjs",
+            "bytes": 37282,
+            "sha256": "459c46934b983ae3f86f044bf6e920d8af1e7a7d098d33a8ea164dc7f358a716"
+          },
+          "originalProviderChecks": 80,
+          "totalProviderChecks": 92,
+          "unchangedSchemaChecks": 5,
+          "totalCombinedChecks": 97,
+          "fourRoleGapMatrix": {
+            "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZG-FOUR-ROLE-GAP-MATRIX.json",
+            "bytes": 37757,
+            "sha256": "be2fb7766f1d9825aef9f062c93f4fbab5ba8b61e143cf09364bf4de9d832865"
+          },
+          "originalNativeDeadlineFailure": {
+            "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZF-OPERATOR-DEADLINE-ANOMALY.json",
+            "bytes": 2204,
+            "sha256": "6fed3e2ab18e31379a5197ac75edb9d821c3657a6633675d62012280247ea422"
+          },
+          "nativeAdapter": "EXECUTED_EXACT_REVIEWED_FOREGROUND_ASYNC_ADAPTER",
+          "native": "TERMINAL_PARTIAL",
+          "sourceResponsibilitiesChanged": false,
+          "methodSourceCommit": "b410d9cc9a06fd8bb6b773a57642dc2347ed9512",
+          "publishedPayloadSource": "c5989a4180e7a69ffc9d92cdac410939440e0e8c",
+          "nativeResult": {
+            "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZG-NATIVE-RESULT.json",
+            "bytes": 6397,
+            "sha256": "2b96ec955d47e5dde62d2e1c46193e428fc46e0a1be1ad2db1bc30ef2983c7fb"
+          },
+          "independentGrades": [
+            {
+              "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZG-CODER2-T1-INDEPENDENT-GRADE.json",
+              "bytes": 22702,
+              "sha256": "cf215c0b554e925e4c312bf89db56f2d61b33a274afe64cbcdf366f689ed94ad"
+            },
+            {
+              "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZG-T2-INDEPENDENT-GRADE.json",
+              "bytes": 8820,
+              "sha256": "b813ab0fa49e71295c0cdad4a6d23d2103e109317be6931100485044eb255efd"
+            }
+          ],
+          "protectedClosure": {
+            "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZG-PROTECTED-CLOSURE.json",
+            "bytes": 5195,
+            "sha256": "2da1279436603fecd92a496a4f55c0f6b3270590892ba42595cc09ae668f3c99"
+          },
+          "terminalClosure": {
+            "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZG-TERMINAL-CLOSURE.json",
+            "bytes": 5401,
+            "sha256": "a965427976bffd72466cd3e7fe6b68452d4642080c4f67b6b321efc295444ec0"
+          },
+          "methodLearning": {
+            "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZG-METHOD-LEARNING.json",
+            "bytes": 2773,
+            "sha256": "bd84f008d6e34ee2b7098cf1f53c9d83acb5c5c0cdb9905674a8e5b93596b581"
+          },
+          "executionReview": {
+            "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZG-EXECUTION-REVIEW.json",
+            "bytes": 4356,
+            "sha256": "095ead3238c670b0b42efc31cbab2e6e4b978aafc2d235160ece259dce7986a2"
+          },
+          "closurePlanReview": {
+            "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZG-CLOSURE-PLAN-REVIEW.json",
+            "bytes": 4735,
+            "sha256": "48ad0f46860d14e9051864d234f5090c7694e8793eabd8103cbebed4100f618f"
+          },
+          "focusedCoordination": "PASS",
+          "focusedProfessionalDelegation": "PASS_ROUTING_START_ONLY",
+          "fullProfessionalCase": "NOT_PASSED_CANCELLED_PRODUCER_FUNCTION_UNVERIFIED",
+          "fullLoading": "UNVERIFIED_COMPLETE_TEXT_9_OF_11",
+          "forcedNativeDeadline": "UNTESTED_300S_EXPIRY",
+          "unfamiliar": "NOT_RUN_NOT_READY",
+          "noActiveNativeSubjectExecutor": true,
+          "processDeviation": "SUPPLEMENT_METADATA_READ_ATTEMPTS_4_OVER_ORIGINAL_2_RETAINED_NOT_BACKDATED",
+          "interpretationFollowup": {
+            "status": "LOCAL_INTERPRETATION_PASS_NATIVE_UNVERIFIED",
+            "baseCommit": "d7940f982445e98b56bb0548a2c6d417b5834baa",
+            "provider": {
+              "path": "/Users/herman_mbp2023/.codex/worktrees/swarm-role-test-entry/Feature-Delivery-Intelligence/engcim/swarm/tests/agents/four-role/role-unit-evidence-v3.mjs",
+              "bytes": 44023,
+              "sha256": "778b11157388544a6e40c3ea5147d8433eee3ebddcb834dfc4a92d37bde786d5"
+            },
+            "planReview": {
+              "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZH-IMPLEMENTATION-PLAN-REVIEW.json",
+              "bytes": 3169,
+              "sha256": "bf29e7c811e75dcd241c87637deac0d4a6b8a496de6720aac19435a155b4219b"
+            },
+            "result": {
+              "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZH-LOCAL-RESULT.json",
+              "bytes": 8992,
+              "sha256": "2d3b8c4e6aa57c3d4923fa3854dfeacd6fdebf8fe04c705e44297f6eddabdd2f"
+            },
+            "replay": {
+              "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZH-RECORDED-REPLAY.json",
+              "bytes": 6881,
+              "sha256": "b03d5ca26b6aed0241a055772286275b3b9a3f0e3f6832e4dde7e0e26621f9dc"
+            },
+            "testSetupAnomaly": {
+              "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZH-TEST-SETUP-ANOMALY.json",
+              "bytes": 968,
+              "sha256": "03bde1a432ae8a046e37cf800113dd2688bf9c34d33c784699db071419b425f3"
+            },
+            "before": {
+              "originalPass": 97,
+              "newFail": 9
+            },
+            "after": {
+              "originalPass": 97,
+              "newPass": 10,
+              "total": 107
+            },
+            "sourceResponsibilitiesChanged": false,
+            "operationAuthority": "NONE",
+            "native": "NOT_RUN_FOR_CURRENT_METHOD",
+            "historicalStops": "UNCHANGED",
+            "fullRoleAcceptance": "UNVERIFIED",
+            "reviewRegression": {
+              "before": {
+                "pass": 106,
+                "fail": 1
+              },
+              "after": {
+                "pass": 107,
+                "fail": 0
+              },
+              "firstReview": {
+                "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZH-LOCAL-INDEPENDENT-REVIEW.json",
+                "bytes": 5790,
+                "sha256": "aa99093ff41f58623b36ec87e4b372ba56a4a2382d1234703d454fee131bca66"
+              },
+              "prefixClosure": {
+                "secondReview": {
+                  "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZH-LOCAL-INDEPENDENT-REVIEW-r2.json",
+                  "bytes": 3241,
+                  "sha256": "8f10d19d763f197076f59c8c5897bcb174c565d7e1055e88a22f85042ac9b83d"
+                },
+                "before": {
+                  "pass": 106,
+                  "fail": 1
+                },
+                "after": {
+                  "pass": 107,
+                  "fail": 0
+                },
+                "scope": "Only four incomplete stems removed; complete reasons and guards retained",
+                "invocationAnomaly": {
+                  "path": "/Users/herman_mbp2023/Documents/Codex/2026-10-09/orchestrator-component-validation/PHASE-ZH-REVIEW-PREFIX-INVOCATION-ANOMALY.json",
+                  "bytes": 1749,
+                  "sha256": "45ce2a299d0d5582e87cf920f5167dfe33b8fc96bc842bfdb0619c28ed10ad50"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

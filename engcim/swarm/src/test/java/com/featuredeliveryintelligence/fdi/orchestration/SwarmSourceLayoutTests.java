@@ -49,6 +49,7 @@ class SwarmSourceLayoutTests {
         falsePass.put("behavioralAcceptance", "PASS");
         assertThrows(AssertionError.class, () -> validateAllRoles(root(), falsePass));
         ObjectNode unpublished = coverage.path("roles").get(0).deepCopy();
+        unpublished.put("parity", "MATCH_AT_OBSERVATION");
         ((ObjectNode) unpublished.path("candidateBody")).put("sha256", "0".repeat(64));
         assertThrows(AssertionError.class, () -> validateObservedBodyParity(unpublished));
         unpublished.put("parity", "SOURCE_DIFFERS_FROM_PROVIDER_ORIGIN");
@@ -347,7 +348,7 @@ class SwarmSourceLayoutTests {
                 if (group.equals("definitions")) cases += pin.path("cases").asInt();
             }
         }
-        assertEquals(87, cases, "Case definitions retained; this is not a native PASS count");
+        assertEquals(88, cases, "Case definitions retained; this is not a native PASS count");
         JsonNode map = JSON.readTree(root.resolve(MODULE + "SOURCE-TO-EFFECTIVE.json").toFile());
         assertEquals(map.path("development_ssot").path("tests").path("manifestSha256").asText(), digest(Files.readAllBytes(manifestPath)));
     }
@@ -441,6 +442,7 @@ class SwarmSourceLayoutTests {
         ((ObjectNode) duplicate.get(1)).put("key", duplicate.get(0).path("key").asText());
         assertThrows(AssertionError.class, () -> validateRoleSources(root(), duplicate));
         ObjectNode unpublished = entries.get(0).deepCopy();
+        unpublished.put("parity", "MATCH_AT_OBSERVATION");
         unpublished.put("sha256", "0".repeat(64));
         assertThrows(AssertionError.class, () -> validateOriginParity(unpublished));
         unpublished.put("parity", "SOURCE_DIFFERS_FROM_PROVIDER_ORIGIN");
