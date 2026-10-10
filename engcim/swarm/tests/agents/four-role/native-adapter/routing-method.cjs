@@ -39,7 +39,20 @@ function allowedMention(m,target,body,r){
 }
 
 
-function publicationBody(file,r){
+function publicationBody(file,r,command,target){
+ // This bounded shape describes a request, never a write ACK or stored effect.
+ // Check it before project-root bytes: the actual terminal cwd may differ.
+ if(shellSegments(command).some(tokens=>tokens[0]==='printf')){
+  const literal=command.length<=65536&&command.trim().match(/^(?:(?:multica|\/opt\/homebrew\/bin\/multica)\s+issue\s+status\s+(\S+)\s+(?:todo|in_progress|in_review)\s+&&\s+)?printf\s+'([^'%$`\\\r\n\x00]+)'\s+>\s+(\.\/[A-Za-z0-9_-]+\.md)\s+&&\s+(?:multica|\/opt\/homebrew\/bin\/multica)\s+issue\s+comment\s+add\s+(\S+)\s+--content-file\s+(\.\/[A-Za-z0-9_-]+\.md)\s+--output\s+(?:json|table)(?:\s+&&\s+rm\s+(\.\/[A-Za-z0-9_-]+\.md))?$/);
+  if(!literal||key!=='T1'||r.agent_id!==actor||target!==r.issue_id||target!==c.issueId||literal[4]!==target||(literal[1]&&literal[1]!==target)||literal[3]!==literal[5]||(literal[6]&&literal[6]!==literal[3])||!own(literal[3])||path.resolve(c.cwd,literal[3])!==file){
+   record('publicationBody',{status:'METHOD_UNSUPPORTED',reason:'METHOD_PUBLICATION_BODY_UNAVAILABLE',source:'UNSUPPORTED_SAME_TERMINAL_PRINTF_DECLARATION'},r);
+   throw Error('METHOD_PUBLICATION_BODY_UNAVAILABLE');
+  }
+  const body=literal[2],view={status:'LITERAL_PUBLICATION_REQUEST_DECLARED',source:'SAME_TERMINAL_LITERAL_PRINTF_DECLARATION',file,bytes:Buffer.byteLength(body),sha256:sha(body),requestSeq:r.observedSeq,actualPublishedBody:'UNVERIFIED_UNTIL_OWN_COMMENT_READBACK',actualCwd:'UNKNOWN',cleanupEffect:'UNKNOWN'};
+  record('publicationBody',view,r);
+  if(!selfTest)save('phaseZG-publication-provenance-'+r.id+'-'+r.observedSeq+'.json',view);
+  return body;
+ }
  try{const st=fs.lstatSync(file);if(st.isSymbolicLink()||st.size>1048576)throw Error('UNVERIFIABLE_PUBLICATION_FILE');return fs.readFileSync(file,'utf8');}catch(error){
   if(error.code!=='ENOENT')throw error;
   const writes=currentTrace.filter(x=>x.seq<r.observedSeq&&x.task_id===r.id&&x.issue_id===r.issue_id&&x.type==='tool_use'&&x.tool==='write_file'&&own(x.input?.path)&&path.resolve(c.cwd,x.input.path)===file&&typeof x.input.content==='string');
@@ -76,7 +89,7 @@ if(kind==='squad'&&verb==='get')allowed=key==='T2'&&a[2]===prep.squad;
 if(kind==='skill'&&verb==='get'){const allowedSkills=[...readNamed('phaseZG-orchestrator.stdout').skills,...readNamed('phaseZG-coder.stdout').skills].map(x=>x.skill_id||x.id);allowed=allowedSkills.includes(a[2]);}
 if(kind==='squad'&&verb==='activity')allowed=ids.has(a[2]);
 if(!allowed)bad.push('UNAPPROVED_PUBLIC_COMMAND_SCOPE');
-if(kind==='issue'&&verb==='comment'&&a[2]==='add'){const n=a.indexOf('--content-file');if(n>=0){if(!own(a[n+1]))bad.push('OUTSIDE_CASE_COMMENT_FILE');else{const file=path.resolve(c.cwd,a[n+1]);try{{const body=publicationBody(file,r);for(const m of body.matchAll(/mention:\/\/(agent|squad|member|all)\/([^\s)\]>]+)/g))if(!allowedMention(m,a[3],body,r))bad.push('UNAPPROVED_MENTION_ACTIVATION');}}catch(e){bad.push(e.message.startsWith('METHOD_')?e.message:'UNVERIFIABLE_PUBLICATION_FILE');}}}}
+if(kind==='issue'&&verb==='comment'&&a[2]==='add'){const n=a.indexOf('--content-file');if(n>=0){if(!own(a[n+1]))bad.push('OUTSIDE_CASE_COMMENT_FILE');else{const file=path.resolve(c.cwd,a[n+1]);try{{const body=publicationBody(file,r,cmd,a[3]);for(const m of body.matchAll(/mention:\/\/(agent|squad|member|all)\/([^\s)\]>]+)/g))if(!allowedMention(m,a[3],body,r))bad.push('UNAPPROVED_MENTION_ACTIVATION');}}catch(e){bad.push(e.message.startsWith('METHOD_')?e.message:'UNVERIFIABLE_PUBLICATION_FILE');}}}}
 for(const m of cmd.matchAll(/mention:\/\/(agent|squad|member|all)\/([^\s)'"\]>]+)/g))if(!(key==='T2'&&kind==='issue'&&verb==='comment'&&a[2]==='add'&&ids.has(a[3])&&allowedMention(m,a[3],cmd,r)))bad.push('UNAPPROVED_MENTION_ACTIVATION');
 }return [...new Set(bad)];}
 

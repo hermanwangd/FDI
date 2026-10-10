@@ -88,6 +88,14 @@ Before/after results must bind the same case input, criteria and consumer/provid
 
 `fixtures/` contains immutable role/Skill snapshots, raw traces, old outputs and old suites used by the checks. Original failures remain failures. Literal historical actor paths inside traces/manifests describe the scenario; local self-tests read repository fixture bytes and do not access those paths. The historical QA dispatch driver is stored only as `.mjs.txt`; the existing guard test extracts two pure comparisons, never imports or executes that driver. Listed local checks and adapter imports do not dispatch, publish or update roles; invoking the maintained native operator is a separate exact reviewed action.
 
+### Literal coordination publication observation
+
+RC10VAL-335 exposed a publication observer gap: its actual seq18 used one terminal request to `printf` a literal reply into `./reply.md`, post that file on its own issue and request cleanup. The original run remains cancelled/PARTIAL; its independently bound public comment contains the exact 45-byte reply. The SDK terminal result does not establish stdout, actual cwd or cleanup effect.
+
+The existing `routing-method.cjs` now recognizes only the bounded T1 Orchestrator request shape: optional own-issue status, a single-quoted literal without printf formatting/expansion/escape syntax, one simple owned relative Markdown filename, own-issue comment publication and optional matching cleanup. It checks the declaration before project-root file bytes, which could be stale or belong to a different terminal cwd. Unsupported printf shapes cannot fall back to a stale file. Existing raw path, issue, workspace, actor and mention guards still apply. This is a declaration observation, with effect/role acceptance UNVERIFIED; it fabricates neither a write ACK nor stored publication evidence. Actual publication still requires exact same-run public comment binding and independent grading. Existing file/prior-write observation paths remain available to requests without printf.
+
+Six consumer regressions replay the actual request and adjacent positive/negative boundaries; all original 135 local provider/schema/consumer checks remain. Local checks do not establish normal native completion, full role acceptance or automatic Skill loading. The original 334/335 failures and STOP records are immutable.
+
 ### Java selftest method applicability
 
 RC10VAL-334 completed through the maintained entry, but five ordinary Orchestrator CLI requests received a false `SELFTEST_CODER_GRANT_REQUIRED` interpretation: routing invoked the Java inspector on every terminal command. The existing 124 local checks passed while missing this extra observation. The recorded native method failure and the separate exact-reply failure (48 bytes including `。`, expected 45 bytes) remain unchanged.
