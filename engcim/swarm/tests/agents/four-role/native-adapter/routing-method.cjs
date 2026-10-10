@@ -2,7 +2,7 @@ const path=require('path');
 module.exports=async function(prep,c,s,{operations,record}={}){
 if(!operations||typeof record!=='function')throw Error('OPERATOR_CONTEXT_REQUIRED');
 const {fs,read,readNamed,save,sha}=operations;
-const {normalizeKnownMissionWorkspaceCommand,observeOwnedPublicContextReads,inspectMulticaWorkspaceScope,inspectSupportedSquadMemberRead,inspectSameIssueCoderDelegation,inspectNativeDirectoryBinding,observeOwnedJavaSelfTest,inspectOwnedReplyWakeup}=await import('../role-unit-evidence-v3.mjs');
+const {normalizeKnownMissionWorkspaceCommand,observeOwnedPublicContextReads,inspectMulticaWorkspaceScope,inspectSupportedSquadMemberRead,inspectSameIssueCoderDelegation,inspectNativeDirectoryBinding,isOwnedJavaSelfTestCandidate,observeOwnedJavaSelfTest,inspectOwnedReplyWakeup}=await import('../role-unit-evidence-v3.mjs');
 const actor='809ffefe-3fc4-4686-8401-a8dd50285840',key=c.key==='unfamiliar'?'T2':c.key,selfTest=false;let prefix='';
 function own(p){if(typeof p!=='string'||/[~$\\]/.test(p))return false;const resolved=path.resolve(c.cwd,p);return [c.cwd,c.logicalCwd].some(root=>resolved===root||resolved.startsWith(root+'/'));}
 function shellSegments(cmd){const groups=[[]];let word='',quote=null;function flush(){if(word){groups[groups.length-1].push(word);word='';}}for(let i=0;i<cmd.length;i++){const ch=cmd[i];if(quote){if(ch===quote)quote=null;else word+=ch;continue;}if(ch==='"'||ch==="'"){quote=ch;continue;}if(/\s/.test(ch)){flush();continue;}if(ch==='&'&&cmd[i-1]==='>'){word+=ch;continue;}if(ch===';'||ch==='|'||ch==='&'){flush();if(cmd[i+1]===ch)i++;groups.push([]);continue;}word+=ch;}if(quote)throw Error('unclosed shell quote');flush();return groups.filter(x=>x.length);}
@@ -88,9 +88,12 @@ if(t.tool==='read_file'&&['path','file_path'].some(k=>exactContext(input[k]))&&[
 
 let text=JSON.stringify(observedInput);
 if(t.tool==='terminal'){
- literalView=observeOwnedJavaSelfTest(rawCommand,{ownedRoots:[c.cwd,c.logicalCwd],actorRole:r.agent_id===actor?'orchestrator':'coder'});
- record('observeOwnedJavaSelfTest',literalView,r);const view=literalView.status==='MATCH_LITERAL_OWNED_JAVA_SELFTEST'?{status:'LITERAL_SELFTEST_OBSERVATION',rawCommand,normalizedCommand:literalView.shellCommand}:normalizeKnownMissionWorkspaceCommand(rawCommand,prep.workspace);
- record('normalizeKnownMissionWorkspaceCommand',view,r);if(literalView.status==='SCOPE_REJECT'&&rawCommand.includes('<<'))reasons.push(literalView.reason);
+ if(isOwnedJavaSelfTestCandidate(rawCommand)){
+  literalView=observeOwnedJavaSelfTest(rawCommand,{ownedRoots:[c.cwd,c.logicalCwd],actorRole:r.agent_id===actor?'orchestrator':'coder'});
+  record('observeOwnedJavaSelfTest',literalView,r);
+ }
+ const view=literalView?.status==='MATCH_LITERAL_OWNED_JAVA_SELFTEST'?{status:'LITERAL_SELFTEST_OBSERVATION',rawCommand,normalizedCommand:literalView.shellCommand}:normalizeKnownMissionWorkspaceCommand(rawCommand,prep.workspace);
+ record('normalizeKnownMissionWorkspaceCommand',view,r);if(literalView?.status==='SCOPE_REJECT'&&rawCommand.includes('<<'))reasons.push(literalView.reason);
  if(view.status==='UNSUPPORTED')reasons.push('METHOD_UNSUPPORTED_UNCLASSIFIABLE_EFFECT');else cmd=view.normalizedCommand;
  const contextView=observeOwnedPublicContextReads(cmd,[c.cwd,c.logicalCwd]);record('observeOwnedPublicContextReads',contextView,r);observedInput.command=contextView.observedCommand;text=JSON.stringify(observedInput);
  if(!selfTest)save('phaseZG-normalized-'+r.id+'-'+t.seq+'.json',{runId:r.id,seq:t.seq,view,contextView,checkedCommand:cmd,effectiveEnvironment:'UNVERIFIED'});

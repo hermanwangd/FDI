@@ -107,6 +107,19 @@ export function inspectOwnedCaptureCommand(rawCommand, context, cwd=null) {
 // Syntax observation for the two recorded owned Coder Java selftest shapes.
 // Literal here-doc text is inert to the shell, not necessarily inert to Java.
 // Preserve raw text for every existing scope check; never execute or authorize it.
+function ownedJavaSelfTestShape(rawCommand) {
+  return {
+    cleanup:/^cd ([A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*) && rm ([A-Za-z_][A-Za-z0-9_]*)\.java \*\.class && ls -la$/.exec(rawCommand),
+    legacy:/^cd ([A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*) && javac ([A-Za-z_][A-Za-z0-9_]*)\.java && cat > ([A-Za-z_][A-Za-z0-9_]*)\.java <<'([A-Za-z_][A-Za-z0-9_]{0,31})'\n/.exec(rawCommand),
+    current:/^cd ([A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*) && cat > ([A-Za-z_][A-Za-z0-9_]*)\.java <<'([A-Za-z_][A-Za-z0-9_]{0,31})'\n/.exec(rawCommand)
+  };
+}
+// Method selection only. A matching header grants neither scope nor execution.
+export function isOwnedJavaSelfTestCandidate(rawCommand) {
+  if(typeof rawCommand!=='string')return false;
+  const {cleanup,legacy,current}=ownedJavaSelfTestShape(rawCommand);
+  return !!(cleanup||legacy||current);
+}
 export function observeOwnedJavaSelfTest(rawCommand, context) {
   const out=(status,reason=null,extra={})=>({status,reason,rawCommand,shellCommand:null,execution:'UNVERIFIED',...extra});
   if(typeof rawCommand!=='string'||Buffer.byteLength(rawCommand)>65536||!context||!Array.isArray(context.ownedRoots)||!context.ownedRoots.length||context.ownedRoots.some(x=>typeof x!=='string'||!path.isAbsolute(x)))return out('METHOD_UNSUPPORTED','INVALID_LITERAL_SELFTEST_INPUT');
@@ -117,7 +130,7 @@ export function observeOwnedJavaSelfTest(rawCommand, context) {
   if(/\b(?:curl|wget|ssh|git\s+(?:push|merge|clone)|multica\s+login)\b/.test(rawCommand))return out('SCOPE_REJECT','UNAPPROVED_NETWORK_OR_MUTATION_REQUEST');
   if(/\b(?:skill\s+update|agent\s+update|runtime\s+(?:update|create)|knowledge\s+(?:write|publish)|autopilot)\b/.test(rawCommand))return out('SCOPE_REJECT','UNAPPROVED_CONFIGURATION_OR_KNOWLEDGE_MUTATION');
   if(/\bcd\s+(?:\.\.\/|\/)/.test(rawCommand))return out('SCOPE_REJECT','OUTSIDE_RELATIVE_SELFTEST_DIRECTORY');
-  const cleanup=/^cd ([A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*) && rm ([A-Za-z_][A-Za-z0-9_]*)\.java \*\.class && ls -la$/.exec(rawCommand);
+  const {cleanup,legacy,current}=ownedJavaSelfTestShape(rawCommand);
   if(cleanup){
     if(typeof context.priorSelfTestCommand!=='string')return out('METHOD_UNSUPPORTED','PRIOR_SELFTEST_SYNTAX_REQUIRED');
     const prior=observeOwnedJavaSelfTest(context.priorSelfTestCommand,{actorRole:context.actorRole,ownedRoots:context.ownedRoots});
@@ -126,8 +139,6 @@ export function observeOwnedJavaSelfTest(rawCommand, context) {
     if(cleanup[1]!==prior.directory||cleanup[2]!==prior.probe)return out('SCOPE_REJECT','SELFTEST_CLEANUP_DIRECTORY_OR_PROBE_MISMATCH');
     return out('MATCH_LITERAL_OWNED_JAVA_CLEANUP',null,{shellCommand:rawCommand,directory:prior.directory,probe:prior.probe,ownedDirectories:prior.ownedDirectories,authority:'OBSERVATION_ONLY',filesystemExpansion:'UNVERIFIED',priorRunBinding:'UNVERIFIED'});
   }
-  const legacy=/^cd ([A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*) && javac ([A-Za-z_][A-Za-z0-9_]*)\.java && cat > ([A-Za-z_][A-Za-z0-9_]*)\.java <<'([A-Za-z_][A-Za-z0-9_]{0,31})'\n/.exec(rawCommand);
-  const current=/^cd ([A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*) && cat > ([A-Za-z_][A-Za-z0-9_]*)\.java <<'([A-Za-z_][A-Za-z0-9_]{0,31})'\n/.exec(rawCommand);
   const header=legacy||current;
   if(!header)return out('METHOD_UNSUPPORTED','UNSUPPORTED_SELFTEST_HEADER');
   const directory=header[1],probe=legacy?header[3]:header[2],delimiter=legacy?header[4]:header[3];
